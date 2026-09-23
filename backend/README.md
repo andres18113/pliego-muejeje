@@ -48,6 +48,10 @@ OpenAPI is served at `/v3/api-docs` and `/swagger-ui/index.html`. CORS has no al
 
 Flyway runs `classpath:db/migration` on startup. It keeps its history in PostgreSQL's existing `public` schema; V001 creates the application `pliego` schema. SQL initialization outside Flyway is disabled. A fresh database user needs permission to create the `pliego` schema and its objects.
 
+## CI and PostgreSQL integration gate
+
+GitHub Actions runs `mvn verify` on Java 25 for pushes and pull requests to `main`, with Maven dependency caching. The workflow does not provision a database container, in keeping with the repository's no-Docker constraint. Maven verification is the CI gate. A passing PostgreSQL 18 smoke is a separate verified integration gate: start with a clean PostgreSQL 18 database, start the backend so Flyway applies V001–V020, confirm all 20 successful rows in `public.flyway_schema_history`, then run the approved SQL smoke suite from `pliego-flyway-v1.0.zip` and the public catalog Function checks with publicable and nonpublic fixtures. Record that gate separately before release. H2 is not a substitute for that gate.
+
 ## Build and run
 
 From this directory, with Java 25 and Maven installed:

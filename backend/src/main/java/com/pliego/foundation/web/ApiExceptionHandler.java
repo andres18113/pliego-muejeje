@@ -16,6 +16,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.pliego.foundation.database.DatabaseException;
 import com.pliego.foundation.security.InvalidCredentialsException;
+import com.pliego.modules.catalog.application.EditionNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -25,6 +26,8 @@ public final class ApiExceptionHandler {
 
     private static final String VALIDATION_TITLE = "Datos inválidos";
     private static final String VALIDATION_DETAIL = "Revisa los datos enviados e intenta nuevamente.";
+    private static final String CATALOG_FILTER_DETAIL = "Revisa los filtros enviados e intenta nuevamente.";
+    private static final String ADMIN_FILTER_DETAIL = "Revisa los filtros enviados e intenta nuevamente.";
     private static final String MALFORMED_TITLE = "Solicitud inválida";
     private static final String MALFORMED_DETAIL = "El cuerpo de la solicitud falta o no contiene JSON válido.";
     private static final String INTERNAL_TITLE = "Error interno";
@@ -43,7 +46,7 @@ public final class ApiExceptionHandler {
                 .map(ApiExceptionHandler::safeViolation)
                 .toList();
         ProblemDetail problem = problems.create("VALIDATION_ERROR", VALIDATION_TITLE, HttpStatus.BAD_REQUEST,
-                VALIDATION_DETAIL, request);
+                validationDetail(request), request);
         ProblemDetailSupport.violations(problem, violations);
         return ResponseEntity.badRequest().body(problem);
     }
@@ -52,21 +55,21 @@ public final class ApiExceptionHandler {
     public ResponseEntity<ProblemDetail> methodValidation(HandlerMethodValidationException exception,
             HttpServletRequest request) {
         return ProblemDetailSupport.response(problems, request, "VALIDATION_ERROR", VALIDATION_TITLE,
-                HttpStatus.BAD_REQUEST, VALIDATION_DETAIL);
+                HttpStatus.BAD_REQUEST, validationDetail(request));
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ProblemDetail> constraintValidation(ConstraintViolationException exception,
             HttpServletRequest request) {
         return ProblemDetailSupport.response(problems, request, "VALIDATION_ERROR", VALIDATION_TITLE,
-                HttpStatus.BAD_REQUEST, VALIDATION_DETAIL);
+                HttpStatus.BAD_REQUEST, validationDetail(request));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ProblemDetail> argumentTypeMismatch(MethodArgumentTypeMismatchException exception,
             HttpServletRequest request) {
         return ProblemDetailSupport.response(problems, request, "VALIDATION_ERROR", VALIDATION_TITLE,
-                HttpStatus.BAD_REQUEST, VALIDATION_DETAIL);
+                HttpStatus.BAD_REQUEST, validationDetail(request));
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -82,6 +85,13 @@ public final class ApiExceptionHandler {
                 HttpStatus.NOT_FOUND, "El recurso solicitado no está disponible.");
     }
 
+    @ExceptionHandler(EditionNotFoundException.class)
+    public ResponseEntity<ProblemDetail> publicEditionNotFound(EditionNotFoundException exception,
+            HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "P2041", "Edición no encontrada",
+                HttpStatus.NOT_FOUND, "La edición solicitada no está disponible.");
+    }
+
     @ExceptionHandler(InvalidCredentialsException.class)
     public ResponseEntity<ProblemDetail> invalidCredentials(InvalidCredentialsException exception,
             HttpServletRequest request) {
@@ -92,7 +102,8 @@ public final class ApiExceptionHandler {
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<ProblemDetail> database(DatabaseException exception, HttpServletRequest request) {
         var error = exception.error();
-        String detail = databaseDetail(error);
+        String detail = error == com.pliego.foundation.database.DatabaseError.INVALID_ARGUMENT
+                ? validationDetail(request) : databaseDetail(error);
         String publicCode = switch (error) {
             case DATABASE_CONTRACT_VIOLATION, INTERNAL_SERVER_ERROR -> error.code();
             default -> error.sqlState();
@@ -144,7 +155,7 @@ public final class ApiExceptionHandler {
             case EDITION_DATA_INVALID -> "Datos de edición inválidos";
             case INVENTORY_NOT_FOUND -> "Inventario no encontrado";
             case INSUFFICIENT_STOCK -> "Existencias insuficientes";
-            case STOCK_QUANTITY_INVALID -> "Cantidad de existencias inválida";
+            case STOCK_QUANTITY_INVALID -> "Cantidad inválida";
             case STOCK_MINIMUM_INVALID -> "Mínimo de existencias inválido";
             case STOCK_MOVEMENT_DUPLICATE -> "Movimiento de existencias duplicado";
             case SALE_REQUIRED_FOR_CANCELLATION -> "Se requiere una venta para cancelar";
@@ -172,6 +183,30 @@ public final class ApiExceptionHandler {
             case EMAIL_ALREADY_EXISTS -> "Ya existe una cuenta con ese correo electrónico.";
             case CUSTOMER_NOT_FOUND -> "El perfil solicitado no está disponible.";
             case ADDRESS_NOT_FOUND -> "La dirección solicitada no existe o no está disponible para tu cuenta.";
+            case AUTHOR_NOT_FOUND -> "El autor solicitado no está disponible.";
+            case AUTHOR_INACTIVE -> "El autor no está disponible para esta operación.";
+            case PUBLISHER_NOT_FOUND -> "La editorial solicitada no está disponible.";
+            case PUBLISHER_INACTIVE -> "La editorial no está disponible para esta operación.";
+            case CATEGORY_NOT_FOUND -> "La categoría solicitada no está disponible.";
+            case CATEGORY_INACTIVE -> "La categoría no está disponible para esta operación.";
+            case CATEGORY_INVALID_HIERARCHY -> "La jerarquía de categorías solicitada no es válida.";
+            case CATEGORY_SLUG_EXISTS -> "Ya existe una categoría con ese identificador.";
+            case BOOK_NOT_FOUND -> "El libro solicitado no está disponible.";
+            case BOOK_REQUIRES_AUTHOR -> "El libro debe tener al menos un autor.";
+            case BOOK_REQUIRES_CATEGORY -> "El libro debe tener al menos una categoría.";
+            case AUTHOR_ORDER_INVALID -> "El orden de los autores no es válido.";
+            case EDITION_NOT_FOUND -> "La edición solicitada no está disponible.";
+            case EDITION_INACTIVE -> "La edición no está disponible para esta operación.";
+            case BOOK_INACTIVE -> "El libro no está disponible para esta operación.";
+            case SKU_ALREADY_EXISTS -> "Ya existe una edición con ese SKU.";
+            case ISBN_ALREADY_EXISTS -> "Ya existe una edición con ese ISBN.";
+            case ISBN_INVALID -> "El ISBN no es válido.";
+            case COVER_METADATA_INVALID -> "Los metadatos de portada no son válidos.";
+            case EDITION_DATA_INVALID -> "Los datos de la edición no son válidos.";
+            case INVENTORY_NOT_FOUND -> "No existe inventario para la edición solicitada.";
+            case INSUFFICIENT_STOCK -> "No hay existencias suficientes para realizar el ajuste.";
+            case STOCK_QUANTITY_INVALID -> "La cantidad debe ser mayor que cero.";
+            case STOCK_MINIMUM_INVALID -> "El stock mínimo no puede ser negativo.";
             default -> switch (error.httpStatus().value()) {
                 case 400 -> VALIDATION_DETAIL;
                 case 404 -> "El recurso solicitado no está disponible.";
@@ -179,5 +214,12 @@ public final class ApiExceptionHandler {
                 default -> INTERNAL_DETAIL;
             };
         };
+    }
+
+    private static String validationDetail(HttpServletRequest request) {
+        if ("/api/v1/catalog/editions".equals(request.getRequestURI())) return CATALOG_FILTER_DETAIL;
+        if (request.getRequestURI().startsWith("/api/v1/admin/")
+                && "GET".equalsIgnoreCase(request.getMethod())) return ADMIN_FILTER_DETAIL;
+        return VALIDATION_DETAIL;
     }
 }

@@ -10,6 +10,9 @@ Implemented vertical slices:
 
 - Authentication with BCrypt and stateless JWT, plus centralized RFC 9457 ProblemDetail responses.
 - Authenticated CUSTOMER profile and address operations.
+- Public catalog search and edition detail backed by the approved PostgreSQL Functions.
+- ADMIN author, publisher, category, book, and edition management backed by the approved PostgreSQL Database API.
+- ADMIN inventory search, movement history, entries, adjustments, and minimum-stock updates backed by the approved PostgreSQL Database API.
 
 Human-facing REST error and validation feedback is in Spanish. Machine-readable error codes remain stable. Further slices follow the approved REST and Database API contracts.
 
