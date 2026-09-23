@@ -1,0 +1,23 @@
+# Maven
+**/target/
+backend/.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# Local environment and logs
+.env
+.env.*
+!.env.example
+*.log
+
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Local agent skills and their nested repositories
+.agents/

@@ -1,0 +1,57 @@
+-- PLIEGO V002 — Identity / Customer
+CREATE TABLE pliego.usuario (
+    usuario_id BIGINT GENERATED ALWAYS AS IDENTITY,
+    email_normalizado VARCHAR(254) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    rol VARCHAR(16) NOT NULL,
+    estado VARCHAR(16) NOT NULL DEFAULT 'ACTIVE',
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_usuario PRIMARY KEY (usuario_id),
+    CONSTRAINT uq_usuario_email UNIQUE (email_normalizado),
+    CONSTRAINT ck_usuario_email_canonico CHECK (email_normalizado = lower(btrim(email_normalizado)) AND char_length(email_normalizado) BETWEEN 3 AND 254),
+    CONSTRAINT ck_usuario_password_hash CHECK (char_length(btrim(password_hash)) > 0),
+    CONSTRAINT ck_usuario_rol CHECK (rol IN ('CUSTOMER','ADMIN')),
+    CONSTRAINT ck_usuario_estado CHECK (estado IN ('ACTIVE','BLOCKED'))
+);
+CREATE TABLE pliego.cliente (
+    cliente_id BIGINT GENERATED ALWAYS AS IDENTITY,
+    usuario_id BIGINT NOT NULL,
+    nombres VARCHAR(120) NOT NULL,
+    apellidos VARCHAR(120) NOT NULL,
+    telefono VARCHAR(20),
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_cliente PRIMARY KEY (cliente_id),
+    CONSTRAINT uq_cliente_usuario UNIQUE (usuario_id),
+    CONSTRAINT fk_cliente_usuario FOREIGN KEY (usuario_id) REFERENCES pliego.usuario(usuario_id) ON DELETE RESTRICT,
+    CONSTRAINT ck_cliente_nombres CHECK (char_length(btrim(nombres)) BETWEEN 1 AND 120),
+    CONSTRAINT ck_cliente_apellidos CHECK (char_length(btrim(apellidos)) BETWEEN 1 AND 120),
+    CONSTRAINT ck_cliente_telefono CHECK (telefono IS NULL OR telefono ~ '^\+?[0-9]{7,19}$')
+);
+CREATE TABLE pliego.direccion (
+    direccion_id BIGINT GENERATED ALWAYS AS IDENTITY,
+    cliente_id BIGINT NOT NULL,
+    alias VARCHAR(80) NOT NULL,
+    destinatario VARCHAR(200) NOT NULL,
+    direccion_linea1 VARCHAR(200) NOT NULL,
+    direccion_linea2 VARCHAR(200),
+    ciudad VARCHAR(100) NOT NULL,
+    provincia VARCHAR(100) NOT NULL,
+    pais_codigo CHAR(2) NOT NULL,
+    codigo_postal VARCHAR(20),
+    referencia VARCHAR(300),
+    telefono VARCHAR(20) NOT NULL,
+    es_principal BOOLEAN NOT NULL DEFAULT FALSE,
+    fecha_creacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT pk_direccion PRIMARY KEY (direccion_id),
+    CONSTRAINT fk_direccion_cliente FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id) ON DELETE RESTRICT,
+    CONSTRAINT ck_direccion_alias CHECK (char_length(btrim(alias)) BETWEEN 1 AND 80),
+    CONSTRAINT ck_direccion_destinatario CHECK (char_length(btrim(destinatario)) BETWEEN 1 AND 200),
+    CONSTRAINT ck_direccion_linea1 CHECK (char_length(btrim(direccion_linea1)) BETWEEN 1 AND 200),
+    CONSTRAINT ck_direccion_ciudad CHECK (char_length(btrim(ciudad)) BETWEEN 1 AND 100),
+    CONSTRAINT ck_direccion_provincia CHECK (char_length(btrim(provincia)) BETWEEN 1 AND 100),
+    CONSTRAINT ck_direccion_pais_formato CHECK (pais_codigo ~ '^[A-Z]{2}$'),
+    CONSTRAINT ck_direccion_telefono CHECK (telefono ~ '^\+?[0-9]{7,19}$')
+);

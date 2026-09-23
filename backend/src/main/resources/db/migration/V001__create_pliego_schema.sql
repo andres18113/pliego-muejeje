@@ -1,0 +1,3 @@
+-- PLIEGO V001
+-- PostgreSQL 18.x
+CREATE SCHEMA IF NOT EXISTS pliego;
