@@ -78,8 +78,9 @@ jobs:
             printf 'PLIEGO_JWT_SECRET=%s\n' "$jwt_secret"
           } >> "$GITHUB_ENV"
           export PGPASSWORD="$db_password"
-          sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -v "ci_password=$db_password" \
-            -c "CREATE ROLE pliego LOGIN PASSWORD :'ci_password';"
+          sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -v "ci_password=$db_password" <<'SQL'
+          CREATE ROLE pliego LOGIN PASSWORD :'ci_password';
+          SQL
           sudo -u postgres createdb -p 55432 --owner=pliego pliego
           psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180000" \
             | grep -qx t
