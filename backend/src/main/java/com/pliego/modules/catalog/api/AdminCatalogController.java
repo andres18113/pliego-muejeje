@@ -82,6 +82,7 @@ public class AdminCatalogController {
     }
 
     @PutMapping(path = "/authors/{authorId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Cambiar el estado del autor")
     public ResponseEntity<Void> authorStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long authorId,
             @Valid @RequestBody AdminCatalogRequests.Status request) {
         service.setAuthorStatus(actorId(jwt), authorId, request.state()); return ResponseEntity.noContent().build();
@@ -108,6 +109,7 @@ public class AdminCatalogController {
     }
 
     @PutMapping(path = "/publishers/{publisherId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Reemplazar editorial")
     public ResponseEntity<Void> updatePublisher(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long publisherId,
             @Valid @RequestBody AdminCatalogRequests.Publisher request) {
         service.updatePublisher(actorId(jwt), publisherId, new PublisherData(request.name(), request.description()));
@@ -115,6 +117,7 @@ public class AdminCatalogController {
     }
 
     @PutMapping(path = "/publishers/{publisherId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Cambiar el estado de la editorial")
     public ResponseEntity<Void> publisherStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long publisherId,
             @Valid @RequestBody AdminCatalogRequests.Status request) {
         service.setPublisherStatus(actorId(jwt), publisherId, request.state()); return ResponseEntity.noContent().build();
@@ -142,12 +145,14 @@ public class AdminCatalogController {
     }
 
     @PutMapping(path = "/categories/{categoryId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Reemplazar categoría")
     public ResponseEntity<Void> updateCategory(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long categoryId,
             @Valid @RequestBody AdminCatalogRequests.Category request) {
         service.updateCategory(actorId(jwt), categoryId, categoryData(request)); return ResponseEntity.noContent().build();
     }
 
     @PutMapping(path = "/categories/{categoryId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Cambiar el estado de la categoría")
     public ResponseEntity<Void> categoryStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long categoryId,
             @Valid @RequestBody AdminCatalogRequests.Status request) {
         service.setCategoryStatus(actorId(jwt), categoryId, request.state()); return ResponseEntity.noContent().build();
@@ -177,12 +182,14 @@ public class AdminCatalogController {
     }
 
     @PutMapping(path = "/books/{bookId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Reemplazar libro")
     public ResponseEntity<Void> updateBook(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long bookId,
             @Valid @RequestBody AdminCatalogRequests.Book request) {
         service.updateBook(actorId(jwt), bookId, bookData(request)); return ResponseEntity.noContent().build();
     }
 
     @PutMapping(path = "/books/{bookId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Cambiar el estado del libro")
     public ResponseEntity<Void> bookStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long bookId,
             @Valid @RequestBody AdminCatalogRequests.Status request) {
         service.setBookStatus(actorId(jwt), bookId, request.state()); return ResponseEntity.noContent().build();
@@ -216,6 +223,7 @@ public class AdminCatalogController {
     }
 
     @PutMapping(path = "/editions/{editionId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Reemplazar edición")
     public ResponseEntity<Void> updateEdition(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long editionId,
             @Valid @RequestBody EditionUpdate request) {
         service.updateEdition(actorId(jwt), editionId, new EditionUpdateData(Long.parseLong(request.publisherId()),
@@ -226,6 +234,7 @@ public class AdminCatalogController {
     }
 
     @PutMapping(path = "/editions/{editionId}/status", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Cambiar el estado de la edición")
     public ResponseEntity<Void> editionStatus(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long editionId,
             @Valid @RequestBody AdminCatalogRequests.Status request) {
         service.setEditionStatus(actorId(jwt), editionId, request.state()); return ResponseEntity.noContent().build();

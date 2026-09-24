@@ -17,6 +17,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 import com.pliego.foundation.database.DatabaseException;
 import com.pliego.foundation.security.InvalidCredentialsException;
 import com.pliego.modules.catalog.application.EditionNotFoundException;
+import com.pliego.modules.sales.application.InvalidCardNumberException;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
@@ -99,16 +100,24 @@ public final class ApiExceptionHandler {
                 HttpStatus.UNAUTHORIZED, "El correo o la contraseña son incorrectos.");
     }
 
+    @ExceptionHandler(InvalidCardNumberException.class)
+    public ResponseEntity<ProblemDetail> invalidCard(InvalidCardNumberException exception,
+            HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "INVALID_CARD_NUMBER", "Tarjeta inválida",
+                HttpStatus.BAD_REQUEST, "El número de tarjeta no es válido.");
+    }
+
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<ProblemDetail> database(DatabaseException exception, HttpServletRequest request) {
         var error = exception.error();
         String detail = error == com.pliego.foundation.database.DatabaseError.INVALID_ARGUMENT
-                ? validationDetail(request) : databaseDetail(error);
+                ? validationDetail(request) : databaseDetail(error, request);
         String publicCode = switch (error) {
             case DATABASE_CONTRACT_VIOLATION, INTERNAL_SERVER_ERROR -> error.code();
             default -> error.sqlState();
         };
-        ProblemDetail problem = problems.create(publicCode, databaseTitle(error), error.httpStatus(), detail, request);
+        ProblemDetail problem = problems.create(publicCode, databaseTitle(error, request), error.httpStatus(), detail,
+                request);
         return ResponseEntity.status(error.httpStatus()).body(problem);
     }
 
@@ -122,6 +131,49 @@ public final class ApiExceptionHandler {
         String message = error.getDefaultMessage();
         if (message == null || message.isBlank()) message = "El valor no es válido.";
         return new ProblemDetailSupport.Violation(error.getField(), message);
+    }
+
+    private static String databaseTitle(com.pliego.foundation.database.DatabaseError error,
+            HttpServletRequest request) {
+        if (isAdminCustomersRequest(request)) {
+            return switch (error) {
+                case CUSTOMER_NOT_FOUND -> "Cliente no encontrado";
+                default -> databaseTitle(error);
+            };
+        }
+        if (isAdminOrdersRequest(request)) {
+            return switch (error) {
+                case ORDER_NOT_FOUND -> "Pedido no encontrado";
+                case ORDER_INVALID_TRANSITION -> "Cambio de estado inválido";
+                case ORDER_NOT_CANCELLABLE -> "Pedido no cancelable";
+                case PAYMENT_STATE_INVALID -> "Estado de pago inválido";
+                case STOCK_MOVEMENT_DUPLICATE, SALE_REQUIRED_FOR_CANCELLATION ->
+                        "No se pudo completar la cancelación";
+                default -> databaseTitle(error);
+            };
+        }
+        if (isCustomerOrdersRequest(request)) {
+            return switch (error) {
+                case STOCK_MOVEMENT_DUPLICATE, SALE_REQUIRED_FOR_CANCELLATION -> "No se pudo cancelar el pedido";
+                default -> databaseTitle(error);
+            };
+        }
+        if (isCheckoutRequest(request)) {
+            return switch (error) {
+                case CART_NOT_ACTIVE -> "Carrito no disponible";
+                case PAYMENT_REFERENCE_CONFLICT -> "No se pudo completar el pago";
+                default -> databaseTitle(error);
+            };
+        }
+        if (isCartRequest(request)) {
+            return switch (error) {
+                case CART_NOT_ACTIVE -> "Carrito no disponible";
+                case CART_ITEM_NOT_FOUND -> "Artículo del carrito no encontrado";
+                case CART_QUANTITY_INVALID -> "Cantidad inválida";
+                default -> databaseTitle(error);
+            };
+        }
+        return databaseTitle(error);
     }
 
     private static String databaseTitle(com.pliego.foundation.database.DatabaseError error) {
@@ -173,6 +225,89 @@ public final class ApiExceptionHandler {
             case IMMUTABLE_HISTORY_VIOLATION -> "No se pudo completar la operación";
             case DATABASE_CONTRACT_VIOLATION, INTERNAL_SERVER_ERROR -> INTERNAL_TITLE;
         };
+    }
+
+    private static String databaseDetail(com.pliego.foundation.database.DatabaseError error,
+            HttpServletRequest request) {
+        if (isAdminCustomersRequest(request)) {
+            return switch (error) {
+                case CUSTOMER_NOT_FOUND -> "El cliente solicitado no está disponible.";
+                default -> databaseDetail(error);
+            };
+        }
+        if (isAdminOrdersRequest(request)) {
+            return switch (error) {
+                case ORDER_NOT_FOUND -> "El pedido solicitado no existe.";
+                case ORDER_INVALID_TRANSITION ->
+                        "El pedido no puede pasar al estado solicitado desde su estado actual.";
+                case ORDER_NOT_CANCELLABLE -> "El pedido ya no puede cancelarse en su estado actual.";
+                case PAYMENT_STATE_INVALID ->
+                        "No es posible completar la operación con el estado actual del pago.";
+                case STOCK_MOVEMENT_DUPLICATE, SALE_REQUIRED_FOR_CANCELLATION ->
+                        "No se pudo completar la cancelación. Consulta el estado del pedido.";
+                default -> databaseDetail(error);
+            };
+        }
+        if (isCustomerOrdersRequest(request)) {
+            return switch (error) {
+                case ORDER_NOT_FOUND -> "El pedido solicitado no existe o no está disponible para tu cuenta.";
+                case ORDER_NOT_CANCELLABLE -> "El pedido ya no puede cancelarse en su estado actual.";
+                case PAYMENT_STATE_INVALID -> "No es posible completar la cancelación con el estado actual del pago.";
+                case STOCK_MOVEMENT_DUPLICATE, SALE_REQUIRED_FOR_CANCELLATION ->
+                        "No se pudo completar la cancelación. Consulta el estado del pedido.";
+                default -> databaseDetail(error);
+            };
+        }
+        if (isCheckoutRequest(request)) {
+            return switch (error) {
+                case CART_NOT_ACTIVE -> "No hay un carrito activo para finalizar la compra.";
+                case CART_EMPTY -> "Agrega al menos un libro antes de finalizar la compra.";
+                case EDITION_INACTIVE -> "Una de las ediciones del carrito ya no está disponible.";
+                case BOOK_INACTIVE -> "Uno de los libros del carrito ya no está disponible.";
+                case INSUFFICIENT_STOCK -> "Uno o más libros ya no tienen existencias suficientes.";
+                case CHECKOUT_ADDRESS_INVALID -> "La dirección seleccionada no está disponible.";
+                case PAYMENT_OUTCOME_INVALID -> "El resultado de simulación seleccionado no es válido.";
+                case PAYMENT_STATE_INVALID -> "El estado del pago no permite finalizar la compra.";
+                case PAYMENT_REFERENCE_CONFLICT -> "No se pudo completar el pago simulado. Intenta nuevamente.";
+                default -> databaseDetail(error);
+            };
+        }
+        if (isCartRequest(request)) {
+            return switch (error) {
+                case CART_NOT_ACTIVE -> "No hay un carrito activo para realizar esta operación.";
+                case CART_ITEM_NOT_FOUND -> "El artículo solicitado no existe o no está disponible en tu carrito.";
+                case CART_QUANTITY_INVALID -> "La cantidad debe ser mayor que cero.";
+                case INSUFFICIENT_STOCK -> "No hay existencias suficientes para la cantidad solicitada.";
+                case EDITION_INACTIVE -> "La edición seleccionada no está disponible actualmente.";
+                case BOOK_INACTIVE -> "El libro asociado a la edición seleccionada no está disponible actualmente.";
+                default -> databaseDetail(error);
+            };
+        }
+        return databaseDetail(error);
+    }
+
+    private static boolean isCartRequest(HttpServletRequest request) {
+        return request.getRequestURI().equals("/api/v1/cart")
+                || request.getRequestURI().startsWith("/api/v1/cart/");
+    }
+
+    private static boolean isCheckoutRequest(HttpServletRequest request) {
+        return request.getRequestURI().equals("/api/v1/checkout");
+    }
+
+    private static boolean isCustomerOrdersRequest(HttpServletRequest request) {
+        return request.getRequestURI().equals("/api/v1/orders")
+                || request.getRequestURI().startsWith("/api/v1/orders/");
+    }
+
+    private static boolean isAdminOrdersRequest(HttpServletRequest request) {
+        return request.getRequestURI().equals("/api/v1/admin/orders")
+                || request.getRequestURI().startsWith("/api/v1/admin/orders/");
+    }
+
+    private static boolean isAdminCustomersRequest(HttpServletRequest request) {
+        return request.getRequestURI().equals("/api/v1/admin/customers")
+                || request.getRequestURI().startsWith("/api/v1/admin/customers/");
     }
 
     private static String databaseDetail(com.pliego.foundation.database.DatabaseError error) {

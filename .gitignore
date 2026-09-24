@@ -14,6 +14,8 @@ backend/.mvn/wrapper/maven-wrapper.jar
 .env.*
 !.env.example
 *.log
+__pycache__/
+*.py[cod]
 
 # Operating systems
 .DS_Store

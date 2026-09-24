@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Size;
 
 import com.pliego.foundation.security.ValidPassword;
 
-@Schema(name = "RegisterRequest", description = "Creates an active CUSTOMER account.")
+@Schema(name = "RegisterRequest", description = "Crea una cuenta CUSTOMER activa.")
 public record RegisterRequest(
         @NotBlank(message = "El correo es obligatorio.") @Email(message = "El correo tiene un formato inválido.") @Size(max = 254, message = "El correo no puede superar 254 caracteres.") @Schema(example = "usuario@example.com", maxLength = 254) String email,
         @NotNull(message = "La contraseña es obligatoria.") @ValidPassword @Schema(format = "password", description = "Al menos 8 caracteres Unicode y máximo 72 bytes en UTF-8.", example = "password-segura", minLength = 8, maxLength = 72) String password,
@@ -20,7 +20,6 @@ public record RegisterRequest(
 
     @Override
     public String toString() {
-        return "RegisterRequest[email=" + email + ", password=[redacted], firstNames=" + firstNames
-                + ", lastNames=" + lastNames + ", phone=" + phone + "]";
+        return "RegisterRequest[personalData=[redacted], credentials=[redacted]]";
     }
 }

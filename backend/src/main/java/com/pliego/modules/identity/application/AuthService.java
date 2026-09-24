@@ -62,8 +62,8 @@ public class AuthService {
     public record LoginResult(String accessToken, long expiresInSeconds, long userId, String email, String role) {
         @Override
         public String toString() {
-            return "LoginResult[accessToken=[redacted], expiresInSeconds=" + expiresInSeconds + ", userId=" + userId
-                    + ", email=" + email + ", role=" + role + "]";
+            return "LoginResult[accessToken=[redacted], expiresInSeconds=" + expiresInSeconds
+                    + ", user=[redacted]]";
         }
     }
 }

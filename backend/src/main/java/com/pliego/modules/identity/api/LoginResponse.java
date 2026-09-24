@@ -12,7 +12,7 @@ public record LoginResponse(
     @Override
     public String toString() {
         return "LoginResponse[accessToken=[redacted], tokenType=" + tokenType + ", expiresInSeconds="
-                + expiresInSeconds + ", user=" + user + "]";
+                + expiresInSeconds + ", user=[redacted]]";
     }
 
     @Schema(name = "AuthenticatedUser")
@@ -20,5 +20,10 @@ public record LoginResponse(
             @Schema(example = "100", pattern = "^[1-9][0-9]*$") String userId,
             @Schema(example = "usuario@example.com") String email,
             @Schema(example = "CUSTOMER", allowableValues = { "CUSTOMER", "ADMIN" }) String role) {
+
+        @Override
+        public String toString() {
+            return "AuthenticatedUser[identity=[redacted]]";
+        }
     }
 }

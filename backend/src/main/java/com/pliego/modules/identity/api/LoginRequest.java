@@ -15,6 +15,6 @@ public record LoginRequest(
 
     @Override
     public String toString() {
-        return "LoginRequest[email=" + email + ", password=[redacted]]";
+        return "LoginRequest[credentials=[redacted]]";
     }
 }

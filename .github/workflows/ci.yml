@@ -11,13 +11,24 @@ permissions:
 
 jobs:
   maven-verify:
-    name: Maven verification
+    name: Maven and PostgreSQL 18 verification
     runs-on: ubuntu-latest
+    env:
+      PGHOST: 127.0.0.1
+      PGPORT: '55432'
+      PGDATABASE: pliego
+      PGUSER: pliego
+      PLIEGO_DB_URL: jdbc:postgresql://127.0.0.1:55432/pliego
+      PLIEGO_DB_USERNAME: pliego
+      PLIEGO_ADMIN_EMAIL: ci-admin@example.invalid
+      PLIEGO_ADMIN_PASSWORD_HASH: smoke-placeholder-not-usable
+      PLIEGO_PG18_APP_PORT: '18080'
+      CHECKOUT_BASE_URL: http://127.0.0.1:18080
     steps:
       - name: Check out repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up Java 25
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
         with:
           distribution: temurin
           java-version: '25'
@@ -26,3 +37,52 @@ jobs:
       - name: Verify backend
         working-directory: backend
         run: mvn --batch-mode --no-transfer-progress verify
+      - name: Install PostgreSQL 18 from the official PGDG repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y ca-certificates curl gnupg
+          key_file="$(mktemp)"
+          curl --fail --silent --show-error --location \
+            https://www.postgresql.org/media/keys/ACCC4CF8.asc -o "$key_file"
+          key_fingerprint="$(gpg --batch --show-keys --with-colons "$key_file" \
+            | awk -F: '$1 == "fpr" { print $10; exit }')"
+          if [[ "$key_fingerprint" != B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8 ]]; then
+            echo "Unexpected PostgreSQL package signing key fingerprint" >&2
+            exit 1
+          fi
+          sudo install -d -m 0755 /usr/share/postgresql-common/pgdg
+          sudo install -m 0644 "$key_file" \
+            /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc
+          rm -f "$key_file"
+          . /etc/os-release
+          printf 'Types: deb\nURIs: https://apt.postgresql.org/pub/repos/apt\nSuites: %s-pgdg\nArchitectures: %s\nComponents: main\nSigned-By: /usr/share/postgresql-common/pgdg/apt.postgresql.org.asc\n' \
+            "$VERSION_CODENAME" "$(dpkg --print-architecture)" \
+            | sudo tee /etc/apt/sources.list.d/pgdg.sources >/dev/null
+          sudo apt-get update
+          sudo apt-get install -y postgresql-18 postgresql-client-18
+          sudo pg_conftool 18 main set port 55432
+          sudo pg_ctlcluster 18 main stop || true
+          sudo pg_ctlcluster 18 main start
+      - name: Create a disposable PostgreSQL database and ephemeral credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          db_password="$(openssl rand -hex 32)"
+          jwt_secret="$(openssl rand -hex 32)"
+          echo "::add-mask::$db_password"
+          echo "::add-mask::$jwt_secret"
+          {
+            printf 'PGPASSWORD=%s\n' "$db_password"
+            printf 'PLIEGO_DB_PASSWORD=%s\n' "$db_password"
+            printf 'PLIEGO_JWT_SECRET=%s\n' "$jwt_secret"
+          } >> "$GITHUB_ENV"
+          export PGPASSWORD="$db_password"
+          sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -v "ci_password=$db_password" \
+            -c "CREATE ROLE pliego LOGIN PASSWORD :'ci_password';"
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego
+          psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180000" \
+            | grep -qx t
+      - name: Run live SQL, concurrency, HTTP, and Flyway gates
+        run: bash backend/src/test/postgres18/run_ci_gates.sh

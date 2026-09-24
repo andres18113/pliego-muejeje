@@ -38,7 +38,6 @@ public final class UserAuthData {
 
     @Override
     public String toString() {
-        return "UserAuthData[userId=" + userId + ", email=" + email + ", passwordHash=[redacted], role=" + role
-                + ", state=" + state + "]";
+        return "UserAuthData[identity=[redacted], credentials=[redacted], role=[redacted], state=[redacted]]";
     }
 }

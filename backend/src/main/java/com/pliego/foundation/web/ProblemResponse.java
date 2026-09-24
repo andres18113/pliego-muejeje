@@ -4,7 +4,7 @@ import java.net.URI;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(name = "ProblemDetail", description = "RFC 9457 Problem Details with PLIEGO correlation fields.")
+@Schema(name = "ProblemDetail", description = "Detalle de problema RFC 9457 con campos de correlación de PLIEGO.")
 public record ProblemResponse(
         @Schema(example = "urn:pliego:problem:VALIDATION_ERROR") URI type,
         @Schema(example = "Datos inválidos") String title,

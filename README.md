@@ -6,15 +6,16 @@ PLIEGO is a modular-monolith backend for the approved v1 use cases. Its approved
 
 The backend uses Java 25, Spring Boot, Spring JDBC, Flyway, and PostgreSQL 18. Feature code follows Controller → Application Service → JDBC Gateway; PostgreSQL routines remain authoritative for business rules. JPA/Hibernate ORM and Docker are not used.
 
-Implemented vertical slices:
+Implemented v1 vertical slices:
 
 - Authentication with BCrypt and stateless JWT, plus centralized RFC 9457 ProblemDetail responses.
 - Authenticated CUSTOMER profile and address operations.
 - Public catalog search and edition detail backed by the approved PostgreSQL Functions.
 - ADMIN author, publisher, category, book, and edition management backed by the approved PostgreSQL Database API.
 - ADMIN inventory search, movement history, entries, adjustments, and minimum-stock updates backed by the approved PostgreSQL Database API.
+- CUSTOMER cart, checkout, and order history/cancellation; ADMIN customer management and order/logistics operations.
 
-Human-facing REST error and validation feedback is in Spanish. Machine-readable error codes remain stable. Further slices follow the approved REST and Database API contracts.
+Human-facing REST error and validation feedback is in Spanish. Machine-readable error codes remain stable. See the [frontend handoff](docs/frontend/backend-handoff-v1.0.md) for the supported screens, navigation, and API conventions.
 
 ## Build and run
 
@@ -26,7 +27,7 @@ mvn clean verify
 mvn spring-boot:run
 ```
 
-OpenAPI is served at `/v3/api-docs` and `/swagger-ui/index.html`.
+Backend configuration/startup is documented in [backend/README.md](backend/README.md). With the backend running, OpenAPI is served at `/v3/api-docs` and Swagger UI at `/swagger-ui/index.html`.
 
 ## Approved artifacts
 
@@ -37,4 +38,4 @@ OpenAPI is served at `/v3/api-docs` and `/swagger-ui/index.html`.
 - [Database API contract](database-api-contract-v1.0.md)
 - [Approved Flyway archive](pliego-flyway-v1.0.zip)
 
-Flyway migrations V001–V019 match the approved archive byte-for-byte. V020 is an additive correction to the primary-address routine that preserves its approved public contract and behavior.
+Flyway migrations V001–V019 match the approved archive byte-for-byte. V020 and V021 are additive corrections that preserve the approved public contract and behavior.

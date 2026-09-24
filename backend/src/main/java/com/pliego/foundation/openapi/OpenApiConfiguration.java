@@ -17,7 +17,7 @@ public class OpenApiConfiguration {
         return new OpenAPI()
                 .openapi("3.1.2")
                 .info(new Info().title("PLIEGO API").version("1.0.0")
-                        .description("API de PLIEGO v1. Incluye autenticación, perfil y direcciones del cliente."))
+                        .description("API de PLIEGO v1: autenticación, clientes, catálogo, inventario, carrito, pago y pedidos."))
                 .components(new Components().addSecuritySchemes("bearerJwt",
                         new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
     }
