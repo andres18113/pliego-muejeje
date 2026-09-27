@@ -1,0 +1,510 @@
+{
+  "schema": "pliego-cover-sku-registry-v1",
+  "next_sequence": 57,
+  "assignments": [
+    {
+      "sku": "PLG-BK-000001",
+      "identity_keys": [
+        "isbn13:9781915088406"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#el-retrato-de-dorian-gray.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000002",
+      "identity_keys": [
+        "isbn13:9786070738548"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#el-extranjero.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000003",
+      "identity_keys": [
+        "isbn13:9786071512949"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#metodos-numericos-para-ingenieros.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000004",
+      "identity_keys": [
+        "isbn13:9786073259521"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#algebra-lineal-y-su-aplicacion.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000005",
+      "identity_keys": [
+        "isbn13:9786074816631"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#analisis-numerico-richard-l-burden-j-douglas-faires.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000006",
+      "identity_keys": [
+        "isbn13:9786075263113"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#algebra-lineal-una-introduccion-moderna-4-edicion.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000007",
+      "identity_keys": [
+        "isbn13:9786075266312"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#ecuaciones-diferenciales.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000008",
+      "identity_keys": [
+        "isbn13:9786075502069"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#geometria-trigonemetria-baldor.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000009",
+      "identity_keys": [
+        "isbn13:9786075502090"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#alegebra-de-baldor.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000010",
+      "identity_keys": [
+        "isbn13:9786124441073"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#ANALISIS-MATEMATICO-IV-Calculo-Vectorial.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000011",
+      "identity_keys": [
+        "isbn13:9786124441141"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#Cálculo-analisis-vectorial.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000012",
+      "identity_keys": [
+        "isbn13:9786124441165"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#problemas-resueltps-de-al.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000013",
+      "identity_keys": [
+        "isbn13:9786125020727"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#la-ciudad-y-los-perros.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000014",
+      "identity_keys": [
+        "isbn13:9786287745131"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#cien-anos-de-soledad.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000015",
+      "identity_keys": [
+        "isbn13:9788410011045"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#madame-bovary.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000016",
+      "identity_keys": [
+        "isbn13:9788413370200"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#asi-hablo-zaratustra.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000017",
+      "identity_keys": [
+        "isbn13:9788413371696"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#critica-de-la-razon-practica.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000018",
+      "identity_keys": [
+        "isbn13:9788413371702"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#critica-de-la-razon-pura.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000019",
+      "identity_keys": [
+        "isbn13:9788413372945"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#la-iliada.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000020",
+      "identity_keys": [
+        "isbn13:9788413373423"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#meditaciones-metafisicas.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000021",
+      "identity_keys": [
+        "isbn13:9788413373836"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#moby-dick.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000022",
+      "identity_keys": [
+        "isbn13:9788413376936"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#etica-a-nicomaco.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000023",
+      "identity_keys": [
+        "isbn13:9788417666439"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#sobre-la-libertad.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000024",
+      "identity_keys": [
+        "isbn13:9788419190123"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#el-gran-gatsby.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000025",
+      "identity_keys": [
+        "isbn13:9788419599940"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#mas-alla-del-bien-y-del-mal.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000026",
+      "identity_keys": [
+        "isbn13:9788419651730"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#genealogia-de-la-moral.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000027",
+      "identity_keys": [
+        "isbn13:9788420414706"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#rayuela.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000028",
+      "identity_keys": [
+        "isbn13:9788429150049"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#analisis-matematico-apostol.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000029",
+      "identity_keys": [
+        "isbn13:9788432172281"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#don-quijote.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000030",
+      "identity_keys": [
+        "isbn13:9788466362085"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#la-casa-de-los-espiritus.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000031",
+      "identity_keys": [
+        "isbn13:9788466378581"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#el-amor-en-tiempos-de-colera.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000032",
+      "identity_keys": [
+        "isbn13:9788466388627"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#soldados-de-salamina.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000033",
+      "identity_keys": [
+        "isbn13:9788467070835"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#orgullo-y-prejuicio.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000034",
+      "identity_keys": [
+        "isbn13:9788476157589"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#algebra-lineal-serie-schaum.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000035",
+      "identity_keys": [
+        "isbn13:9788478883608"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#anna-karenina.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000036",
+      "identity_keys": [
+        "isbn13:9788490743720"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#romeo-y-julieta.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000037",
+      "identity_keys": [
+        "isbn13:9788490745113"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#meditaciones.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000038",
+      "identity_keys": [
+        "isbn13:9788490747681"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#crimen-y-castigo.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000039",
+      "identity_keys": [
+        "isbn13:9788493442606"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#pedro-paramo.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000040",
+      "identity_keys": [
+        "isbn13:9788497592437"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#cronica-de-una-muerte-anunciada.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000041",
+      "identity_keys": [
+        "isbn13:9788499538761"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#tractatus-logico-philosophicus.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000042",
+      "identity_keys": [
+        "isbn13:9789561120785"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#apologia-de-socrates.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000043",
+      "identity_keys": [
+        "isbn13:9789585062665"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#inferencia-bayesana.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000044",
+      "identity_keys": [
+        "isbn13:9789585082656"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#Introducción-al-algebra-lineal.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000045",
+      "identity_keys": [
+        "isbn13:9789585581685"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#el-mito-de-sisifo.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000046",
+      "identity_keys": [
+        "isbn13:9789586954525"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#Matematica-Estructural.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000047",
+      "identity_keys": [
+        "isbn13:9789681849740"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera-william-e-boyce-richard-c-diprima.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000048",
+      "identity_keys": [
+        "isbn13:9789702402589"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#metodos-numericos-aplicados-a-la-ingenieria-antonio-nieves-hurtado-federico-c-dominguez-sanchez.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000049",
+      "identity_keys": [
+        "isbn13:9789702605928"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000050",
+      "identity_keys": [
+        "isbn13:9789875666474"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#ficciones.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000051",
+      "identity_keys": [
+        "isbn13:9789972813665"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#analisis-matematico-ii.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000052",
+      "identity_keys": [
+        "isbn13:9789972813818"
+      ],
+      "source_keys": [
+        "Matemáticas/pliego_matematicas_limpio.json#analisis-matematico-i-calculo-diferencial-moises-lazaro-carrion.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000053",
+      "identity_keys": [
+        "isbn13:9791370180652"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#discurso-del-metodo.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000054",
+      "identity_keys": [
+        "isbn13:9791387692865"
+      ],
+      "source_keys": [
+        "Literatura/pliego_literatura_limpio.json#los-miserables.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000055",
+      "identity_keys": [
+        "isbn13:9798215299210"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#el-principe.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000056",
+      "identity_keys": [
+        "isbn13:9798224715541"
+      ],
+      "source_keys": [
+        "Filosofia/pliego_filosofia_limpio.json#la-republica.webp"
+      ]
+    }
+  ]
+}

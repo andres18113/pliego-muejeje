@@ -47,7 +47,6 @@ public class AdminCatalogController {
 
     private static final String STATE_PATTERN = "ACTIVE|INACTIVE";
     private final AdminCatalogService service;
-
     public AdminCatalogController(AdminCatalogService service) { this.service = service; }
 
     @GetMapping("/authors")

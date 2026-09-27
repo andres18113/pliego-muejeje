@@ -2,6 +2,7 @@ package com.pliego.modules.catalog.api;
 
 import java.util.List;
 
+
 /** Wire representations for ADMIN catalog resources. IDs and totals stay decimal strings. */
 public final class AdminCatalogResponses {
     private AdminCatalogResponses() { }

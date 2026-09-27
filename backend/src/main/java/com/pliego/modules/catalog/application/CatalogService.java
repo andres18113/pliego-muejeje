@@ -1,5 +1,7 @@
 package com.pliego.modules.catalog.application;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,16 @@ public class CatalogService {
     @Transactional(readOnly = true)
     public CatalogSearchPage search(CatalogQuery query) {
         return catalogGateway.search(query);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PublicCatalogCategory> listPublicCategories() {
+        return catalogGateway.findPublicCategories();
+    }
+
+    @Transactional(readOnly = true)
+    public PublicCatalogFilterOptions getPublicFilterOptions() {
+        return catalogGateway.findPublicFilterOptions();
     }
 
     @Transactional(readOnly = true)

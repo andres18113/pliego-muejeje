@@ -2,6 +2,11 @@
 **/target/
 backend/.mvn/wrapper/maven-wrapper.jar
 
+# Node and frontend build outputs
+node_modules/
+frontend/dist/
+frontend/test-results/
+
 # IDEs
 .idea/
 *.iml
@@ -13,9 +18,13 @@ backend/.mvn/wrapper/maven-wrapper.jar
 .env
 .env.*
 !.env.example
+.local-secrets/
 *.log
 __pycache__/
 *.py[cod]
+
+# Local Impeccable state
+.impeccable/
 
 # Operating systems
 .DS_Store

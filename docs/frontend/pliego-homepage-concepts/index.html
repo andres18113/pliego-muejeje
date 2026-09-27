@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <title>PLIEGO — dirección visual aprobada</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="./concepts.js" defer></script>
+  </head>
+  <body>
+    <header class="lab-header">
+      <a class="lab-wordmark" href="#inicio" aria-label="PLIEGO, inicio de la exploración">
+        <span class="brand-mark" aria-hidden="true">P</span>
+        <span>PLIEGO <small>ESTUDIO VISUAL</small></span>
+      </a>
+      <span class="lab-status"><span aria-hidden="true"></span> DIRECCIÓN DE TRABAJO · CATÁLOGO FAMILIAR</span>
+    </header>
+
+    <main id="inicio">
+      <section class="intro" aria-labelledby="page-title">
+        <p class="eyebrow">Librería en línea · página pública de descubrimiento</p>
+        <h1 id="page-title">Una librería.<br /><em>Siete maneras de entrar.</em></h1>
+        <p class="intro-copy">Catálogo familiar es la dirección elegida para esta primera pulida. Las otras seis propuestas siguen disponibles para comparar el lenguaje visual; la estructura de librería ya está decidida.</p>
+        <p class="sample-note"><strong>Dirección visual aprobada; prototipo no conectado:</strong> títulos, autorías, categorías, portadas, precios y disponibilidad son ejemplos sintéticos. Los controles ilustran la dirección y no se conectan al backend.</p>
+      </section>
+
+      <div class="explore-layout">
+        <nav class="concept-nav" aria-label="Conceptos visuales de página de inicio">
+          <div class="concept-tabs" role="tablist" aria-label="Seleccionar concepto">
+          <button class="concept-tab" id="tab-pixel" role="tab" aria-selected="false" aria-controls="panel-pixel" tabindex="-1">
+            <span class="tab-number">01</span><span>Pixorama</span><small>Ciudad en bloques</small>
+          </button>
+          <button class="concept-tab" id="tab-viewfinder" role="tab" aria-selected="false" aria-controls="panel-viewfinder" tabindex="-1">
+            <span class="tab-number">02</span><span>Viewfinder</span><small>Encuadre y foco</small>
+          </button>
+          <button class="concept-tab" id="tab-tensegrity" role="tab" aria-selected="false" aria-controls="panel-tensegrity" tabindex="-1">
+            <span class="tab-number">03</span><span>Tensegridad</span><small>Equilibrio visible</small>
+          </button>
+          <button class="concept-tab" id="tab-cape" role="tab" aria-selected="false" aria-controls="panel-cape" tabindex="-1">
+            <span class="tab-number">04</span><span>Pliegue textil</span><small>Cubierta y cordón</small>
+          </button>
+          <button class="concept-tab" id="tab-teletext" role="tab" aria-selected="false" aria-controls="panel-teletext" tabindex="-1">
+            <span class="tab-number">05</span><span>Teletexto</span><small>Índice de emisión</small>
+          </button>
+          <button class="concept-tab" id="tab-darkroom" role="tab" aria-selected="false" aria-controls="panel-darkroom" tabindex="-1">
+            <span class="tab-number">06</span><span>Hoja de exposición</span><small>Capas de impresión</small>
+          </button>
+          <button class="concept-tab concept-tab-standard" id="tab-standard" role="tab" aria-selected="true" aria-controls="panel-standard" tabindex="0">
+            <span class="tab-number">✓</span><span>Catálogo familiar</span><small>Dirección aprobada</small>
+          </button>
+          </div>
+          <p class="nav-hint">Usa ← → para recorrer las opciones.</p>
+        </nav>
+
+        <section class="concept-view" aria-label="Vista del concepto seleccionado" aria-live="polite">
+          <article class="concept-panel" id="panel-pixel" role="tabpanel" aria-labelledby="tab-pixel" tabindex="0" hidden>
+            <div class="concept-caption">
+              <div><p class="concept-kicker">01 / SISTEMA GRÁFICO</p><h2>Pixorama Metropolis</h2></div>
+              <p>Un catálogo que se recorre como una ciudad isométrica: cada distrito representa una categoría y cada cubierta es un edificio legible, construido sobre una cuadrícula de píxel nítida.</p>
+              <div class="concept-tags"><span>RGB pleno</span><span>Bloques duros</span><span>Zoom por pasos</span></div>
+            </div>
+            <div class="storefront pixel-home" aria-label="Composición ilustrativa de la página de inicio Pixorama">
+              <div class="pixel-topbar"><a class="pixel-logo" href="#inicio">PLIEGO<span>■</span></a><span>LIBROS · EDICIONES</span><span>ENTRAR</span></div>
+              <div class="pixel-hero">
+                <div class="pixel-copy">
+                  <p class="pixel-label">CIUDAD DE LECTURAS / 01</p>
+                  <h3>Explora<br />por distrito.</h3>
+                  <p>Ficción, ensayo, poesía y más en un mapa claro del catálogo.</p>
+                  <div class="search-illustration pixel-search"><span aria-hidden="true">⌕</span> Buscar por título, autor o ISBN <b>↵</b></div>
+                  <a class="pixel-cta" href="#inicio">VER CATÁLOGO <span>→</span></a>
+                </div>
+                <div class="city-map" aria-hidden="true">
+                  <div class="pixel-sun"></div><div class="pixel-cloud cloud-one"></div><div class="pixel-cloud cloud-two"></div>
+                  <div class="pixel-road road-a"></div><div class="pixel-road road-b"></div>
+                  <div class="pixel-building building-a"><i></i><i></i><i></i><b>FICCIÓN</b></div>
+                  <div class="pixel-building building-b"><i></i><i></i><i></i><b>ENSAYO</b></div>
+                  <div class="pixel-building building-c"><i></i><i></i><i></i><b>POESÍA</b></div>
+                  <div class="pixel-booklet">LIBRO<br />01</div>
+                </div>
+              </div>
+              <div class="pixel-result"><div class="pixel-cover cover-pixel"><span>LA<br />MEMORIA<br />DEL AGUA</span><i></i></div><div><small>EDICIÓN DE EJEMPLO</small><h4>La memoria del agua</h4><p>Inés Valera · Tapa blanda</p></div><strong>$18,00</strong><span class="pixel-available">DISPONIBLE</span><a href="#inicio" class="pixel-open">VER EDICIÓN ↗</a></div>
+            </div>
+          </article>
+
+          <article class="concept-panel" id="panel-viewfinder" role="tabpanel" aria-labelledby="tab-viewfinder" tabindex="0" hidden>
+            <div class="concept-caption">
+              <div><p class="concept-kicker">02 / SISTEMA GRÁFICO</p><h2>Viewfinder de lectura</h2></div>
+              <p>La cubierta ocupa el encuadre; los corchetes y datos de cámara se convierten en una retícula de selección. La navegación sigue siendo búsqueda de catálogo, sin simular vídeo ni funciones de cámara.</p>
+              <div class="concept-tags"><span>Imagen a sangre</span><span>OSD blanco y ámbar</span><span>Foco por edición</span></div>
+            </div>
+            <div class="storefront viewfinder-home" aria-label="Composición ilustrativa de la página de inicio Viewfinder">
+              <div class="vf-header"><a class="vf-logo" href="#inicio">PLIEGO</a><span>LIBROS ENCUADRADOS</span><a href="#inicio">CUENTA ↗</a></div>
+              <div class="vf-scene">
+                <div class="vf-backdrop"><span class="vf-light"></span><span class="vf-shelf shelf-one"></span><span class="vf-shelf shelf-two"></span></div>
+                <div class="vf-book"><span>UNA NOVELA DE<br />INES VALERA</span><strong>LA MEMORIA<br />DEL AGUA</strong><i>EDICIÓN DE EJEMPLO</i></div>
+                <div class="vf-bracket vf-tl"></div><div class="vf-bracket vf-tr"></div><div class="vf-bracket vf-bl"></div><div class="vf-bracket vf-br"></div>
+                <span class="vf-rec"><i></i> ÍNDICE · PLIEGO</span><span class="vf-counter">01 / CATÁLOGO</span><span class="vf-zoom">W <b>━━━━━━●━━</b> T</span>
+                <div class="vf-title"><p>ENCUADRE 01 — FICCIÓN</p><h3>Mira las<br />ediciones.</h3></div>
+                <div class="search-illustration vf-search"><span aria-hidden="true">⌕</span> Buscar por título, autor o ISBN <b>↵</b></div>
+                <div class="vf-edition"><strong>La memoria del agua</strong><span>Inés Valera · $18,00 · Disponible</span><a href="#inicio">VER EDICIÓN ↗</a></div>
+              </div>
+            </div>
+          </article>
+
+          <article class="concept-panel" id="panel-tensegrity" role="tabpanel" aria-labelledby="tab-tensegrity" tabindex="0" hidden>
+            <div class="concept-caption">
+              <div><p class="concept-kicker">03 / SISTEMA GRÁFICO</p><h2>Columna en equilibrio</h2></div>
+              <p>Varillas y tensores rojos forman un eje para ordenar cubiertas, categorías y datos. La tensión pertenece a la composición; no sugiere recomendaciones ni relaciones editoriales entre libros.</p>
+              <div class="concept-tags"><span>Concreto pálido</span><span>Carbono y cordón rojo</span><span>Relaciones trazables</span></div>
+            </div>
+            <div class="storefront tensegrity-home" aria-label="Composición ilustrativa de la página de inicio Tensegridad">
+              <header class="tg-header"><a href="#inicio" class="tg-logo">PLIEGO<span> / EDICIONES</span></a><nav>CATÁLOGO&nbsp;&nbsp; CATEGORÍAS</nav><a href="#inicio">INICIAR SESIÓN</a></header>
+              <div class="tg-content"><div class="tg-heading"><p class="tg-index">01 — SELECCIÓN DEL CATÁLOGO</p><h3>Un eje<br /><em>para explorar.</em></h3><div class="search-illustration tg-search"><span>⌕</span> Buscar por título, autor o ISBN <b>↵</b></div></div>
+                <div class="tg-structure" aria-hidden="true"><span class="rod rod-a"></span><span class="rod rod-b"></span><span class="rod rod-c"></span><span class="rod rod-d"></span><span class="cord cord-a"></span><span class="cord cord-b"></span><span class="cord cord-c"></span><span class="cord cord-d"></span><div class="tg-book tg-book-top"><span>POESÍA</span><b>Atlas de<br />las mareas</b></div><div class="tg-book tg-book-center"><span>FICCIÓN</span><b>La memoria<br />del agua</b></div><div class="tg-book tg-book-low"><span>ENSAYO</span><b>El peso de<br />las palabras</b></div><span class="node node-one"></span><span class="node node-two"></span><span class="node node-three"></span></div>
+                <div class="tg-side-note"><span>EDICIÓN</span><strong>02.01</strong><span>Inés Valera</span><b>$18,00</b><small>DISPONIBLE</small><a href="#inicio">DETALLE ↗</a></div>
+              </div><footer class="tg-footer"><span>ENCUENTRA UNA CATEGORÍA</span><span>FICCIÓN · ENSAYO · POESÍA · INFANTIL</span><span>01 / 04</span></footer>
+            </div>
+          </article>
+
+          <article class="concept-panel" id="panel-cape" role="tabpanel" aria-labelledby="tab-cape" tabindex="0" hidden>
+            <div class="concept-caption">
+              <div><p class="concept-kicker">04 / SISTEMA GRÁFICO</p><h2>El pliegue textil</h2></div>
+              <p>Una gran superficie de tela se recoge alrededor de la cubierta; el cordón dorado conduce entre identidad, búsqueda y lectura. La metáfora se mantiene en el campo visual, no cambia cómo funciona el catálogo.</p>
+              <div class="concept-tags"><span>Seda negra</span><span>Cordón dorado</span><span>Pliegues por capas</span></div>
+            </div>
+            <div class="storefront cape-home" aria-label="Composición ilustrativa de la página de inicio Pliegue textil">
+              <div class="cape-header"><a href="#inicio">PLIEGO</a><span>CATÁLOGO DE EDICIONES</span><nav>CATÁLOGO&nbsp;&nbsp; CATEGORÍAS</nav><a href="#inicio">ENTRAR ↗</a></div>
+              <div class="cape-scene"><div class="silk-form"><i class="silk-fold fold-one"></i><i class="silk-fold fold-two"></i><i class="silk-fold fold-three"></i><i class="gold-cord cord-one"></i><i class="gold-cord cord-two"></i><i class="gold-knot"></i><div class="cape-book"><small>INÉS VALERA</small><strong>La memoria<br />del agua</strong><span>EDICIÓN DE EJEMPLO</span></div></div>
+                <div class="cape-copy"><p>CATÁLOGO PÚBLICO</p><h3>Explora<br /><em>el catálogo.</em></h3><div class="search-illustration cape-search"><span>⌕</span> Buscar por título, autor o ISBN <b>↵</b></div><div class="cape-details"><span>EDICIÓN EN TAPA BLANDA</span><strong>$18,00</strong><b>DISPONIBLE</b><a href="#inicio">VER EDICIÓN ↗</a></div></div>
+              </div><div class="cape-footer"><span>FICCIÓN</span><span>ENSAYO</span><span>POESÍA</span><span>← RECORRE EL CATÁLOGO →</span></div>
+            </div>
+          </article>
+
+          <article class="concept-panel" id="panel-teletext" role="tabpanel" aria-labelledby="tab-teletext" tabindex="0" hidden>
+            <div class="concept-caption">
+              <div><p class="concept-kicker">05 / SISTEMA GRÁFICO</p><h2>Índice de teletexto</h2></div>
+              <p>Una retícula de emisión organiza el catálogo en renglones claros y compactos. Conserva el carácter cromático del teletexto, pero usa controles web normales y no inventa códigos, carruseles ni navegación inexistentes.</p>
+              <div class="concept-tags"><span>Cuadrícula 40 × 24</span><span>Negro y ocho colores</span><span>Texto primero</span></div>
+            </div>
+            <div class="storefront teletext-home" aria-label="Composición ilustrativa de la página de inicio Teletexto">
+              <div class="tt-top"><span>PLIEGO / ÍNDICE DEL CATÁLOGO</span><span>ES / EDICIONES</span></div>
+              <div class="tt-title"><span>LIBROS</span><strong>ENCUENTRA TU PRÓXIMA LECTURA</strong></div>
+              <div class="tt-search search-illustration"><span>⌕</span> BUSCAR POR TÍTULO, AUTOR O ISBN <b>↵</b></div>
+              <div class="tt-main"><aside class="tt-categories"><p>EXPLORAR</p><b>FICCIÓN</b><b>ENSAYO</b><b>POESÍA</b><b>INFANTIL</b><span>FILTROS</span><small>IDIOMA · FORMATO<br />PRECIO · CATEGORÍA</small></aside>
+                <div class="tt-list"><div class="tt-list-head"><span>EDICIONES / FICCIÓN</span><span>PRECIO</span><span>DISP.</span></div><div class="tt-row"><i>01</i><div><strong>La memoria del agua</strong><small>Inés Valera · Tapa blanda</small></div><b>$18,00</b><em>●</em></div><div class="tt-row"><i>02</i><div><strong>Atlas de las mareas</strong><small>Mateo Ríos · Tapa dura</small></div><b>$24,00</b><em>●</em></div><div class="tt-row"><i>03</i><div><strong>El peso de las palabras</strong><small>Lucía Navas · Ensayo</small></div><b>$16,00</b><em>●</em></div><div class="tt-pagination"><span>← ANTERIOR</span><b>PÁGINA 1</b><span>SIGUIENTE →</span></div></div>
+              </div><footer class="tt-footer"><span>PLIEGO · CATÁLOGO PÚBLICO</span><span>CONTENIDO DE MUESTRA</span><span>LECTURA CLARA / SIN PARPADEO</span></footer>
+            </div>
+          </article>
+
+          <article class="concept-panel" id="panel-darkroom" role="tabpanel" aria-labelledby="tab-darkroom" tabindex="0" hidden>
+            <div class="concept-caption">
+              <div><p class="concept-kicker">06 / SISTEMA GRÁFICO</p><h2>Registro de exposición</h2></div>
+              <p>Fichas y hojas traslúcidas convierten cada edición en una lectura de capas: cubierta, autoría, formato, precio y disponibilidad. La trama aporta densidad visual; nunca sustituye texto ni estado.</p>
+              <div class="concept-tags"><span>Rampa tonal</span><span>Papel traslúcido</span><span>Trama sin color</span></div>
+            </div>
+            <div class="storefront darkroom-home" aria-label="Composición ilustrativa de la página de inicio Registro de exposición">
+              <div class="dr-header"><a href="#inicio">PLIEGO<span> / LIBRERÍA</span></a><nav>CATÁLOGO&nbsp;&nbsp; FILTROS&nbsp;&nbsp; CATEGORÍAS</nav><a href="#inicio">CUENTA ↗</a></div>
+              <div class="dr-content"><div class="dr-lead"><p>HOJA 01 · EDICIONES PÚBLICAS</p><h3>Lee cada<br /><em>capa.</em></h3><div class="search-illustration dr-search"><span>⌕</span> Buscar por título, autor o ISBN <b>↵</b></div><div class="zone-ramp" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div><small>CATÁLOGO · AUTOR · EDICIÓN · DISPONIBILIDAD</small></div>
+                <div class="dr-sheets"><div class="dr-sheet sheet-back"><span>CAPA 01 / CUBIERTA</span><div class="dr-cover"><small>INÉS VALERA</small><b>La memoria<br />del agua</b><i></i></div></div><div class="dr-sheet sheet-front"><span>LECTURA DE EDICIÓN</span><h4>La memoria del agua</h4><p>Inés Valera · Tapa blanda</p><div class="dr-facts"><span>PRECIO <b>$18,00</b></span><span>DISPONIBILIDAD <b>Disponible</b></span></div><a href="#inicio">VER EDICIÓN ↗</a><div class="hatch hatch-a"></div><div class="hatch hatch-b"></div></div></div>
+              </div><footer class="dr-footer"><span>01 / 11 ZONAS</span><span>DATOS DE EJEMPLO · NO ES UNA FICHA REAL</span><span>HOJAS DESLIZAN; EL CONTENIDO NO DESAPARECE</span></footer>
+            </div>
+          </article>
+
+          <article class="concept-panel" id="panel-standard" role="tabpanel" aria-labelledby="tab-standard" tabindex="0">
+            <div class="concept-caption standard-caption">
+              <div><p class="concept-kicker">DIRECCIÓN APROBADA / VERSIÓN 1</p><h2>Catálogo familiar</h2></div>
+              <p>Una librería editorial con búsqueda al frente, categorías legibles y ediciones que muestran autoría, precio y disponibilidad. Esta es la dirección visual aprobada para el frontend.</p>
+              <div class="concept-tags"><span>Papel claro e tinta profunda</span><span>Cubiertas protagonistas</span><span>Catálogo claro</span></div>
+            </div>
+            <div class="storefront standard-home" aria-label="Composición ilustrativa de un catálogo de librería convencional">
+              <div class="std-notice"><span class="std-seal" aria-hidden="true">P</span><span>Librería en línea</span><span>Consulta el catálogo sin iniciar sesión</span></div>
+              <header class="std-header">
+                <a class="std-brand" href="#inicio" aria-label="PLIEGO, inicio"><span class="std-brand-mark" aria-hidden="true">P</span><span>PLIEGO<small>LIBRERÍA</small></span></a>
+                <div class="search-illustration std-search" role="img" aria-label="Campo ilustrativo de búsqueda por título, autor o ISBN"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.4"></circle><path d="m15.5 15.5 4.2 4.2"></path></svg><span>Buscar por título, autor o ISBN</span><kbd>Enter</kbd></div>
+                <nav class="std-account" aria-label="Acceso a cuenta"><a href="#inicio">Iniciar sesión</a><a class="std-register" href="#inicio">Crear cuenta</a></nav>
+              </header>
+              <nav class="std-nav" aria-label="Categorías de muestra"><a class="std-nav-current" href="#ediciones">Ver catálogo</a><a href="#ediciones">Ficción</a><a href="#ediciones">Ensayo</a><a href="#ediciones">Poesía</a><a href="#ediciones">Infantil</a><a class="std-nav-all" href="#ediciones">Todas las categorías <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h15M10 1l6 6-6 6"></path></svg></a></nav>
+              <section class="std-hero" aria-labelledby="std-hero-title">
+                <div class="std-hero-copy"><h3 id="std-hero-title">Explora<br /><em>el catálogo.</em></h3><p>Encuentra ediciones por título, autor, ISBN o categoría.</p><a class="std-hero-link" href="#ediciones">Ver todas las ediciones <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h15M10 1l6 6-6 6"></path></svg></a></div>
+                <div class="std-hero-art" role="img" aria-label="Portada tipográfica de muestra: Atlas de las mareas, de Mateo Ríos">
+                  <div class="std-feature-note"><span>PORTADA DE MUESTRA</span><span>CUBIERTA FICTICIA</span></div>
+                  <div class="std-feature-book"><span class="std-feature-author">MATEO RÍOS</span><span class="std-feature-orbit" aria-hidden="true"></span><strong>Atlas<br />de las<br />mareas</strong><span class="std-feature-imprint">PLIEGO · POESÍA</span></div>
+                  <span class="std-feature-caption">Cubierta ilustrativa · sin datos reales</span>
+                </div>
+              </section>
+              <section class="std-editions" id="ediciones" aria-labelledby="std-editions-title">
+                <div class="std-results-head"><div><h4 id="std-editions-title">Ediciones del catálogo</h4><p>Consulta el precio y la disponibilidad de cada edición.</p></div><div class="std-sort"><span>Ordenar</span><strong>Título (A–Z)<svg viewBox="0 0 12 8" aria-hidden="true"><path d="m1 1 5 5 5-5"></path></svg></strong></div></div>
+                <div class="std-products">
+                  <article class="std-product"><div class="std-cover std-cover-water" aria-hidden="true"><span>FICCIÓN</span><strong>La memoria<br />del agua</strong><i></i><small>INÉS VALERA</small></div><h5>La memoria del agua</h5><p>Inés Valera</p><div class="std-product-meta"><strong>USD 18.00</strong><span class="std-stock">Disponible</span></div><span class="std-product-link">Ver edición <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h15M10 1l6 6-6 6"></path></svg></span></article>
+                  <article class="std-product"><div class="std-cover std-cover-tide" aria-hidden="true"><span>POESÍA</span><strong>Atlas<br />de las mareas</strong><i></i><small>MATEO RÍOS</small></div><h5>Atlas de las mareas</h5><p>Mateo Ríos</p><div class="std-product-meta"><strong>USD 24.00</strong><span class="std-stock">Disponible</span></div><span class="std-product-link">Ver edición <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h15M10 1l6 6-6 6"></path></svg></span></article>
+                  <article class="std-product"><div class="std-cover std-cover-words" aria-hidden="true"><span>ENSAYO</span><strong>El peso de<br />las palabras</strong><i></i><small>LUCÍA NAVAS</small></div><h5>El peso de las palabras</h5><p>Lucía Navas</p><div class="std-product-meta"><strong>USD 16.00</strong><span class="std-stock">Disponible</span></div><span class="std-product-link">Ver edición <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h15M10 1l6 6-6 6"></path></svg></span></article>
+                  <article class="std-product"><div class="std-cover std-cover-garden" aria-hidden="true"><span>INFANTIL</span><strong>Jardín<br />interior</strong><i></i><small>EDITORIAL DEL SUR</small></div><h5>Jardín interior</h5><p>Mara Solís</p><div class="std-product-meta"><strong>USD 21.00</strong><span class="std-stock std-stock-empty">No disponible</span></div><span class="std-product-link">Ver edición <svg viewBox="0 0 18 14" aria-hidden="true"><path d="M1 7h15M10 1l6 6-6 6"></path></svg></span></article>
+                </div>
+              </section>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+    <footer class="lab-footer"><span>PLIEGO · DIRECCIÓN VISUAL</span><span>Los controles son ilustrativos · no se conecta al backend</span><span>Dirección aprobada: Catálogo familiar</span></footer>
+  </body>
+</html>

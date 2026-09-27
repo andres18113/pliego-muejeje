@@ -269,6 +269,21 @@ class CartApiIntegrationTest {
         assertTrue(gateway.calls.isEmpty());
     }
 
+    @Test
+    void openApiUsesTheDocumentedCartItemSchemaInsteadOfTheOrderItemSchema() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.components.schemas.Cart.properties.items.items['$ref']")
+                        .value("#/components/schemas/CartItem"))
+                .andExpect(jsonPath("$.components.schemas.Cart.properties.cartId.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.Cart.properties.state.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.cartItemId.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.currentPrice.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.available.type").value("boolean"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.coverUrl.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.unavailabilityReason.type[1]").value("null"));
+    }
+
     private DatabaseException databaseFailure(String state) {
         return exceptionTranslator.translate(new SQLException("private postgres SQL and constraint detail", state));
     }

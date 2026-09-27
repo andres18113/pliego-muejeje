@@ -42,6 +42,8 @@ import com.pliego.modules.catalog.application.CatalogEditionDetail.Publisher;
 import com.pliego.modules.catalog.application.CatalogEditionSummary;
 import com.pliego.modules.catalog.application.CatalogQuery;
 import com.pliego.modules.catalog.application.CatalogSearchPage;
+import com.pliego.modules.catalog.application.PublicCatalogCategory;
+import com.pliego.modules.catalog.application.PublicCatalogFilterOptions;
 import com.pliego.modules.catalog.gateway.CatalogGateway;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -61,18 +63,22 @@ import tools.jackson.databind.node.ObjectNode;
 @Import(CatalogApiIntegrationTest.CatalogTestConfiguration.class)
 class CatalogApiIntegrationTest {
 
+    private static final String CDN_COVER_URL =
+            "https://covers.pliegolibros.com/covers/editions/PLG-BK-000001.webp";
+
     private static final CatalogEditionSummary SUMMARY = new CatalogEditionSummary("250", "80",
             "Don Quijote de la Mancha", "Miguel de Cervantes", "Editorial Ejemplo", "9780306406157",
-            new BigDecimal("18.50"), "https://example.com/cover.jpg", "PUBLIC_DOMAIN", null,
+            new BigDecimal("18.50"), CDN_COVER_URL, null, null,
             "PAPERBACK", "es", true);
 
     private static final CatalogEditionDetail DETAIL = new CatalogEditionDetail("250", "80",
-            "Don Quijote de la Mancha", null, "Una novela clásica.",
+            "Don Quijote de la Mancha", null,
+            "Una novela clásica.",
             List.of(new Author("12", "Miguel de Cervantes", 1)),
             List.of(new Category("2", "Literatura", "literatura", null)),
             new Publisher("7", "Editorial Ejemplo"), "9780306406157", "PLG-LIT-001", "es",
             "PAPERBACK", 560, LocalDate.of(2024, 1, 1), new BigDecimal("18.50"),
-            "https://example.com/cover.jpg", "PUBLIC_DOMAIN", "https://example.com/source",
+            CDN_COVER_URL, null, null,
             null, true);
 
     @Autowired
@@ -100,6 +106,8 @@ class CatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].editionId").value("250"))
                 .andExpect(jsonPath("$.items[0].bookId").value("80"))
                 .andExpect(jsonPath("$.items[0].price").value("18.50"))
+                .andExpect(jsonPath("$.items[0].coverUrl").value(CDN_COVER_URL))
+                .andExpect(jsonPath("$.items[0].coverLicense").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.items[0].available").value(true))
                 .andReturn().getResponse().getContentAsString();
 
@@ -171,6 +179,63 @@ class CatalogApiIntegrationTest {
     }
 
     @Test
+    void inactiveCategoryReturnsTheExistingCategoryConflictProblem() throws Exception {
+        gateway.failure = gateway.translator.translate(new SQLException("private inactive category", "P2022"));
+
+        mvc.perform(get("/api/v1/catalog/editions").param("category", "literatura"))
+                .andExpect(status().isConflict())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.code").value("P2022"))
+                .andExpect(jsonPath("$.title").value("Categoría no disponible"))
+                .andExpect(jsonPath("$.detail").value("La categoría no está disponible para esta operación."));
+    }
+
+    @Test
+    void publicCategoryListIncludesOnlyContractFieldsAndHierarchy() throws Exception {
+        gateway.publicCategories = List.of(new PublicCatalogCategory("literatura", "Literatura", null),
+                new PublicCatalogCategory("novela", "Novela", "literatura"));
+
+        mvc.perform(get("/api/v1/catalog/categories"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.items[0].slug").value("literatura"))
+                .andExpect(jsonPath("$.items[0].name").value("Literatura"))
+                .andExpect(jsonPath("$.items[0].parentSlug").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.items[1].slug").value("novela"))
+                .andExpect(jsonPath("$.items[1].parentSlug").value("literatura"))
+                .andExpect(jsonPath("$.items[0].categoryId").doesNotExist())
+                .andExpect(jsonPath("$.items[0].state").doesNotExist());
+    }
+
+    @Test
+    void publicFilterOptionsReturnDatabaseLanguagesAndMoneyAsStrings() throws Exception {
+        gateway.publicFilterOptions = new PublicCatalogFilterOptions(List.of("en", "es"),
+                new BigDecimal("7.25"), new BigDecimal("38.00"));
+
+        mvc.perform(get("/api/v1/catalog/filter-options"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.languages[0]").value("en"))
+                .andExpect(jsonPath("$.languages[1]").value("es"))
+                .andExpect(jsonPath("$.minimumPrice").value("7.25"))
+                .andExpect(jsonPath("$.maximumPrice").value("38.00"));
+    }
+
+    @Test
+    void generatedOpenApiIncludesPublicCategoryDiscoveryAndFilterConflict() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.paths['/api/v1/catalog/categories'].get.summary")
+                        .value("Listar categorías del catálogo público"))
+                .andExpect(jsonPath("$.paths['/api/v1/catalog/filter-options'].get.summary")
+                        .value("Consultar opciones de filtros del catálogo público"))
+                .andExpect(jsonPath("$.paths['/api/v1/catalog/editions'].get.responses['200'].content['application/json'].schema.$ref")
+                        .value("#/components/schemas/CatalogEditionSearchResponse"))
+                .andExpect(jsonPath("$.paths['/api/v1/catalog/editions'].get.responses['409']")
+                        .exists());
+    }
+
+    @Test
     void invalidSortAndFiltersReturnSpanishValidationProblems() throws Exception {
         assertInvalidFilter("sort", "RECENT");
         assertInvalidFilter("isbn13", "978030640615X");
@@ -209,6 +274,7 @@ class CatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.bookId").value("80"))
                 .andExpect(jsonPath("$.title").value("Don Quijote de la Mancha"))
                 .andExpect(jsonPath("$.subtitle").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.synopsis").value("Una novela clásica."))
                 .andExpect(jsonPath("$.authors[0].authorId").value("12"))
                 .andExpect(jsonPath("$.authors[0].order").value(1))
                 .andExpect(jsonPath("$.categories[0].categoryId").value("2"))
@@ -219,6 +285,9 @@ class CatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.pageCount").value(560))
                 .andExpect(jsonPath("$.publicationDate").value("2024-01-01"))
                 .andExpect(jsonPath("$.price").value("18.50"))
+                .andExpect(jsonPath("$.coverUrl").value(CDN_COVER_URL))
+                .andExpect(jsonPath("$.coverLicense").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.coverSourceUrl").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.available").value(true))
                 .andReturn().getResponse().getContentAsString();
 
@@ -279,6 +348,7 @@ class CatalogApiIntegrationTest {
         FakeCatalogGateway catalogGateway(DatabaseExceptionTranslator translator) {
             return new FakeCatalogGateway(translator);
         }
+
     }
 
     static class FakeCatalogGateway implements CatalogGateway {
@@ -286,6 +356,8 @@ class CatalogApiIntegrationTest {
         private CatalogQuery lastQuery;
         private long lastEditionId;
         private CatalogSearchPage searchPage = new CatalogSearchPage(List.of(SUMMARY), 1);
+        private List<PublicCatalogCategory> publicCategories = List.of();
+        private PublicCatalogFilterOptions publicFilterOptions = new PublicCatalogFilterOptions(List.of(), null, null);
         private Optional<CatalogEditionDetail> publicEdition = Optional.empty();
         private DatabaseException failure;
 
@@ -297,6 +369,8 @@ class CatalogApiIntegrationTest {
             lastQuery = null;
             lastEditionId = 0;
             searchPage = new CatalogSearchPage(List.of(SUMMARY), 1);
+            publicCategories = List.of();
+            publicFilterOptions = new PublicCatalogFilterOptions(List.of(), null, null);
             publicEdition = Optional.empty();
             failure = null;
         }
@@ -306,6 +380,18 @@ class CatalogApiIntegrationTest {
             lastQuery = query;
             if (failure != null) throw failure;
             return searchPage;
+        }
+
+        @Override
+        public List<PublicCatalogCategory> findPublicCategories() {
+            if (failure != null) throw failure;
+            return publicCategories;
+        }
+
+        @Override
+        public PublicCatalogFilterOptions findPublicFilterOptions() {
+            if (failure != null) throw failure;
+            return publicFilterOptions;
         }
 
         @Override

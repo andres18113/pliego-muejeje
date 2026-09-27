@@ -1,0 +1,784 @@
+{
+  "schema": "PLIEGO literatura staging v1",
+  "notas": [
+    "Los campos libro y edicion siguen la separación conceptual de PLIEGO.",
+    "anioPublicacion es un campo de staging para conservar el año cuando no hay una fecha exacta verificable; no debe enviarse al DTO si este no lo admite.",
+    "fechaPublicacion solo se completa cuando se dispone de una fecha exacta razonablemente verificable.",
+    "precio e inventarioInicial quedan en null porque son decisiones comerciales de PLIEGO, no metadatos bibliográficos.",
+    "Los SKU LIT-001 a LIT-022 son identificadores internos propuestos y pueden utilizarse tal cual si no colisionan con datos existentes.",
+    "portadaArchivo corresponde a los nombres de los 22 WEBP locales proporcionados por el usuario.",
+    "La licencia y atribución de las portadas no se inventan; deben completarse según la procedencia real de cada imagen."
+  ],
+  "libros": [
+    {
+      "portadaArchivo": "anna-karenina.webp",
+      "libro": {
+        "titulo": "Anna Karénina",
+        "subtitulo": null,
+        "sinopsis": "Anna Karénina vive atrapada entre las convenciones de la aristocracia rusa y un amor que transforma su vida.\nSu relación con el conde Vronski la enfrenta a su familia, a la sociedad y a sus propias contradicciones.\nEn paralelo, la historia de Levin explora otras formas de amor, familia, fe y búsqueda de sentido.",
+        "autores": [
+          {
+            "nombre": "Lev Tolstói",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Salamandra",
+        "isbn13": "9788478883608",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 992,
+        "anioPublicacion": 1997,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-001",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "cien-anos-de-soledad.webp",
+      "libro": {
+        "titulo": "Cien años de soledad",
+        "subtitulo": null,
+        "sinopsis": "La novela sigue a varias generaciones de la familia Buendía en el pueblo ficticio de Macondo.\nAmores, guerras, descubrimientos y tragedias se repiten mientras pasado y presente parecen confundirse.\nLa historia combina lo cotidiano con lo extraordinario para explorar la memoria, el destino y la soledad.",
+        "autores": [
+          {
+            "nombre": "Gabriel García Márquez",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Debolsillo",
+        "isbn13": "9786287745131",
+        "idioma": "es",
+        "formato": "TAPA_DURA",
+        "paginas": 496,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-002",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "crimen-y-castigo.webp",
+      "libro": {
+        "titulo": "Crimen y castigo",
+        "subtitulo": null,
+        "sinopsis": "Rodión Raskólnikov, un joven empobrecido de San Petersburgo, comete un asesinato convencido de poder justificarlo racionalmente.\nLa culpa y la presión de la investigación comienzan a quebrar sus certezas.\nSu relación con Sonia abre un camino de confrontación moral, sufrimiento y posible redención.",
+        "autores": [
+          {
+            "nombre": "Fiódor Dostoyevski",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788490747681",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 670,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-003",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "cronica-de-una-muerte-anunciada.webp",
+      "libro": {
+        "titulo": "Crónica de una muerte anunciada",
+        "subtitulo": null,
+        "sinopsis": "Todo un pueblo sabe que Santiago Nasar va a ser asesinado, pero nadie consigue impedirlo.\nAños después, el narrador reconstruye las horas previas al crimen y las contradicciones de quienes fueron testigos.\nLa novela examina el honor, la fatalidad y la responsabilidad colectiva.",
+        "autores": [
+          {
+            "nombre": "Gabriel García Márquez",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Debolsillo",
+        "isbn13": "9788497592437",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 144,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-004",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "don-quijote.webp",
+      "libro": {
+        "titulo": "Don Quijote de la Mancha",
+        "subtitulo": null,
+        "sinopsis": "Alonso Quijano, fascinado por los libros de caballerías, decide convertirse en el caballero Don Quijote.\nJunto a Sancho Panza recorre caminos en los que sus ideales chocan continuamente con la realidad.\nLa obra combina aventura, humor y reflexión sobre la imaginación, la libertad y la identidad.",
+        "autores": [
+          {
+            "nombre": "Miguel de Cervantes",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Rialp",
+        "isbn13": "9788432172281",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 238,
+        "anioPublicacion": 2025,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-005",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "el-amor-en-tiempos-de-colera.webp",
+      "libro": {
+        "titulo": "El amor en los tiempos del cólera",
+        "subtitulo": null,
+        "sinopsis": "Florentino Ariza se enamora de Fermina Daza y mantiene ese sentimiento durante décadas, incluso cuando sus vidas toman caminos distintos.\nEl paso del tiempo transforma a los personajes, sus afectos y la idea misma del amor.\nLa novela explora la espera, la memoria, la vejez y la persistencia de los vínculos.",
+        "autores": [
+          {
+            "nombre": "Gabriel García Márquez",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Debolsillo",
+        "isbn13": "9788466378581",
+        "idioma": "es",
+        "formato": "TAPA_DURA",
+        "paginas": 496,
+        "anioPublicacion": 2025,
+        "fechaPublicacion": "2025-11-12",
+        "precio": null,
+        "sku": "LIT-006",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "el-extranjero.webp",
+      "libro": {
+        "titulo": "El extranjero",
+        "subtitulo": null,
+        "sinopsis": "Meursault vive con una marcada indiferencia frente a las expectativas emocionales y sociales de quienes lo rodean.\nTras cometer un homicidio, su juicio termina evaluando tanto su conducta personal como el propio crimen.\nLa novela plantea la extrañeza ante el mundo, el absurdo y la búsqueda de sentido.",
+        "autores": [
+          {
+            "nombre": "Albert Camus",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Booket",
+        "isbn13": "9786070738548",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 160,
+        "anioPublicacion": 2018,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-007",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "el-gran-gatsby.webp",
+      "libro": {
+        "titulo": "El gran Gatsby",
+        "subtitulo": null,
+        "sinopsis": "Nick Carraway llega a Long Island y conoce al enigmático Jay Gatsby, famoso por sus grandes fiestas.\nDetrás de su riqueza se encuentra una obsesión por recuperar una relación del pasado con Daisy Buchanan.\nLa historia cuestiona el éxito, el deseo, las apariencias y la promesa del sueño americano.",
+        "autores": [
+          {
+            "nombre": "F. Scott Fitzgerald",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Adapta Editorial S.L.",
+        "isbn13": "9788419190123",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 172,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": "2023-02-14",
+        "precio": null,
+        "sku": "LIT-008",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "el-mito-de-sisifo.webp",
+      "libro": {
+        "titulo": "El mito de Sísifo",
+        "subtitulo": null,
+        "sinopsis": "Camus parte de una pregunta radical: cómo vivir cuando el ser humano busca sentido en un mundo que no ofrece respuestas definitivas.\nA partir de esa tensión desarrolla su idea del absurdo y rechaza las salidas que eliminan el problema.\nEl ensayo propone la lucidez, la libertad y la rebelión como formas de afrontar la existencia.",
+        "autores": [
+          {
+            "nombre": "Albert Camus",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Literatura Random House",
+        "isbn13": "9789585581685",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 160,
+        "anioPublicacion": 2021,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-009",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "el-retrato-de-dorian-gray.webp",
+      "libro": {
+        "titulo": "El retrato de Dorian Gray",
+        "subtitulo": null,
+        "sinopsis": "Dorian Gray desea conservar para siempre su juventud mientras un retrato suyo carga con las marcas del tiempo y de sus actos.\nLibre de consecuencias visibles, se entrega a una vida de placer y creciente degradación moral.\nLa novela examina la belleza, la vanidad, la influencia y el precio de una vida sin responsabilidad.",
+        "autores": [
+          {
+            "nombre": "Oscar Wilde",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Rosetta Edu",
+        "isbn13": "9781915088406",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 195,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-010",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "ficciones.webp",
+      "libro": {
+        "titulo": "Ficciones",
+        "subtitulo": null,
+        "sinopsis": "Esta colección reúne relatos donde bibliotecas, laberintos, espejos, libros imaginarios y mundos posibles alteran la percepción de la realidad.\nBorges convierte ideas filosóficas y literarias en tramas precisas, fantásticas y a veces policiales.\nLos cuentos exploran el infinito, la identidad, el tiempo y los límites entre ficción y conocimiento.",
+        "autores": [
+          {
+            "nombre": "Jorge Luis Borges",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Debolsillo",
+        "isbn13": "9789875666474",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 224,
+        "anioPublicacion": 2011,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-011",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "la-casa-de-los-espiritus.webp",
+      "libro": {
+        "titulo": "La casa de los espíritus",
+        "subtitulo": null,
+        "sinopsis": "La historia sigue a varias generaciones de la familia Trueba y entrelaza sus conflictos íntimos con profundas transformaciones sociales.\nAmores, rencores, recuerdos y elementos sobrenaturales acompañan el ascenso y la fractura de la familia.\nLa novela explora el poder, la memoria, la violencia y la capacidad de reconstruir el pasado.",
+        "autores": [
+          {
+            "nombre": "Isabel Allende",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Debolsillo",
+        "isbn13": "9788466362085",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 460,
+        "anioPublicacion": 2025,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-012",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "la-ciudad-y-los-perros.webp",
+      "libro": {
+        "titulo": "La ciudad y los perros",
+        "subtitulo": null,
+        "sinopsis": "Un grupo de cadetes del Colegio Militar Leoncio Prado aprende a sobrevivir dentro de una disciplina marcada por la violencia y las jerarquías.\nUn robo y sus consecuencias revelan lealtades, abusos y silencios dentro de la institución.\nLa novela cuestiona la brutalidad, las ideas rígidas de masculinidad y los mecanismos de poder.",
+        "autores": [
+          {
+            "nombre": "Mario Vargas Llosa",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alfaguara",
+        "isbn13": "9786125020727",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 488,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-013",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "la-iliada.webp",
+      "libro": {
+        "titulo": "La Ilíada",
+        "subtitulo": null,
+        "sinopsis": "En los últimos episodios de la guerra de Troya, la cólera de Aquiles altera el destino de griegos y troyanos.\nEl enfrentamiento entre orgullo, honor y deber desencadena pérdidas que afectan tanto a héroes como a familias.\nEl poema épico reflexiona sobre la gloria, la mortalidad, el destino y el costo humano de la guerra.",
+        "autores": [
+          {
+            "nombre": "Homero",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788413372945",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 492,
+        "anioPublicacion": 2021,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-014",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "los-miserables.webp",
+      "libro": {
+        "titulo": "Los miserables",
+        "subtitulo": null,
+        "sinopsis": "Jean Valjean intenta reconstruir su vida después de años de prisión, pero el inspector Javert continúa persiguiéndolo.\nSu historia se cruza con personajes marcados por la pobreza, la injusticia y los conflictos de la Francia del siglo XIX.\nLa novela contrapone ley y compasión mientras explora redención, dignidad y responsabilidad social.",
+        "autores": [
+          {
+            "nombre": "Victor Hugo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Plutón Ediciones",
+        "isbn13": "9791387692865",
+        "idioma": "es",
+        "formato": "TAPA_DURA",
+        "paginas": 1296,
+        "anioPublicacion": 2025,
+        "fechaPublicacion": "2025-10-10",
+        "precio": null,
+        "sku": "LIT-015",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "madame-bovary.webp",
+      "libro": {
+        "titulo": "Madame Bovary",
+        "subtitulo": null,
+        "sinopsis": "Emma Bovary se siente atrapada en una vida provincial que no coincide con las expectativas románticas que ha construido.\nBusca escapar mediante relaciones amorosas, consumo y fantasías de una existencia más intensa.\nLa distancia entre deseo y realidad la conduce a una espiral de deudas, frustración y consecuencias trágicas.",
+        "autores": [
+          {
+            "nombre": "Gustave Flaubert",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ardea",
+        "isbn13": "9788410011045",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 326,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": "2024-06-15",
+        "precio": null,
+        "sku": "LIT-016",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "moby-dick.webp",
+      "libro": {
+        "titulo": "Moby Dick",
+        "subtitulo": null,
+        "sinopsis": "Ishmael se embarca en el Pequod, un ballenero comandado por el capitán Ahab.\nPronto descubre que el verdadero objetivo del viaje es perseguir a Moby Dick, la gran ballena blanca que obsesiona a Ahab.\nLa travesía convierte esa cacería en una reflexión sobre obsesión, destino, naturaleza y límites humanos.",
+        "autores": [
+          {
+            "nombre": "Herman Melville",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788413373836",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 588,
+        "anioPublicacion": 2021,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-017",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "orgullo-y-prejuicio.webp",
+      "libro": {
+        "titulo": "Orgullo y prejuicio",
+        "subtitulo": null,
+        "sinopsis": "Elizabeth Bennet y Fitzwilliam Darcy se conocen bajo prejuicios, diferencias sociales y primeras impresiones poco favorables.\nSus encuentros obligan a ambos a revisar lo que creen saber sobre el otro y sobre sí mismos.\nLa novela combina romance, ironía y crítica social alrededor de la familia, el matrimonio y las clases sociales.",
+        "autores": [
+          {
+            "nombre": "Jane Austen",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Austral",
+        "isbn13": "9788467070835",
+        "idioma": "es",
+        "formato": "TAPA_DURA",
+        "paginas": 384,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": "2023-09-13",
+        "precio": null,
+        "sku": "LIT-018",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "pedro-paramo.webp",
+      "libro": {
+        "titulo": "Pedro Páramo",
+        "subtitulo": null,
+        "sinopsis": "Juan Preciado llega a Comala para buscar a su padre, Pedro Páramo, cumpliendo una promesa hecha a su madre.\nEl pueblo parece vacío, pero pronto se llena de voces, recuerdos y muertos que reconstruyen una historia fragmentada.\nLa novela explora el poder, la culpa, la memoria y la frontera incierta entre vida y muerte.",
+        "autores": [
+          {
+            "nombre": "Juan Rulfo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "RM",
+        "isbn13": "9788493442606",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 132,
+        "anioPublicacion": 2005,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-019",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "rayuela.webp",
+      "libro": {
+        "titulo": "Rayuela",
+        "subtitulo": null,
+        "sinopsis": "Horacio Oliveira recorre París y Buenos Aires mientras intenta comprender su relación con la Maga y su propio lugar en el mundo.\nLa novela permite distintas rutas de lectura y rompe deliberadamente con una estructura lineal tradicional.\nEntre conversaciones, pérdidas y búsquedas, explora el amor, el lenguaje, el azar y la necesidad de encontrar sentido.",
+        "autores": [
+          {
+            "nombre": "Julio Cortázar",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alfaguara",
+        "isbn13": "9788420414706",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 632,
+        "anioPublicacion": 2013,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-020",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "romeo-y-julieta.webp",
+      "libro": {
+        "titulo": "Romeo y Julieta",
+        "subtitulo": null,
+        "sinopsis": "Romeo Montesco y Julieta Capuleto se enamoran pese a la enemistad que enfrenta a sus familias.\nLa pareja intenta mantener su relación en secreto mientras la violencia entre ambos bandos continúa creciendo.\nUna cadena de decisiones apresuradas y malentendidos conduce la historia hacia su desenlace trágico.",
+        "autores": [
+          {
+            "nombre": "William Shakespeare",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788490743720",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 144,
+        "anioPublicacion": 2016,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-021",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "soldados-de-salamina.webp",
+      "libro": {
+        "titulo": "Soldados de Salamina",
+        "subtitulo": null,
+        "sinopsis": "Un escritor investiga un episodio de la Guerra Civil española relacionado con Rafael Sánchez Mazas y su fallida ejecución.\nLa búsqueda se concentra en el soldado republicano que pudo matarlo, pero decidió dejarlo vivir.\nLa novela mezcla investigación, memoria y ficción para reflexionar sobre el heroísmo y la manera en que se construyen los relatos del pasado.",
+        "autores": [
+          {
+            "nombre": "Javier Cercas",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Debolsillo",
+        "isbn13": "9788466388627",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 224,
+        "anioPublicacion": 2025,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "LIT-022",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    }
+  ]
+}

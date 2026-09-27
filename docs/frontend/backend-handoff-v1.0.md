@@ -1,6 +1,6 @@
 # PLIEGO Backend Handoff v1.0
 
-Practical starting point for the frontend UX and screen architecture. The executable API reference is the generated OpenAPI document at `/v3/api-docs` and Swagger UI at `/swagger-ui/index.html` on a running backend; the approved [REST contract](../../rest-api-contract-v1.0.md) provides the stable v1 contract. The backend serves 50 REST endpoints.
+Practical starting point for the frontend UX and screen architecture. The executable API reference is the generated OpenAPI document at `/v3/api-docs` and Swagger UI at `/swagger-ui/index.html` on a running backend; the approved [REST contract](../../rest-api-contract-v1.0.md) provides the stable v1 contract. The backend serves 52 REST endpoints.
 
 ## Architecture
 

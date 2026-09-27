@@ -167,8 +167,10 @@ def main():
     status, _, publisher = request("/api/v1/admin/publishers", admin, method="POST", body={
         "name": f"Editorial Journey {suffix}", "description": None})
     assert status == 201, (status, publisher)
+    category_name = f"Categoría Journey {suffix}"
+    category_slug = f"i12-journey-{suffix}"
     status, _, category = request("/api/v1/admin/categories", admin, method="POST", body={
-        "name": f"Categoría Journey {suffix}", "slug": f"i12-journey-{suffix}",
+        "name": category_name, "slug": category_slug,
         "description": None, "parentCategoryId": None})
     assert status == 201, (status, category)
     status, _, book = request("/api/v1/admin/books", admin, method="POST", body={
@@ -184,6 +186,9 @@ def main():
         "coverSourceUrl": None, "coverAttribution": None})
     assert status == 201, (status, edition)
     edition_id = edition["editionId"]
+    status, _, categories = request("/api/v1/catalog/categories")
+    assert status == 200, (status, categories)
+    assert {"slug": category_slug, "name": category_name, "parentSlug": None} in categories["items"], categories
     status, _, none = request(f"/api/v1/admin/books/{book['bookId']}", admin, method="PUT", body={
         "title": f"Libro Journey {suffix}", "subtitle": "Segunda edición en camino", "synopsis": None,
         "authors": [{"authorId": author["authorId"], "order": 1}],

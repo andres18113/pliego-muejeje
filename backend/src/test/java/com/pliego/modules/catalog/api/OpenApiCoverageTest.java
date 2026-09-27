@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
  * Guards REST/OpenAPI contract consistency: every endpoint method carries an
@@ -56,7 +57,8 @@ class OpenApiCoverageTest {
                 }
             }
         }
-        assertThat(endpoints).as("approved REST total (50 endpoints)").isEqualTo(50);
+        assertThat(endpoints).as("REST total including public catalog category and filter-options routes")
+                .isEqualTo(52);
     }
 
     @Test
@@ -79,5 +81,13 @@ class OpenApiCoverageTest {
                 assertThat(secured).as("%s must require bearerJwt", name).isTrue();
             }
         }
+    }
+
+    @Test
+    void cartItemsUseTheirOwnOpenApiSchemaName() {
+        Schema schema = com.pliego.modules.cart.api.CartResponses.Item.class.getAnnotation(Schema.class);
+
+        assertThat(schema).isNotNull();
+        assertThat(schema.name()).isEqualTo("CartItem");
     }
 }

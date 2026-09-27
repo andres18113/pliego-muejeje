@@ -22,6 +22,8 @@ import com.pliego.modules.catalog.application.CatalogEditionDetail.Publisher;
 import com.pliego.modules.catalog.application.CatalogEditionSummary;
 import com.pliego.modules.catalog.application.CatalogQuery;
 import com.pliego.modules.catalog.application.CatalogSearchPage;
+import com.pliego.modules.catalog.application.PublicCatalogCategory;
+import com.pliego.modules.catalog.application.PublicCatalogFilterOptions;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -38,6 +40,10 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
             + "publisher_name, btrim(isbn13::text) AS isbn13, sku, language, format, page_count, publication_date, "
             + "price, cover_url, cover_license, cover_source_url, cover_attribution, available "
             + "FROM pliego.fn_edition_detail(?)";
+    private static final String PUBLIC_CATEGORY_LIST_QUERY = "SELECT category_slug, category_name, "
+            + "parent_category_slug FROM pliego.fn_public_category_list()";
+    private static final String PUBLIC_FILTER_OPTIONS_QUERY = "SELECT language_code, minimum_price, maximum_price "
+            + "FROM pliego.fn_public_catalog_filter_options()";
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
@@ -65,6 +71,31 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                 totalCount = 0;
             }
             return new CatalogSearchPage(rows.stream().map(CatalogSearchRow::edition).toList(), totalCount);
+        });
+    }
+
+    @Override
+    public List<PublicCatalogCategory> findPublicCategories() {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.query(PUBLIC_CATEGORY_LIST_QUERY,
+                (results, rowNumber) -> new PublicCatalogCategory(results.getString("category_slug"),
+                        results.getString("category_name"), results.getString("parent_category_slug"))));
+    }
+
+    @Override
+    public PublicCatalogFilterOptions findPublicFilterOptions() {
+        return withDatabaseErrorTranslation(() -> {
+            List<PublicCatalogFilterOptionRow> rows = jdbcTemplate.query(PUBLIC_FILTER_OPTIONS_QUERY,
+                    (results, rowNumber) -> new PublicCatalogFilterOptionRow(results.getString("language_code"),
+                            results.getBigDecimal("minimum_price"), results.getBigDecimal("maximum_price")));
+            if (rows.isEmpty()) return new PublicCatalogFilterOptions(List.of(), null, null);
+
+            PublicCatalogFilterOptionRow bounds = rows.getFirst();
+            List<String> languages = rows.stream()
+                    .map(PublicCatalogFilterOptionRow::languageCode)
+                    .filter(java.util.Objects::nonNull)
+                    .distinct()
+                    .toList();
+            return new PublicCatalogFilterOptions(languages, bounds.minimumPrice(), bounds.maximumPrice());
         });
     }
 
@@ -167,5 +198,9 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
     }
 
     private record CatalogSearchRow(CatalogEditionSummary edition, long totalCount) {
+    }
+
+    private record PublicCatalogFilterOptionRow(String languageCode, BigDecimal minimumPrice,
+            BigDecimal maximumPrice) {
     }
 }

@@ -20,6 +20,7 @@ import com.pliego.modules.catalog.application.CatalogEditionSummary;
 import com.pliego.modules.catalog.application.CatalogQuery;
 import com.pliego.modules.catalog.application.CatalogSearchPage;
 import com.pliego.modules.catalog.application.CatalogService;
+import com.pliego.modules.catalog.application.PublicCatalogFilterOptions;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -35,8 +36,8 @@ import jakarta.validation.constraints.Size;
 
 @Validated
 @RestController
-@RequestMapping(path = "/api/v1/catalog/editions", produces = MediaType.APPLICATION_JSON_VALUE)
-@Tag(name = "Catálogo público", description = "Búsqueda pública de ediciones y consulta de su detalle.")
+@RequestMapping(path = "/api/v1/catalog", produces = MediaType.APPLICATION_JSON_VALUE)
+@Tag(name = "Catálogo público", description = "Navegación de categorías y búsqueda/consulta de ediciones públicas.")
 public class CatalogController {
 
     private static final DateTimeFormatter CONTRACT_DATE = DateTimeFormatter.ISO_LOCAL_DATE;
@@ -48,10 +49,13 @@ public class CatalogController {
         this.catalogService = catalogService;
     }
 
-    @GetMapping
-    @Operation(summary = "Buscar ediciones publicables", description = "Filtra y pagina el catálogo público.")
-    @ApiResponse(responseCode = "200", description = "Página del catálogo", content = @Content(schema = @Schema(implementation = PageResponse.class)))
+    @GetMapping("/editions")
+    @Operation(summary = "Buscar ediciones publicables", description = "Filtra y pagina el catálogo público. "
+            + "Un slug de categoría desconocido devuelve una página vacía; una categoría inactiva devuelve 409.")
+    @ApiResponse(responseCode = "200", description = "Página del catálogo",
+            content = @Content(schema = @Schema(implementation = CatalogEditionSearchResponse.class)))
     @ApiResponse(responseCode = "400", description = "Filtros inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "409", description = "La categoría está inactiva", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public PageResponse<CatalogEditionSummaryResponse> search(
             @Parameter(description = "Texto parcial del título") @RequestParam(required = false) String title,
             @Parameter(description = "Texto parcial del autor") @RequestParam(required = false) String author,
@@ -72,12 +76,36 @@ public class CatalogController {
         return new PageResponse<>(items, page, pageSize, Long.toString(result.totalCount()));
     }
 
-    @GetMapping("/{editionId}")
+    @GetMapping("/editions/{editionId}")
     @Operation(summary = "Consultar una edición publicable")
     @ApiResponse(responseCode = "200", description = "Detalle de la edición", content = @Content(schema = @Schema(implementation = CatalogEditionDetailResponse.class)))
     @ApiResponse(responseCode = "404", description = "Edición no disponible", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public CatalogEditionDetailResponse getEdition(@PathVariable @Positive long editionId) {
         return toDetailResponse(catalogService.getPublicEdition(editionId));
+    }
+
+    @GetMapping("/categories")
+    @Operation(summary = "Listar categorías del catálogo público",
+            description = "Devuelve categorías activas con ediciones publicables y su jerarquía de hasta dos niveles.")
+    @ApiResponse(responseCode = "200", description = "Categorías disponibles para navegar el catálogo",
+            content = @Content(schema = @Schema(implementation = CatalogCategoryListResponse.class)))
+    public CatalogCategoryListResponse listCategories() {
+        return new CatalogCategoryListResponse(catalogService.listPublicCategories().stream()
+                .map(category -> new CatalogCategoryListResponse.Category(category.slug(), category.name(),
+                        category.parentSlug()))
+                .toList());
+    }
+
+    @GetMapping("/filter-options")
+    @Operation(summary = "Consultar opciones de filtros del catálogo público",
+            description = "Devuelve los idiomas y límites de precio de las ediciones publicables actuales.")
+    @ApiResponse(responseCode = "200", description = "Opciones disponibles para los filtros del catálogo",
+            content = @Content(schema = @Schema(implementation = PublicCatalogFilterOptionsResponse.class)))
+    public PublicCatalogFilterOptionsResponse filterOptions() {
+        PublicCatalogFilterOptions options = catalogService.getPublicFilterOptions();
+        return new PublicCatalogFilterOptionsResponse(options.languages(),
+                options.minimumPrice() == null ? null : money(options.minimumPrice()),
+                options.maximumPrice() == null ? null : money(options.maximumPrice()));
     }
 
     private static CatalogEditionSummaryResponse toSummaryResponse(CatalogEditionSummary edition) {
@@ -89,7 +117,8 @@ public class CatalogController {
 
     private static CatalogEditionDetailResponse toDetailResponse(CatalogEditionDetail edition) {
         return new CatalogEditionDetailResponse(edition.editionId(), edition.bookId(), edition.title(),
-                edition.subtitle(), edition.synopsis(), edition.authors().stream()
+                edition.subtitle(), edition.synopsis(),
+                edition.authors().stream()
                         .map(author -> new CatalogEditionDetailResponse.Author(author.authorId(), author.name(),
                                 author.order())).toList(),
                 edition.categories().stream()

@@ -2,16 +2,21 @@ package com.pliego.modules.cart.api;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 /** REST representations for customer cart reads and mutations. */
 public final class CartResponses {
 
     private CartResponses() { }
 
-    public record Cart(String cartId, String state, List<Item> items, String totalCurrent) { }
+    public record Cart(@Schema(nullable = true) String cartId, @Schema(nullable = true) String state,
+            List<Item> items, String totalCurrent) { }
 
+    @Schema(name = "CartItem")
     public record Item(String cartItemId, String editionId, String title, String authors, String sku,
-            String coverUrl, int quantity, String currentPrice, String currentSubtotal, boolean available,
-            String unavailabilityReason) { }
+            @Schema(nullable = true) String coverUrl,
+            int quantity, String currentPrice, String currentSubtotal,
+            boolean available, @Schema(nullable = true) String unavailabilityReason) { }
 
     public record ItemMutation(String cartId, String cartItemId, int quantity) { }
 }

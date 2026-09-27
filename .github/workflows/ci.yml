@@ -1,4 +1,4 @@
-name: Backend CI
+name: PLIEGO CI
 
 on:
   push:
@@ -10,6 +10,34 @@ permissions:
   contents: read
 
 jobs:
+  frontend:
+    name: Frontend quality gates
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Set up Node.js 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install frontend dependencies
+        run: npm ci
+      - name: Typecheck frontend
+        run: npm run typecheck
+      - name: Build frontend
+        run: npm run build
+      - name: Run Vitest
+        run: npm run test
+      - name: Install Playwright Chromium and system dependencies
+        run: npx playwright install --with-deps chromium
+      - name: Run Playwright
+        run: npm run test:e2e
+
   maven-verify:
     name: Maven and PostgreSQL 18 verification
     runs-on: ubuntu-latest

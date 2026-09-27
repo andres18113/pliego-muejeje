@@ -1,0 +1,533 @@
+{
+  "schema": "PLIEGO filosofia staging v1",
+  "notas": [
+    "Los registros están separados en libro y edicion para ajustarse al modelo conceptual de PLIEGO.",
+    "categoria normalizada: Filosofía.",
+    "idioma normalizado: es.",
+    "formato normalizado a RUSTICA o TAPA_DURA.",
+    "anioPublicacion es un campo de staging para conservar el año cuando el DTO final solo acepte fechaPublicacion.",
+    "precio e inventarioInicial quedan en null porque son decisiones comerciales de PLIEGO.",
+    "Los SKU FIL-001 a FIL-014 son identificadores internos propuestos; comprobar colisiones antes de insertarlos.",
+    "portadaArchivo corresponde a los 14 WEBP locales listados por el usuario.",
+    "La licencia y la atribución de cada portada quedan en null hasta documentar su procedencia real.",
+    "Las observacionesStaging no forman parte del contrato público; sirven para revisar excepciones antes de transformar este archivo a seed definitivo."
+  ],
+  "libros": [
+    {
+      "portadaArchivo": "apologia-de-socrates.webp",
+      "libro": {
+        "titulo": "Apología de Sócrates",
+        "subtitulo": null,
+        "sinopsis": "Platón reconstruye la defensa de Sócrates ante el tribunal ateniense que lo acusa de corromper a los jóvenes y de impiedad.\nSócrates explica el sentido de su actividad filosófica y sostiene que una vida sin examen no merece ser vivida.\nLa obra presenta una defensa de la conciencia, la verdad y la coherencia moral frente a la presión social.",
+        "autores": [
+          {
+            "nombre": "Platón",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Universitaria de Chile",
+        "isbn13": "9789561120785",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 140,
+        "anioPublicacion": 2015,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "PLG-BK-000042",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000042.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El autor de la obra es Platón. Alejandro G. Vigo corresponde a la edición/traducción/estudio y no se modela como autor en el contrato actual."
+      ]
+    },
+    {
+      "portadaArchivo": "asi-hablo-zaratustra.webp",
+      "libro": {
+        "titulo": "Así habló Zaratustra",
+        "subtitulo": null,
+        "sinopsis": "Zaratustra abandona su retiro para comunicar una filosofía que cuestiona los valores heredados y las certezas tradicionales.\nA través de discursos, parábolas y episodios simbólicos, Nietzsche desarrolla ideas como la superación personal, el eterno retorno y la creación de valores.\nLa obra combina reflexión filosófica, poesía y crítica cultural.",
+        "autores": [
+          {
+            "nombre": "Friedrich Nietzsche",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788413370200",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 298,
+        "anioPublicacion": 2019,
+        "fechaPublicacion": "2019-09-16",
+        "precio": null,
+        "sku": "PLG-BK-000016",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000016.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "critica-de-la-razon-practica.webp",
+      "libro": {
+        "titulo": "Crítica de la razón práctica",
+        "subtitulo": null,
+        "sinopsis": "Kant analiza cómo la razón puede orientar la acción moral independientemente de los deseos y las circunstancias particulares.\nLa obra desarrolla conceptos como deber, autonomía y ley moral, y profundiza en la idea de una voluntad racional.\nEs una pieza central de su filosofía ética y complementa la investigación iniciada en la Crítica de la razón pura.",
+        "autores": [
+          {
+            "nombre": "Immanuel Kant",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788413371696",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 186,
+        "anioPublicacion": 2020,
+        "fechaPublicacion": "2020-03-16",
+        "precio": null,
+        "sku": "PLG-BK-000017",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000017.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "Se normaliza el año a 2020 según la edición verificable asociada al ISBN 9788413371696."
+      ]
+    },
+    {
+      "portadaArchivo": "critica-de-la-razon-pura.webp",
+      "libro": {
+        "titulo": "Crítica de la razón pura",
+        "subtitulo": null,
+        "sinopsis": "Kant investiga los límites y las condiciones del conocimiento humano y pregunta qué puede conocer la razón antes de recurrir a la experiencia.\nDistingue sensibilidad, entendimiento y razón para explicar cómo construimos conocimiento sobre el mundo.\nLa obra busca establecer qué puede sostener legítimamente la metafísica y dónde comienzan los límites de la razón.",
+        "autores": [
+          {
+            "nombre": "Immanuel Kant",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788413371702",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 646,
+        "anioPublicacion": 2020,
+        "fechaPublicacion": "2020-03-16",
+        "precio": null,
+        "sku": "PLG-BK-000018",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000018.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "Algunos marketplaces indican 588 páginas para el mismo ISBN; se adopta 646, que coincide con la ficha verificable de la edición de Editorial Verbum de 2020."
+      ]
+    },
+    {
+      "portadaArchivo": "discurso-del-metodo.webp",
+      "libro": {
+        "titulo": "Discurso del método",
+        "subtitulo": null,
+        "sinopsis": "Descartes expone un método para conducir la razón y buscar conocimientos firmes evitando aceptar como verdadero aquello que pueda ponerse en duda.\nA partir de la duda metódica formula principios para analizar problemas, ordenar el pensamiento y revisar las conclusiones.\nLa obra constituye uno de los textos fundacionales de la filosofía moderna.",
+        "autores": [
+          {
+            "nombre": "René Descartes",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9791370180652",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 94,
+        "anioPublicacion": 2026,
+        "fechaPublicacion": "2026-01-28",
+        "precio": null,
+        "sku": "PLG-BK-000053",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000053.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "La ficha oficial de Editorial Verbum indica 94 páginas; algunas tiendas reproducen 92."
+      ]
+    },
+    {
+      "portadaArchivo": "el-principe.webp",
+      "libro": {
+        "titulo": "El príncipe",
+        "subtitulo": null,
+        "sinopsis": "Maquiavelo examina cómo un gobernante adquiere, conserva y fortalece el poder en contextos políticos inestables.\nEl texto analiza decisiones, alianzas, conflictos y la relación entre virtud, fortuna y necesidad política.\nSu enfoque separa el análisis del poder de las idealizaciones morales tradicionales y marca un hito en la teoría política moderna.",
+        "autores": [
+          {
+            "nombre": "Nicolás Maquiavelo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Innisfree",
+        "isbn13": "9798215299210",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 114,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "PLG-BK-000055",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000055.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "etica-a-nicomaco.webp",
+      "libro": {
+        "titulo": "Ética a Nicómaco",
+        "subtitulo": null,
+        "sinopsis": "Aristóteles estudia qué significa vivir bien y sostiene que la felicidad se alcanza mediante una actividad racional guiada por la virtud.\nAnaliza virtudes como la justicia, la valentía y la templanza, entendidas como hábitos formados mediante la práctica.\nLa obra también examina la amistad, el placer y la relación entre ética, carácter y vida comunitaria.",
+        "autores": [
+          {
+            "nombre": "Aristóteles",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788413376936",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 254,
+        "anioPublicacion": 2021,
+        "fechaPublicacion": "2021-10-20",
+        "precio": null,
+        "sku": "PLG-BK-000022",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000022.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "genealogia-de-la-moral.webp",
+      "libro": {
+        "titulo": "La genealogía de la moral",
+        "subtitulo": null,
+        "sinopsis": "Nietzsche investiga cómo surgieron y se transformaron conceptos morales como culpa, bien, mal y responsabilidad.\nEn tres tratados relaciona esos valores con procesos históricos, psicológicos y sociales en lugar de tratarlos como verdades universales.\nLa obra cuestiona la moral heredada y examina el resentimiento, la mala conciencia y los ideales ascéticos.",
+        "autores": [
+          {
+            "nombre": "Friedrich Nietzsche",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Plutón Ediciones",
+        "isbn13": "9788419651730",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 192,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "PLG-BK-000026",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000026.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El dato original solo indicaba Editorial Crítica y no aportaba ISBN, páginas ni año verificables.",
+        "Para producir un registro completo y utilizable se sustituyó por una edición física verificable de Plutón Ediciones de 2024.",
+        "Conviene comprobar que genealogia-de-la-moral.webp corresponda visualmente a esta edición antes de publicar."
+      ]
+    },
+    {
+      "portadaArchivo": "la-republica.webp",
+      "libro": {
+        "titulo": "La República",
+        "subtitulo": null,
+        "sinopsis": "Platón desarrolla un diálogo sobre la justicia tanto en el individuo como en la organización de una ciudad.\nA través de Sócrates examina educación, formas de gobierno, conocimiento, virtud y la relación entre filosofía y poder.\nLa obra incluye la célebre alegoría de la caverna y presenta una de las formulaciones más influyentes de la filosofía política occidental.",
+        "autores": [
+          {
+            "nombre": "Platón",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Innisfree",
+        "isbn13": "9798224715541",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 412,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": "2024-05-01",
+        "precio": null,
+        "sku": "PLG-BK-000056",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000056.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "mas-alla-del-bien-y-del-mal.webp",
+      "libro": {
+        "titulo": "Más allá del bien y del mal",
+        "subtitulo": null,
+        "sinopsis": "Nietzsche critica los supuestos que sostienen buena parte de la filosofía y la moral occidentales.\nMediante aforismos examina verdad, poder, religión, cultura y los prejuicios que influyen en los sistemas filosóficos.\nLa obra propone superar oposiciones morales rígidas y reconsiderar el origen y el valor de nuestras convicciones.",
+        "autores": [
+          {
+            "nombre": "Friedrich Nietzsche",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Alma",
+        "isbn13": "9788419599940",
+        "idioma": "es",
+        "formato": "TAPA_DURA",
+        "paginas": 304,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": "2024-10-01",
+        "precio": null,
+        "sku": "PLG-BK-000025",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000025.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El dato original solo indicaba Editorial Paidós y no aportaba ISBN, páginas ni año verificables.",
+        "Para producir un registro completo y utilizable se sustituyó por una edición física verificable de Editorial Alma de 2024.",
+        "Conviene comprobar que mas-alla-del-bien-y-del-mal.webp corresponda visualmente a esta edición antes de publicar."
+      ]
+    },
+    {
+      "portadaArchivo": "meditaciones-metafisicas.webp",
+      "libro": {
+        "titulo": "Meditaciones metafísicas",
+        "subtitulo": null,
+        "sinopsis": "Descartes parte de una duda radical para buscar una base absolutamente segura para el conocimiento.\nA lo largo de seis meditaciones examina la existencia del yo pensante, la naturaleza de las ideas y la relación entre mente y cuerpo.\nLa obra profundiza el proyecto filosófico iniciado en el Discurso del método.",
+        "autores": [
+          {
+            "nombre": "René Descartes",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788413373423",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 74,
+        "anioPublicacion": 2020,
+        "fechaPublicacion": "2020-11-10",
+        "precio": null,
+        "sku": "PLG-BK-000020",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000020.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "meditaciones.webp",
+      "libro": {
+        "titulo": "Meditaciones",
+        "subtitulo": null,
+        "sinopsis": "Marco Aurelio reúne reflexiones personales escritas como ejercicio de disciplina filosófica y examen de sí mismo.\nDesde una perspectiva estoica aborda el deber, el autocontrol, la fugacidad de la vida y la aceptación de aquello que no depende de nosotros.\nSus notas proponen actuar con razón, justicia y serenidad frente a las dificultades cotidianas.",
+        "autores": [
+          {
+            "nombre": "Marco Aurelio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": "9788490745113",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 160,
+        "anioPublicacion": 2018,
+        "fechaPublicacion": "2018-08-21",
+        "precio": null,
+        "sku": "PLG-BK-000037",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000037.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "sobre-la-libertad.webp",
+      "libro": {
+        "titulo": "Sobre la libertad",
+        "subtitulo": null,
+        "sinopsis": "John Stuart Mill analiza hasta dónde puede llegar legítimamente el poder de la sociedad sobre las decisiones de cada individuo.\nDefiende la libertad de pensamiento, expresión y formas de vida siempre que el ejercicio de esa libertad no cause daño a otros.\nEl ensayo examina la individualidad como elemento esencial del desarrollo humano y de una sociedad abierta.",
+        "autores": [
+          {
+            "nombre": "John Stuart Mill",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Ygriega",
+        "isbn13": "9788417666439",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 256,
+        "anioPublicacion": 2021,
+        "fechaPublicacion": "2021-08-30",
+        "precio": null,
+        "sku": "PLG-BK-000023",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000023.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "Se conserva la combinación aportada por el usuario y corroborada por varios catálogos comerciales: Ygriega, 9788417666439, 256 páginas.",
+        "Existe una inconsistencia entre catálogos: algunos asignan ese mismo ISBN a El sometimiento de la mujer y reservan 9788417666477 para Sobre la libertad. Verificar la página legal del ejemplar antes de producción."
+      ]
+    },
+    {
+      "portadaArchivo": "tractatus-logico-philosophicus.webp",
+      "libro": {
+        "titulo": "Tractatus Logico-Philosophicus",
+        "subtitulo": null,
+        "sinopsis": "Wittgenstein estudia la relación entre lenguaje, pensamiento y mundo mediante una estructura de proposiciones numeradas.\nSostiene que el lenguaje puede representar hechos cuando comparte con ellos una estructura lógica y delimita qué puede expresarse con sentido.\nLa obra concluye señalando los límites del lenguaje y, con ellos, los límites de aquello que puede formularse filosóficamente.",
+        "autores": [
+          {
+            "nombre": "Ludwig Wittgenstein",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Linkgua Ediciones",
+        "isbn13": "9788499538761",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 134,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "PLG-BK-000041",
+        "inventarioInicial": null,
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/PLG-BK-000041.webp",
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    }
+  ]
+}

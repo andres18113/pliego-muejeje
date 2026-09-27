@@ -29,7 +29,8 @@ public final class AdminCatalogModels {
     public record EditionRow(String editionId, String bookId, String bookTitle, String publisherId,
             String publisherName, String sku, String isbn13, String language, String format,
             Integer pageCount, LocalDate publicationDate, BigDecimal price, String coverUrl,
-            String coverLicense, String coverSourceUrl, String coverAttribution, String state,
+            String coverLicense, String coverSourceUrl,
+            String coverAttribution, String state,
             int stockActual, String createdAt, String updatedAt) { }
 
     public record AuthorData(String name, String biography) { }

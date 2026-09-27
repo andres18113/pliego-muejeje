@@ -167,6 +167,7 @@ class AdminCatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].bookId").value("90"))
                 .andExpect(jsonPath("$.items[0].publisherId").value("8"))
                 .andExpect(jsonPath("$.items[0].price").value("18.50"))
+                .andExpect(jsonPath("$.items[0].coverUrl").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.items[0].publicationDate").value("2024-01-15"))
                 .andExpect(jsonPath("$.items[0].stockActual").value(4))
                 .andReturn().getResponse().getContentAsString();

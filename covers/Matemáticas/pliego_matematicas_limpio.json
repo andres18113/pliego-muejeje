@@ -1,0 +1,810 @@
+{
+  "schema": "PLIEGO matematicas staging v1",
+  "notas": [
+    "Los 20 registros corresponden uno a uno con los 20 archivos WEBP listados por el usuario.",
+    "La categoría se normaliza a Matemáticas, de acuerdo con el catálogo principal de PLIEGO.",
+    "Los registros están separados en libro y edicion para coincidir con el modelo conceptual del backend.",
+    "idioma se normaliza a es; formato se limita a RUSTICA o TAPA_DURA.",
+    "anioPublicacion es un campo de staging para conservar el año cuando fechaPublicacion exacta no está disponible.",
+    "precio e inventarioInicial permanecen en null porque son datos comerciales de PLIEGO y no metadatos bibliográficos.",
+    "Los SKU MAT-001 a MAT-020 son propuestas deterministas; verificar que no colisionen con SKU existentes antes del seed.",
+    "portadaArchivo conserva exactamente el nombre de archivo informado por el usuario, incluso cuando contiene mayúsculas, acentos o erratas en el nombre.",
+    "La licencia y atribución de las portadas no se inventan; deben completarse según la procedencia real de cada WEBP.",
+    "observacionesStaging no forma parte del contrato público y debe retirarse o ignorarse al transformar este archivo al seed definitivo."
+  ],
+  "libros": [
+    {
+      "portadaArchivo": "alegebra-de-baldor.webp",
+      "libro": {
+        "titulo": "Álgebra Baldor",
+        "subtitulo": null,
+        "sinopsis": "Texto clásico de álgebra elemental orientado al aprendizaje progresivo mediante teoría, ejemplos y una amplia colección de ejercicios.\nDesarrolla operaciones algebraicas, factorización, fracciones, ecuaciones, desigualdades, funciones, radicales, progresiones y logaritmos.\nLa cuarta edición incorpora apoyos para el uso de calculadora científica y recursos complementarios.",
+        "autores": [
+          {
+            "nombre": "Aurelio Baldor",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Grupo Editorial Patria",
+        "isbn13": "9786075502090",
+        "idioma": "es",
+        "formato": "TAPA_DURA",
+        "paginas": 588,
+        "anioPublicacion": 2019,
+        "fechaPublicacion": "2019-05-17",
+        "precio": null,
+        "sku": "MAT-001",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "algebra-lineal-serie-schaum.webp",
+      "libro": {
+        "titulo": "Álgebra lineal",
+        "subtitulo": "Serie Schaum",
+        "sinopsis": "Manual de apoyo para cursos de álgebra lineal que combina resúmenes teóricos con numerosos problemas desarrollados y ejercicios propuestos.\nCubre sistemas de ecuaciones, matrices, espacios vectoriales, determinantes, valores propios, transformaciones lineales y formas canónicas.\nEstá pensado tanto para estudio guiado como para práctica autónoma y repaso.",
+        "autores": [
+          {
+            "nombre": "Seymour Lipschutz",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "McGraw-Hill Interamericana de España",
+        "isbn13": "9788476157589",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 512,
+        "anioPublicacion": 1992,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-002",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "La edición se cataloga habitualmente como 2.ª edición; algunas fuentes sitúan su publicación a finales de 1991 y otras en 1992.",
+        "Existen registros bibliotecarios con 553 páginas, mientras catálogos comerciales de esta edición ISBN indican 512; se conserva 512."
+      ]
+    },
+    {
+      "portadaArchivo": "algebra-lineal-una-introduccion-moderna-4-edicion.webp",
+      "libro": {
+        "titulo": "Álgebra lineal",
+        "subtitulo": "Una introducción moderna",
+        "sinopsis": "Introducción al álgebra lineal con énfasis en la comprensión geométrica antes de formalizar los procedimientos computacionales.\nDesarrolla vectores, sistemas de ecuaciones, matrices, valores y vectores propios, ortogonalidad, espacios vectoriales y aproximación.\nIntegra teoría y aplicaciones para facilitar la transición hacia cursos matemáticos de mayor abstracción.",
+        "autores": [
+          {
+            "nombre": "David Poole",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Cengage Learning",
+        "isbn13": "9786075263113",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 752,
+        "anioPublicacion": 2017,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-003",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "algebra-lineal-y-su-aplicacion.webp",
+      "libro": {
+        "titulo": "Álgebra lineal y sus aplicaciones",
+        "subtitulo": null,
+        "sinopsis": "Texto universitario que presenta los conceptos fundamentales del álgebra lineal y los relaciona con aplicaciones científicas y de ingeniería.\nAborda ecuaciones lineales, matrices, espacios vectoriales, transformaciones, valores propios, ortogonalidad y otros métodos esenciales.\nIncluye problemas conceptuales y computacionales orientados a desarrollar interpretación geométrica y capacidad de modelado.",
+        "autores": [
+          {
+            "nombre": "David C. Lay",
+            "orden": 1
+          },
+          {
+            "nombre": "Steven R. Lay",
+            "orden": 2
+          },
+          {
+            "nombre": "Judi J. McDonald",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Pearson",
+        "isbn13": "9786073259521",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 752,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-004",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "analisis-matematico-apostol.webp",
+      "libro": {
+        "titulo": "Análisis matemático",
+        "subtitulo": null,
+        "sinopsis": "Tratado riguroso de análisis que parte de los sistemas numéricos y la topología elemental para desarrollar límites, continuidad y derivación.\nIncluye integración de Riemann-Stieltjes y Lebesgue, series, sucesiones de funciones, análisis de Fourier y cálculo en varias variables.\nSu enfoque combina precisión teórica con una cobertura amplia de herramientas fundamentales del análisis moderno.",
+        "autores": [
+          {
+            "nombre": "Tom M. Apostol",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Reverté",
+        "isbn13": "9788429150049",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 616,
+        "anioPublicacion": 1976,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-005",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "La fuente aportada indicaba 618 páginas; catálogos bibliográficos de la edición impresa ISBN 9788429150049 registran 616, valor utilizado aquí."
+      ]
+    },
+    {
+      "portadaArchivo": "analisis-matematico-i-calculo-diferencial-moises-lazaro-carrion.webp",
+      "libro": {
+        "titulo": "Análisis matemático I",
+        "subtitulo": "Cálculo diferencial",
+        "sinopsis": "Texto universitario centrado en el cálculo diferencial y en el desarrollo operativo de la derivada.\nIncluye curvas paramétricas, derivadas parciales, derivación implícita, diferenciales, funciones inversas y aplicaciones a problemas de optimización.\nFinaliza con el polinomio de Taylor y una colección de ejercicios orientados a consolidar los procedimientos.",
+        "autores": [
+          {
+            "nombre": "Moisés Lázaro Carrión",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Moshera",
+        "isbn13": "9789972813818",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 456,
+        "anioPublicacion": 2014,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-006",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El ISBN 9789972813818 corresponde a una edición catalogada como 4.ª edición (2014), no como 1.ª edición."
+      ]
+    },
+    {
+      "portadaArchivo": "analisis-matematico-ii.webp",
+      "libro": {
+        "titulo": "Análisis matemático II",
+        "subtitulo": null,
+        "sinopsis": "Continuación orientada al cálculo integral y sus aplicaciones en matemáticas, ciencias e ingeniería.\nDesarrolla antiderivadas, integrales definidas e impropias, técnicas de integración, curvas paramétricas y coordenadas polares.\nIncluye aplicaciones de la integral al cálculo de áreas, volúmenes y distintos problemas físicos.",
+        "autores": [
+          {
+            "nombre": "Moisés Lázaro Carrión",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Moshera",
+        "isbn13": "9789972813665",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 754,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-007",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El mismo ISBN aparece en registros antiguos de 2011 con 742–744 páginas.",
+        "Para la reimpresión/copia catalogada en 2023 se utiliza el registro bibliotecario de 754 páginas; revisar la página legal del ejemplar si la portada WEBP corresponde a otra reimpresión."
+      ]
+    },
+    {
+      "portadaArchivo": "ANALISIS-MATEMATICO-IV-Calculo-Vectorial.webp",
+      "libro": {
+        "titulo": "Análisis matemático IV",
+        "subtitulo": "Cálculo vectorial",
+        "sinopsis": "Texto de cálculo vectorial dedicado a la integración en varias variables y al estudio de campos escalares y vectoriales.\nTrabaja integrales dobles y triples, coordenadas polares, cilíndricas y esféricas, integrales de línea e integrales de superficie.\nTambién desarrolla los teoremas de Green, Gauss y Stokes mediante teoría y problemas resueltos.",
+        "autores": [
+          {
+            "nombre": "Moisés Lázaro Carrión",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Moshera",
+        "isbn13": "9786124441073",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 612,
+        "anioPublicacion": 2020,
+        "fechaPublicacion": "2020-10-31",
+        "precio": null,
+        "sku": "MAT-008",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "analisis-numerico-richard-l-burden-j-douglas-faires.webp",
+      "libro": {
+        "titulo": "Análisis numérico",
+        "subtitulo": null,
+        "sinopsis": "Introducción sistemática a los métodos de aproximación numérica y al análisis de sus errores y condiciones de convergencia.\nIncluye raíces de ecuaciones, interpolación, integración y derivación numéricas, sistemas lineales, aproximación y valores propios.\nTambién aborda métodos numéricos para ecuaciones diferenciales ordinarias y parciales con ejemplos y ejercicios aplicados.",
+        "autores": [
+          {
+            "nombre": "Richard L. Burden",
+            "orden": 1
+          },
+          {
+            "nombre": "J. Douglas Faires",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Cengage Learning",
+        "isbn13": "9786074816631",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 888,
+        "anioPublicacion": 2011,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-009",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "La paginación de este ISBN varía entre catálogos según se contabilicen preliminares o la representación digital: se encuentran 871, 882, 888 y 890 páginas.",
+        "Se adopta 888 para la edición física en rústica; conviene validar contra el ejemplar físico antes de producción si se requiere coincidencia exacta."
+      ]
+    },
+    {
+      "portadaArchivo": "Cálculo-analisis-vectorial.webp",
+      "libro": {
+        "titulo": "Cálculo y análisis vectorial",
+        "subtitulo": null,
+        "sinopsis": "Texto universitario dedicado a técnicas de integración múltiple y al análisis de curvas, superficies y campos vectoriales.\nRevisa integrales dobles y triples, integrales de línea y de superficie, y su interpretación en problemas de cálculo superior.\nSirve como complemento para cursos avanzados de cálculo vectorial y análisis matemático.",
+        "autores": [
+          {
+            "nombre": "Moisés Lázaro Carrión",
+            "orden": 1
+          },
+          {
+            "nombre": "César Junior Esteban Chávez",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Moshera",
+        "isbn13": "9786124441141",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 422,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": "2023-04-29",
+        "precio": null,
+        "sku": "MAT-010",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera-william-e-boyce-richard-c-diprima.webp",
+      "libro": {
+        "titulo": "Ecuaciones diferenciales y problemas con valores en la frontera",
+        "subtitulo": null,
+        "sinopsis": "Texto universitario sobre ecuaciones diferenciales ordinarias y problemas de frontera con atención a fundamentos y aplicaciones.\nIncluye ecuaciones de primer orden, ecuaciones lineales de orden superior, transformada de Laplace, sistemas, métodos numéricos y estabilidad.\nTambién estudia ecuaciones diferenciales parciales, series de Fourier y teoría de Sturm-Liouville.",
+        "autores": [
+          {
+            "nombre": "William E. Boyce",
+            "orden": 1
+          },
+          {
+            "nombre": "Richard C. DiPrima",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Limusa Wiley",
+        "isbn13": "9789681849740",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 760,
+        "anioPublicacion": 2002,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-011",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El ISBN-10 aportado (9681849744) se convirtió a ISBN-13: 9789681849740.",
+        "Existen registros de reimpresiones con años 1998–2003 y paginaciones de 752, 758 o 760; se adopta la ficha editorial Limusa de 4.ª edición, 2002, 760 páginas."
+      ]
+    },
+    {
+      "portadaArchivo": "ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera.webp",
+      "libro": {
+        "titulo": "Ecuaciones diferenciales y problemas con valores en la frontera",
+        "subtitulo": null,
+        "sinopsis": "Curso amplio de ecuaciones diferenciales que combina técnicas de solución, teoría y modelado matemático.\nIncluye ecuaciones de primer y segundo orden, sistemas, transformada de Laplace, métodos numéricos, series y análisis cualitativo.\nLa obra dedica además atención específica a problemas con valores en la frontera y a aplicaciones en ciencias e ingeniería.",
+        "autores": [
+          {
+            "nombre": "R. Kent Nagle",
+            "orden": 1
+          },
+          {
+            "nombre": "Edward B. Saff",
+            "orden": 2
+          },
+          {
+            "nombre": "Arthur David Snider",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Pearson Educación",
+        "isbn13": "9789702605928",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 816,
+        "anioPublicacion": 2005,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-012",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "Se añadió Arthur David Snider como tercer autor, presente en registros bibliográficos completos de esta 4.ª edición.",
+        "La paginación aparece como 736 páginas más apéndices en algunos catálogos y como 816 páginas totales en otros; se conserva 816 de la ficha física aportada y de catálogos universitarios."
+      ]
+    },
+    {
+      "portadaArchivo": "ecuaciones-diferenciales.webp",
+      "libro": {
+        "titulo": "Ecuaciones diferenciales con aplicaciones de modelado",
+        "subtitulo": null,
+        "sinopsis": "Introducción a las ecuaciones diferenciales con énfasis en su utilización para construir y analizar modelos matemáticos.\nDesarrolla ecuaciones de primer orden, ecuaciones lineales de orden superior, transformada de Laplace, sistemas y soluciones en series.\nIncluye además métodos numéricos y numerosos ejemplos vinculados con fenómenos de ciencias e ingeniería.",
+        "autores": [
+          {
+            "nombre": "Dennis G. Zill",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Cengage Learning",
+        "isbn13": "9786075266312",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 480,
+        "anioPublicacion": 2018,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-013",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "La fuente aportada y algunos catálogos universitarios indican 458 páginas; la ficha editorial de Cengage para el ISBN impreso 9786075266312 indica 480, valor utilizado aquí."
+      ]
+    },
+    {
+      "portadaArchivo": "geometria-trigonemetria-baldor.webp",
+      "libro": {
+        "titulo": "Geometría y trigonometría Baldor",
+        "subtitulo": null,
+        "sinopsis": "Curso completo de geometría plana, geometría del espacio y trigonometría con numerosos ejemplos y ejercicios desarrollados paso a paso.\nEstudia ángulos, triángulos, polígonos, circunferencia, áreas, cuerpos geométricos y relaciones métricas.\nLa parte trigonométrica aborda funciones, identidades, resolución de triángulos y aplicaciones apoyadas por recursos de cálculo.",
+        "autores": [
+          {
+            "nombre": "Aurelio Baldor",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Grupo Editorial Patria",
+        "isbn13": "9786075502069",
+        "idioma": "es",
+        "formato": "TAPA_DURA",
+        "paginas": 556,
+        "anioPublicacion": 2020,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-014",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "La paginación publicada para esta 4.ª edición varía entre 554, 556 y 560 según el catálogo; se adopta 556 de la ficha de distribución de la edición."
+      ]
+    },
+    {
+      "portadaArchivo": "inferencia-bayesana.webp",
+      "libro": {
+        "titulo": "Inferencia bayesiana y el método de máxima entropía",
+        "subtitulo": "Teoría, computación y aplicaciones en econometría",
+        "sinopsis": "Estudio de los fundamentos y aplicaciones de la inferencia bayesiana y del principio de máxima entropía en econometría.\nContrasta estos enfoques con métodos frecuentistas y desarrolla herramientas para problemas con información limitada.\nLa parte aplicada utiliza modelos de series de tiempo, corte transversal, estado-espacio y métodos semiparamétricos con apoyo computacional.",
+        "autores": [
+          {
+            "nombre": "Juan Esteban Jacobo Vásquez",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Externado de Colombia",
+        "isbn13": "9789585062665",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 500,
+        "anioPublicacion": 2025,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-015",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El ISBN 9789585062672 aportado corresponde al eBook/PDF.",
+        "Para PLIEGO se utiliza la edición física en tapa blanda ISBN 9789585062665, también de 2025 y 500 páginas."
+      ]
+    },
+    {
+      "portadaArchivo": "Introducción-al-algebra-lineal.webp",
+      "libro": {
+        "titulo": "Introducción al álgebra lineal",
+        "subtitulo": null,
+        "sinopsis": "Material universitario de apoyo para el aprendizaje sistemático de los conceptos esenciales del álgebra lineal.\nDesarrolla matrices, sistemas de ecuaciones, determinantes, álgebra vectorial, espacios vectoriales, transformaciones lineales y valores propios.\nIncluye explicaciones didácticas, problemas y ejercicios orientados a carreras de ingeniería, ciencias y matemáticas.",
+        "autores": [
+          {
+            "nombre": "José Alfredo Collazos Sánchez",
+            "orden": 1
+          },
+          {
+            "nombre": "Carlos Alberto Ramírez Vanegas",
+            "orden": 2
+          },
+          {
+            "nombre": "Óscar Danilo Montoya Giraldo",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ecoe Ediciones",
+        "isbn13": "9789585082656",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 224,
+        "anioPublicacion": 2024,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-016",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El ISBN 9789585082663 aportado corresponde a la edición digital PDF.",
+        "Para PLIEGO se utiliza el ISBN físico 9789585082656 de la edición impresa en rústica."
+      ]
+    },
+    {
+      "portadaArchivo": "Matematica-Estructural.webp",
+      "libro": {
+        "titulo": "Matemática estructural",
+        "subtitulo": null,
+        "sinopsis": "Introducción rigurosa a las matemáticas desde la teoría de conjuntos, la lógica y los métodos de demostración.\nDesarrolla inducción, conteo, divisibilidad, relaciones, funciones, equivalencia, cardinalidad y nociones de estructura e isomorfismo.\nSu propósito es fortalecer el razonamiento formal y preparar al estudiante para cursos matemáticos de mayor abstracción.",
+        "autores": [
+          {
+            "nombre": "Andrés Forero Cuervo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Uniandes",
+        "isbn13": "9789586954525",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 326,
+        "anioPublicacion": 2009,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-017",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "La ficha aportada indicaba 2014 y 324 páginas.",
+        "La ficha actual de Ediciones Uniandes registra la versión impresa con año 2009 y 326 páginas; otros catálogos contabilizan 324 o 344 páginas.",
+        "Se prioriza la ficha directa de la editorial: 2009, 326 páginas."
+      ]
+    },
+    {
+      "portadaArchivo": "metodos-numericos-aplicados-a-la-ingenieria-antonio-nieves-hurtado-federico-c-dominguez-sanchez.webp",
+      "libro": {
+        "titulo": "Métodos numéricos aplicados a la ingeniería",
+        "subtitulo": null,
+        "sinopsis": "Texto de métodos numéricos orientado a la resolución computacional de problemas frecuentes en ingeniería.\nPresenta técnicas para ecuaciones lineales y no lineales, aproximación, interpolación, integración y otros procedimientos de cálculo numérico.\nLa obra combina fundamentos matemáticos con algoritmos y aplicaciones prácticas para cursos universitarios.",
+        "autores": [
+          {
+            "nombre": "Antonio Nieves Hurtado",
+            "orden": 1
+          },
+          {
+            "nombre": "Federico C. Domínguez Sánchez",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Compañía Editorial Continental",
+        "isbn13": "9789702402589",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 600,
+        "anioPublicacion": 2002,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-018",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [
+        "El ISBN-10 aportado 9702402581 se normalizó al ISBN-13 9789702402589.",
+        "Algunos comercios datan la misma edición/reimpresión en 2003; se conserva 2002 de registros bibliográficos universitarios."
+      ]
+    },
+    {
+      "portadaArchivo": "metodos-numericos-para-ingenieros.webp",
+      "libro": {
+        "titulo": "Métodos numéricos para ingenieros",
+        "subtitulo": null,
+        "sinopsis": "Texto aplicado que presenta métodos numéricos junto con su implementación y uso en problemas de ingeniería.\nIncluye análisis de errores, raíces de ecuaciones, sistemas lineales, optimización, ajuste de curvas, integración y diferenciación numéricas.\nTambién desarrolla métodos para ecuaciones diferenciales ordinarias y parciales, con estudios de caso y apoyo computacional.",
+        "autores": [
+          {
+            "nombre": "Steven C. Chapra",
+            "orden": 1
+          },
+          {
+            "nombre": "Raymond P. Canale",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "McGraw-Hill",
+        "isbn13": "9786071512949",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 756,
+        "anioPublicacion": 2015,
+        "fechaPublicacion": null,
+        "precio": null,
+        "sku": "MAT-019",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    },
+    {
+      "portadaArchivo": "problemas-resueltps-de-al.webp",
+      "libro": {
+        "titulo": "Problemas resueltos de álgebra lineal",
+        "subtitulo": null,
+        "sinopsis": "Colección universitaria orientada a reforzar el álgebra lineal mediante problemas completamente desarrollados.\nTrabaja matrices, sistemas de ecuaciones, espacios vectoriales, transformaciones, determinantes y valores y vectores propios.\nLa exposición combina teoría accesible con procedimientos de resolución destinados principalmente a estudiantes de ingeniería.",
+        "autores": [
+          {
+            "nombre": "Moisés Lázaro Carrión",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Moshera",
+        "isbn13": "9786124441165",
+        "idioma": "es",
+        "formato": "RUSTICA",
+        "paginas": 256,
+        "anioPublicacion": 2023,
+        "fechaPublicacion": "2023-05-31",
+        "precio": null,
+        "sku": "MAT-020",
+        "inventarioInicial": null,
+        "portada": {
+          "url": null,
+          "licencia": null,
+          "fuente": "archivo_local",
+          "atribucion": null
+        }
+      }
+    }
+  ]
+}
