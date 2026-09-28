@@ -39,9 +39,25 @@ const editionDetail = {
   available: true,
 };
 
+type DetailOverrides = Omit<Partial<typeof editionDetail>, "coverUrl"> & { coverUrl?: string | null };
+type SummaryOverrides = Omit<Partial<typeof editionSummary>, "coverUrl"> & { coverUrl?: string | null };
+
+const representativeCovers = [
+  { title: "Análisis matemático", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000028-5c3053a00867.webp", source: "covers/Matemáticas/analisis-matematico-apostol.webp", width: 300, height: 450, fit: "cover" },
+  { title: "Análisis matemático I", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000052-b80e012ee00e.webp", source: "covers/Matemáticas/analisis-matematico-i-calculo-diferencial-moises-lazaro-carrion.webp", width: 600, height: 800, fit: "contain" },
+  { title: "Análisis matemático II", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000051-319fe6c039de.webp", source: "covers/Matemáticas/analisis-matematico-ii.webp", width: 270, height: 353, fit: "contain" },
+  { title: "Anna Karénina", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000035-b62b28e2ae01.webp", source: "covers/Literatura/anna-karenina.webp", width: 777, height: 1200, fit: "cover" },
+  { title: "Cien años de soledad", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000014-b456b439611b.webp", source: "covers/Literatura/cien-anos-de-soledad.webp", width: 381, height: 588, fit: "cover" },
+  { title: "Don Quijote de la Mancha", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000029-37c3121f9eca.webp", source: "covers/Literatura/don-quijote.webp", width: 337, height: 500, fit: "cover" },
+  { title: "La genealogía de la moral", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000026-26fcbd0dabe9.webp", source: "covers/Filosofia/genealogia-de-la-moral.webp", width: 656, height: 923, fit: "cover" },
+  { title: "Los miserables", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000054-fe0fdb7fdd82.webp", source: "covers/Literatura/los-miserables.webp", width: 729, height: 1200, fit: "contain" },
+  { title: "Moby Dick", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000021-86bb100040cb.webp", source: "covers/Literatura/moby-dick.webp", width: 359, height: 500, fit: "cover" },
+] as const;
+
 async function mockCatalogApi(
   page: import("@playwright/test").Page,
-  detailOverrides: Partial<typeof editionDetail> = {},
+  detailOverrides: DetailOverrides = {},
+  summaryOverrides: SummaryOverrides = {},
 ) {
   await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
     status: 200,
@@ -57,10 +73,123 @@ async function mockCatalogApi(
     const url = new URL(route.request().url());
     const body = url.pathname.endsWith("/42")
       ? { ...editionDetail, ...detailOverrides }
-      : { items: [editionSummary], page: Number(url.searchParams.get("page") || "0"), pageSize: 20, totalCount: "1" };
+      : { items: [{ ...editionSummary, ...summaryOverrides }], page: Number(url.searchParams.get("page") || "0"), pageSize: 20, totalCount: "1" };
     return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) });
   });
 }
+
+test("keeps the cover frame at 2:3 before and after load on catalog and detail", async ({ page }) => {
+  const coverUrl = "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
+  let releaseCover!: () => void;
+  const responseGate = new Promise<void>((resolve) => { releaseCover = resolve; });
+  await page.route(coverUrl, async (route) => {
+    await responseGate;
+    await route.fulfill({
+      status: 200,
+      contentType: "image/svg+xml",
+      body: '<svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450"><rect width="300" height="450" fill="#24513f"/><text x="24" y="90" fill="white">Dorian Gray</text></svg>',
+    });
+  });
+  await mockCatalogApi(page, { title: "El retrato de Dorian Gray", coverUrl }, { title: "El retrato de Dorian Gray", coverUrl });
+  await page.goto("/");
+
+  const cardFrame = page.locator(".edition-grid .cover-frame");
+  await cardFrame.scrollIntoViewIfNeeded();
+  await expect(page.locator(".edition-grid img.cover-image")).toHaveAttribute("loading", "lazy");
+  await expect(page.locator(".edition-grid img.cover-image")).toHaveAttribute("src", coverUrl);
+  await expect(page.locator(".edition-grid [data-testid=cover-skeleton]")).toBeVisible();
+  const frameBeforeLoad = await cardFrame.boundingBox();
+  expect(frameBeforeLoad).not.toBeNull();
+  expect(frameBeforeLoad!.height / frameBeforeLoad!.width).toBeCloseTo(1.5, 3);
+
+  releaseCover();
+  await expect(page.locator(".edition-grid [data-testid=cover-skeleton]")).toHaveCount(0);
+  const frameAfterLoad = await cardFrame.boundingBox();
+  expect(frameAfterLoad).toEqual(frameBeforeLoad);
+
+  await page.setViewportSize({ width: 390, height: 844 });
+  const mobileFrame = await cardFrame.boundingBox();
+  expect(mobileFrame).not.toBeNull();
+  expect(mobileFrame!.height / mobileFrame!.width).toBeCloseTo(1.5, 3);
+
+  await page.getByRole("link", { name: "Ver edición: El retrato de Dorian Gray" }).click();
+  const detailFrame = page.locator(".book-cover--detail .cover-frame");
+  await expect(detailFrame).toBeVisible();
+  const detailBox = await detailFrame.boundingBox();
+  expect(detailBox).not.toBeNull();
+  expect(detailBox!.height / detailBox!.width).toBeCloseTo(1.5, 3);
+  await expect(page.locator(".book-cover--detail img.cover-image")).toHaveAttribute("src", coverUrl);
+});
+
+test("renders representative source covers in identical, non-distorting frames", async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 1440, height: 1200 });
+  await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ items: [{ slug: "narrativa", name: "Narrativa", parentSlug: null }] }),
+  }));
+  await page.route("**/api/v1/catalog/filter-options", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" }),
+  }));
+  await page.route("**/api/v1/catalog/editions**", (route) => {
+    const url = new URL(route.request().url());
+    const body = url.pathname.endsWith("/42")
+      ? { ...editionDetail, title: representativeCovers[0].title, coverUrl: representativeCovers[0].coverUrl }
+      : {
+        items: representativeCovers.map((cover, index) => ({
+          ...editionSummary,
+          editionId: String(100 + index),
+          bookId: String(17 + index),
+          title: cover.title,
+          coverUrl: cover.coverUrl,
+        })),
+        page: 0,
+        pageSize: 20,
+        totalCount: String(representativeCovers.length),
+      };
+    return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) });
+  });
+  await page.route("https://covers.pliegolibros.com/covers/editions/**", async (route) => {
+    const cover = representativeCovers.find((item) => item.coverUrl === route.request().url());
+    if (!cover) return route.abort();
+    return route.fulfill({
+      path: decodeURIComponent(new URL(`../../../${cover.source}`, import.meta.url).pathname),
+      contentType: "image/webp",
+      headers: { "Cache-Control": "public, max-age=31536000, immutable" },
+    });
+  });
+  await page.goto("/");
+
+  for (const [index, cover] of representativeCovers.entries()) {
+    const edition = page.locator(".edition-item").nth(index);
+    const frame = edition.locator(".cover-frame");
+    const image = edition.locator("img.cover-image");
+    await frame.scrollIntoViewIfNeeded();
+    await expect(image).toHaveAttribute("loading", "lazy");
+    await expect(image).toHaveCSS("object-fit", cover.fit);
+    await expect(edition.locator("[data-testid=cover-skeleton]")).toHaveCount(0);
+    expect(await image.evaluate((element: HTMLImageElement) => [element.naturalWidth, element.naturalHeight]))
+      .toEqual([cover.width, cover.height]);
+    expect(await image.evaluate((element: HTMLImageElement) => getComputedStyle(element).objectPosition))
+      .toBe("50% 50%");
+    const box = await frame.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height / box!.width).toBeCloseTo(1.5, 3);
+    if (cover.fit === "contain") await expect(frame).toHaveCSS("background-color", "rgb(250, 251, 248)");
+  }
+
+  await page.locator(".edition-grid").screenshot({ path: testInfo.outputPath("representative-covers.png") });
+  await page.setViewportSize({ width: 390, height: 844 });
+  const mobileColumns = await page.locator(".edition-grid").evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(" ").length);
+  expect(mobileColumns).toBe(2);
+  for (const edition of await page.locator(".edition-item").all()) {
+    const box = await edition.locator(".cover-frame").boundingBox();
+    expect(box).not.toBeNull();
+    expect(box!.height / box!.width).toBeCloseTo(1.5, 3);
+  }
+});
 
 async function mockCustomerLogin(page: import("@playwright/test").Page, role: "CUSTOMER" | "ADMIN" = "CUSTOMER") {
   await page.route("**/api/v1/auth/login", (route) => route.fulfill({
@@ -89,7 +218,7 @@ test("searches the public catalog, opens a real edition route, and returns to th
 
   await page.getByRole("searchbox").fill("Cien años");
   await page.getByRole("button", { name: "Buscar" }).click();
-  await expect(page).toHaveURL(/q=Cien\+a%C3%B1os/);
+  await expect(page).toHaveURL(/\/catalog\?q=Cien\+a%C3%B1os/);
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeVisible();
 
   const editionLink = page.getByRole("link", { name: "Ver edición: Cien años de soledad" });
@@ -100,7 +229,7 @@ test("searches the public catalog, opens a real edition route, and returns to th
   await expect(page.getByRole("navigation", { name: "Ruta de navegación" })).toContainText("Cien años de soledad");
 
   await page.getByRole("link", { name: "Volver al catálogo" }).first().click();
-  await expect(page).toHaveURL(/q=Cien\+a%C3%B1os/);
+  await expect(page).toHaveURL(/\/catalog\?q=Cien\+a%C3%B1os/);
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeVisible();
 });
 
@@ -127,9 +256,48 @@ test("moves focus to the page heading after route changes and from the skip link
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeFocused();
 });
 
+test("makes the root a book-led discovery page and moves legacy criteria to the catalog route", async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.goto("/");
+
+  await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Ediciones para descubrir" })).toBeVisible();
+  await expect(page.locator(".catalog-controls")).toHaveCount(0);
+  await expect(page.locator(".edition-item")).toHaveCount(1);
+  await expect(page.getByRole("link", { name: "Explorar catálogo completo" })).toHaveAttribute("href", "/catalog");
+  const categoryPosition = await page.locator(".edition-grid").evaluate((element) =>
+    element.compareDocumentPosition(document.querySelector(".category-section")!) & Node.DOCUMENT_POSITION_FOLLOWING,
+  );
+  expect(categoryPosition).toBeTruthy();
+  const narrativeCategory = page.locator(".category-section").getByRole("link", { name: "Narrativa" });
+  await expect(narrativeCategory).toHaveAttribute("href", "/catalog?category=narrativa");
+  await narrativeCategory.click();
+  await expect(page).toHaveURL("/catalog?category=narrativa");
+
+  await page.goto("/?q=Cien+años&category=narrativa&sort=PRICE_DESC&page=2");
+  await expect(page).toHaveURL(/\/catalog\?q=Cien\+a%C3%B1os&category=narrativa&sort=PRICE_DESC&page=2/);
+  await expect(page.getByRole("searchbox")).toHaveValue("Cien años");
+});
+
+test("keeps card covers and metadata aligned at the requested viewport widths", async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.goto("/catalog");
+
+  for (const width of [1440, 768, 390, 320]) {
+    await page.setViewportSize({ width, height: 1000 });
+    const cover = await page.locator(".edition-item .cover-frame").first().boundingBox();
+    const metadata = await page.locator(".edition-item .edition-copy").first().boundingBox();
+    expect(cover, `cover at ${width}px`).not.toBeNull();
+    expect(metadata, `metadata at ${width}px`).not.toBeNull();
+    expect(metadata!.x).toBeCloseTo(cover!.x, 0);
+    expect(metadata!.width).toBeCloseTo(cover!.width, 0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth), `page width at ${width}px`).toBe(width);
+  }
+});
+
 test("preserves search, sort, and price criteria from edition category links", async ({ page }) => {
   await mockCatalogApi(page);
-  await page.goto("/?q=Julio&minPrice=12.00&sort=PRICE_DESC&page=2");
+  await page.goto("/catalog?q=Julio&minPrice=12.00&sort=PRICE_DESC&page=2");
   await page.getByRole("link", { name: "Ver edición: Cien años de soledad" }).click();
 
   await page.locator(".detail-categories").getByRole("link", { name: "Narrativa" }).click();
@@ -183,7 +351,7 @@ test("returns a guest to the intended edition and confirms the server cart mutat
     });
   });
 
-  await page.goto("/catalog/editions/42?from=%2F%3Fq%3DCien");
+  await page.goto("/catalog/editions/42?from=%2Fcatalog%3Fq%3DCien");
   await expect(page.getByRole("link", { name: "Iniciar sesión para agregar" })).toBeVisible();
   await signInFromEdition(page);
 
@@ -212,7 +380,7 @@ test("does not expose customer purchasing to an authenticated administrator", as
   await signInFromEdition(page, "ADMIN");
   await expect(page).toHaveURL(/\/admin$/);
 
-  await page.getByRole("link", { name: "PLIEGO, ir al catálogo" }).click();
+  await page.getByRole("link", { name: "PLIEGO, ir al inicio" }).click();
   await page.getByRole("link", { name: "Ver edición: Cien años de soledad" }).click();
 
   await expect(page.getByText("El carrito está disponible únicamente para cuentas de cliente.")).toBeVisible();
@@ -247,7 +415,7 @@ test("announces cart validation errors and leaves a deliberate retry available",
         title: "Cantidad inválida",
         detail: "La cantidad debe ser mayor que cero.",
         status: 400,
-        code: "CART_QUANTITY_INVALID",
+        code: "P4004",
       }),
     });
   });
@@ -295,6 +463,10 @@ test("reconciles a server failure against cart state before allowing another add
 
   await page.goto("/catalog/editions/42");
   await signInFromEdition(page);
+  // The header's cart link reads the cart too; count only the reads this flow makes.
+  await expect.poll(() => cartReads).toBeGreaterThan(0);
+  await page.waitForLoadState("networkidle");
+  const baselineCartReads = cartReads;
   await page.getByRole("button", { name: "Agregar al carrito" }).click();
   await expect(page.getByText("No pudimos confirmar si se agregó.")).toBeVisible();
   const blockedAdd = page.getByRole("button", { name: "Agregar al carrito" });
@@ -309,13 +481,13 @@ test("reconciles a server failure against cart state before allowing another add
   await expect(page.getByText("El carrito no muestra una unidad nueva de esta edición. Puedes volver a intentarlo.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Agregar al carrito" })).toBeEnabled();
   expect(addCount).toBe(1);
-  expect(cartReads).toBe(2);
+  expect(cartReads - baselineCartReads).toBe(2);
 });
 
 test("keeps the first edition cover in reach on mobile and preserves access to filters", async ({ page }) => {
   await mockCatalogApi(page);
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/");
+  await page.goto("/catalog");
 
   const filters = page.locator("details.filter-disclosure");
   expect(await filters.evaluate((element) => (element as HTMLDetailsElement).open)).toBe(false);
@@ -335,7 +507,7 @@ test("keeps the first edition cover in reach on mobile and preserves access to f
 
 test("gives each price slider thumb a 24px pointer target", async ({ page }) => {
   await mockCatalogApi(page);
-  await page.goto("/");
+  await page.goto("/catalog");
 
   for (const slider of [page.getByRole("slider", { name: "Precio mínimo" }), page.getByRole("slider", { name: "Precio máximo" })]) {
     const thumbWidth = await slider.evaluate((input) =>
@@ -364,7 +536,7 @@ test("keeps catalog search usable at the minimum 320px viewport", async ({ page 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
 });
 
-test("account links open supported registration and sign-in routes", async ({ page }) => {
+test("sign-in returns to the storefront without exposing the email in its header", async ({ page }) => {
   await mockCatalogApi(page);
   await page.route("**/api/v1/auth/register", (route) => route.fulfill({
     status: 201,
@@ -398,7 +570,8 @@ test("account links open supported registration and sign-in routes", async ({ pa
   await page.getByLabel("Contraseña").fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL("/");
-  await expect(page.getByText("ana@example.com")).toBeVisible();
+  await expect(page.locator(".site-header").getByRole("button", { name: "Menú de cuenta" })).toBeVisible();
+  await expect(page.locator(".site-header").getByText("ana@example.com")).toHaveCount(0);
 });
 
 test("keeps open subcategory menus inside a 320px viewport", async ({ page }) => {
@@ -426,7 +599,7 @@ test("keeps open subcategory menus inside a 320px viewport", async ({ page }) =>
     contentType: "application/json",
     body: JSON.stringify({ items: [], page: 0, pageSize: 20, totalCount: "0" }),
   }));
-  await page.goto("/");
+  await page.goto("/catalog");
 
   const disclosures = page.locator(".subcategory-disclosure");
   const count = await disclosures.count();

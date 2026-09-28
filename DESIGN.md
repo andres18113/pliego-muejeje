@@ -1,4 +1,4 @@
-<!-- Updated from the production frontend on 2026-09-25. The approved “Catálogo familiar” seed remains the visual direction. -->
+<!-- Updated from the implemented frontend on 2026-09-27. The approved “Catálogo familiar” seed remains the visual direction. -->
 
 ---
 name: PLIEGO
@@ -11,11 +11,11 @@ description: A familiar, editorial bookstore experience for discovering book edi
 
 **Creative North Star: “La librería clara y cercana.”**
 
-The approved first expression, **Catálogo familiar**, remains the visual direction. Preserve its search-first bookstore structure, deep pine and clear paper palette, literary serif paired with a plain sans serif, flat reading surfaces, light dividers, book-like square geometry, and restrained shadows on covers. Production details below describe the public catalog, edition detail, sign-in, and registration surfaces as implemented.
+The approved first expression, **Catálogo familiar**, remains the visual direction. Preserve its search-first bookstore structure, deep pine and clear paper palette, literary serif paired with a plain sans serif, flat reading surfaces, light dividers, book-like square geometry, and restrained shadows on covers. Production details below describe the public catalog, edition detail, sign-in, registration, cart, checkout, and order confirmation surfaces as implemented.
 
-The frontend source of truth for these rules is `frontend/src/styles.css` and its catalog and auth components. The design foundation uses Tailwind CSS 4 and shadcn/ui with Base UI shared controls; their appearance follows the PLIEGO styles.
+The frontend source of truth for these rules is `frontend/src/styles.css` and the catalog, auth, and purchase components. The design foundation uses Tailwind CSS 4 and shadcn/ui with Base UI shared controls; their appearance follows the PLIEGO styles.
 
-`CatalogHeader` and `SiteFooter` provide the shared route chrome; sign-in and registration use the compact header mode.
+`CatalogHeader` and `SiteFooter` provide the shared route chrome; sign-in, registration, and checkout use the compact header mode. Cart and order confirmation retain the catalog header and its bookstore navigation.
 
 Notion, Banco Guayaquil, and Stripe remain references for hierarchy, direct Spanish-language copy, and page rhythm. PLIEGO keeps its own bookstore structure, content, and visual tokens. The shared palette and type foundation can carry into administrative work, while navigation and density remain task-specific; this review does not define an administrative page system.
 
@@ -79,6 +79,14 @@ Edition detail is a centered, two-column reading layout, at most 1080px wide, wi
 
 Sign-in and registration use the compact masthead, with the wordmark but no search or account links. The form column is centered and capped at 480px. Registration presents its successful result in the same column, replacing the form with a confirmation and sign-in action.
 
+### CUSTOMER purchase layout
+
+The cart uses an open two-column layout: a ruled list of books and a sage summary up to 340px wide. Each row starts with a small jacket, then title, author, current unit price and availability; quantity controls, current subtotal and removal stay with that book. Covers retain the jacket-only shadow. The heading warns that cart stock is not reserved. The summary shows units, current total, and the action to continue. An unavailable book keeps its row and a named status; the summary explains the blocker instead of offering checkout.
+
+Checkout keeps a single reading sequence: current order summary, delivery address, payment method, academic outcome, and final order action. Above 900px the order summary is a sage sidebar beside the form. At 900px and below it becomes a native disclosure before the form, with units and total always visible. Sections use top rules and Literata headings. Saved addresses are full-row radio choices showing alias, recipient, address and phone; the primary address is preselected when available. A new address opens an inline form, with two fields per row where space allows. The saved address is then selected for this purchase.
+
+Payment choices are radio rows. Card shows one transient test-number field and help text; transfer shows a short no-extra-data note. The academic simulation is a separate section with explicit approved and rejected results, their effects on order, stock and cart, and a statement that PLIEGO does not charge money. The final button includes the current total. The confirmation page leads with the order result, then order number, total, payment method/reference, item snapshot and delivery snapshot. The rejected simulation has a clear route back to the active cart.
+
 ## Components and states
 
 ### Buttons and links
@@ -105,6 +113,14 @@ All keyboard focus-visible targets receive a 3px solid focus outline with a 3px 
 
 Invalid fields expose aria-invalid and a linked Spanish error message in error color. Filter errors are 11px; auth errors are 12px and semibold. A server error is grouped in a lightly tinted paper panel with a 1px error outline and error-colored heading. The field border itself does not change color for aria-invalid. Successful auth feedback uses pine; validating/submitting feedback uses secondary ink. Loading and stale-result states retain the catalog layout, use quiet sage surfaces or skeletons, and provide status text. Empty states use a short terracotta rule and Literata heading. Request failures retain explanatory Spanish copy and retry or recovery actions.
 
+### Purchase states and recovery
+
+Cart and checkout loading use short status text in place; book-level updates keep quantity and removal in the row and report success or failure beside it. Removing a book moves keyboard focus to the resulting cart notice. An empty cart or checkout uses the same editorial empty-state rule and a catalog action. Unavailable editions remain visible with a text reason and a route to adjust the cart.
+
+Checkout validation names the missing address, payment method, card number or simulated result beside the affected choice. While the order is checked or submitted, the button names progress and repeat submission is blocked. A changed cart or address, stock conflict, or known API failure appears in a bounded error panel with a specific next action. If the result of the non-idempotent checkout is unknown, the page says a pedido may already exist, blocks another submission, and offers a read of recent orders before any new attempt. The card number is cleared after the attempt. A successful read leads to the order page; a confirmed absence returns to the current cart and permits a fresh decision.
+
+Order confirmation is a read surface, not a new checkout step. Approved and rejected simulated payments have distinct Spanish headings and explanations. The order page can also show its current state when opened later. Pending order reads, missing or inaccessible orders, and read failures each retain a useful heading or status and a catalog or retry path. Guest, expired-session and wrong-role gates explain access and offer sign-in or catalog recovery without exposing purchase data.
+
 ### Borders and radii
 
 Use 1px dividers and control outlines, with 2px corners for the page’s controls, category tiles, and buttons. Keep catalog items unboxed. The only circular shapes in the core system are the availability marker and price-slider thumbs. Reserve cover shadows for the physical jackets; use tonal surfaces and rules to organize the rest.
@@ -119,6 +135,8 @@ Use 1px dividers and control outlines, with 2px corners for the page’s control
 | 481–740px | Page insets reduce to 18px; masthead places wordmark and account links above full-width search; categories and filter fields reflow; edition grid becomes two columns. |
 | 480px and below | Filter disclosure is shown and starts collapsed; detail cover stacks above copy; auth spacing tightens; footer can wrap. |
 | 360px and below | Wordmark shrinks to 21px; language and format filters occupy full rows. |
+
+For purchase pages, the cart and order columns stack at 900px; the cart summary loses its sticky position and checkout switches to the compact order disclosure. At 560px and below, cart controls move below each book's jacket and copy, payment methods stack, and the new-address form becomes one column. Order facts remain two columns where they fit, with long references spanning the row. Purchase buttons and choice rows retain at least 44px targets, headings and totals wrap, and error/recovery text stays in document order.
 
 At reduced-motion preference, disable smooth scrolling, button transitions, and loading-skeleton animation. The product keeps content order and complete labels as layouts narrow; category and filter controls remain reachable without clipping.
 

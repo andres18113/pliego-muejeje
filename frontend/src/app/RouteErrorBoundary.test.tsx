@@ -19,14 +19,14 @@ describe("RouteErrorBoundary", () => {
 
     render(
       <QueryClientProvider client={queryClient}>
-        <SessionProvider>
+        <SessionProvider restoreOnMount={false}>
           <RouterProvider router={router} />
         </SessionProvider>
       </QueryClientProvider>,
     );
 
     expect(await screen.findByRole("heading", { name: "No pudimos mostrar esta página." })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "PLIEGO, ir al catálogo" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "PLIEGO, ir al inicio" })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Ir al catálogo" })).toBeInTheDocument();
     expect(screen.queryByText("private implementation detail")).not.toBeInTheDocument();
   });

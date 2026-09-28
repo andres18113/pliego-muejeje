@@ -37,7 +37,17 @@ public class SecurityConfiguration {
     }
 
     @Bean
+    FilterRegistrationBean<AuthSessionRequestFilter> authSessionRequestFilterRegistration(
+            AuthSessionRequestFilter authSessionRequestFilter) {
+        FilterRegistrationBean<AuthSessionRequestFilter> registration =
+                new FilterRegistrationBean<>(authSessionRequestFilter);
+        registration.setEnabled(false);
+        return registration;
+    }
+
+    @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http, TraceIdFilter traceIdFilter,
+            AuthSessionRequestFilter authSessionRequestFilter,
             SecurityProblemWriter problemWriter) throws Exception {
         AuthenticationEntryPoint entryPoint = (request, response, exception) -> {
             boolean missing = request.getHeader(HttpHeaders.AUTHORIZATION) == null;
@@ -67,8 +77,10 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint(entryPoint)
                         .accessDeniedHandler(deniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login",
+                                "/api/v1/auth/refresh", "/api/v1/auth/logout").permitAll()
                         .requestMatchers("/api/v1/catalog/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/reference/**").permitAll()
                         .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
                         .permitAll()
                         .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
@@ -81,6 +93,7 @@ public class SecurityConfiguration {
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(token -> toAuthentication(token))));
 
         http.addFilterBefore(traceIdFilter, CorsFilter.class);
+        http.addFilterAfter(authSessionRequestFilter, CorsFilter.class);
         return http.build();
     }
 
@@ -96,9 +109,10 @@ public class SecurityConfiguration {
                         .toList();
         configuration.setAllowedOrigins(origins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type",
+                AuthSessionRequestFilter.HEADER_NAME));
         configuration.setExposedHeaders(List.of("X-Trace-Id"));
-        configuration.setAllowCredentials(false);
+        configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

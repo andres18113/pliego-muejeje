@@ -152,7 +152,7 @@ class CartApiIntegrationTest {
                 new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 2,
                         new BigDecimal("19.90"), new BigDecimal("39.80"), true, null),
                 new CartItem("101", "251", "Animal Farm", "George Orwell", "PLG-LIT-002", null, 1,
-                        new BigDecimal("12.35"), new BigDecimal("12.35"), false, "EDITION_INACTIVE")),
+                        new BigDecimal("12.35"), new BigDecimal("12.35"), false, "P2042")),
                 new BigDecimal("52.15"));
 
         String body = mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))
@@ -163,7 +163,7 @@ class CartApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].currentPrice").value("19.90"))
                 .andExpect(jsonPath("$.items[0].currentSubtotal").value("39.80"))
                 .andExpect(jsonPath("$.items[1].available").value(false))
-                .andExpect(jsonPath("$.items[1].unavailabilityReason").value("EDITION_INACTIVE"))
+                .andExpect(jsonPath("$.items[1].unavailabilityReason").value("P2042"))
                 .andExpect(jsonPath("$.totalCurrent").value("52.15"))
                 .andReturn().getResponse().getContentAsString();
 
@@ -281,7 +281,8 @@ class CartApiIntegrationTest {
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.currentPrice.type").value("string"))
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.available.type").value("boolean"))
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.coverUrl.type[1]").value("null"))
-                .andExpect(jsonPath("$.components.schemas.CartItem.properties.unavailabilityReason.type[1]").value("null"));
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.unavailabilityReason.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.unavailabilityReason.enum[0]").value("P2043"));
     }
 
     private DatabaseException databaseFailure(String state) {

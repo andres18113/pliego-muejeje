@@ -19,7 +19,10 @@ public class OpenApiConfiguration {
                 .info(new Info().title("PLIEGO API").version("1.0.0")
                         .description("API de PLIEGO v1: autenticación, clientes, catálogo, inventario, carrito, pago y pedidos."))
                 .components(new Components().addSecuritySchemes("bearerJwt",
-                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
+                        new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"))
+                        .addSecuritySchemes("authSessionCookie",
+                                new SecurityScheme().type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.COOKIE).name("pliego_session")));
     }
 
     @Bean

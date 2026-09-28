@@ -17,7 +17,7 @@ Generated files are written under `covers/generated/`:
 - `manifest.json` maps ISBN, title, original cover, prior SKU, permanent SKU, R2 object key, and the corresponding public `cover_url`.
 - The normalized JSON copies contain that same delivery URL at `edicion.portada.url`; unresolved license, source, and attribution values are preserved.
 
-The script does not alter staging JSON or source WebP files and does not connect to Cloudflare or any remote service. The existing development seed reads the manifest and applies URLs to already-imported Editions with matching permanent SKUs; it does not invent missing catalog or commercial fields. Run the focused pipeline tests with:
+The preparation script does not alter staging JSON or source WebP files and does not connect to Cloudflare or any remote service. The local development seed reads the tracked bibliographic staging files, maps each ISBN-13 through `sku-registry.json`, and verifies the ISBN, permanent SKU, and title against `manifest-normalized.json` before creating or updating editions through the ADMIN REST API. It uses the manifest as the only source of CDN URLs and excludes `PLG-BK-000042`. Local development editions use a fixed USD 20.00 price and are topped up to at least five units; existing cover license and provenance fields are preserved, and missing provenance is not invented. The seed does not upload CDN objects. Run the focused pipeline tests with:
 
 ```bash
 python3 scripts/test_prepare_covers.py

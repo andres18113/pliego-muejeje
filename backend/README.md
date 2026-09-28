@@ -28,6 +28,36 @@ The backend uses the stable Spring Boot 4.1.1 line, which supports Java 25, and 
 
 ## Configuration
 
+### Reproducible local PostgreSQL 18
+
+From the repository root, use `scripts/local-db.sh` with native PostgreSQL 18,
+OpenSSL, Java 25, and Maven installed. It creates a private cluster and generated
+credentials under ignored `.local-db/`, binds PostgreSQL to `127.0.0.1:55432`,
+creates the `pliego` role/database, and checks that the server is version 18.
+No system PostgreSQL role, Docker container, or tracked secret is needed. Set
+`PLIEGO_PG18_BIN` if the version 18 binaries are elsewhere, and set
+`PLIEGO_LOCAL_PG_PORT` before the first run if port 55432 is occupied.
+
+```bash
+./scripts/local-db.sh migrate   # create/start the cluster and run all Flyway migrations
+./scripts/local-db.sh backend   # start the API; Flyway validates at startup
+./scripts/local-db.sh stop      # stop the private database when finished
+```
+
+`backend` runs in the foreground. The generated `.local-db/backend.env` is a
+shell-readable local configuration for the backend and `psql`; source it in a
+shell for manual database commands. It contains an unusable ADMIN hash by
+default. To sign in as the local ADMIN, set `PLIEGO_ADMIN_PASSWORD_HASH` in that
+file to a BCrypt hash **before the first migration**; `scripts/generate-admin-bcrypt.sh`
+can create one from an interactively entered password. CUSTOMER registration
+does not depend on ADMIN sign-in.
+
+`./scripts/local-db.sh recreate` drops only this private `pliego` database,
+creates it again, and migrates it from V001 through the current version. It
+deletes local PLIEGO data, while retaining the private cluster and credentials.
+Use `status` to inspect the database and `start` to start it without migrating.
+The generated local configuration is ignored by Git and must never be committed.
+
 Supply connection credentials and the approved initial admin seed values through the environment. The seed migration accepts a BCrypt hash, never a plaintext password. Keep these values out of Git and local logs.
 
 ```text
@@ -38,11 +68,19 @@ PLIEGO_ADMIN_EMAIL=<initial admin email>
 PLIEGO_ADMIN_PASSWORD_HASH=<BCrypt hash>
 PLIEGO_JWT_SECRET=<at least 32 random bytes; never commit>
 PLIEGO_CORS_ALLOWED_ORIGINS=<comma-separated exact origins; optional>
+PLIEGO_AUTH_COOKIE_SECURE=true
+PLIEGO_TRANSFER_BANK=<bank shown at checkout; optional>
+PLIEGO_TRANSFER_BENEFICIARY=<account holder; optional>
+PLIEGO_TRANSFER_ACCOUNT_TYPE=<account type; optional>
+PLIEGO_TRANSFER_ACCOUNT_NUMBER=<account number; optional>
+PLIEGO_TRANSFER_IDENTIFICATION=<RUC or identification; optional>
 ```
 
 For example, generate a development secret with `openssl rand -hex 32` and export the result as `PLIEGO_JWT_SECRET`. The application interprets its UTF-8 bytes as the HS256 key and rejects values shorter than 32 bytes.
 
-Authentication is available at `POST /api/v1/auth/register` and `POST /api/v1/auth/login`. The authenticated CUSTOMER profile and address routes are `GET/PUT /api/v1/me`, `GET/POST /api/v1/me/addresses`, `PUT/DELETE /api/v1/me/addresses/{addressId}`, and `PUT /api/v1/me/addresses/{addressId}/primary`. These operations derive the actor from the verified JWT and delegate business rules to the approved Database API routines. Human-facing REST errors and validation feedback are in Spanish; machine-readable codes stay stable.
+The public `GET /api/v1/reference/countries` endpoint serves ISO country codes with Spanish names from the Java locale reference. `GET /api/v1/reference/transfer-details` serves the transfer instructions from the configuration above. Local defaults are demonstration values; set all five transfer variables for any non-demo deployment.
+
+Authentication is available at `POST /api/v1/auth/register` and `POST /api/v1/auth/login`. Login returns a 30-minute bearer JWT and sets a host-only, `HttpOnly`, `Secure`, `SameSite=Strict` refresh cookie. `POST /api/v1/auth/refresh` restores and rotates the cookie-backed session; the session expires absolutely after 30 days. `POST /api/v1/auth/logout` revokes the session and expires the cookie. PostgreSQL stores only a SHA-256 digest of the opaque refresh credential. Keep `PLIEGO_AUTH_COOKIE_SECURE=true` in deployed HTTPS environments; set it to `false` only for local plain-HTTP development. If the frontend uses a separate origin, list its exact origin in `PLIEGO_CORS_ALLOWED_ORIGINS`; credentialed CORS does not allow wildcard origins. The authenticated CUSTOMER profile and address routes are `GET/PUT /api/v1/me`, `GET/POST /api/v1/me/addresses`, `PUT/DELETE /api/v1/me/addresses/{addressId}`, and `PUT /api/v1/me/addresses/{addressId}/primary`. These operations derive the actor from the verified JWT and delegate business rules to the approved Database API routines. Human-facing REST errors and validation feedback are in Spanish; machine-readable codes stay stable.
 
 The public catalog routes are `GET /api/v1/catalog/categories`, `GET /api/v1/catalog/editions`, and `GET /api/v1/catalog/editions/{editionId}`. The category index includes only active categories with publicly listed editions and returns each category's slug, display name, and optional parent slug. A known inactive category used as an edition-search filter returns `409` with wire code `P2022` (symbolic mapping `CATEGORY_INACTIVE`); a syntactically valid unknown slug retains the documented empty-page response. See the [public catalog API amendment](../docs/api-amendments/0001-public-catalog-categories-v1.0.1.md) for the complete contract.
 
@@ -71,4 +109,4 @@ mvn clean verify
 mvn spring-boot:run
 ```
 
-PostgreSQL 18.x is the approved database baseline. Migrations V001–V019 remain byte-for-byte identical to the approved archive; V020 onward contain additive corrections and contract amendments, including V024's separation of cover delivery URLs from unresolved licensing metadata. The handoff and OpenAPI links are also available from the [repository README](../README.md).
+PostgreSQL 18.x is the approved database baseline. Migrations V001–V019 remain byte-for-byte identical to the approved archive; V020 onward contain additive corrections and contract amendments, including V024's separation of cover delivery URLs from unresolved licensing metadata. V025 makes cart-item `unavailabilityReason` report the canonical SQLSTATE (`P2043`, `P2042`, `P3002`). Domain errors publish the PostgreSQL SQLSTATE as the Problem Details `code`; symbolic names are documentation labels only. See the [canonical domain error codes amendment](../docs/api-amendments/0003-canonical-domain-error-codes-v1.0.3.md). The handoff and OpenAPI links are also available from the [repository README](../README.md).

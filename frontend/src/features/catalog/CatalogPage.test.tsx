@@ -6,13 +6,13 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { SessionProvider } from "@/app/session";
 import { CatalogPage } from "./CatalogPage";
 
-function renderCatalog(initialEntry = "/") {
+function renderCatalog(initialEntry = "/catalog") {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  const router = createMemoryRouter([{ path: "/", element: <CatalogPage /> }], { initialEntries: [initialEntry] });
+  const router = createMemoryRouter([{ path: "/catalog", element: <CatalogPage /> }], { initialEntries: [initialEntry] });
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <SessionProvider>
+      <SessionProvider restoreOnMount={false}>
         <RouterProvider router={router} />
       </SessionProvider>
     </QueryClientProvider>,
@@ -47,7 +47,7 @@ describe("CatalogPage", () => {
       return jsonResponse({}, 404);
     }));
 
-    renderCatalog("/?category=bad%2Fslug&minPrice=abc&maxPrice=-8&language=english&format=OTHER&page=1e3&pageSize=51");
+    renderCatalog("/catalog?category=bad%2Fslug&minPrice=abc&maxPrice=-8&language=english&format=OTHER&page=1e3&pageSize=51");
 
     await waitFor(() => expect(requestedUrl).toBeDefined());
     expect(requestedUrl?.searchParams.has("category")).toBe(false);
@@ -106,7 +106,7 @@ describe("CatalogPage", () => {
   });
 
   it("renders the CDN URL returned by catalog search when cover provenance is unresolved", async () => {
-    const coverUrl = "https://covers.pliegolibros.com/covers/editions/PLG-BK-000001.webp";
+    const coverUrl = "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(requestUrl(input), "http://localhost");
       if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
@@ -167,7 +167,7 @@ describe("CatalogPage", () => {
       return jsonResponse({}, 404);
     }));
 
-    renderCatalog("/?q=Julio&category=inactiva");
+    renderCatalog("/catalog?q=Julio&category=inactiva");
 
     const results = await screen.findByRole("region", { name: "Resultados" });
     expect(await within(results).findByRole("alert")).toHaveTextContent("La categoría ya no está activa.");

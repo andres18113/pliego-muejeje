@@ -38,7 +38,7 @@ export function writeCatalogCriteria(criteria: CatalogCriteria) {
 
 export function catalogHref(criteria: CatalogCriteria) {
   const query = writeCatalogCriteria(criteria).toString();
-  return query ? `/?${query}` : "/";
+  return query ? `/catalog?${query}` : "/catalog";
 }
 
 export function hasActiveFilters(criteria: CatalogCriteria) {
@@ -71,16 +71,17 @@ export function safeExternalHttpHref(candidate: string | null | undefined) {
 
 export function safeCatalogReturnHref(candidate: string | null | undefined) {
   if (!candidate || !candidate.startsWith("/") || candidate.startsWith("//") || candidate.includes("\\")) {
-    return "/";
+    return "/catalog";
   }
   try {
     const parsed = new URL(candidate, window.location.origin);
-    const isCatalogPath = parsed.pathname === "/" || /^\/catalog\/editions\/[1-9][0-9]*\/?$/.test(parsed.pathname);
+    const isCatalogPath = parsed.pathname === "/" || parsed.pathname === "/catalog"
+      || /^\/catalog\/editions\/[1-9][0-9]*\/?$/.test(parsed.pathname);
     return parsed.origin === window.location.origin && isCatalogPath
       ? `${parsed.pathname}${parsed.search}${parsed.hash}`
-      : "/";
+      : "/catalog";
   } catch {
-    return "/";
+    return "/catalog";
   }
 }
 

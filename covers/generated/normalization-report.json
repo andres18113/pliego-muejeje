@@ -1,0 +1,1149 @@
+{
+  "schema": "pliego-cover-normalization-v3",
+  "target": {
+    "width": 600,
+    "height": 900,
+    "aspect_ratio": "2:3",
+    "format": "webp",
+    "quality": 86
+  },
+  "excluded": [
+    {
+      "sku": "PLG-BK-000042",
+      "title": "Apología de Sócrates",
+      "reason": "Excluded from normalized catalog"
+    }
+  ],
+  "records": [
+    {
+      "sku": "PLG-BK-000001",
+      "title": "El retrato de Dorian Gray",
+      "source": "Literatura/el-retrato-de-dorian-gray.webp",
+      "output": "covers/editions/v2/PLG-BK-000001-52ead14866be.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp",
+      "sha256": "52ead14866bebc448e4f210d9b772b1b8c834450ed0b05db6c2d64774d0eb966",
+      "original_size": {
+        "width": 600,
+        "height": 900
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000002",
+      "title": "El extranjero",
+      "source": "Literatura/el-extranjero.webp",
+      "output": "covers/editions/v2/PLG-BK-000002-ca452ee580f4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000002-ca452ee580f4.webp",
+      "sha256": "ca452ee580f401d1566b24b857f43ae0ca6897d7e260f953098d256b648c92da",
+      "original_size": {
+        "width": 362,
+        "height": 552
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.016304,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000003",
+      "title": "Métodos numéricos para ingenieros",
+      "source": "Matemáticas/metodos-numericos-para-ingenieros.webp",
+      "output": "covers/editions/v2/PLG-BK-000003-6249aab14969.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000003-6249aab14969.webp",
+      "sha256": "6249aab1496907c640fa9fd6655fec6f6b55b4cd26b477668b2d953c2dba3868",
+      "original_size": {
+        "width": 124,
+        "height": 160
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000004",
+      "title": "Álgebra lineal y sus aplicaciones",
+      "source": "Matemáticas/algebra-lineal-y-su-aplicacion.webp",
+      "output": "covers/editions/v2/PLG-BK-000004-79eace1d30c0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000004-79eace1d30c0.webp",
+      "sha256": "79eace1d30c0537fbf556af818fe0287e3e9fa98011513360cf3eb33e4f9ed6e",
+      "original_size": {
+        "width": 516,
+        "height": 660
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000005",
+      "title": "Análisis numérico",
+      "source": "Matemáticas/analisis-numerico-richard-l-burden-j-douglas-faires.webp",
+      "output": "covers/editions/v2/PLG-BK-000005-41b83fcf3974.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000005-41b83fcf3974.webp",
+      "sha256": "41b83fcf39742c35b8987ed107068c135d0256b601fdf022b5d4c1c02e0a4220",
+      "original_size": {
+        "width": 398,
+        "height": 512
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000006",
+      "title": "Álgebra lineal",
+      "source": "Matemáticas/algebra-lineal-una-introduccion-moderna-4-edicion.webp",
+      "output": "covers/editions/v2/PLG-BK-000006-942d503cab30.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000006-942d503cab30.webp",
+      "sha256": "942d503cab307a349d77f69c3a2375ce6e7fa76830dc23b15d196fe329d91289",
+      "original_size": {
+        "width": 521,
+        "height": 660
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000007",
+      "title": "Ecuaciones diferenciales con aplicaciones de modelado",
+      "source": "Matemáticas/ecuaciones-diferenciales.webp",
+      "output": "covers/editions/v2/PLG-BK-000007-d2e55c4175ca.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000007-d2e55c4175ca.webp",
+      "sha256": "d2e55c4175ca61b075e19d5386e015b5711996c14a3c95a234f995f4550ffa9f",
+      "original_size": {
+        "width": 383,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000008",
+      "title": "Geometría y trigonometría Baldor",
+      "source": "Matemáticas/geometria-trigonemetria-baldor.webp",
+      "output": "covers/editions/v2/PLG-BK-000008-0bb82992c0eb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000008-0bb82992c0eb.webp",
+      "sha256": "0bb82992c0ebdd9d9e9b5fd6592971e3e0d81db30f71c259c290088e96b6f8ba",
+      "original_size": {
+        "width": 850,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000009",
+      "title": "Álgebra Baldor",
+      "source": "Matemáticas/alegebra-de-baldor.webp",
+      "output": "covers/editions/v2/PLG-BK-000009-4c913e2c7914.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000009-4c913e2c7914.webp",
+      "sha256": "4c913e2c7914cdd731fdac4b2e2c10713462eb46385e21b72816a8f1eed86f1e",
+      "original_size": {
+        "width": 851,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000010",
+      "title": "Análisis matemático IV",
+      "source": "Matemáticas/ANALISIS-MATEMATICO-IV-Calculo-Vectorial.webp",
+      "output": "covers/editions/v2/PLG-BK-000010-9edf89eab2f1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000010-9edf89eab2f1.webp",
+      "sha256": "9edf89eab2f103be36735b2842737c7222ae8034dfdcb047fbdbc476d4786127",
+      "original_size": {
+        "width": 270,
+        "height": 354
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000011",
+      "title": "Cálculo y análisis vectorial",
+      "source": "Matemáticas/Cálculo-analisis-vectorial.webp",
+      "output": "covers/editions/v2/PLG-BK-000011-48509a85c734.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000011-48509a85c734.webp",
+      "sha256": "48509a85c734f6e5961bfb02f6f87e89f3e682b186d5aff113259bd3d546a65a",
+      "original_size": {
+        "width": 709,
+        "height": 1005
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000012",
+      "title": "Problemas resueltos de álgebra lineal",
+      "source": "Matemáticas/problemas-resueltps-de-al.webp",
+      "output": "covers/editions/v2/PLG-BK-000012-0b128b7cc271.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000012-0b128b7cc271.webp",
+      "sha256": "0b128b7cc27175b414a93038733bb50c2e2f469bb4cd0045a6973efe862e513e",
+      "original_size": {
+        "width": 800,
+        "height": 1135
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000013",
+      "title": "La ciudad y los perros",
+      "source": "Literatura/la-ciudad-y-los-perros.webp",
+      "output": "covers/editions/v2/PLG-BK-000013-3d9a3ffe7035.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000013-3d9a3ffe7035.webp",
+      "sha256": "3d9a3ffe70352901d74e80de226c95a7c88f74462c757dae0814efec6ed31501",
+      "original_size": {
+        "width": 418,
+        "height": 660
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.05,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000014",
+      "title": "Cien años de soledad",
+      "source": "Literatura/cien-anos-de-soledad.webp",
+      "output": "covers/editions/v2/PLG-BK-000014-b456b439611b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000014-b456b439611b.webp",
+      "sha256": "b456b439611b24795fc5ed39e09789c27f4cb4422f219e7b44df723da855be1f",
+      "original_size": {
+        "width": 381,
+        "height": 588
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.027211,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000015",
+      "title": "Madame Bovary",
+      "source": "Literatura/madame-bovary.webp",
+      "output": "covers/editions/v2/PLG-BK-000015-219ca801124c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000015-219ca801124c.webp",
+      "sha256": "219ca801124c5d3b96f27b3150802317a1b1bbfc5f6863166ebd08f363553562",
+      "original_size": {
+        "width": 700,
+        "height": 980
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000016",
+      "title": "Así habló Zaratustra",
+      "source": "Filosofia/asi-hablo-zaratustra.webp",
+      "output": "covers/editions/v2/PLG-BK-000016-d230fc853c6f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000016-d230fc853c6f.webp",
+      "sha256": "d230fc853c6ffc877363b14fa763db8f7d1e001b37bde8bf3b4f6386afe42a12",
+      "original_size": {
+        "width": 865,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000017",
+      "title": "Crítica de la razón práctica",
+      "source": "Filosofia/critica-de-la-razon-practica.webp",
+      "output": "covers/editions/v2/PLG-BK-000017-41c9a4ae0f39.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000017-41c9a4ae0f39.webp",
+      "sha256": "41c9a4ae0f3941fc3a3860052116aaf9dba5bce2be5aceb0b4dc1db9404b2e21",
+      "original_size": {
+        "width": 600,
+        "height": 836
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000018",
+      "title": "Crítica de la razón pura",
+      "source": "Filosofia/critica-de-la-razon-pura.webp",
+      "output": "covers/editions/v2/PLG-BK-000018-9795eea29c87.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000018-9795eea29c87.webp",
+      "sha256": "9795eea29c871726380ed81165b3b730081e05bba2f607c64ea651152850eeaf",
+      "original_size": {
+        "width": 600,
+        "height": 836
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000019",
+      "title": "La Ilíada",
+      "source": "Literatura/la-iliada.webp",
+      "output": "covers/editions/v2/PLG-BK-000019-8039b46f6a32.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000019-8039b46f6a32.webp",
+      "sha256": "8039b46f6a323799676fe47e4c3efc01b46aa97b043f2a551f3199e477746612",
+      "original_size": {
+        "width": 359,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000020",
+      "title": "Meditaciones metafísicas",
+      "source": "Filosofia/meditaciones-metafisicas.webp",
+      "output": "covers/editions/v2/PLG-BK-000020-0eb2ac315613.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000020-0eb2ac315613.webp",
+      "sha256": "0eb2ac315613a56a73b4689790cdaf80f4cafa6db8fa612f3542ca1e4a97e947",
+      "original_size": {
+        "width": 600,
+        "height": 836
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000021",
+      "title": "Moby Dick",
+      "source": "Literatura/moby-dick.webp",
+      "output": "covers/editions/v2/PLG-BK-000021-86bb100040cb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000021-86bb100040cb.webp",
+      "sha256": "86bb100040cb6ed212db0e4dcb6816ee09705d19b090096135e4331b0e067583",
+      "original_size": {
+        "width": 359,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000022",
+      "title": "Ética a Nicómaco",
+      "source": "Filosofia/etica-a-nicomaco.webp",
+      "output": "covers/editions/v2/PLG-BK-000022-3b1726043bc7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000022-3b1726043bc7.webp",
+      "sha256": "3b1726043bc7dc6e7bcea6b839b8e2a3d52b8ff76fcc5dfa6ec9acbd38aa0edc",
+      "original_size": {
+        "width": 359,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000023",
+      "title": "Sobre la libertad",
+      "source": "Filosofia/sobre-la-libertad.webp",
+      "output": "covers/editions/v2/PLG-BK-000023-d6ead8529220.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000023-d6ead8529220.webp",
+      "sha256": "d6ead8529220e75ef54d822f0768eb192548a6bb107a417fb358101ed2ec80f9",
+      "original_size": {
+        "width": 350,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.048571,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000024",
+      "title": "El gran Gatsby",
+      "source": "Literatura/el-gran-gatsby.webp",
+      "output": "covers/editions/v2/PLG-BK-000024-edb8b7717a8b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000024-edb8b7717a8b.webp",
+      "sha256": "edb8b7717a8b534c5d320e56b266fdf265dc9c41c59c4c7fca3c4dd313ff9f85",
+      "original_size": {
+        "width": 367,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000025",
+      "title": "Más allá del bien y del mal",
+      "source": "Filosofia/mas-alla-del-bien-y-del-mal.webp",
+      "output": "covers/editions/v2/PLG-BK-000025-41cf64eb537a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000025-41cf64eb537a.webp",
+      "sha256": "41cf64eb537ac88817a532eebae3d028c30b0c079dbb4ad4662cd24d89e846e0",
+      "original_size": {
+        "width": 800,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000026",
+      "title": "La genealogía de la moral",
+      "source": "Filosofia/genealogia-de-la-moral.webp",
+      "output": "covers/editions/v2/PLG-BK-000026-26fcbd0dabe9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000026-26fcbd0dabe9.webp",
+      "sha256": "26fcbd0dabe990beaccb809a8a3ec6d8600dc6634594c7547b0caa1c19b2ab9c",
+      "original_size": {
+        "width": 656,
+        "height": 923
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000027",
+      "title": "Rayuela",
+      "source": "Literatura/rayuela.webp",
+      "output": "covers/editions/v2/PLG-BK-000027-7a8520bbdab9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000027-7a8520bbdab9.webp",
+      "sha256": "7a8520bbdab95e320aee8deb03ca201c7ca230a07e2b23060161298f51f06bde",
+      "original_size": {
+        "width": 753,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000028",
+      "title": "Análisis matemático",
+      "source": "Matemáticas/analisis-matematico-apostol.webp",
+      "output": "covers/editions/v2/PLG-BK-000028-5c3053a00867.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000028-5c3053a00867.webp",
+      "sha256": "5c3053a008674ab2ac0b8d35cc8f76c1e7f9fe5747f57de337827a496572d04d",
+      "original_size": {
+        "width": 300,
+        "height": 450
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000029",
+      "title": "Don Quijote de la Mancha",
+      "source": "Literatura/don-quijote.webp",
+      "output": "covers/editions/v2/PLG-BK-000029-37c3121f9eca.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000029-37c3121f9eca.webp",
+      "sha256": "37c3121f9ecae5cffa8c23cfa844c1767ec996e8b38fd10e440f3dc6d3ba6586",
+      "original_size": {
+        "width": 337,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.011869,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000030",
+      "title": "La casa de los espíritus",
+      "source": "Literatura/la-casa-de-los-espiritus.webp",
+      "output": "covers/editions/v2/PLG-BK-000030-c78433dbae44.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000030-c78433dbae44.webp",
+      "sha256": "c78433dbae442788ac5c7c5d143d3f1f1368059dd3b158ef815066327eadec93",
+      "original_size": {
+        "width": 353,
+        "height": 539
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.016698,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000031",
+      "title": "El amor en los tiempos del cólera",
+      "source": "Literatura/el-amor-en-tiempos-de-colera.webp",
+      "output": "covers/editions/v2/PLG-BK-000031-ef11f23f18e2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000031-ef11f23f18e2.webp",
+      "sha256": "ef11f23f18e284d04618e34444dcd9fa038956320970a42855a59b0be660afb5",
+      "original_size": {
+        "width": 364,
+        "height": 549
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.005464,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000032",
+      "title": "Soldados de Salamina",
+      "source": "Literatura/soldados-de-salamina.webp",
+      "output": "covers/editions/v2/PLG-BK-000032-12d4196d1f21.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000032-12d4196d1f21.webp",
+      "sha256": "12d4196d1f218366bc1129b3fa22dea6780c2b8bba2eeadcdf6d24e0d1718f27",
+      "original_size": {
+        "width": 733,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000033",
+      "title": "Orgullo y prejuicio",
+      "source": "Literatura/orgullo-y-prejuicio.webp",
+      "output": "covers/editions/v2/PLG-BK-000033-541b16122de7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000033-541b16122de7.webp",
+      "sha256": "541b16122de79cc36275bbcad75a984e1b769b71d96a931caec385f34b4a3218",
+      "original_size": {
+        "width": 364,
+        "height": 549
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.005464,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000034",
+      "title": "Álgebra lineal",
+      "source": "Matemáticas/algebra-lineal-serie-schaum.webp",
+      "output": "covers/editions/v2/PLG-BK-000034-9c9fd78eb909.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000034-9c9fd78eb909.webp",
+      "sha256": "9c9fd78eb90978a4fbb04460afb1eda3983881fa9fa7922b4deeb531cbb58558",
+      "original_size": {
+        "width": 519,
+        "height": 660
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000035",
+      "title": "Anna Karénina",
+      "source": "Literatura/anna-karenina.webp",
+      "output": "covers/editions/v2/PLG-BK-000035-b62b28e2ae01.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000035-b62b28e2ae01.webp",
+      "sha256": "b62b28e2ae01f31a962af00602d4dd78b10122dee322d7f4256fa806838836ed",
+      "original_size": {
+        "width": 777,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.028333,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000036",
+      "title": "Romeo y Julieta",
+      "source": "Literatura/romeo-y-julieta.webp",
+      "output": "covers/editions/v2/PLG-BK-000036-7e4f0adf170d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000036-7e4f0adf170d.webp",
+      "sha256": "7e4f0adf170d2a52ca3a09c0f7ba974c417f5591142b7ac32938154edb203807",
+      "original_size": {
+        "width": 852,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000037",
+      "title": "Meditaciones",
+      "source": "Filosofia/meditaciones.webp",
+      "output": "covers/editions/v2/PLG-BK-000037-c3fa6daeb218.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000037-c3fa6daeb218.webp",
+      "sha256": "c3fa6daeb2187149afa6fa57f561e5b0d1c01ec10749d678c8df16d359f7df1d",
+      "original_size": {
+        "width": 861,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000038",
+      "title": "Crimen y castigo",
+      "source": "Literatura/crimen-y-castigo.webp",
+      "output": "covers/editions/v2/PLG-BK-000038-ff38aafc3811.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000038-ff38aafc3811.webp",
+      "sha256": "ff38aafc3811020380914e6cb86ba79d8b5204f2c58818046a780ad1e1d541e0",
+      "original_size": {
+        "width": 359,
+        "height": 500
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000039",
+      "title": "Pedro Páramo",
+      "source": "Literatura/pedro-paramo.webp",
+      "output": "covers/editions/v2/PLG-BK-000039-a27819d45f6e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000039-a27819d45f6e.webp",
+      "sha256": "a27819d45f6ef3c4e24b0ea0f159ac5a814fd6d4637e6b8362dd4de0dec53f6b",
+      "original_size": {
+        "width": 261,
+        "height": 420
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000040",
+      "title": "Crónica de una muerte anunciada",
+      "source": "Literatura/cronica-de-una-muerte-anunciada.webp",
+      "output": "covers/editions/v2/PLG-BK-000040-e2551aada44a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000040-e2551aada44a.webp",
+      "sha256": "e2551aada44a8c33ee0163ed25060f6d74e1f33008863a496f389ad071e60fda",
+      "original_size": {
+        "width": 500,
+        "height": 760
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.013158,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000041",
+      "title": "Tractatus Logico-Philosophicus",
+      "source": "Filosofia/tractatus-logico-philosophicus.webp",
+      "output": "covers/editions/v2/PLG-BK-000041-3499d99d15ce.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000041-3499d99d15ce.webp",
+      "sha256": "3499d99d15cefc9354fbc2c350b4cbff690cb038eb4ce15c317013f4ee9ee65d",
+      "original_size": {
+        "width": 600,
+        "height": 845
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000043",
+      "title": "Inferencia bayesiana y el método de máxima entropía",
+      "source": "Matemáticas/inferencia-bayesana.webp",
+      "output": "covers/editions/v2/PLG-BK-000043-eb2957751239.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000043-eb2957751239.webp",
+      "sha256": "eb2957751239d2eb9f06f0aa38fd9d68541ee52158dc1d11b814c2977178833c",
+      "original_size": {
+        "width": 300,
+        "height": 450
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000044",
+      "title": "Introducción al álgebra lineal",
+      "source": "Matemáticas/Introducción-al-algebra-lineal.webp",
+      "output": "covers/editions/v2/PLG-BK-000044-204968142c57.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000044-204968142c57.webp",
+      "sha256": "204968142c573e0670b9e32edbe9e6027eddc17f5a54e762c5167aa242b672ff",
+      "original_size": {
+        "width": 300,
+        "height": 450
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000045",
+      "title": "El mito de Sísifo",
+      "source": "Literatura/el-mito-de-sisifo.webp",
+      "output": "covers/editions/v2/PLG-BK-000045-d2fd169f1556.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000045-d2fd169f1556.webp",
+      "sha256": "d2fd169f155668dc352550bf12a1277331aabfca5b46c0059e81d8c58807f220",
+      "original_size": {
+        "width": 672,
+        "height": 1024
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.015625,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000046",
+      "title": "Matemática estructural",
+      "source": "Matemáticas/Matematica-Estructural.webp",
+      "output": "covers/editions/v2/PLG-BK-000046-16e1f40ce870.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000046-16e1f40ce870.webp",
+      "sha256": "16e1f40ce870cec82ad24066d14e1fbd3cd5731e099f04babf0f21885fdf6171",
+      "original_size": {
+        "width": 600,
+        "height": 855
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.05,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000047",
+      "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+      "source": "Matemáticas/ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera-william-e-boyce-richard-c-diprima.webp",
+      "output": "covers/editions/v2/PLG-BK-000047-aa33471e3d31.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000047-aa33471e3d31.webp",
+      "sha256": "aa33471e3d31a0652dd4c73fe1d87f59aa5787d5d4430b74713c1336f6aafc12",
+      "original_size": {
+        "width": 382,
+        "height": 512
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000048",
+      "title": "Métodos numéricos aplicados a la ingeniería",
+      "source": "Matemáticas/metodos-numericos-aplicados-a-la-ingenieria-antonio-nieves-hurtado-federico-c-dominguez-sanchez.webp",
+      "output": "covers/editions/v2/PLG-BK-000048-3f3528aa2b7d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000048-3f3528aa2b7d.webp",
+      "sha256": "3f3528aa2b7d3d3eea6e17863a276ec0da78f9684f4ca642edeaef9781640385",
+      "original_size": {
+        "width": 485,
+        "height": 633
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000049",
+      "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+      "source": "Matemáticas/ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera.webp",
+      "output": "covers/editions/v2/PLG-BK-000049-ff9728f0ddef.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000049-ff9728f0ddef.webp",
+      "sha256": "ff9728f0ddef12636ddccba446df394f936377df5b93e0046ccff21256706114",
+      "original_size": {
+        "width": 127,
+        "height": 160
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000050",
+      "title": "Ficciones",
+      "source": "Literatura/ficciones.webp",
+      "output": "covers/editions/v2/PLG-BK-000050-beb18072d331.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000050-beb18072d331.webp",
+      "sha256": "beb18072d331c06e21966d3df7d5fd87a14ba04d4518a2c941536d699fb45621",
+      "original_size": {
+        "width": 640,
+        "height": 983
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.023398,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000051",
+      "title": "Análisis matemático II",
+      "source": "Matemáticas/analisis-matematico-ii.webp",
+      "output": "covers/editions/v2/PLG-BK-000051-319fe6c039de.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000051-319fe6c039de.webp",
+      "sha256": "319fe6c039def7b5d7bc28348acccff2b20292cdedb0818ddcb4551463707e43",
+      "original_size": {
+        "width": 270,
+        "height": 353
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000052",
+      "title": "Análisis matemático I",
+      "source": "Matemáticas/analisis-matematico-i-calculo-diferencial-moises-lazaro-carrion.webp",
+      "output": "covers/editions/v2/PLG-BK-000052-b80e012ee00e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000052-b80e012ee00e.webp",
+      "sha256": "b80e012ee00e7808227fc42dc4923fc0b5b1973ba59714aa483078ac904cc7a5",
+      "original_size": {
+        "width": 600,
+        "height": 800
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000053",
+      "title": "Discurso del método",
+      "source": "Filosofia/discurso-del-metodo.webp",
+      "output": "covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "sha256": "700e1f21cf5821498050663b03195f20b726b383a2d8c1a4c9aab983c622ad6b",
+      "original_size": {
+        "width": 600,
+        "height": 835
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "MANUAL_FILL",
+      "padded": false,
+      "focal_x": 0.5,
+      "focal_y": 0.5,
+      "status": "OVERRIDE"
+    },
+    {
+      "sku": "PLG-BK-000054",
+      "title": "Los miserables",
+      "source": "Literatura/los-miserables.webp",
+      "output": "covers/editions/v2/PLG-BK-000054-fe0fdb7fdd82.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000054-fe0fdb7fdd82.webp",
+      "sha256": "fe0fdb7fdd82c05b907dfb8b727c95eefd9b5db1d5c3cd87fafc9d946e72015b",
+      "original_size": {
+        "width": 729,
+        "height": 1200
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CONTAIN",
+      "padded": true,
+      "aspect_crop_fraction": 0.0,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000055",
+      "title": "El príncipe",
+      "source": "Filosofia/el-principe.webp",
+      "output": "covers/editions/v2/PLG-BK-000055-78a9bcec4411.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000055-78a9bcec4411.webp",
+      "sha256": "78a9bcec44111ce2f029b02951cd09da0a17ae5d527331daa701c94c54753ea1",
+      "original_size": {
+        "width": 600,
+        "height": 907
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.007718,
+      "status": "AUTO"
+    },
+    {
+      "sku": "PLG-BK-000056",
+      "title": "La República",
+      "source": "Filosofia/la-republica.webp",
+      "output": "covers/editions/v2/PLG-BK-000056-6d9506beae9e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000056-6d9506beae9e.webp",
+      "sha256": "6d9506beae9ef3a743d0177b9f2105e06ca53f807daedbbd648d37b2bd11cfb5",
+      "original_size": {
+        "width": 600,
+        "height": 909
+      },
+      "normalized_size": {
+        "width": 600,
+        "height": 900
+      },
+      "mode": "CROP_OR_EXACT",
+      "padded": false,
+      "aspect_crop_fraction": 0.009901,
+      "status": "AUTO"
+    }
+  ],
+  "summary": {
+    "source_records": 56,
+    "normalized": 55,
+    "excluded": 1,
+    "manual_fill": 21,
+    "manual_contain": 0,
+    "crop_or_exact": 20,
+    "contained": 14
+  }
+}

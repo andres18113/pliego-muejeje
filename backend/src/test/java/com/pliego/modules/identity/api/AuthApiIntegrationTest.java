@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.sql.SQLException;
 import java.nio.charset.StandardCharsets;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
 import java.util.Map;
@@ -44,6 +45,7 @@ import com.nimbusds.jose.jwk.source.ImmutableSecret;
 import com.pliego.modules.identity.gateway.IdentityGateway;
 import com.pliego.modules.identity.gateway.RegistrationResult;
 import com.pliego.modules.identity.gateway.UserAuthData;
+import com.pliego.modules.identity.gateway.UserSessionData;
 
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -193,6 +195,14 @@ class AuthApiIntegrationTest {
                 .andExpect(jsonPath("$.user.role").value("CUSTOMER"))
                 .andReturn();
 
+        String sessionCookie = response.getResponse().getHeader("Set-Cookie");
+        org.junit.jupiter.api.Assertions.assertNotNull(sessionCookie);
+        org.junit.jupiter.api.Assertions.assertTrue(sessionCookie.contains("HttpOnly"));
+        org.junit.jupiter.api.Assertions.assertTrue(sessionCookie.contains("Secure"));
+        org.junit.jupiter.api.Assertions.assertTrue(sessionCookie.contains("SameSite=Strict"));
+        org.junit.jupiter.api.Assertions.assertTrue(sessionCookie.contains("Path=/api/v1/auth"));
+        org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString().contains("refreshToken"));
+
         LoginResponse login = objectMapper.readValue(response.getResponse().getContentAsString(), LoginResponse.class);
         Jwt jwt = jwtDecoder.decode(login.accessToken());
         org.junit.jupiter.api.Assertions.assertEquals("pliego", jwt.getClaimAsString("iss"));
@@ -209,6 +219,74 @@ class AuthApiIntegrationTest {
         mvc.perform(get("/api/v1/admin/role-check").header("Authorization", "Bearer " + login.accessToken()))
                 .andExpect(status().isForbidden())
                 .andExpect(jsonPath("$.code").value("ACCESS_DENIED"));
+    }
+
+    @Test
+    void refreshRotatesPersistentCredentialAndLogoutRevokesIt() throws Exception {
+        identityGateway.authData.put("ana@example.com", activeUser("CUSTOMER"));
+        jakarta.servlet.http.Cookie firstCookie = cookieFrom(mvc.perform(post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON).content(LOGIN_JSON))
+                .andExpect(status().isOk()).andReturn().getResponse().getHeader("Set-Cookie"));
+
+        var refreshed = mvc.perform(post("/api/v1/auth/refresh").cookie(firstCookie)
+                        .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.expiresInSeconds").value(1800))
+                .andExpect(jsonPath("$.user.role").value("CUSTOMER"))
+                .andReturn();
+        jakarta.servlet.http.Cookie secondCookie = cookieFrom(refreshed.getResponse().getHeader("Set-Cookie"));
+        org.junit.jupiter.api.Assertions.assertNotEquals(firstCookie.getValue(), secondCookie.getValue());
+
+        var retried = mvc.perform(post("/api/v1/auth/refresh").cookie(firstCookie)
+                        .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
+                .andExpect(status().isOk())
+                .andReturn();
+        jakarta.servlet.http.Cookie retriedCookie = cookieFrom(retried.getResponse().getHeader("Set-Cookie"));
+        org.junit.jupiter.api.Assertions.assertEquals(secondCookie.getValue(), retriedCookie.getValue());
+
+        mvc.perform(post("/api/v1/auth/logout").cookie(firstCookie)
+                        .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
+                .andExpect(status().isNoContent())
+                .andExpect(result -> org.junit.jupiter.api.Assertions.assertTrue(
+                        result.getResponse().getHeader("Set-Cookie").contains("Max-Age=0")));
+        mvc.perform(post("/api/v1/auth/refresh").cookie(secondCookie)
+                .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
+                .andExpect(status().isNoContent());
+        mvc.perform(post("/api/v1/auth/refresh").cookie(firstCookie)
+                .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void cookieSessionEndpointsRejectRequestsWithoutBrowserMarker() throws Exception {
+        mvc.perform(post("/api/v1/auth/refresh"))
+                .andExpect(status().isForbidden())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
+                .andExpect(jsonPath("$.code").value("ACCESS_DENIED"));
+        mvc.perform(post("/api/v1/auth/logout"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("ACCESS_DENIED"));
+    }
+
+    @Test
+    void expiredPersistentCredentialIsRemovedAndCannotRestoreUser() throws Exception {
+        identityGateway.authData.put("ana@example.com", activeUser("CUSTOMER"));
+        jakarta.servlet.http.Cookie cookie = cookieFrom(mvc.perform(post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON).content(LOGIN_JSON))
+                .andExpect(status().isOk()).andReturn().getResponse().getHeader("Set-Cookie"));
+        identityGateway.expireSessions();
+
+        mvc.perform(post("/api/v1/auth/refresh").cookie(cookie)
+                        .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
+                .andExpect(status().isNoContent())
+                .andExpect(result -> org.junit.jupiter.api.Assertions.assertTrue(
+                        result.getResponse().getHeader("Set-Cookie").contains("Max-Age=0")));
+    }
+
+    private jakarta.servlet.http.Cookie cookieFrom(String setCookie) {
+        String nameAndValue = setCookie.substring(0, setCookie.indexOf(';'));
+        String[] pair = nameAndValue.split("=", 2);
+        return new jakarta.servlet.http.Cookie(pair[0], pair[1]);
     }
 
     @Test
@@ -339,7 +417,15 @@ class AuthApiIntegrationTest {
                 .andExpect(jsonPath("$.openapi").value("3.1.2"))
                 .andExpect(jsonPath("$.paths['/api/v1/auth/register'].post").exists())
                 .andExpect(jsonPath("$.paths['/api/v1/auth/login'].post").exists())
-                .andExpect(jsonPath("$.components.securitySchemes.bearerJwt.scheme").value("bearer"));
+                .andExpect(jsonPath("$.paths['/api/v1/auth/refresh'].post.responses.204").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/auth/refresh'].post.responses.204.content").doesNotExist())
+                .andExpect(jsonPath("$.paths['/api/v1/auth/refresh'].post.responses.200.headers['Set-Cookie']").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/auth/refresh'].post.parameters[0].name")
+                        .value("X-PLIEGO-SESSION-REQUEST"))
+                .andExpect(jsonPath("$.paths['/api/v1/auth/logout'].post.responses.204").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/auth/refresh'].post.security[0].authSessionCookie").isArray())
+                .andExpect(jsonPath("$.components.securitySchemes.bearerJwt.scheme").value("bearer"))
+                .andExpect(jsonPath("$.components.securitySchemes.authSessionCookie.in").value("cookie"));
     }
 
     private String loginProblem(String email, String password) throws Exception {
@@ -401,6 +487,8 @@ class AuthApiIntegrationTest {
     static final class FakeIdentityGateway implements IdentityGateway {
 
         private final java.util.Map<String, UserAuthData> authData = new java.util.HashMap<>();
+        private final java.util.Map<String, UserSessionData> sessions = new java.util.HashMap<>();
+        private final java.util.Map<String, PreviousFakeSession> previousSessions = new java.util.HashMap<>();
         private RegistrationResult registrationResult = new RegistrationResult(100, 87, "ACTIVE");
         private RuntimeException registrationFailure;
         private String registeredEmail;
@@ -428,8 +516,57 @@ class AuthApiIntegrationTest {
             return authData.get(email);
         }
 
+        @Override
+        public void createSession(long userId, String refreshTokenHash, Instant expiresAt) {
+            UserAuthData user = authData.values().stream().filter(candidate -> candidate.userId() == userId)
+                    .findFirst().orElseThrow();
+            sessions.put(refreshTokenHash, new UserSessionData(userId, user.email(), user.role(), expiresAt));
+        }
+
+        @Override
+        public UserSessionData refreshSession(String currentRefreshTokenHash, String replacementRefreshTokenHash) {
+            UserSessionData current = sessions.remove(currentRefreshTokenHash);
+            if (current != null) {
+                UserSessionData rotating = current;
+                previousSessions.entrySet().removeIf(entry -> entry.getValue().session() == rotating);
+                previousSessions.put(currentRefreshTokenHash, new PreviousFakeSession(rotating, Instant.now()));
+            } else {
+                PreviousFakeSession previous = previousSessions.get(currentRefreshTokenHash);
+                current = previous != null && previous.rotatedAt().plusSeconds(300).isAfter(Instant.now())
+                        ? previous.session() : null;
+            }
+            if (current == null || !current.expiresAt().isAfter(Instant.now())) return null;
+            sessions.put(replacementRefreshTokenHash, current);
+            return current;
+        }
+
+        @Override
+        public void revokeSession(String refreshTokenHash) {
+            UserSessionData revoked = sessions.remove(refreshTokenHash);
+            if (revoked == null) {
+                PreviousFakeSession previous = previousSessions.remove(refreshTokenHash);
+                revoked = previous == null ? null : previous.session();
+            }
+            if (revoked != null) {
+                UserSessionData revokedSession = revoked;
+                sessions.entrySet().removeIf(entry -> entry.getValue() == revokedSession);
+                previousSessions.entrySet().removeIf(entry -> entry.getValue().session() == revokedSession);
+            }
+        }
+
+        void expireSessions() {
+            sessions.replaceAll((hash, session) -> new UserSessionData(session.userId(), session.email(),
+                    session.role(), Instant.now().minus(1, ChronoUnit.SECONDS)));
+            previousSessions.replaceAll((hash, previous) -> new PreviousFakeSession(
+                    new UserSessionData(previous.session().userId(), previous.session().email(),
+                            previous.session().role(), Instant.now().minus(1, ChronoUnit.SECONDS)),
+                    previous.rotatedAt()));
+        }
+
         void reset() {
             authData.clear();
+            sessions.clear();
+            previousSessions.clear();
             registrationResult = new RegistrationResult(100, 87, "ACTIVE");
             registrationFailure = null;
             registeredEmail = null;
@@ -442,6 +579,9 @@ class AuthApiIntegrationTest {
         @Override
         public String toString() {
             return "FakeIdentityGateway[registeredPasswordHash=[redacted]]";
+        }
+
+        private record PreviousFakeSession(UserSessionData session, Instant rotatedAt) {
         }
     }
 }

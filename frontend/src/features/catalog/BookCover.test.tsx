@@ -32,6 +32,39 @@ describe("BookCover", () => {
     expect(image).not.toHaveClass("cover-image--loading");
   });
 
+  it.each([
+    ["Apología de Sócrates", 371, 784, "contain"],
+    ["Análisis matemático", 300, 450, "cover"],
+    ["Análisis matemático I", 600, 800, "contain"],
+    ["Análisis matemático II", 270, 353, "contain"],
+    ["Anna Karénina", 777, 1200, "cover"],
+    ["Cien años de soledad", 381, 588, "cover"],
+    ["Don Quijote de la Mancha", 337, 500, "cover"],
+    ["La genealogía de la moral", 656, 923, "cover"],
+    ["Los miserables", 729, 1200, "contain"],
+    ["Moby Dick", 359, 500, "cover"],
+  ] as const)("chooses a non-distorting fit for %s (%sx%s)", async (title, width, height, fit) => {
+    const { container } = render(<BookCover
+      url={`https://images.example.com/covers/${encodeURIComponent(title)}.webp`}
+      license={null}
+      attribution={null}
+      title={title}
+    />);
+    const image = container.querySelector("img.cover-image")!;
+    Object.defineProperties(image, {
+      naturalWidth: { configurable: true, value: width },
+      naturalHeight: { configurable: true, value: height },
+    });
+
+    fireEvent.load(image);
+
+    await waitFor(() => {
+      if (fit === "cover") expect(image).toHaveClass("cover-image--cover");
+      else expect(image).not.toHaveClass("cover-image--cover");
+      expect(screen.queryByTestId("cover-skeleton")).not.toBeInTheDocument();
+    });
+  });
+
   it("does not flash the skeleton when a decoded cover is remounted", async () => {
     const props = {
       url: "https://images.example.com/covers/remounted-cover.webp",
@@ -107,7 +140,7 @@ describe("BookCover", () => {
   });
 
   it("renders a prepared CDN cover while license and provenance remain unresolved", () => {
-    const coverUrl = "https://covers.pliegolibros.com/covers/editions/PLG-BK-000001.webp";
+    const coverUrl = "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
     const { container } = render(<BookCover
       url={coverUrl}
       license={null}

@@ -16,7 +16,11 @@ public final class CartResponses {
     public record Item(String cartItemId, String editionId, String title, String authors, String sku,
             @Schema(nullable = true) String coverUrl,
             int quantity, String currentPrice, String currentSubtotal,
-            boolean available, @Schema(nullable = true) String unavailabilityReason) { }
+            boolean available,
+            @Schema(nullable = true, allowableValues = {"P2043", "P2042", "P3002"}, example = "P3002",
+                    description = "SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, "
+                            + "P2042 edición inactiva, P3002 existencias insuficientes; null si está disponible.")
+            String unavailabilityReason) { }
 
     public record ItemMutation(String cartId, String cartItemId, int quantity) { }
 }

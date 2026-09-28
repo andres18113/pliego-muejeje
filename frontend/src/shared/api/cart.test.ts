@@ -32,7 +32,7 @@ describe("cart API", () => {
     vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({
       title: "Edición no disponible",
       detail: "Esta edición ya no está disponible para agregar al carrito.",
-      code: "EDITION_INACTIVE",
+      code: "P2042",
     }), {
       status: 400,
       headers: { "Content-Type": "application/problem+json" },
@@ -41,7 +41,7 @@ describe("cart API", () => {
     await expect(addEditionToCart("42")).rejects.toMatchObject({
       name: "ApiRequestError",
       status: 400,
-      code: "EDITION_INACTIVE",
+      code: "P2042",
       detail: "Esta edición ya no está disponible para agregar al carrito.",
     } satisfies Partial<ApiRequestError>);
   });

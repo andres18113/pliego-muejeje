@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { authLocation } from "@/features/auth/authLocation";
+import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { CatalogHeader } from "@/features/catalog/CatalogHeader";
 import { readCatalogCriteria, safeCatalogReturnHref } from "@/features/catalog/catalogUrl";
 import { login, register } from "@/shared/api/auth";
@@ -66,7 +66,8 @@ export function SignInPage() {
   const session = useSession();
   const errorRef = useRef<HTMLDivElement>(null);
   const submitLockRef = useRef(false);
-  const from = safeCatalogReturnHref(new URLSearchParams(location.search).get("from"));
+  const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
+  const from = safeCatalogReturnHref(intent);
   const criteria = criteriaForReturn(from);
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
@@ -104,7 +105,7 @@ export function SignInPage() {
       setFeedback({ state: "success", message: "Inicio de sesión correcto. Abriendo tu cuenta…" });
       await new Promise<void>((resolve) => window.setTimeout(resolve, 220));
       if (response.user.role === "ADMIN") navigate("/admin", { replace: true });
-      else navigate(from, { replace: true });
+      else navigate(intent, { replace: true });
     } catch (error: unknown) {
       setServerError(authFailure(error, "No se pudo iniciar sesión", "Comprueba tu conexión e inténtalo otra vez.", true));
       setFeedback({ state: "error", message: "No se pudo iniciar sesión." });
@@ -191,7 +192,7 @@ export function SignInPage() {
           </form>
 
           <p className="auth-switch">
-            ¿Todavía no tienes una cuenta? <Link to={authLocation("/register", from)}>Crear cuenta</Link>
+            ¿Todavía no tienes una cuenta? <Link to={authLocation("/register", intent)}>Crear cuenta</Link>
           </p>
         </div>
       </main>
@@ -205,7 +206,8 @@ export function RegisterPage() {
   const errorRef = useRef<HTMLDivElement>(null);
   const successRef = useRef<HTMLHeadingElement>(null);
   const submitLockRef = useRef(false);
-  const from = safeCatalogReturnHref(new URLSearchParams(location.search).get("from"));
+  const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
+  const from = safeCatalogReturnHref(intent);
   const criteria = criteriaForReturn(from);
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
@@ -284,7 +286,7 @@ export function RegisterPage() {
             <section className="auth-success" aria-labelledby="register-success-heading">
               <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Cuenta creada</h1>
               <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong className="auth-success-email">{registeredEmail}</strong>. Inicia sesión con ese correo para continuar.</p>
-              <ButtonLink variant="primary" to={authLocation("/sign-in", from)} state={{ registeredEmail }}>Iniciar sesión</ButtonLink>
+              <ButtonLink variant="primary" to={authLocation("/sign-in", intent)} state={{ registeredEmail }}>Iniciar sesión</ButtonLink>
             </section>
           ) : (
             <>
@@ -407,7 +409,7 @@ export function RegisterPage() {
                 </Button>
               </form>
               <p className="auth-switch">
-                ¿Ya tienes una cuenta? <Link to={authLocation("/sign-in", from)}>Iniciar sesión</Link>
+                ¿Ya tienes una cuenta? <Link to={authLocation("/sign-in", intent)}>Iniciar sesión</Link>
               </p>
             </>
           )}

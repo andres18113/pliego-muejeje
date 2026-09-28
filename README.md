@@ -19,7 +19,7 @@ Human-facing REST error and validation feedback is in Spanish. Machine-readable 
 
 ## Build and run
 
-Install Java 25, Maven, and PostgreSQL 18. Configure the database connection, initial admin seed, and JWT signing key as described in [backend/README.md](backend/README.md), then run:
+Install Java 25, Maven, and PostgreSQL 18. For a reproducible private local database, follow [backend/README.md](backend/README.md#reproducible-local-postgresql-18) and run `./scripts/local-db.sh migrate`, then `./scripts/local-db.sh backend`. For an externally managed database, configure the connection, initial admin seed, and JWT signing key as described in the same README, then run:
 
 ```bash
 cd backend

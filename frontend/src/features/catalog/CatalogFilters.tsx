@@ -228,7 +228,11 @@ export function CatalogFilters({
             <div className="price-range">
               <fieldset className="price-fields-set">
                 <legend>Precio actual (USD)</legend>
-                {priceSlider ? (
+                {priceSlider ? priceSlider.hasSinglePrice ? (
+                  <p className="single-price-state">
+                    Precio disponible: <output>{formatUsd(priceFromNumber(priceSlider.catalogMinimum))}</output>
+                  </p>
+                ) : (
                   <>
                     <div className={`price-slider${priceSlider.canSlide ? "" : " price-slider-static"}`}>
                       <div className="price-slider-track" aria-hidden="true">
@@ -432,6 +436,7 @@ function buildPriceSliderState(
   return {
     catalogMinimum,
     catalogMaximum,
+    hasSinglePrice: catalogMinimum === catalogMaximum,
     rangeMinimum,
     rangeMaximum,
     minimumValue,

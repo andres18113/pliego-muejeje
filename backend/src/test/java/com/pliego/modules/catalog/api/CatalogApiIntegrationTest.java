@@ -64,7 +64,7 @@ import tools.jackson.databind.node.ObjectNode;
 class CatalogApiIntegrationTest {
 
     private static final String CDN_COVER_URL =
-            "https://covers.pliegolibros.com/covers/editions/PLG-BK-000001.webp";
+            "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
 
     private static final CatalogEditionSummary SUMMARY = new CatalogEditionSummary("250", "80",
             "Don Quijote de la Mancha", "Miguel de Cervantes", "Editorial Ejemplo", "9780306406157",

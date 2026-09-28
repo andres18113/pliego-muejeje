@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
 
-export function SiteFooter({ returnHref = "/" }: { returnHref?: string }) {
+export function SiteFooter({ returnHref = "/catalog" }: { returnHref?: string }) {
   return (
     <footer className="site-footer">
       <div className="page-frame footer-content">

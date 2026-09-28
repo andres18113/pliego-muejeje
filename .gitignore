@@ -19,6 +19,7 @@ frontend/test-results/
 .env.*
 !.env.example
 .local-secrets/
+.local-db/
 *.log
 __pycache__/
 *.py[cod]

@@ -59,6 +59,25 @@ describe("CatalogFilters", () => {
     expect(maximum).toHaveAttribute("aria-valuetext", `Precio máximo ${outputs[1].textContent}`);
   });
 
+  it("shows a single catalog price when both available bounds are equal", () => {
+    render(
+      <CatalogFilters
+        criteria={readCatalogCriteria("")}
+        categories={[]}
+        filterOptions={{ ...filterOptions, minimumPrice: "18.50", maximumPrice: "18.50" }}
+        filterOptionsLoading={false}
+        filterOptionsError=""
+        pending={false}
+        onApply={vi.fn()}
+        onSort={vi.fn()}
+        onRemove={vi.fn()}
+      />,
+    );
+
+    expect(screen.queryByRole("slider")).not.toBeInTheDocument();
+    expect(screen.getByText(/Precio disponible:/)).toHaveTextContent("$ 18,50");
+  });
+
   it("offers only database-backed languages as named dropdown options", async () => {
     const onApply = vi.fn();
 

@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted as implementation of REST API Contract v1.0.
+Accepted as implementation of REST API Contract v1.0; session persistence and browser restoration are superseded by ADR-0010.
 
 ## Date
 

@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { SessionProvider } from "@/app/session";
 import { EditionDetailPage } from "./EditionDetailPage";
 
-function renderDetail(initialEntry = "/catalog/editions/42?from=%2F%3Fq%3DCien", state: unknown = null) {
+function renderDetail(initialEntry = "/catalog/editions/42?from=%2Fcatalog%3Fq%3DCien", state: unknown = null) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const initialUrl = new URL(initialEntry, "http://localhost");
   const router = createMemoryRouter(
@@ -16,7 +16,7 @@ function renderDetail(initialEntry = "/catalog/editions/42?from=%2F%3Fq%3DCien",
 
   return render(
     <QueryClientProvider client={queryClient}>
-      <SessionProvider>
+      <SessionProvider restoreOnMount={false}>
         <RouterProvider router={router} />
       </SessionProvider>
     </QueryClientProvider>,
@@ -56,7 +56,7 @@ function editionResponse(available = true, overrides: Record<string, unknown> = 
 }
 
 function expectSharedChrome() {
-  expect(screen.getByRole("link", { name: "PLIEGO, ir al catálogo" })).toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "PLIEGO, ir al inicio" })).toBeInTheDocument();
   expect(screen.getByText("Catálogo público")).toBeInTheDocument();
 }
 
@@ -83,7 +83,7 @@ describe("EditionDetailPage", () => {
   it("keeps the catalog cover visible while detail data loads", async () => {
     let releaseRequest: ((response: Response) => void) | undefined;
     const pendingResponse = new Promise<Response>((resolve) => { releaseRequest = resolve; });
-    const coverUrl = "https://covers.pliegolibros.com/covers/editions/PLG-BK-000001.webp";
+    const coverUrl = "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
     vi.stubGlobal("fetch", vi.fn(() => pendingResponse));
 
     renderDetail("/catalog/editions/42?from=%2F", {
@@ -107,7 +107,7 @@ describe("EditionDetailPage", () => {
   });
 
   it("renders the same CDN cover URL from edition detail when provenance is unresolved", async () => {
-    const coverUrl = "https://covers.pliegolibros.com/covers/editions/PLG-BK-000001.webp";
+    const coverUrl = "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
     vi.stubGlobal("fetch", vi.fn(async () => editionResponse(true, {
       coverUrl,
       coverLicense: null,
@@ -162,7 +162,7 @@ describe("EditionDetailPage", () => {
       publicationDate: "1967-05-30",
     })));
 
-    renderDetail("/catalog/editions/42?from=%2F%3Fq%3DCien%26sort%3DPRICE_DESC%26page%3D2%26minPrice%3D10.00");
+    renderDetail("/catalog/editions/42?from=%2Fcatalog%3Fq%3DCien%26sort%3DPRICE_DESC%26page%3D2%26minPrice%3D10.00");
 
     await screen.findByRole("heading", { name: "Cien años de soledad" });
     expect(screen.queryByRole("link", { name: /fuente de la portada/i })).not.toBeInTheDocument();
@@ -173,7 +173,7 @@ describe("EditionDetailPage", () => {
     const category = screen.getByRole("link", { name: "Narrativa" });
     expect(category).toHaveAttribute(
       "href",
-      "/?q=Cien&category=narrativa&minPrice=10.00&sort=PRICE_DESC",
+      "/catalog?q=Cien&category=narrativa&minPrice=10.00&sort=PRICE_DESC",
     );
   });
 

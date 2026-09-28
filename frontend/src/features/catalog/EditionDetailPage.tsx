@@ -39,13 +39,9 @@ function coverPreviewFromNavigation(state: unknown, editionId: string): CoverPre
   return { url: preview.url, license, attribution, title: preview.title };
 }
 
-const unavailableCartCodes = new Set([
-  "EDITION_NOT_FOUND",
-  "EDITION_INACTIVE",
-  "BOOK_INACTIVE",
-  "INSUFFICIENT_STOCK",
-  "INVENTORY_NOT_FOUND",
-]);
+// Canonical SQLSTATE wire codes (API amendment v1.0.3): edition not found, edition inactive,
+// book inactive, inventory not found, insufficient stock.
+const unavailableCartCodes = new Set(["P2041", "P2042", "P2043", "P3001", "P3002"]);
 
 export function EditionDetailPage() {
   const { editionId = "" } = useParams();
@@ -91,7 +87,7 @@ export function EditionDetailPage() {
     },
     onError: async (error: Error) => {
       if (error instanceof ApiRequestError && error.status === 401) {
-        clearSession();
+        clearSession("expired");
         setPurchaseFeedback({
           kind: "auth",
           message: "Tu sesión ya no está activa. Inicia sesión para agregar esta edición.",
@@ -102,7 +98,7 @@ export function EditionDetailPage() {
       if (error instanceof ApiRequestError && error.code && unavailableCartCodes.has(error.code)) {
         setPurchaseFeedback({
           kind: "unavailable",
-          message: error.code === "INSUFFICIENT_STOCK"
+          message: error.code === "P3002"
             ? "La disponibilidad cambió. No hay existencias suficientes para agregar esta edición."
             : "Esta edición ya no está disponible para agregar al carrito.",
         });
@@ -161,7 +157,7 @@ export function EditionDetailPage() {
     },
     onError: (error: Error) => {
       if (error instanceof ApiRequestError && error.status === 401) {
-        clearSession();
+        clearSession("expired");
         setPurchaseFeedback({
           kind: "auth",
           message: "Tu sesión ya no está activa. Inicia sesión para consultar el carrito.",
@@ -358,6 +354,9 @@ export function EditionDetailPage() {
                       ? purchasePhase === "preparing" ? "Preparando…" : "Agregando…"
                       : "Agregar al carrito"}
                   </Button>
+                  {purchaseFeedback?.kind === "success" && (
+                    <ButtonLink variant="secondary" to="/cart">Ver el carrito</ButtonLink>
+                  )}
                 </>
               ) : adminSession ? (
                 <p className="detail-purchase-feedback">

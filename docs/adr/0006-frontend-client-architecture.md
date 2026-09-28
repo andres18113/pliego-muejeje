@@ -2,7 +2,7 @@
 
 ## Status
 
-Accepted for the frontend implementation.
+Accepted for the frontend implementation; the in-memory-only/reload-to-Guest session decision is superseded by ADR-0010.
 
 ## Date
 

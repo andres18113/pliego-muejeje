@@ -1,14 +1,16 @@
 import { useLayoutEffect, useRef, useState } from "react";
 
 // Tracks decoded URL state for this SPA session; the browser owns the image bytes and HTTP cache.
-const decodedCoverUrls = new Set<string>();
+const decodedCoverFits = new Map<string, "cover" | "contain">();
+const CANONICAL_COVER_RATIO = 2 / 3;
+const MAX_CROP_PER_EDGE = 0.04;
 
 interface BookCoverProps {
   url: string | null;
   license: string | null;
   attribution: string | null;
   title: string;
-  size?: "catalog" | "detail";
+  size?: "catalog" | "detail" | "compact";
   loading?: "eager" | "lazy";
 }
 
@@ -25,15 +27,16 @@ export function BookCover({
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
 
   const canShowCover = canDisplayCover(url) && failedUrl !== url;
-  const isDecoded = url !== null && (decodedUrl === url || decodedCoverUrls.has(url));
+  const isDecoded = url !== null && (decodedUrl === url || decodedCoverFits.has(url));
   const isLoading = canShowCover && !isDecoded;
+  const imageFit = url ? decodedCoverFits.get(url) ?? "contain" : "contain";
   const credit = [attribution, license ? `Licencia: ${license}` : ""].filter(Boolean).join(" · ");
 
   useLayoutEffect(() => {
-    if (!url || !canShowCover || decodedCoverUrls.has(url)) return;
+    if (!url || !canShowCover || decodedCoverFits.has(url)) return;
     const image = imageRef.current;
     if (image?.complete && image.naturalWidth > 0) {
-      decodedCoverUrls.add(url);
+      decodedCoverFits.set(url, fitForCover(image));
       setDecodedUrl(url);
     }
   }, [url, canShowCover]);
@@ -44,7 +47,7 @@ export function BookCover({
       setFailedUrl(url);
       return;
     }
-    decodedCoverUrls.add(url);
+    decodedCoverFits.set(url, fitForCover(image));
     setDecodedUrl(url);
   }
 
@@ -77,7 +80,7 @@ export function BookCover({
             <img
               key={url}
               ref={imageRef}
-              className={`cover-image${isLoading ? " cover-image--loading" : ""}`}
+              className={`cover-image${isLoading ? " cover-image--loading" : ""}${imageFit === "cover" ? " cover-image--cover" : ""}`}
               src={url}
               alt={`Portada de ${title}`}
               loading={loading}
@@ -100,6 +103,17 @@ export function BookCover({
       {canShowCover && credit && <figcaption className="cover-credit">{credit}</figcaption>}
     </figure>
   );
+}
+
+function fitForCover(image: HTMLImageElement): "cover" | "contain" {
+  const ratio = image.naturalWidth / image.naturalHeight;
+  if (!Number.isFinite(ratio) || ratio <= 0) return "contain";
+
+  const retainedRatio = ratio < CANONICAL_COVER_RATIO
+    ? ratio / CANONICAL_COVER_RATIO
+    : CANONICAL_COVER_RATIO / ratio;
+  const cropPerEdge = (1 - retainedRatio) / 2;
+  return cropPerEdge <= MAX_CROP_PER_EDGE ? "cover" : "contain";
 }
 
 function canDisplayCover(url: string | null): url is string {

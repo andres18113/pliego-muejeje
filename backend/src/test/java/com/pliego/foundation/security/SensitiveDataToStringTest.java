@@ -17,6 +17,7 @@ class SensitiveDataToStringTest {
         String email = "private@example.invalid";
         String password = "test-password-secret";
         String token = "jwt-test-only-token";
+        String refreshToken = "refresh-test-only-token";
         String hash = "$2a$12$test-only-password-hash";
         String userId = "987654";
 
@@ -24,14 +25,15 @@ class SensitiveDataToStringTest {
                 new RegisterRequest(email, password, "Private Name", "Private Surname", "+59325550134")
                         .toString(),
                 new LoginRequest(email, password).toString(),
-                new AuthService.LoginResult(token, 1800, Long.parseLong(userId), email, "CUSTOMER").toString(),
+                new AuthService.LoginResult(token, 1800, Long.parseLong(userId), email, "CUSTOMER", refreshToken,
+                        java.time.Instant.now().plusSeconds(86400)).toString(),
                 new LoginResponse(token, "Bearer", 1800,
                         new LoginResponse.AuthenticatedUser(userId, email, "CUSTOMER")).toString(),
                 new LoginResponse.AuthenticatedUser(userId, email, "CUSTOMER").toString(),
                 new UserAuthData(Long.parseLong(userId), email, hash, "CUSTOMER", "ACTIVE").toString()
         };
         String[] sensitiveValues = {
-                email, password, token, hash, userId, "Private Name", "Private Surname", "+59325550134"
+                email, password, token, refreshToken, hash, userId, "Private Name", "Private Surname", "+59325550134"
         };
 
         for (String diagnostic : diagnostics) {

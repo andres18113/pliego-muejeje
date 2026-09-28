@@ -26,7 +26,9 @@ describe("catalog URL helpers", () => {
       pageSize: 40,
     });
     expect(readCatalogCriteria(writeCatalogCriteria(criteria).toString())).toEqual(criteria);
+    expect(catalogHref(criteria)).toMatch(/^\/catalog\?/);
     expect(catalogHref(criteria)).toContain("page=2");
+    expect(catalogHref(readCatalogCriteria(""))).toBe("/catalog");
   });
 
   it("drops malformed criteria and normalizes valid ISBN and reversed price bounds before requests", () => {
@@ -55,8 +57,9 @@ describe("catalog URL helpers", () => {
 
   it("keeps return destinations on the catalog or a catalog edition route", () => {
     expect(safeCatalogReturnHref("/?q=Julio&page=1")).toBe("/?q=Julio&page=1");
-    expect(safeCatalogReturnHref("/catalog/editions/42?from=%2F%3Fq%3DJulio#facts"))
-      .toBe("/catalog/editions/42?from=%2F%3Fq%3DJulio#facts");
+    expect(safeCatalogReturnHref("/catalog?q=Julio&page=1")).toBe("/catalog?q=Julio&page=1");
+    expect(safeCatalogReturnHref("/catalog/editions/42?from=%2Fcatalog%3Fq%3DJulio#facts"))
+      .toBe("/catalog/editions/42?from=%2Fcatalog%3Fq%3DJulio#facts");
   });
 
   it.each([
@@ -68,7 +71,7 @@ describe("catalog URL helpers", () => {
     "/catalog/editions/0",
     "/catalog/%2e%2e/admin",
   ])("rejects adversarial return URL %s", (candidate) => {
-    expect(safeCatalogReturnHref(candidate)).toBe("/");
+    expect(safeCatalogReturnHref(candidate)).toBe("/catalog");
   });
 
   it("contains nested return parameters within the app and rejects the nested external destination", () => {
@@ -78,7 +81,7 @@ describe("catalog URL helpers", () => {
     expect(safeDetailReturn).toBe("/catalog/editions/42?from=%2F%2Fevil.example%2Fsteal");
 
     const nested = new URL(safeDetailReturn, window.location.origin);
-    expect(safeCatalogReturnHref(nested.searchParams.get("from"))).toBe("/");
+    expect(safeCatalogReturnHref(nested.searchParams.get("from"))).toBe("/catalog");
   });
 
   it("allows only absolute HTTP(S) cover-source links without embedded credentials", () => {

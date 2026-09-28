@@ -64,13 +64,13 @@ fi
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '24:24' ]]; then
-    printf 'Expected 24 successful versioned Flyway migrations through V024; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '25:25' ]]; then
+    printf 'Expected 25 successful versioned Flyway migrations through V025; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"
 
-for gate in checkout_gate.sql customer_orders_gate.sql admin_orders_gate.sql catalog_public_categories_gate.sql catalog_public_filter_options_gate.sql catalog_cover_delivery_gate.sql; do
+for gate in checkout_gate.sql customer_orders_gate.sql admin_orders_gate.sql catalog_public_categories_gate.sql catalog_public_filter_options_gate.sql catalog_cover_delivery_gate.sql cart_unavailability_codes_gate.sql; do
     printf 'Running %s\n' "$gate"
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done

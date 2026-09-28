@@ -7,7 +7,7 @@ const apiOrigin = configuredBaseUrl.replace(/\/api\/v1$/, "");
 
 export const apiClient = createClient<paths>({
   baseUrl: apiOrigin || (typeof window !== "undefined" ? window.location.origin : "http://localhost"),
-  fetch: (request: Request) => globalThis.fetch(request),
+  fetch: (request: Request) => globalThis.fetch(new Request(request, { credentials: "include" })),
   headers: {
     Accept: "application/json, application/problem+json",
   },

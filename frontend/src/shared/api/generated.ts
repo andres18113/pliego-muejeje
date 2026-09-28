@@ -391,7 +391,7 @@ export interface paths {
         put?: never;
         /**
          * Iniciar sesión
-         * @description Devuelve un token bearer HS256 sin estado, válido durante 30 minutos.
+         * @description Devuelve un access token bearer HS256 válido durante 30 minutos y establece una cookie HttpOnly de sesión revocable, válida durante 30 días.
          */
         post: operations["login"];
         delete?: never;
@@ -558,6 +558,38 @@ export interface paths {
         put?: never;
         /** Crear autor */
         post: operations["createAuthor"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reference/transfer-details": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["transferDetails"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/reference/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["countries"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -783,6 +815,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restaurar o renovar la sesión
+         * @description Rota la credencial persistente HttpOnly y emite un access token nuevo. Si se pierde la respuesta, repetir con la cookie anterior durante 5 minutos devuelve la misma rotación. La sesión vence de forma absoluta a los 30 días del inicio de sesión.
+         */
+        post: operations["refreshSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cerrar sesión
+         * @description Revoca la sesión persistente en PostgreSQL y elimina la cookie HttpOnly. La operación es idempotente.
+         */
+        post: operations["logoutSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -817,7 +889,10 @@ export interface components {
              * @example /api/v1/auth/register
              */
             instance?: string;
-            /** @example VALIDATION_ERROR */
+            /**
+             * @description Código estable legible por máquina. Los errores de dominio usan el SQLSTATE canónico de PostgreSQL (Pxxxx); los errores propios de la capa REST usan un código simbólico (por ejemplo VALIDATION_ERROR o INVALID_CARD_NUMBER).
+             * @example P3002
+             */
             code?: string;
             /** @example 8f2ab598-3e33-40b1-a5c7-15f676a84f9a */
             traceId?: string;
@@ -1079,6 +1154,17 @@ export interface components {
         AuthorCreated: {
             authorId?: string;
         };
+        TransferDetails: {
+            bank?: string;
+            beneficiary?: string;
+            accountType?: string;
+            accountNumber?: string;
+            identification?: string;
+        };
+        Country: {
+            code?: string;
+            name?: string;
+        };
         PageResponse: {
             items?: unknown[];
             /** Format: int32 */
@@ -1258,7 +1344,12 @@ export interface components {
             currentPrice?: string;
             currentSubtotal?: string;
             available?: boolean;
-            unavailabilityReason?: string | null;
+            /**
+             * @description SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, P2042 edición inactiva, P3002 existencias insuficientes; null si está disponible.
+             * @example P3002
+             * @enum {string|null}
+             */
+            unavailabilityReason?: "P2043" | "P2042" | "P3002" | null;
         };
         PageResponsePublisher: {
             items?: components["schemas"]["Publisher"][];
@@ -2116,9 +2207,11 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Token de acceso emitido */
+            /** @description Token de acceso emitido y sesión persistente establecida */
             200: {
                 headers: {
+                    /** @description Cookie HttpOnly, Secure, SameSite=Strict; expira 30 días después del inicio de sesión. */
+                    "Set-Cookie"?: string;
                     [name: string]: unknown;
                 };
                 content: {
@@ -2545,6 +2638,46 @@ export interface operations {
             };
         };
     };
+    transferDetails: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TransferDetails"];
+                };
+            };
+        };
+    };
+    countries: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Country"][];
+                };
+            };
+        };
+    };
     list: {
         parameters: {
             query?: {
@@ -2887,6 +3020,81 @@ export interface operations {
             };
             /** @description Filtros inválidos */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    refreshSession: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Marcador requerido para autorizar la petición de sesión desde el cliente PLIEGO. */
+                "X-PLIEGO-SESSION-REQUEST": "1";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sesión restaurada */
+            200: {
+                headers: {
+                    /** @description Cookie HttpOnly renovada; conserva la expiración absoluta de la sesión. */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResponse"];
+                };
+            };
+            /** @description No existe una sesión válida; se elimina la cookie */
+            204: {
+                headers: {
+                    /** @description Cookie eliminada. */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Error interno */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    logoutSession: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Marcador requerido para autorizar la petición de sesión desde el cliente PLIEGO. */
+                "X-PLIEGO-SESSION-REQUEST": "1";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sesión revocada y cookie eliminada */
+            204: {
+                headers: {
+                    /** @description Cookie eliminada. */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Error interno */
+            500: {
                 headers: {
                     [name: string]: unknown;
                 };

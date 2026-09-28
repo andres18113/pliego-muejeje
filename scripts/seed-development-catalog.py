@@ -14,7 +14,6 @@ import urllib.parse
 import urllib.request
 from dataclasses import dataclass
 from pathlib import Path
-from decimal import Decimal
 from typing import Any
 
 
@@ -22,8 +21,19 @@ API_BASE = os.environ.get("PLIEGO_API_BASE_URL", "http://127.0.0.1:8080").rstrip
 ADMIN_EMAIL = os.environ.get("PLIEGO_ADMIN_EMAIL", "admin@pliego.local")
 ADMIN_PASSWORD = os.environ.get("PLIEGO_ADMIN_PASSWORD")
 PAGE_SIZE = 50
-DEFAULT_COVER_MANIFEST = Path(__file__).resolve().parent.parent / "covers/generated/manifest.json"
+DEFAULT_COVER_MANIFEST = Path(__file__).resolve().parent.parent / "covers/generated/manifest-normalized.json"
+DEFAULT_SKU_REGISTRY = Path(__file__).resolve().parent.parent / "covers/sku-registry.json"
+DEFAULT_STAGING_FILES = (
+    Path(__file__).resolve().parent.parent / "covers/Literatura/pliego_literatura_limpio.json",
+    Path(__file__).resolve().parent.parent / "covers/Matemáticas/pliego_matematicas_limpio.json",
+    Path(__file__).resolve().parent.parent / "covers/Filosofia/pliego_filosofia_limpio.json",
+)
 PERMANENT_SKU_PATTERN = re.compile(r"PLG-BK-[0-9]{6,}\Z")
+NORMALIZED_COVER_KEY_PATTERN = re.compile(r"covers/editions/v2/(PLG-BK-[0-9]{6,})-[0-9a-f]{12}\.webp\Z")
+EXCLUDED_CATALOG_SKUS = frozenset({"PLG-BK-000042"})
+LOCAL_DEVELOPMENT_PRICE = "20.00"
+LOCAL_DEVELOPMENT_MINIMUM_STOCK = 5
+TEST_FIXTURE_SKU_PREFIXES = ("I8-CONC-", "I9-CONC-", "I10-CONC-", "I12-JOURNEY-")
 
 
 @dataclass(frozen=True)
@@ -37,120 +47,24 @@ class CategorySeed:
 class EditionSeed:
     sku: str
     title: str
+    subtitle: str | None
     authors: tuple[str, ...]
     category: str
     publisher: str
     language: str
     format: str
     page_count: int
-    publication_date: str
+    publication_date: str | None
     price: str
     stock: int
     synopsis: str
     isbn13: str | None = None
 
 
-# These exact labels and slugs are already used by the project's public catalog
-# category examples and frontend catalog fixtures.
 CATEGORIES = (
-    CategorySeed("narrativa", "Narrativa"),
-    CategorySeed("novela", "Novela histórica", "narrativa"),
-    CategorySeed("poesia", "Poesía"),
-    CategorySeed("verso", "Verso libre", "poesia"),
-    CategorySeed("ciencia", "Ciencia"),
-    CategorySeed("astronomia", "Astronomía", "ciencia"),
-    CategorySeed("ensayo", "Ensayo"),
-)
-
-
-EDITIONS = (
-    EditionSeed("PLG-DEV-NAR-001", "Cien años de soledad", ("Gabriel García Márquez",), "narrativa",
-        "Vintage Español", "es", "PAPERBACK", 494, "2009-01-01", "17.50", 8,
-        "La saga de la familia Buendía y la historia de Macondo.", "9780307474728"),
-    EditionSeed("PLG-DEV-NAR-002", "One Hundred Years of Solitude", ("Gabriel García Márquez",), "narrativa",
-        "Penguin Books, Limited", "en", "PAPERBACK", 417, "2007-01-01", "16.99", 4,
-        "The Buendía family saga unfolds across generations in Macondo.", "9780141032436"),
-    EditionSeed("PLG-DEV-NOV-003", "Don Quijote de la Mancha", ("Miguel de Cervantes",), "novela",
-        "Susaeta", "es", "HARDCOVER", 152, "2016-04-06", "24.95", 0,
-        "Las aventuras del caballero manchego y su escudero Sancho Panza.", "9788467750911"),
-    EditionSeed("PLG-DEV-NAR-004", "1984", ("George Orwell",), "narrativa", "Signet Classics",
-        "en", "PAPERBACK", 328, "1949-06-08", "9.99", 7,
-        "A dystopian novel about surveillance, language, and political power.", "9780451524935"),
-    EditionSeed("PLG-DEV-NAR-005", "The Hobbit", ("J. R. R. Tolkien",), "narrativa",
-        "Houghton Mifflin Harcourt", "en", "HARDCOVER", 310, "1937-09-21", "24.95", 3,
-        "Bilbo Baggins joins a company of dwarves on a journey to the Lonely Mountain.", "9780547928227"),
-    EditionSeed("PLG-DEV-NAR-006", "El principito", ("Antoine de Saint-Exupéry",), "narrativa",
-        "Salamandra", "es", "PAPERBACK", 93, "2010-01-01", "12.95", 0,
-        "Un aviador conoce a un pequeño viajero que comparte preguntas sobre la vida.", "9788498381498"),
-    EditionSeed("PLG-DEV-NOV-007", "Pride and Prejudice", ("Jane Austen",), "novela",
-        "Penguin Classics", "en", "PAPERBACK", 480, "1813-01-28", "10.50", 5,
-        "Elizabeth Bennet navigates family expectations, first impressions, and affection.", "9780141439518"),
-    EditionSeed("PLG-DEV-NOV-008", "La sombra del viento", ("Carlos Ruiz Zafón",), "novela",
-        "Editorial Planeta", "es", "PAPERBACK", 576, "2001-04-01", "18.75", 2,
-        "Daniel Sempere busca la historia de un autor olvidado en la Barcelona de posguerra.", "9788408043645"),
-    EditionSeed("PLG-DEV-NAR-009", "Dune", ("Frank Herbert",), "narrativa", "Ace Books",
-        "en", "PAPERBACK", 688, "1965-08-01", "16.95", 1,
-        "Paul Atreides enters a struggle over the desert planet Arrakis and its spice.", "9780441172719"),
-    EditionSeed("PLG-DEV-NOV-010", "El nombre de la rosa", ("Umberto Eco",), "novela",
-        "Debolsillo", "es", "PAPERBACK", 607, "2011-05-24", "18.50", 4,
-        "Un fraile franciscano investiga una serie de muertes en una abadía medieval.", "9780307882776"),
-    EditionSeed("PLG-DEV-NAR-011", "Fahrenheit 451", ("Ray Bradbury",), "narrativa",
-        "Simon & Schuster", "en", "HARDCOVER", 249, "1953-10-19", "19.50", 0,
-        "A fireman begins to question a society that burns books.", "9781451673319"),
-    EditionSeed("PLG-DEV-NAR-012", "El coronel no tiene quien le escriba", ("Gabriel García Márquez",),
-        "narrativa", "Plaza & Janés", "es", "PAPERBACK", 98, "2003-05-01", "11.95", 6,
-        "Un coronel retirado espera una carta y una pensión que no llegan.", "9788497592352"),
-
-    EditionSeed("PLG-DEV-POE-013", "Veinte poemas de amor y una canción desesperada", ("Pablo Neruda",),
-        "poesia", "Navona", "es", "PAPERBACK", 96, "2014-03-17", "9.95", 4,
-        "Un poemario temprano de Pablo Neruda sobre el amor, la ausencia y el paisaje.", "9788416259595"),
-    EditionSeed("PLG-DEV-VER-014", "Poeta en Nueva York", ("Federico García Lorca",), "verso",
-        "Lumen España", "es", "PAPERBACK", 128, "1998-04-01", "14.95", 2,
-        "Poemas escritos durante la estancia de Lorca en Nueva York.", "9788426423122"),
-    EditionSeed("PLG-DEV-POE-015", "Leaves of Grass", ("Walt Whitman",), "poesia", "Penguin Classics",
-        "en", "PAPERBACK", 736, "1855-07-04", "17.95", 1,
-        "Whitman's evolving collection of poems about people, place, and the self.", "9780140421996"),
-    EditionSeed("PLG-DEV-VER-016", "El libro de las preguntas", ("Pablo Neruda",), "verso",
-        "Martínez Roca", "es", "HARDCOVER", 192, "2000-03-01", "13.50", 5,
-        "Preguntas breves y poéticas de la colección póstuma de Neruda.", "9788427025219"),
-    EditionSeed("PLG-DEV-POE-017", "Versos sencillos", ("José Martí",), "poesia",
-        "Betania", "es", "PAPERBACK", 112, "2003-04-02", "10.25", 0,
-        "Poemas de José Martí reunidos en una colección publicada en Nueva York.", "9788480171823"),
-    EditionSeed("PLG-DEV-VER-018", "Twenty Love Poems and a Song of Despair", ("Pablo Neruda",),
-        "verso", "Penguin Books", "en", "PAPERBACK", 96, "1924-01-01", "12.99", 3,
-        "An English-language edition of Neruda's early love poems.", "9780143039969"),
-
-    EditionSeed("PLG-DEV-SCI-019", "Cosmos", ("Carl Sagan",), "ciencia", "Ballantine Books",
-        "en", "PAPERBACK", 432, "1980-01-01", "21.50", 4,
-        "Sagan explores astronomy, life, and humanity's place in the universe.", "9780345539434"),
-    EditionSeed("PLG-DEV-AST-020", "A Brief History of Time", ("Stephen Hawking",), "astronomia",
-        "Bantam Books", "en", "PAPERBACK", 212, "1988-04-01", "14.50", 0,
-        "An introduction to cosmology, black holes, and the nature of time.", "9780553380163"),
-    EditionSeed("PLG-DEV-SCI-021", "Astrophysics for People in a Hurry", ("Neil deGrasse Tyson",),
-        "ciencia", "W. W. Norton", "en", "HARDCOVER", 224, "2017-05-02", "18.95", 3,
-        "A concise tour of the ideas and discoveries that shape modern astrophysics.", "9780393609394"),
-    EditionSeed("PLG-DEV-AST-022", "El universo en tu mano", ("Christophe Galfard",), "astronomia",
-        "Blackie Books", "es", "PAPERBACK", 464, "2016-01-01", "22.00", 1,
-        "Un recorrido divulgativo por el espacio, el tiempo y la física moderna.", "9788416290628"),
-
-    EditionSeed("PLG-DEV-ENS-023", "Sapiens: De animales a dioses", ("Yuval Noah Harari",), "ensayo",
-        "Debolsillo", "es", "PAPERBACK", 496, "2023-02-23", "20.00", 2,
-        "Una historia de la humanidad desde las primeras sociedades hasta el presente.", "9788466347518"),
-    EditionSeed("PLG-DEV-ENS-024", "A Room of One's Own", ("Virginia Woolf",), "ensayo",
-        "Harcourt", "en", "PAPERBACK", 112, "1929-10-24", "11.50", 6,
-        "Woolf's essay examines women's writing, education, and material independence.", "9780156787338"),
-    EditionSeed("PLG-DEV-ENS-025", "Educated", ("Tara Westover",), "ensayo", "Random House",
-        "en", "HARDCOVER", 352, "2018-02-20", "23.00", 0,
-        "Westover recounts her education and departure from an isolated childhood.", "9780399590504"),
-    EditionSeed("PLG-DEV-ENS-026", "El laberinto de la soledad", ("Octavio Paz",), "ensayo",
-        "Fondo de Cultura Económica", "es", "PAPERBACK", 352, "1990-11-02", "16.00", 1,
-        "Paz reflexiona sobre la identidad mexicana, su historia y su vida cultural.", "9789681616434"),
-    EditionSeed("PLG-DEV-ENS-027", "Meditations", ("Marcus Aurelius",), "ensayo", "Modern Library",
-        "en", "PAPERBACK", 304, "2006-01-01", "12.95", 4,
-        "A collection of Stoic reflections by the Roman emperor.", "9780812968255"),
-    EditionSeed("PLG-DEV-ENS-028", "Una habitación propia", ("Virginia Woolf",), "ensayo",
-        "Alianza Editorial", "es", "PAPERBACK", 160, "2023-02-02", "12.75", 0,
-        "La reflexión de Woolf sobre las condiciones materiales para escribir.", "9788411481892"),
+    CategorySeed("literatura", "Literatura"),
+    CategorySeed("matematicas", "Matemáticas"),
+    CategorySeed("filosofia", "Filosofía"),
 )
 
 
@@ -167,6 +81,7 @@ def load_cover_manifest(path: Path) -> dict[str, dict[str, str | None]]:
         raise ApiError("El manifiesto de portadas debe contener una lista records.")
 
     covers: dict[str, dict[str, str | None]] = {}
+    seen_skus: set[str] = set()
     for index, record in enumerate(manifest["records"]):
         if not isinstance(record, dict):
             raise ApiError(f"El registro {index} del manifiesto de portadas no es válido.")
@@ -175,19 +90,157 @@ def load_cover_manifest(path: Path) -> dict[str, dict[str, str | None]]:
         cover_url = record.get("cover_url")
         if not isinstance(sku, str) or not PERMANENT_SKU_PATTERN.fullmatch(sku):
             raise ApiError(f"El registro {index} tiene un SKU permanente no válido.")
-        if object_key != f"covers/editions/{sku}.webp":
-            raise ApiError(f"El registro {sku} no usa su clave canónica de R2.")
+        if sku in seen_skus:
+            raise ApiError(f"El manifiesto contiene el SKU duplicado {sku}.")
+        seen_skus.add(sku)
+        if sku in EXCLUDED_CATALOG_SKUS:
+            continue
+        key_match = NORMALIZED_COVER_KEY_PATTERN.fullmatch(object_key) if isinstance(object_key, str) else None
+        if key_match is None or key_match.group(1) != sku:
+            raise ApiError(f"El registro {sku} no usa una clave normalizada v2 por SKU.")
         parsed_url = urllib.parse.urlsplit(cover_url) if isinstance(cover_url, str) else None
         if (parsed_url is None or parsed_url.scheme != "https"
                 or parsed_url.hostname != "covers.pliegolibros.com"
                 or parsed_url.path != f"/{object_key}" or parsed_url.username or parsed_url.password
                 or parsed_url.query or parsed_url.fragment):
             raise ApiError(f"El registro {sku} no contiene una URL CDN canónica.")
-        if sku in covers:
-            raise ApiError(f"El manifiesto contiene el SKU duplicado {sku}.")
         isbn13 = record.get("isbn13")
-        covers[sku] = {"coverUrl": cover_url, "isbn13": isbn13 if isinstance(isbn13, str) else None}
+        covers[sku] = {
+            "coverUrl": cover_url,
+            "isbn13": isbn13 if isinstance(isbn13, str) else None,
+            "title": record.get("title") if isinstance(record.get("title"), str) else None,
+        }
     return covers
+
+
+def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: Path,
+                       staging_files: tuple[Path, ...]) -> tuple[EditionSeed, ...]:
+    try:
+        registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ApiError(f"No se pudo leer el registro permanente de SKU ({type(error).__name__}).") from None
+    assignments = registry.get("assignments") if isinstance(registry, dict) else None
+    if not isinstance(assignments, list):
+        raise ApiError("El registro permanente de SKU debe contener assignments.")
+
+    sku_by_isbn: dict[str, str] = {}
+    for assignment in assignments:
+        if not isinstance(assignment, dict):
+            raise ApiError("El registro permanente de SKU contiene una asignación inválida.")
+        sku = assignment.get("sku")
+        identity_keys = assignment.get("identity_keys")
+        if not isinstance(sku, str) or not PERMANENT_SKU_PATTERN.fullmatch(sku):
+            raise ApiError("El registro permanente contiene un SKU no válido.")
+        if not isinstance(identity_keys, list):
+            raise ApiError(f"La asignación de {sku} no contiene identity_keys.")
+        for key in identity_keys:
+            if not isinstance(key, str) or not key.startswith("isbn13:"):
+                continue
+            isbn13 = key.removeprefix("isbn13:")
+            if isbn13 in sku_by_isbn and sku_by_isbn[isbn13] != sku:
+                raise ApiError(f"El ISBN {isbn13} está asignado a más de un SKU permanente.")
+            sku_by_isbn[isbn13] = sku
+
+    covers_by_isbn: dict[str, tuple[str, dict[str, str | None]]] = {}
+    for sku, cover in covers.items():
+        isbn13 = cover.get("isbn13")
+        if not isinstance(isbn13, str) or not isbn13:
+            raise ApiError(f"El manifiesto normalizado no incluye ISBN-13 para {sku}.")
+        if isbn13 in covers_by_isbn:
+            raise ApiError(f"El ISBN {isbn13} aparece más de una vez en el manifiesto normalizado.")
+        covers_by_isbn[isbn13] = (sku, cover)
+
+    seeds: list[EditionSeed] = []
+    matched_skus: set[str] = set()
+    excluded_skus: set[str] = set()
+    seen_isbns: set[str] = set()
+    category_slugs = {category.name: category.slug for category in CATEGORIES}
+    staging_count = 0
+    for staging_path in staging_files:
+        try:
+            document = json.loads(staging_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError) as error:
+            raise ApiError(f"No se pudo leer el catálogo de {staging_path.name} ({type(error).__name__}).") from None
+        records = document.get("libros") if isinstance(document, dict) else None
+        if not isinstance(records, list):
+            raise ApiError(f"El catálogo de {staging_path.name} debe contener libros.")
+        for record in records:
+            staging_count += 1
+            if not isinstance(record, dict):
+                raise ApiError(f"El catálogo de {staging_path.name} contiene un registro inválido.")
+            book = record.get("libro")
+            edition = record.get("edicion")
+            if not isinstance(book, dict) or not isinstance(edition, dict):
+                raise ApiError(f"Un registro de {staging_path.name} no separa libro y edición.")
+            isbn13 = edition.get("isbn13")
+            title = book.get("titulo")
+            if not isinstance(isbn13, str) or not isbn13 or isbn13 in seen_isbns:
+                raise ApiError(f"El catálogo de {staging_path.name} contiene ISBN ausente o duplicado.")
+            seen_isbns.add(isbn13)
+            permanent_sku = sku_by_isbn.get(isbn13)
+            if permanent_sku is None:
+                raise ApiError(f"El ISBN {isbn13} no tiene asignación permanente en el registro SKU.")
+            if permanent_sku in EXCLUDED_CATALOG_SKUS:
+                if isbn13 in covers_by_isbn:
+                    raise ApiError(f"El SKU excluido {permanent_sku} también aparece en el manifiesto CDN.")
+                excluded_skus.add(permanent_sku)
+                continue
+
+            manifest_entry = covers_by_isbn.get(isbn13)
+            if manifest_entry is None:
+                raise ApiError(f"El ISBN {isbn13} ({title}) no tiene una portada en el manifiesto normalizado.")
+            manifest_sku, cover = manifest_entry
+            if manifest_sku != permanent_sku or cover.get("isbn13") != isbn13:
+                raise ApiError(f"La asignación SKU/ISBN de {isbn13} no coincide entre registro y manifiesto.")
+            if not isinstance(title, str) or cover.get("title") != title:
+                raise ApiError(f"El título para {permanent_sku} no coincide con el manifiesto normalizado.")
+
+            authors = book.get("autores")
+            categories = book.get("categorias")
+            if not isinstance(authors, list) or not authors or not isinstance(categories, list) or len(categories) != 1:
+                raise ApiError(f"El registro bibliográfico para {permanent_sku} no tiene autor/categoría únicos válidos.")
+            author_names = tuple(author.get("nombre") for author in authors if isinstance(author, dict))
+            if len(author_names) != len(authors) or any(not isinstance(name, str) or not name for name in author_names):
+                raise ApiError(f"El registro bibliográfico para {permanent_sku} contiene un autor inválido.")
+            category_name = categories[0]
+            if not isinstance(category_name, str) or category_name not in category_slugs:
+                raise ApiError(f"La categoría de {permanent_sku} no pertenece al catálogo normalizado.")
+            formats = {"RUSTICA": "PAPERBACK", "TAPA_DURA": "HARDCOVER"}
+            source_format = edition.get("formato")
+            format_name = formats.get(source_format)
+            page_count = edition.get("paginas")
+            language = edition.get("idioma")
+            publisher = edition.get("editorial")
+            synopsis = book.get("sinopsis")
+            publication_date = edition.get("fechaPublicacion")
+            subtitle = book.get("subtitulo")
+            if (format_name is None or not isinstance(page_count, int) or page_count <= 0
+                    or not isinstance(language, str) or not isinstance(publisher, str) or not publisher
+                    or not isinstance(synopsis, str) or not synopsis.strip()
+                    or (subtitle is not None and not isinstance(subtitle, str))):
+                raise ApiError(f"Los metadatos bibliográficos de {permanent_sku} están incompletos.")
+            if publication_date is not None:
+                try:
+                    from datetime import date
+                    date.fromisoformat(publication_date)
+                except (TypeError, ValueError):
+                    raise ApiError(f"La fecha de publicación de {permanent_sku} no es ISO válida.") from None
+
+            seeds.append(EditionSeed(
+                permanent_sku, title, subtitle, author_names, category_slugs[category_name], publisher, language,
+                format_name, page_count, publication_date, LOCAL_DEVELOPMENT_PRICE,
+                LOCAL_DEVELOPMENT_MINIMUM_STOCK, synopsis, isbn13,
+            ))
+            matched_skus.add(permanent_sku)
+
+    if excluded_skus != EXCLUDED_CATALOG_SKUS:
+        raise ApiError("El registro bibliográfico no confirma el SKU 000042 excluido.")
+    if matched_skus != set(covers):
+        missing = sorted(set(covers) - matched_skus)
+        raise ApiError("El catálogo fuente no cubre todos los SKU del manifiesto: " + ", ".join(missing))
+    if staging_count != len(seeds) + len(EXCLUDED_CATALOG_SKUS):
+        raise ApiError("El número de registros bibliográficos no coincide con los 55 elegibles y el excluido.")
+    return tuple(seeds)
 
 
 class PliegoApi:
@@ -230,33 +283,58 @@ class PliegoApi:
         query = {"page": "0", "pageSize": str(PAGE_SIZE), **params}
         return self.request("GET", path + "?" + urllib.parse.urlencode(query))["items"]
 
+    def all_pages(self, path: str, **params: str) -> list[dict[str, Any]]:
+        rows: list[dict[str, Any]] = []
+        page = 0
+        while True:
+            current = self.page(path, page=str(page), **params)
+            rows.extend(current)
+            if len(current) < PAGE_SIZE:
+                return rows
+            page += 1
+
 
 def sync_cover_manifest(api: PliegoApi, covers: dict[str, dict[str, str | None]]) -> dict[str, int]:
+    eligible_covers = {
+        sku: cover for sku, cover in covers.items()
+        if sku not in EXCLUDED_CATALOG_SKUS
+    }
+    wanted_skus = set(eligible_covers) | EXCLUDED_CATALOG_SKUS
     editions_by_sku: dict[str, dict[str, Any]] = {}
-    page = 0
-    while True:
-        query = urllib.parse.urlencode({"query": "PLG-BK-", "page": str(page), "pageSize": str(PAGE_SIZE)})
-        response = api.request("GET", "/api/v1/admin/editions?" + query)
-        rows = response.get("items") if isinstance(response, dict) else None
-        if not isinstance(rows, list):
-            raise ApiError("La búsqueda ADMIN de ediciones devolvió una respuesta inválida.")
-        for row in rows:
-            sku = row.get("sku") if isinstance(row, dict) else None
-            if isinstance(sku, str) and sku in covers:
-                editions_by_sku[sku] = row
-        if len(rows) < PAGE_SIZE:
-            break
-        page += 1
+    for row in api.all_pages("/api/v1/admin/editions", query="PLG-BK-"):
+        sku = row.get("sku") if isinstance(row, dict) else None
+        if isinstance(sku, str) and sku in wanted_skus:
+            if sku in editions_by_sku:
+                raise ApiError(f"La búsqueda ADMIN devolvió más de una edición con SKU {sku}.")
+            editions_by_sku[sku] = row
 
-    updated = 0
-    skipped = 0
-    for sku, cover in covers.items():
+    for sku, cover in eligible_covers.items():
         edition = editions_by_sku.get(sku)
         if edition is None:
             continue
-        manifest_isbn = cover["isbn13"]
-        if manifest_isbn and edition.get("isbn13") and edition["isbn13"] != manifest_isbn:
+        if cover.get("isbn13") and edition.get("isbn13") != cover["isbn13"]:
             raise ApiError(f"El ISBN de {sku} no coincide con el manifiesto de portadas.")
+        if cover.get("title") and edition.get("bookTitle") != cover["title"]:
+            raise ApiError(f"El título de {sku} no coincide con el manifiesto de portadas.")
+
+    updated = 0
+    skipped = 0
+    excluded = 0
+    for sku in EXCLUDED_CATALOG_SKUS:
+        edition = editions_by_sku.get(sku)
+        if edition is None:
+            continue
+        state = edition.get("state")
+        if state not in {"ACTIVE", "INACTIVE"}:
+            raise ApiError(f"El estado de {sku} no está disponible para excluirla del catálogo.")
+        if state == "ACTIVE":
+            api.request("PUT", f"/api/v1/admin/editions/{edition['editionId']}/status", {"state": "INACTIVE"})
+        excluded += 1
+
+    for sku, cover in eligible_covers.items():
+        edition = editions_by_sku.get(sku)
+        if edition is None:
+            continue
         cover_url = cover["coverUrl"]
         if edition.get("coverUrl") == cover_url:
             skipped += 1
@@ -279,7 +357,8 @@ def sync_cover_manifest(api: PliegoApi, covers: dict[str, dict[str, str | None]]
     return {
         "updated": updated,
         "skipped": skipped,
-        "unmatched": len(covers) - len(editions_by_sku),
+        "unmatched": len(eligible_covers) - sum(sku in editions_by_sku for sku in eligible_covers),
+        "excluded": excluded,
     }
 
 
@@ -337,6 +416,7 @@ def book_matches(book: dict[str, Any], seed: EditionSeed, category_id: str) -> b
     category_ids = [category.get("categoryId") for category in book.get("categories", [])]
     return (
         book.get("title") == seed.title
+        and book.get("subtitle") == seed.subtitle
         and author_names == list(seed.authors)
         and category_ids == [category_id]
         and book.get("state") == "ACTIVE"
@@ -344,9 +424,13 @@ def book_matches(book: dict[str, Any], seed: EditionSeed, category_id: str) -> b
 
 
 def ensure_book(api: PliegoApi, seed: EditionSeed, category_id: str) -> str:
-    candidates = api.page("/api/v1/admin/books", query=seed.title, state="ACTIVE")
+    candidates = api.page("/api/v1/admin/books", query=seed.title)
     for candidate in candidates:
         if candidate.get("title") == seed.title and book_matches(candidate, seed, category_id):
+            if candidate.get("state") == "INACTIVE":
+                api.request("PUT", f"/api/v1/admin/books/{candidate['bookId']}/status", {"state": "ACTIVE"})
+            elif candidate.get("state") != "ACTIVE":
+                raise ApiError(f"El estado del libro '{seed.title}' no está disponible para el seed.")
             return candidate["bookId"]
     authors = [
         {"authorId": ensure_author(api, author), "order": index}
@@ -354,7 +438,7 @@ def ensure_book(api: PliegoApi, seed: EditionSeed, category_id: str) -> str:
     ]
     created = api.request("POST", "/api/v1/admin/books", {
         "title": seed.title,
-        "subtitle": None,
+        "subtitle": seed.subtitle,
         "synopsis": seed.synopsis,
         "authors": authors,
         "categoryIds": [category_id],
@@ -397,6 +481,10 @@ def ensure_edition(api: PliegoApi, seed: EditionSeed, book_id: str, publisher_id
             "coverSourceUrl": existing.get("coverSourceUrl"),
             "coverAttribution": existing.get("coverAttribution"),
         })
+        if existing.get("state") == "INACTIVE":
+            api.request("PUT", f"/api/v1/admin/editions/{edition_id}/status", {"state": "ACTIVE"})
+        elif existing.get("state") != "ACTIVE":
+            raise ApiError(f"El estado de {seed.sku} no está disponible para el seed.")
         return existing
     created = api.request("POST", "/api/v1/admin/editions", {
         "bookId": book_id,
@@ -416,41 +504,100 @@ def ensure_edition(api: PliegoApi, seed: EditionSeed, book_id: str, publisher_id
     return {"editionId": created["editionId"], "bookId": book_id, "sku": seed.sku}
 
 
-def sync_stock(api: PliegoApi, edition_id: str, desired: int) -> None:
+def ensure_minimum_stock(api: PliegoApi, edition_id: str, minimum: int) -> None:
     current_rows = api.page("/api/v1/admin/inventory", editionId=edition_id)
     if len(current_rows) != 1:
         raise ApiError(f"No se encontró inventario único para la edición {edition_id}.")
     current = int(current_rows[0]["stockActual"])
-    difference = desired - current
+    difference = minimum - current
     if difference > 0:
         api.request("POST", f"/api/v1/admin/inventory/{edition_id}/entries", {
             "quantity": difference,
-            "reason": "Carga idempotente del catálogo de desarrollo.",
+            "reason": "Stock mínimo idempotente para pruebas locales de desarrollo.",
         })
-    elif difference < 0:
-        api.request("POST", f"/api/v1/admin/inventory/{edition_id}/adjustments", {
-            "type": "ADJUSTMENT_OUT",
-            "quantity": -difference,
-            "reason": "Ajuste idempotente del catálogo de desarrollo.",
-        })
+
+
+def retire_test_fixtures(api: PliegoApi) -> int:
+    retired = 0
+    for edition in api.all_pages("/api/v1/admin/editions"):
+        sku = edition.get("sku")
+        if not isinstance(sku, str) or not sku.startswith(TEST_FIXTURE_SKU_PREFIXES):
+            continue
+        if edition.get("state") not in {"ACTIVE", "INACTIVE"}:
+            raise ApiError(f"El estado de la edición fixture {sku} no está disponible.")
+        if edition["state"] == "ACTIVE":
+            api.request("PUT", f"/api/v1/admin/editions/{edition['editionId']}/status", {"state": "INACTIVE"})
+            retired += 1
+    return retired
+
+
+def verify_seeded_catalog(api: PliegoApi, seeds: tuple[EditionSeed, ...],
+                          covers: dict[str, dict[str, str | None]]) -> tuple[int, int]:
+    admin_rows = api.all_pages("/api/v1/admin/editions")
+    admin_by_sku: dict[str, dict[str, Any]] = {}
+    for row in admin_rows:
+        sku = row.get("sku")
+        if isinstance(sku, str) and sku.startswith("PLG-BK-"):
+            if sku in admin_by_sku:
+                raise ApiError(f"La búsqueda ADMIN devolvió más de una edición con SKU {sku}.")
+            admin_by_sku[sku] = row
+
+    for seed in seeds:
+        edition = admin_by_sku.get(seed.sku)
+        if edition is None:
+            raise ApiError(f"La edición {seed.sku} no aparece en ADMIN después del seed.")
+        cover = covers[seed.sku]
+        if (edition.get("state") != "ACTIVE" or edition.get("isbn13") != seed.isbn13
+                or edition.get("bookTitle") != seed.title or edition.get("coverUrl") != cover["coverUrl"]):
+            raise ApiError(f"La edición ADMIN {seed.sku} no coincide exactamente con el seed y el manifiesto.")
+
+    public_rows = api.all_pages("/api/v1/catalog/editions", sort="TITLE_ASC")
+    expected_ids = {admin_by_sku[seed.sku]["editionId"] for seed in seeds}
+    public_by_id = {row["editionId"]: row for row in public_rows}
+    if len(public_rows) != len(seeds) or set(public_by_id) != expected_ids:
+        raise ApiError(f"El catálogo público muestra {len(public_rows)} ediciones; se esperaban {len(seeds)}.")
+
+    for seed in seeds:
+        admin = admin_by_sku[seed.sku]
+        public = public_by_id[admin["editionId"]]
+        expected_url = covers[seed.sku]["coverUrl"]
+        if public.get("coverUrl") != expected_url or public.get("isbn13") != seed.isbn13:
+            raise ApiError(f"La búsqueda pública no devuelve el CDN esperado para {seed.sku}.")
+        detail = api.request("GET", f"/api/v1/catalog/editions/{admin['editionId']}")
+        if (detail.get("sku") != seed.sku or detail.get("isbn13") != seed.isbn13
+                or detail.get("coverUrl") != expected_url):
+            raise ApiError(f"El detalle público no devuelve el CDN esperado para {seed.sku}.")
+
+    excluded_rows = [row for row in admin_rows if row.get("sku") in EXCLUDED_CATALOG_SKUS]
+    if any(row.get("state") != "INACTIVE" for row in excluded_rows):
+        raise ApiError("PLG-BK-000042 debe permanecer INACTIVE.")
+    if any(row.get("editionId") in public_by_id for row in excluded_rows):
+        raise ApiError("PLG-BK-000042 no debe aparecer en el catálogo público.")
+    matched = sum(1 for seed in seeds if admin_by_sku[seed.sku].get("coverUrl") == covers[seed.sku]["coverUrl"])
+    return len(public_rows), matched
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--sku", action="append", help="Seed only this deterministic edition SKU; may be repeated.")
+    parser.add_argument("--sku", action="append", help="Seed only this manifest SKU; may be repeated.")
     parser.add_argument("--cover-manifest", type=Path, default=DEFAULT_COVER_MANIFEST,
-                        help="Prepared manifest containing permanent SKU and CDN URL mappings.")
+                        help="Normalized v2 manifest containing permanent SKU and CDN URL mappings.")
+    parser.add_argument("--sku-registry", type=Path, default=DEFAULT_SKU_REGISTRY,
+                        help="Permanent ISBN-to-SKU registry for the bibliographic staging records.")
+    parser.add_argument("--staging-file", action="append", type=Path,
+                        help="Bibliographic staging JSON; may be repeated (defaults to the three local catalogs).")
     args = parser.parse_args()
     covers = load_cover_manifest(args.cover_manifest)
-    selected = EDITIONS
+    seeds = load_catalog_seeds(covers, args.sku_registry, tuple(args.staging_file or DEFAULT_STAGING_FILES))
+    selected = seeds
     if args.sku:
         wanted = set(args.sku)
-        known = {seed.sku for seed in EDITIONS}
+        known = {seed.sku for seed in seeds}
         unknown = wanted - known
         if unknown:
             raise ApiError("SKU no incluidos en el manifiesto: " + ", ".join(sorted(unknown)))
-        selected = tuple(seed for seed in EDITIONS if seed.sku in wanted)
-    invalid = [seed.sku for seed in EDITIONS if seed.isbn13 and not isbn_is_valid(seed.isbn13)]
+        selected = tuple(seed for seed in seeds if seed.sku in wanted)
+    invalid = [seed.sku for seed in seeds if seed.isbn13 and not isbn_is_valid(seed.isbn13)]
     if invalid:
         print("ISBN-13 inválido en el manifiesto: " + ", ".join(invalid), file=sys.stderr)
         return 2
@@ -469,50 +616,20 @@ def main() -> int:
             publisher_ids[seed.publisher] = publisher_id
         edition = ensure_edition(api, seed, book_id, publisher_id)
         edition_id = edition["editionId"]
-        sync_stock(api, edition_id, seed.stock)
+        ensure_minimum_stock(api, edition_id, seed.stock)
         print(f"{seed.sku}: {edition_id} listo")
 
+    retired_fixtures = retire_test_fixtures(api)
     cover_result = sync_cover_manifest(api, covers)
     print("Portadas CDN: "
           f"{cover_result['updated']} actualizadas; {cover_result['skipped']} vigentes; "
-          f"{cover_result['unmatched']} SKU sin edición importada.")
+          f"{cover_result['unmatched']} SKU sin edición importada; "
+          f"{cover_result['excluded']} SKU excluidos del catálogo.")
 
-    admin_editions = api.page("/api/v1/admin/editions", query="PLG-DEV-")
-    seed_rows = [row for row in admin_editions if row.get("sku", "").startswith("PLG-DEV-")]
-    if len(seed_rows) < len(EDITIONS):
-        raise ApiError(f"La búsqueda ADMIN devolvió {len(seed_rows)} ediciones seed; se esperaban {len(EDITIONS)}.")
-    public_rows = api.page("/api/v1/catalog/editions", sort="TITLE_ASC")
-    public_by_id = {row["editionId"]: row for row in public_rows}
-    public_ids = {row["editionId"] for row in seed_rows}
-    visible = [public_by_id[edition_id] for edition_id in public_ids if edition_id in public_by_id]
-    categories = api.request("GET", "/api/v1/catalog/categories")["items"]
-    options = api.request("GET", "/api/v1/catalog/filter-options")
-    if len(visible) != len(EDITIONS):
-        raise ApiError(f"El catálogo público muestra {len(visible)} de {len(EDITIONS)} ediciones seed.")
-    languages = {row["language"] for row in visible}
-    formats = {row["format"] for row in visible}
-    if not {"en", "es"}.issubset(languages) or not {"PAPERBACK", "HARDCOVER"}.issubset(formats):
-        raise ApiError("La búsqueda pública no expone los idiomas o formatos definidos por el seed.")
-    available = sum(1 for row in visible if row["available"])
-    unavailable = len(visible) - available
-    prices = [Decimal(row["price"]) for row in visible]
-    by_language = {code: sum(1 for row in visible if row["language"] == code) for code in sorted(languages)}
-    by_format = {kind: sum(1 for row in visible if row["format"] == kind) for kind in sorted(formats)}
-    by_category = {}
-    for category in categories:
-        query = urllib.parse.urlencode({"category": category["slug"], "page": 0, "pageSize": PAGE_SIZE})
-        by_category[category["slug"]] = len(api.request("GET", "/api/v1/catalog/editions?" + query)["items"])
-    print(f"Resumen: {len(categories)} categorías públicas; {len(seed_rows)} ediciones ADMIN; "
-          f"{len(visible)} visibles; {available} disponibles; {unavailable} sin stock.")
-    print("Filtros públicos:", json.dumps({
-        "languages": by_language,
-        "formats": by_format,
-        "minimumPrice": str(min(prices)),
-        "maximumPrice": str(max(prices)),
-        "categoryCounts": by_category,
-    }, ensure_ascii=False, sort_keys=True))
-    print("Idiomas/filtros:", json.dumps(options, ensure_ascii=False, sort_keys=True))
-    print("Categorías:", json.dumps(categories, ensure_ascii=False, sort_keys=True))
+    if not args.sku:
+        total_public, matched = verify_seeded_catalog(api, seeds, covers)
+        print(f"Verificación API: {total_public} ediciones públicas; {matched}/{len(covers)} portadas concordantes.")
+        print(f"Fixtures sintéticos retirados: {retired_fixtures}.")
     return 0
 
 
