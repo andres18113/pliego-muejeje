@@ -16,11 +16,29 @@ async function mockPublicCatalog(page: import("@playwright/test").Page) {
   await page.route("**/api/v1/catalog/editions**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
-    body: JSON.stringify({ items: [], page: 0, pageSize: 20, totalCount: "0" }),
+    body: JSON.stringify(new URL(route.request().url()).searchParams.has("que") ? {
+      items: [{
+        editionId: "42",
+        bookId: "17",
+        title: "Cien años de soledad",
+        authors: "Gabriel García Márquez",
+        publisher: "Editorial Sur",
+        isbn13: "9780306406157",
+        price: "18.50",
+        coverUrl: null,
+        coverLicense: null,
+        coverAttribution: null,
+        format: "PAPERBACK",
+        language: "es",
+        available: true,
+      }], page: 0, pageSize: 6, totalCount: "1",
+    } : { items: [], page: 0, pageSize: 20, totalCount: "0" }),
   }));
 }
 
 async function mockCustomerLogin(page: import("@playwright/test").Page) {
+  await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
+  await page.route("**/api/v1/auth/logout", (route) => route.fulfill({ status: 204 }));
   await page.route("**/api/v1/auth/login", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
@@ -75,20 +93,23 @@ async function signIn(page: import("@playwright/test").Page) {
   await expect(page).toHaveURL(/\/catalog$/);
 }
 
-test("guest header keeps search and sign-in actions available without overflow", async ({ page }) => {
+test("guest header keeps compact actions and responsive search dialog available", async ({ page }) => {
   await mockPublicCatalog(page);
   await page.goto("/");
 
   const header = page.locator(".site-header");
   await expect(header.getByRole("link", { name: "PLIEGO, ir al inicio" })).toBeVisible();
-  await expect(header.getByRole("search")).toBeVisible();
+  await expect(header.getByRole("search")).toHaveCount(0);
+  const searchTrigger = header.getByRole("button", { name: "Buscar en el catálogo" });
+  await expect(searchTrigger).toBeVisible();
   await expect(header.getByRole("link", { name: "Iniciar sesión" })).toBeVisible();
-  await expect(header.getByRole("link", { name: "Crear cuenta" })).toBeVisible();
   await expect(header.getByRole("button", { name: "Menú de cuenta" })).toHaveCount(0);
 
-  for (const width of [1440, 768, 390, 320]) {
+  for (const width of [1920, 1440, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
-    await expect(header.getByRole("search")).toBeVisible();
+    const searchTarget = await searchTrigger.boundingBox();
+    expect(searchTarget?.width).toBe(44);
+    expect(searchTarget?.height).toBe(44);
     const sizes = await header.evaluate((element) => ({
       scroll: element.scrollWidth,
       client: element.clientWidth,
@@ -97,6 +118,75 @@ test("guest header keeps search and sign-in actions available without overflow",
     }));
     expect(sizes.scroll, `guest header overflows at ${width}px`).toBeLessThanOrEqual(sizes.client);
     expect(sizes.documentScroll, `guest page overflows at ${width}px`).toBeLessThanOrEqual(sizes.viewport);
+
+    await searchTrigger.click();
+    const dialog = page.getByRole("dialog", { name: "Buscar en el catálogo" });
+    const searchbox = dialog.getByRole("searchbox", { name: "Buscar en el catálogo" });
+    await expect(dialog).toBeVisible();
+    await expect(searchbox).toBeFocused();
+    expect((await searchbox.boundingBox())?.width).toBeGreaterThanOrEqual(130);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    await page.keyboard.press("Escape");
+    await expect(dialog).toHaveCount(0);
+    await expect(searchTrigger).toBeFocused();
+  }
+
+  await searchTrigger.click();
+  await page.getByRole("button", { name: "Cerrar búsqueda" }).click();
+  await expect(searchTrigger).toBeFocused();
+  await searchTrigger.click();
+  const populatedSearch = page.getByRole("searchbox", { name: "Buscar en el catálogo" });
+  await populatedSearch.fill("Cien años");
+  await expect(page.locator(".search-suggestion-link")).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(searchTrigger).toBeFocused();
+});
+
+test("global suggestions return real editions that can be opened by keyboard", async ({ page }) => {
+  await mockPublicCatalog(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+
+  const trigger = page.getByRole("button", { name: "Buscar en el catálogo" });
+  await trigger.click();
+  const searchbox = page.getByRole("searchbox", { name: "Buscar en el catálogo" });
+  await searchbox.fill("Cien años");
+  const result = page.getByRole("link", { name: /Cien años de soledad.*Gabriel García Márquez/ });
+  await expect(result).toBeVisible();
+  const desktopBounds = await page.evaluate(() => {
+    const field = document.querySelector(".search-dialog-form")!.getBoundingClientRect();
+    const panel = document.querySelector(".search-suggestions")!.getBoundingClientRect();
+    return { fieldX: field.x, fieldWidth: field.width, panelX: panel.x, panelWidth: panel.width };
+  });
+  expect(Math.abs(desktopBounds.fieldX - desktopBounds.panelX)).toBeLessThanOrEqual(1);
+  expect(Math.abs(desktopBounds.fieldWidth - desktopBounds.panelWidth)).toBeLessThanOrEqual(1);
+  await page.keyboard.press("ArrowDown");
+  await expect(result).toBeFocused();
+  await page.keyboard.press("ArrowUp");
+  await expect(searchbox).toBeFocused();
+  await page.keyboard.press("ArrowDown");
+  await page.keyboard.press("Enter");
+
+  await expect(page).toHaveURL(/\/catalog\/editions\/42\?/);
+  expect(new URL(page.url()).searchParams.get("from")).toBe("/catalog?que=Cien+a%C3%B1os");
+
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 844 });
+    await page.goto("/");
+    const mobileTrigger = page.getByRole("button", { name: "Buscar en el catálogo" });
+    await mobileTrigger.click();
+    await page.getByRole("searchbox", { name: "Buscar en el catálogo" }).fill("Cien años");
+    await expect(page.locator(".search-suggestion-link")).toBeVisible();
+    const mobileBounds = await page.evaluate(() => {
+      const field = document.querySelector(".search-dialog-form")!.getBoundingClientRect();
+      const panel = document.querySelector(".search-suggestions")!.getBoundingClientRect();
+      return { fieldX: field.x, fieldWidth: field.width, panelX: panel.x, panelWidth: panel.width };
+    });
+    expect(Math.abs(mobileBounds.fieldX - mobileBounds.panelX), `suggestions align at ${width}px`).toBeLessThanOrEqual(1);
+    expect(Math.abs(mobileBounds.fieldWidth - mobileBounds.panelWidth), `suggestions match field width at ${width}px`).toBeLessThanOrEqual(1);
+    await page.getByRole("button", { name: "Cerrar búsqueda" }).click();
+    await expect(mobileTrigger).toBeFocused();
   }
 });
 
@@ -109,12 +199,14 @@ test("customer header keeps Cart direct and groups profile, orders, and sign-out
   const cart = header.getByRole("link", { name: /Carrito.*3 unidades/ });
   const trigger = header.getByRole("button", { name: "Menú de cuenta" });
   await expect(cart).toBeVisible();
+  await expect(cart).toHaveAttribute("aria-label", "Carrito, 3 unidades");
+  await expect(cart.getByText("Carrito", { exact: true })).toHaveCount(0);
+  await expect(cart.locator(".account-cart-count")).toHaveCSS("background-color", "rgb(36, 81, 63)");
   await expect(trigger).toBeVisible();
   await expect(header.getByText(customerEmail)).toHaveCount(0);
 
-  for (const width of [1440, 768, 390, 320]) {
+  for (const width of [1920, 1440, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
-    await expect(header.getByRole("search")).toBeVisible();
     await expect(cart).toBeVisible();
     await expect(trigger).toBeVisible();
     const sizes = await header.evaluate((element) => ({
@@ -125,6 +217,32 @@ test("customer header keeps Cart direct and groups profile, orders, and sign-out
     }));
     expect(sizes.scroll, `customer header overflows at ${width}px`).toBeLessThanOrEqual(sizes.client);
     expect(sizes.documentScroll, `customer page overflows at ${width}px`).toBeLessThanOrEqual(sizes.viewport);
+
+    const proportions = await header.evaluate((element) => {
+      const rect = (selector: string) => element.querySelector<HTMLElement>(selector)?.getBoundingClientRect();
+      const search = rect(".search-trigger");
+      const cartTarget = rect(".account-cart");
+      const accountTarget = rect(".account-menu-trigger");
+      const glyphs = [...element.querySelectorAll<HTMLElement>(".masthead .material-symbol--header")].map((glyph) => ({
+        size: getComputedStyle(glyph).fontSize,
+        weight: getComputedStyle(glyph).fontWeight,
+        top: glyph.getBoundingClientRect().top,
+      }));
+      return {
+        searchWidth: search?.width ?? 0,
+        cartHeight: cartTarget?.height ?? 0,
+        accountHeight: accountTarget?.height ?? 0,
+        glyphs,
+      };
+    });
+    expect(proportions.searchWidth).toBe(44);
+    expect(proportions.cartHeight).toBeGreaterThanOrEqual(44);
+    expect(proportions.accountHeight).toBeGreaterThanOrEqual(44);
+    expect(new Set(proportions.glyphs.map((glyph) => `${glyph.size}/${glyph.weight}`)).size).toBe(1);
+    if (width > 740) {
+      const glyphY = proportions.glyphs.map((glyph) => glyph.top);
+      expect(Math.max(...glyphY) - Math.min(...glyphY)).toBeLessThanOrEqual(1);
+    }
   }
 
   await trigger.focus();

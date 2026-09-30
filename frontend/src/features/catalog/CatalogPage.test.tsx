@@ -105,6 +105,41 @@ describe("CatalogPage", () => {
     expect(document.querySelectorAll('[aria-labelledby="catalog-results-heading"]')).toHaveLength(1);
   });
 
+  it("submits title, author, and ISBN as one global query without a scope selector", async () => {
+    const editionRequests: URL[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
+      const url = new URL(requestUrl(input), "http://localhost");
+      if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" });
+      if (url.pathname.endsWith("/catalog/editions")) {
+        editionRequests.push(url);
+        return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
+      }
+      return jsonResponse({}, 404);
+    }));
+
+    const user = userEvent.setup();
+    renderCatalog();
+    expect(screen.queryByRole("combobox", { name: "Buscar por" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buscar en el catálogo" })).toBeInTheDocument();
+
+    for (const value of ["Cien años", "Cervantes", "978-0-306-40615-7"]) {
+      await user.click(screen.getByRole("button", { name: "Buscar en el catálogo" }));
+      const searchbox = screen.getByRole("searchbox", { name: "Buscar en el catálogo" });
+      await user.clear(searchbox);
+      await user.type(searchbox, value);
+      await user.keyboard("{Enter}");
+      await waitFor(() => expect(editionRequests.some((url) => url.searchParams.get("que") === value)).toBe(true));
+    }
+
+    for (const url of editionRequests) {
+      expect(url.searchParams.has("title")).toBe(false);
+      expect(url.searchParams.has("author")).toBe(false);
+      expect(url.searchParams.has("isbn13")).toBe(false);
+      expect(url.searchParams.has("q")).toBe(false);
+    }
+  });
+
   it("renders the CDN URL returned by catalog search when cover provenance is unresolved", async () => {
     const coverUrl = "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
@@ -167,14 +202,16 @@ describe("CatalogPage", () => {
       return jsonResponse({}, 404);
     }));
 
-    renderCatalog("/catalog?q=Julio&category=inactiva");
+    const user = userEvent.setup();
+    renderCatalog("/catalog?que=Julio&category=inactiva");
 
     const results = await screen.findByRole("region", { name: "Resultados" });
     expect(await within(results).findByRole("alert")).toHaveTextContent("La categoría ya no está activa.");
-    await userEvent.setup().click(within(results).getByRole("button", { name: "Quitar categoría" }));
+    await user.click(within(results).getByRole("button", { name: "Quitar categoría" }));
 
     await waitFor(() => expect(screen.getByRole("heading", { name: "No encontramos ediciones con estos criterios." })).toBeInTheDocument());
-    expect(screen.getByRole("searchbox")).toHaveValue("Julio");
+    await user.click(screen.getByRole("button", { name: "Buscar en el catálogo" }));
+    expect(screen.getByRole("searchbox", { name: "Buscar en el catálogo" })).toHaveValue("Julio");
     expect(requestedCategories).toEqual(["inactiva", null]);
   });
 });

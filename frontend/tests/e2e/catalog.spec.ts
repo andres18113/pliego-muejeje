@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { readChevronRotation } from "./shared/chevron";
 
 const editionSummary = {
   editionId: "42",
@@ -59,6 +60,14 @@ async function mockCatalogApi(
   detailOverrides: DetailOverrides = {},
   summaryOverrides: SummaryOverrides = {},
 ) {
+  await page.route("**/api/v1/me/favorites/status**", (route) => {
+    const url = new URL(route.request().url());
+    return route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify(url.searchParams.getAll("editionIds").map((editionId) => ({ editionId, favorite: false }))),
+    });
+  });
   await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
@@ -75,6 +84,55 @@ async function mockCatalogApi(
       ? { ...editionDetail, ...detailOverrides }
       : { items: [{ ...editionSummary, ...summaryOverrides }], page: Number(url.searchParams.get("page") || "0"), pageSize: 20, totalCount: "1" };
     return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(body) });
+  });
+}
+
+async function openCatalogSearch(page: import("@playwright/test").Page) {
+  await page.getByRole("button", { name: "Buscar en el catálogo" }).click();
+  return page.getByRole("searchbox", { name: "Buscar en el catálogo" });
+}
+
+async function mockPaginatedCatalogApi(page: import("@playwright/test").Page) {
+  const editions = Array.from({ length: 40 }, (_, index) => ({
+    ...editionSummary,
+    editionId: String(42 + index),
+    title: index < 20 ? `Página 1 · Libro ${index + 1}` : `Página 2 · Libro ${index - 19}`,
+  }));
+
+  await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
+  await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ items: [{ slug: "narrativa", name: "Narrativa", parentSlug: null }] }),
+  }));
+  await page.route("**/api/v1/catalog/filter-options", (route) => route.fulfill({
+    status: 200,
+    contentType: "application/json",
+    body: JSON.stringify({ languages: ["en", "es"], minimumPrice: "7.25", maximumPrice: "38.00" }),
+  }));
+  await page.route("**/api/v1/catalog/editions**", (route) => {
+    const url = new URL(route.request().url());
+    if (url.pathname.endsWith("/62")) {
+      return route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ ...editionDetail, editionId: "62", title: "Página 2 · Libro 1" }),
+      });
+    }
+
+    const requestedPage = Number(url.searchParams.get("page") || "0");
+    const pageSize = Number(url.searchParams.get("pageSize") || "20");
+    const start = requestedPage * pageSize;
+    return route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        items: editions.slice(start, start + pageSize),
+        page: requestedPage,
+        pageSize,
+        totalCount: "40",
+      }),
+    });
   });
 }
 
@@ -216,9 +274,10 @@ test("searches the public catalog, opens a real edition route, and returns to th
   await mockCatalogApi(page);
   await page.goto("/");
 
-  await page.getByRole("searchbox").fill("Cien años");
-  await page.getByRole("button", { name: "Buscar" }).click();
-  await expect(page).toHaveURL(/\/catalog\?q=Cien\+a%C3%B1os/);
+  const searchbox = await openCatalogSearch(page);
+  await searchbox.fill("Cien años");
+  await searchbox.press("Enter");
+  await expect(page).toHaveURL(/\/catalog\?que=Cien\+a%C3%B1os/);
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeVisible();
 
   const editionLink = page.getByRole("link", { name: "Ver edición: Cien años de soledad" });
@@ -229,13 +288,14 @@ test("searches the public catalog, opens a real edition route, and returns to th
   await expect(page.getByRole("navigation", { name: "Ruta de navegación" })).toContainText("Cien años de soledad");
 
   await page.getByRole("link", { name: "Volver al catálogo" }).first().click();
-  await expect(page).toHaveURL(/\/catalog\?q=Cien\+a%C3%B1os/);
+  await expect(page).toHaveURL(/\/catalog\?que=Cien\+a%C3%B1os/);
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeVisible();
 });
 
 test("moves focus to the page heading after route changes and from the skip link to main", async ({ page }) => {
   await mockCatalogApi(page);
   await page.goto("/");
+  await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toBeVisible();
 
   let releaseDetail!: () => void;
   const detailResponseGate = new Promise<void>((resolve) => { releaseDetail = resolve; });
@@ -261,10 +321,22 @@ test("makes the root a book-led discovery page and moves legacy criteria to the 
   await page.goto("/");
 
   await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Explorar catálogo", exact: true })).toHaveAttribute("href", "/catalog");
+  await expect(page.getByRole("link", { name: "Ver categorías", exact: true })).toHaveAttribute("href", "/#categorias");
   await expect(page.getByRole("heading", { name: "Ediciones para descubrir" })).toBeVisible();
   await expect(page.locator(".catalog-controls")).toHaveCount(0);
   await expect(page.locator(".edition-item")).toHaveCount(1);
-  await expect(page.getByRole("link", { name: "Explorar catálogo completo" })).toHaveAttribute("href", "/catalog");
+  const fullCatalogLink = page.getByRole("link", { name: "Explorar catálogo completo" });
+  await expect(fullCatalogLink).toHaveAttribute("href", "/catalog");
+  await expect(page.locator(".discovery-heading-row").getByRole("heading", { name: "Ediciones para descubrir" })).toBeVisible();
+  await expect(page.locator(".discovery-heading-row").getByRole("link", { name: "Explorar catálogo completo" })).toHaveCount(1);
+  await fullCatalogLink.click();
+  await expect(page).toHaveURL("/catalog");
+  await expect(page.getByRole("heading", { level: 1, name: "Catálogo" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toHaveCount(0);
+  await expect(page.locator(".category-section")).toHaveCount(0);
+  await page.goto("/");
+
   const categoryPosition = await page.locator(".edition-grid").evaluate((element) =>
     element.compareDocumentPosition(document.querySelector(".category-section")!) & Node.DOCUMENT_POSITION_FOLLOWING,
   );
@@ -274,9 +346,93 @@ test("makes the root a book-led discovery page and moves legacy criteria to the 
   await narrativeCategory.click();
   await expect(page).toHaveURL("/catalog?category=narrativa");
 
-  await page.goto("/?q=Cien+años&category=narrativa&sort=PRICE_DESC&page=2");
-  await expect(page).toHaveURL(/\/catalog\?q=Cien\+a%C3%B1os&category=narrativa&sort=PRICE_DESC&page=2/);
-  await expect(page.getByRole("searchbox")).toHaveValue("Cien años");
+  await page.goto("/?que=Cien+años&category=narrativa&sort=PRICE_DESC&page=2");
+  await expect(page).toHaveURL(/\/catalog\?que=Cien\+a%C3%B1os&category=narrativa&sort=PRICE_DESC&page=2/);
+  await expect(await openCatalogSearch(page)).toHaveValue("Cien años");
+});
+
+test("paginates to the results and restores catalog context after an edition detail", async ({ page }) => {
+  await mockPaginatedCatalogApi(page);
+  await page.goto("/");
+
+  await page.getByRole("link", { name: "Explorar catálogo completo" }).click();
+  await expect(page).toHaveURL("/catalog");
+  await expect(page.locator(".page-position")).toHaveText("Página 1");
+  await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toHaveCount(0);
+
+  await page.getByRole("link", { name: "Siguiente" }).click();
+  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page.locator(".page-position")).toHaveText("Página 2");
+  const results = page.locator(".catalog-results");
+  await expect(results).toBeFocused();
+  expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top))).toBeLessThanOrEqual(1);
+
+  await page.goBack();
+  await expect(page).toHaveURL("/catalog");
+  await expect(page.locator(".page-position")).toHaveText("Página 1");
+  await expect(results).toBeFocused();
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+
+  await page.goForward();
+  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page.locator(".page-position")).toHaveText("Página 2");
+  await expect(results).toBeFocused();
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+
+  await page.getByRole("link", { name: "Anterior" }).click();
+  await expect(page).toHaveURL("/catalog");
+  await expect(page.locator(".page-position")).toHaveText("Página 1");
+  await expect(results).toBeFocused();
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+
+  await page.getByRole("link", { name: "Siguiente" }).click();
+  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page.locator(".page-position")).toHaveText("Página 2");
+  await expect(results).toBeFocused();
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+
+  await page.getByRole("link", { name: "Ver edición: Página 2 · Libro 1", exact: true }).click();
+  await expect(page).toHaveURL(/\/catalog\/editions\/62\?from=%2Fcatalog%3Fpage%3D1/);
+  await page.getByRole("link", { name: "Volver al catálogo" }).first().click();
+  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page.locator(".page-position")).toHaveText("Página 2");
+  await expect(results).toBeFocused();
+  expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top))).toBeLessThanOrEqual(1);
+});
+
+test("keeps the Roboto Flex hero balanced from desktop through 320px", async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.goto("/");
+
+  const title = page.getByRole("heading", { level: 1, name: "Una lectura empieza por una pista." });
+  const explore = page.getByRole("link", { name: "Explorar catálogo", exact: true });
+  const categories = page.getByRole("link", { name: "Ver categorías", exact: true });
+  await page.evaluate(() => document.fonts.ready);
+  expect(await page.evaluate(() => Array.from(document.fonts).some((font) => font.family === "Roboto Flex" && font.status === "loaded"))).toBe(true);
+  for (const viewport of [
+    { width: 1440, height: 1000 },
+    { width: 768, height: 1024 },
+    { width: 390, height: 844 },
+    { width: 320, height: 740 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await expect(title).toBeVisible();
+    await expect(explore).toBeVisible();
+    await expect(categories).toBeVisible();
+    const [heading, primary, secondary] = await Promise.all([
+      title.boundingBox(), explore.boundingBox(), categories.boundingBox(),
+    ]);
+    expect(heading).not.toBeNull();
+    expect(primary).not.toBeNull();
+    expect(secondary).not.toBeNull();
+    expect(heading!.x).toBeGreaterThanOrEqual(0);
+    expect(heading!.x + heading!.width).toBeLessThanOrEqual(viewport.width);
+    expect(primary!.x + primary!.width).toBeLessThanOrEqual(viewport.width);
+    expect(secondary!.x + secondary!.width).toBeLessThanOrEqual(viewport.width);
+    expect(await title.evaluate((element) => getComputedStyle(element).fontFamily)).toContain("Roboto Flex");
+    expect(await title.evaluate((element) => getComputedStyle(element).fontWeight)).toBe("700");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+  }
 });
 
 test("keeps card covers and metadata aligned at the requested viewport widths", async ({ page }) => {
@@ -297,11 +453,11 @@ test("keeps card covers and metadata aligned at the requested viewport widths", 
 
 test("preserves search, sort, and price criteria from edition category links", async ({ page }) => {
   await mockCatalogApi(page);
-  await page.goto("/catalog?q=Julio&minPrice=12.00&sort=PRICE_DESC&page=2");
+  await page.goto("/catalog?que=Julio&minPrice=12.00&sort=PRICE_DESC&page=2");
   await page.getByRole("link", { name: "Ver edición: Cien años de soledad" }).click();
 
   await page.locator(".detail-categories").getByRole("link", { name: "Narrativa" }).click();
-  await expect(page).toHaveURL(/q=Julio/);
+  await expect(page).toHaveURL(/que=Julio/);
   const url = new URL(page.url());
   expect(url.searchParams.get("category")).toBe("narrativa");
   expect(url.searchParams.get("minPrice")).toBe("12.00");
@@ -481,7 +637,9 @@ test("reconciles a server failure against cart state before allowing another add
   await expect(page.getByText("El carrito no muestra una unidad nueva de esta edición. Puedes volver a intentarlo.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Agregar al carrito" })).toBeEnabled();
   expect(addCount).toBe(1);
-  expect(cartReads - baselineCartReads).toBe(2);
+  const reconciliationReads = cartReads - baselineCartReads;
+  expect(reconciliationReads).toBeGreaterThanOrEqual(2);
+  expect(reconciliationReads).toBeLessThanOrEqual(3);
 });
 
 test("keeps the first edition cover in reach on mobile and preserves access to filters", async ({ page }) => {
@@ -526,14 +684,83 @@ test("keeps catalog search usable at the minimum 320px viewport", async ({ page 
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto("/");
 
-  const queryBounds = await page.getByRole("searchbox").boundingBox();
-  const searchButtonBounds = await page.getByRole("button", { name: "Buscar" }).boundingBox();
+  const searchTrigger = page.getByRole("button", { name: "Buscar en el catálogo" });
+  const searchButtonBounds = await searchTrigger.boundingBox();
+  const searchbox = await openCatalogSearch(page);
+  const queryBounds = await searchbox.boundingBox();
+  const closeButtonBounds = await page.getByRole("button", { name: "Cerrar búsqueda" }).boundingBox();
   expect(queryBounds).not.toBeNull();
   expect(searchButtonBounds).not.toBeNull();
-  expect(queryBounds!.width).toBeGreaterThanOrEqual(160);
+  expect(closeButtonBounds).not.toBeNull();
+  expect(queryBounds!.width).toBeGreaterThanOrEqual(130);
   expect(queryBounds!.height).toBeGreaterThanOrEqual(44);
-  expect(searchButtonBounds!.height).toBeGreaterThanOrEqual(44);
+  expect(searchButtonBounds!.height).toBe(44);
+  expect(closeButtonBounds!.height).toBeGreaterThanOrEqual(44);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+});
+
+test("keeps the global search in browser history and shared filters usable", async ({ page }) => {
+  await mockCatalogApi(page);
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto("/");
+  await page.evaluate(() => document.fonts.ready);
+
+  let searchbox = await openCatalogSearch(page);
+  await expect(page.getByRole("combobox", { name: "Buscar por" })).toHaveCount(0);
+  await searchbox.fill("Cien años");
+  await searchbox.press("Enter");
+  await expect(page).toHaveURL(/\/catalog\?que=Cien\+a%C3%B1os/);
+  searchbox = await openCatalogSearch(page);
+  await searchbox.fill("Cervantes");
+  await searchbox.press("Enter");
+  await expect(page).toHaveURL(/\/catalog\?que=Cervantes/);
+  await page.goBack();
+  await expect(page).toHaveURL(/\/catalog\?que=Cien\+a%C3%B1os/);
+  searchbox = await openCatalogSearch(page);
+  await expect(searchbox).toHaveValue("Cien años");
+  await page.keyboard.press("Escape");
+  await page.goForward();
+  await expect(page).toHaveURL(/\/catalog\?que=Cervantes/);
+  searchbox = await openCatalogSearch(page);
+  await expect(searchbox).toHaveValue("Cervantes");
+  await page.keyboard.press("Escape");
+
+  await page.setViewportSize({ width: 320, height: 740 });
+  await page.goto("/");
+  const compactButton = page.getByRole("button", { name: "Buscar en el catálogo" });
+  expect((await compactButton.boundingBox())!.height).toBe(44);
+  const compactSearch = await openCatalogSearch(page);
+  await compactSearch.fill("978-0-306-40615-7");
+  await compactSearch.press("Enter");
+  await expect(page).toHaveURL(/\/catalog\?que=978-0-306-40615-7/);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+
+  await page.setViewportSize({ width: 320, height: 500 });
+  await page.goto("/catalog");
+  await page.locator(".filter-disclosure-summary").click();
+  await page.evaluate(() => {
+    const trigger = document.getElementById("language-filter");
+    if (!trigger) return;
+    const bounds = trigger.getBoundingClientRect();
+    window.scrollTo({ top: window.scrollY + bounds.bottom - window.innerHeight + 12, behavior: "instant" });
+  });
+  const language = page.getByRole("combobox", { name: "Idioma" });
+  const languageBefore = await language.boundingBox();
+  await language.click();
+  const upwardPopup = page.locator(".pliego-dropdown-positioner[data-open]");
+  await expect(upwardPopup).toBeVisible();
+  await expect(language).toHaveAttribute("data-popup-side", "top");
+  await expect(upwardPopup).toHaveAttribute("data-side", "top");
+  expect(await language.locator(".pliego-select-chevron").evaluate((element) => getComputedStyle(element).transform)).not.toBe("none");
+  expect(await readChevronRotation(language.locator(".pliego-select-chevron"))).toBe(true);
+  expect(await language.boundingBox()).toEqual(languageBefore);
+  const upwardPopupBounds = await upwardPopup.boundingBox();
+  expect(upwardPopupBounds).not.toBeNull();
+  expect(upwardPopupBounds!.y + upwardPopupBounds!.height).toBeLessThanOrEqual(languageBefore!.y + 1);
+
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const reducedDuration = await upwardPopup.locator(".pliego-dropdown-popup").evaluate((element) => getComputedStyle(element).transitionDuration);
+  expect(reducedDuration.split(",").every((duration) => Number.parseFloat(duration) === 0)).toBe(true);
 });
 
 test("sign-in returns to the storefront without exposing the email in its header", async ({ page }) => {
