@@ -17,7 +17,7 @@ const routes = [{ path: "/catalog/editions/:editionId", element: <EditionDetailP
 describe("EditionDetailPage purchase", () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  it("treats the canonical P3002 wire code as an availability change", async () => {
+  it("keeps edition availability separate from a quantity conflict in the cart", async () => {
     stubApi({
       "GET /api/v1/catalog/editions/42": () => json(edition),
       "GET /api/v1/cart": () => json({ cartId: null, state: null, items: [], totalCurrent: "0.00" }),
@@ -28,8 +28,9 @@ describe("EditionDetailPage purchase", () => {
 
     await user.click(await screen.findByRole("button", { name: "Agregar al carrito" }));
 
-    expect(await screen.findByText("La disponibilidad cambió. No hay existencias suficientes para agregar esta edición."))
+    expect(await screen.findByText("No hay existencias suficientes para esta cantidad en tu carrito."))
       .toBeInTheDocument();
+    expect(screen.getByText("Disponible")).toBeVisible();
     expect(screen.queryByRole("button", { name: "Agregar al carrito" })).not.toBeInTheDocument();
   });
 
@@ -45,5 +46,21 @@ describe("EditionDetailPage purchase", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar al carrito" }));
 
     expect(await screen.findByRole("link", { name: "Ver el carrito" })).toHaveAttribute("href", "/cart");
+  });
+
+  it("shows an error without using the success button state", async () => {
+    stubApi({
+      "GET /api/v1/catalog/editions/42": () => json(edition),
+      "GET /api/v1/cart": () => json({ cartId: null, state: null, items: [], totalCurrent: "0.00" }),
+      "POST /api/v1/cart/items": () => problem(400, "INVALID_REQUEST", "Solicitud no válida", "Revisa los datos e inténtalo otra vez."),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/catalog/editions/42");
+
+    await user.click(await screen.findByRole("button", { name: "Agregar al carrito" }));
+
+    expect(await screen.findByRole("alert")).toHaveTextContent("Solicitud no válida.");
+    expect(await screen.findByRole("button", { name: "Agregar al carrito" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Agregado" })).not.toBeInTheDocument();
   });
 });

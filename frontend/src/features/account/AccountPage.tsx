@@ -11,6 +11,7 @@ import { ApiRequestError } from "@/shared/api/errors";
 import { useCountries } from "@/shared/api/reference";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { ReadFailure } from "@/features/purchase/CartPage";
+import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { AccountNavigation } from "./AccountNavigation";
 import { InternationalPhoneField, isValidPhoneNumber } from "@/shared/ui/InternationalPhoneField";
@@ -66,6 +67,8 @@ function ProfileForm({ profile, readCurrent, refetch, onExpired }: {
   const [phoneCountry, setPhoneCountry] = useState<CountryCode>((parsePhoneNumberFromString(profile.phone ?? "")?.country ?? "EC") as CountryCode);
   const countries = useCountries();
   const lock = useRef(false);
+  const savedPulseTimer = useRef<number | null>(null);
+  const [savedPulse, setSavedPulse] = useState(false);
   const form = useForm<ProfileValues>({
     resolver: zodResolver(profileSchema),
     defaultValues: { firstNames: profile.firstNames, lastNames: profile.lastNames, phone: profile.phone ?? "" },
@@ -74,6 +77,14 @@ function ProfileForm({ profile, readCurrent, refetch, onExpired }: {
     if (!form.formState.isDirty) form.reset({ firstNames: profile.firstNames, lastNames: profile.lastNames, phone: profile.phone ?? "" });
   }, [profile.firstNames, profile.lastNames, profile.phone, form.formState.isDirty, form.reset]);
   const mutation = useMutation({ mutationFn: updateProfile, retry: false });
+  useEffect(() => () => {
+    if (savedPulseTimer.current !== null) window.clearTimeout(savedPulseTimer.current);
+  }, []);
+  function showSavedPulse() {
+    setSavedPulse(true);
+    if (savedPulseTimer.current !== null) window.clearTimeout(savedPulseTimer.current);
+    savedPulseTimer.current = window.setTimeout(() => setSavedPulse(false), 1_100);
+  }
   const save = form.handleSubmit(async (values) => {
     if (lock.current || !readCurrent) return;
     const parsedPhone = values.phone.trim() ? parsePhoneNumberFromString(values.phone) : null;
@@ -87,6 +98,7 @@ function ProfileForm({ profile, readCurrent, refetch, onExpired }: {
     const body = { firstNames: values.firstNames, lastNames: values.lastNames, phone: parsedPhone?.number ?? null };
     try {
       await mutation.mutateAsync(body);
+      showSavedPulse();
       const current = await refetch();
       if (current.data) form.reset({ firstNames: current.data.firstNames, lastNames: current.data.lastNames, phone: current.data.phone ?? "" });
       setFeedback({ message: current.isError ? "Guardamos tus datos, pero no pudimos actualizar la vista. Usa Actualizar para comprobarlos." : "Guardamos tus datos personales.", error: current.isError });
@@ -96,7 +108,10 @@ function ProfileForm({ profile, readCurrent, refetch, onExpired }: {
       else {
         const current = await refetch();
         const applied = !current.isError && current.data?.firstNames === body.firstNames && current.data?.lastNames === body.lastNames && current.data?.phone === body.phone;
-        if (applied && current.data) form.reset({ firstNames: current.data.firstNames, lastNames: current.data.lastNames, phone: current.data.phone ?? "" });
+        if (applied && current.data) {
+          showSavedPulse();
+          form.reset({ firstNames: current.data.firstNames, lastNames: current.data.lastNames, phone: current.data.phone ?? "" });
+        }
         setFeedback({ message: applied ? "Confirmamos que tus datos se guardaron." : "No pudimos confirmar los cambios. Revisa los datos actuales antes de volver a guardarlos.", error: !applied });
       }
     } finally {
@@ -134,7 +149,19 @@ function ProfileForm({ profile, readCurrent, refetch, onExpired }: {
         </Field>
       </div>
     </div>
-    {feedback && <p className={`purchase-notice ${feedback.error ? "purchase-notice--error" : "purchase-notice--success"}`} role={feedback.error ? "alert" : "status"}>{feedback.message}</p>}
-    <Button variant="primary" type="submit" disabled={!readCurrent || mutation.isPending}>{mutation.isPending ? "Guardando…" : "Guardar datos personales"}</Button>
+    <div className="account-profile-actions">
+      <Button variant="primary" type="submit" disabled={!readCurrent} aria-disabled={!readCurrent || mutation.isPending || undefined} aria-busy={mutation.isPending || undefined}>
+        <TransactionButtonLabel
+          state={mutation.isPending ? "pending" : savedPulse ? "success" : "idle"}
+          idle="Guardar datos personales"
+          pending="Guardando…"
+          success="Guardado"
+        />
+      </Button>
+      {feedback && <p
+          className={`purchase-notice ${feedback.error ? "purchase-notice--error" : "purchase-notice--success"}`}
+          role={feedback.error ? "alert" : "status"}
+        >{feedback.message}</p>}
+    </div>
   </form>;
 }

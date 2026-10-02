@@ -1,15 +1,18 @@
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { Button } from "@mantine/core";
+import { CategoryDirectory } from "./CategoryDirectory";
+import classes from "./exploration.module.css";
 import { describeApiError } from "@/shared/api/errors";
 import { getPublicCategories, searchPublicEditions } from "@/shared/api/catalog";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
-import { CatalogHeader } from "./CatalogHeader";
-import { CategoryNavigation } from "./CategoryNavigation";
-import { EditionGrid } from "./EditionGrid";
+import { HomeDiscoveryRail } from "./HomeDiscoveryRail";
+import { EditionLoadingGrid } from "./EditionLoadingGrid";
 import { readCatalogCriteria } from "./catalogUrl";
+import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
+import { useCatalogReturnScrollRestoration } from "./catalogScrollRestoration";
 
-const discoveryCriteria = { ...readCatalogCriteria(""), page: 0, pageSize: 4 };
+const discoveryCriteria = { ...readCatalogCriteria(""), page: 0, pageSize: 8 };
 const numberFormat = new Intl.NumberFormat("es-EC");
 
 export function CatalogHomePage() {
@@ -31,97 +34,82 @@ export function CatalogHomePage() {
   const discoveryError = discoveryQuery.error
     ? describeApiError(discoveryQuery.error, "No pudimos cargar las ediciones", "Revisa tu conexión e inténtalo otra vez.")
     : undefined;
-  const categoriesError = categoriesQuery.error
-    ? describeApiError(categoriesQuery.error, "No pudimos actualizar las categorías", "Revisa tu conexión e inténtalo otra vez.")
-    : undefined;
   const editions = discoveryQuery.data;
+  const discoveryEditions = editions?.items.slice(0, discoveryCriteria.pageSize) ?? [];
+  useCatalogReturnScrollRestoration(!discoveryQuery.isFetching && !categoriesQuery.isFetching);
+  const showDiscoveryPending = useDelayedPending(discoveryQuery.isPending);
 
   return (
-    <>
-      <CatalogHeader criteria={readCatalogCriteria("")} />
+    <div className={classes.surface}>
 
-      <main id="contenido-principal" tabIndex={-1}>
-        <section className="discovery-lead page-frame" aria-labelledby="page-title">
-          <div className="lead-copy">
-            <h1 id="page-title">
-              Una lectura empieza <span>por una{"\u00a0"}pista.</span>
-            </h1>
+      <main id="contenido-principal" tabIndex={-1} className={classes.home}>
+        <div className={classes.shell}>
+        <section className={classes.intro} aria-labelledby="page-title">
+          <div>
+            <h1 id="page-title">Una lectura empieza por una pista.</h1>
             <p>Abre un libro y descubre a dónde te lleva.</p>
           </div>
         </section>
 
         <section
-          className="discovery-shelf page-frame"
+          className={classes.shelf}
           aria-labelledby="discovery-heading"
-          aria-busy={discoveryQuery.isFetching}
+          aria-busy={discoveryQuery.isPending}
         >
           <p className="visually-hidden" role="status" aria-live="polite" aria-atomic="true">
             {discoveryQuery.isPending
               ? "Cargando ediciones…"
               : editions
-                ? `${numberFormat.format(editions.items.length)} ediciones cargadas.`
+                ? `${numberFormat.format(discoveryEditions.length)} ediciones cargadas.`
                 : ""}
           </p>
-          <div className="discovery-heading-row">
-            <h2 id="discovery-heading">Ediciones para descubrir</h2>
-            <ButtonLink variant="secondary" to="/catalog">
-              Explorar catálogo completo
-            </ButtonLink>
-          </div>
 
           {discoveryQuery.isPending ? (
-            <p className="discovery-message">
-              Cargando ediciones…
-            </p>
+            <>
+              <p className={classes.note} hidden={!showDiscoveryPending}>Cargando ediciones…</p>
+              <h2 id="discovery-heading" className={classes.sectionTitle}>Ediciones para descubrir</h2>
+              <EditionLoadingGrid count={6} />
+            </>
           ) : discoveryError && !editions ? (
-            <div className="catalog-error discovery-error" role="alert">
-              <p className="error-title">{discoveryError.title}</p>
+            <div className={classes.notice} role="alert">
+              <h2 id="discovery-heading" className={classes.sectionTitle}>Ediciones para descubrir</h2>
+              <p className={classes.noticeTitle}>{discoveryError.title}</p>
               <p>{discoveryError.detail}</p>
-              <Button variant="secondary" type="button" onClick={() => void discoveryQuery.refetch()}>
+              <Button variant="light" type="button" onClick={() => void discoveryQuery.refetch()}>
                 Volver a intentar
               </Button>
             </div>
           ) : editions && editions.items.length > 0 ? (
             <>
               {discoveryError && (
-                <p className="stale-data-note" role="alert">
+                <p className={classes.notice} role="alert">
                   No se pudieron actualizar estas ediciones. Mostramos los datos anteriores; el precio y la disponibilidad pueden haber cambiado.
                   {" "}
-                  <Button variant="text" type="button" onClick={() => void discoveryQuery.refetch()}>
+                  <Button variant="subtle" type="button" onClick={() => void discoveryQuery.refetch()}>
                     Volver a intentar
                   </Button>
                 </p>
               )}
-              <p className="discovery-count">
-                {editions.totalCountValue > BigInt(editions.items.length)
-                  ? `Mostramos ${numberFormat.format(editions.items.length)} de ${numberFormat.format(editions.totalCountValue)} ediciones del catálogo.`
-                  : `${numberFormat.format(editions.totalCountValue)} ${editions.totalCountValue === 1n ? "edición" : "ediciones"} del catálogo.`}
-              </p>
-              <EditionGrid editions={editions.items} criteria={discoveryCriteria} />
+              <HomeDiscoveryRail editions={discoveryEditions} criteria={discoveryCriteria} />
             </>
           ) : (
-            <div className="empty-state discovery-empty">
-              <div className="empty-rule" aria-hidden="true" />
+            <div className={classes.empty}>
+              <h2 id="discovery-heading" className={classes.sectionTitle}>Ediciones para descubrir</h2>
+
               <h3>Aún no hay ediciones publicadas.</h3>
               <p>Vuelve a consultar el catálogo para revisar las ediciones disponibles.</p>
-              <Button variant="secondary" type="button" onClick={() => void discoveryQuery.refetch()}>
+              <Button variant="light" type="button" onClick={() => void discoveryQuery.refetch()}>
                 Actualizar catálogo
               </Button>
             </div>
           )}
         </section>
 
-        <CategoryNavigation
-          categories={categoriesQuery.data?.items || []}
-          selectedSlug=""
-          criteria={readCatalogCriteria("")}
-          loading={categoriesQuery.isFetching}
-          error={categoriesError ? `${categoriesError.title}. ${categoriesError.detail}` : ""}
-          onRetry={() => void categoriesQuery.refetch()}
-        />
+        <CategoryDirectory home categories={categoriesQuery.data?.items ?? []} criteria={readCatalogCriteria("")} loading={categoriesQuery.isPending} error={categoriesQuery.isError ? "error" : ""} />
+        </div>
       </main>
 
       <SiteFooter />
-    </>
+    </div>
   );
 }

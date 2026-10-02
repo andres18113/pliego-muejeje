@@ -1,0 +1,16 @@
+.section { padding-bottom: var(--mantine-spacing-xl); overflow-wrap: anywhere; }
+.section :global(.material-symbol) { width: 1em; height: 1em; overflow: hidden; }
+.muted, .note, .caseLabel { color: var(--pliego-text-muted); }
+.controls { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--mantine-spacing-md); }
+.controls > p { grid-column: 1 / -1; margin: 0; }
+.note { max-width: 75ch; margin-block: var(--mantine-spacing-md); }
+.grid { padding: 0; list-style: none; }
+.item { display: flex; flex-direction: column; min-width: 0; gap: var(--mantine-spacing-xs); }
+.caseLabel { min-height: 2lh; margin: 0; overflow-wrap: anywhere; }
+.preview { margin-top: var(--mantine-spacing-lg); background: var(--pliego-surface); border-color: var(--pliego-border); }
+.preview p { overflow-wrap: anywhere; }
+.preview h3:focus { outline: 3px solid var(--mantine-color-pliego-8); outline-offset: 3px; }
+.contractNotes { max-width: 75ch; padding-block: var(--mantine-spacing-lg); }
+.contractNotes p { margin-bottom: var(--mantine-spacing-xs); color: var(--pliego-text-muted); }
+@media (max-width: 47.99em) { .controls { grid-template-columns: minmax(0, 1fr); } }
+:global([data-mantine-color-scheme="dark"]) .preview h3:focus { outline-color: var(--mantine-color-pliego-3); }

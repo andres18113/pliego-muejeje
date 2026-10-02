@@ -1,77 +1,55 @@
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useMemo, type RefObject } from "react";
+import { useLocation } from "react-router-dom";
+import { useSession } from "@/app/session";
+import { useFavoriteSessionFailure, useFavoriteStatuses } from "@/features/favorites/favoriteStatus";
+import { favoriteStatusQueryKey } from "@/shared/api/favorites";
 import type { EditionSummary } from "@/shared/api/catalog";
-import { formatEdition, formatLanguage, formatUsd } from "./formatters";
 import { catalogHref, type CatalogCriteria } from "./catalogUrl";
-import { BookCover } from "./BookCover";
+import { rememberCatalogReturnPosition } from "./catalogScrollRestoration";
+import { CatalogBookCard } from "./CatalogBookCard";
+import layout from "./catalogLayout.module.css";
 
 interface EditionGridProps {
   editions: EditionSummary[];
   criteria: CatalogCriteria;
+  presentation?: "catalog" | "showcase" | "rail";
+  railRef?: RefObject<HTMLUListElement | null>;
+  railId?: string;
 }
 
-export function EditionGrid({ editions, criteria }: EditionGridProps) {
+export function EditionGrid({ editions, criteria, presentation = "catalog", railRef, railId }: EditionGridProps) {
+  const location = useLocation();
+  const { session, clear } = useSession();
+  const customerId = session?.user.role === "CUSTOMER" ? session.user.userId : null;
+  const editionIds = useMemo(() => editions.map((edition) => edition.editionId), [editions]);
+  const favoritesQuery = useFavoriteStatuses(editionIds, customerId);
+  useFavoriteSessionFailure(favoritesQuery.error, clear);
+  const sourceHref = `${location.pathname}${location.search}${location.hash}`;
+
   return (
-    <ul className="edition-grid">
+    <>
+      {favoritesQuery.isError && customerId && <p className="edition-favorites-read-error" role="status">No pudimos consultar cuáles están guardados. Vuelve a cargar la página para comprobarlo.</p>}
+      <ul ref={railRef} id={railId} className={`edition-grid ${layout.grid}${presentation === "showcase" ? ` ${layout.showcase}` : presentation === "rail" ? ` ${layout.rail}` : ""}`} data-presentation={presentation} aria-label={presentation === "rail" ? "Libros para descubrir" : undefined}>
       {editions.map((edition) => (
-        <EditionItem key={edition.editionId} edition={edition} criteria={criteria} />
+        <li className={`edition-item ${layout.item}`} key={edition.editionId}><CatalogBookCard
+          edition={edition}
+          detailHref={`/catalog/editions/${encodeURIComponent(edition.editionId)}?from=${encodeURIComponent(presentation === "rail" ? sourceHref : catalogHref(criteria))}`}
+          returnHref={sourceHref}
+          isFavorite={favoritesQuery.statusByEdition.get(edition.editionId) ?? false}
+          favoriteReady={!customerId || Boolean(favoritesQuery.data)}
+          favoriteQueryKey={favoriteStatusQueryKey(customerId ?? "guest", favoritesQuery.stableIds)}
+          catalogReturn
+          onOpen={(event) => {
+            if (event.defaultPrevented || event.button !== 0
+                || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            if (presentation === "rail" && railRef?.current) {
+              window.history.replaceState({ ...window.history.state, pliegoHomeRailScrollLeft: railRef.current.scrollLeft }, "");
+            }
+            rememberCatalogReturnPosition({ locationKey: location.key, href: sourceHref, scrollY: window.scrollY });
+          }}
+        /></li>
       ))}
-    </ul>
-  );
-}
-
-function EditionItem({
-  edition,
-  criteria,
-}: {
-  edition: EditionSummary;
-  criteria: CatalogCriteria;
-}) {
-  const detailHref = `/catalog/editions/${encodeURIComponent(edition.editionId)}?from=${encodeURIComponent(catalogHref(criteria))}`;
-
-  return (
-    <li className="edition-item">
-      <Link
-        className="edition-primary-link"
-        to={detailHref}
-        state={{
-          coverPreview: {
-            editionId: edition.editionId,
-            url: edition.coverUrl,
-            license: edition.coverLicense,
-            attribution: edition.coverAttribution,
-            title: edition.title,
-          },
-        }}
-        aria-label={`Ver edición: ${edition.title}`}
-      >
-        <div className="edition-figure">
-          <BookCover
-            url={edition.coverUrl}
-            license={edition.coverLicense}
-            attribution={edition.coverAttribution}
-            title={edition.title}
-            loading="lazy"
-          />
-        </div>
-        <div className="edition-copy">
-          <h3 className="edition-title">{edition.title}</h3>
-          <p className="edition-author">{edition.authors}</p>
-          <p className="edition-publisher">{edition.publisher}</p>
-          <p className="edition-format">
-            {formatEdition(edition.format)} <span aria-hidden="true">·</span> {formatLanguage(edition.language)}
-          </p>
-          <p className="edition-price">{formatUsd(edition.price)}</p>
-          <p className={`edition-availability ${edition.available ? "is-available" : "is-unavailable"}`}>
-            <span className="availability-mark" aria-hidden="true" />
-            {edition.available ? "Disponible" : "No disponible"}
-          </p>
-          <span className="edition-detail-link">
-            Ver edición
-            <ArrowRight aria-hidden="true" size={16} strokeWidth={1.7} />
-          </span>
-        </div>
-      </Link>
-    </li>
+      </ul>
+    </>
   );
 }

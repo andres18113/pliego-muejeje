@@ -5,8 +5,7 @@ export type CatalogCriteria = EditionSearch;
 export function readCatalogCriteria(search: string): CatalogCriteria {
   const params = new URLSearchParams(search);
   return normalizeCatalogCriteria({
-    query: params.get("q") || "",
-    scope: params.get("scope") as CatalogCriteria["scope"],
+    query: params.get("que") || "",
     category: params.get("category") || "",
     minPrice: params.get("minPrice") || "",
     maxPrice: params.get("maxPrice") || "",
@@ -22,8 +21,7 @@ export function writeCatalogCriteria(criteria: CatalogCriteria) {
   const normalized = normalizeCatalogCriteria(criteria);
   const params = new URLSearchParams();
   if (normalized.query) {
-    params.set("q", normalized.query);
-    if (normalized.scope !== "title") params.set("scope", normalized.scope);
+    params.set("que", normalized.query);
   }
   if (normalized.category) params.set("category", normalized.category);
   if (normalized.minPrice) params.set("minPrice", normalized.minPrice);
@@ -75,7 +73,7 @@ export function safeCatalogReturnHref(candidate: string | null | undefined) {
   }
   try {
     const parsed = new URL(candidate, window.location.origin);
-    const isCatalogPath = parsed.pathname === "/" || parsed.pathname === "/catalog"
+    const isCatalogPath = parsed.pathname === "/" || parsed.pathname === "/catalog" || parsed.pathname === "/favorites"
       || /^\/catalog\/editions\/[1-9][0-9]*\/?$/.test(parsed.pathname);
     return parsed.origin === window.location.origin && isCatalogPath
       ? `${parsed.pathname}${parsed.search}${parsed.hash}`
@@ -86,17 +84,7 @@ export function safeCatalogReturnHref(candidate: string | null | undefined) {
 }
 
 function normalizeCatalogCriteria(criteria: CatalogCriteria): CatalogCriteria {
-  let scope: CatalogCriteria["scope"] =
-    criteria.scope === "author" || criteria.scope === "isbn13" ? criteria.scope : "title";
-  let query = typeof criteria.query === "string" ? criteria.query.trim() : "";
-  if (scope === "isbn13") {
-    const isbn = query.replace(/[\s-]/g, "");
-    if (/^[0-9]{13}$/.test(isbn)) query = isbn;
-    else {
-      query = "";
-      scope = "title";
-    }
-  }
+  const query = typeof criteria.query === "string" ? criteria.query.trim() : "";
 
   const rawCategory = typeof criteria.category === "string" ? criteria.category.trim().toLowerCase() : "";
   const category = rawCategory.length <= 140 && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(rawCategory)
@@ -113,7 +101,6 @@ function normalizeCatalogCriteria(criteria: CatalogCriteria): CatalogCriteria {
 
   return {
     query,
-    scope,
     category,
     minPrice,
     maxPrice,

@@ -1,0 +1,6 @@
+.card :global(.cover-frame) { border-radius: var(--mantine-radius-xs); background: var(--pliego-background); box-shadow: none; }
+.card :global(.cover-image) { object-fit: contain; }
+.card :global(.cover-fallback) { gap: var(--mantine-spacing-xs); padding: var(--mantine-spacing-xs); background: var(--pliego-background); color: var(--pliego-text-muted); }
+.card :global(.cover-fallback) > :global(.material-symbol) { width: 28px; height: 28px; font-size: 28px !important; overflow: hidden; }
+.card :global(.cover-fallback) span:last-child { font-size: var(--mantine-font-size-xs); line-height: var(--mantine-line-height-xs); }
+.skeleton.skeleton { position: absolute; inset: 0; }

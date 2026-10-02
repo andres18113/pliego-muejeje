@@ -1,21 +1,32 @@
 import { useEffect, useRef, useState } from "react";
-import { Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useRouteError } from "react-router-dom";
+import { Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
 import { CatalogHomePage } from "@/features/catalog/CatalogHomePage";
-import { CatalogHeader } from "@/features/catalog/CatalogHeader";
-import { readCatalogCriteria } from "@/features/catalog/catalogUrl";
+import { SiteHeader } from "./navigation/SiteHeader";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { Button, ButtonLink } from "@/components/ui/button";
-import { useSession } from "./session";
+import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
+import { SessionProvider, useSession } from "./session";
 
-const emptyCriteria = readCatalogCriteria("");
-const catalogCriteriaKeys = ["q", "scope", "category", "minPrice", "maxPrice", "language", "format", "sort", "page", "pageSize"];
+const catalogCriteriaKeys = ["que", "category", "minPrice", "maxPrice", "language", "format", "sort", "page", "pageSize"];
+
+const developmentRoutes = import.meta.env.DEV
+  ? [{
+      path: "/dev/theme",
+      HydrateFallback: InitialRouteFallback,
+      lazy: async () => {
+        const { ThemeInspectionPage } = await import("@/dev/ThemeInspectionPage");
+        return { Component: ThemeInspectionPage };
+      },
+    }]
+  : [];
 
 export const router = createBrowserRouter([
+  ...developmentRoutes,
   {
     path: "/",
-    Component: RootLayout,
+    Component: RootSessionLayout,
     HydrateFallback: InitialRouteFallback,
-    ErrorBoundary: RouteErrorBoundary,
+    ErrorBoundary: RootRouteErrorBoundary,
     children: [
       {
         index: true,
@@ -71,6 +82,13 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: "favorites",
+        lazy: async () => {
+          const { FavoritesPage } = await import("@/features/favorites/FavoritesPage");
+          return { Component: FavoritesPage };
+        },
+      },
+      {
         path: "cart",
         lazy: async () => {
           const { CartPage } = await import("@/features/purchase/CartPage");
@@ -105,6 +123,18 @@ export const router = createBrowserRouter([
 ]);
 
 export function App() {
+  return <RouterProvider router={router} />;
+}
+
+function RootSessionLayout() {
+  return (
+    <SessionProvider>
+      <RootLayout />
+    </SessionProvider>
+  );
+}
+
+function RootLayout() {
   const { restoreState, retryRestore } = useSession();
   if (restoreState === "restoring") return <InitialRouteFallback label="Comprobando tu sesión…" />;
   if (restoreState === "unavailable") {
@@ -116,26 +146,32 @@ export function App() {
       </main>
     );
   }
-  return <RouterProvider router={router} />;
+  return <ApplicationLayout />;
 }
 
 function InitialRouteFallback({ label = "Abriendo tu página…" }: { label?: string }) {
   return <div className="initial-route-loading" role="status"><strong>PLIEGO</strong><span>{label}</span></div>;
 }
 
-function RootLayout() {
+function ApplicationLayout() {
   usePageHeadingFocus();
   const navigation = useNavigation();
+  const showRoutePending = useDelayedPending(navigation.state !== "idle");
   const target = navigation.location?.pathname;
   const label = target === "/cart" ? "Abriendo carrito…" : target?.startsWith("/account") ? "Abriendo tu cuenta…" : target?.startsWith("/orders") ? "Abriendo tus pedidos…" : target === "/checkout" ? "Preparando la compra…" : "Cargando página…";
 
   return (
     <>
-      {navigation.state !== "idle" && <div className="route-pending" role="status" aria-live="polite"><span className="route-pending-bar" aria-hidden="true" />{label}</div>}
+      {showRoutePending && <div className="route-pending" role="status" aria-live="polite">{label}</div>}
+      <SiteHeader />
       <Outlet />
       <ScrollRestoration />
     </>
   );
+}
+
+function RootRouteErrorBoundary() {
+  return <SessionProvider restoreOnMount={false}><RouteErrorBoundary /></SessionProvider>;
 }
 
 export function RouteErrorBoundary() {
@@ -149,7 +185,8 @@ export function RouteErrorBoundary() {
 
   return (
     <>
-      <CatalogHeader criteria={emptyCriteria} />
+      <SiteHeader />
+
       <main className="route-fallback page-frame" id="contenido-principal" tabIndex={-1}>
         <h1>{notFound ? "No encontramos esta página." : "No pudimos mostrar esta página."}</h1>
         <p>
@@ -171,7 +208,7 @@ function NotFoundPage() {
 
   return (
     <>
-      <CatalogHeader criteria={emptyCriteria} />
+
       <main className="not-found page-frame" id="contenido-principal" tabIndex={-1}>
         <h1>No encontramos esta página.</h1>
         <p>Vuelve a explorar el catálogo completo.</p>
@@ -192,7 +229,7 @@ function AdminWorkspacePage() {
 
   return (
     <>
-      <CatalogHeader criteria={emptyCriteria} />
+
       <main className="admin-placeholder page-frame" id="contenido-principal" tabIndex={-1}>
         {!session ? (
           <section role="alert">
@@ -222,6 +259,7 @@ function AdminWorkspacePage() {
 
 function usePageHeadingFocus() {
   const { pathname } = useLocation();
+  const navigationType = useNavigationType();
   const previousPathname = useRef<string | null>(null);
 
   useEffect(() => {
@@ -231,11 +269,12 @@ function usePageHeadingFocus() {
     } else {
       if (previousPathname.current === pathname) return;
       previousPathname.current = pathname;
+      if (pathname === "/catalog" && navigationType === "POP") return;
     }
 
     const heading = document.querySelector<HTMLElement>("#contenido-principal h1");
     if (!heading) return;
     heading.tabIndex = -1;
     heading.focus({ preventScroll: true });
-  }, [pathname]);
+  }, [navigationType, pathname]);
 }

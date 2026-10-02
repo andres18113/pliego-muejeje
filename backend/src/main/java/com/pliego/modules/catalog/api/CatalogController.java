@@ -51,12 +51,16 @@ public class CatalogController {
 
     @GetMapping("/editions")
     @Operation(summary = "Buscar ediciones publicables", description = "Filtra y pagina el catálogo público. "
+            + "El parámetro «que» busca automáticamente por ISBN-13 exacto o por coincidencias parciales de título y autor. "
             + "Un slug de categoría desconocido devuelve una página vacía; una categoría inactiva devuelve 409.")
     @ApiResponse(responseCode = "200", description = "Página del catálogo",
             content = @Content(schema = @Schema(implementation = CatalogEditionSearchResponse.class)))
     @ApiResponse(responseCode = "400", description = "Filtros inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "409", description = "La categoría está inactiva", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public PageResponse<CatalogEditionSummaryResponse> search(
+            @Parameter(description = "Consulta global por ISBN-13, título o autor; tiene prioridad sobre title, author e isbn13")
+            @RequestParam(name = "que", required = false)
+            @Size(max = 140, message = "La búsqueda no puede superar 140 caracteres.") String query,
             @Parameter(description = "Texto parcial del título") @RequestParam(required = false) String title,
             @Parameter(description = "Texto parcial del autor") @RequestParam(required = false) String author,
             @RequestParam(required = false) @Pattern(regexp = "[0-9]{13}") String isbn13,
@@ -68,9 +72,9 @@ public class CatalogController {
             @RequestParam(defaultValue = "TITLE_ASC") @Pattern(regexp = "TITLE_ASC|PRICE_ASC|PRICE_DESC") String sort,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @jakarta.validation.constraints.Max(50) int pageSize) {
-        CatalogQuery query = new CatalogQuery(title, author, isbn13, category, minPrice, maxPrice,
+        CatalogQuery catalogQuery = new CatalogQuery(query, title, author, isbn13, category, minPrice, maxPrice,
                 language, format, sort, page, pageSize);
-        CatalogSearchPage result = catalogService.search(query);
+        CatalogSearchPage result = catalogService.search(catalogQuery);
         List<CatalogEditionSummaryResponse> items = result.items().stream()
                 .map(CatalogController::toSummaryResponse).toList();
         return new PageResponse<>(items, page, pageSize, Long.toString(result.totalCount()));
@@ -98,12 +102,12 @@ public class CatalogController {
 
     @GetMapping("/filter-options")
     @Operation(summary = "Consultar opciones de filtros del catálogo público",
-            description = "Devuelve los idiomas y límites de precio de las ediciones publicables actuales.")
+            description = "Devuelve idiomas, formatos y límites de precio de todas las ediciones publicables actuales.")
     @ApiResponse(responseCode = "200", description = "Opciones disponibles para los filtros del catálogo",
             content = @Content(schema = @Schema(implementation = PublicCatalogFilterOptionsResponse.class)))
     public PublicCatalogFilterOptionsResponse filterOptions() {
         PublicCatalogFilterOptions options = catalogService.getPublicFilterOptions();
-        return new PublicCatalogFilterOptionsResponse(options.languages(),
+        return new PublicCatalogFilterOptionsResponse(options.languages(), options.formats(),
                 options.minimumPrice() == null ? null : money(options.minimumPrice()),
                 options.maximumPrice() == null ? null : money(options.maximumPrice()));
     }

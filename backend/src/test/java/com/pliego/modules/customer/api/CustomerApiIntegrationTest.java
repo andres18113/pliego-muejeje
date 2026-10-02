@@ -40,6 +40,9 @@ import com.pliego.modules.customer.gateway.CustomerGateway;
 import com.pliego.modules.customer.gateway.CustomerGateway.AddressData;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerAddress;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerProfile;
+import com.pliego.modules.customer.application.CustomerFavorites.Favorite;
+import com.pliego.modules.customer.application.CustomerFavorites.Page;
+import com.pliego.modules.customer.application.CustomerFavorites.Status;
 
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i3_test",
@@ -242,7 +245,58 @@ class CustomerApiIntegrationTest {
                 .andExpect(jsonPath("$.paths['/api/v1/me/addresses'].post").exists())
                 .andExpect(jsonPath("$.paths['/api/v1/me/addresses/{addressId}'].put").exists())
                 .andExpect(jsonPath("$.paths['/api/v1/me/addresses/{addressId}'].delete").exists())
-                .andExpect(jsonPath("$.paths['/api/v1/me/addresses/{addressId}/primary'].put").exists());
+                .andExpect(jsonPath("$.paths['/api/v1/me/addresses/{addressId}/primary'].put").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/me/favorites'].get").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/me/favorites'].get.responses.200.content['application/json'].schema.$ref")
+                        .value("#/components/schemas/CustomerFavoritePage"))
+                .andExpect(jsonPath("$.paths['/api/v1/me/favorites/status'].get").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/me/favorites/{editionId}'].put").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/me/favorites/{editionId}'].delete").exists());
+    }
+
+    @Test
+    void customerFavoritesCanBeListedCheckedAddedAndRemoved() throws Exception {
+        mvc.perform(put("/api/v1/me/favorites/42").header("Authorization", customerToken("100")))
+                .andExpect(status().isNoContent());
+        mvc.perform(put("/api/v1/me/favorites/42").header("Authorization", customerToken("100")))
+                .andExpect(status().isNoContent());
+
+        mvc.perform(get("/api/v1/me/favorites/status").param("editionIds", "42", "43")
+                        .header("Authorization", customerToken("100")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].editionId").value("42"))
+                .andExpect(jsonPath("$[0].favorite").value(true))
+                .andExpect(jsonPath("$[1].editionId").value("43"))
+                .andExpect(jsonPath("$[1].favorite").value(false));
+
+        mvc.perform(get("/api/v1/me/favorites").header("Authorization", customerToken("100")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.totalCount").value("1"))
+                .andExpect(jsonPath("$.items[0].editionId").value("42"))
+                .andExpect(jsonPath("$.items[0].title").value("Edición favorita"))
+                .andExpect(jsonPath("$.items[0].available").value(true));
+
+        mvc.perform(delete("/api/v1/me/favorites/42").header("Authorization", customerToken("100")))
+                .andExpect(status().isNoContent());
+        mvc.perform(delete("/api/v1/me/favorites/42").header("Authorization", customerToken("100")))
+                .andExpect(status().isNoContent());
+        mvc.perform(get("/api/v1/me/favorites/status").param("editionIds", "42")
+                        .header("Authorization", customerToken("100")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$[0].favorite").value(false));
+    }
+
+    @Test
+    void favoritesRequireAnAuthenticatedCustomerAndBoundStatusBatchSize() throws Exception {
+        mvc.perform(get("/api/v1/me/favorites"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTH_REQUIRED"));
+        mvc.perform(get("/api/v1/me/favorites/status").param("editionIds", "1")
+                        .header("Authorization", customerToken("100")))
+                .andExpect(status().isOk());
+        mvc.perform(get("/api/v1/me/favorites/status")
+                        .header("Authorization", customerToken("100")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
     }
 
     private String customerToken(String actorUserId) {
@@ -280,6 +334,7 @@ class CustomerApiIntegrationTest {
         private long lastActorUserId;
         private long nextAddressId = 501;
         private DatabaseException failure;
+        private final List<Favorite> favorites = new ArrayList<>();
 
         FakeCustomerGateway(DatabaseExceptionTranslator translator) {
             this.translator = translator;
@@ -291,6 +346,7 @@ class CustomerApiIntegrationTest {
             lastActorUserId = 0;
             nextAddressId = 501;
             failure = null;
+            favorites.clear();
         }
 
         private void beforeCall(long actorUserId) {
@@ -347,6 +403,33 @@ class CustomerApiIntegrationTest {
                         address.line1(), address.line2(), address.city(), address.province(), address.countryCode(),
                         address.postalCode(), address.reference(), address.phone(), address.addressId() == addressId));
             }
+        }
+
+        @Override public Page listFavorites(long actorUserId, int page, int pageSize) {
+            beforeCall(actorUserId);
+            int fromIndex = Math.min(page * pageSize, favorites.size());
+            int toIndex = Math.min(fromIndex + pageSize, favorites.size());
+            return new Page(favorites.subList(fromIndex, toIndex), favorites.size());
+        }
+
+        @Override public List<Status> favoriteStatus(long actorUserId, List<Long> editionIds) {
+            beforeCall(actorUserId);
+            return editionIds.stream().distinct().map(id -> new Status(id,
+                    favorites.stream().anyMatch(favorite -> favorite.editionId() == id))).toList();
+        }
+
+        @Override public void addFavorite(long actorUserId, long editionId) {
+            beforeCall(actorUserId);
+            if (favorites.stream().noneMatch(favorite -> favorite.editionId() == editionId)) {
+                favorites.add(new Favorite(editionId, 12, "Edición favorita", "Autora de prueba", "Editorial",
+                        new java.math.BigDecimal("12.50"), null, null, null, "PAPERBACK", "es", true,
+                        Instant.parse("2026-09-29T12:00:00Z")));
+            }
+        }
+
+        @Override public void removeFavorite(long actorUserId, long editionId) {
+            beforeCall(actorUserId);
+            favorites.removeIf(favorite -> favorite.editionId() == editionId);
         }
 
         private void setNoAddressesPrimary() {

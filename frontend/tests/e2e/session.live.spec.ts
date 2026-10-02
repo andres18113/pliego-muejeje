@@ -30,7 +30,7 @@ test("restores CUSTOMER across reload and reopen, then keeps logout through relo
   await expect(reopened.getByRole("heading", { level: 1, name: "Mi cuenta" })).toBeVisible();
   await reopened.getByRole("button", { name: "Menú de cuenta" }).click();
   await reopened.getByRole("menuitem", { name: "Cerrar sesión" }).click();
-  await expect(reopened.getByRole("navigation", { name: "Cuenta y carrito" })
+  await expect(reopened.getByRole("navigation", { name: "Búsqueda, carrito y cuenta" })
     .getByRole("link", { name: "Iniciar sesión" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Inicia sesión para ver tu cuenta." })).toBeVisible();
 

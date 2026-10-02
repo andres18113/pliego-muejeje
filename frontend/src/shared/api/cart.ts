@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { stockUnavailabilityReasons } from "./availability";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
 
@@ -30,7 +31,7 @@ const cartDetailSchema = z.object({
     currentPrice: moneySchema,
     currentSubtotal: moneySchema,
     available: z.boolean(),
-    unavailabilityReason: z.enum(["P2043", "P2042", "P3002"]).nullable().catch(null),
+    unavailabilityReason: z.enum(stockUnavailabilityReasons).nullable().catch(null),
   })),
   totalCurrent: moneySchema,
 });

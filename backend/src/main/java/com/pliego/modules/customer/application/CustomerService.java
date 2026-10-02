@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pliego.modules.customer.gateway.CustomerGateway;
 import com.pliego.modules.customer.gateway.CustomerGateway.AddressData;
+import com.pliego.modules.customer.application.CustomerFavorites.Page;
+import com.pliego.modules.customer.application.CustomerFavorites.Status;
 
 @Service
 public class CustomerService {
@@ -56,6 +58,26 @@ public class CustomerService {
     @Transactional
     public void setPrimaryAddress(long actorUserId, long addressId) {
         customerGateway.setPrimaryAddress(actorUserId, addressId);
+    }
+
+    @Transactional(readOnly = true)
+    public Page listFavorites(long actorUserId, int page, int pageSize) {
+        return customerGateway.listFavorites(actorUserId, page, pageSize);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Status> favoriteStatus(long actorUserId, List<Long> editionIds) {
+        return customerGateway.favoriteStatus(actorUserId, editionIds);
+    }
+
+    @Transactional
+    public void addFavorite(long actorUserId, long editionId) {
+        customerGateway.addFavorite(actorUserId, editionId);
+    }
+
+    @Transactional
+    public void removeFavorite(long actorUserId, long editionId) {
+        customerGateway.removeFavorite(actorUserId, editionId);
     }
 
     private static AddressData toGatewayAddress(AddressInput address) {

@@ -10,12 +10,11 @@ import {
 describe("catalog URL helpers", () => {
   it("round-trips supported criteria using the existing zero-based page URL semantics", () => {
     const criteria = readCatalogCriteria(
-      "?q=Julio+Verne&scope=author&category=ciencia-ficcion&minPrice=7.2&maxPrice=38&language=ES&format=HARDCOVER&sort=PRICE_DESC&page=2&pageSize=40",
+      "?que=Julio+Verne&scope=author&category=ciencia-ficcion&minPrice=7.2&maxPrice=38&language=ES&format=HARDCOVER&sort=PRICE_DESC&page=2&pageSize=40",
     );
 
     expect(criteria).toEqual({
       query: "Julio Verne",
-      scope: "author",
       category: "ciencia-ficcion",
       minPrice: "7.20",
       maxPrice: "38.00",
@@ -25,7 +24,9 @@ describe("catalog URL helpers", () => {
       page: 2,
       pageSize: 40,
     });
-    expect(readCatalogCriteria(writeCatalogCriteria(criteria).toString())).toEqual(criteria);
+    const written = writeCatalogCriteria(criteria);
+    expect(written.has("scope")).toBe(false);
+    expect(readCatalogCriteria(written.toString())).toEqual(criteria);
     expect(catalogHref(criteria)).toMatch(/^\/catalog\?/);
     expect(catalogHref(criteria)).toContain("page=2");
     expect(catalogHref(readCatalogCriteria(""))).toBe("/catalog");
@@ -33,10 +34,9 @@ describe("catalog URL helpers", () => {
 
   it("drops malformed criteria and normalizes valid ISBN and reversed price bounds before requests", () => {
     expect(readCatalogCriteria(
-      "?q=978-0-306-40615-7&scope=isbn13&category=../admin&minPrice=NaN&maxPrice=9.5&language=English&format=OTHER&sort=RECENT&page=1e3&pageSize=51",
+      "?que=978-0-306-40615-7&scope=isbn13&category=../admin&minPrice=NaN&maxPrice=9.5&language=English&format=OTHER&sort=RECENT&page=1e3&pageSize=51",
     )).toEqual({
-      query: "9780306406157",
-      scope: "isbn13",
+      query: "978-0-306-40615-7",
       category: "",
       minPrice: "",
       maxPrice: "9.50",
@@ -47,17 +47,16 @@ describe("catalog URL helpers", () => {
       pageSize: 20,
     });
 
-    expect(readCatalogCriteria("?q=no-es-isbn&scope=isbn13&minPrice=38&maxPrice=7.25")).toMatchObject({
-      query: "",
-      scope: "title",
+    expect(readCatalogCriteria("?que=no-es-isbn&scope=isbn13&minPrice=38&maxPrice=7.25")).toMatchObject({
+      query: "no-es-isbn",
       minPrice: "7.25",
       maxPrice: "38.00",
     });
   });
 
   it("keeps return destinations on the catalog or a catalog edition route", () => {
-    expect(safeCatalogReturnHref("/?q=Julio&page=1")).toBe("/?q=Julio&page=1");
-    expect(safeCatalogReturnHref("/catalog?q=Julio&page=1")).toBe("/catalog?q=Julio&page=1");
+    expect(safeCatalogReturnHref("/?que=Julio&page=1")).toBe("/?que=Julio&page=1");
+    expect(safeCatalogReturnHref("/catalog?que=Julio&page=1")).toBe("/catalog?que=Julio&page=1");
     expect(safeCatalogReturnHref("/catalog/editions/42?from=%2Fcatalog%3Fq%3DJulio#facts"))
       .toBe("/catalog/editions/42?from=%2Fcatalog%3Fq%3DJulio#facts");
   });

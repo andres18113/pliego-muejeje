@@ -1,0 +1,13 @@
+/* Local bridge for stock-bearing legacy surfaces. Foundations remain authoritative. */
+.surface {
+  --ink: var(--pliego-text);
+  --secondary-ink: var(--pliego-text-muted);
+  --divider: var(--pliego-border);
+  color: var(--pliego-text);
+  background: var(--pliego-surface);
+}
+.surface :global(.detail-purchase-links) a { color: var(--pliego-text); text-decoration: underline; }
+.surface:global(.cart-line-copy) h3 a:hover { color: var(--pliego-text); text-decoration: underline; }
+.surface :global(.detail-purchase-feedback) { color: var(--pliego-text); }
+.status { display: flex; margin-top: var(--mantine-spacing-xs); }
+.summaryStatus { grid-column: 1; }

@@ -2,21 +2,18 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { authLocation } from "@/features/auth/authLocation";
-import { CatalogHeader } from "@/features/catalog/CatalogHeader";
-import { readCatalogCriteria } from "@/features/catalog/catalogUrl";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 
-const emptyCriteria = readCatalogCriteria("");
 
-export function PurchasePage({ title, compact = false, children }: { title: string; compact?: boolean; children: ReactNode }) {
+export function PurchasePage({ title, children, contentClassName }: { title: string; compact?: boolean; children: ReactNode; contentClassName?: string }) {
   useEffect(() => {
     document.title = `${title} · PLIEGO`;
   }, [title]);
 
   return (
     <>
-      <CatalogHeader criteria={emptyCriteria} compact={compact} />
-      <main className="purchase-route page-frame" id="contenido-principal" tabIndex={-1}>
+
+      <main className={`purchase-route page-frame ${contentClassName ?? ""}`} id="contenido-principal" tabIndex={-1}>
         {children}
       </main>
       <SiteFooter />

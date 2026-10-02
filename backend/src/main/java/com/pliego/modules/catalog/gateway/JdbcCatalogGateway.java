@@ -35,6 +35,9 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
     private static final String CATALOG_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, price, cover_url, cover_license, cover_attribution, "
             + "format, language, available, total_count FROM pliego.fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String CATALOG_GLOBAL_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
+            + "publisher_name, btrim(isbn13::text) AS isbn13, price, cover_url, cover_license, cover_attribution, "
+            + "format, language, available, total_count FROM pliego.fn_catalog_search_global(?,?,?,?,?,?,?,?,?)";
     private static final String EDITION_DETAIL_QUERY = "SELECT edition_id, book_id, title, subtitle, synopsis, "
             + "authors_json::text AS authors_json, categories_json::text AS categories_json, publisher_id, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, sku, language, format, page_count, publication_date, "
@@ -42,8 +45,9 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
             + "FROM pliego.fn_edition_detail(?)";
     private static final String PUBLIC_CATEGORY_LIST_QUERY = "SELECT category_slug, category_name, "
             + "parent_category_slug FROM pliego.fn_public_category_list()";
-    private static final String PUBLIC_FILTER_OPTIONS_QUERY = "SELECT language_code, minimum_price, maximum_price "
-            + "FROM pliego.fn_public_catalog_filter_options()";
+    private static final String PUBLIC_FILTER_OPTIONS_QUERY = "SELECT languages::text AS languages_json, "
+            + "formats::text AS formats_json, minimum_price, maximum_price "
+            + "FROM pliego.fn_public_catalog_filter_facets()";
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
@@ -84,18 +88,13 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
     @Override
     public PublicCatalogFilterOptions findPublicFilterOptions() {
         return withDatabaseErrorTranslation(() -> {
-            List<PublicCatalogFilterOptionRow> rows = jdbcTemplate.query(PUBLIC_FILTER_OPTIONS_QUERY,
-                    (results, rowNumber) -> new PublicCatalogFilterOptionRow(results.getString("language_code"),
+            return jdbcTemplate.queryForObject(PUBLIC_FILTER_OPTIONS_QUERY, (results, rowNumber) ->
+                    new PublicCatalogFilterOptions(
+                            parseJsonArray(results.getString("languages_json"), "languages_json")
+                                    .valueStream().map(JsonNode::asText).toList(),
+                            parseJsonArray(results.getString("formats_json"), "formats_json")
+                                    .valueStream().map(JsonNode::asText).toList(),
                             results.getBigDecimal("minimum_price"), results.getBigDecimal("maximum_price")));
-            if (rows.isEmpty()) return new PublicCatalogFilterOptions(List.of(), null, null);
-
-            PublicCatalogFilterOptionRow bounds = rows.getFirst();
-            List<String> languages = rows.stream()
-                    .map(PublicCatalogFilterOptionRow::languageCode)
-                    .filter(java.util.Objects::nonNull)
-                    .distinct()
-                    .toList();
-            return new PublicCatalogFilterOptions(languages, bounds.minimumPrice(), bounds.maximumPrice());
         });
     }
 
@@ -106,8 +105,25 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
     }
 
     private List<CatalogSearchRow> runCatalogSearch(CatalogQuery query, int page) {
+        if (query.query() != null && !query.query().isBlank()) {
+            return jdbcTemplate.query(CATALOG_GLOBAL_SEARCH_QUERY,
+                    statement -> bindGlobalSearch(statement, query, page), catalogSearchRowMapper());
+        }
         return jdbcTemplate.query(CATALOG_SEARCH_QUERY, statement -> bindSearch(statement, query, page),
                 catalogSearchRowMapper());
+    }
+
+    private static void bindGlobalSearch(PreparedStatement statement, CatalogQuery query, int page)
+            throws SQLException {
+        setNullableString(statement, 1, query.query());
+        setNullableString(statement, 2, query.category());
+        setNullableDecimal(statement, 3, query.minPrice());
+        setNullableDecimal(statement, 4, query.maxPrice());
+        setNullableString(statement, 5, query.language());
+        setNullableString(statement, 6, query.format());
+        statement.setString(7, query.sort());
+        statement.setInt(8, page);
+        statement.setInt(9, query.pageSize());
     }
 
     private static void bindSearch(PreparedStatement statement, CatalogQuery query, int page) throws SQLException {
@@ -200,7 +216,4 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
     private record CatalogSearchRow(CatalogEditionSummary edition, long totalCount) {
     }
 
-    private record PublicCatalogFilterOptionRow(String languageCode, BigDecimal minimumPrice,
-            BigDecimal maximumPrice) {
-    }
 }

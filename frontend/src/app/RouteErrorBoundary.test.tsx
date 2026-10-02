@@ -1,3 +1,4 @@
+import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
@@ -18,11 +19,11 @@ describe("RouteErrorBoundary", () => {
     ]);
 
     render(
-      <QueryClientProvider client={queryClient}>
+      <PliegoThemeProvider><QueryClientProvider client={queryClient}>
         <SessionProvider restoreOnMount={false}>
           <RouterProvider router={router} />
         </SessionProvider>
-      </QueryClientProvider>,
+      </QueryClientProvider></PliegoThemeProvider>,
     );
 
     expect(await screen.findByRole("heading", { name: "No pudimos mostrar esta página." })).toBeInTheDocument();

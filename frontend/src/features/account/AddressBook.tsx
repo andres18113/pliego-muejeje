@@ -1,7 +1,7 @@
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { MapPin, Pencil, Trash2 } from "lucide-react";
 import { useSession } from "@/app/session";
 import { AddressForm } from "@/features/purchase/AddressForm";
 import { ReadFailure } from "@/features/purchase/CartPage";
@@ -102,11 +102,16 @@ export function AddressBook() {
   return <section className="account-section account-addresses" id="direcciones" aria-labelledby="account-addresses-heading">
     <div className="account-section-heading">
       <div><h2 id="account-addresses-heading">Direcciones de entrega</h2><p>Elige una dirección principal para encontrarla primero al finalizar una compra.</p></div>
-      {addresses && formAddressId === null && <Button variant="secondary" type="button" disabled={!editable} onClick={(event) => { triggerRef.current = event.currentTarget; setNotice(null); setFormAddressId("new"); }}>Agregar dirección</Button>}
+      {addresses && formAddressId === null && <Button variant="secondary" type="button" disabled={!editable} onClick={(event) => { triggerRef.current = event.currentTarget; setNotice(null); setFormAddressId("new"); }}><MaterialSymbol name="add" aria-hidden="true" size={16} />Agregar dirección</Button>}
     </div>
     {query.isPending ? <p className="purchase-loading" role="status">Consultando tus direcciones…</p> : !addresses ? <ReadFailure title="No pudimos consultar tus direcciones." onRetry={() => void query.refetch()} retrying={query.isFetching} /> : <>
       {query.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus direcciones. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void query.refetch()}>Actualizar</Button></p>}
-      {notice && <p ref={noticeRef} tabIndex={-1} className={`purchase-notice ${notice.error ? "purchase-notice--error" : "purchase-notice--success"}`} role={notice.error ? "alert" : "status"}>{notice.text}</p>}
+      {notice && <p
+        ref={noticeRef}
+        tabIndex={-1}
+        className={`purchase-notice ${notice.error ? "purchase-notice--error" : "purchase-notice--success"}`}
+        role={notice.error ? "alert" : "status"}
+      >{notice.text}</p>}
       {addresses.length === 0 && <div className="purchase-empty account-address-empty"><h3>Aún no tienes direcciones guardadas.</h3><p>Agrega una para elegir dónde recibir tus libros al finalizar una compra.</p></div>}
       {addresses.length > 0 && <ul className="account-address-list">
         {addresses.map((address) => <AddressRow
@@ -122,7 +127,7 @@ export function AddressBook() {
           onPrimary={() => void perform({ kind: "primary", addressId: address.addressId })}
           onDelete={(trigger) => startDelete(address.addressId, trigger)}
           onConfirmDelete={() => void perform({ kind: "delete", addressId: address.addressId })}
-          onKeep={() => { setConfirmDeleteId(null); returnFocus(); }}
+          onKeep={() => { if (mutation.isPending) return; setConfirmDeleteId(null); returnFocus(); }}
         />)}
       </ul>}
       {missingEditedAddress && <div ref={missingRef} tabIndex={-1} className="purchase-problem" role="alert" aria-label="Esta dirección ya no está guardada."><h3>Esta dirección ya no está guardada.</h3><p>Actualizamos tu lista de direcciones. Puedes elegir otra o agregar una nueva.</p><Button variant="secondary" type="button" onClick={() => setFormAddressId(null)}>Volver a la lista</Button></div>}
@@ -161,7 +166,7 @@ function AddressRow({ address, countryName, editable, canConfirm, busy, confirmi
 }) {
   return <li className="account-address-row">
     <div className="account-address-copy">
-      <h3><MapPin aria-hidden="true" size={19} />{address.alias}{address.primary && <span className="choice-tag">Principal</span>}</h3>
+      <h3><MaterialSymbol name="location_on" aria-hidden="true" size={19} />{address.alias}{address.primary && <span className="choice-tag">Principal</span>}</h3>
       <address>
         {address.line1}{address.line2 && <>, {address.line2}</>}<br />
         {address.city}, {address.province}, {countryName}{address.postalCode && <> · {address.postalCode}</>}<br />
@@ -170,15 +175,15 @@ function AddressRow({ address, countryName, editable, canConfirm, busy, confirmi
       {address.reference && <p>{address.reference}</p>}
     </div>
     <div className="account-address-actions">
-      <Button variant="text" type="button" disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><Pencil aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
+      <Button variant="text" type="button" disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><MaterialSymbol name="edit" aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
       {!address.primary && <Button variant="text" type="button" disabled={!editable} onClick={onPrimary}>Elegir {address.alias} como principal</Button>}
-      <Button variant="text" type="button" disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><Trash2 aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
+      <Button variant="text" type="button" disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><MaterialSymbol name="delete" aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
     </div>
     {confirming && <div className="account-delete-confirm" role="group" aria-label={`Eliminar ${address.alias}`}>
       <p>¿Eliminar {address.alias}? Ya no podrás elegir esta dirección para compras nuevas. Los pedidos anteriores conservarán sus datos de entrega.</p>
       <div className="purchase-actions">
-        <Button ref={confirmRef} variant="secondary" type="button" disabled={!canConfirm} onClick={onConfirmDelete}>{busy ? "Eliminando…" : "Confirmar eliminación"}</Button>
-        <Button variant="text" type="button" disabled={busy} onClick={onKeep}>Conservar dirección</Button>
+        <Button ref={confirmRef} variant="secondary" type="button" aria-disabled={!canConfirm || undefined} aria-busy={busy || undefined} onClick={() => { if (canConfirm) onConfirmDelete(); }}>{busy ? "Eliminando…" : "Confirmar eliminación"}</Button>
+        <Button variant="text" type="button" aria-disabled={busy || undefined} onClick={onKeep}>Conservar dirección</Button>
       </div>
     </div>}
   </li>;

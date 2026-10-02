@@ -1,3 +1,4 @@
+import { safeCatalogReturnHref } from "@/features/catalog/catalogUrl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
@@ -6,13 +7,12 @@ import { z } from "zod";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
-import { CatalogHeader } from "@/features/catalog/CatalogHeader";
-import { readCatalogCriteria, safeCatalogReturnHref } from "@/features/catalog/catalogUrl";
 import { login, register } from "@/shared/api/auth";
 import { ApiRequestError, describeApiError } from "@/shared/api/errors";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
+import { stateAfterRegistration, stateAfterSignIn } from "@/features/favorites/favoriteIntent";
 
 const MAX_PASSWORD_UTF8_BYTES = 72;
 const phoneCharacters = /^\+?[0-9\s().-]+$/;
@@ -68,7 +68,6 @@ export function SignInPage() {
   const submitLockRef = useRef(false);
   const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
   const from = safeCatalogReturnHref(intent);
-  const criteria = criteriaForReturn(from);
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const {
@@ -105,7 +104,7 @@ export function SignInPage() {
       setFeedback({ state: "success", message: "Inicio de sesión correcto. Abriendo tu cuenta…" });
       await new Promise<void>((resolve) => window.setTimeout(resolve, 220));
       if (response.user.role === "ADMIN") navigate("/admin", { replace: true });
-      else navigate(intent, { replace: true });
+      else navigate(intent, { replace: true, state: stateAfterSignIn(location.state) });
     } catch (error: unknown) {
       setServerError(authFailure(error, "No se pudo iniciar sesión", "Comprueba tu conexión e inténtalo otra vez.", true));
       setFeedback({ state: "error", message: "No se pudo iniciar sesión." });
@@ -131,7 +130,7 @@ export function SignInPage() {
 
   return (
     <>
-      <CatalogHeader criteria={criteria} compact />
+
       <main className="auth-page page-frame" id="contenido-principal" tabIndex={-1}>
         <div className="auth-content" data-auth-state={activeFeedback.state}>
           <BackToCatalogLink to={from} />
@@ -192,7 +191,7 @@ export function SignInPage() {
           </form>
 
           <p className="auth-switch">
-            ¿Todavía no tienes una cuenta? <Link to={authLocation("/register", intent)}>Crear cuenta</Link>
+            ¿Todavía no tienes una cuenta? <Link to={authLocation("/register", intent)} state={location.state}>Crear cuenta</Link>
           </p>
         </div>
       </main>
@@ -208,7 +207,6 @@ export function RegisterPage() {
   const submitLockRef = useRef(false);
   const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
   const from = safeCatalogReturnHref(intent);
-  const criteria = criteriaForReturn(from);
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [registered, setRegistered] = useState(false);
@@ -278,7 +276,7 @@ export function RegisterPage() {
 
   return (
     <>
-      <CatalogHeader criteria={criteria} compact />
+
       <main className="auth-page page-frame" id="contenido-principal" tabIndex={-1}>
         <div className="auth-content" data-auth-state={registered ? "success" : activeFeedback.state}>
           <BackToCatalogLink to={from} />
@@ -286,7 +284,7 @@ export function RegisterPage() {
             <section className="auth-success" aria-labelledby="register-success-heading">
               <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Cuenta creada</h1>
               <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong className="auth-success-email">{registeredEmail}</strong>. Inicia sesión con ese correo para continuar.</p>
-              <ButtonLink variant="primary" to={authLocation("/sign-in", intent)} state={{ registeredEmail }}>Iniciar sesión</ButtonLink>
+              <ButtonLink variant="primary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink>
             </section>
           ) : (
             <>
@@ -409,7 +407,7 @@ export function RegisterPage() {
                 </Button>
               </form>
               <p className="auth-switch">
-                ¿Ya tienes una cuenta? <Link to={authLocation("/sign-in", intent)}>Iniciar sesión</Link>
+                ¿Ya tienes una cuenta? <Link to={authLocation("/sign-in", intent)} state={location.state}>Iniciar sesión</Link>
               </p>
             </>
           )}
@@ -459,9 +457,4 @@ function clearErrorFeedback(
 ) {
   if (feedback?.state === "error") setFeedback(null);
   if (serverError) setServerError(null);
-}
-
-function criteriaForReturn(from: string) {
-  const parsed = new URL(from, window.location.origin);
-  return readCatalogCriteria(parsed.search);
 }

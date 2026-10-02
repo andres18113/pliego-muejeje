@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.Instant;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.jdbc.core.ConnectionCallback;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,6 +18,9 @@ import com.pliego.foundation.database.JdbcGatewaySupport;
 import com.pliego.modules.customer.gateway.CustomerGateway.AddressData;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerAddress;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerProfile;
+import com.pliego.modules.customer.application.CustomerFavorites.Favorite;
+import com.pliego.modules.customer.application.CustomerFavorites.Page;
+import com.pliego.modules.customer.application.CustomerFavorites.Status;
 
 /** Calls only the approved customer profile and address Database API routines. */
 @Repository
@@ -31,6 +36,13 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
     private static final String ADDRESS_UPDATE_CALL = "CALL pliego.sp_address_update(?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String ADDRESS_DELETE_CALL = "CALL pliego.sp_address_delete(?,?)";
     private static final String ADDRESS_SET_PRIMARY_CALL = "CALL pliego.sp_address_set_primary(?,?)";
+    private static final String FAVORITES_QUERY = "SELECT edition_id, book_id, title, authors, publisher, price, "
+            + "cover_url, cover_license, cover_attribution, format, language, available, favorited_at, total_count "
+            + "FROM pliego.fn_customer_favorites(?,?,?)";
+    private static final String FAVORITE_STATUS_QUERY = "SELECT edition_id, favorite "
+            + "FROM pliego.fn_customer_favorite_status(?, string_to_array(?, ',')::BIGINT[])";
+    private static final String FAVORITE_ADD_CALL = "CALL pliego.sp_customer_favorite_add(?,?)";
+    private static final String FAVORITE_REMOVE_CALL = "CALL pliego.sp_customer_favorite_remove(?,?)";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -113,6 +125,63 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
             statement.setLong(2, addressId);
         });
     }
+
+    @Override
+    public Page listFavorites(long actorUserId, int page, int pageSize) {
+        return withDatabaseErrorTranslation(() -> {
+            List<FavoriteRow> rows = readFavoriteRows(actorUserId, page, pageSize);
+            long totalCount = rows.isEmpty() && page > 0
+                    ? readFavoriteRows(actorUserId, 0, pageSize).stream().findFirst()
+                            .map(FavoriteRow::totalCount).orElse(0L)
+                    : rows.stream().findFirst().map(FavoriteRow::totalCount).orElse(0L);
+            return new Page(rows.stream().map(FavoriteRow::favorite).toList(), totalCount);
+        });
+    }
+
+    @Override
+    public List<Status> favoriteStatus(long actorUserId, List<Long> editionIds) {
+        String ids = editionIds.stream().distinct().map(String::valueOf).collect(Collectors.joining(","));
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.query(FAVORITE_STATUS_QUERY,
+                statement -> {
+                    statement.setLong(1, actorUserId);
+                    statement.setString(2, ids);
+                }, (results, rowNumber) -> new Status(results.getLong("edition_id"),
+                        results.getBoolean("favorite"))));
+    }
+
+    @Override
+    public void addFavorite(long actorUserId, long editionId) {
+        executeNoOutput(FAVORITE_ADD_CALL, statement -> {
+            statement.setLong(1, actorUserId);
+            statement.setLong(2, editionId);
+        });
+    }
+
+    @Override
+    public void removeFavorite(long actorUserId, long editionId) {
+        executeNoOutput(FAVORITE_REMOVE_CALL, statement -> {
+            statement.setLong(1, actorUserId);
+            statement.setLong(2, editionId);
+        });
+    }
+
+    private List<FavoriteRow> readFavoriteRows(long actorUserId, int page, int pageSize) {
+        return jdbcTemplate.query(FAVORITES_QUERY, statement -> {
+            statement.setLong(1, actorUserId);
+            statement.setInt(2, page);
+            statement.setInt(3, pageSize);
+        }, (results, rowNumber) -> {
+            Favorite favorite = new Favorite(results.getLong("edition_id"), results.getLong("book_id"),
+                    results.getString("title"), results.getString("authors"), results.getString("publisher"),
+                    results.getBigDecimal("price"), results.getString("cover_url"),
+                    results.getString("cover_license"), results.getString("cover_attribution"),
+                    results.getString("format"), results.getString("language"), results.getBoolean("available"),
+                    results.getTimestamp("favorited_at").toInstant());
+            return new FavoriteRow(favorite, results.getLong("total_count"));
+        });
+    }
+
+    private record FavoriteRow(Favorite favorite, long totalCount) { }
 
     private void executeNoOutput(String call, StatementBinder binder) {
         withDatabaseErrorTranslation(() -> jdbcTemplate.execute((ConnectionCallback<Void>) connection -> {

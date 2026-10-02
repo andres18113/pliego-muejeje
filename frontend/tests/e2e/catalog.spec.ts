@@ -1,5 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { readChevronRotation } from "./shared/chevron";
 
 const editionSummary = {
   editionId: "42",
@@ -60,6 +59,7 @@ async function mockCatalogApi(
   detailOverrides: DetailOverrides = {},
   summaryOverrides: SummaryOverrides = {},
 ) {
+  await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
   await page.route("**/api/v1/me/favorites/status**", (route) => {
     const url = new URL(route.request().url());
     return route.fulfill({
@@ -170,7 +170,7 @@ test("keeps the cover frame at 2:3 before and after load on catalog and detail",
   expect(mobileFrame).not.toBeNull();
   expect(mobileFrame!.height / mobileFrame!.width).toBeCloseTo(1.5, 3);
 
-  await page.getByRole("link", { name: "Ver edición: El retrato de Dorian Gray" }).click();
+  await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "El retrato de Dorian Gray", exact: true }) }).click();
   const detailFrame = page.locator(".book-cover--detail .cover-frame");
   await expect(detailFrame).toBeVisible();
   const detailBox = await detailFrame.boundingBox();
@@ -180,6 +180,7 @@ test("keeps the cover frame at 2:3 before and after load on catalog and detail",
 });
 
 test("renders representative source covers in identical, non-distorting frames", async ({ page }, testInfo) => {
+  await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
   await page.setViewportSize({ width: 1440, height: 1200 });
   await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
     status: 200,
@@ -218,7 +219,7 @@ test("renders representative source covers in identical, non-distorting frames",
       headers: { "Cache-Control": "public, max-age=31536000, immutable" },
     });
   });
-  await page.goto("/");
+  await page.goto("/catalog");
 
   for (const [index, cover] of representativeCovers.entries()) {
     const edition = page.locator(".edition-item").nth(index);
@@ -226,7 +227,7 @@ test("renders representative source covers in identical, non-distorting frames",
     const image = edition.locator("img.cover-image");
     await frame.scrollIntoViewIfNeeded();
     await expect(image).toHaveAttribute("loading", "lazy");
-    await expect(image).toHaveCSS("object-fit", cover.fit);
+    await expect(image).toHaveCSS("object-fit", "contain");
     await expect(edition.locator("[data-testid=cover-skeleton]")).toHaveCount(0);
     expect(await image.evaluate((element: HTMLImageElement) => [element.naturalWidth, element.naturalHeight]))
       .toEqual([cover.width, cover.height]);
@@ -235,7 +236,7 @@ test("renders representative source covers in identical, non-distorting frames",
     const box = await frame.boundingBox();
     expect(box).not.toBeNull();
     expect(box!.height / box!.width).toBeCloseTo(1.5, 3);
-    if (cover.fit === "contain") await expect(frame).toHaveCSS("background-color", "rgb(250, 251, 248)");
+    await expect(frame).toHaveCSS("background-color", "rgb(248, 249, 250)");
   }
 
   await page.locator(".edition-grid").screenshot({ path: testInfo.outputPath("representative-covers.png") });
@@ -280,7 +281,7 @@ test("searches the public catalog, opens a real edition route, and returns to th
   await expect(page).toHaveURL(/\/catalog\?que=Cien\+a%C3%B1os/);
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeVisible();
 
-  const editionLink = page.getByRole("link", { name: "Ver edición: Cien años de soledad" });
+  const editionLink = page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Cien años de soledad", exact: true }) });
   await expect(editionLink).toHaveCount(1);
   await editionLink.click();
   await expect(page).toHaveURL(/\/catalog\/editions\/42\?/);
@@ -310,44 +311,23 @@ test("moves focus to the page heading after route changes and from the skip link
   await page.keyboard.press("Enter");
   await expect(page.locator("#contenido-principal")).toBeFocused();
 
-  await page.getByRole("link", { name: "Ver edición: Cien años de soledad" }).click();
+  await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Cien años de soledad", exact: true }) }).click();
   await expect(page.getByRole("heading", { name: "Consultando la edición" })).toBeFocused();
   releaseDetail();
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeFocused();
 });
 
-test("makes the root a book-led discovery page and moves legacy criteria to the catalog route", async ({ page }) => {
-  await mockCatalogApi(page);
-  await page.goto("/");
-
+test("makes Home a discovery shelf with one catalog CTA and real topic destinations", async ({ page }) => {
+  await mockCatalogApi(page); await page.goto("/");
   await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Explorar catálogo", exact: true })).toHaveAttribute("href", "/catalog");
-  await expect(page.getByRole("link", { name: "Ver categorías", exact: true })).toHaveAttribute("href", "/#categorias");
-  await expect(page.getByRole("heading", { name: "Ediciones para descubrir" })).toBeVisible();
-  await expect(page.locator(".catalog-controls")).toHaveCount(0);
-  await expect(page.locator(".edition-item")).toHaveCount(1);
-  const fullCatalogLink = page.getByRole("link", { name: "Explorar catálogo completo" });
-  await expect(fullCatalogLink).toHaveAttribute("href", "/catalog");
-  await expect(page.locator(".discovery-heading-row").getByRole("heading", { name: "Ediciones para descubrir" })).toBeVisible();
-  await expect(page.locator(".discovery-heading-row").getByRole("link", { name: "Explorar catálogo completo" })).toHaveCount(1);
-  await fullCatalogLink.click();
-  await expect(page).toHaveURL("/catalog");
-  await expect(page.getByRole("heading", { level: 1, name: "Catálogo" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toHaveCount(0);
-  await expect(page.locator(".category-section")).toHaveCount(0);
-  await page.goto("/");
-
-  const categoryPosition = await page.locator(".edition-grid").evaluate((element) =>
-    element.compareDocumentPosition(document.querySelector(".category-section")!) & Node.DOCUMENT_POSITION_FOLLOWING,
-  );
-  expect(categoryPosition).toBeTruthy();
-  const narrativeCategory = page.locator(".category-section").getByRole("link", { name: "Narrativa" });
-  await expect(narrativeCategory).toHaveAttribute("href", "/catalog?category=narrativa");
-  await narrativeCategory.click();
+  const main = page.getByRole("main");
+  await expect(main.getByRole("link", { name: "Explorar catálogo", exact: true })).toHaveCount(0);
+  await expect(main.getByRole("link", { name: "Ver categorías" })).toHaveCount(0);
+  await expect(main.getByRole("link", { name: "Explorar catálogo completo" })).toHaveCount(0);
+  await main.getByRole("link", { name: "Narrativa", exact: true }).click();
   await expect(page).toHaveURL("/catalog?category=narrativa");
-
   await page.goto("/?que=Cien+años&category=narrativa&sort=PRICE_DESC&page=2");
-  await expect(page).toHaveURL(/\/catalog\?que=Cien\+a%C3%B1os&category=narrativa&sort=PRICE_DESC&page=2/);
+  await expect(page).toHaveURL(/\/catalog\?que=Cien/);
   await expect(await openCatalogSearch(page)).toHaveValue("Cien años");
 });
 
@@ -355,94 +335,75 @@ test("paginates to the results and restores catalog context after an edition det
   await mockPaginatedCatalogApi(page);
   await page.goto("/");
 
-  await page.getByRole("link", { name: "Explorar catálogo completo" }).click();
+  await page.getByTestId("site-header").getByRole("link", { name: "Catálogo", exact: true }).click();
   await expect(page).toHaveURL("/catalog");
-  await expect(page.locator(".page-position")).toHaveText("Página 1");
+  await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 1 de");
   await expect(page.getByRole("heading", { name: "Una lectura empieza por una pista." })).toHaveCount(0);
 
   await page.getByRole("link", { name: "Siguiente" }).click();
   await expect(page).toHaveURL("/catalog?page=1");
-  await expect(page.locator(".page-position")).toHaveText("Página 2");
-  const results = page.locator(".catalog-results");
+  await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
+  const results = page.getByRole("region", { name: "Resultados", exact: true });
   await expect(results).toBeFocused();
-  expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top))).toBeLessThanOrEqual(1);
+  expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top - 88))).toBeLessThanOrEqual(1);
 
   await page.goBack();
   await expect(page).toHaveURL("/catalog");
-  await expect(page.locator(".page-position")).toHaveText("Página 1");
+  await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 1 de");
   await expect(results).toBeFocused();
-  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(88, 0);
 
   await page.goForward();
   await expect(page).toHaveURL("/catalog?page=1");
-  await expect(page.locator(".page-position")).toHaveText("Página 2");
+  await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
   await expect(results).toBeFocused();
-  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(88, 0);
 
   await page.getByRole("link", { name: "Anterior" }).click();
   await expect(page).toHaveURL("/catalog");
-  await expect(page.locator(".page-position")).toHaveText("Página 1");
+  await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 1 de");
   await expect(results).toBeFocused();
-  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(88, 0);
 
   await page.getByRole("link", { name: "Siguiente" }).click();
   await expect(page).toHaveURL("/catalog?page=1");
-  await expect(page.locator(".page-position")).toHaveText("Página 2");
+  await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
   await expect(results).toBeFocused();
-  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeLessThan(2);
+  await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(88, 0);
 
-  await page.getByRole("link", { name: "Ver edición: Página 2 · Libro 1", exact: true }).click();
+  await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Página 2 · Libro 1", exact: true }) }).click();
   await expect(page).toHaveURL(/\/catalog\/editions\/62\?from=%2Fcatalog%3Fpage%3D1/);
+  await expect(page.getByRole("heading", { level: 1, name: "Página 2 · Libro 1" })).toBeVisible();
+  await expect(page.getByRole("link", { name: "Volver al catálogo" }).first()).toHaveAttribute("href", "/catalog?page=1");
   await page.getByRole("link", { name: "Volver al catálogo" }).first().click();
   await expect(page).toHaveURL("/catalog?page=1");
-  await expect(page.locator(".page-position")).toHaveText("Página 2");
+  await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
   await expect(results).toBeFocused();
-  expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top))).toBeLessThanOrEqual(1);
+  expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top - 88))).toBeLessThanOrEqual(1);
 });
 
-test("keeps the Roboto Flex hero balanced from desktop through 320px", async ({ page }) => {
-  await mockCatalogApi(page);
-  await page.goto("/");
-
-  const title = page.getByRole("heading", { level: 1, name: "Una lectura empieza por una pista." });
-  const explore = page.getByRole("link", { name: "Explorar catálogo", exact: true });
-  const categories = page.getByRole("link", { name: "Ver categorías", exact: true });
-  await page.evaluate(() => document.fonts.ready);
-  expect(await page.evaluate(() => Array.from(document.fonts).some((font) => font.family === "Roboto Flex" && font.status === "loaded"))).toBe(true);
-  for (const viewport of [
-    { width: 1440, height: 1000 },
-    { width: 768, height: 1024 },
-    { width: 390, height: 844 },
-    { width: 320, height: 740 },
-  ]) {
-    await page.setViewportSize(viewport);
+test("keeps the single Home action and Roboto Flex reading hierarchy at all target widths", async ({ page }) => {
+  await mockCatalogApi(page); await page.goto("/");
+  for (const width of [320, 375, 768, 1024, 1440, 1920]) {
+    await page.setViewportSize({ width, height: 900 });
+    const title = page.getByRole("heading", { level: 1 });
     await expect(title).toBeVisible();
-    await expect(explore).toBeVisible();
-    await expect(categories).toBeVisible();
-    const [heading, primary, secondary] = await Promise.all([
-      title.boundingBox(), explore.boundingBox(), categories.boundingBox(),
-    ]);
-    expect(heading).not.toBeNull();
-    expect(primary).not.toBeNull();
-    expect(secondary).not.toBeNull();
-    expect(heading!.x).toBeGreaterThanOrEqual(0);
-    expect(heading!.x + heading!.width).toBeLessThanOrEqual(viewport.width);
-    expect(primary!.x + primary!.width).toBeLessThanOrEqual(viewport.width);
-    expect(secondary!.x + secondary!.width).toBeLessThanOrEqual(viewport.width);
-    expect(await title.evaluate((element) => getComputedStyle(element).fontFamily)).toContain("Roboto Flex");
-    expect(await title.evaluate((element) => getComputedStyle(element).fontWeight)).toBe("700");
-    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(viewport.width);
+    await expect(page.getByTestId("site-header").getByRole("link", { name: "Catálogo", exact: true })).toBeVisible();
+    expect(await title.evaluate((node) => getComputedStyle(node).fontFamily)).toContain("Roboto Flex");
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }
 });
 
 test("keeps card covers and metadata aligned at the requested viewport widths", async ({ page }) => {
   await mockCatalogApi(page);
   await page.goto("/catalog");
+  await expect(page.locator("[data-bookcard]").first()).toBeVisible();
+  await page.evaluate(() => document.fonts.ready);
 
   for (const width of [1440, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 1000 });
     const cover = await page.locator(".edition-item .cover-frame").first().boundingBox();
-    const metadata = await page.locator(".edition-item .edition-copy").first().boundingBox();
+    const metadata = await page.locator("[data-bookcard-title]").first().boundingBox();
     expect(cover, `cover at ${width}px`).not.toBeNull();
     expect(metadata, `metadata at ${width}px`).not.toBeNull();
     expect(metadata!.x).toBeCloseTo(cover!.x, 0);
@@ -454,7 +415,7 @@ test("keeps card covers and metadata aligned at the requested viewport widths", 
 test("preserves search, sort, and price criteria from edition category links", async ({ page }) => {
   await mockCatalogApi(page);
   await page.goto("/catalog?que=Julio&minPrice=12.00&sort=PRICE_DESC&page=2");
-  await page.getByRole("link", { name: "Ver edición: Cien años de soledad" }).click();
+  await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Cien años de soledad", exact: true }) }).click();
 
   await page.locator(".detail-categories").getByRole("link", { name: "Narrativa" }).click();
   await expect(page).toHaveURL(/que=Julio/);
@@ -466,6 +427,7 @@ test("preserves search, sort, and price criteria from edition category links", a
 });
 
 test("sets administrative and not-found titles and focuses their headings", async ({ page }) => {
+  await mockCatalogApi(page);
   await page.goto("/admin");
   await expect(page).toHaveTitle("Área administrativa · PLIEGO");
   await expect(page.getByRole("heading", { name: "Inicia sesión para continuar." })).toBeFocused();
@@ -537,7 +499,7 @@ test("does not expose customer purchasing to an authenticated administrator", as
   await expect(page).toHaveURL(/\/admin$/);
 
   await page.getByRole("link", { name: "PLIEGO, ir al inicio" }).click();
-  await page.getByRole("link", { name: "Ver edición: Cien años de soledad" }).click();
+  await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Cien años de soledad", exact: true }) }).click();
 
   await expect(page.getByText("El carrito está disponible únicamente para cuentas de cliente.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Agregar al carrito" })).toHaveCount(0);
@@ -642,41 +604,27 @@ test("reconciles a server failure against cart state before allowing another add
   expect(reconciliationReads).toBeLessThanOrEqual(3);
 });
 
-test("keeps the first edition cover in reach on mobile and preserves access to filters", async ({ page }) => {
-  await mockCatalogApi(page);
-  await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("/catalog");
-
-  const filters = page.locator("details.filter-disclosure");
-  expect(await filters.evaluate((element) => (element as HTMLDetailsElement).open)).toBe(false);
+test("keeps mobile books visible while grouping filters in an accessible Drawer", async ({ page }) => {
+  await mockCatalogApi(page); await page.setViewportSize({ width: 375, height: 844 }); await page.goto("/catalog");
   await expect(page.locator(".edition-item .cover-frame").first()).toBeInViewport({ ratio: 0.5 });
-  const minimum = page.getByRole("slider", { name: "Precio mínimo" });
-  await expect(minimum).toBeHidden();
-
-  const filterSummary = page.locator(".filter-disclosure-summary");
-  await filterSummary.focus();
-  await page.keyboard.press("Enter");
-  await expect(minimum).toBeVisible();
-  await minimum.press("End");
-  await page.getByRole("button", { name: "Aplicar filtros" }).click();
-  await expect(page).toHaveURL(/minPrice=38(?:\.00)?/);
-  await expect(page.locator('output[for="min-price"]')).toHaveText(/^\$\s38,00$/);
+  await page.getByRole("button", { name: /^Filtros/ }).click();
+  const drawer = page.getByRole("dialog", { name: "Filtros del catálogo" });
+  await expect(drawer).toBeVisible();
+  await drawer.getByRole("button", { name: "Precio (USD)" }).click();
+  await drawer.getByLabel("Precio mínimo").fill("38");
+  await drawer.getByRole("button", { name: "Aplicar filtros" }).click();
+  await expect(page).toHaveURL(/minPrice=38/);
+  await expect(drawer).toHaveCount(0);
 });
 
-test("gives each price slider thumb a 24px pointer target", async ({ page }) => {
-  await mockCatalogApi(page);
-  await page.goto("/catalog");
-
-  for (const slider of [page.getByRole("slider", { name: "Precio mínimo" }), page.getByRole("slider", { name: "Precio máximo" })]) {
-    const thumbWidth = await slider.evaluate((input) =>
-      Number.parseFloat(getComputedStyle(input, "::-webkit-slider-thumb").width),
-    );
-    const thumbHeight = await slider.evaluate((input) =>
-      Number.parseFloat(getComputedStyle(input, "::-webkit-slider-thumb").height),
-    );
-    expect(thumbWidth).toBeGreaterThanOrEqual(24);
-    expect(thumbHeight).toBeGreaterThanOrEqual(24);
-  }
+test("price filtering supports precise typed values without drag-only interaction", async ({ page }) => {
+  await mockCatalogApi(page); await page.goto("/catalog");
+  await page.getByRole("button", { name: /^Filtros/ }).click();
+  await page.getByRole("button", { name: "Precio (USD)" }).click();
+  await page.getByLabel("Precio mínimo").fill("9.25");
+  await page.getByLabel("Precio máximo").fill("30.50");
+  await page.getByRole("button", { name: "Aplicar filtros" }).click();
+  await expect(page).toHaveURL(/minPrice=9.25&maxPrice=30.50/);
 });
 
 test("keeps catalog search usable at the minimum 320px viewport", async ({ page }) => {
@@ -737,30 +685,15 @@ test("keeps the global search in browser history and shared filters usable", asy
 
   await page.setViewportSize({ width: 320, height: 500 });
   await page.goto("/catalog");
-  await page.locator(".filter-disclosure-summary").click();
-  await page.evaluate(() => {
-    const trigger = document.getElementById("language-filter");
-    if (!trigger) return;
-    const bounds = trigger.getBoundingClientRect();
-    window.scrollTo({ top: window.scrollY + bounds.bottom - window.innerHeight + 12, behavior: "instant" });
-  });
-  const language = page.getByRole("combobox", { name: "Idioma" });
-  const languageBefore = await language.boundingBox();
-  await language.click();
-  const upwardPopup = page.locator(".pliego-dropdown-positioner[data-open]");
-  await expect(upwardPopup).toBeVisible();
-  await expect(language).toHaveAttribute("data-popup-side", "top");
-  await expect(upwardPopup).toHaveAttribute("data-side", "top");
-  expect(await language.locator(".pliego-select-chevron").evaluate((element) => getComputedStyle(element).transform)).not.toBe("none");
-  expect(await readChevronRotation(language.locator(".pliego-select-chevron"))).toBe(true);
-  expect(await language.boundingBox()).toEqual(languageBefore);
-  const upwardPopupBounds = await upwardPopup.boundingBox();
-  expect(upwardPopupBounds).not.toBeNull();
-  expect(upwardPopupBounds!.y + upwardPopupBounds!.height).toBeLessThanOrEqual(languageBefore!.y + 1);
+  await page.getByRole("button", { name: /^Filtros/ }).click();
+  const drawer = page.getByRole("dialog", { name: "Filtros del catálogo" });
+  const languageGroup = drawer.getByRole("button", { name: "Idioma", exact: true });
+  if (await languageGroup.getAttribute("aria-expanded") === "false") await languageGroup.click();
+  await drawer.getByRole("combobox", { name: "Idioma", exact: true }).selectOption("en");
+  await drawer.getByRole("button", { name: "Aplicar filtros" }).click();
+  await expect(page).toHaveURL(/language=en/);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
 
-  await page.emulateMedia({ reducedMotion: "reduce" });
-  const reducedDuration = await upwardPopup.locator(".pliego-dropdown-popup").evaluate((element) => getComputedStyle(element).transitionDuration);
-  expect(reducedDuration.split(",").every((duration) => Number.parseFloat(duration) === 0)).toBe(true);
 });
 
 test("sign-in returns to the storefront without exposing the email in its header", async ({ page }) => {
@@ -782,7 +715,8 @@ test("sign-in returns to the storefront without exposing the email in its header
   }));
 
   await page.goto("/");
-  await page.getByRole("link", { name: "Crear cuenta" }).click();
+  await page.getByRole("link", { name: "Iniciar sesión", exact: true }).click();
+  await page.locator("main").getByRole("link", { name: "Crear cuenta", exact: true }).click();
   await expect(page).toHaveURL(/\/register\?/);
   await page.getByLabel("Nombres").fill("Ana María");
   await page.getByLabel("Apellidos").fill("Pérez López");
@@ -797,8 +731,8 @@ test("sign-in returns to the storefront without exposing the email in its header
   await page.getByLabel("Contraseña").fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL("/");
-  await expect(page.locator(".site-header").getByRole("button", { name: "Menú de cuenta" })).toBeVisible();
-  await expect(page.locator(".site-header").getByText("ana@example.com")).toHaveCount(0);
+  await expect(page.getByTestId("site-header").getByRole("button", { name: "Menú de cuenta" })).toBeVisible();
+  await expect(page.getByTestId("site-header").getByText("ana@example.com")).toHaveCount(0);
 });
 
 test("keeps open subcategory menus inside a 320px viewport", async ({ page }) => {

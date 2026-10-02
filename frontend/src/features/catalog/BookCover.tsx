@@ -1,4 +1,8 @@
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useLayoutEffect, useRef, useState } from "react";
+import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
+import { Skeleton } from "@mantine/core";
+import classes from "./BookCover.module.css";
 
 // Tracks decoded URL state for this SPA session; the browser owns the image bytes and HTTP cache.
 const decodedCoverFits = new Map<string, "cover" | "contain">();
@@ -10,8 +14,9 @@ interface BookCoverProps {
   license: string | null;
   attribution: string | null;
   title: string;
-  size?: "catalog" | "detail" | "compact";
+  size?: "catalog" | "detail" | "compact" | "card";
   loading?: "eager" | "lazy";
+  decorative?: boolean;
 }
 
 export function BookCover({
@@ -21,6 +26,7 @@ export function BookCover({
   title,
   size = "catalog",
   loading = "lazy",
+  decorative = false,
 }: BookCoverProps) {
   const imageRef = useRef<HTMLImageElement>(null);
   const [decodedUrl, setDecodedUrl] = useState<string | null>(null);
@@ -29,7 +35,8 @@ export function BookCover({
   const canShowCover = canDisplayCover(url) && failedUrl !== url;
   const isDecoded = url !== null && (decodedUrl === url || decodedCoverFits.has(url));
   const isLoading = canShowCover && !isDecoded;
-  const imageFit = url ? decodedCoverFits.get(url) ?? "contain" : "contain";
+  const showSkeleton = useDelayedPending(isLoading, 120);
+  const imageFit = size === "card" ? "contain" : url ? decodedCoverFits.get(url) ?? "contain" : "contain";
   const credit = [attribution, license ? `Licencia: ${license}` : ""].filter(Boolean).join(" · ");
 
   useLayoutEffect(() => {
@@ -64,25 +71,26 @@ export function BookCover({
 
   return (
     <figure
-      className={`book-cover book-cover--${size}${canShowCover ? "" : " book-cover--fallback"}`}
+      className={`book-cover book-cover--${size}${canShowCover ? "" : " book-cover--fallback"}${size === "card" ? ` ${classes.card}` : ""}`}
       aria-busy={isLoading}
+      data-bookcard-cover={size === "card" ? "" : undefined}
     >
       <div className="cover-frame">
         {canShowCover ? (
           <>
-            {isLoading && (
+            {showSkeleton && (size === "card" ? <Skeleton className={classes.skeleton} height="100%" animate={false} aria-hidden="true" data-testid="cover-skeleton" /> : (
               <div className="cover-skeleton" data-testid="cover-skeleton" aria-hidden="true">
                 <span className="cover-skeleton-shape cover-skeleton-top" />
                 <span className="cover-skeleton-shape cover-skeleton-art" />
                 <span className="cover-skeleton-shape cover-skeleton-bottom" />
               </div>
-            )}
+            ))}
             <img
               key={url}
               ref={imageRef}
               className={`cover-image${isLoading ? " cover-image--loading" : ""}${imageFit === "cover" ? " cover-image--cover" : ""}`}
               src={url}
-              alt={`Portada de ${title}`}
+              alt={decorative ? "" : `Portada de ${title}`}
               loading={loading}
               decoding="async"
               referrerPolicy="no-referrer"
@@ -91,11 +99,8 @@ export function BookCover({
             />
           </>
         ) : (
-          <div className="cover-fallback" role="img" aria-label={`Portada no disponible de ${title}`}>
-            <svg viewBox="0 0 42 48" aria-hidden="true">
-              <path d="M8 5.5h19.5A6.5 6.5 0 0 1 34 12v30.5H14.5A6.5 6.5 0 0 0 8 49V5.5Z" />
-              <path d="M8 5.5v36.6a6.7 6.7 0 0 1 6.5-5h19.4M14 12h13M14 18h13M14 24h9" />
-            </svg>
+          <div className="cover-fallback" role={decorative ? undefined : "img"} aria-label={decorative ? undefined : `Portada no disponible de ${title}`} data-bookcard-fallback={size === "card" ? "" : undefined}>
+            <MaterialSymbol name="menu_book" size={size === "card" ? 28 : 37} />
             <span>Portada no disponible</span>
           </div>
         )}

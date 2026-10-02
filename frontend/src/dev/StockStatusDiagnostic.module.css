@@ -1,0 +1,16 @@
+.section { padding-bottom: var(--mantine-spacing-xl); overflow-wrap: anywhere; }
+.muted { color: var(--pliego-text-muted); }
+.grid { padding: 0; list-style: none; }
+.item { display: flex; min-width: 0; }
+.block { padding-block: var(--mantine-spacing-lg); }
+.matrix { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--mantine-spacing-lg); }
+.case { min-width: 0; padding-block: var(--mantine-spacing-md); border-bottom: 1px solid var(--pliego-border); }
+.case h4 { margin-top: 0; }
+.sizes { display: grid; gap: var(--mantine-spacing-md); }
+.sizes > div { min-width: 0; }
+.sizes p { margin-top: 0; margin-bottom: var(--mantine-spacing-xs); }
+.surface { display: grid; gap: var(--mantine-spacing-md); max-width: 75ch; background: var(--pliego-surface); border-color: var(--pliego-border); }
+.surface h3, .surface p { margin: 0; }
+.surface button { justify-self: start; max-width: 100%; height: auto; min-height: 44px; }
+.surface button :global(.mantine-Button-label) { white-space: normal; overflow-wrap: anywhere; padding-block: var(--mantine-spacing-xs); }
+@media (max-width: 47.99em) { .matrix { grid-template-columns: minmax(0, 1fr); } }

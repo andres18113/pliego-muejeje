@@ -2,6 +2,9 @@ package com.pliego.modules.customer.gateway;
 
 import java.util.List;
 
+import com.pliego.modules.customer.application.CustomerFavorites.Page;
+import com.pliego.modules.customer.application.CustomerFavorites.Status;
+
 public interface CustomerGateway {
 
     CustomerProfile findProfile(long actorUserId);
@@ -17,6 +20,14 @@ public interface CustomerGateway {
     void deleteAddress(long actorUserId, long addressId);
 
     void setPrimaryAddress(long actorUserId, long addressId);
+
+    Page listFavorites(long actorUserId, int page, int pageSize);
+
+    List<Status> favoriteStatus(long actorUserId, List<Long> editionIds);
+
+    void addFavorite(long actorUserId, long editionId);
+
+    void removeFavorite(long actorUserId, long editionId);
 
     record CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone,
             String state) {

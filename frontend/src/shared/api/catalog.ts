@@ -27,6 +27,7 @@ const publicCategorySchema = z.object({
 
 const publicCatalogFilterOptionsSchema = z.object({
   languages: z.array(z.string().regex(/^[a-z]{2,3}$/)),
+  formats: z.array(z.enum(["PAPERBACK", "HARDCOVER"])).default([]),
   minimumPrice: z.string().regex(/^\d{1,9}\.\d{2}$/).nullable(),
   maximumPrice: z.string().regex(/^\d{1,9}\.\d{2}$/).nullable(),
 }).superRefine((options, context) => {
@@ -49,12 +50,11 @@ const pageEnvelopeSchema = z.object({
 
 export type EditionSummary = z.infer<typeof editionSummarySchema>;
 export type PublicCategory = z.infer<typeof publicCategorySchema> & Pick<components["schemas"]["Category"], "slug" | "name">;
-export type EditionDetail = components["schemas"]["CatalogEditionDetailResponse"];
+export type EditionDetail = components["schemas"]["CatalogEditionDetailResponse"] & { available: boolean };
 export type PublicCatalogFilterOptions = z.infer<typeof publicCatalogFilterOptionsSchema>;
 
 export type EditionSearch = {
   query: string;
-  scope: "title" | "author" | "isbn13";
   category: string;
   minPrice: string;
   maxPrice: string;
@@ -113,9 +113,7 @@ export async function getPublicCatalogFilterOptions(signal?: AbortSignal): Promi
 
 export async function searchPublicEditions(search: EditionSearch, signal?: AbortSignal) {
   const query: NonNullable<operations["search"]["parameters"]["query"]> = {
-    ...(search.query && search.scope === "title" ? { title: search.query } : {}),
-    ...(search.query && search.scope === "author" ? { author: search.query } : {}),
-    ...(search.query && search.scope === "isbn13" ? { isbn13: search.query } : {}),
+    ...(search.query ? { que: search.query } : {}),
     ...(search.category ? { category: search.category } : {}),
     ...(search.minPrice ? { minPrice: search.minPrice as unknown as number } : {}),
     ...(search.maxPrice ? { maxPrice: search.maxPrice as unknown as number } : {}),
@@ -147,7 +145,7 @@ export async function searchPublicEditions(search: EditionSearch, signal?: Abort
   } satisfies CatalogPage;
 }
 
-export async function getPublicEdition(editionId: string, signal?: AbortSignal) {
+export async function getPublicEdition(editionId: string, signal?: AbortSignal): Promise<EditionDetail> {
   const { data, error, response } = await apiClient.GET("/api/v1/catalog/editions/{editionId}", {
     params: { path: { editionId: editionId as unknown as number } },
     signal,
@@ -155,7 +153,8 @@ export async function getPublicEdition(editionId: string, signal?: AbortSignal) 
   if (error) {
     throw toApiRequestError(response.status, error, "No pudimos consultar la edición", "Revisa tu conexión e inténtalo otra vez.");
   }
-  return data;
+  if (!data || typeof data.available !== "boolean") throw invalidCatalogResponse();
+  return { ...data, available: data.available };
 }
 
 function invalidCatalogResponse() {

@@ -1,4 +1,6 @@
+import { SiteHeader } from "@/app/navigation/SiteHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
@@ -8,14 +10,14 @@ import { CatalogPage } from "./CatalogPage";
 
 function renderCatalog(initialEntry = "/catalog") {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
-  const router = createMemoryRouter([{ path: "/catalog", element: <CatalogPage /> }], { initialEntries: [initialEntry] });
+  const router = createMemoryRouter([{ path: "/catalog", element: <><SiteHeader /><CatalogPage /></> }], { initialEntries: [initialEntry] });
 
   return render(
-    <QueryClientProvider client={queryClient}>
+    <PliegoThemeProvider><QueryClientProvider client={queryClient}>
       <SessionProvider restoreOnMount={false}>
         <RouterProvider router={router} />
       </SessionProvider>
-    </QueryClientProvider>,
+    </QueryClientProvider></PliegoThemeProvider>,
   );
 }
 
@@ -39,7 +41,7 @@ describe("CatalogPage", () => {
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(requestUrl(input), "http://localhost");
       if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
-      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], formats: [], minimumPrice: "7.25", maximumPrice: "38.00" });
       if (url.pathname.endsWith("/catalog/editions")) {
         requestedUrl = url;
         return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
@@ -64,7 +66,7 @@ describe("CatalogPage", () => {
     const fetchMock = vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(requestUrl(input), "http://localhost");
       if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
-      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], formats: [], minimumPrice: "7.25", maximumPrice: "38.00" });
       if (url.pathname.endsWith("/catalog/editions")) {
         editionReads += 1;
         return jsonResponse({
@@ -94,7 +96,7 @@ describe("CatalogPage", () => {
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(requestUrl(input), "http://localhost");
       if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
-      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], formats: [], minimumPrice: "7.25", maximumPrice: "38.00" });
       if (url.pathname.endsWith("/catalog/editions")) return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
       return jsonResponse({}, 404);
     }));
@@ -110,7 +112,7 @@ describe("CatalogPage", () => {
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(requestUrl(input), "http://localhost");
       if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
-      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], formats: [], minimumPrice: "7.25", maximumPrice: "38.00" });
       if (url.pathname.endsWith("/catalog/editions")) {
         editionRequests.push(url);
         return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
@@ -146,7 +148,7 @@ describe("CatalogPage", () => {
       const url = new URL(requestUrl(input), "http://localhost");
       if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
       if (url.pathname.endsWith("/catalog/filter-options")) {
-        return jsonResponse({ languages: ["es"], minimumPrice: "18.50", maximumPrice: "18.50" });
+        return jsonResponse({ languages: ["es"], formats: [], minimumPrice: "18.50", maximumPrice: "18.50" });
       }
       if (url.pathname.endsWith("/catalog/editions")) {
         return jsonResponse({
@@ -175,7 +177,9 @@ describe("CatalogPage", () => {
 
     renderCatalog();
 
-    const image = await screen.findByRole("img", { name: "Portada de Don Quijote de la Mancha" });
+    const link = await screen.findByRole("link", { name: "Ver edición: Don Quijote de la Mancha. Editorial Ejemplo, Rústica · Español" });
+    const image = link.querySelector("img")!;
+    expect(image).toHaveAttribute("alt", "");
     expect(image).toHaveAttribute("src", coverUrl);
     expect(image).toHaveAttribute("loading", "lazy");
   });
@@ -185,7 +189,7 @@ describe("CatalogPage", () => {
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
       const url = new URL(requestUrl(input), "http://localhost");
       if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
-      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], formats: [], minimumPrice: "7.25", maximumPrice: "38.00" });
       if (url.pathname.endsWith("/catalog/editions")) {
         const category = url.searchParams.get("category");
         requestedCategories.push(category);

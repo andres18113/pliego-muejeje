@@ -1,15 +1,17 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { Link, useLocation, useNavigate, useNavigationType } from "react-router-dom";
+import { Button } from "@mantine/core";
+import { CatalogControls } from "./CatalogControls";
+import classes from "./exploration.module.css";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { describeApiError } from "@/shared/api/errors";
 import { getPublicCategories, getPublicCatalogFilterOptions, searchPublicEditions } from "@/shared/api/catalog";
 import { CatalogFilters } from "./CatalogFilters";
-import { CatalogHeader } from "./CatalogHeader";
-import { CategoryNavigation } from "./CategoryNavigation";
 import { EditionGrid } from "./EditionGrid";
+import { EditionLoadingGrid } from "./EditionLoadingGrid";
 import { Pagination } from "./Pagination";
+import { useCatalogReturnScrollRestoration } from "./catalogScrollRestoration";
 import {
   catalogHref,
   hasAnyCriteria,
@@ -18,12 +20,19 @@ import {
   type CatalogCriteria,
 } from "./catalogUrl";
 
+
 const numberFormat = new Intl.NumberFormat("es-EC");
 
 export function CatalogPage() {
   const location = useLocation();
   const navigate = useNavigate();
+  const navigationType = useNavigationType();
   const criteria = useMemo(() => readCatalogCriteria(location.search), [location.search]);
+  const previousCriteria = useRef(criteria);
+  const resultsRef = useRef<HTMLElement>(null);
+  const filterTrigger = useRef<HTMLButtonElement>(null);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  useEffect(() => setFiltersOpen(false), [location.key]);
   const categoriesQuery = useQuery({
     queryKey: ["public-catalog", "categories"],
     queryFn: ({ signal }) => getPublicCategories(signal),
@@ -47,14 +56,41 @@ export function CatalogPage() {
   }, [criteria.query]);
 
   const activePage = editionsQuery.data;
+  useCatalogReturnScrollRestoration(
+    !editionsQuery.isFetching && !categoriesQuery.isFetching && !filterOptionsQuery.isFetching,
+    resultsRef,
+  );
+
+  useLayoutEffect(() => {
+    const previous = previousCriteria.current;
+    previousCriteria.current = criteria;
+
+    const changedPageOnly = previous.page !== criteria.page
+      && catalogHref({ ...previous, page: 0 }) === catalogHref({ ...criteria, page: 0 });
+    if (!changedPageOnly) return;
+
+    const results = resultsRef.current;
+    if (!results) return;
+    results.focus({ preventScroll: true });
+
+    const scrollToResults = () => window.scrollTo(
+      0,
+      Math.max(0, results.getBoundingClientRect().top + window.scrollY - 88),
+    );
+    // POP may restore a previous page position after this layout effect.
+    // Schedule the results alignment after React Router applies that position.
+    if (navigationType === "POP") {
+      const frame = window.requestAnimationFrame(scrollToResults);
+      return () => window.cancelAnimationFrame(frame);
+    }
+
+    scrollToResults();
+  }, [criteria, location.key, navigationType]);
   const resultError = editionsQuery.error
     ? describeApiError(editionsQuery.error, "No pudimos actualizar el catálogo", "Revisa tu conexión e inténtalo otra vez.")
     : undefined;
-  const isCurrentReadPending = editionsQuery.isFetching;
+  const isCurrentReadPending = editionsQuery.isPending;
   const categories = categoriesQuery.data?.items || [];
-  const categoriesError = categoriesQuery.error
-    ? describeApiError(categoriesQuery.error, "No pudimos actualizar las categorías", "Revisa tu conexión e inténtalo otra vez.")
-    : undefined;
   const filterOptionsError = filterOptionsQuery.error
     ? describeApiError(filterOptionsQuery.error, "No pudimos cargar los filtros", "Revisa tu conexión e inténtalo otra vez.")
     : undefined;
@@ -65,7 +101,7 @@ export function CatalogPage() {
 
   function removeCriterion(field: "query" | "category" | "minPrice" | "maxPrice" | "language" | "format") {
     if (field === "query") {
-      navigateToCriteria({ ...criteria, query: "", scope: "title", page: 0 });
+      navigateToCriteria({ ...criteria, query: "", page: 0 });
     } else if (field === "minPrice" || field === "maxPrice") {
       navigateToCriteria({ ...criteria, minPrice: "", maxPrice: "", page: 0 });
     } else {
@@ -74,55 +110,26 @@ export function CatalogPage() {
   }
 
   const unavailableCategory = resultError?.code === "P2022";
-  const staleRefresh = !unavailableCategory && Boolean(activePage && (isCurrentReadPending || editionsQuery.isRefetchError));
+  const staleRefresh = !unavailableCategory && Boolean(activePage && editionsQuery.isRefetchError);
 
   return (
-    <>
-      <CatalogHeader
-        criteria={criteria}
-        pending={isCurrentReadPending}
-        onSearch={(query, scope) => navigateToCriteria({ ...criteria, query, scope, page: 0 })}
-      />
-
-      <CategoryNavigation
-        categories={categories}
-        selectedSlug={criteria.category}
-        criteria={criteria}
-        loading={categoriesQuery.isFetching}
-        error={categoriesError ? `${categoriesError.title}. ${categoriesError.detail}` : ""}
-        onRetry={() => void categoriesQuery.refetch()}
-      />
-
-      <main id="contenido-principal" tabIndex={-1}>
-        <section className="discovery-lead page-frame" aria-labelledby="page-title">
-          <div className="lead-copy">
-            <h1 id="page-title">
-              Una lectura empieza <span>por una{"\u00a0"}pista.</span>
-            </h1>
-            <p>Abre un libro y descubre a dónde te lleva.</p>
-          </div>
-        </section>
-
-        <CatalogFilters
-          criteria={criteria}
-          categories={categories}
-          filterOptions={filterOptionsQuery.data}
-          filterOptionsLoading={filterOptionsQuery.isFetching}
-          filterOptionsError={filterOptionsError?.detail || ""}
-          pending={isCurrentReadPending}
-          onApply={navigateToCriteria}
-          onSort={(sort) => navigateToCriteria({ ...criteria, sort, page: 0 })}
-          onRemove={removeCriterion}
-        />
+    <div className={classes.surface}>
+      <main id="contenido-principal" tabIndex={-1} className={classes.page}>
+        <div className={classes.shell}>
+        <CatalogControls criteria={criteria} categories={categories} options={filterOptionsQuery.data} optionsError={filterOptionsError?.detail || ""} pending={isCurrentReadPending} total={activePage?.totalCountValue} filtersOpen={filtersOpen} filterTrigger={filterTrigger} onToggleFilters={() => setFiltersOpen((current) => !current)} onChange={navigateToCriteria} onRemove={removeCriterion} />
+        <div className={classes.body}>
+        <CatalogFilters criteria={criteria} options={filterOptionsQuery.data} error={filterOptionsError?.detail || ""} opened={filtersOpen} categories={categories} categoriesLoading={categoriesQuery.isPending} categoriesError={categoriesQuery.isError} onClose={() => setFiltersOpen(false)} onApply={(next) => { navigateToCriteria(next); setFiltersOpen(false); requestAnimationFrame(() => filterTrigger.current?.focus({ preventScroll: true })); }} onRetry={() => void filterOptionsQuery.refetch()} />
 
         <section
-          className="catalog-results page-frame"
+          ref={resultsRef}
+          className={classes.results}
           aria-labelledby="catalog-results-heading"
           aria-busy={isCurrentReadPending}
+          tabIndex={-1}
         >
           <h2 id="catalog-results-heading" className="visually-hidden">Resultados</h2>
           <div
-            className={`result-status${activePage ? " visually-hidden" : ""}`}
+            className="visually-hidden"
             role="status"
             aria-live="polite"
             aria-atomic="true"
@@ -135,47 +142,36 @@ export function CatalogPage() {
           </div>
 
           {unavailableCategory ? (
-            <div className="catalog-error category-unavailable" role="alert">
-              <p className="error-title">{resultError.title}</p>
+            <div className={classes.notice} role="alert">
+              <p className={classes.noticeTitle}>{resultError.title}</p>
               <p>{resultError.detail}</p>
-              <Button variant="secondary" type="button" onClick={() => removeCriterion("category")}>
+              <Button variant="light" type="button" onClick={() => removeCriterion("category")}>
                 Quitar categoría
               </Button>
             </div>
           ) : resultError && !activePage ? (
-            <div className="catalog-error" role="alert">
-              <p className="error-title">{resultError.title}</p>
+            <div className={classes.notice} role="alert">
+              <p className={classes.noticeTitle}>{resultError.title}</p>
               <p>{resultError.detail}</p>
-              <Button variant="secondary" type="button" onClick={() => void editionsQuery.refetch()}>
+              <Button variant="light" type="button" onClick={() => void editionsQuery.refetch()}>
                 Volver a intentar
               </Button>
             </div>
           ) : editionsQuery.isPending && !activePage ? (
-            <EditionLoadingState />
+            <EditionLoadingGrid count={criteria.pageSize} />
           ) : activePage && activePage.items.length > 0 ? (
             <>
               {staleRefresh && (
-                <p className="stale-data-note" role={resultError ? "alert" : undefined}>
+                <p className={classes.notice} role={resultError ? "alert" : undefined}>
                   {resultError
                     ? "No se pudo actualizar esta búsqueda. Mostramos los resultados anteriores; el precio y la disponibilidad pueden haber cambiado."
                     : "Actualizando la búsqueda. El precio y la disponibilidad pueden haber cambiado."}
                   {" "}
-                  <Button variant="text" type="button" onClick={() => void editionsQuery.refetch()}>
+                  <Button variant="subtle" type="button" onClick={() => void editionsQuery.refetch()}>
                     Volver a intentar
                   </Button>
                 </p>
               )}
-              <div className="results-summary">
-                <p>
-                  <strong>{numberFormat.format(activePage.totalCountValue)}</strong>
-                  {" "}{activePage.totalCountValue === 1n ? "edición" : "ediciones"}
-                </p>
-                {activePage.totalCountValue > 0n && (
-                  <p className="page-position">
-                    Página {numberFormat.format(criteria.page + 1)}
-                  </p>
-                )}
-              </div>
               <EditionGrid editions={activePage.items} criteria={criteria} />
               <Pagination
                 criteria={criteria}
@@ -184,17 +180,18 @@ export function CatalogPage() {
               />
             </>
           ) : activePage && criteria.page > 0 ? (
-            <div className="empty-state stale-page">
+            <div className={classes.empty}>
               <h3>Esta página ya no tiene ediciones.</h3>
               <p>
                 El catálogo pudo cambiar desde tu última visita. Vuelve a la primera página para revisar los resultados actuales.
               </p>
-              <ButtonLink
-                variant="secondary"
+              <Button component={Link}
+                variant="light"
                 to={catalogHref({ ...criteria, page: 0 })}
+                preventScrollReset
               >
                 Ir a la primera página
-              </ButtonLink>
+              </Button>
             </div>
           ) : activePage ? (
             <EmptyCatalogState
@@ -204,10 +201,12 @@ export function CatalogPage() {
             />
           ) : null}
         </section>
+        </div>
+        </div>
       </main>
 
       <SiteFooter />
-    </>
+    </div>
   );
 }
 
@@ -229,8 +228,8 @@ function EmptyCatalogState({
       : "No encontramos ediciones con estos criterios.";
 
   return (
-    <div className="empty-state">
-      <div className="empty-rule" aria-hidden="true" />
+    <div className={classes.empty}>
+
       <h3>{title}</h3>
       <p>
         {!filtered
@@ -238,14 +237,14 @@ function EmptyCatalogState({
           : "Puedes cambiar los filtros o volver a explorar todo el catálogo."}
       </p>
       {!filtered ? (
-        <Button variant="secondary" type="button" onClick={onRetry}>
+        <Button variant="light" type="button" onClick={onRetry}>
           Actualizar catálogo
         </Button>
       ) : (
-        <div className="empty-actions">
+        <div className={classes.emptyActions}>
           {hasActiveFilters(criteria) && (
-            <ButtonLink
-              variant="secondary"
+            <Button component={Link}
+              variant="light"
               to={catalogHref({
                 ...criteria,
                 category: "",
@@ -257,33 +256,18 @@ function EmptyCatalogState({
               })}
             >
               Limpiar filtros
-            </ButtonLink>
+            </Button>
           )}
           {criteria.query && (
             <Link
               className="text-link"
-              to={catalogHref({ ...criteria, query: "", scope: "title", page: 0 })}
+              to={catalogHref({ ...criteria, query: "", page: 0 })}
             >
               Limpiar búsqueda
             </Link>
           )}
         </div>
       )}
-    </div>
-  );
-}
-
-function EditionLoadingState() {
-  return (
-    <div className="loading-state" aria-hidden="true">
-      {Array.from({ length: 8 }, (_, index) => (
-        <div className="loading-edition" key={index}>
-          <div className="loading-cover" />
-          <div className="loading-line loading-line-long" />
-          <div className="loading-line" />
-          <div className="loading-line loading-line-short" />
-        </div>
-      ))}
     </div>
   );
 }

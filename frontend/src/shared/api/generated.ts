@@ -28,6 +28,30 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/favorites/{editionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Agregar una edición a mis favoritos
+         * @description La operación es idempotente; solo guarda ediciones publicables del catálogo.
+         */
+        put: operations["addFavorite"];
+        post?: never;
+        /**
+         * Quitar una edición de mis favoritos
+         * @description La operación es idempotente.
+         */
+        delete: operations["removeFavorite"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/addresses/{addressId}": {
         parameters: {
             query?: never;
@@ -380,6 +404,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restaurar o renovar la sesión
+         * @description Rota la credencial persistente HttpOnly y emite un access token nuevo. Si se pierde la respuesta, repetir con la cookie anterior durante 5 minutos devuelve la misma rotación. La sesión tiene una expiración absoluta de 30 días desde el inicio de sesión.
+         */
+        post: operations["refreshSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cerrar sesión
+         * @description Revoca la sesión persistente y elimina su cookie HttpOnly. La operación es idempotente.
+         */
+        post: operations["logoutSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/login": {
         parameters: {
             query?: never;
@@ -391,7 +455,7 @@ export interface paths {
         put?: never;
         /**
          * Iniciar sesión
-         * @description Devuelve un access token bearer HS256 válido durante 30 minutos y establece una cookie HttpOnly de sesión revocable, válida durante 30 días.
+         * @description Emite un access token bearer HS256 válido durante 30 minutos y establece una cookie HttpOnly de sesión revocable, válida durante 30 días.
          */
         post: operations["login"];
         delete?: never;
@@ -633,6 +697,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/favorites": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar mis ediciones favoritas
+         * @description Devuelve una página de ediciones guardadas por el cliente, incluidas las que ya no están disponibles.
+         */
+        get: operations["listFavorites"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/favorites/status": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar favoritos de varias ediciones
+         * @description Devuelve si cada edición solicitada pertenece a los favoritos del cliente. Admite hasta 50 identificadores por petición.
+         */
+        get: operations["favoriteStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/catalog/filter-options": {
         parameters: {
             query?: never;
@@ -642,7 +746,7 @@ export interface paths {
         };
         /**
          * Consultar opciones de filtros del catálogo público
-         * @description Devuelve los idiomas y límites de precio de las ediciones publicables actuales.
+         * @description Devuelve idiomas, formatos y límites de precio de todas las ediciones publicables actuales.
          */
         get: operations["filterOptions"];
         put?: never;
@@ -662,7 +766,7 @@ export interface paths {
         };
         /**
          * Buscar ediciones publicables
-         * @description Filtra y pagina el catálogo público. Un slug de categoría desconocido devuelve una página vacía; una categoría inactiva devuelve 409.
+         * @description Filtra y pagina el catálogo público. El parámetro «que» busca automáticamente por ISBN-13 exacto o por coincidencias parciales de título y autor. Un slug de categoría desconocido devuelve una página vacía; una categoría inactiva devuelve 409.
          */
         get: operations["search"];
         put?: never;
@@ -809,46 +913,6 @@ export interface paths {
         get: operations["search_3"];
         put?: never;
         post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/refresh": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Restaurar o renovar la sesión
-         * @description Rota la credencial persistente HttpOnly y emite un access token nuevo. Si se pierde la respuesta, repetir con la cookie anterior durante 5 minutos devuelve la misma rotación. La sesión vence de forma absoluta a los 30 días del inicio de sesión.
-         */
-        post: operations["refreshSession"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/logout": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Cerrar sesión
-         * @description Revoca la sesión persistente en PostgreSQL y elimina la cookie HttpOnly. La operación es idempotente.
-         */
-        post: operations["logoutSession"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1066,18 +1130,6 @@ export interface components {
              */
             state?: "ACTIVE";
         };
-        LoginRequest: {
-            /**
-             * Format: email
-             * @example usuario@example.com
-             */
-            email: string;
-            /**
-             * Format: password
-             * @description Máximo 72 bytes en UTF-8.
-             */
-            password: string;
-        };
         AuthenticatedUser: {
             /** @example 100 */
             userId?: string;
@@ -1100,6 +1152,18 @@ export interface components {
              */
             expiresInSeconds?: number;
             user?: components["schemas"]["AuthenticatedUser"];
+        };
+        LoginRequest: {
+            /**
+             * Format: email
+             * @example usuario@example.com
+             */
+            email: string;
+            /**
+             * Format: password
+             * @description Máximo 72 bytes en UTF-8.
+             */
+            password: string;
         };
         PublisherCreated: {
             publisherId?: string;
@@ -1246,6 +1310,33 @@ export interface components {
              */
             state?: "ACTIVE" | "BLOCKED";
         };
+        CustomerFavorite: {
+            editionId?: string;
+            bookId?: string;
+            title?: string;
+            authors?: string;
+            publisher?: string;
+            price?: string;
+            coverUrl?: string | null;
+            coverLicense?: string | null;
+            coverAttribution?: string | null;
+            format?: string;
+            language?: string;
+            available?: boolean;
+            favoritedAt?: string;
+        };
+        CustomerFavoritePage: {
+            items?: components["schemas"]["CustomerFavorite"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            totalCount?: string;
+        };
+        CustomerFavoriteStatus: {
+            editionId?: string;
+            favorite?: boolean;
+        };
         CustomerAddress: {
             /** @example 15 */
             addressId?: string;
@@ -1274,6 +1365,14 @@ export interface components {
         };
         PublicCatalogFilterOptionsResponse: {
             languages?: string[];
+            /**
+             * @description Formatos presentes en ediciones publicables
+             * @example [
+             *       "HARDCOVER",
+             *       "PAPERBACK"
+             *     ]
+             */
+            formats?: string[];
             minimumPrice?: string | null;
             maximumPrice?: string | null;
         };
@@ -1523,6 +1622,109 @@ export interface operations {
             };
             /** @description Datos inválidos */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    addFavorite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                editionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Edición agregada o ya guardada */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Identificador inválido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Autenticación requerida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Edición no disponible */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Error interno */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    removeFavorite: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                editionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Edición quitada o ya ausente */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Identificador inválido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Autenticación requerida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Error interno */
+            500: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -2194,6 +2396,81 @@ export interface operations {
             };
         };
     };
+    refreshSession: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Marcador requerido para autorizar la petición de sesión desde el cliente PLIEGO. */
+                "X-PLIEGO-SESSION-REQUEST": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sesión restaurada */
+            200: {
+                headers: {
+                    /** @description Cookie HttpOnly renovada; conserva la expiración absoluta de la sesión. */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoginResponse"];
+                };
+            };
+            /** @description No existe una sesión válida; se elimina la cookie */
+            204: {
+                headers: {
+                    /** @description Cookie eliminada. */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Error interno */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    logoutSession: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Marcador requerido para autorizar la petición de sesión desde el cliente PLIEGO. */
+                "X-PLIEGO-SESSION-REQUEST": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sesión revocada y cookie eliminada */
+            204: {
+                headers: {
+                    /** @description Cookie eliminada. */
+                    "Set-Cookie"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Error interno */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     login: {
         parameters: {
             query?: never;
@@ -2210,7 +2487,7 @@ export interface operations {
             /** @description Token de acceso emitido y sesión persistente establecida */
             200: {
                 headers: {
-                    /** @description Cookie HttpOnly, Secure, SameSite=Strict; expira 30 días después del inicio de sesión. */
+                    /** @description Cookie HttpOnly, Secure y SameSite=Strict; expira 30 días después del inicio de sesión. */
                     "Set-Cookie"?: string;
                     [name: string]: unknown;
                 };
@@ -2732,6 +3009,106 @@ export interface operations {
             };
         };
     };
+    listFavorites: {
+        parameters: {
+            query?: {
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Página de favoritos */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CustomerFavoritePage"];
+                };
+            };
+            /** @description Paginación inválida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Autenticación requerida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Error interno */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    favoriteStatus: {
+        parameters: {
+            query: {
+                /** @description Entre 1 y 50 identificadores de edición positivos. */
+                editionIds: number[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Estado favorito de cada edición */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CustomerFavoriteStatus"][];
+                };
+            };
+            /** @description Lista de ediciones inválida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Autenticación requerida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Error interno */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     filterOptions: {
         parameters: {
             query?: never;
@@ -2755,6 +3132,8 @@ export interface operations {
     search: {
         parameters: {
             query?: {
+                /** @description Consulta global por ISBN-13, título o autor; tiene prioridad sobre title, author e isbn13 */
+                que?: string;
                 /** @description Texto parcial del título */
                 title?: string;
                 /** @description Texto parcial del autor */
@@ -3020,81 +3399,6 @@ export interface operations {
             };
             /** @description Filtros inválidos */
             400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    refreshSession: {
-        parameters: {
-            query?: never;
-            header: {
-                /** @description Marcador requerido para autorizar la petición de sesión desde el cliente PLIEGO. */
-                "X-PLIEGO-SESSION-REQUEST": "1";
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Sesión restaurada */
-            200: {
-                headers: {
-                    /** @description Cookie HttpOnly renovada; conserva la expiración absoluta de la sesión. */
-                    "Set-Cookie"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["LoginResponse"];
-                };
-            };
-            /** @description No existe una sesión válida; se elimina la cookie */
-            204: {
-                headers: {
-                    /** @description Cookie eliminada. */
-                    "Set-Cookie"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error interno */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    logoutSession: {
-        parameters: {
-            query?: never;
-            header: {
-                /** @description Marcador requerido para autorizar la petición de sesión desde el cliente PLIEGO. */
-                "X-PLIEGO-SESSION-REQUEST": "1";
-            };
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Sesión revocada y cookie eliminada */
-            204: {
-                headers: {
-                    /** @description Cookie eliminada. */
-                    "Set-Cookie"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Error interno */
-            500: {
                 headers: {
                     [name: string]: unknown;
                 };

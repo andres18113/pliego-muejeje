@@ -1,4 +1,6 @@
+import { SiteHeader } from "@/app/navigation/SiteHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
@@ -10,16 +12,16 @@ function renderDetail(initialEntry = "/catalog/editions/42?from=%2Fcatalog%3Fq%3
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const initialUrl = new URL(initialEntry, "http://localhost");
   const router = createMemoryRouter(
-    [{ path: "/catalog/editions/:editionId", element: <EditionDetailPage /> }],
+    [{ path: "/catalog/editions/:editionId", element: <><SiteHeader /><EditionDetailPage /></> }],
     { initialEntries: [{ pathname: initialUrl.pathname, search: initialUrl.search, state }] },
   );
 
   return render(
-    <QueryClientProvider client={queryClient}>
+    <PliegoThemeProvider><QueryClientProvider client={queryClient}>
       <SessionProvider restoreOnMount={false}>
         <RouterProvider router={router} />
       </SessionProvider>
-    </QueryClientProvider>,
+    </QueryClientProvider></PliegoThemeProvider>,
   );
 }
 
@@ -162,7 +164,7 @@ describe("EditionDetailPage", () => {
       publicationDate: "1967-05-30",
     })));
 
-    renderDetail("/catalog/editions/42?from=%2Fcatalog%3Fq%3DCien%26sort%3DPRICE_DESC%26page%3D2%26minPrice%3D10.00");
+    renderDetail("/catalog/editions/42?from=%2Fcatalog%3Fque%3DCien%26sort%3DPRICE_DESC%26page%3D2%26minPrice%3D10.00");
 
     await screen.findByRole("heading", { name: "Cien años de soledad" });
     expect(screen.queryByRole("link", { name: /fuente de la portada/i })).not.toBeInTheDocument();
@@ -173,7 +175,7 @@ describe("EditionDetailPage", () => {
     const category = screen.getByRole("link", { name: "Narrativa" });
     expect(category).toHaveAttribute(
       "href",
-      "/catalog?q=Cien&category=narrativa&minPrice=10.00&sort=PRICE_DESC",
+      "/catalog?que=Cien&category=narrativa&minPrice=10.00&sort=PRICE_DESC",
     );
   });
 

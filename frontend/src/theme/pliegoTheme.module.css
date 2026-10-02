@@ -1,0 +1,22 @@
+.focusRing:focus-visible,
+.inputControl.inputControl:focus-visible,
+.inputControl.inputControl:has(:focus-visible) {
+  outline: 3px solid var(--mantine-color-pliego-8);
+  outline-offset: 3px;
+}
+
+:global([data-mantine-color-scheme="dark"]) .focusRing:focus-visible,
+:global([data-mantine-color-scheme="dark"]) .inputControl.inputControl:focus-visible,
+:global([data-mantine-color-scheme="dark"]) .inputControl.inputControl:has(:focus-visible) {
+  outline-color: var(--mantine-color-pliego-3);
+}
+
+.inputControl.inputControl:where(:not([data-error], [data-success])) {
+  border-color: var(--pliego-control-border);
+}
+
+@media (hover: hover) {
+  .inputControl.inputControl:where(:not([data-error], [data-success], [data-disabled], :disabled)):hover {
+    border-color: var(--mantine-primary-color-filled);
+  }
+}

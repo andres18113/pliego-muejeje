@@ -1,6 +1,7 @@
 package com.pliego.modules.customer.api;
 
 import java.util.List;
+import java.math.RoundingMode;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,23 +16,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pliego.foundation.web.ProblemResponse;
+import com.pliego.foundation.web.PageResponse;
+import com.pliego.modules.customer.api.CustomerFavoriteResponses.Favorite;
+import com.pliego.modules.customer.api.CustomerFavoriteResponses.FavoritePage;
+import com.pliego.modules.customer.api.CustomerFavoriteResponses.Status;
 import com.pliego.modules.customer.application.AddressInput;
 import com.pliego.modules.customer.application.CustomerAddress;
 import com.pliego.modules.customer.application.CustomerProfile;
 import com.pliego.modules.customer.application.CustomerService;
+import com.pliego.modules.customer.application.CustomerFavorites;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @Validated
 @RestController
@@ -121,6 +134,58 @@ public class CustomerController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/me/favorites")
+    @Operation(summary = "Listar mis ediciones favoritas", description = "Devuelve una página de ediciones guardadas por el cliente, incluidas las que ya no están disponibles.")
+    @ApiResponse(responseCode = "200", description = "Página de favoritos", content = @Content(schema = @Schema(implementation = FavoritePage.class)))
+    @ApiResponse(responseCode = "400", description = "Paginación inválida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "401", description = "Autenticación requerida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public PageResponse<Favorite> listFavorites(@AuthenticationPrincipal Jwt jwt,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "20") @Min(1) @Max(50) int pageSize) {
+        CustomerFavorites.Page result = customerService.listFavorites(actorUserId(jwt), page, pageSize);
+        List<Favorite> items = result.items().stream().map(CustomerController::toFavoriteResponse).toList();
+        return new PageResponse<>(items, page, pageSize, Long.toString(result.totalCount()));
+    }
+
+    @GetMapping("/me/favorites/status")
+    @Operation(summary = "Consultar favoritos de varias ediciones", description = "Devuelve si cada edición solicitada pertenece a los favoritos del cliente. Admite hasta 50 identificadores por petición.")
+    @ApiResponse(responseCode = "200", description = "Estado favorito de cada edición", content = @Content(array = @ArraySchema(schema = @Schema(implementation = Status.class))))
+    @ApiResponse(responseCode = "400", description = "Lista de ediciones inválida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "401", description = "Autenticación requerida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public List<Status> favoriteStatus(@AuthenticationPrincipal Jwt jwt,
+            @Parameter(required = true, description = "Entre 1 y 50 identificadores de edición positivos.")
+            @RequestParam(required = false) @NotEmpty @Size(max = 50) List<@Positive Long> editionIds) {
+        return customerService.favoriteStatus(actorUserId(jwt), editionIds).stream()
+                .map(status -> new Status(Long.toString(status.editionId()), status.favorite())).toList();
+    }
+
+    @PutMapping("/me/favorites/{editionId}")
+    @Operation(summary = "Agregar una edición a mis favoritos", description = "La operación es idempotente; solo guarda ediciones publicables del catálogo.")
+    @ApiResponse(responseCode = "204", description = "Edición agregada o ya guardada")
+    @ApiResponse(responseCode = "400", description = "Identificador inválido", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "401", description = "Autenticación requerida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Edición no disponible", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public ResponseEntity<Void> addFavorite(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable @Positive long editionId) {
+        customerService.addFavorite(actorUserId(jwt), editionId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/me/favorites/{editionId}")
+    @Operation(summary = "Quitar una edición de mis favoritos", description = "La operación es idempotente.")
+    @ApiResponse(responseCode = "204", description = "Edición quitada o ya ausente")
+    @ApiResponse(responseCode = "400", description = "Identificador inválido", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "401", description = "Autenticación requerida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public ResponseEntity<Void> removeFavorite(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable @Positive long editionId) {
+        customerService.removeFavorite(actorUserId(jwt), editionId);
+        return ResponseEntity.noContent().build();
+    }
+
     private static long actorUserId(Jwt jwt) {
         return Long.parseLong(jwt.getSubject());
     }
@@ -135,5 +200,13 @@ public class CustomerController {
         return new CustomerAddressResponse(Long.toString(address.addressId()), address.alias(), address.recipient(),
                 address.line1(), address.line2(), address.city(), address.province(), address.countryCode(),
                 address.postalCode(), address.reference(), address.phone(), address.primary());
+    }
+
+    private static Favorite toFavoriteResponse(CustomerFavorites.Favorite favorite) {
+        return new Favorite(Long.toString(favorite.editionId()), Long.toString(favorite.bookId()),
+                favorite.title(), favorite.authors(), favorite.publisher(),
+                favorite.price().setScale(2, RoundingMode.UNNECESSARY).toPlainString(), favorite.coverUrl(),
+                favorite.coverLicense(), favorite.coverAttribution(), favorite.format(), favorite.language(),
+                favorite.available(), favorite.favoritedAt().toString());
     }
 }

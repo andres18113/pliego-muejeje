@@ -111,7 +111,7 @@ class CatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].available").value(true))
                 .andReturn().getResponse().getContentAsString();
 
-        assertEquals(new CatalogQuery(null, null, null, null, null, null, null, null,
+        assertEquals(new CatalogQuery(null, null, null, null, null, null, null, null, null,
                 "TITLE_ASC", 0, 20), gateway.lastQuery);
         assertFalse(response.contains("stock"));
         assertFalse(response.contains("stockActual"));
@@ -144,6 +144,19 @@ class CatalogApiIntegrationTest {
         assertEquals("PRICE_ASC", gateway.lastQuery.sort());
         assertEquals(1, gateway.lastQuery.page());
         assertEquals(5, gateway.lastQuery.pageSize());
+    }
+
+    @Test
+    void globalQueryAndFiltersReachTheGateway() throws Exception {
+        mvc.perform(get("/api/v1/catalog/editions")
+                        .param("que", "Gabriel García Márquez")
+                        .param("category", "literatura")
+                        .param("page", "1"))
+                .andExpect(status().isOk());
+
+        assertEquals("Gabriel García Márquez", gateway.lastQuery.query());
+        assertEquals("literatura", gateway.lastQuery.category());
+        assertEquals(1, gateway.lastQuery.page());
     }
 
     @ParameterizedTest
@@ -209,7 +222,7 @@ class CatalogApiIntegrationTest {
 
     @Test
     void publicFilterOptionsReturnDatabaseLanguagesAndMoneyAsStrings() throws Exception {
-        gateway.publicFilterOptions = new PublicCatalogFilterOptions(List.of("en", "es"),
+        gateway.publicFilterOptions = new PublicCatalogFilterOptions(List.of("en", "es"), List.of("HARDCOVER", "PAPERBACK"),
                 new BigDecimal("7.25"), new BigDecimal("38.00"));
 
         mvc.perform(get("/api/v1/catalog/filter-options"))
@@ -217,6 +230,8 @@ class CatalogApiIntegrationTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.languages[0]").value("en"))
                 .andExpect(jsonPath("$.languages[1]").value("es"))
+                .andExpect(jsonPath("$.formats[0]").value("HARDCOVER"))
+                .andExpect(jsonPath("$.formats[1]").value("PAPERBACK"))
                 .andExpect(jsonPath("$.minimumPrice").value("7.25"))
                 .andExpect(jsonPath("$.maximumPrice").value("38.00"));
     }
@@ -357,7 +372,7 @@ class CatalogApiIntegrationTest {
         private long lastEditionId;
         private CatalogSearchPage searchPage = new CatalogSearchPage(List.of(SUMMARY), 1);
         private List<PublicCatalogCategory> publicCategories = List.of();
-        private PublicCatalogFilterOptions publicFilterOptions = new PublicCatalogFilterOptions(List.of(), null, null);
+        private PublicCatalogFilterOptions publicFilterOptions = new PublicCatalogFilterOptions(List.of(), List.of(), null, null);
         private Optional<CatalogEditionDetail> publicEdition = Optional.empty();
         private DatabaseException failure;
 
@@ -370,7 +385,7 @@ class CatalogApiIntegrationTest {
             lastEditionId = 0;
             searchPage = new CatalogSearchPage(List.of(SUMMARY), 1);
             publicCategories = List.of();
-            publicFilterOptions = new PublicCatalogFilterOptions(List.of(), null, null);
+            publicFilterOptions = new PublicCatalogFilterOptions(List.of(), List.of(), null, null);
             publicEdition = Optional.empty();
             failure = null;
         }

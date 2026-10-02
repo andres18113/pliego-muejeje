@@ -326,5 +326,15 @@ class AdminCustomerApiIntegrationTest {
         @Override public void updateAddress(long actorUserId, long addressId, AddressData address) { }
         @Override public void deleteAddress(long actorUserId, long addressId) { }
         @Override public void setPrimaryAddress(long actorUserId, long addressId) { }
+        @Override public com.pliego.modules.customer.application.CustomerFavorites.Page listFavorites(
+                long actorUserId, int page, int pageSize) {
+            return new com.pliego.modules.customer.application.CustomerFavorites.Page(List.of(), 0);
+        }
+        @Override public List<com.pliego.modules.customer.application.CustomerFavorites.Status> favoriteStatus(
+                long actorUserId, List<Long> editionIds) {
+            return editionIds.stream().map(id -> new com.pliego.modules.customer.application.CustomerFavorites.Status(id, false)).toList();
+        }
+        @Override public void addFavorite(long actorUserId, long editionId) { }
+        @Override public void removeFavorite(long actorUserId, long editionId) { }
     }
 }

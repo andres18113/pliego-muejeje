@@ -1,0 +1,36 @@
+.root {
+  --stock-icon-size: 20px;
+  display: inline-flex;
+  flex-direction: column;
+  min-width: 0;
+  max-width: 100%;
+  color: var(--pliego-text);
+  vertical-align: top;
+}
+.root[data-tone="success"] { color: color-mix(in srgb, var(--mantine-color-green-9) 85%, var(--mantine-color-black)); }
+.root[data-tone="danger"] { color: var(--mantine-color-red-9); }
+:global([data-mantine-color-scheme="dark"]) .root[data-tone="success"] { color: var(--mantine-color-green-3); }
+:global([data-mantine-color-scheme="dark"]) .root[data-tone="danger"] { color: var(--mantine-color-red-3); }
+.root[data-size="compact"] { --stock-icon-size: 16px; }
+.primary { display: flex; align-items: flex-start; gap: var(--mantine-spacing-2xs); min-width: 0; }
+.icon {
+  flex: 0 0 var(--stock-icon-size);
+  width: var(--stock-icon-size);
+  height: var(--stock-icon-size);
+  margin-top: max(0px, calc((1lh - var(--stock-icon-size)) / 2));
+  overflow: hidden;
+}
+.label { min-width: 0; overflow-wrap: anywhere; }
+.explanation {
+  margin-top: var(--mantine-spacing-2xs);
+  padding-inline-start: calc(var(--stock-icon-size) + var(--mantine-spacing-2xs));
+  color: var(--pliego-text-muted);
+  overflow-wrap: anywhere;
+}
+
+/* Badge is opt-in: quantity explanations in cart/checkout retain their plain text layout. */
+.root[data-variant="badge"] .primary { width: fit-content; max-width: 100%; padding: calc(var(--mantine-spacing-2xs) / 2) var(--mantine-spacing-2xs); border-radius: var(--mantine-radius-xs); }
+.root[data-variant="badge"][data-tone="success"] .primary { background: var(--mantine-color-green-0); }
+.root[data-variant="badge"][data-tone="danger"] .primary { background: var(--mantine-color-red-0); }
+:global([data-mantine-color-scheme="dark"]) .root[data-variant="badge"][data-tone="success"] .primary { background: color-mix(in srgb, var(--mantine-color-green-9) 20%, var(--pliego-surface)); }
+:global([data-mantine-color-scheme="dark"]) .root[data-variant="badge"][data-tone="danger"] .primary { background: color-mix(in srgb, var(--mantine-color-red-9) 20%, var(--pliego-surface)); }

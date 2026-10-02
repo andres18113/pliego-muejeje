@@ -1,6 +1,7 @@
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { Button } from "@mantine/core";
+import classes from "./exploration.module.css";
 import { parseTotalCount } from "@/shared/api/catalog";
 import { catalogHref, type CatalogCriteria } from "./catalogUrl";
 
@@ -18,7 +19,7 @@ export function Pagination({ criteria, totalCount, onRetry }: PaginationProps) {
     return (
       <div className="pagination-error" role="alert">
         <p>No pudimos calcular las páginas del catálogo.</p>
-        <Button variant="text" type="button" onClick={onRetry}>Volver a intentar</Button>
+        <Button variant="subtle" type="button" onClick={onRetry}>Volver a intentar</Button>
       </div>
     );
   }
@@ -33,21 +34,21 @@ export function Pagination({ criteria, totalCount, onRetry }: PaginationProps) {
   const hasNextPage = BigInt(criteria.page + 1) < totalPages;
 
   return (
-    <nav className="pagination" aria-label="Paginación del catálogo">
+    <nav className={classes.pagination} aria-label="Paginación del catálogo">
       {criteria.page > 0 ? (
-        <Link className="pagination-link" to={previousHref}>
-          <ArrowLeft aria-hidden="true" size={18} strokeWidth={1.6} />
+        <Button component={Link} variant="subtle" className={classes.control} to={previousHref} preventScrollReset>
+          <MaterialSymbol name="arrow_back" aria-hidden="true" size={18} />
           Anterior
-        </Link>
+        </Button>
       ) : (
         <span className="pagination-placeholder" aria-hidden="true" />
       )}
       <p>Página {numberFormat.format(criteria.page + 1)} de {numberFormat.format(totalPages)}</p>
       {hasNextPage ? (
-        <Link className="pagination-link" to={nextHref}>
+        <Button component={Link} variant="subtle" className={classes.control} to={nextHref} preventScrollReset>
           Siguiente
-          <ArrowRight aria-hidden="true" size={18} strokeWidth={1.6} />
-        </Link>
+          <MaterialSymbol name="arrow_forward" aria-hidden="true" size={18} />
+        </Button>
       ) : (
         <span className="pagination-placeholder" aria-hidden="true" />
       )}

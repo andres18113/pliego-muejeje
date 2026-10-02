@@ -1,9 +1,29 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { BookCover } from "./BookCover";
+import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 
 describe("BookCover", () => {
-  it("shows a per-image skeleton while an uncached cover is unloaded", () => {
+  it("keeps the card artwork intact even when the decoded URL's legacy fit permits cropping", async () => {
+    const url = "https://images.example.com/covers/card-preserves-art.webp";
+    const legacy = render(<BookCover url={url} license={null} attribution={null} title="Portada íntegra" />);
+    const image = legacy.container.querySelector("img")!;
+    Object.defineProperty(image, "naturalWidth", { configurable: true, value: 337 });
+    Object.defineProperty(image, "naturalHeight", { configurable: true, value: 500 });
+    fireEvent.load(image);
+    await waitFor(() => expect(image).toHaveClass("cover-image--cover"));
+    legacy.unmount();
+    const card = render(<PliegoThemeProvider><BookCover url={url} license={null} attribution={null} title="Portada íntegra" size="card" decorative /></PliegoThemeProvider>);
+    expect(card.container.querySelector("img")).not.toHaveClass("cover-image--cover");
+    expect(card.container.querySelector("img")).toHaveAttribute("alt", "");
+  });
+  it("retains the shared rejected-URL fallback in cards without creating a redundant image name", () => {
+    const card = render(<PliegoThemeProvider><BookCover url="http://localhost/card.webp" license={null} attribution={null} title="Edición" size="card" decorative /></PliegoThemeProvider>);
+    expect(card.container.querySelector("img")).toBeNull();
+    expect(screen.getByText("Portada no disponible")).toBeVisible();
+    expect(card.container.querySelector('[role="img"]')).toBeNull();
+  });
+  it("shows a per-image skeleton when an uncached cover remains unloaded", async () => {
     const { container } = render(<BookCover
       url="https://images.example.com/covers/uncached-skeleton.webp"
       license={null}
@@ -11,7 +31,7 @@ describe("BookCover", () => {
       title="Unloaded edition"
     />);
 
-    expect(screen.getByTestId("cover-skeleton")).toBeInTheDocument();
+    expect(await screen.findByTestId("cover-skeleton")).toBeInTheDocument();
     expect(container.querySelector(".cover-frame")).toBeInTheDocument();
     expect(container.querySelector("img.cover-image")).toHaveAttribute("loading", "lazy");
   });
@@ -104,7 +124,7 @@ describe("BookCover", () => {
       title="Second edition"
     />);
 
-    expect(screen.getByTestId("cover-skeleton")).toBeInTheDocument();
+    expect(await screen.findByTestId("cover-skeleton")).toBeInTheDocument();
     expect(first.container.querySelector("img.cover-image")).toHaveAttribute(
       "src", "https://images.example.com/covers/second-url.webp",
     );
