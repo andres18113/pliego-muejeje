@@ -23,7 +23,7 @@ public final class AdminOrderModels {
     public record Detail(String orderId, String customerId, String customerEmail, String customerName,
             String orderState, BigDecimal subtotal, BigDecimal total, Instant createdAt, Instant updatedAt,
             List<Item> items, Address address, Payment payment, List<History> stateHistory,
-            List<InventoryMovement> inventoryMovements) {
+            List<InventoryMovement> inventoryMovements, PostPurchaseModels.Extras postPurchase) {
         public Detail {
             items = List.copyOf(items);
             stateHistory = List.copyOf(stateHistory);

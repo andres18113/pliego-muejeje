@@ -45,12 +45,13 @@ async function install(page: Page, scheme: "light" | "dark", outcome: "ok" | "un
 }
 
 for (const scheme of ["light", "dark"] as const) {
-  test(`BookCard production ${scheme}: approved grid, complete cover, identity and targets`, async ({ page }) => {
+  test(`BookCard production ${scheme}: responsive grid, complete cover, identity and targets`, async ({ page }) => {
     test.setTimeout(120_000);
     await install(page, scheme);
-    for (const route of ["/catalog?que=lectura", "/", "/favorites"]) {
+    // The Home presents books as reading scenes (see the Home specs); BookCard routes are the catalog and favorites.
+    for (const route of ["/catalog?que=lectura", "/favorites"]) {
       await page.goto(route);
-      await expect(page.locator("[data-bookcard]")).toHaveCount(route === "/" ? 8 : 12);
+      await expect(page.locator("[data-bookcard]")).toHaveCount(route === "/" ? 4 : 12);
       await page.evaluate(() => document.fonts.ready);
       for (const width of [320, 375, 390, 768, 992, 1024, 1200, 1408, 1440, 1920]) {
         await page.setViewportSize({ width, height: 1000 });
@@ -61,14 +62,19 @@ for (const scheme of ["light", "dark"] as const) {
           overflow: document.documentElement.scrollWidth - innerWidth,
           cards: [...grid.querySelectorAll<HTMLElement>("[data-bookcard]")].map((card) => ({
             ratio: card.querySelector("[data-bookcard-cover]")!.getBoundingClientRect().width / card.querySelector("[data-bookcard-cover]")!.getBoundingClientRect().height,
-            actionAxis: (() => {
-              const favorite = card.querySelector('[data-bookcard-favorite]')!.getBoundingClientRect();
-              const cart = card.querySelector('[data-bookcard-cart]')!.getBoundingClientRect();
-              return { centers: Math.abs(favorite.top + favorite.height / 2 - cart.top - cart.height / 2), gap: cart.left - favorite.right, leftToRight: favorite.left < cart.left, favoriteBorder: getComputedStyle(card.querySelector('[data-bookcard-favorite]')!).borderTopWidth };
+            favoriteBesideCart: (() => {
+              const favorite = card.querySelector("[data-bookcard-favorite]")!.getBoundingClientRect();
+              const cart = card.querySelector("[data-bookcard-cart]")!.getBoundingClientRect();
+              // Very narrow action lines stack favorite under the cart by design.
+              if (getComputedStyle(card.querySelector("[data-bookcard-actions]")!).flexWrap === "wrap") return favorite.top >= cart.bottom;
+              return favorite.left >= cart.right && Math.abs(favorite.top + favorite.height / 2 - cart.top - cart.height / 2) < 1;
             })(),
-            cartTextVisible: getComputedStyle(card.querySelector('[data-bookcard-cart] .mantine-Button-label > span:last-child')!).display !== 'none',
-            cartNeutral: !card.querySelector('[data-bookcard-cart]')!.hasAttribute('data-unavailable') || (getComputedStyle(card.querySelector('[data-bookcard-cart]')!).color === getComputedStyle(card.querySelector('[data-bookcard-identity] p')!).color && getComputedStyle(card.querySelector('[data-bookcard-cart]')!).backgroundColor === 'rgba(0, 0, 0, 0)'),
-            cartText: card.querySelector('[data-bookcard-cart] .mantine-Button-label > span:last-child')!.textContent,
+            cartTextVisible: getComputedStyle(card.querySelector('[data-bookcard-cart] .mantine-Button-label > span')!).display !== 'none',
+            // Unavailable carts use the approved dashed outline on a transparent ground; available ones stay solid.
+            cartNeutral: card.querySelector('[data-bookcard-cart]')!.hasAttribute('data-unavailable')
+              ? getComputedStyle(card.querySelector('[data-bookcard-cart]')!).outlineStyle === 'dashed' && getComputedStyle(card.querySelector('[data-bookcard-cart]')!).backgroundColor === 'rgba(0, 0, 0, 0)'
+              : getComputedStyle(card.querySelector('[data-bookcard-cart]')!).outlineStyle !== 'dashed',
+            cartText: card.querySelector('[data-bookcard-cart] .mantine-Button-label > span')!.textContent,
             cartIcon: card.querySelector('[data-bookcard-cart] .material-symbol')!.textContent,
             available: !card.querySelector('[data-bookcard-cart]')!.hasAttribute('data-unavailable'),
             secondaryRows: card.querySelectorAll('[data-bookcard-detail-cue], [data-bookcard-credit]').length,
@@ -81,7 +87,7 @@ for (const scheme of ["light", "dark"] as const) {
             height: card.getBoundingClientRect().height,
             priceTop: card.querySelector("[data-bookcard-price]")!.getBoundingClientRect().top,
             commercialGap: card.querySelector("[data-bookcard-price]")!.getBoundingClientRect().top - card.querySelector("[data-bookcard-identity]")!.getBoundingClientRect().bottom,
-            identityBounded: [...card.querySelectorAll<HTMLElement>("[data-line-clamp]")].every((text) => getComputedStyle(text).webkitLineClamp === "2" && text.clientHeight <= 2 * parseFloat(getComputedStyle(text).lineHeight) + 1),
+            identityBounded: [...card.querySelectorAll<HTMLElement>("[data-line-clamp]")].every((text) => { const lines = Number(getComputedStyle(text).webkitLineClamp); return lines >= 2 && lines <= 4 && text.clientHeight <= lines * parseFloat(getComputedStyle(text).lineHeight) + 1; }),
             clipped: [...card.querySelectorAll<HTMLElement>("[data-bookcard-price], [data-bookcard-availability], [data-bookcard-detail-cue]")].some((text) => text.scrollHeight > text.clientHeight || getComputedStyle(text).webkitLineClamp !== "none"),
             nestedButtons: card.querySelector("[data-bookcard-link] button") !== null,
             targets: [...card.querySelectorAll("button")].map((button) => ({ width: button.getBoundingClientRect().width, height: button.getBoundingClientRect().height })),
@@ -89,10 +95,11 @@ for (const scheme of ["light", "dark"] as const) {
           })),
         }));
         expect(metrics.overflow).toBe(0);
-        expect(metrics.columns).toBe(route === "/" ? 8 : width >= 1408 ? 6 : width >= 1200 ? 5 : width >= 992 ? 4 : width >= 768 ? 3 : 2);
-        expect(metrics.gap).toBe(route === "/" ? 24 : 16);
-        if (width === 320) expect(metrics.cardWidth).toBe(route === "/" ? 208 : 136);
-        for (const card of metrics.cards) { expect(card.actionAxis.centers).toBeLessThan(1); expect(card.actionAxis.leftToRight).toBe(true); expect(card.actionAxis.gap).toBeCloseTo(8, 0); expect(card.actionAxis.favoriteBorder).toBe("1px"); expect(card.cartTextVisible).toBe(true); expect(card.cartNeutral).toBe(true); expect(card.cartText).toBe("Agregar"); expect(card.cartIcon).toBe(card.available ? "add_shopping_cart" : "shopping_cart_off"); expect(card.secondaryRows).toBe(0); expect(card.badge).toBe("badge"); expect(card.stockOnCover).toBe(false); expect(card.identityBounded).toBe(true); expect(card.clipped).toBe(false); expect(card.commercialGap).toBeLessThanOrEqual(8); expect(card.links).toBe(1); expect(card.nestedButtons).toBe(false); expect(card.ratio).toBeCloseTo(2 / 3, 2); expect(card.fits).toBe(true); for (const target of card.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); } }
+        // Catalog: wide four-column shelf from 1024px (no sidebar); favorites keep the shared base grid.
+        expect(metrics.columns).toBe(route.startsWith("/catalog") ? width >= 1200 ? 5 : width >= 920 ? 4 : width >= 600 ? 3 : 2 : width >= 992 ? 4 : width >= 768 ? 3 : 2);
+        expect(metrics.gap).toBe(route.startsWith("/catalog") ? width >= 920 ? 24 : width >= 600 ? 20 : width < 360 ? 12 : 16 : 16);
+        if (width === 320) expect(metrics.cardWidth).toBe(route.startsWith("/catalog") ? 138 : 136);
+        for (const card of metrics.cards) { expect(card.favoriteBesideCart, `${route}, ${width}px, favorite placement`).toBe(true); expect(card.cartTextVisible).toBe(true); expect(card.cartNeutral).toBe(true); expect(card.cartText).toBe("Agregar"); expect(card.cartIcon).toBe(card.available ? "add_shopping_cart" : "shopping_cart_off"); expect(card.secondaryRows).toBe(0); expect(card.badge).toBe("text"); expect(card.stockOnCover).toBe(false); expect(card.identityBounded).toBe(true); expect(card.clipped).toBe(false); expect(card.commercialGap).toBeLessThanOrEqual(16); expect(card.links).toBe(1); expect(card.nestedButtons).toBe(false); expect(card.ratio).toBeCloseTo(2 / 3, 2); expect(card.fits).toBe(true); for (const target of card.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); } }
         if ((route.startsWith("/catalog") || route === "/") && [320, 375, 768, 1024, 1200, 1440, 1920].includes(width)) {
           await page.locator(".edition-grid").screenshot({ path: `/tmp/pliego-${route === "/" ? "home" : "bookcard"}-${scheme}-${width}.png`, style: "header { visibility: hidden; }" });
         }
@@ -113,12 +120,15 @@ test("BookCard: independent actions, confirmed add and an accessible single-link
   await page.goto("/catalog?que=lectura");
   const card = page.locator("[data-bookcard]").first();
   await expect(card.locator("[data-bookcard-favorite]")).toBeEnabled();
+  // Visual and focus order match the Home scenes: link → cart → favorite.
   await card.locator("[data-bookcard-link]").focus(); await page.keyboard.press("Tab");
+  await expect(card.locator("[data-bookcard-cart]")).toBeFocused();
+  await page.keyboard.press("Tab");
   await expect(card.locator("[data-bookcard-favorite]")).toBeFocused();
   await page.keyboard.press("Space");
   await expect(card.getByRole("status")).toHaveText("Quitado de favoritos.");
   await expect(page).toHaveURL(/\/catalog\?que=lectura$/);
-  await page.keyboard.press("Tab");
+  await page.keyboard.press("Shift+Tab");
   await expect(card.locator("[data-bookcard-cart]")).toBeFocused();
   await page.keyboard.press("Space");
   await expect(card.getByRole("status")).toHaveText("Agregado al carrito.");
@@ -164,26 +174,19 @@ for (const scheme of ["light", "dark"] as const) {
     const card = page.locator("[data-bookcard]").first();
     const link = card.locator("[data-bookcard-link]");
     await expect(card.locator("[data-bookcard-detail-cue]")).toHaveCount(0);
-    await expect(card.locator("[data-bookcard-title]")).toHaveCSS("text-decoration-line", "underline");
-    await page.mouse.move(0, 0);
-    await expect(card.locator("[data-bookcard-cover-affordance]")).toHaveCSS("opacity", "0");
+    await expect(card.locator("[data-bookcard-title]")).toHaveCSS("text-decoration-line", "none");
+    await expect(card.locator("[data-bookcard-cover-affordance]")).toHaveCount(0);
+    const coverBefore = await card.locator("[data-bookcard-cover]").boundingBox();
     await link.hover();
-    const hover = await card.evaluate((element) => {
-      const cue = element.querySelector('[data-bookcard-cover-affordance]')!.getBoundingClientRect();
-      const cover = element.querySelector('[data-bookcard-cover]')!.getBoundingClientRect();
-      return { area: cue.width * cue.height / (cover.width * cover.height), symbol: element.querySelector('[data-bookcard-cover-affordance] .material-symbol')!.textContent };
-    });
-    expect(hover.area).toBeLessThan(.08);
-    expect(hover.symbol).toBe("visibility");
-    await expect(card.locator("[data-bookcard-cover-affordance]")).toHaveCSS("opacity", "1");
+    await expect.poll(async () => (await card.locator("[data-bookcard-cover]").boundingBox())!.y).toBeLessThan(coverBefore!.y);
     await page.mouse.move(0, 0);
     await link.focus();
     await page.keyboard.press("Tab");
-    await expect(card.locator("[data-bookcard-favorite]")).toBeFocused();
+    await expect(card.locator("[data-bookcard-cart]")).toBeFocused();
     await page.keyboard.press("Shift+Tab");
     await expect(link).toBeFocused();
-    expect(await link.evaluate((element) => ({ width: getComputedStyle(element).outlineWidth, offset: getComputedStyle(element).outlineOffset }))).toEqual({ width: "3px", offset: "3px" });
-    await expect(card.locator("[data-bookcard-cover-affordance]")).toHaveCSS("opacity", "1");
+    expect(await link.evaluate((element) => ({ width: getComputedStyle(element).outlineWidth, offset: getComputedStyle(element).outlineOffset }))).toEqual({ width: "3px", offset: "4px" });
+    await expect(card.locator("[data-bookcard-title]")).toHaveCSS("text-decoration-line", "underline");
     await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
     for (const width of [320, 375, 768, 1024, 1200, 1440, 1920]) {
       await page.setViewportSize({ width, height: 1000 });
@@ -195,16 +198,16 @@ for (const scheme of ["light", "dark"] as const) {
           height: card.getBoundingClientRect().height,
           tops: ["price", "availability", "actions"].map((part) => card.querySelector(`[data-bookcard-${part}]`)!.getBoundingClientRect().top),
         })),
-        cartTextFits: [...grid.querySelectorAll<HTMLElement>('[data-bookcard-cart] .mantine-Button-label > span:last-child')].every((text) => text.scrollWidth <= text.clientWidth + 1 && text.scrollHeight <= text.clientHeight + 2),
+        cartTextFits: [...grid.querySelectorAll<HTMLElement>('[data-bookcard-cart] .mantine-Button-label > span')].every((text) => text.scrollWidth <= text.clientWidth + 1 && text.scrollHeight <= text.clientHeight + 2),
         targets: [...grid.querySelectorAll("a, button")].map((element) => ({ width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })),
       }));
-      expect(result.overflow).toBe(false);
-      expect(result.clipped).toBe(false);
+      expect(result.overflow, `200% text, ${width}px, horizontal overflow`).toBe(false);
+      expect(result.clipped, `200% text, ${width}px, clipped commercial text`).toBe(false);
       expect(result.cartTextFits).toBe(true);
       for (let index = 0; index < result.cards.length; index += result.columns) {
         const row = result.cards.slice(index, index + result.columns);
         expect(Math.max(...row.map((card) => card.height)) - Math.min(...row.map((card) => card.height))).toBeLessThan(1);
-        for (let part = 0; part < 3; part++) expect(Math.max(...row.map((card) => card.tops[part])) - Math.min(...row.map((card) => card.tops[part]))).toBeLessThan(1);
+        for (let part = 0; part < 3; part++) expect(Math.max(...row.map((card) => card.tops[part])) - Math.min(...row.map((card) => card.tops[part])), `200% text, ${width}px, ${["price", "availability", "actions"][part]}`).toBeLessThan(1);
       }
       for (const target of result.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); }
     }
@@ -218,11 +221,11 @@ for (const scheme of ["light", "dark"] as const) {
     const api = await install(page, scheme);
     await page.goto("/catalog");
     const card = page.locator("[data-bookcard]").nth(2);
-    await expect(card.locator("[data-bookcard-title]")).toHaveCSS("text-decoration-line", "underline");
+    await expect(card.locator("[data-bookcard-title]")).toHaveCSS("text-decoration-line", "none");
     await expect(card.locator("[data-bookcard-cart]")).toBeDisabled();
     await expect(card.locator("[data-bookcard-cart]")).toHaveText("shopping_cart_offAgregar");
     await expect(card.locator("[data-bookcard-cart]")).toHaveAccessibleDescription(/No disponible/);
-    await expect(card.locator("[data-bookcard-cart] .mantine-Button-label > span:last-child")).toBeVisible();
+    await expect(card.locator("[data-bookcard-cart] .mantine-Button-label > span")).toBeVisible();
     const availableCard = page.locator("[data-bookcard]").first();
     await availableCard.locator("[data-bookcard-cart]").tap();
     await expect(availableCard.getByRole("status")).toHaveText("Agregado al carrito.");
@@ -238,23 +241,22 @@ for (const scheme of ["light", "dark"] as const) {
 }
 
 for (const scheme of ["light", "dark"] as const) {
-  test(`Home discovery rail ${scheme}: independent keyboard and touch actions reach detail`, async ({ page, browser }) => {
+  test(`Home reading scene ${scheme}: independent keyboard and touch actions reach detail`, async ({ page, browser }) => {
     const api = await install(page, scheme);
     await page.goto("/");
-    await expect(page.locator('[data-presentation="rail"] [data-bookcard]')).toHaveCount(8);
-    await expect(page.locator('.discovery-count')).toHaveCount(0);
-    const card = page.locator('[data-bookcard]').first();
-    await card.locator('[data-bookcard-link]').focus();
+    await expect(page.locator("[data-reading-scene]")).toHaveCount(4);
+    const scene = page.locator("[data-reading-scene]:not([inert])");
+    await scene.locator("[data-reading-title]").focus();
     await page.keyboard.press("Tab");
-    await expect(card.locator('[data-bookcard-favorite]')).toBeFocused();
+    await expect(scene.locator("[data-reading-cart]")).toBeFocused();
     await page.keyboard.press("Space");
-    await expect(card.getByRole("status")).toHaveText("Quitado de favoritos.");
-    await card.locator('[data-bookcard-cart]').focus();
+    await expect(scene.getByRole("status")).toHaveText("Agregado al carrito.");
+    await scene.locator("[data-reading-favorite]").focus();
     await page.keyboard.press("Space");
-    await expect(card.getByRole("status")).toHaveText("Agregado al carrito.");
+    await expect(scene.getByRole("status")).toHaveText("Quitado de favoritos.");
     expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
     await expect(page).toHaveURL(/\/$/);
-    await card.locator('[data-bookcard-link]').focus();
+    await scene.locator("[data-reading-title]").focus();
     await page.keyboard.press("Enter");
     await expect(page.getByRole("heading", { level: 1, name: "El extranjero" })).toBeVisible();
 
@@ -262,13 +264,19 @@ for (const scheme of ["light", "dark"] as const) {
     const touch = await context.newPage();
     await install(touch, scheme);
     await touch.goto("/");
-    await expect(touch.locator('[data-bookcard]')).toHaveCount(8);
-    const touchCard = touch.locator('[data-bookcard]').first();
-    await touchCard.locator('[data-bookcard-favorite]').tap();
-    await expect(touchCard.getByRole("status")).toHaveText("Quitado de favoritos.");
-    await touchCard.locator('[data-bookcard-cart]').tap();
-    await expect(touchCard.getByRole("status")).toHaveText("Agregado al carrito.");
-    await touch.locator('[data-bookcard]').filter({ has: touch.locator('[data-bookcard-cart][data-unavailable]') }).first().locator('[data-bookcard-link]').tap();
+    await expect(touch.locator("[data-reading-scene]")).toHaveCount(4);
+    const touchScene = touch.locator("[data-reading-scene]:not([inert])");
+    await touchScene.locator("[data-reading-favorite]").tap();
+    await expect(touchScene.getByRole("status")).toHaveText("Quitado de favoritos.");
+    await touchScene.locator("[data-reading-cart]").tap();
+    await expect(touchScene.getByRole("status")).toHaveText("Agregado al carrito.");
+    const dots = touch.getByRole("group", { name: /^Libros de / }).getByRole("button");
+    for (let index = 0; index < 4; index++) {
+      await dots.nth(index).tap();
+      if (await touchScene.locator("[data-reading-cart]").isDisabled()) break;
+    }
+    await expect(touchScene.locator("[data-stockstatus-label]")).toHaveText("No disponible");
+    await touchScene.locator("[data-reading-title]").tap();
     await expect(touch.locator('.detail-copy [data-stockstatus-label]')).toHaveText("No disponible");
     await context.close();
   });

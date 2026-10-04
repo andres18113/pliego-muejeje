@@ -5,8 +5,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { App } from "./app/App";
 import { PliegoThemeProvider } from "./theme/PliegoThemeProvider";
 import "@fontsource-variable/roboto-flex/wght.css";
+import "@fontsource-variable/bricolage-grotesque/wght.css";
 import "@mantine/core/styles.css";
 import "./styles.css";
+import "./storefront.css";
 
 const root = document.getElementById("root");
 

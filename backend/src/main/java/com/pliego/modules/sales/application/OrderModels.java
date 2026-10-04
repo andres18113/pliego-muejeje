@@ -14,11 +14,11 @@ public final class OrderModels {
     }
 
     public record Summary(String orderId, Instant createdAt, String orderState,
-            BigDecimal total, String paymentState) { }
+            BigDecimal total, String paymentState, PostPurchaseModels.SummaryExtras postPurchase) { }
 
     public record Detail(String orderId, String orderState, BigDecimal subtotal, BigDecimal total,
             Instant createdAt, Instant updatedAt, List<Item> items, Address address,
-            Payment payment, List<History> stateHistory) {
+            Payment payment, List<History> stateHistory, PostPurchaseModels.Extras postPurchase) {
         public Detail {
             items = List.copyOf(items);
             stateHistory = List.copyOf(stateHistory);

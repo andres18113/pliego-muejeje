@@ -1,0 +1,40 @@
+:root {
+  --store-blue: #283da8;
+  --store-ink: #252740;
+  --store-lavender: #e4def4;
+  --store-yellow: #f3df83;
+  --store-paper: #f6f5f0;
+  --store-display: "Bricolage Grotesque Variable", "Roboto Flex Variable", sans-serif;
+}
+:is([data-storefront-surface], .storefront-panel) {
+  --pliego-surface: var(--store-paper);
+  --pliego-background: #eeece7;
+  --pliego-surface-hover: #e4def4;
+  --pliego-text: var(--store-ink);
+  --pliego-text-muted: #595a6e;
+  --pliego-border: #d4d2dc;
+  --pliego-control-border: #858398;
+  --store-link: var(--store-blue);
+}
+[data-mantine-color-scheme="dark"] :is([data-storefront-surface], .storefront-panel) {
+  --pliego-surface: #22243b;
+  --pliego-background: #2e3049;
+  --pliego-surface-hover: #3c3e5a;
+  --pliego-text: #f0edf8;
+  --pliego-text-muted: #c5c1d5;
+  --pliego-border: #4e506b;
+  --pliego-control-border: #9995b1;
+  --store-link: #c5bcff;
+}
+.storefront-footer.storefront-footer { background: var(--store-blue); color: white; border: 0; padding: 56px 0 32px; margin: 0; }
+.storefront-footer .footer-content { width: min(calc(100% - 96px), 1728px); padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; margin-inline: auto; }
+.storefront-footer .footer-wordmark { font-family: var(--store-display); font-size: clamp(2.25rem, 7vw, 6.75rem); font-weight: 800; letter-spacing: -.055em; color: white; }
+.storefront-footer .footer-content p { font-size: 1rem; color: #e4def4; margin: 16px 0 0; }
+.storefront-footer nav { display: flex; flex-wrap: wrap; gap: 16px 32px; }
+.storefront-footer nav a { display: flex; align-items: center; min-height: 44px; text-decoration: none; color: white; }
+.storefront-footer a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.storefront-footer a:focus-visible { outline: 3px solid var(--store-yellow); outline-offset: 4px; }
+@media (max-width: 767px) {
+  .storefront-footer .footer-content { width: calc(100% - 40px); grid-template-columns: 1fr; }
+  .storefront-footer.storefront-footer { padding-block: 40px 24px; }
+}

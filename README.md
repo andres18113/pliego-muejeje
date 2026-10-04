@@ -19,12 +19,30 @@ Human-facing REST error and validation feedback is in Spanish. Machine-readable 
 
 ## Build and run
 
-Install Java 25, Maven, and PostgreSQL 18. For a reproducible private local database, follow [backend/README.md](backend/README.md#reproducible-local-postgresql-18) and run `./scripts/local-db.sh migrate`, then `./scripts/local-db.sh backend`. For an externally managed database, configure the connection, initial admin seed, and JWT signing key as described in the same README, then run:
+Install Java 25, Maven, Node.js/npm, curl, and PostgreSQL 18. To start the local database, backend, and frontend together, use the idempotent stack script:
 
 ```bash
+cd frontend && npm ci
+cd ..
+./scripts/dev.sh up       # starts the services that are not already ready
+./scripts/dev.sh status
+./scripts/dev.sh logs     # Ctrl+C stops following logs, not the services
+./scripts/dev.sh down     # stops only backend/frontend started by the script
+```
+
+The local PostgreSQL 18 service remains running after `down`; stop it separately with `./scripts/local-db.sh stop`. The web app is at `http://127.0.0.1:5173` and the API at `http://127.0.0.1:8080`. To use database credentials already exported in the current shell, set `PLIEGO_USE_LOCAL_DB=0` when running the script.
+
+For an externally managed database, export the connection, initial admin seed, and JWT signing key described in [backend/README.md](backend/README.md), then run `PLIEGO_USE_LOCAL_DB=0 ./scripts/dev.sh up` in that shell. To start services manually instead:
+
+```bash
+# Terminal 1
 cd backend
 mvn clean verify
 mvn spring-boot:run
+
+# Terminal 2
+cd frontend
+npm run dev -- --host 127.0.0.1
 ```
 
 Backend configuration/startup is documented in [backend/README.md](backend/README.md). With the backend running, OpenAPI is served at `/v3/api-docs` and Swagger UI at `/swagger-ui/index.html`.

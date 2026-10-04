@@ -9,7 +9,7 @@ public final class AdminCatalogModels {
     private AdminCatalogModels() { }
 
     public record Search(String query, String state, int page, int pageSize) { }
-    public record EditionSearch(String query, String state, Long bookId, int page, int pageSize) { }
+    public record EditionSearch(String query, String state, Long bookId, int page, int pageSize, String format) { }
     public record Page<T>(List<T> items, long totalCount) {
         public Page { items = List.copyOf(items); }
     }
@@ -31,7 +31,10 @@ public final class AdminCatalogModels {
             Integer pageCount, LocalDate publicationDate, BigDecimal price, String coverUrl,
             String coverLicense, String coverSourceUrl,
             String coverAttribution, String state,
-            int stockActual, String createdAt, String updatedAt) { }
+            Integer stockActual, String createdAt, String updatedAt,
+            String ebookFileFormat, Integer audioDurationSeconds, List<String> narrators) {
+        public EditionRow { narrators = List.copyOf(narrators); }
+    }
 
     public record AuthorData(String name, String biography) { }
     public record PublisherData(String name, String description) { }
@@ -42,9 +45,15 @@ public final class AdminCatalogModels {
     }
     public record BookAuthorInput(long authorId, int order) { }
     public record EditionCreateData(long bookId, long publisherId, String sku, String isbn13, String language,
-            String format, int pageCount, LocalDate publicationDate, BigDecimal price, String coverUrl,
-            String coverLicense, String coverSourceUrl, String coverAttribution) { }
+            String format, Integer pageCount, LocalDate publicationDate, BigDecimal price, String coverUrl,
+            String coverLicense, String coverSourceUrl, String coverAttribution,
+            String ebookFileFormat, Integer audioDurationSeconds, List<String> narrators) {
+        public EditionCreateData { narrators = narrators == null ? List.of() : List.copyOf(narrators); }
+    }
     public record EditionUpdateData(long publisherId, String isbn13, String language, String format,
-            int pageCount, LocalDate publicationDate, BigDecimal price, String coverUrl,
-            String coverLicense, String coverSourceUrl, String coverAttribution) { }
+            Integer pageCount, LocalDate publicationDate, BigDecimal price, String coverUrl,
+            String coverLicense, String coverSourceUrl, String coverAttribution,
+            String ebookFileFormat, Integer audioDurationSeconds, List<String> narrators) {
+        public EditionUpdateData { narrators = narrators == null ? List.of() : List.copyOf(narrators); }
+    }
 }

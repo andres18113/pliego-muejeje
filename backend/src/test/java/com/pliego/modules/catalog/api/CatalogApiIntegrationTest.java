@@ -69,7 +69,7 @@ class CatalogApiIntegrationTest {
     private static final CatalogEditionSummary SUMMARY = new CatalogEditionSummary("250", "80",
             "Don Quijote de la Mancha", "Miguel de Cervantes", "Editorial Ejemplo", "9780306406157",
             new BigDecimal("18.50"), CDN_COVER_URL, null, null,
-            "PAPERBACK", "es", true);
+            "PAPERBACK", "es", true, null, null, List.of());
 
     private static final CatalogEditionDetail DETAIL = new CatalogEditionDetail("250", "80",
             "Don Quijote de la Mancha", null,
@@ -79,7 +79,7 @@ class CatalogApiIntegrationTest {
             new Publisher("7", "Editorial Ejemplo"), "9780306406157", "PLG-LIT-001", "es",
             "PAPERBACK", 560, LocalDate.of(2024, 1, 1), new BigDecimal("18.50"),
             CDN_COVER_URL, null, null,
-            null, true);
+            null, true, null, null, List.of());
 
     @Autowired
     MockMvc mvc;
@@ -89,6 +89,39 @@ class CatalogApiIntegrationTest {
 
     @Autowired
     FakeCatalogGateway gateway;
+
+
+    @ParameterizedTest
+    @ValueSource(strings = {"EBOOK", "AUDIOBOOK"})
+    void digitalFormatsAreAcceptedByBothSearchModes(String format) throws Exception {
+        mvc.perform(get("/api/v1/catalog/editions").param("format", format)).andExpect(status().isOk());
+        assertEquals(format, gateway.lastQuery.format());
+        mvc.perform(get("/api/v1/catalog/editions").param("format", format).param("que", "Una obra"))
+                .andExpect(status().isOk());
+        assertEquals(format, gateway.lastQuery.format());
+    }
+
+    @Test
+    void audiobookMetadataSerializesInSearchDetailAndGeneratedContract() throws Exception {
+        gateway.searchPage = new CatalogSearchPage(List.of(new CatalogEditionSummary("250", "80", "Una obra", "Autora",
+                "Editorial", null, new BigDecimal("10.00"), CDN_COVER_URL, null, null, "AUDIOBOOK", "es", true,
+                null, 3600, List.of("Una voz", "Otra voz"))), 1);
+        gateway.publicEdition = Optional.of(new CatalogEditionDetail("250", "80", "Una obra", null, "Sinopsis",
+                DETAIL.authors(), DETAIL.categories(), DETAIL.publisher(), null, "DIGITAL-TEST", "es", "AUDIOBOOK", null,
+                null, new BigDecimal("10.00"), CDN_COVER_URL, null, null, null, true, null, 3600, List.of("Una voz", "Otra voz")));
+        mvc.perform(get("/api/v1/catalog/editions")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].format").value("AUDIOBOOK"))
+                .andExpect(jsonPath("$.items[0].audioDurationSeconds").value(3600))
+                .andExpect(jsonPath("$.items[0].narrators[1]").value("Otra voz"));
+        mvc.perform(get("/api/v1/catalog/editions/250")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.pageCount").value(org.hamcrest.Matchers.nullValue()))
+                .andExpect(jsonPath("$.audioDurationSeconds").value(3600))
+                .andExpect(jsonPath("$.narrators[0]").value("Una voz"));
+        mvc.perform(get("/v3/api-docs")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.components.schemas.CatalogEditionDetailResponse.properties.format.enum")
+                        .value(org.hamcrest.Matchers.hasItems("EBOOK", "AUDIOBOOK")))
+                .andExpect(jsonPath("$.components.schemas.CatalogEditionDetailResponse.properties.narrators.type").value("array"));
+    }
 
     @BeforeEach
     void resetGateway() {
@@ -256,7 +289,7 @@ class CatalogApiIntegrationTest {
         assertInvalidFilter("isbn13", "978030640615X");
         assertInvalidFilter("category", "una/categoria");
         assertInvalidFilter("language", "spanish");
-        assertInvalidFilter("format", "AUDIOBOOK");
+        assertInvalidFilter("format", "COMIC");
         assertInvalidFilter("minPrice", "-1.00");
     }
 

@@ -119,7 +119,7 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
                     text(item, "authors"), text(item, "sku"), nullableText(item, "coverUrl"),
                     item.path("quantity").intValue(), decimal(item, "currentPrice"),
                     decimal(item, "currentSubtotal"), item.path("available").booleanValue(),
-                    nullableText(item, "unavailabilityReason")));
+                    nullableText(item, "unavailabilityReason"), text(item, "format")));
         }
         return List.copyOf(result);
     }

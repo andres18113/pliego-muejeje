@@ -16,3 +16,6 @@
 | [0012](0012-controlled-bookcard-and-catalog-controllers.md) | Controlled BookCard, shared edition projection and separate action controllers | Accepted for BookCard v1 production migration | 2026-10-01 |
 | [0013](0013-persistent-global-navigation.md) | Persistent global navigation in the application layout | Accepted for Header production refactor | 2026-10-02 |
 | [0014](0014-public-exploration-and-real-catalog-facets.md) | One catalog entry and real public facets | Accepted for exploration refactor | 2026-10-02 |
+| [0015](0015-google-store-public-storefront.md) | Rebuild public storefront from measured Google Store evidence | Accepted for authorized visual replacement | 2026-10-02 |
+| [0016](0016-digital-editions-and-stockless-availability.md) | Typed digital editions and availability without physical inventory | Accepted for digital-format extension | 2026-10-03 |
+| [0017](0017-post-purchase-lifecycle-and-documents.md) | Separate fulfillment/shipment and immutable commercial invoice/credit-note records | Accepted for post-purchase backend extension | 2026-10-03 |

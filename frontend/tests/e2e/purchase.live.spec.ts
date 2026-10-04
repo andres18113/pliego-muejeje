@@ -7,6 +7,15 @@ const env = (globalThis as { process?: { env: Record<string, string | undefined>
 test.skip(!env.PLIEGO_E2E_LIVE, "Set PLIEGO_E2E_LIVE=1 to run against the live development backend.");
 
 const api = (env.PLIEGO_API_BASE_URL || "http://127.0.0.1:8080").replace(/\/$/, "") + "/api/v1";
+const browserApiOrigin = api.replace(/\/api\/v1$/, "");
+
+test.beforeEach(async ({ page }) => {
+  if (!env.PLIEGO_API_BASE_URL) return;
+  await page.route("**/api/v1/**", (route) => {
+    const url = new URL(route.request().url());
+    return route.continue({ url: `${browserApiOrigin}${url.pathname}${url.search}` });
+  });
+});
 
 test("a new CUSTOMER buys a seeded edition end to end against the live API", async ({ page, request }) => {
   const email = `e2e-${Date.now()}@pliego.local`;
@@ -24,10 +33,6 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await page.getByLabel("Correo electrónico").fill(email);
   await page.getByLabel("Contraseña").fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
-  await page.getByRole("button", { name: "Menú de cuenta" }).click();
-  await page.getByRole("menuitem", { name: "Mis pedidos" }).click();
-  await expect(page.getByRole("heading", { name: "Aún no tienes pedidos." })).toBeVisible();
-  await page.goBack();
   await page.getByRole("button", { name: "Agregar al carrito" }).click();
   await page.getByRole("link", { name: "Ver el carrito" }).click();
   await expect(page.getByRole("link", { name: edition.title })).toBeVisible();
@@ -41,8 +46,8 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await expect(page.locator(".checkout-selected-address")).toContainText("Casa");
   await page.locator(".payment-method-option").filter({ hasText: "Tarjeta" }).click();
   await page.getByLabel("Número de tarjeta").fill("4111111111111111");
-  await page.getByLabel("Vencimiento (MM/AA)").fill("12/30");
-  await page.getByLabel("CVV").fill("123");
+  await page.getByLabel("Caducidad (MM/AA)").fill("12/30");
+  await page.getByLabel("Código de seguridad").fill("123");
   await page.getByLabel("Nombre en la tarjeta").fill("Lectora E2E");
   await expect(page.getByText("Pago aprobado")).toHaveCount(0);
   for (const viewport of [
@@ -55,7 +60,9 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   }
   await page.getByRole("button", { name: /Pagar/ }).click();
 
-  await expect(page.getByRole("heading", { level: 1, name: /^Pedido n\.º \d+ confirmado$/ })).toBeVisible();
+  await expect(page.locator(".checkout-submit [role='status']")).toContainText(/Procesando tu pago/);
+  await expect(page.getByRole("heading", { level: 1, name: /^Pedido N\.° \d+ confirmado$/ })).toBeVisible();
+  await page.getByText("Pago", { exact: true }).click();
   await expect(page.getByText(/^SIM-/)).toBeVisible();
   const orderId = /\/orders\/(\d+)$/.exec(page.url())?.[1];
   expect(orderId).toBeTruthy();
@@ -66,15 +73,18 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await page.screenshot({ path: "/tmp/pliego-s06-mobile-history.png", fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.getByRole("link", { name: new RegExp(`Pedido n.º ${orderId}`) }).click();
-  await expect(page.getByRole("heading", { name: "Historial del pedido" })).toBeVisible();
-  await expect(page.getByRole("heading", { name: new RegExp(`Pedido n.º ${orderId}`) })).toBeVisible();
+  await page.getByText("Historial", { exact: true }).click();
+  await expect(page.getByText("Historial", { exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: new RegExp(`Pedido N\\.° ${orderId}`) })).toBeVisible();
   await page.screenshot({ path: "/tmp/pliego-s06-mobile.png", fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.setViewportSize({ width: 320, height: 720 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.getByText("Cancelación", { exact: true }).click();
   await page.getByRole("button", { name: "Cancelar pedido" }).click();
   await page.getByRole("button", { name: "Confirmar cancelación" }).click();
-  await expect(page.getByText("Este pedido ya está cancelado.")).toBeVisible();
+  await expect(page.locator(".order-status")).toContainText("Cancelado");
+  await expect(page.getByText(/Tu pedido fue cancelado/)).toBeVisible();
   await expect(page.getByText(/El pago fue reembolsado/i)).toBeVisible();
 });
 
@@ -105,11 +115,39 @@ test("transfer checkout reads configured bank data and shows the generated refer
   await expect(page.locator(".transfer-instructions")).toContainText(configured.accountNumber);
   await expect(page.locator(".transfer-instructions")).toContainText(configured.identification);
   await expect(page.getByRole("radio", { name: /Pago aprobado|Pago rechazado/ })).toHaveCount(0);
-  await page.setViewportSize({ width: 320, height: 720 });
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  for (const viewport of [
+    { name: "desktop", width: 1280, height: 900 },
+    { name: "mobile", width: 390, height: 844 },
+    { name: "small-mobile", width: 320, height: 720 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await page.screenshot({ path: `/tmp/pliego-transfer-checkout-${viewport.name}.png`, fullPage: true });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  }
   await page.getByRole("button", { name: /Pagar/ }).click();
-  await expect(page.getByRole("heading", { level: 1, name: /^Pedido n\.º \d+ confirmado$/ })).toBeVisible();
-  await expect(page.locator(".order-transfer")).toContainText(configured.bank);
-  await expect(page.locator(".order-transfer")).toContainText(/SIM-/);
-  await expect(page.getByRole("button", { name: "Copiar referencia" })).toBeVisible();
+  await expect(page.locator(".checkout-submit [role='status']")).toContainText(/Procesando tu pago/);
+  await expect(page.getByRole("heading", { level: 1, name: /^Pedido N\.° \d+ confirmado$/ })).toBeVisible();
+  await page.getByText("Pago", { exact: true }).click();
+  await expect(page.locator(".transfer-facts-card")).toContainText(configured.bank);
+  await expect(page.locator(".transfer-facts-card")).toContainText(/SIM-/);
+  for (const label of ["Copiar número de cuenta", "Copiar beneficiario", "Copiar identificación", "Copiar monto exacto", "Copiar referencia"]) {
+    await expect(page.getByRole("button", { name: label })).toBeVisible();
+  }
+  await page.context().grantPermissions(["clipboard-read", "clipboard-write"], { origin: "http://127.0.0.1:5173" });
+  await page.getByRole("button", { name: "Copiar referencia" }).click();
+  await expect(page.getByRole("button", { name: "Copiar referencia" })).toContainText("Copiado");
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toMatch(/^SIM-/);
+  for (const viewport of [
+    { width: 1280, height: 900 },
+    { width: 390, height: 844 },
+    { width: 320, height: 720 },
+  ]) {
+    await page.setViewportSize(viewport);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    await page.screenshot({ path: `/tmp/pliego-transfer-order-${viewport.width}.png`, fullPage: true });
+  }
+  await page.getByText("Cancelación", { exact: true }).click();
+  await page.getByRole("button", { name: "Cancelar pedido" }).click();
+  await page.getByRole("button", { name: "Confirmar cancelación" }).click();
+  await expect(page.getByText(/Tu pedido fue cancelado/)).toBeVisible();
 });

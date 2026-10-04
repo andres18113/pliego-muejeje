@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pliego.foundation.database.DatabaseExceptionTranslator;
 import com.pliego.foundation.database.JdbcGatewaySupport;
+import com.pliego.foundation.database.JdbcArrays;
 import com.pliego.modules.catalog.application.CatalogEditionDetail;
 import com.pliego.modules.catalog.application.CatalogEditionDetail.Author;
 import com.pliego.modules.catalog.application.CatalogEditionDetail.Category;
@@ -34,14 +35,14 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
 
     private static final String CATALOG_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, price, cover_url, cover_license, cover_attribution, "
-            + "format, language, available, total_count FROM pliego.fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?)";
+            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators FROM pliego.fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?)";
     private static final String CATALOG_GLOBAL_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, price, cover_url, cover_license, cover_attribution, "
-            + "format, language, available, total_count FROM pliego.fn_catalog_search_global(?,?,?,?,?,?,?,?,?)";
+            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators FROM pliego.fn_catalog_search_global(?,?,?,?,?,?,?,?,?)";
     private static final String EDITION_DETAIL_QUERY = "SELECT edition_id, book_id, title, subtitle, synopsis, "
             + "authors_json::text AS authors_json, categories_json::text AS categories_json, publisher_id, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, sku, language, format, page_count, publication_date, "
-            + "price, cover_url, cover_license, cover_source_url, cover_attribution, available "
+            + "price, cover_url, cover_license, cover_source_url, cover_attribution, available, ebook_file_format, audio_duration_seconds, narrators "
             + "FROM pliego.fn_edition_detail(?)";
     private static final String PUBLIC_CATEGORY_LIST_QUERY = "SELECT category_slug, category_name, "
             + "parent_category_slug FROM pliego.fn_public_category_list()";
@@ -148,7 +149,8 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                         results.getString("isbn13"), results.getBigDecimal("price"),
                         results.getString("cover_url"), results.getString("cover_license"),
                         results.getString("cover_attribution"), results.getString("format"),
-                        results.getString("language"), results.getBoolean("available")),
+                        results.getString("language"), results.getBoolean("available"), results.getString("ebook_file_format"),
+                        results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators")),
                 results.getLong("total_count"));
     }
 
@@ -163,7 +165,8 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                 results.getObject("publication_date", LocalDate.class), results.getBigDecimal("price"),
                 results.getString("cover_url"), results.getString("cover_license"),
                 results.getString("cover_source_url"), results.getString("cover_attribution"),
-                results.getBoolean("available"));
+                results.getBoolean("available"), results.getString("ebook_file_format"),
+                results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators"));
     }
 
     private List<Author> parseAuthors(String json) throws SQLException {

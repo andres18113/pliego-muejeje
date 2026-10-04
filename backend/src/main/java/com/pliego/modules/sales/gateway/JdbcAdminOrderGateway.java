@@ -26,6 +26,7 @@ import com.pliego.modules.sales.application.AdminOrderModels.Payment;
 import com.pliego.modules.sales.application.AdminOrderModels.Search;
 import com.pliego.modules.sales.application.AdminOrderModels.Summary;
 import com.pliego.modules.sales.application.AdminOrderModels.Transition;
+import com.pliego.modules.sales.application.PostPurchaseModels;
 
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
@@ -40,19 +41,22 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
     private static final String DETAIL = "SELECT order_id,customer_id,customer_email,customer_name,order_state,"
             + "subtotal,total,created_at,updated_at,items::text AS items,address::text AS address,"
             + "payment::text AS payment,state_history::text AS state_history,"
-            + "inventory_movements::text AS inventory_movements "
+            + "inventory_movements::text AS inventory_movements,purchase_state,fulfillment::text,shipment::text,"
+            + "invoice::text,credit_notes::text,available_actions::text "
             + "FROM pliego.fn_admin_order_detail(?,?)";
     private static final String TRANSITION = "CALL pliego.sp_order_change_status(?,?,?,?,?,?)";
     private static final String CANCEL = "CALL pliego.sp_order_cancel(?,?,?,?,?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
+    private final PostPurchaseRowMapper postPurchase;
 
     public JdbcAdminOrderGateway(DatabaseExceptionTranslator exceptionTranslator, JdbcTemplate jdbcTemplate,
             ObjectMapper objectMapper) {
         super(exceptionTranslator);
         this.jdbcTemplate = jdbcTemplate;
         this.objectMapper = objectMapper;
+        this.postPurchase = new PostPurchaseRowMapper(objectMapper);
     }
 
     @Override
@@ -154,7 +158,7 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
                             decimal(payment, "monto"), text(payment, "referencia"),
                             text(payment, "detalle_resultado"), timestamp(payment, "fecha_creacion"),
                             timestamp(payment, "fecha_actualizacion")),
-                    parseHistory(history), parseMovements(movements));
+                    parseHistory(history), parseMovements(movements),postPurchase.detail(rs));
         };
     }
 
@@ -210,6 +214,47 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
     private static String id(ResultSet rs, String field) throws SQLException {
         long value = rs.getLong(field);
         return rs.wasNull() ? null : Long.toString(value);
+    }
+
+    @Override
+    public void transitionShipment(long actorUserId,long orderId,String targetState) {
+        command("CALL pliego.sp_shipment_transition(?,?,?)",null,actorUserId,orderId,targetState);
+    }
+
+    @Override
+    public void updateTracking(long actorUserId,long orderId,PostPurchaseModels.Tracking tracking) {
+        command("CALL pliego.sp_shipment_update_tracking(?,?,?,?,?,?,?)",null,actorUserId,orderId,
+                tracking.carrier(),tracking.trackingCode(),tracking.trackingUrl(),
+                tracking.estimatedDeliveryFrom(),tracking.estimatedDeliveryTo());
+    }
+
+    @Override
+    public long issueInvoice(long actorUserId,long orderId,PostPurchaseModels.IssueInvoice invoice) {
+        var address=invoice.billingAddress();
+        return command("CALL pliego.sp_invoice_issue(?,?,?,?,?,?,?,?,?,?,?,?,?,?)","o_invoice_id",
+                actorUserId,orderId,invoice.documentNumber(),invoice.buyerName(),invoice.identityType(),
+                invoice.identityNumber(),invoice.buyerEmail(),address.line1(),address.line2(),address.city(),
+                address.province(),address.countryCode(),address.postalCode());
+    }
+
+    @Override
+    public long issueCreditNote(long actorUserId,long orderId,String documentNumber,String reason) {
+        return command("CALL pliego.sp_credit_note_issue(?,?,?,?,?)","o_credit_note_id",actorUserId,orderId,documentNumber,reason);
+    }
+
+    private Long command(String sql,String outputColumn,Object... inputs) {
+        return withDatabaseErrorTranslation(()->jdbcTemplate.execute((ConnectionCallback<Long>)connection->{
+            try (var statement=connection.prepareStatement(sql)) {
+                for (int index=0;index<inputs.length;index++) statement.setObject(index+1,inputs[index]);
+                if (outputColumn!=null) statement.setNull(inputs.length+1,Types.BIGINT);
+                statement.execute();
+                if (outputColumn==null) return null;
+                try (var result=statement.getResultSet()) {
+                    if (result==null || !result.next()) throw new SQLException("Document command returned no identifier","02000");
+                    return result.getLong(outputColumn);
+                }
+            }
+        }));
     }
 
     private static String id(JsonNode object, String field) {

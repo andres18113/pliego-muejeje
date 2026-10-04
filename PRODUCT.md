@@ -45,7 +45,7 @@ People use a browser to discover a published edition and, as a CUSTOMER, manage 
 - Product name: PLIEGO.
 - Interface copy and human-facing errors are Spanish for v1.
 - Use a PLIEGO-owned palette and design tokens with semantic HTML. Tailwind CSS 4 and shadcn/ui with Base UI support reusable components without changing the approved bookstore direction.
-- Use Inter Variable for interface text and Literata Variable for editorial display text.
+- Use Roboto Flex as the global interface and editorial typeface, with the PLIEGO palette and Spanish product voice.
 - The approved visual direction is a familiar, editorial bookstore: lead with catalog search, direct category navigation, book covers, and clear edition facts. Keep the storefront in bookstore vocabulary rather than generic SaaS framing.
 
 ## Evidence on Hand

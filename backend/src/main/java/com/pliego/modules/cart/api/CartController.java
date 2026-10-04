@@ -89,7 +89,7 @@ public class CartController {
     private static Item item(CartItem item) {
         return new Item(item.cartItemId(), item.editionId(), item.title(), item.authors(), item.sku(), item.coverUrl(),
                 item.quantity(), money(item.currentPrice()), money(item.currentSubtotal()), item.available(),
-                item.unavailabilityReason());
+                item.unavailabilityReason(), item.format());
     }
 
     private static ItemMutation mutation(CartItemResult result) {

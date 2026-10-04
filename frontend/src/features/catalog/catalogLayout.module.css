@@ -1,27 +1,26 @@
 .shell.shell { --catalog-gutter: var(--mantine-spacing-md); width: min(calc(100% - 2 * var(--catalog-gutter)), 1440px); min-width: 0; margin-inline: auto; padding-inline: 0; }
-.grid { background: var(--pliego-background); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--mantine-spacing-md); padding: 0; margin: 0; list-style: none; }
+.grid { background: var(--pliego-background); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px var(--mantine-spacing-md); padding: 0; margin: 0; list-style: none; }
 .item { display: flex; align-items: stretch; min-width: 0; }
 @media (min-width: 48em) { .shell.shell { --catalog-gutter: var(--mantine-spacing-lg); } .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 @media (min-width: 62em) { .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (min-width: 75em) { .shell.shell { --catalog-gutter: var(--mantine-spacing-xl); } .grid { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
-@media (min-width: 88em) { .grid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+@media (min-width: 75em) { .shell.shell { --catalog-gutter: var(--mantine-spacing-xl); } }
 
-/* Share intrinsic tracks within each visual row, including wrapped price/status/actions.
-   Each item spans cover, identity, price, stock, actions and supplemental feedback.
-   Grid owns row sizing; standalone BookCards keep their flexible column layout. */
+/* Each item spans shelf, identity, price, stock, actions and feedback. Rows share their tracks, so
+   prices and actions line up across a visual row while titles keep their natural wrapping. */
 @supports (grid-template-rows: subgrid) {
-  .item { --bookcard-layout: grid; --bookcard-commercial-margin: 0px; display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
-  .item > :global([data-bookcard]) { height: 100%; grid-row: 1 / -1; grid-template-rows: subgrid; row-gap: 0; }
+  .item { --bookcard-layout: grid; display: grid; grid-row: span 6; grid-template-rows: subgrid; row-gap: 0; }
+  .item > :global([data-bookcard]) { grid-row: 1 / -1; }
 }
 
-/* Home is a short storefront shelf; catalogue and favourites retain their dense grid. */
-.showcaseShell.showcaseShell { width: min(calc(100% - 2 * var(--catalog-gutter)), 1040px); padding-block: var(--mantine-spacing-2xl); }
-.showcase.showcase { grid-template-columns: minmax(0, 1fr); max-width: 280px; margin-inline: auto; column-gap: var(--mantine-spacing-xl); row-gap: var(--mantine-spacing-xl); }
-@media (min-width: 48em) { .showcase.showcase { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; } }
-@media (min-width: 62em) { .showcase.showcase { column-gap: var(--mantine-spacing-2xl); row-gap: var(--mantine-spacing-2xl); } }
-
-/* Discovery keeps one horizontal product row; the catalog grid is unchanged. */
-.rail.rail { display: grid; grid-auto-flow: column; grid-auto-columns: var(--discovery-card-width, 224px); grid-template-columns: none; column-gap: 24px; row-gap: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding-inline: 4px; padding: 4px 4px 16px; margin-inline: -4px; scrollbar-width: none; }
-.rail::-webkit-scrollbar { display: none; }
-.rail > .item { scroll-snap-align: start; }
-@media (min-width: 48em) { .rail.rail { margin-inline: 56px; } }
+/* Catalog: a library shelf, not a showcase. Columns change where a bounded card would drop below
+   ~200px — the width its cart label, icon and 44px favorite need beside each other at the 16px
+   card padding: 5 from 1200px (32px gutters: ≈208px cards, ≈270px at the 1440px cap), 4 from
+   920px (24px gutters: ≈200px), 3 from 600px, 2 on phones. Rows breathe slightly more than columns.
+   Row spacing lives in the item's bottom padding: a parent row-gap would also open between
+   the subgrid's own tracks (and around the usually empty feedback row). */
+.storeGrid.storeGrid { --shelf-space: 20px; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; background: transparent; }
+.storeGrid > .item { padding-bottom: var(--shelf-space); }
+@media (min-width: 600px) { .storeGrid.storeGrid { --shelf-space: 24px; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 20px; } }
+@media (min-width: 920px) { .storeGrid.storeGrid { --shelf-space: 28px; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 24px; } }
+@media (min-width: 1200px) { .storeGrid.storeGrid { --shelf-space: 32px; grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 359px) { .storeGrid.storeGrid { column-gap: 12px; } }

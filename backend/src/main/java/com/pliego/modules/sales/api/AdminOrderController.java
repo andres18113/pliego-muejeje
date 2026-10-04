@@ -5,6 +5,8 @@ import java.math.RoundingMode;
 import java.time.OffsetDateTime;
 
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.validation.annotation.Validated;
@@ -29,6 +31,7 @@ import com.pliego.modules.sales.api.AdminOrderResponses.Summary;
 import com.pliego.modules.sales.api.AdminOrderResponses.Transition;
 import com.pliego.modules.sales.application.AdminOrderModels.Search;
 import com.pliego.modules.sales.application.AdminOrderService;
+import com.pliego.modules.sales.application.PostPurchaseModels;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -56,7 +59,7 @@ public class AdminOrderController {
 
     @GetMapping
     @Operation(summary = "Buscar pedidos", description = "Filtros y orden definidos por fn_admin_orders.")
-    @ApiResponse(responseCode = "200", description = "Página de pedidos", content = @Content(schema = @Schema(implementation = PageResponse.class)))
+    @ApiResponse(responseCode = "200", description = "Página de pedidos")
     public PageResponse<Summary> search(@AuthenticationPrincipal Jwt jwt,
             @RequestParam(required = false) String state,
             @RequestParam(required = false) OffsetDateTime dateFrom,
@@ -79,6 +82,7 @@ public class AdminOrderController {
         var order = service.detail(actorId(jwt), orderId);
         var address = order.address();
         var payment = order.payment();
+        var post = order.postPurchase();
         return new Detail(order.orderId(), order.customerId(), order.customerEmail(), order.customerName(),
                 order.orderState(), money(order.subtotal()), money(order.total()), order.createdAt().toString(),
                 order.updatedAt().toString(), order.items().stream().map(item -> new Item(item.orderItemId(),
@@ -96,7 +100,8 @@ public class AdminOrderController {
                 order.inventoryMovements().stream().map(movement -> new InventoryMovement(
                         movement.movementId(), movement.editionId(), movement.orderId(), movement.actorUserId(),
                         movement.type(), movement.quantity(), movement.stockBefore(), movement.stockAfter(),
-                        movement.reason(), movement.eventAt())).toList());
+                        movement.reason(), movement.eventAt())).toList(),post.purchaseState(),post.fulfillment(),post.shipment(),
+                PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions());
     }
 
     @PostMapping(path = "/{orderId}/transitions", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -125,6 +130,47 @@ public class AdminOrderController {
 
     private static String money(BigDecimal value) {
         return value.setScale(2, RoundingMode.UNNECESSARY).toPlainString();
+    }
+
+    @PostMapping(path="/{orderId}/shipment/transitions",consumes=MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary="Avanzar el estado del envío",description="Consulta el detalle después de una respuesta desconocida antes de repetir el comando.")
+    public PostPurchaseResponses.ShipmentResult transitionShipment(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable @Positive long orderId,@Valid @RequestBody PostPurchaseRequests.ShipmentTransition request) {
+        return new PostPurchaseResponses.ShipmentResult(Long.toString(orderId),
+                service.transitionShipment(actorId(jwt),orderId,request.targetState()));
+    }
+
+    @PutMapping(path="/{orderId}/shipment/tracking",consumes=MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary="Actualizar seguimiento y ventana estimada",description="Reemplaza los datos de seguimiento del envío y registra un evento histórico.")
+    public PostPurchaseResponses.ShipmentResult updateTracking(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable @Positive long orderId,@Valid @RequestBody PostPurchaseRequests.Tracking request) {
+        return new PostPurchaseResponses.ShipmentResult(Long.toString(orderId),service.updateTracking(actorId(jwt),orderId,
+                new PostPurchaseModels.Tracking(request.carrier(),request.trackingCode(),request.trackingUrl(),
+                        request.estimatedDeliveryFrom(),request.estimatedDeliveryTo())));
+    }
+
+    @PostMapping(path="/{orderId}/invoice",consumes=MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary="Emitir documento comercial del pedido",description="Preserva identidad y dirección de cobro explícitas. No realiza autorización fiscal ni integración con SRI. Consulta el detalle antes de repetir tras una respuesta desconocida.")
+    @ApiResponse(responseCode="201",description="Documento comercial emitido")
+    public ResponseEntity<PostPurchaseResponses.IssuedInvoice> issueInvoice(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable @Positive long orderId,@Valid @RequestBody PostPurchaseRequests.Invoice request) {
+        var address=request.billingAddress();
+        long id=service.issueInvoice(actorId(jwt),orderId,new PostPurchaseModels.IssueInvoice(request.documentNumber(),
+                request.buyerName(),request.identityType(),request.identityNumber(),request.buyerEmail(),
+                new PostPurchaseModels.BillingAddress(address.line1(),address.line2(),address.city(),address.province(),
+                        address.countryCode(),address.postalCode())));
+        return ResponseEntity.created(java.net.URI.create("/api/v1/admin/orders/"+orderId))
+                .body(new PostPurchaseResponses.IssuedInvoice(Long.toString(orderId),Long.toString(id)));
+    }
+
+    @PostMapping(path="/{orderId}/credit-notes",consumes=MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary="Emitir nota de crédito total",description="Requiere pago reembolsado y factura emitida. Conserva la factura original; no implementa correcciones parciales ni integración fiscal.")
+    @ApiResponse(responseCode="201",description="Nota de crédito emitida")
+    public ResponseEntity<PostPurchaseResponses.IssuedCreditNote> issueCreditNote(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable @Positive long orderId,@Valid @RequestBody PostPurchaseRequests.CreditNote request) {
+        long id=service.issueCreditNote(actorId(jwt),orderId,request.documentNumber(),request.reason());
+        return ResponseEntity.created(java.net.URI.create("/api/v1/admin/orders/"+orderId))
+                .body(new PostPurchaseResponses.IssuedCreditNote(Long.toString(orderId),Long.toString(id)));
     }
 
     private static long actorId(Jwt jwt) {

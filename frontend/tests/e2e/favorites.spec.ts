@@ -92,6 +92,9 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await cover.focus();
   const addFavorite = firstCard.getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" });
   await expect(addFavorite).toBeVisible();
+  // Focus follows the card's visual order: link → cart → favorite.
+  await page.keyboard.press("Tab");
+  await expect(firstCard.locator("[data-bookcard-cart]")).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(addFavorite).toBeFocused();
   await page.keyboard.press("Enter");

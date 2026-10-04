@@ -68,7 +68,10 @@ describe("EditionDetailPage", () => {
   it("keeps the shared header and footer while loading and after success", async () => {
     let releaseRequest: ((response: Response) => void) | undefined;
     const pendingResponse = new Promise<Response>((resolve) => { releaseRequest = resolve; });
-    vi.stubGlobal("fetch", vi.fn(() => pendingResponse));
+    vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
+      const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+      return url.pathname.endsWith("/categories") ? Promise.resolve(new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } })) : pendingResponse;
+    }));
 
     renderDetail();
 
@@ -86,7 +89,10 @@ describe("EditionDetailPage", () => {
     let releaseRequest: ((response: Response) => void) | undefined;
     const pendingResponse = new Promise<Response>((resolve) => { releaseRequest = resolve; });
     const coverUrl = "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp";
-    vi.stubGlobal("fetch", vi.fn(() => pendingResponse));
+    vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
+      const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+      return url.pathname.endsWith("/categories") ? Promise.resolve(new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } })) : pendingResponse;
+    }));
 
     renderDetail("/catalog/editions/42?from=%2F", {
       coverPreview: {
@@ -126,7 +132,9 @@ describe("EditionDetailPage", () => {
 
   it("keeps the shared header and footer through a retryable error", async () => {
     let attempts = 0;
-    vi.stubGlobal("fetch", vi.fn(async () => {
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
+      const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+      if (url.pathname.endsWith("/categories")) return new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } });
       attempts += 1;
       return attempts < 3 ? problemResponse() : editionResponse();
     }));

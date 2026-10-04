@@ -28,11 +28,11 @@ pliego:
     cookie-secure: ${PLIEGO_AUTH_COOKIE_SECURE:true}
   checkout:
     transfer:
-      bank: ${PLIEGO_TRANSFER_BANK:Banco PLIEGO}
-      beneficiary: ${PLIEGO_TRANSFER_BENEFICIARY:PLIEGO Tienda}
-      account-type: ${PLIEGO_TRANSFER_ACCOUNT_TYPE:Corriente}
-      account-number: ${PLIEGO_TRANSFER_ACCOUNT_NUMBER:0000000000}
-      identification: ${PLIEGO_TRANSFER_IDENTIFICATION:0000000000000}
+      bank: ${PLIEGO_TRANSFER_BANK:Banco Guayaquil}
+      beneficiary: ${PLIEGO_TRANSFER_BENEFICIARY:PLIEGO}
+      account-type: ${PLIEGO_TRANSFER_ACCOUNT_TYPE:Ahorros}
+      account-number: ${PLIEGO_TRANSFER_ACCOUNT_NUMBER:2557897233}
+      identification: ${PLIEGO_TRANSFER_IDENTIFICATION:1751550656}
   cors:
     allowed-origins: ${PLIEGO_CORS_ALLOWED_ORIGINS:}
   security:

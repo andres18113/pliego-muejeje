@@ -32,18 +32,27 @@ describe("OrderPage", () => {
   afterEach(() => vi.unstubAllGlobals());
 
   it("confirms an approved order with its identifier and payment reference", async () => {
-    stubApi({ "GET /api/v1/orders/700": () => json(order()) });
+    stubApi({
+      "GET /api/v1/orders/700": () => json(order()),
+      "GET /api/v1/catalog/editions/42": () => json({ available: true, coverUrl: "https://covers.example.invalid/42.webp", coverLicense: null, coverAttribution: null }),
+    });
     renderPurchaseRoute(routes, "/orders/700");
 
-    const heading = await screen.findByRole("heading", { level: 1, name: "Pedido n.º 700 confirmado" });
+    const heading = await screen.findByRole("heading", { level: 1, name: "Pedido N.° 700 confirmado" });
     expect(heading).toHaveFocus();
+    expect(screen.getByRole("link", { name: /Volver a mis pedidos/ })).toContainElement(screen.getByText(/2026/));
     expect(screen.getByText("Número de pedido").nextSibling).toHaveTextContent("700");
+    expect(screen.getByRole("heading", { name: "Libros del pedido" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Cien años de soledad" })).toBeInTheDocument();
+    expect(await screen.findByRole("img", { name: "Portada de Cien años de soledad" })).toBeInTheDocument();
+    expect(screen.getByText("Total").parentElement).toHaveTextContent("$");
+    expect(screen.getByRole("link", { name: "Ver mis pedidos" })).toBeVisible();
+    await userEvent.click(screen.getByText("Pago", { exact: true }));
     expect(screen.getByText("Referencia de pago").nextSibling).toHaveTextContent("SIM-550e8400");
-    expect(screen.getByText(/no realizó ningún cobro real/)).toBeInTheDocument();
     expect(screen.queryByText(/4111/)).not.toBeInTheDocument();
   });
 
-  it("explains a rejected simulated payment without a payment reference", async () => {
+  it("explains a rejected payment without a payment reference", async () => {
     stubApi({
       "GET /api/v1/orders/701": () => json(order({
         orderId: "701",
@@ -54,7 +63,7 @@ describe("OrderPage", () => {
     renderPurchaseRoute(routes, "/orders/701");
 
     expect(await screen.findByRole("heading", { name: "No pudimos completar el pago" })).toBeInTheDocument();
-    expect(screen.getByText(/No se completó la compra y los libros siguen en tu carrito/)).toBeInTheDocument();
+    expect(screen.getByText(/Los libros siguen en tu carrito/)).toBeInTheDocument();
     expect(screen.queryByText("Referencia de pago")).not.toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Revisar el carrito" })).toHaveAttribute("href", "/cart");
   });
@@ -69,6 +78,7 @@ describe("OrderPage", () => {
   it("does not offer cancellation for a shipped order", async () => {
     stubApi({ "GET /api/v1/orders/700": () => json(order({ orderState: "SHIPPED" })) });
     renderPurchaseRoute(routes, "/orders/700");
+    await userEvent.click(await screen.findByText("Cancelación", { exact: true }));
     expect(await screen.findByText("Este pedido ya no se puede cancelar desde tu cuenta.")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).not.toBeInTheDocument();
   });
@@ -82,7 +92,10 @@ describe("OrderPage", () => {
       "POST /api/v1/orders/700/cancel": () => json({ orderId: "700", previousState: "CONFIRMED", orderState: "CANCELLED", paymentState: "REFUNDED", restoredUnits: 2 }),
     });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByRole("heading", { name: "Historial del pedido" })).toBeInTheDocument();
+    await screen.findByText("Historial");
+    await userEvent.click(screen.getByText("Historial", { exact: true }));
+    expect(await screen.findByText("Confirmado")).toBeInTheDocument();
+    await userEvent.click(screen.getByText("Cancelación", { exact: true }));
     await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
     expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(0);
     expect(screen.getByRole("button", { name: "Confirmar cancelación" })).toHaveFocus();
@@ -97,7 +110,8 @@ describe("OrderPage", () => {
       "POST /api/v1/orders/700/cancel": () => { throw new TypeError("Lost response"); },
     });
     renderPurchaseRoute(routes, "/orders/700");
-    await screen.findByRole("button", { name: "Cancelar pedido" });
+    await screen.findByText("Cancelación");
+    await userEvent.click(screen.getByText("Cancelación", { exact: true }));
     await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
     await userEvent.click(screen.getByRole("button", { name: "Confirmar cancelación" }));
     expect(await screen.findByText(/La cancelación no aparece en el estado actual/)).toBeInTheDocument();

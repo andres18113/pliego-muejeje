@@ -57,8 +57,8 @@ class OpenApiCoverageTest {
                 }
             }
         }
-        assertThat(endpoints).as("REST total including public catalog and customer favorites routes")
-                .isEqualTo(58);
+        assertThat(endpoints).as("REST total including public catalog, customer favorites and post-purchase routes")
+                .isEqualTo(62);
     }
 
     @Test

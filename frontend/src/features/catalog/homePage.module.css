@@ -1,0 +1,11 @@
+.surface { --home-panel-radius: 24px; --home-brand: var(--store-link); --home-quiet: #ecebe4; color: var(--pliego-text); background: var(--pliego-surface); }
+:global([data-mantine-color-scheme="dark"]) .surface { --home-quiet: var(--pliego-background); }
+.home { min-height: 65vh; background: var(--pliego-surface); }
+.shell { width: min(calc(100% - 96px), 1728px); margin: 0 auto; }
+.note { color: var(--pliego-text-muted); margin: 8px 0; font-size: 1rem; line-height: 1.5; }
+.home :focus-visible:not([tabindex="-1"]) { outline: 3px solid var(--home-brand); outline-offset: 4px; }
+.home :global([data-bookcard-link]), .home :global([data-bookcard-favorite]), .home :global([data-bookcard-cart]) { scroll-margin-top: 112px; }
+.home ::selection { background: var(--store-blue); color: white; }
+@media (max-width: 1199px) { .shell { width: calc(100% - 64px); } }
+@media (max-width: 767px) { .shell { width: calc(100% - 40px); } }
+@media (max-width: 359px) { .shell { width: calc(100% - 32px); } }

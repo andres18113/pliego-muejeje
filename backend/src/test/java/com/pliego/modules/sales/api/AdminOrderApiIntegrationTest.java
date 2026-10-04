@@ -300,6 +300,10 @@ class AdminOrderApiIntegrationTest {
     }
 
     static class FakeAdminOrderGateway implements AdminOrderGateway {
+        @Override public void transitionShipment(long actor,long order,String state) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
+        @Override public void updateTracking(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.Tracking tracking) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
+        @Override public long issueInvoice(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice invoice) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
+        @Override public long issueCreditNote(long actor,long order,String number,String reason) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
         int calls;
         long actor;
         long orderId;
@@ -380,7 +384,9 @@ class AdminOrderApiIntegrationTest {
                             new History("1001", "7", "USER", "PREPARING", "CONFIRMED",
                                     "2026-09-23T19:31:00Z")),
                     List.of(new InventoryMovement("1200", "250", "700", null, "SALE", 2, 11, 9,
-                            null, "2026-09-23T19:30:00Z")));
+                            null, "2026-09-23T19:30:00Z")),
+                    new com.pliego.modules.sales.application.PostPurchaseModels.Extras("CONFIRMED",null,null,null,
+                            List.of(),new com.pliego.modules.sales.application.PostPurchaseModels.Actions(true,false)));
         }
     }
 }

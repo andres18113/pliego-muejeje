@@ -41,6 +41,7 @@ import com.pliego.modules.sales.application.OrderModels.Page;
 import com.pliego.modules.sales.application.OrderModels.Payment;
 import com.pliego.modules.sales.application.OrderModels.Summary;
 import com.pliego.modules.sales.gateway.CustomerOrderGateway;
+import com.pliego.modules.sales.application.PostPurchaseModels;
 
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i9_test",
@@ -84,9 +85,9 @@ class CustomerOrderApiIntegrationTest {
 
         gateway.page = new Page(List.of(
                 new Summary("9007199254740993", Instant.parse("2026-09-23T20:00:00Z"),
-                        "CONFIRMED", new BigDecimal("39.80"), "APPROVED"),
+                        "CONFIRMED", new BigDecimal("39.80"), "APPROVED", summaryExtras("CONFIRMED")),
                 new Summary("700", Instant.parse("2026-09-23T19:30:00Z"),
-                        "CANCELLED", new BigDecimal("12.35"), "REJECTED")), 12);
+                        "CANCELLED", new BigDecimal("12.35"), "REJECTED", summaryExtras("CANCELLED"))), 12);
         String body = mvc.perform(get("/api/v1/orders?page=1&pageSize=2&actorUserId=7")
                         .header("Authorization", token("42", "CUSTOMER")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.page").value(1))
@@ -221,6 +222,11 @@ class CustomerOrderApiIntegrationTest {
         return "Bearer " + tokenIssuer.issue(actor, role, issued, issued.plusSeconds(1800), UUID.randomUUID().toString());
     }
 
+    private static PostPurchaseModels.SummaryExtras summaryExtras(String purchaseState) {
+        return new PostPurchaseModels.SummaryExtras(purchaseState,"HOME_DELIVERY","PENDING",null,null,
+                1,2,List.of(new PostPurchaseModels.ItemSummary("800","Título en compra","PAPERBACK",2)),null,false,false);
+    }
+
     @TestConfiguration(proxyBeanMethods = false)
     static class TestConfigurationForOrders {
         @Bean PlatformTransactionManager transactionManager() {
@@ -299,7 +305,8 @@ class CustomerOrderApiIntegrationTest {
                     List.of(new History("1000", null, "SYSTEM", null, "PENDING_PAYMENT",
                                     "2026-09-23T19:30:00Z"),
                             new History("1001", null, "SYSTEM", "PENDING_PAYMENT", "CONFIRMED",
-                                    "2026-09-23T19:31:00Z")));
+                                    "2026-09-23T19:31:00Z")),
+                    new PostPurchaseModels.Extras("CONFIRMED",null,null,null,List.of(),new PostPurchaseModels.Actions(true,false)));
         }
     }
 }

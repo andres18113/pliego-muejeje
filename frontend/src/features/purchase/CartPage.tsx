@@ -1,16 +1,18 @@
-import { Minus, Plus } from "lucide-react";
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useRef, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { BookCover } from "@/features/catalog/BookCover";
+import { StockStatus } from "@/features/catalog/StockStatus";
+import surface from "@/features/catalog/availabilitySurface.module.css";
 import { formatUsd } from "@/features/catalog/formatters";
 import { removeCartItem, updateCartItemQuantity, type CartLine } from "@/shared/api/cart";
 import { ApiRequestError } from "@/shared/api/errors";
 import { cartUnitCount, useCustomerCart } from "./cartQuery";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
-import { canChangeQuantity, unavailabilityText, unitsLabel } from "./purchaseText";
+import { canChangeQuantity, unitsLabel } from "./purchaseText";
 
 type LineFeedback = { cartItemId: string; tone: "success" | "error"; message: string };
 type CartNotice = { tone: "success" | "error"; message: string };
@@ -95,33 +97,34 @@ function CartContent() {
   }
 
   const cart = cartQuery.data;
+  const cartIsEmpty = Boolean(cart && cart.items.length === 0);
   const busyLineId = command.isPending ? command.variables?.line.cartItemId : undefined;
 
   return (
     <>
-      <header className="purchase-heading">
+      {!cartIsEmpty && <header className="purchase-heading">
         <h1>Tu carrito</h1>
         <p>El carrito no reserva existencias. Los precios y la disponibilidad son los actuales y se confirman otra vez al finalizar la compra.</p>
-      </header>
+      </header>}
 
-      <p
+      {notice && <p
         ref={noticeRef}
-        className={notice ? `purchase-notice purchase-notice--${notice.tone}` : "visually-hidden"}
+        className={`purchase-notice purchase-notice--${notice.tone}`}
         role={notice?.tone === "error" ? "alert" : "status"}
         tabIndex={-1}
       >
-        {notice?.message}
-      </p>
+        {notice.message}
+      </p>}
 
       {cartQuery.isPending ? (
         <p className="purchase-loading" role="status">Consultando tu carrito…</p>
       ) : cartQuery.isError && !cart ? (
         <ReadFailure onRetry={() => void cartQuery.refetch()} retrying={cartQuery.isFetching} />
       ) : cart && cart.items.length === 0 ? (
-        <section className="empty-state purchase-empty" aria-labelledby="cart-empty-heading">
-          <div className="empty-rule" aria-hidden="true" />
-          <h2 id="cart-empty-heading">Tu carrito está vacío.</h2>
-          <p>Explora el catálogo y agrega una edición para empezar.</p>
+        <section className="cart-empty-state" aria-labelledby="cart-empty-heading">
+          <MaterialSymbol name="shopping_cart" size={34} className="cart-empty-icon" />
+          <h1 id="cart-empty-heading">Tu carrito está vacío.</h1>
+          <p>Explora el catálogo para encontrar tu próxima lectura.</p>
           <ButtonLink variant="primary" to="/catalog">Ir al catálogo</ButtonLink>
         </section>
       ) : cart ? (
@@ -136,8 +139,12 @@ function CartContent() {
             )}
             <ul className="cart-lines">
               {cart.items.map((line) => (
-                <CartLineItem
+                <li
                   key={line.cartItemId}
+                  className={`cart-line${line.available ? "" : " cart-line--unavailable"}`}
+                  aria-busy={busyLineId === line.cartItemId}
+                >
+                <CartLineItem
                   line={line}
                   busy={busyLineId === line.cartItemId}
                   locked={command.isPending}
@@ -145,6 +152,7 @@ function CartContent() {
                   onQuantity={(quantity) => run({ kind: "quantity", line, quantity })}
                   onRemove={() => run({ kind: "remove", line })}
                 />
+                </li>
               ))}
             </ul>
           </section>
@@ -193,23 +201,21 @@ function CartLineItem({
   const statusId = `cart-line-status-${line.cartItemId}`;
 
   return (
-    <li className={`cart-line${line.available ? "" : " cart-line--unavailable"}`} aria-busy={busy}>
+    <>
       <Link className="cart-line-cover" to={`/catalog/editions/${line.editionId}`} tabIndex={-1} aria-hidden="true">
         <BookCover url={line.coverUrl} license={null} attribution={null} title={line.title} size="compact" />
       </Link>
-      <div className="cart-line-copy">
+      <div className={`cart-line-copy ${surface.surface}`}>
         <h3><Link to={`/catalog/editions/${line.editionId}`}>{line.title}</Link></h3>
         {line.authors && <p className="cart-line-authors">{line.authors}</p>}
         <p className="cart-line-price">{formatUsd(line.currentPrice)} <span>por unidad</span></p>
-        <p className={`edition-availability ${line.available ? "is-available" : "is-unavailable"}`}>
-          <span className="availability-mark" aria-hidden="true" />
-          {line.available ? "Disponible" : unavailabilityText(line.unavailabilityReason)}
-        </p>
+        <StockStatus available={line.available} unavailabilityReason={line.unavailabilityReason}
+          id={`cart-line-stock-${line.cartItemId}`} className={surface.status} />
       </div>
 
       <div className="cart-line-controls">
         {quantityEditable ? (
-          <div className="quantity-stepper" role="group" aria-label={`Cantidad de ${line.title}`} aria-describedby={statusId}>
+          <div className="quantity-stepper" role="group" aria-label={`Cantidad de ${line.title}`} aria-describedby={`cart-line-stock-${line.cartItemId} ${statusId}`}>
             <Button
               type="button"
               className="quantity-step"
@@ -217,10 +223,11 @@ function CartLineItem({
               aria-disabled={locked || line.quantity <= 1 || undefined}
               onClick={() => !locked && line.quantity > 1 && onQuantity(line.quantity - 1)}
             >
-              <Minus aria-hidden="true" size={16} />
+              <MaterialSymbol name="remove" aria-hidden="true" size={16} />
             </Button>
             <span className="quantity-value" aria-live="off">
-              <span className="visually-hidden">Cantidad: </span>{line.quantity}
+              <span className="visually-hidden">Cantidad: </span>
+              <span aria-hidden="true">{line.quantity}</span>
             </span>
             <Button
               type="button"
@@ -229,7 +236,7 @@ function CartLineItem({
               aria-disabled={locked || !canIncrease || undefined}
               onClick={() => !locked && canIncrease && onQuantity(line.quantity + 1)}
             >
-              <Plus aria-hidden="true" size={16} />
+              <MaterialSymbol name="add" aria-hidden="true" size={16} />
             </Button>
           </div>
         ) : (
@@ -253,11 +260,14 @@ function CartLineItem({
       <p
         id={statusId}
         className={`cart-line-feedback${feedback ? ` cart-line-feedback--${feedback.tone}` : ""}`}
-        role={feedback?.tone === "error" ? "alert" : "status"}
       >
-        {busy ? "Actualizando el carrito…" : feedback?.message}
+        {(busy || feedback) && <span
+            role={feedback?.tone === "error" ? "alert" : "status"}
+          >
+            {feedback?.message ?? (busy ? "Actualizando el carrito…" : "")}
+          </span>}
       </p>
-    </li>
+    </>
   );
 }
 

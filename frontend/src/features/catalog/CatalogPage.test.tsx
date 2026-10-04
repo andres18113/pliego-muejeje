@@ -127,7 +127,7 @@ describe("CatalogPage", () => {
 
     for (const value of ["Cien años", "Cervantes", "978-0-306-40615-7"]) {
       await user.click(screen.getByRole("button", { name: "Buscar en el catálogo" }));
-      const searchbox = screen.getByRole("searchbox", { name: "Buscar en el catálogo" });
+      const searchbox = await screen.findByRole("searchbox", { name: "Buscar en el catálogo" });
       await user.clear(searchbox);
       await user.type(searchbox, value);
       await user.keyboard("{Enter}");
@@ -215,7 +215,7 @@ describe("CatalogPage", () => {
 
     await waitFor(() => expect(screen.getByRole("heading", { name: "No encontramos ediciones con estos criterios." })).toBeInTheDocument());
     await user.click(screen.getByRole("button", { name: "Buscar en el catálogo" }));
-    expect(screen.getByRole("searchbox", { name: "Buscar en el catálogo" })).toHaveValue("Julio");
+    expect(await screen.findByRole("searchbox", { name: "Buscar en el catálogo" })).toHaveValue("Julio");
     expect(requestedCategories).toEqual(["inactiva", null]);
   });
 });

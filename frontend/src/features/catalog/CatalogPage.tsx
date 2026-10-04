@@ -32,7 +32,8 @@ export function CatalogPage() {
   const resultsRef = useRef<HTMLElement>(null);
   const filterTrigger = useRef<HTMLButtonElement>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
-  useEffect(() => setFiltersOpen(false), [location.key]);
+  // Filter choices navigate within the catalog; only leaving it closes the drawer.
+  useEffect(() => setFiltersOpen(false), [location.pathname]);
   const categoriesQuery = useQuery({
     queryKey: ["public-catalog", "categories"],
     queryFn: ({ signal }) => getPublicCategories(signal),
@@ -75,7 +76,7 @@ export function CatalogPage() {
 
     const scrollToResults = () => window.scrollTo(
       0,
-      Math.max(0, results.getBoundingClientRect().top + window.scrollY - 88),
+      Math.max(0, results.getBoundingClientRect().top + window.scrollY - 104),
     );
     // POP may restore a previous page position after this layout effect.
     // Schedule the results alignment after React Router applies that position.
@@ -109,16 +110,19 @@ export function CatalogPage() {
     }
   }
 
+  function clearAll() {
+    navigateToCriteria({ ...criteria, query: "", category: "", minPrice: "", maxPrice: "", language: "", format: "", page: 0 });
+  }
+
   const unavailableCategory = resultError?.code === "P2022";
   const staleRefresh = !unavailableCategory && Boolean(activePage && editionsQuery.isRefetchError);
 
   return (
-    <div className={classes.surface}>
+    <div className={classes.surface} data-storefront-surface>
       <main id="contenido-principal" tabIndex={-1} className={classes.page}>
         <div className={classes.shell}>
-        <CatalogControls criteria={criteria} categories={categories} options={filterOptionsQuery.data} optionsError={filterOptionsError?.detail || ""} pending={isCurrentReadPending} total={activePage?.totalCountValue} filtersOpen={filtersOpen} filterTrigger={filterTrigger} onToggleFilters={() => setFiltersOpen((current) => !current)} onChange={navigateToCriteria} onRemove={removeCriterion} />
-        <div className={classes.body}>
-        <CatalogFilters criteria={criteria} options={filterOptionsQuery.data} error={filterOptionsError?.detail || ""} opened={filtersOpen} categories={categories} categoriesLoading={categoriesQuery.isPending} categoriesError={categoriesQuery.isError} onClose={() => setFiltersOpen(false)} onApply={(next) => { navigateToCriteria(next); setFiltersOpen(false); requestAnimationFrame(() => filterTrigger.current?.focus({ preventScroll: true })); }} onRetry={() => void filterOptionsQuery.refetch()} />
+        <CatalogControls criteria={criteria} categories={categories} options={filterOptionsQuery.data} optionsError={filterOptionsError?.detail || ""} pending={isCurrentReadPending} total={activePage?.totalCountValue} filtersOpen={filtersOpen} filterTrigger={filterTrigger} onToggleFilters={() => setFiltersOpen((current) => !current)} onChange={navigateToCriteria} onRemove={removeCriterion} onClearAll={clearAll} />
+        <CatalogFilters criteria={criteria} options={filterOptionsQuery.data} error={filterOptionsError?.detail || ""} opened={filtersOpen} categories={categories} categoriesLoading={categoriesQuery.isPending} categoriesError={categoriesQuery.isError} total={activePage?.totalCountValue} pending={editionsQuery.isFetching} onClose={() => setFiltersOpen(false)} onApply={navigateToCriteria} onRetry={() => void filterOptionsQuery.refetch()} />
 
         <section
           ref={resultsRef}
@@ -201,7 +205,6 @@ export function CatalogPage() {
             />
           ) : null}
         </section>
-        </div>
         </div>
       </main>
 

@@ -1,0 +1,33 @@
+{
+  "build": "passed",
+  "unit": {
+    "files": 27,
+    "passed": 192
+  },
+  "e2e": {
+    "passed": 91,
+    "defaultSkipped": 17,
+    "authenticatedLiveSkipped": 5
+  },
+  "visual": {
+    "casesPassed": 12,
+    "widths": [
+      320,
+      375,
+      768,
+      1024,
+      1440,
+      1920
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "source": "live development API and cover CDN",
+    "documentOverflow": 0
+  },
+  "gitDiffCheck": "passed",
+  "committed": false,
+  "pushed": false,
+  "deployed": false
+}

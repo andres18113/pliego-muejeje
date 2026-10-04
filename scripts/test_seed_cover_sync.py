@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import copy
+import shutil
 import importlib.util
 import json
 import sys
@@ -35,6 +37,59 @@ class FakeApi:
 
 
 class SeedCoverSyncTests(unittest.TestCase):
+
+    def test_stockless_digital_staging_without_isbn_preserves_registry_and_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            sources = []
+            for source in seed_module.DEFAULT_STAGING_FILES:
+                target = root / source.parent.name / source.name
+                target.parent.mkdir(parents=True)
+                shutil.copyfile(source, target)
+                sources.append(target)
+            registry_path = root / "sku-registry.json"
+            registry = json.loads(seed_module.DEFAULT_SKU_REGISTRY.read_text())
+            covers = seed_module.load_cover_manifest(seed_module.DEFAULT_COVER_MANIFEST)
+            source = sources[2]
+            document = json.loads(source.read_text())
+            reference = next(row for row in document["libros"] if row["libro"]["titulo"] == "Discurso del método")
+            for number, format_name in [(57, "EBOOK"), (58, "AUDIOBOOK")]:
+                record = copy.deepcopy(reference)
+                record["portadaArchivo"] = f"digital-{format_name.lower()}.webp"
+                record["edicion"].update(isbn13=None, sku=None, formato=format_name, paginas=None)
+                if format_name == "EBOOK":
+                    record["edicion"]["ebookFileFormat"] = "EPUB"
+                else:
+                    record["edicion"].update(audioDurationSeconds=3600, narrators=["Una voz", "Otra voz"])
+                document["libros"].append(record)
+                sku = f"PLG-BK-{number:06d}"
+                registry["assignments"].append({"sku": sku, "identity_keys": [f"fallback:test-{format_name}"],
+                    "source_keys": [f"Filosofia/{source.name}#{record['portadaArchivo']}"]})
+                covers[sku] = {"isbn13": None, "title": reference["libro"]["titulo"],
+                    "coverUrl": f"https://covers.pliegolibros.com/covers/editions/v2/{sku}-0123456789ab.webp"}
+            source.write_text(json.dumps(document))
+            registry_path.write_text(json.dumps(registry))
+            seeds = seed_module.load_catalog_seeds(covers, registry_path, tuple(sources))
+            digital = [seed for seed in seeds if seed.format in {"EBOOK", "AUDIOBOOK"}]
+            self.assertEqual(len(digital), 2)
+            self.assertTrue(all(seed.stock == 0 and seed.isbn13 is None and seed.page_count is None for seed in digital))
+            self.assertEqual(digital[0].ebook_file_format, "EPUB")
+            self.assertEqual(digital[1].narrators, ("Una voz", "Otra voz"))
+            self.assertEqual(digital[1].audio_duration_seconds, 3600)
+
+    def test_cover_sync_preserves_audiobook_metadata(self) -> None:
+        sku = "PLG-BK-000058"
+        edition = {"editionId": "58", "sku": sku, "bookTitle": "Obra", "publisherId": "8",
+            "isbn13": None, "language": "es", "format": "AUDIOBOOK", "pageCount": None,
+            "publicationDate": None, "price": "20.00", "coverUrl": None,
+            "audioDurationSeconds": 3600, "narrators": ["Una voz", "Otra voz"]}
+        api = FakeApi([edition])
+        seed_module.sync_cover_manifest(api, {sku: {"coverUrl": "https://covers.pliegolibros.com/new.webp", "title": "Obra", "isbn13": None}})
+        payload = api.updates[0][1]
+        self.assertEqual(payload["audioDurationSeconds"], 3600)
+        self.assertEqual(payload["narrators"], ["Una voz", "Otra voz"])
+        self.assertIsNone(payload["pageCount"])
+
     def test_manifest_maps_any_number_of_permanent_skus_without_hardcoded_rows(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "manifest.json"

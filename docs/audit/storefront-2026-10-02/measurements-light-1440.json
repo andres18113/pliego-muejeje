@@ -1,0 +1,152 @@
+{
+  "width": 1440,
+  "scheme": "light",
+  "measurements": [
+    {
+      "surface": "home",
+      "viewport": 1440,
+      "header": {
+        "x": 24,
+        "y": 12,
+        "width": 1392,
+        "height": 60,
+        "top": 12,
+        "right": 1416,
+        "bottom": 72,
+        "left": 24
+      },
+      "title": {
+        "x": 64,
+        "y": 482,
+        "width": 429,
+        "height": 136,
+        "top": 482,
+        "right": 493,
+        "bottom": 618,
+        "left": 64
+      },
+      "titleSize": "60px",
+      "titleLineHeight": "68px",
+      "grid": {
+        "x": 148,
+        "y": 996,
+        "width": 1144,
+        "height": 468,
+        "top": 996,
+        "right": 1292,
+        "bottom": 1464,
+        "left": 148
+      },
+      "columns": "208px 208px 208px 208px 208px 208px 208px 208px",
+      "rowGap": "0px",
+      "card": {
+        "x": 152,
+        "y": 1000,
+        "width": 208,
+        "height": 448,
+        "top": 1000,
+        "right": 360,
+        "bottom": 1448,
+        "left": 152
+      },
+      "overflow": 0,
+      "duplicateSearch": 0,
+      "visibleControls": 1,
+      "contrasts": [
+        {
+          "text": "Un libro. Todo un mundo.",
+          "ratio": 11.96
+        },
+        {
+          "text": "Anna Karénina",
+          "ratio": 15.43
+        },
+        {
+          "text": "Lev Tolstói",
+          "ratio": 8.18
+        },
+        {
+          "text": "No disponible",
+          "ratio": 8.18
+        },
+        {
+          "text": "Explorar libros",
+          "ratio": 6.93
+        }
+      ]
+    },
+    {
+      "surface": "catalog",
+      "viewport": 1440,
+      "header": {
+        "x": 24,
+        "y": 12,
+        "width": 1392,
+        "height": 60,
+        "top": 12,
+        "right": 1416,
+        "bottom": 72,
+        "left": 24
+      },
+      "title": {
+        "x": 24,
+        "y": 124,
+        "width": 274,
+        "height": 48,
+        "top": 124,
+        "right": 298,
+        "bottom": 172,
+        "left": 24
+      },
+      "titleSize": "40px",
+      "titleLineHeight": "48px",
+      "grid": {
+        "x": 344,
+        "y": 232,
+        "width": 1072,
+        "height": 3829.390625,
+        "top": 232,
+        "right": 1416,
+        "bottom": 4061.390625,
+        "left": 344
+      },
+      "columns": "341.328px 341.328px 341.344px",
+      "rowGap": "24px",
+      "card": {
+        "x": 344,
+        "y": 232,
+        "width": 341.328125,
+        "height": 523.34375,
+        "top": 232,
+        "right": 685.328125,
+        "bottom": 755.34375,
+        "left": 344
+      },
+      "overflow": 0,
+      "duplicateSearch": 0,
+      "visibleControls": 11,
+      "contrasts": [
+        {
+          "text": "Todos los libros",
+          "ratio": 15.43
+        },
+        {
+          "text": "Anna Karénina",
+          "ratio": 15.43
+        },
+        {
+          "text": "Lev Tolstói",
+          "ratio": 8.18
+        },
+        {
+          "text": "No disponible",
+          "ratio": 8.18
+        },
+        {
+          "text": "Siguientearrow_forward",
+          "ratio": 9
+        }
+      ]
+    }
+  ]
+}

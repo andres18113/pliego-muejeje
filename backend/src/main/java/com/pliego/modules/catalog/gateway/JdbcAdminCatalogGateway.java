@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.pliego.foundation.database.DatabaseExceptionTranslator;
 import com.pliego.foundation.database.JdbcGatewaySupport;
+import com.pliego.foundation.database.JdbcArrays;
 import static com.pliego.modules.catalog.application.AdminCatalogModels.*;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
@@ -29,7 +30,7 @@ public class JdbcAdminCatalogGateway extends JdbcGatewaySupport implements Admin
     private static final String PUBLISHER_SEARCH = "SELECT publisher_id,name,description,state,created_at,updated_at,total_count FROM pliego.fn_admin_publisher_search(?,?,?,?,?)";
     private static final String CATEGORY_SEARCH = "SELECT category_id,parent_category_id,parent_name,name,slug,description,state,created_at,updated_at,total_count FROM pliego.fn_admin_category_search(?,?,?,?,?)";
     private static final String BOOK_SEARCH = "SELECT book_id,title,subtitle,synopsis,state,authors_json::text AS authors_json,categories_json::text AS categories_json,created_at,updated_at,total_count FROM pliego.fn_admin_book_search(?,?,?,?,?)";
-    private static final String EDITION_SEARCH = "SELECT edition_id,book_id,book_title,publisher_id,publisher_name,sku,btrim(isbn13::text) AS isbn13,language,format,page_count,publication_date,price,cover_url,cover_license,cover_source_url,cover_attribution,state,stock_actual,created_at,updated_at,total_count FROM pliego.fn_admin_edition_search(?,?,?,?,?,?)";
+    private static final String EDITION_SEARCH = "SELECT edition_id,book_id,book_title,publisher_id,publisher_name,sku,btrim(isbn13::text) AS isbn13,language,format,page_count,publication_date,price,cover_url,cover_license,cover_source_url,cover_attribution,state,stock_actual,created_at,updated_at,total_count,ebook_file_format,audio_duration_seconds,narrators FROM pliego.fn_admin_edition_search(?,?,?,?,?,?,?)";
 
     private static final String AUTHOR_CREATE = "CALL pliego.sp_author_create(?,?,?,?)";
     private static final String AUTHOR_UPDATE = "CALL pliego.sp_author_update(?,?,?,?)";
@@ -43,8 +44,8 @@ public class JdbcAdminCatalogGateway extends JdbcGatewaySupport implements Admin
     private static final String BOOK_CREATE = "CALL pliego.sp_book_create(?,?,?,?,?,?,?)";
     private static final String BOOK_UPDATE = "CALL pliego.sp_book_update(?,?,?,?,?,?,?)";
     private static final String BOOK_STATUS = "CALL pliego.sp_book_set_status(?,?,?)";
-    private static final String EDITION_CREATE = "CALL pliego.sp_edition_create(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String EDITION_UPDATE = "CALL pliego.sp_edition_update(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String EDITION_CREATE = "CALL pliego.sp_edition_create(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String EDITION_UPDATE = "CALL pliego.sp_edition_update(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String EDITION_STATUS = "CALL pliego.sp_edition_set_status(?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
@@ -145,11 +146,11 @@ public class JdbcAdminCatalogGateway extends JdbcGatewaySupport implements Admin
     }
 
     @Override public long createEdition(long actorId, EditionCreateData data) {
-        return create(EDITION_CREATE, 15, "o_edition_id", statement -> {
+        return create(EDITION_CREATE, 18, "o_edition_id", statement -> {
             statement.setLong(1, actorId); statement.setLong(2, data.bookId()); statement.setLong(3, data.publisherId());
             statement.setString(4, data.sku()); bindEditionMutable(statement, 5, data.isbn13(), data.language(),
                     data.format(), data.pageCount(), data.publicationDate(), data.price(), data.coverUrl(),
-                    data.coverLicense(), data.coverSourceUrl(), data.coverAttribution());
+                    data.coverLicense(), data.coverSourceUrl(), data.coverAttribution(), data.ebookFileFormat(), data.audioDurationSeconds(), data.narrators());
         });
     }
     @Override public void updateEdition(long actorId, long editionId, EditionUpdateData data) {
@@ -157,7 +158,7 @@ public class JdbcAdminCatalogGateway extends JdbcGatewaySupport implements Admin
             statement.setLong(1, actorId); statement.setLong(2, editionId); statement.setLong(3, data.publisherId());
             bindEditionMutable(statement, 4, data.isbn13(), data.language(), data.format(), data.pageCount(),
                     data.publicationDate(), data.price(), data.coverUrl(), data.coverLicense(),
-                    data.coverSourceUrl(), data.coverAttribution());
+                    data.coverSourceUrl(), data.coverAttribution(), data.ebookFileFormat(), data.audioDurationSeconds(), data.narrators());
         });
     }
     @Override public void setEditionStatus(long actorId, long editionId, String state) {
@@ -185,13 +186,15 @@ public class JdbcAdminCatalogGateway extends JdbcGatewaySupport implements Admin
         return jdbcTemplate.query(EDITION_SEARCH, statement -> {
             statement.setLong(1, actorId); nullableString(statement, 2, query.query()); nullableString(statement, 3, query.state());
             nullableLong(statement, 4, query.bookId()); statement.setInt(5, page); statement.setInt(6, query.pageSize());
+            nullableString(statement, 7, query.format());
         }, (rs, row) -> new Counted<>(new EditionRow(id(rs, "edition_id"), id(rs, "book_id"),
                 rs.getString("book_title"), id(rs, "publisher_id"), rs.getString("publisher_name"),
                 rs.getString("sku"), rs.getString("isbn13"), rs.getString("language"), rs.getString("format"),
                 rs.getObject("page_count", Integer.class), rs.getObject("publication_date", LocalDate.class),
                 rs.getBigDecimal("price"), rs.getString("cover_url"), rs.getString("cover_license"),
                 rs.getString("cover_source_url"), rs.getString("cover_attribution"), rs.getString("state"),
-                rs.getInt("stock_actual"), timestamp(rs, "created_at"), timestamp(rs, "updated_at")),
+                rs.getObject("stock_actual", Integer.class), timestamp(rs, "created_at"), timestamp(rs, "updated_at"),
+                rs.getString("ebook_file_format"), rs.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(rs, "narrators")),
                 rs.getLong("total_count")));
     }
 
@@ -243,13 +246,18 @@ public class JdbcAdminCatalogGateway extends JdbcGatewaySupport implements Admin
     }
 
     private void bindEditionMutable(PreparedStatement statement, int first, String isbn13, String language,
-            String format, int pageCount, LocalDate publicationDate, java.math.BigDecimal price, String coverUrl,
-            String coverLicense, String coverSourceUrl, String coverAttribution) throws SQLException {
+            String format, Integer pageCount, LocalDate publicationDate, java.math.BigDecimal price, String coverUrl,
+            String coverLicense, String coverSourceUrl, String coverAttribution,
+            String ebookFileFormat, Integer audioDurationSeconds, List<String> narrators) throws SQLException {
         nullableString(statement, first, isbn13); statement.setString(first + 1, language);
-        statement.setString(first + 2, format); statement.setInt(first + 3, pageCount);
+        statement.setString(first + 2, format); statement.setObject(first + 3, pageCount, Types.INTEGER);
         nullableDate(statement, first + 4, publicationDate); statement.setBigDecimal(first + 5, price);
         nullableString(statement, first + 6, coverUrl); nullableString(statement, first + 7, coverLicense);
         nullableString(statement, first + 8, coverSourceUrl); nullableString(statement, first + 9, coverAttribution);
+        nullableString(statement, first + 10, ebookFileFormat);
+        statement.setObject(first + 11, audioDurationSeconds, Types.INTEGER);
+        statement.setArray(first + 12, statement.getConnection().createArrayOf("text",
+                narrators == null ? new String[0] : narrators.toArray(String[]::new)));
     }
 
     private String writeAuthors(List<BookAuthorInput> authors) throws SQLException {

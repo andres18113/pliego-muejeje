@@ -35,7 +35,7 @@ The static host and backend use separately configured origins. Set `PLIEGO_CORS_
 - **Shared API:** typed request/response contracts, bearer header, Spanish Problem Details parsing, page-index conversion, and request cancellation for stale reads.
 - **Server state:** TanStack Query for loading, cache, invalidation, and refetch after mutations. No optimistic success for checkout, cancellation, inventory movements, or logistics transitions.
 - **Form state:** React Hook Form + Zod for validation and local submission state. Clear password after login response; keep `cardNumber` only in transient checkout memory and clear it on submit, payment-method switch to TRANSFER, route exit, or session teardown.
-- **UI foundation:** Tailwind CSS 4 and shadcn/ui with Base UI, layered onto PLIEGO's tokens and existing custom catalog styling. Use Inter Variable for interface text and Literata Variable for editorial display text. Use Lucide React for interface icons.
+- **UI foundation:** Tailwind CSS 4 and shadcn/ui with Base UI, layered onto PLIEGO's tokens and existing custom catalog styling. Use Roboto Flex globally for interface and editorial text. Use Lucide React for interface icons.
 - **Tests:** Vitest + Testing Library for component behavior and Playwright for critical browser journeys. TanStack Table remains scoped to future ADMIN data grids; Motion waits for an interaction that benefits from animation.
 - **Authorization:** route visibility is role-aware for navigation. Backend 401/403 and ownership enforcement remain authoritative; clear in-memory auth and protected cached data on 401.
 

@@ -61,6 +61,32 @@ def output_snapshot(root: Path) -> dict[str, bytes]:
 
 
 class PrepareCoversTests(unittest.TestCase):
+
+    def test_digital_editions_without_isbn_get_distinct_stable_skus(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "covers"
+            category = root / "Literatura"
+            category.mkdir(parents=True)
+            rows = []
+            for index, (format_name, voices) in enumerate([
+                    ("EBOOK", []), ("AUDIOBOOK", ["Una voz"]), ("AUDIOBOOK", ["Otra voz"])]):
+                filename = f"edition-{index}.webp"
+                (category / filename).write_bytes(webp_bytes(f"cover-{index}".encode()))
+                row = record("Misma obra", None, filename, sku=None)
+                row["edicion"].update(formato=format_name, paginas=None, narrators=voices)
+                if format_name == "EBOOK":
+                    row["edicion"]["ebookFileFormat"] = "EPUB"
+                else:
+                    row["edicion"]["audioDurationSeconds"] = 3600
+                rows.append(row)
+            write_staging(category, rows)
+            prepare_covers_module.prepare_covers(root)
+            manifest = json.loads((root / "generated/manifest.json").read_text())
+            self.assertEqual(len({row["permanent_sku"] for row in manifest["records"]}), 3)
+            snapshot = output_snapshot(root)
+            self.assertEqual(prepare_covers_module.prepare_covers(root)["new_skus"], 0)
+            self.assertEqual(snapshot, output_snapshot(root))
+
     def test_validation_reports_missing_orphan_duplicate_and_conflicting_records(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary) / "covers"
@@ -76,7 +102,7 @@ class PrepareCoversTests(unittest.TestCase):
             self.assertEqual(len(scanned), 2)
             self.assertTrue(report["missing"])
             self.assertEqual(report["orphans"], ["Mystery/orphan.webp"])
-            self.assertTrue(any("referenced by" in item for item in report["duplicates"]))
+            self.assertTrue(any("referenced by" in item for item in report["shared_content"]))
             self.assertTrue(any("ISBN13" in item for item in report["duplicates"]))
             self.assertTrue(any("conflicting record data" in item for item in report["conflicts"]))
             with self.assertRaises(prepare_covers_module.PreparationError):

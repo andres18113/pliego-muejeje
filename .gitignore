@@ -6,6 +6,8 @@ backend/.mvn/wrapper/maven-wrapper.jar
 node_modules/
 frontend/dist/
 frontend/test-results/
+frontend/test-results-visual/
+frontend/test-results-polish/
 
 # IDEs
 .idea/

@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 export type MaterialSymbolName =
   | "account_balance" | "account_circle" | "add" | "add_shopping_cart" | "arrow_back" | "arrow_forward" | "check" | "check_circle"
-  | "close" | "menu" | "menu_book" | "content_copy" | "credit_card" | "delete"
+  | "close" | "chevron_right" | "menu" | "menu_book" | "content_copy" | "credit_card" | "delete"
   | "edit" | "expand_less" | "expand_more" | "favorite" | "favorite_border"
   | "filter_list" | "lock" | "location_on" | "logout" | "format_paint" | "light_mode" | "dark_mode" | "brightness_auto" | "info"
   | "remove" | "search" | "shopping_bag" | "shopping_cart" | "shopping_cart_off"

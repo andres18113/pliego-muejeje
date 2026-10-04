@@ -35,6 +35,7 @@ class FakePliego {
   lines: Line[] = [];
   addresses: Record<string, unknown>[] = [];
   orders: Order[] = [];
+  addPosts = 0;
   checkoutPosts = 0;
   loseNextCheckoutResponse = false;
   rejectNextCheckout = false;
@@ -78,21 +79,26 @@ class FakePliego {
       body: JSON.stringify({ type: `urn:pliego:problem:${code}`, title, status, detail, code, traceId: "e2e" }),
     });
 
+    if (path === "/auth/refresh") return route.fulfill({ status: 204 });
     if (path === "/auth/login") {
       return ok({ accessToken: "e2e-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" } });
     }
     if (path === "/me" && method === "GET") return ok({ customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE" });
     if (path === "/reference/countries") return ok([{ code: "EC", name: "Ecuador" }, { code: "CO", name: "Colombia" }]);
-    if (path === "/reference/transfer-details") return ok({ bank: "Banco PLIEGO", beneficiary: "PLIEGO Tienda", accountType: "Corriente", accountNumber: "0000000000", identification: "0000000000000" });
+    if (path === "/reference/transfer-details") return ok({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
     if (path === "/catalog/categories") return ok({ items: [{ slug: "narrativa", name: "Narrativa", parentSlug: null }] });
     if (path === "/catalog/filter-options") return ok({ languages: ["es"], minimumPrice: "18.50", maximumPrice: "18.50" });
     if (path === "/catalog/editions/42") return ok({ ...edition, available: this.stock > 0 });
     if (path === "/catalog/editions") {
       return ok({ items: [{ ...edition, authors: "Gabriel García Márquez", publisher: "Editorial Sur", available: this.stock > 0 }], page: 0, pageSize: 20, totalCount: "1" });
     }
+    if (path === "/me/favorites/status") {
+      return ok(url.searchParams.getAll("editionIds").map((editionId) => ({ editionId, favorite: false })));
+    }
 
     if (path === "/cart" && method === "GET") return ok(this.cart());
     if (path === "/cart/items" && method === "POST") {
+      this.addPosts += 1;
       const existing = this.lines.find((line) => line.editionId === body.editionId);
       const quantity = (existing?.quantity ?? 0) + body.quantity;
       if (quantity > this.stock) return fail(409, "P3002", "Existencias insuficientes", "No hay existencias suficientes para la cantidad solicitada.");
@@ -171,17 +177,44 @@ class FakePliego {
   }
 }
 
-async function signInAndAdd(page: Page) {
+async function signInAndAdd(page: Page, api: FakePliego, screenshots?: { pending: string; added: string; cart: string }) {
   await page.goto("/catalog/editions/42");
   await page.getByRole("link", { name: "Iniciar sesión para agregar" }).click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
   await page.getByLabel("Contraseña").fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/catalog\/editions\/42$/);
-  await page.getByRole("button", { name: "Agregar al carrito" }).click();
-  await expect(page.getByText("Edición agregada al carrito. Ahora tienes 1 unidad de esta edición.")).toBeVisible();
+  const addButton = page.locator(".detail-purchase .button-primary");
+  const pageBox = () => addButton.evaluate((button) => {
+    const rect = button.getBoundingClientRect();
+    return { x: rect.left + window.scrollX, y: rect.top + window.scrollY, width: rect.width, height: rect.height };
+  });
+  const idleBox = await pageBox();
+  const addStartedAt = Date.now();
+  await addButton.dblclick();
+  await expect(addButton).toHaveAttribute("aria-busy", "true");
+  await expect(page.getByRole("button", { name: "Agregando…" })).toBeVisible();
+  const pendingBox = await pageBox();
+  expect(Math.abs(pendingBox.x - idleBox.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(pendingBox.y - idleBox.y)).toBeLessThanOrEqual(1);
+  expect(pendingBox.width).toBeCloseTo(idleBox.width, 0);
+  expect(pendingBox.height).toBeCloseTo(idleBox.height, 0);
+  if (screenshots) await page.screenshot({ path: screenshots.pending, fullPage: true });
+  await expect(page.getByText("Edición agregada al carrito. Ahora tienes 1 unidad de esta edición.")).toBeAttached();
+  await expect(page.getByRole("button", { name: "Agregado" })).toBeVisible();
+  expect(Date.now() - addStartedAt).toBeGreaterThanOrEqual(500);
+  const successBox = await pageBox();
+  expect(Math.abs(successBox.x - idleBox.x)).toBeLessThanOrEqual(1);
+  expect(Math.abs(successBox.y - idleBox.y)).toBeLessThanOrEqual(1);
+  expect(successBox.width).toBeCloseTo(idleBox.width, 0);
+  expect(successBox.height).toBeCloseTo(idleBox.height, 0);
+  await expect(addButton).toBeFocused();
+  await expect(page.getByTestId("header-cart-count")).toHaveText("1");
+  expect(api.addPosts).toBe(1);
+  if (screenshots) await page.screenshot({ path: screenshots.added, fullPage: true });
   await page.getByRole("link", { name: "Ver el carrito" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Tu carrito" })).toBeVisible();
+  if (screenshots) await page.screenshot({ path: screenshots.cart, fullPage: true });
 }
 
 async function saveFirstAddress(page: Page) {
@@ -199,12 +232,16 @@ async function expectNoHorizontalOverflow(page: Page) {
 }
 
 for (const viewport of [{ name: "desktop", width: 1280, height: 900 }, { name: "tablet", width: 768, height: 1024 }, { name: "mobile", width: 390, height: 844 }, { name: "small mobile", width: 320, height: 720 }]) {
-  test(`completes the CUSTOMER purchase from edition to confirmation on ${viewport.name}`, async ({ page }) => {
+  test(`completes the CUSTOMER purchase from edition to confirmation on ${viewport.name}`, async ({ page }, testInfo) => {
     await page.setViewportSize(viewport);
     const api = new FakePliego();
     await api.install(page);
 
-    await signInAndAdd(page);
+    await signInAndAdd(page, api, {
+      pending: testInfo.outputPath("edition-adding.png"),
+      added: testInfo.outputPath("edition-added.png"),
+      cart: testInfo.outputPath("cart-open.png"),
+    });
     await page.getByRole("button", { name: "Agregar una unidad de Cien años de soledad" }).click();
     await expect(page.getByText("Cantidad actualizada: 2 unidades.")).toBeVisible();
     await expect(page.locator(".purchase-total dd")).toHaveText(/37,00/);
@@ -214,15 +251,23 @@ for (const viewport of [{ name: "desktop", width: 1280, height: 900 }, { name: "
     await expect(page.getByRole("heading", { level: 1, name: "Finalizar compra" })).toBeVisible();
     await saveFirstAddress(page);
     await page.locator(".payment-method-option").filter({ hasText: "Tarjeta" }).click();
+    await expect(page.getByText("Proceso de compra seguro")).toBeVisible();
+    for (const brand of ["Visa", "Mastercard", "American Express", "Diners Club"]) {
+      await expect(page.getByRole("img", { name: brand })).toBeVisible();
+    }
+    await expectNoHorizontalOverflow(page);
+    await page.screenshot({ path: testInfo.outputPath("card-ready.png"), fullPage: true });
     await page.getByLabel("Número de tarjeta").fill("4111 1111 1111 1111");
-    await page.getByLabel("Vencimiento (MM/AA)").fill("12/30");
-    await page.getByLabel("CVV").fill("123");
+    await page.getByLabel("Caducidad (MM/AA)").fill("12/30");
+    await page.getByLabel("Código de seguridad").fill("123");
     await page.getByLabel("Nombre en la tarjeta").fill("Ana Pérez");
     await expectNoHorizontalOverflow(page);
     await page.getByRole("button", { name: /Pagar/ }).click();
 
+    await expect(page.locator(".checkout-submit [role='status']")).toContainText("Procesando tu pago");
     await expect(page).toHaveURL(/\/orders\/700$/);
-    await expect(page.getByRole("heading", { level: 1, name: "Pedido n.º 700 confirmado" })).toBeFocused();
+    await expect(page.getByRole("heading", { level: 1, name: "Pedido N.° 700 confirmado" })).toBeFocused();
+    await page.getByText("Pago", { exact: true }).click();
     await expect(page.getByText("SIM-e2e-0")).toBeVisible();
     await expect(page.getByText("4111")).toHaveCount(0);
     await expect(page.getByRole("link", { name: /^Carrito/ })).toContainText("0");
@@ -232,12 +277,86 @@ for (const viewport of [{ name: "desktop", width: 1280, height: 900 }, { name: "
   });
 }
 
+test("advances valid card details as they are typed without moving focus for invalid values", async ({ page }) => {
+  const api = new FakePliego();
+  await api.install(page);
+  await signInAndAdd(page, api);
+  await page.getByRole("link", { name: "Continuar con la compra" }).click();
+  await saveFirstAddress(page);
+  await page.locator(".payment-method-option").filter({ hasText: "Tarjeta" }).click();
+
+  const number = page.getByLabel("Número de tarjeta");
+  const expiry = page.getByLabel("Caducidad (MM/AA)");
+  const cvv = page.getByLabel("Código de seguridad");
+  await number.pressSequentially("4111111111111110");
+  await expect(number).toBeFocused();
+  await number.fill("");
+  await number.pressSequentially("4111111111111111");
+  await expect(expiry).toBeFocused();
+
+  await expiry.pressSequentially("1328");
+  await expect(expiry).toBeFocused();
+  await expiry.fill("");
+  await expiry.pressSequentially("1230");
+  await expect(cvv).toBeFocused();
+
+  await cvv.pressSequentially("12");
+  await expect(cvv).toBeFocused();
+  await cvv.pressSequentially("3");
+  await expect(page.getByLabel("Nombre en la tarjeta")).toBeFocused();
+  expect(api.checkoutPosts).toBe(0);
+});
+
+test("keeps transactional feedback available with reduced motion enabled", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const api = new FakePliego();
+  await api.install(page);
+  await signInAndAdd(page, api);
+  await expect(page.getByRole("heading", { level: 1, name: "Tu carrito" })).toBeFocused();
+});
+
+test("keeps account, address book, and orders on the same type system at all target widths", async ({ page }) => {
+  const api = new FakePliego();
+  await api.install(page);
+  await signInAndAdd(page, api);
+
+  const viewports = [
+    { width: 1280, height: 900 },
+    { width: 768, height: 1024 },
+    { width: 390, height: 844 },
+    { width: 320, height: 720 },
+  ];
+  const verifySurface = async (heading: string) => {
+    const title = page.getByRole("heading", { level: 1, name: heading });
+    for (const viewport of viewports) {
+      await page.setViewportSize(viewport);
+      await expect(title).toBeVisible();
+      const typography = await title.evaluate((element) => {
+        const style = getComputedStyle(element);
+        return { family: style.fontFamily, weight: style.fontWeight };
+      });
+      expect(typography.family).toContain("Roboto Flex");
+      expect(typography.weight).toBe("700");
+      await expectNoHorizontalOverflow(page);
+    }
+  };
+
+  await verifySurface("Tu carrito");
+  await page.getByRole("button", { name: "Menú de cuenta" }).click();
+  await page.getByRole("menuitem", { name: /Mi cuenta/ }).click();
+  await verifySurface("Mi cuenta");
+  await page.getByRole("link", { name: "Direcciones" }).click();
+  await verifySurface("Mis direcciones");
+  await page.getByRole("link", { name: "Mis pedidos" }).click();
+  await verifySurface("Mis pedidos");
+});
+
 test("a rejected simulated payment leaves the cart active for a deliberate new attempt", async ({ page }) => {
   const api = new FakePliego();
   api.rejectNextCheckout = true;
   await api.install(page);
 
-  await signInAndAdd(page);
+  await signInAndAdd(page, api);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
   await page.locator(".payment-method-option").filter({ hasText: "Transferencia" }).click();
@@ -256,7 +375,7 @@ test("a lost checkout response is reconciled through orders without replaying th
   api.loseNextCheckoutResponse = true;
   await api.install(page);
 
-  await signInAndAdd(page);
+  await signInAndAdd(page, api);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
   await page.locator(".payment-method-option").filter({ hasText: "Transferencia" }).click();
@@ -269,7 +388,7 @@ test("a lost checkout response is reconciled through orders without replaying th
 
   await page.getByRole("button", { name: "Consultar mis pedidos" }).click();
   await expect(page).toHaveURL(/\/orders\/700$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Pedido n.º 700 confirmado" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Pedido N.° 700 confirmado" })).toBeVisible();
   expect(api.checkoutPosts).toBe(1);
 });
 
@@ -277,7 +396,7 @@ test("a stock change at checkout refreshes the cart and names the affected item"
   const api = new FakePliego();
   await api.install(page);
 
-  await signInAndAdd(page);
+  await signInAndAdd(page, api);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
   await page.locator(".payment-method-option").filter({ hasText: "Transferencia" }).click();

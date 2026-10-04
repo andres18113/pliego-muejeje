@@ -123,12 +123,17 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await page.emulateMedia({ colorScheme }); await page.setViewportSize({ width, height: 900 });
     await mockPublicCatalog(page); await page.goto("/");
     const header = page.getByTestId("site-header"); await expect(header).toBeVisible();
-    await expect(header.getByRole("link", { name: "Catálogo", exact: true })).toHaveAttribute("href", "/catalog");
+    if (width >= 1280) await expect(header.getByRole("link", { name: "Catálogo", exact: true })).toHaveAttribute("href", "/catalog");
+    else await expect(header.getByRole("button", { name: "Abrir navegación" })).toBeVisible();
     await expect(header.getByRole("button", { name: "Categorías" })).toHaveCount(0);
     const initial = (await header.boundingBox())!;
+    const contentTop = () => page.evaluate(() => document.querySelector("main")!.getBoundingClientRect().top + window.scrollY);
+    const contentBefore = await contentTop();
     await page.evaluate(() => { document.body.style.minHeight = "1800px"; scrollTo(0, 250); });
     await expect(header).toHaveAttribute("data-scrolled", "true");
-    expect((await header.boundingBox())!.height).toBe(initial.height);
+    // The scrolled bar compacts, but the page content never shifts underneath it.
+    await expect.poll(async () => (await header.boundingBox())!.height).toBeLessThan(initial.height);
+    await expect.poll(contentTop).toBe(contentBefore);
     expect((await header.boundingBox())!.y).toBe(0);
     const trigger = header.getByRole("button", { name: "Buscar en el catálogo" });
     await trigger.click();
@@ -139,12 +144,15 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await page.keyboard.press("ArrowDown"); await expect(dialog.getByRole("link", { name: /Cien años de soledad/ })).toBeFocused();
     await page.keyboard.press("Escape"); await expect(trigger).toBeFocused();
     await header.evaluate((node) => { (window as unknown as { headerNode: Element }).headerNode = node; });
-    await header.getByRole("link", { name: "Catálogo", exact: true }).click();
+    if (width < 1280) {
+      await header.getByRole("button", { name: "Abrir navegación" }).click();
+      await page.getByRole("dialog", { name: "Categorías", exact: true }).getByRole("link", { name: "Todos los libros", exact: true }).click();
+    } else await header.getByRole("link", { name: "Catálogo", exact: true }).click();
     await expect(page).toHaveURL(/\/catalog$/);
     expect(await header.evaluate((node) => node === (window as unknown as { headerNode: Element }).headerNode)).toBe(true);
     for (const route of ["/sign-in", "/register", "/account", "/cart", "/checkout", "/orders", "/favorites", "/missing"]) {
       await page.goto(route); await expect(page.getByTestId("site-header")).toHaveCount(1);
-      await expect(page.getByTestId("site-header").getByRole("link", { name: "Catálogo", exact: true })).toBeVisible();
+      await expect(page.getByTestId("site-header").getByRole(width >= 1280 ? "link" : "button", { name: width >= 1280 ? "Catálogo" : "Abrir navegación", exact: true })).toBeVisible();
     }
   });
 }
@@ -166,4 +174,48 @@ test("global suggestions carry the unfiltered search destination", async ({ page
   await page.getByRole("dialog").getByRole("link", { name: /Cien años de soledad/ }).click();
   await expect(page).toHaveURL(/\/catalog\/editions\/42\?/);
   expect(new URL(page.url()).searchParams.get("from")).toBe("/catalog?que=Cien+a%C3%B1os");
+});
+
+test("desktop categories open on hover without moving focus and support keyboard recovery", async ({ page }) => {
+  await mockPublicCatalog(page);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/");
+  const search = page.getByRole("button", { name: "Buscar en el catálogo", exact: true });
+  const literature = page.getByTestId("site-header").getByRole("button", { name: "Literatura", exact: true });
+  await search.focus();
+  await literature.hover();
+  await expect(page.locator("#categorias-escritorio")).toBeVisible();
+  await expect(search).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#categorias-escritorio")).toHaveCount(0);
+  await page.mouse.move(0, 900);
+  await literature.focus();
+  await page.keyboard.press("ArrowDown");
+  await expect(page.getByRole("link", { name: "Ver todos los libros de Literatura" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(literature).toBeFocused();
+  await page.keyboard.press("Enter");
+  await page.getByRole("button", { name: "Cerrar categorías", exact: true }).click({ position: { x: 10, y: 850 } });
+  await expect(literature).toBeFocused();
+});
+
+test("compact navigation has a back level and yields exclusively to global search", async ({ page }) => {
+  await mockPublicCatalog(page);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto("/");
+  const trigger = page.getByRole("button", { name: "Abrir navegación" });
+  await trigger.click();
+  const menu = page.getByRole("dialog", { name: "Categorías", exact: true });
+  await menu.getByRole("button", { name: "Literatura", exact: true }).click();
+  await expect(menu.getByRole("link", { name: "Ver todos los libros de Literatura" })).toBeVisible();
+  await menu.getByRole("button", { name: "Categorías", exact: true }).click();
+  await expect(menu.getByRole("link", { name: "Todos los libros", exact: true })).toBeVisible();
+  await page.keyboard.press("Escape");
+  await expect(trigger).toBeFocused();
+  await trigger.click();
+  await menu.getByRole("button", { name: "Buscar en el catálogo", exact: true }).click();
+  await expect(menu).toHaveCount(0);
+  await expect(page.getByRole("dialog", { name: "Buscar en el catálogo" }).getByRole("searchbox")).toBeFocused();
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("button", { name: "Buscar en el catálogo", exact: true })).toBeFocused();
 });

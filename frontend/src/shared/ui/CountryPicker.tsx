@@ -1,5 +1,5 @@
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { Combobox } from "@base-ui/react/combobox";
-import { Check, ChevronDown, Search } from "lucide-react";
 import { useState } from "react";
 import type { CountryReference } from "@/shared/api/reference";
 import { CountryFlag } from "./CountryFlag";
@@ -59,7 +59,7 @@ export function CountryPicker({
       aria-describedby={describedBy}
     >
       <Combobox.Value>{(country) => showValue(country)}</Combobox.Value>
-      <ChevronDown aria-hidden="true" size={17} />
+      <MaterialSymbol name="expand_more" className="country-picker-chevron" aria-hidden="true" size={17} />
     </Combobox.Trigger>
     <Combobox.Portal>
       <Combobox.Positioner
@@ -69,9 +69,9 @@ export function CountryPicker({
         sideOffset={5}
         collisionAvoidance={{ side: "flip", align: "shift", fallbackAxisSide: "none" }}
       >
-        <Combobox.Popup className="country-picker-popup" aria-label={`Buscar ${label.toLowerCase()}`}>
+        <Combobox.Popup className="country-picker-popup pliego-dropdown-popup" aria-label={`Buscar ${label.toLowerCase()}`}>
           <div className="country-picker-search">
-            <Search aria-hidden="true" size={17} />
+            <MaterialSymbol name="search" aria-hidden="true" size={17} />
             <Combobox.Input aria-label={`Buscar ${label.toLowerCase()}`} placeholder="Busca por país" autoComplete="off" />
           </div>
           <Combobox.Empty className="country-picker-empty">No encontramos ese país.</Combobox.Empty>
@@ -79,7 +79,7 @@ export function CountryPicker({
             {(country: CountryReference) => <Combobox.Item key={country.code} value={country} className="country-picker-option">
               <CountryFlag code={country.code} />
               <span>{country.name}</span>
-              <Combobox.ItemIndicator className="country-picker-check"><Check aria-hidden="true" size={16} /></Combobox.ItemIndicator>
+              <Combobox.ItemIndicator className="country-picker-check"><MaterialSymbol name="check" aria-hidden="true" size={16} /></Combobox.ItemIndicator>
             </Combobox.Item>}
           </Combobox.List>
         </Combobox.Popup>

@@ -15,6 +15,8 @@ from collections import defaultdict
 from pathlib import Path, PurePosixPath
 from typing import Any
 
+from cover_catalog import discover_staging, pipeline_lock, read_manifest
+
 
 REGISTRY_NAME = "sku-registry.json"
 REGISTRY_SCHEMA = "pliego-cover-sku-registry-v1"
@@ -47,7 +49,7 @@ def _normalize_isbn13(value: Any) -> str | None:
     if not isinstance(value, str):
         raise ValueError("isbn13 must be a string when present")
     normalized = re.sub(r"[-\s]", "", value)
-    if len(normalized) != 13 or not normalized.isdigit():
+    if re.fullmatch(r"[0-9]{13}", normalized) is None:
         raise ValueError(f"invalid ISBN13 format: {value!r}")
     checksum = sum(int(char) * (1 if index % 2 == 0 else 3) for index, char in enumerate(normalized[:12]))
     if (checksum + int(normalized[12])) % 10 != 0:
@@ -81,6 +83,10 @@ def _edition_identity(record: dict[str, Any], isbn13: str | None) -> str:
         "publication_date": edition.get("fechaPublicacion") or edition.get("anioPublicacion"),
         "pages": edition.get("paginas"),
     }
+    if edition.get("formato") in {"EBOOK", "AUDIOBOOK"}:
+        fallback.update(ebook_file_format=edition.get("ebookFileFormat"),
+                        audio_duration_seconds=edition.get("audioDurationSeconds"),
+                        narrators=edition.get("narrators") or [])
     encoded = json.dumps(_canonical(fallback), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return "fallback:" + hashlib.sha256(encoded.encode("utf-8")).hexdigest()
 
@@ -188,17 +194,14 @@ def scan_dataset(covers_dir: Path) -> tuple[list[dict[str, Any]], list[tuple[Pat
         "duplicates": [],
         "conflicts": [],
         "errors": [],
+        "shared_content": [],
     }
-    json_paths = sorted(
-        path for path in root.rglob("*")
-        if path.is_file() and path.suffix.casefold() == ".json"
-        and path.relative_to(root).parts[0] not in RESERVED_DIRS
-        and path.name != REGISTRY_NAME
-    )
+    json_paths = discover_staging(root)
     webp_paths = sorted(
         path for path in root.rglob("*")
         if path.is_file() and path.suffix.casefold() == ".webp"
         and path.relative_to(root).parts[0] not in RESERVED_DIRS
+        and "originales" not in path.relative_to(root).parts
     )
     report["json_files"] = len(json_paths)
     report["covers_discovered"] = len(webp_paths)
@@ -320,7 +323,7 @@ def scan_dataset(covers_dir: Path) -> tuple[list[dict[str, Any]], list[tuple[Pat
         report["orphans"].append(relative)
     for relative, usages in sorted(references.items()):
         if len(usages) > 1:
-            report["duplicates"].append(
+            report["shared_content"].append(
                 f"Cover {relative} is referenced by " + ", ".join(item["where"] for item in usages)
             )
     for isbn13, usages in sorted(isbn_records.items()):
@@ -349,13 +352,13 @@ def scan_dataset(covers_dir: Path) -> tuple[list[dict[str, Any]], list[tuple[Pat
                 same_content = False
             locations = ", ".join(_relative(path, root) for path in unique_paths)
             if same_content:
-                report["duplicates"].append(f"WebP basename {basename} has identical files at {locations}")
+                report["shared_content"].append(f"WebP basename {basename} has identical files at {locations}")
             else:
-                report["conflicts"].append(f"WebP basename {basename} has different files at {locations}")
+                report["shared_content"].append(f"Repeated basename with distinct paths at {locations}")
     for digest, paths in sorted(hash_to_paths.items()):
         unique_paths = sorted(set(paths))
         if len(unique_paths) > 1:
-            report["duplicates"].append(
+            report["shared_content"].append(
                 "Identical WebP content exists at " + ", ".join(_relative(path, root) for path in unique_paths)
             )
 
@@ -459,6 +462,9 @@ def prepare_covers(covers_dir: Path) -> dict[str, Any]:
     normalized_docs: dict[Path, dict[str, Any]] = {path: copy.deepcopy(document) for path, document in docs}
     registry["schema"] = REGISTRY_SCHEMA
     registry["next_sequence"] = next_sequence
+    published_path = output_root / "manifest-normalized.json"
+    published = read_manifest(published_path)
+    published_by_sku = {r["permanent_sku"]: r for r in published["records"]}
 
     for entry in records:
         assignment = matches[id(entry)]
@@ -478,7 +484,7 @@ def prepare_covers(covers_dir: Path) -> dict[str, Any]:
         cover_metadata = normalized_record["edicion"].setdefault("portada", {})
         if not isinstance(cover_metadata, dict):
             raise PreparationError({"errors": [f"{entry['where']} has invalid portada metadata"]})
-        cover_metadata["url"] = cover_url
+        cover_metadata["url"] = published_by_sku.get(sku, {}).get("cover_url", cover_url)
         deployment_path = output_root / "r2" / r2_key
         _write_bytes_if_changed(deployment_path, entry["cover_path"])
         manifest_records.append({
@@ -530,6 +536,7 @@ def prepare_covers(covers_dir: Path) -> dict[str, Any]:
         "deployment_covers": len(records),
         "deployment_directory": _relative(output_root / "r2" / "covers" / "editions", root),
         "validation": "passed",
+        "shared_content": report["shared_content"],
         "validation_counts": {key: len(report[key]) for key in ("missing", "orphans", "duplicates", "conflicts")},
     }
 
@@ -560,7 +567,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     args = parser.parse_args(argv)
     try:
-        summary = prepare_covers(args.covers_dir)
+        with pipeline_lock(args.covers_dir.resolve()):
+            summary = prepare_covers(args.covers_dir)
     except PreparationError as error:
         print(_format_report(error.report), file=sys.stderr)
         return 1

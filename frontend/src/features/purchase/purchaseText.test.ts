@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { safeAuthReturnHref } from "@/features/auth/authLocation";
-import { canChangeQuantity, detectCardBrand, formatCardNumber, isLuhnValid, normalizeCardNumber, unavailabilityText } from "./purchaseText";
+import { canChangeQuantity, detectCardBrand, formatCardNumber, isLuhnValid, normalizeCardNumber } from "./purchaseText";
 
 describe("purchase text and validation", () => {
   it("validates card numbers with Luhn and the 12–19 digit contract", () => {
@@ -20,10 +20,7 @@ describe("purchase text and validation", () => {
     expect(detectCardBrand("6011000990139424")).toBeNull();
   });
 
-  it("explains canonical cart unavailability SQLSTATEs", () => {
-    expect(unavailabilityText("P3002")).toBe("No hay existencias suficientes para esta cantidad.");
-    expect(unavailabilityText("P2042")).toBe("Esta edición ya no está a la venta.");
-    expect(unavailabilityText("P2043")).toBe("Este libro ya no está a la venta.");
+  it("keeps quantity controls aligned with the backend reason", () => {
     expect(canChangeQuantity("P3002")).toBe(true);
     expect(canChangeQuantity("P2042")).toBe(false);
   });

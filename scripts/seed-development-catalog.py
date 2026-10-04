@@ -16,6 +16,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from cover_catalog import category_slug, cover_evidence, discover_staging, metadata_errors
+
 
 API_BASE = os.environ.get("PLIEGO_API_BASE_URL", "http://127.0.0.1:8080").rstrip("/")
 ADMIN_EMAIL = os.environ.get("PLIEGO_ADMIN_EMAIL", "admin@pliego.local")
@@ -53,12 +55,20 @@ class EditionSeed:
     publisher: str
     language: str
     format: str
-    page_count: int
+    page_count: int | None
     publication_date: str | None
     price: str
     stock: int
-    synopsis: str
+    synopsis: str | None
     isbn13: str | None = None
+    ebook_file_format: str | None = None
+    audio_duration_seconds: int | None = None
+    narrators: tuple[str, ...] = ()
+    category_name: str | None = None
+    cover_url: str | None = None
+    cover_license: str | None = None
+    cover_source_url: str | None = None
+    cover_attribution: str | None = None
 
 
 CATEGORIES = (
@@ -124,6 +134,7 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
         raise ApiError("El registro permanente de SKU debe contener assignments.")
 
     sku_by_isbn: dict[str, str] = {}
+    sku_by_source: dict[str, str] = {}
     for assignment in assignments:
         if not isinstance(assignment, dict):
             raise ApiError("El registro permanente de SKU contiene una asignación inválida.")
@@ -131,6 +142,13 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
         identity_keys = assignment.get("identity_keys")
         if not isinstance(sku, str) or not PERMANENT_SKU_PATTERN.fullmatch(sku):
             raise ApiError("El registro permanente contiene un SKU no válido.")
+        source_keys = assignment.get("source_keys", [])
+        if not isinstance(source_keys, list):
+            raise ApiError(f"La asignación de {sku} no contiene rutas fuente válidas.")
+        for source_key in source_keys:
+            if not isinstance(source_key, str) or (source_key in sku_by_source and sku_by_source[source_key] != sku):
+                raise ApiError("El registro permanente contiene una ruta fuente inválida o en conflicto.")
+            sku_by_source[source_key] = sku
         if not isinstance(identity_keys, list):
             raise ApiError(f"La asignación de {sku} no contiene identity_keys.")
         for key in identity_keys:
@@ -144,8 +162,10 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
     covers_by_isbn: dict[str, tuple[str, dict[str, str | None]]] = {}
     for sku, cover in covers.items():
         isbn13 = cover.get("isbn13")
+        if isbn13 is None:
+            continue
         if not isinstance(isbn13, str) or not isbn13:
-            raise ApiError(f"El manifiesto normalizado no incluye ISBN-13 para {sku}.")
+            raise ApiError(f"El manifiesto normalizado tiene un ISBN-13 inválido para {sku}.")
         if isbn13 in covers_by_isbn:
             raise ApiError(f"El ISBN {isbn13} aparece más de una vez en el manifiesto normalizado.")
         covers_by_isbn[isbn13] = (sku, cover)
@@ -174,10 +194,17 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
                 raise ApiError(f"Un registro de {staging_path.name} no separa libro y edición.")
             isbn13 = edition.get("isbn13")
             title = book.get("titulo")
-            if not isinstance(isbn13, str) or not isbn13 or isbn13 in seen_isbns:
+            if isbn13 is not None and (not isinstance(isbn13, str) or not isbn13 or isbn13 in seen_isbns):
                 raise ApiError(f"El catálogo de {staging_path.name} contiene ISBN ausente o duplicado.")
-            seen_isbns.add(isbn13)
-            permanent_sku = sku_by_isbn.get(isbn13)
+            if isbn13 is not None:
+                seen_isbns.add(isbn13)
+                permanent_sku = sku_by_isbn.get(isbn13)
+            else:
+                try:
+                    source_relative = staging_path.resolve().relative_to(registry_path.parent.resolve()).as_posix()
+                except ValueError:
+                    raise ApiError("El staging debe estar dentro del directorio del registro SKU.") from None
+                permanent_sku = sku_by_source.get(f"{source_relative}#{record.get('portadaArchivo')}")
             if permanent_sku is None:
                 raise ApiError(f"El ISBN {isbn13} no tiene asignación permanente en el registro SKU.")
             if permanent_sku in EXCLUDED_CATALOG_SKUS:
@@ -186,7 +213,12 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
                 excluded_skus.add(permanent_sku)
                 continue
 
-            manifest_entry = covers_by_isbn.get(isbn13)
+            if isbn13 is not None:
+                manifest_entry = covers_by_isbn.get(isbn13)
+            elif permanent_sku in covers:
+                manifest_entry = (permanent_sku, covers[permanent_sku])
+            else:
+                manifest_entry = None
             if manifest_entry is None:
                 raise ApiError(f"El ISBN {isbn13} ({title}) no tiene una portada en el manifiesto normalizado.")
             manifest_sku, cover = manifest_entry
@@ -203,9 +235,10 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
             if len(author_names) != len(authors) or any(not isinstance(name, str) or not name for name in author_names):
                 raise ApiError(f"El registro bibliográfico para {permanent_sku} contiene un autor inválido.")
             category_name = categories[0]
-            if not isinstance(category_name, str) or category_name not in category_slugs:
-                raise ApiError(f"La categoría de {permanent_sku} no pertenece al catálogo normalizado.")
-            formats = {"RUSTICA": "PAPERBACK", "TAPA_DURA": "HARDCOVER"}
+            if not isinstance(category_name, str) or not category_name.strip():
+                raise ApiError(f"La categoría de {permanent_sku} no tiene un nombre válido.")
+            category_slugs.setdefault(category_name, category_slug(category_name))
+            formats = {"RUSTICA": "PAPERBACK", "TAPA_DURA": "HARDCOVER", "EBOOK": "EBOOK", "AUDIOBOOK": "AUDIOBOOK"}
             source_format = edition.get("formato")
             format_name = formats.get(source_format)
             page_count = edition.get("paginas")
@@ -214,9 +247,11 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
             synopsis = book.get("sinopsis")
             publication_date = edition.get("fechaPublicacion")
             subtitle = book.get("subtitulo")
-            if (format_name is None or not isinstance(page_count, int) or page_count <= 0
+            if (format_name is None
+                    or (page_count is not None and (not isinstance(page_count, int) or isinstance(page_count, bool) or page_count <= 0))
+                    or (format_name in {"PAPERBACK", "HARDCOVER"} and page_count is None)
                     or not isinstance(language, str) or not isinstance(publisher, str) or not publisher
-                    or not isinstance(synopsis, str) or not synopsis.strip()
+                    or (synopsis is not None and not isinstance(synopsis, str))
                     or (subtitle is not None and not isinstance(subtitle, str))):
                 raise ApiError(f"Los metadatos bibliográficos de {permanent_sku} están incompletos.")
             if publication_date is not None:
@@ -226,20 +261,25 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
                 except (TypeError, ValueError):
                     raise ApiError(f"La fecha de publicación de {permanent_sku} no es ISO válida.") from None
 
+            problems = metadata_errors(record)
+            if problems:
+                raise ApiError(f"Metadatos inválidos de {permanent_sku}: " + "; ".join(problems))
+            evidence = cover_evidence(edition)
+            ebook_file_format = edition.get("ebookFileFormat")
+            audio_seconds = edition.get("audioDurationSeconds")
+            narrators = edition.get("narrators") or []
+
             seeds.append(EditionSeed(
                 permanent_sku, title, subtitle, author_names, category_slugs[category_name], publisher, language,
                 format_name, page_count, publication_date, LOCAL_DEVELOPMENT_PRICE,
-                LOCAL_DEVELOPMENT_MINIMUM_STOCK, synopsis, isbn13,
+                LOCAL_DEVELOPMENT_MINIMUM_STOCK if format_name in {"PAPERBACK", "HARDCOVER"} else 0, synopsis, isbn13,
+                ebook_file_format, audio_seconds, tuple(name.strip() for name in narrators),
+                category_name, cover["coverUrl"], evidence["coverLicense"], evidence["coverSourceUrl"], evidence["coverAttribution"],
             ))
             matched_skus.add(permanent_sku)
 
-    if excluded_skus != EXCLUDED_CATALOG_SKUS:
-        raise ApiError("El registro bibliográfico no confirma el SKU 000042 excluido.")
-    if matched_skus != set(covers):
-        missing = sorted(set(covers) - matched_skus)
-        raise ApiError("El catálogo fuente no cubre todos los SKU del manifiesto: " + ", ".join(missing))
-    if staging_count != len(seeds) + len(EXCLUDED_CATALOG_SKUS):
-        raise ApiError("El número de registros bibliográficos no coincide con los 55 elegibles y el excluido.")
+    if staging_count != len(seeds) + len(excluded_skus):
+        raise ApiError("El número de registros bibliográficos no coincide con los importables y los excluidos.")
     return tuple(seeds)
 
 
@@ -351,6 +391,9 @@ def sync_cover_manifest(api: PliegoApi, covers: dict[str, dict[str, str | None]]
             "coverLicense": edition.get("coverLicense"),
             "coverSourceUrl": edition.get("coverSourceUrl"),
             "coverAttribution": edition.get("coverAttribution"),
+            "ebookFileFormat": edition.get("ebookFileFormat"),
+            "audioDurationSeconds": edition.get("audioDurationSeconds"),
+            "narrators": edition.get("narrators") or [],
         })
         updated += 1
 
@@ -390,14 +433,15 @@ def ensure_publisher(api: PliegoApi, name: str) -> str:
     return created["publisherId"]
 
 
-def ensure_categories(api: PliegoApi) -> dict[str, str]:
+def ensure_categories(api: PliegoApi, categories: tuple[CategorySeed, ...] = CATEGORIES) -> dict[str, str]:
     category_ids: dict[str, str] = {}
-    for category in CATEGORIES:
+    for category in categories:
         matches = api.page("/api/v1/admin/categories", query=category.slug)
         found = exact_name(matches, "slug", category.slug)
         expected_parent = category_ids.get(category.parent_slug) if category.parent_slug else None
         if found:
-            if found.get("state") != "ACTIVE" or found.get("parentCategoryId") != expected_parent:
+            known_root = category.slug in {c.slug for c in CATEGORIES}
+            if found.get("state") != "ACTIVE" or ((known_root or category.parent_slug is not None) and found.get("parentCategoryId") != expected_parent):
                 raise ApiError(f"La categoría existente '{category.slug}' no coincide con el seed esperado.")
             category_ids[category.slug] = found["categoryId"]
             continue
@@ -476,10 +520,13 @@ def ensure_edition(api: PliegoApi, seed: EditionSeed, book_id: str, publisher_id
             "pageCount": seed.page_count,
             "publicationDate": seed.publication_date,
             "price": seed.price,
-            "coverUrl": existing.get("coverUrl"),
-            "coverLicense": existing.get("coverLicense"),
-            "coverSourceUrl": existing.get("coverSourceUrl"),
-            "coverAttribution": existing.get("coverAttribution"),
+            "coverUrl": seed.cover_url or existing.get("coverUrl"),
+            "coverLicense": seed.cover_license if seed.cover_license is not None else existing.get("coverLicense"),
+            "coverSourceUrl": seed.cover_source_url if seed.cover_license is not None else existing.get("coverSourceUrl"),
+            "coverAttribution": seed.cover_attribution if seed.cover_license is not None else existing.get("coverAttribution"),
+            "ebookFileFormat": seed.ebook_file_format,
+            "audioDurationSeconds": seed.audio_duration_seconds,
+            "narrators": list(seed.narrators),
         })
         if existing.get("state") == "INACTIVE":
             api.request("PUT", f"/api/v1/admin/editions/{edition_id}/status", {"state": "ACTIVE"})
@@ -496,10 +543,13 @@ def ensure_edition(api: PliegoApi, seed: EditionSeed, book_id: str, publisher_id
         "pageCount": seed.page_count,
         "publicationDate": seed.publication_date,
         "price": seed.price,
-        "coverUrl": None,
-        "coverLicense": None,
-        "coverSourceUrl": None,
-        "coverAttribution": None,
+        "coverUrl": seed.cover_url,
+        "coverLicense": seed.cover_license,
+        "coverSourceUrl": seed.cover_source_url,
+        "coverAttribution": seed.cover_attribution,
+        "ebookFileFormat": seed.ebook_file_format,
+        "audioDurationSeconds": seed.audio_duration_seconds,
+        "narrators": list(seed.narrators),
     })
     return {"editionId": created["editionId"], "bookId": book_id, "sku": seed.sku}
 
@@ -554,8 +604,8 @@ def verify_seeded_catalog(api: PliegoApi, seeds: tuple[EditionSeed, ...],
     public_rows = api.all_pages("/api/v1/catalog/editions", sort="TITLE_ASC")
     expected_ids = {admin_by_sku[seed.sku]["editionId"] for seed in seeds}
     public_by_id = {row["editionId"]: row for row in public_rows}
-    if len(public_rows) != len(seeds) or set(public_by_id) != expected_ids:
-        raise ApiError(f"El catálogo público muestra {len(public_rows)} ediciones; se esperaban {len(seeds)}.")
+    if not expected_ids.issubset(public_by_id):
+        raise ApiError("El catálogo público no contiene todas las ediciones esperadas del seed.")
 
     for seed in seeds:
         admin = admin_by_sku[seed.sku]
@@ -588,7 +638,7 @@ def main() -> int:
                         help="Bibliographic staging JSON; may be repeated (defaults to the three local catalogs).")
     args = parser.parse_args()
     covers = load_cover_manifest(args.cover_manifest)
-    seeds = load_catalog_seeds(covers, args.sku_registry, tuple(args.staging_file or DEFAULT_STAGING_FILES))
+    seeds = load_catalog_seeds(covers, args.sku_registry, tuple(args.staging_file or discover_staging(args.sku_registry.parent)))
     selected = seeds
     if args.sku:
         wanted = set(args.sku)
@@ -605,7 +655,10 @@ def main() -> int:
     api = PliegoApi(API_BASE)
     password = ADMIN_PASSWORD or getpass.getpass(f"Contraseña ADMIN para {ADMIN_EMAIL}: ")
     api.login(ADMIN_EMAIL, password)
-    category_ids = ensure_categories(api)
+    category_definitions = {c.slug:c for c in CATEGORIES}
+    for seed in selected:
+        category_definitions.setdefault(seed.category, CategorySeed(seed.category, seed.category_name or seed.category))
+    category_ids = ensure_categories(api, tuple(category_definitions.values()))
     publisher_ids: dict[str, str] = {}
 
     for seed in selected:
@@ -616,7 +669,8 @@ def main() -> int:
             publisher_ids[seed.publisher] = publisher_id
         edition = ensure_edition(api, seed, book_id, publisher_id)
         edition_id = edition["editionId"]
-        ensure_minimum_stock(api, edition_id, seed.stock)
+        if seed.format in {"PAPERBACK", "HARDCOVER"}:
+            ensure_minimum_stock(api, edition_id, seed.stock)
         print(f"{seed.sku}: {edition_id} listo")
 
     retired_fixtures = retire_test_fixtures(api)

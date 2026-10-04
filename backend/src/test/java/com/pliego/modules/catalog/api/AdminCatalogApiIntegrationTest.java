@@ -66,6 +66,37 @@ class AdminCatalogApiIntegrationTest {
     @Autowired DatabaseExceptionTranslator exceptionTranslator;
     @Autowired FakeAdminCatalogGateway gateway;
 
+
+    @Test
+    void digitalCreationAndReplacementPreserveTypedMetadataAndNullablePages() throws Exception {
+        String admin = adminToken("17");
+        String ebook = EDITION.replace("\"PAPERBACK\"", "\"EBOOK\"").replace("\"pageCount\":328", "\"pageCount\":null")
+                .replace("\"coverAttribution\":\"Editorial\"", "\"coverAttribution\":\"Editorial\",\"ebookFileFormat\":\"EPUB\"");
+        mvc.perform(post("/api/v1/admin/editions").header("Authorization", admin)
+                .contentType(MediaType.APPLICATION_JSON).content(ebook)).andExpect(status().isCreated());
+        assertEquals("EBOOK", gateway.lastEditionCreate.format());
+        assertEquals(null, gateway.lastEditionCreate.pageCount());
+        assertEquals("EPUB", gateway.lastEditionCreate.ebookFileFormat());
+        String audio = EDITION_UPDATE.replace("\"PAPERBACK\"", "\"AUDIOBOOK\"")
+                .replace("\"pageCount\":328", "\"pageCount\":null")
+                .replace("\"coverAttribution\":null", "\"coverAttribution\":null,\"audioDurationSeconds\":3600,\"narrators\":[\"Una voz\",\"Otra voz\"]");
+        mvc.perform(put("/api/v1/admin/editions/505").header("Authorization", admin)
+                .contentType(MediaType.APPLICATION_JSON).content(audio)).andExpect(status().isNoContent());
+        assertEquals("AUDIOBOOK", gateway.lastEditionUpdate.format());
+        assertEquals(3600, gateway.lastEditionUpdate.audioDurationSeconds());
+        assertEquals(List.of("Una voz", "Otra voz"), gateway.lastEditionUpdate.narrators());
+    }
+
+    @Test
+    void narratorAndDurationValidationIsSpanishAndDoesNotReachTheGateway() throws Exception {
+        String invalid = EDITION_UPDATE.replace("\"coverAttribution\":null",
+                "\"coverAttribution\":null,\"audioDurationSeconds\":0,\"narrators\":[\" \"]");
+        mvc.perform(put("/api/v1/admin/editions/505").header("Authorization", adminToken("17"))
+                .contentType(MediaType.APPLICATION_JSON).content(invalid))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
+        assertEquals(0, gateway.mutationCalls);
+    }
+
     @BeforeEach void resetGateway() { gateway.reset(); }
 
     @Test
@@ -96,7 +127,7 @@ class AdminCatalogApiIntegrationTest {
                         .param("query", "PLG-LIT").param("state", "ACTIVE").param("bookId", "90")
                         .param("page", "2").param("pageSize", "5"))
                 .andExpect(status().isOk());
-        assertEquals(new EditionSearch("PLG-LIT", "ACTIVE", 90L, 2, 5), gateway.lastEditionSearch);
+        assertEquals(new EditionSearch("PLG-LIT", "ACTIVE", 90L, 2, 5, null), gateway.lastEditionSearch);
     }
 
     @Test
@@ -161,7 +192,7 @@ class AdminCatalogApiIntegrationTest {
         gateway.editionPage = new Page<>(List.of(new EditionRow("250", "90", "1984", "8", "Penguin",
                 "PLG-LIT-001", "9780306406157", "es", "PAPERBACK", 328, LocalDate.of(2024, 1, 15),
                 new BigDecimal("18.50"), null, null, null, null, "ACTIVE", 4,
-                "2024-01-15T10:00:00Z", "2024-01-15T10:00:00Z")), 1);
+                "2024-01-15T10:00:00Z", "2024-01-15T10:00:00Z", null, null, List.of())), 1);
         String body = mvc.perform(get("/api/v1/admin/editions").header("Authorization", adminToken("17")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].editionId").value("250"))
                 .andExpect(jsonPath("$.items[0].bookId").value("90"))

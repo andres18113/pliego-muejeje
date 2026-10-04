@@ -1,704 +1,133 @@
 #!/usr/bin/env python3
-"""Normalize PLIEGO covers to 600x900 WebP assets with optional per-SKU overrides."""
-
+"""Normalize staged WebP covers safely; existing immutable objects are preserved by default."""
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
-import shutil
+import re
+from PIL import Image
 from pathlib import Path
-from typing import Any
 
-from PIL import Image, ImageOps
-
-
-TARGET_W = 600
-TARGET_H = 900
-TARGET_RATIO = TARGET_W / TARGET_H
-
-# If reaching 2:3 requires removing <= 5% of the image,
-# automatic center crop is considered safe.
-MAX_ASPECT_CROP = 0.05
-
-WEBP_QUALITY = 86
+from cover_catalog import EXCLUDED_SKUS, pipeline_lock, read_manifest, sync_generated_json, write_bytes, write_json
+from cover_images import (CoverRejected, MAX_BYTES, QUALITIES, TARGET_H, TARGET_W,
+                          encode_webp, initial_report, normalize_file, normalize_image)
 
 PUBLIC_BASE_URL = "https://covers.pliegolibros.com"
-
-# Existing R2 URLs are immutable, so normalized covers use v2.
 VERSION_PREFIX = "covers/editions/v2"
-
-OVERRIDES_FILE = "covers/normalization-overrides.json"
-
-# PLG-BK-000042 = Apología de Sócrates.
-# It is intentionally excluded.
-EXCLUDED_SKUS = {
-    "PLG-BK-000042",
-}
+WEBP_QUALITY = 86
 
 
 def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-
-    with path.open("rb") as source:
-        for chunk in iter(lambda: source.read(1024 * 1024), b""):
-            digest.update(chunk)
-
-    return digest.hexdigest()
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def load_overrides(
-    repository_root: Path,
-) -> dict[str, dict[str, Any]]:
-    path = repository_root / OVERRIDES_FILE
-
-    if not path.exists():
-        return {}
-
-    try:
-        data = json.loads(
-            path.read_text(encoding="utf-8")
-        )
-    except (OSError, json.JSONDecodeError) as error:
-        raise SystemExit(
-            f"Cannot read {OVERRIDES_FILE}: {error}"
-        ) from None
-
-    if not isinstance(data, dict):
-        raise SystemExit(
-            f"{OVERRIDES_FILE} must contain a JSON object"
-        )
-
-    for sku, config in data.items():
-        if not isinstance(sku, str):
-            raise SystemExit(
-                "Override SKU keys must be strings"
-            )
-
-        if not isinstance(config, dict):
-            raise SystemExit(
-                f"{sku}: override must be an object"
-            )
-
-        mode = config.get("mode")
-
-        if mode not in {"fill", "contain"}:
-            raise SystemExit(
-                f"{sku}: mode must be 'fill' or 'contain'"
-            )
-
-        for field in ("focalX", "focalY"):
-            if field not in config:
-                continue
-
-            value = config[field]
-
-            if (
-                not isinstance(value, (int, float))
-                or isinstance(value, bool)
-                or not 0.0 <= value <= 1.0
-            ):
-                raise SystemExit(
-                    f"{sku}: {field} must be between 0 and 1"
-                )
-
-    return data
+def load_overrides(covers_root: Path) -> dict:
+    path = covers_root / "normalization-overrides.json"
+    overrides = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    if not isinstance(overrides, dict) or any(not isinstance(v, dict) for v in overrides.values()):
+        raise ValueError("normalization-overrides.json debe contener objetos por SKU.")
+    return overrides
 
 
-def crop_to_ratio_if_small(
-    image: Image.Image,
-) -> tuple[Image.Image, float, bool]:
-    """
-    Convert to 2:3 with a small center crop when doing so
-    removes at most MAX_ASPECT_CROP of the source dimension.
-    """
-
-    width, height = image.size
-    ratio = width / height
-
-    if abs(ratio - TARGET_RATIO) < 1e-6:
-        return image, 0.0, True
-
-    if ratio > TARGET_RATIO:
-        # Too wide.
-        target_width = round(height * TARGET_RATIO)
-        removed_fraction = (width - target_width) / width
-
-        if removed_fraction <= MAX_ASPECT_CROP:
-            left = (width - target_width) // 2
-
-            return (
-                image.crop(
-                    (
-                        left,
-                        0,
-                        left + target_width,
-                        height,
-                    )
-                ),
-                removed_fraction,
-                True,
-            )
-
-    else:
-        # Too tall / too narrow.
-        target_height = round(width / TARGET_RATIO)
-        removed_fraction = (height - target_height) / height
-
-        if removed_fraction <= MAX_ASPECT_CROP:
-            top = (height - target_height) // 2
-
-            return (
-                image.crop(
-                    (
-                        0,
-                        top,
-                        width,
-                        top + target_height,
-                    )
-                ),
-                removed_fraction,
-                True,
-            )
-
-    return image, 0.0, False
+def save_webp(image, path: Path) -> dict:
+    data, details = encode_webp(image, initial_report())
+    write_bytes(path, data)
+    return details
 
 
-def normalize_image(
-    source: Path,
-    override: dict[str, Any] | None = None,
-) -> tuple[Image.Image, dict[str, Any]]:
-    with Image.open(source) as opened:
-        image = ImageOps.exif_transpose(opened).convert("RGB")
-
-    original_width, original_height = image.size
-
-    # Manual FILL override:
-    # force the cover to fill 600x900 and crop around a chosen focal point.
-    if override and override.get("mode") == "fill":
-        focal_x = float(override.get("focalX", 0.5))
-        focal_y = float(override.get("focalY", 0.5))
-
-        normalized = ImageOps.fit(
-            image,
-            (TARGET_W, TARGET_H),
-            method=Image.Resampling.LANCZOS,
-            centering=(focal_x, focal_y),
-        )
-
-        return normalized, {
-            "original_size": {
-                "width": original_width,
-                "height": original_height,
-            },
-            "normalized_size": {
-                "width": TARGET_W,
-                "height": TARGET_H,
-            },
-            "mode": "MANUAL_FILL",
-            "padded": False,
-            "focal_x": focal_x,
-            "focal_y": focal_y,
-            "status": "OVERRIDE",
-        }
-
-    # Manual CONTAIN override:
-    # force complete artwork preservation even if auto crop would be possible.
-    force_contain = bool(
-        override
-        and override.get("mode") == "contain"
-    )
-
-    image, crop_fraction, ratio_ok = crop_to_ratio_if_small(
-        image
-    )
-
-    if ratio_ok and not force_contain:
-        normalized = image.resize(
-            (TARGET_W, TARGET_H),
-            Image.Resampling.LANCZOS,
-        )
-
-        return normalized, {
-            "original_size": {
-                "width": original_width,
-                "height": original_height,
-            },
-            "normalized_size": {
-                "width": TARGET_W,
-                "height": TARGET_H,
-            },
-            "mode": "CROP_OR_EXACT",
-            "padded": False,
-            "aspect_crop_fraction": round(
-                crop_fraction,
-                6,
-            ),
-            "status": "AUTO",
-        }
-
-    # Preserve complete artwork.
-    contained = ImageOps.contain(
-        image,
-        (TARGET_W, TARGET_H),
-        Image.Resampling.LANCZOS,
-    )
-
-    # Opaque white canvas.
-    # Avoid transparency exposing the frontend background.
-    normalized = Image.new(
-        "RGB",
-        (TARGET_W, TARGET_H),
-        (255, 255, 255),
-    )
-
-    x = (TARGET_W - contained.width) // 2
-    y = (TARGET_H - contained.height) // 2
-
-    normalized.paste(
-        contained,
-        (x, y),
-    )
-
-    return normalized, {
-        "original_size": {
-            "width": original_width,
-            "height": original_height,
-        },
-        "normalized_size": {
-            "width": TARGET_W,
-            "height": TARGET_H,
-        },
-        "mode": (
-            "MANUAL_CONTAIN"
-            if force_contain
-            else "CONTAIN"
-        ),
-        "padded": True,
-        "aspect_crop_fraction": 0.0,
-        "status": (
-            "OVERRIDE"
-            if force_contain
-            else "AUTO"
-        ),
-    }
-
-
-def save_webp(
-    image: Image.Image,
-    path: Path,
-) -> None:
-    path.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    temporary = path.with_name(
-        path.name + ".tmp"
-    )
-
-    image.save(
-        temporary,
-        format="WEBP",
-        quality=WEBP_QUALITY,
-        method=6,
-    )
-
-    temporary.replace(path)
-
-
-def validate_source_path(
-    covers_root: Path,
-    original_file: str,
-) -> Path:
-    source = (
-        covers_root / original_file
-    ).resolve()
-
-    try:
-        source.relative_to(covers_root)
-    except ValueError:
-        raise RuntimeError(
-            f"Unsafe source path: {original_file}"
-        ) from None
-
-    if not source.is_file():
-        raise RuntimeError(
-            f"Missing source cover: {original_file}"
-        )
-
-    if source.suffix.casefold() != ".webp":
-        raise RuntimeError(
-            f"Cover is not WebP: {original_file}"
-        )
-
-    return source
+def normalize_manifest(covers_root: Path, manifest_path: Path, output_root: Path,
+                       output_manifest: Path, report_path: Path, *, renormalize_existing=False,
+                       overrides: dict | None = None) -> dict:
+    root = covers_root.resolve()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("schema") != "pliego-cover-manifest-v1" or not isinstance(manifest.get("records"), list):
+        raise ValueError("El manifiesto de entrada no es válido.")
+    previous = read_manifest(output_manifest)
+    published = {r["permanent_sku"]: r for r in previous["records"] if r["permanent_sku"] not in EXCLUDED_SKUS}
+    reports, excluded, seen = [], [], set()
+    for record in manifest["records"]:
+        if (not isinstance(record, dict) or not isinstance(record.get("permanent_sku"), str)
+                or not re.fullmatch(r"PLG-BK-\d{6,}", record["permanent_sku"])
+                or not isinstance(record.get("original_file"), str) or not isinstance(record.get("title"), str)):
+            raise ValueError("El manifiesto contiene un registro inválido.")
+        sku = record["permanent_sku"]
+        if sku in seen:
+            raise ValueError(f"SKU duplicado: {sku}")
+        seen.add(sku)
+        if sku in EXCLUDED_SKUS:
+            excluded.append({"sku": sku, "reason": "Exclusión histórica"})
+            continue
+        item = {**initial_report(), "sku": sku, "source": record["original_file"], "title": record["title"]}
+        if sku in published and not renormalize_existing:
+            final_path = output_root / published[sku]["r2_object_key"]
+            if not final_path.is_file():
+                raise ValueError(f"Objeto publicado ausente: {final_path}")
+            final_bytes = final_path.read_bytes()
+            digest = hashlib.sha256(final_bytes).hexdigest()
+            if not final_path.name.endswith(f"-{digest[:12]}.webp"):
+                raise ValueError(f"El hash del objeto preservado no coincide: {final_path}")
+            with Image.open(final_path) as image:
+                image.load()
+                if image.format != "WEBP" or getattr(image, "n_frames", 1) != 1:
+                    raise ValueError(f"El objeto preservado no es WebP estático: {final_path}")
+                final_size = {"width":image.width,"height":image.height}
+            source = (root / record["original_file"]).resolve()
+            if source.is_relative_to(root) and source.is_file():
+                with Image.open(source) as image:
+                    item["original_size"] = {"width":image.width,"height":image.height}
+            reports.append({**item, "status": "ACEPTADO", "reason": "Objeto inmutable existente preservado; no se renormalizó", "preserved": True,
+                            "normalized_size":final_size,"bytes":len(final_bytes),"sha256":digest,
+                            "output": published[sku]["r2_object_key"]})
+            continue
+        try:
+            source = (root / record["original_file"]).resolve()
+            if not source.is_relative_to(root) or source.suffix.lower() != ".webp":
+                raise CoverRejected("ARCHIVO_INVALIDO", "original_file debe ser un WebP de staging dentro de covers.", item)
+            data, details = normalize_file(source, (overrides or {}).get(sku))
+            key = f"{VERSION_PREFIX}/{sku}-{details['sha256'][:12]}.webp"
+            path = output_root / key
+            if path.exists() and path.read_bytes() != data:
+                raise ValueError(f"Colisión de objeto inmutable: {key}")
+            write_bytes(path, data)
+            published[sku] = {**record, "r2_object_key": key, "cover_url": f"{PUBLIC_BASE_URL}/{key}"}
+            reports.append({**item, **details, "output": key})
+        except CoverRejected as error:
+            reports.append({**item, **error.details})
+    result = {"schema": "pliego-cover-manifest-v1", "records": sorted(published.values(), key=lambda r:r["permanent_sku"])}
+    write_json(output_manifest, result)
+    sync_generated_json(root, result["records"])
+    report = {"schema": "pliego-cover-normalization-v4", "target": {"width": TARGET_W, "height": TARGET_H,
+              "aspect_ratio": "2:3", "format": "webp", "qualities": list(QUALITIES), "maximum_bytes": MAX_BYTES},
+              "excluded": excluded, "records": reports,
+              "summary": {"accepted": sum(r["status"] == "ACEPTADO" for r in reports),
+                          "pending": sum(r["status"] != "ACEPTADO" for r in reports)}}
+    write_json(report_path, report)
+    return report
 
 
 def main() -> int:
-    repository_root = (
-        Path(__file__).resolve().parent.parent
-    )
-
-    overrides = load_overrides(
-        repository_root
-    )
-
-    parser = argparse.ArgumentParser(
-        description=__doc__,
-    )
-
-    parser.add_argument(
-        "--manifest",
-        type=Path,
-        default=repository_root
-        / "covers/generated/manifest.json",
-    )
-
-    parser.add_argument(
-        "--covers-dir",
-        type=Path,
-        default=repository_root
-        / "covers",
-    )
-
-    parser.add_argument(
-        "--output-dir",
-        type=Path,
-        default=repository_root
-        / "covers/generated/r2-normalized",
-    )
-
-    parser.add_argument(
-        "--output-manifest",
-        type=Path,
-        default=repository_root
-        / "covers/generated/manifest-normalized.json",
-    )
-
-    parser.add_argument(
-        "--report",
-        type=Path,
-        default=repository_root
-        / "covers/generated/normalization-report.json",
-    )
-
-    parser.add_argument(
-        "--clean",
-        action="store_true",
-    )
-
+    repo = Path(__file__).resolve().parent.parent
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--covers-dir", type=Path, default=repo / "covers")
+    parser.add_argument("--manifest", type=Path)
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--output-manifest", type=Path)
+    parser.add_argument("--report", type=Path)
+    parser.add_argument("--renormalize-existing", action="store_true", help="Explicitly regenerate existing covers at new immutable keys.")
     args = parser.parse_args()
-
-    try:
-        manifest = json.loads(
-            args.manifest.read_text(
-                encoding="utf-8"
-            )
-        )
-    except (OSError, json.JSONDecodeError) as error:
-        raise SystemExit(
-            f"Cannot read manifest: {error}"
-        ) from None
-
-    records = manifest.get("records")
-
-    if not isinstance(records, list):
-        raise SystemExit(
-            "Manifest must contain a records array"
-        )
-
-    covers_root = (
-        args.covers_dir.resolve()
-    )
-
-    output_root = (
-        args.output_dir.resolve()
-    )
-
-    if args.clean and output_root.exists():
-        shutil.rmtree(output_root)
-
-    normalized_records: list[dict[str, Any]] = []
-    report_records: list[dict[str, Any]] = []
-    excluded_records: list[dict[str, Any]] = []
-
-    seen_skus: set[str] = set()
-
-    for index, source_record in enumerate(records):
-        if not isinstance(source_record, dict):
-            raise SystemExit(
-                f"Manifest record {index} must be an object"
-            )
-
-        record = json.loads(
-            json.dumps(source_record)
-        )
-
-        sku = record.get(
-            "permanent_sku"
-        )
-
-        title = record.get(
-            "title"
-        )
-
-        original_file = record.get(
-            "original_file"
-        )
-
-        if not isinstance(sku, str) or not sku:
-            raise SystemExit(
-                f"Manifest record {index} has no permanent_sku"
-            )
-
-        if sku in seen_skus:
-            raise SystemExit(
-                f"Duplicate permanent SKU: {sku}"
-            )
-
-        seen_skus.add(sku)
-
-        if sku in EXCLUDED_SKUS:
-            excluded_records.append(
-                {
-                    "sku": sku,
-                    "title": title,
-                    "reason": (
-                        "Excluded from normalized catalog"
-                    ),
-                }
-            )
-            continue
-
-        if (
-            not isinstance(original_file, str)
-            or not original_file
-        ):
-            raise SystemExit(
-                f"{sku} has no original_file"
-            )
-
-        try:
-            source = validate_source_path(
-                covers_root,
-                original_file,
-            )
-        except RuntimeError as error:
-            raise SystemExit(
-                str(error)
-            ) from None
-
-        normalized, details = normalize_image(
-            source,
-            overrides.get(sku),
-        )
-
-        temporary_output = (
-            output_root
-            / VERSION_PREFIX
-            / f"{sku}.webp"
-        )
-
-        save_webp(
-            normalized,
-            temporary_output,
-        )
-
-        digest = sha256_file(
-            temporary_output
-        )
-
-        # Hash is included in the name because CDN objects
-        # are served with Cache-Control: immutable.
-        final_name = (
-            f"{sku}-{digest[:12]}.webp"
-        )
-
-        final_path = (
-            temporary_output.parent
-            / final_name
-        )
-
-        if final_path.exists():
-            temporary_output.unlink()
-        else:
-            temporary_output.replace(
-                final_path
-            )
-
-        object_key = (
-            f"{VERSION_PREFIX}/{final_name}"
-        )
-
-        cover_url = (
-            f"{PUBLIC_BASE_URL}/{object_key}"
-        )
-
-        record["r2_object_key"] = (
-            object_key
-        )
-
-        record["cover_url"] = (
-            cover_url
-        )
-
-        normalized_records.append(
-            record
-        )
-
-        report_records.append(
-            {
-                "sku": sku,
-                "title": title,
-                "source": original_file,
-                "output": object_key,
-                "cover_url": cover_url,
-                "sha256": digest,
-                **details,
-            }
-        )
-
-    normalized_manifest = {
-        key: value
-        for key, value in manifest.items()
-        if key != "records"
-    }
-
-    normalized_manifest["records"] = (
-        normalized_records
-    )
-
-    args.output_manifest.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    args.output_manifest.write_text(
-        json.dumps(
-            normalized_manifest,
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    report = {
-        "schema": "pliego-cover-normalization-v3",
-        "target": {
-            "width": TARGET_W,
-            "height": TARGET_H,
-            "aspect_ratio": "2:3",
-            "format": "webp",
-            "quality": WEBP_QUALITY,
-        },
-        "excluded": excluded_records,
-        "records": report_records,
-        "summary": {
-            "source_records": len(records),
-            "normalized": len(
-                report_records
-            ),
-            "excluded": len(
-                excluded_records
-            ),
-            "manual_fill": sum(
-                item["mode"]
-                == "MANUAL_FILL"
-                for item in report_records
-            ),
-            "manual_contain": sum(
-                item["mode"]
-                == "MANUAL_CONTAIN"
-                for item in report_records
-            ),
-            "crop_or_exact": sum(
-                item["mode"]
-                == "CROP_OR_EXACT"
-                for item in report_records
-            ),
-            "contained": sum(
-                item["mode"]
-                == "CONTAIN"
-                for item in report_records
-            ),
-        },
-    }
-
-    args.report.parent.mkdir(
-        parents=True,
-        exist_ok=True,
-    )
-
-    args.report.write_text(
-        json.dumps(
-            report,
-            ensure_ascii=False,
-            indent=2,
-        )
-        + "\n",
-        encoding="utf-8",
-    )
-
-    print(
-        f"Source records: "
-        f"{len(records)}"
-    )
-
-    print(
-        f"Normalized: "
-        f"{len(report_records)}"
-    )
-
-    print(
-        f"Excluded: "
-        f"{len(excluded_records)}"
-    )
-
-    for item in excluded_records:
-        print(
-            f"  - {item['sku']} | "
-            f"{item.get('title')}"
-        )
-
-    print(
-        f"Manual fill: "
-        f"{report['summary']['manual_fill']}"
-    )
-
-    print(
-        f"Manual contain: "
-        f"{report['summary']['manual_contain']}"
-    )
-
-    print(
-        f"Crop/exact: "
-        f"{report['summary']['crop_or_exact']}"
-    )
-
-    print(
-        f"Contained: "
-        f"{report['summary']['contained']}"
-    )
-
-    print(
-        f"Manifest: "
-        f"{args.output_manifest}"
-    )
-
-    print(
-        f"Report: "
-        f"{args.report}"
-    )
-
-    print(
-        f"Assets: "
-        f"{args.output_dir}"
-    )
-
-    return 0
+    root = args.covers_dir.resolve()
+    with pipeline_lock(root):
+        report = normalize_manifest(root, args.manifest or root / "generated/manifest.json",
+            args.output_dir or root / "generated/r2-normalized", args.output_manifest or root / "generated/manifest-normalized.json",
+            args.report or root / "generated/normalization-report.json", renormalize_existing=args.renormalize_existing,
+            overrides=load_overrides(root))
+    print(json.dumps(report["summary"], ensure_ascii=False))
+    return 2 if report["summary"]["pending"] else 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except (ValueError, OSError) as error:
+        raise SystemExit(str(error))

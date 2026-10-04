@@ -62,7 +62,7 @@ async function check(page: Page, count: number) {
     expect(status.role).toBeNull(); expect(status.live).toBeNull(); expect(status.tab).toBeNull();
     expect(Math.min(...status.contrasts)).toBeGreaterThanOrEqual(4.5);
   }
-  expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
 }
 
 for (const scheme of ["light", "dark"] as const) {
@@ -75,7 +75,7 @@ for (const scheme of ["light", "dark"] as const) {
       await expect(page.locator("html")).toHaveAttribute("data-mantine-color-scheme", scheme);
       await expect(page.locator('.edition-item [data-bookcard-cart][data-unavailable]')).toHaveText("shopping_cart_offAgregar");
       await expect(page.locator('.edition-item [data-stockstatus]')).toHaveCount(2);
-      await page.goto("/"); await expect(page.locator("[data-bookcard]")).toHaveCount(2); await check(page, 2);
+      await page.goto("/"); await expect(page.locator("[data-reading-scene]")).toHaveCount(2); await expect(page.locator("main [data-stockstatus]")).toHaveCount(3); await check(page, 3);
       await page.goto("/favorites"); await expect(page.locator("[data-bookcard]")).toHaveCount(1); await check(page, 1);
       await page.goto("/catalog/editions/42"); await check(page, 1);
       await page.goto("/catalog/editions/43"); await check(page, 1);

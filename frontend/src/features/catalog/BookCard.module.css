@@ -1,51 +1,106 @@
-.card.card { align-self: stretch; width: 100%; display: var(--bookcard-layout, flex); flex: 1; flex-direction: column; min-width: 0; padding: 0; border: 0; background: transparent; color: var(--pliego-text); }
-.mainLink.mainLink { display: var(--bookcard-layout, flex); flex: 1; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; flex-direction: column; min-width: 0; color: var(--pliego-text); border-radius: var(--mantine-radius-xs); }
-.mainLink p, .mainLink h3, .mainLink h4 { margin: 0; overflow-wrap: anywhere; }
-.cover { position: relative; width: 100%; aspect-ratio: 2 / 3; flex: 0 0 auto; margin-bottom: var(--mantine-spacing-sm); }
-/* Titles and authors retain full DOM strings; shared rows align the essential content. */
-.mainLink .bookTitle { min-height: 2lh; text-decoration: underline; text-decoration-thickness: 1px; text-decoration-color: var(--pliego-control-border); text-underline-offset: 3px; }
-.identity { min-width: 0; }
+/* One product as one scene: a bounded mist field (lavender folded into paper) holds the jacket,
+   identity, price, stock and the action tray together, so nothing reads as appended beneath a cover.
+   Every card shares the field: the jackets bring the variety, the palette stays calm. Unavailable
+   editions step back to paper with a hairline edge. Saved favorites take the yellow "this one" disc.
+   Rows: shelf · identity · price · stock · actions · supplementary. Inside a grid item they join the row's
+   subgrid so every price and action in a visual row starts on the same line; standalone, they stack. */
+.card { --card-ink: var(--pliego-text); --card-brand: var(--store-blue, var(--mantine-color-pliego-8)); --card-brand-hover: #1d2c86; --card-on-brand: #fff;
+  --card-soft: var(--store-lavender, #e4def4); --card-soft-ink: #595a6e;
+  --card-field: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0)); --card-disc: var(--store-paper, #f6f5f0);
+  --card-saved: var(--store-yellow, #f3df83); --card-pad: 16px;
+  position: relative; display: var(--bookcard-layout, flex); flex-direction: column; grid-template-rows: subgrid; grid-row: span 6; row-gap: 0;
+  width: 100%; min-width: 0; padding: var(--card-pad) var(--card-pad) calc(var(--card-pad) - 2px); border-radius: 18px; background: var(--card-field); color: var(--pliego-text); }
+.card:has([data-bookcard-cart][data-unavailable]) { --card-field: var(--store-paper, #f6f5f0); --card-disc: color-mix(in srgb, var(--store-lavender, #e4def4) 45%, var(--store-paper, #f6f5f0));
+  box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--store-lavender, #e4def4) 85%, var(--store-ink, #252740) 6%); }
+:global([data-mantine-color-scheme="dark"]) .card { --card-brand: var(--store-link, var(--mantine-color-pliego-2)); --card-brand-hover: #d8d1ff; --card-on-brand: var(--store-ink, #252740);
+  --card-soft: #322e52; --card-soft-ink: var(--pliego-text-muted); --card-field: #2e2b4d; --card-disc: #3d3964; }
+:global([data-mantine-color-scheme="dark"]) .card:has([data-bookcard-cart][data-unavailable]) { --card-field: transparent; --card-disc: #2e2b4d; box-shadow: inset 0 0 0 1.5px #3d3964; }
+
+.mainLink.mainLink { display: var(--bookcard-layout, flex); flex-direction: column; grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; min-width: 0; color: inherit; border-radius: 6px; }
+.mainLink h3, .mainLink h4, .mainLink p { margin: 0; }
+
+/* The jacket stands centered on the field, every one on the same baseline, with the soft cast
+   shadow the Home gives its covers. The field is the scene, so there is no stage or plinth. */
+.shelf { display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: end center; align-self: start; width: 100%; aspect-ratio: 20 / 23; padding-top: 6px; }
+/* Sized from the shelf width, never from the image, so loading and loaded states share one geometry. */
+.shelf :global(.book-cover) { width: 72%; height: auto; min-width: 0; aspect-ratio: 2 / 3; filter: drop-shadow(4px 10px 12px rgb(37 39 64 / 24%)); transition: translate 260ms cubic-bezier(.32, .94, .6, 1); }
+.shelf :global(.cover-frame) { width: 100%; background: transparent; box-shadow: none; }
+/* Jackets that are not exactly 2:3 still stand on the shelf line rather than float mid-frame. */
+.shelf :global(.cover-image) { object-position: center bottom; }
+.shelf :global(.book-cover--fallback) { filter: none; }
+.shelf :global(.book-cover--fallback .cover-frame) { background: var(--card-disc); }
+:global([data-mantine-color-scheme="dark"]) .shelf :global(.book-cover) { filter: drop-shadow(5px 10px 12px rgb(0 0 0 / 38%)); }
+
+.identity { min-width: 0; padding-top: 16px; }
+.bookTitle { color: var(--card-ink); font-family: var(--store-display); font-size: 1.125rem; font-weight: 650; line-height: 1.15; letter-spacing: -.03em; overflow-wrap: anywhere; text-wrap: pretty; text-decoration: none; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.authors.authors { margin-top: 5px; color: var(--pliego-text-muted); font-size: .875rem; line-height: 1.4; overflow-wrap: anywhere; }
+
+/* Facts: price in display type (as in the Home scenes) with its stock directly beneath. */
+.commercial { display: var(--bookcard-layout, flex); flex-direction: column; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; min-width: 0; padding-top: 14px; }
+.price { min-width: 0; margin: 0; overflow-wrap: anywhere; color: var(--card-ink); font: 650 1.375rem/1.2 var(--store-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+.availability { min-width: 0; margin: 3px 0 14px; font-size: .8125rem; line-height: 1.4; }
+/* Quiet stock: a small mark beside the words (the words carry the meaning, never color alone) —
+   a solid ultramar dot when available, an open ring and muted text when not.
+   Doubled class outranks StockStatus's own scheme-specific tone colors. */
+.card .availability.availability :global([data-stockstatus]) { color: var(--pliego-text-muted); }
+.card .availability.availability :global([data-stockstatus] .material-symbol) { display: none; }
+.card .availability.availability :global([data-stockstatus-label]) { display: inline-flex; align-items: center; gap: 7px; font-weight: 500; }
+.card .availability.availability :global([data-stockstatus-label])::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--card-brand); }
+.card .availability.availability :global([data-stockstatus][data-tone="danger"] [data-stockstatus-label])::before { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
+
+/* The action line is the size container (never the card: containment would disable subgrid). */
+.actionLine { min-width: 0; container-type: inline-size; }
+.actions { display: flex; align-items: center; gap: 8px; height: 100%; }
+.cart.cart { flex: 1 1 auto; min-width: 0; min-height: 44px; height: auto; padding: 8px 12px 8px 10px; border: 0; border-radius: 8px; background: var(--card-brand); color: var(--card-on-brand); font-size: .875rem; font-weight: 600; transition: background-color 140ms; }
+.cart.cart:hover:not(:disabled) { background: var(--card-brand-hover); }
+.cart :global(.mantine-Button-section[data-position="left"]) { margin-inline-end: 6px; }
+.cart :global(.mantine-Button-label) { white-space: normal; overflow: visible; line-height: 1.3; }
+/* Unavailable: a quiet lavender rest state — clearly not actionable, never technical. */
+/* Unavailable: the approved dashed outline — muted text and icon, clearly not actionable. The dash is
+   an inset outline, so the button keeps exactly the available state's geometry. */
+.cart.cart:disabled { background: transparent; color: var(--card-soft-ink); outline: 1.5px dashed currentColor; outline-offset: -1.5px; opacity: 1; cursor: not-allowed; }
+
+/* The favorite is a round paper disc set into the tray; saved, it takes the yellow "this one" fill. */
+.favorite.favorite { flex: none; width: 44px; height: 44px; min-width: 44px; border: 0; border-radius: 999px; background: var(--card-disc); color: var(--card-ink); transition: background-color 140ms, color 140ms; }
+.favorite.favorite[aria-pressed="true"] { background: var(--card-saved); color: var(--store-blue, #283da8); }
+.favorite.favorite:disabled { opacity: .55; cursor: default; }
+
 .supplementary { min-width: 0; }
-
-.authors.authors { color: var(--pliego-text-muted); }
-.authors { margin-top: var(--mantine-spacing-2xs) !important; }
-/* Auto margin belongs only to the standalone Flex fallback. */
-.commercial { display: var(--bookcard-layout, block); grid-row: span 2; grid-template-rows: subgrid; row-gap: 0; margin-top: var(--bookcard-commercial-margin, auto); padding-top: var(--mantine-spacing-xs); }
-.price { font-variant-numeric: tabular-nums; }
-.availability { margin-top: var(--mantine-spacing-2xs) !important; }
-/* The jacket stays untouched: only a small, opaque reading affordance appears. */
-.coverAffordance { position: absolute; inset-inline-end: var(--mantine-spacing-xs); bottom: var(--mantine-spacing-xs); z-index: 1; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: var(--mantine-radius-sm); background: var(--pliego-surface); color: var(--pliego-text); opacity: 0; pointer-events: none; }
-.coverAffordance > span { width: 20px; height: 20px; overflow: hidden; }
-.mainLink:focus-visible .coverAffordance { opacity: 1; }
-.actionRegion { display: flex; align-items: stretch; min-width: 0; container-type: inline-size; }
-.favorite.favorite { border: 1px solid var(--pliego-control-border); background: var(--pliego-surface); color: var(--pliego-text-muted); }
-.favorite.favorite[aria-pressed="true"] { color: var(--mantine-color-pliego-8); }
-:global([data-mantine-color-scheme="dark"]) .favorite.favorite[aria-pressed="true"] { color: var(--mantine-color-pliego-2); }
-.actions.actions { flex: 1; min-width: 0; flex-direction: row; align-items: center; justify-content: space-between; margin-top: var(--mantine-spacing-xs); }
-.actions > :first-child { flex: 0 0 44px; width: 44px; min-width: 44px; height: 44px; min-height: 44px; }
-.cart.cart { border: 0; color: var(--mantine-color-pliego-8); }
-:global([data-mantine-color-scheme="dark"]) .cart.cart { color: var(--mantine-color-pliego-2); }
-.cart.cart:disabled { color: var(--pliego-text-muted); background: transparent; opacity: 1; }
-.cart { flex: 1; min-width: 44px; min-height: 44px; height: auto; padding-block: var(--mantine-spacing-2xs); }
-.cart :global(.mantine-Button-inner) { height: auto; }
-.cart :global(.mantine-Button-label) { white-space: normal; height: auto; overflow: visible; }
-.cartLabel { display: inline; min-width: 0; margin-left: var(--mantine-spacing-2xs); overflow-wrap: anywhere; }
-.icon { flex: 0 0 20px; width: 20px; height: 20px; overflow: hidden; }
-.feedback.feedback { margin: var(--mantine-spacing-xs) 0 0; color: var(--pliego-text-muted); overflow-wrap: anywhere; }
+.feedback.feedback { margin: 8px 0 0; color: var(--pliego-text-muted); overflow-wrap: anywhere; }
 .recovery { display: flex; align-items: center; min-height: 44px; color: var(--pliego-text); text-decoration: underline; overflow-wrap: anywhere; }
-.mainLink:focus-visible .bookTitle { text-decoration-color: currentColor; text-decoration: underline; text-underline-offset: 3px; }
-@media (hover: hover) {
-  .mainLink:hover .coverAffordance { opacity: 1; }
-  .mainLink:hover .bookTitle { text-decoration-color: currentColor; text-decoration: underline; text-underline-offset: 3px; }
-}
-:global([data-mantine-color-scheme="dark"]) .cart.cart:hover:not(:disabled) { background-color: var(--mantine-color-pliego-light-hover); }
 
+.mainLink:focus-visible .bookTitle { text-decoration-line: underline; }
+@media (hover: hover) {
+  .mainLink:hover .bookTitle { text-decoration-line: underline; }
+  .mainLink:hover .shelf :global(.book-cover) { translate: 0 -6px; }
+  .favorite.favorite:hover:not(:disabled):not([aria-pressed="true"]) { color: var(--card-brand); }
+}
+
+/* Narrow cards (two columns on phones): the label alone carries the cart action. */
+@container (max-width: 10.5rem) { .cart :global(.mantine-Button-section[data-position="left"]) { display: none; } .cart.cart { padding-inline: 10px; } }
+/* Very narrow (320px phones at 200% text): the cart takes the line, favorite sits beneath it. */
+@container (max-width: 7.5rem) {
+  .actions { flex-wrap: wrap; align-content: space-between; }
+  .cart.cart { flex-basis: 100%; }
+}
+@media (max-width: 599px) {
+  .bookTitle { font-size: 1.0625rem; }
+  .authors.authors { font-size: .8125rem; }
+  .price { font-size: 1.25rem; }
+  .identity { padding-top: 14px; }
+  .card { --card-pad: 12px; border-radius: 16px; }
+  .actions { gap: 6px; }
+}
+
+.loadingShelf { aspect-ratio: 2 / 3; width: 72%; justify-self: center; align-self: end; border-radius: 4px; }
 .loadingActions.loadingActions { height: 44px; }
 
-/* At extreme text scaling, reflow controls before an action word becomes a vertical column. */
-@container (max-width: 127px) {
-  .actions.actions { flex-direction: column; align-items: stretch; }
-  .actions > :first-child { flex: none; align-self: flex-start; }
-  .cart.cart { flex: none; width: 100%; }
-  .loadingActions.loadingActions { height: calc(88px + var(--mantine-spacing-xs)); }
+@media (prefers-reduced-motion: reduce) { .shelf :global(.book-cover), .favorite.favorite, .cart.cart { transition: none; } }
+@media (forced-colors: active) {
+  .card { outline: 1px solid CanvasText; }
+  .favorite.favorite { border: 1px solid ButtonText; }
+  .favorite.favorite[aria-pressed="true"] { border: 2px solid Highlight; }
+  .card .availability.availability :global([data-stockstatus-label])::before { background: CanvasText; }
+  .cart.cart { border: 1px solid ButtonText; }
+  .cart.cart:disabled { border-color: GrayText; outline-color: GrayText; color: GrayText; }
 }

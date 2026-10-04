@@ -1,0 +1,497 @@
+[
+  {
+    "id": "34",
+    "title": "Anna Karénina",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000035-b62b28e2ae01.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "60",
+    "title": "Análisis matemático",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000028-5c3053a00867.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "61",
+    "title": "Análisis matemático I",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000052-b80e012ee00e.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "62",
+    "title": "Análisis matemático II",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000051-319fe6c039de.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "63",
+    "title": "Análisis matemático IV",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000010-9edf89eab2f1.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "64",
+    "title": "Análisis numérico",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000005-41b83fcf3974.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "76",
+    "title": "Así habló Zaratustra",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000016-d230fc853c6f.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "35",
+    "title": "Cien años de soledad",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000014-b456b439611b.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "36",
+    "title": "Crimen y castigo",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000038-ff38aafc3811.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "77",
+    "title": "Crítica de la razón práctica",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000017-41c9a4ae0f39.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "78",
+    "title": "Crítica de la razón pura",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000018-9795eea29c87.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "37",
+    "title": "Crónica de una muerte anunciada",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000040-e2551aada44a.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "65",
+    "title": "Cálculo y análisis vectorial",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000011-48509a85c734.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "79",
+    "title": "Discurso del método",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "38",
+    "title": "Don Quijote de la Mancha",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000029-37c3121f9eca.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "68",
+    "title": "Ecuaciones diferenciales con aplicaciones de modelado",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000007-d2e55c4175ca.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "66",
+    "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000047-aa33471e3d31.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "67",
+    "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000049-ff9728f0ddef.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "39",
+    "title": "El amor en los tiempos del cólera",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000031-ef11f23f18e2.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "40",
+    "title": "El extranjero",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000002-ca452ee580f4.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "41",
+    "title": "El gran Gatsby",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000024-edb8b7717a8b.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "42",
+    "title": "El mito de Sísifo",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000045-d2fd169f1556.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "80",
+    "title": "El príncipe",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000055-78a9bcec4411.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "43",
+    "title": "El retrato de Dorian Gray",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "44",
+    "title": "Ficciones",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000050-beb18072d331.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "69",
+    "title": "Geometría y trigonometría Baldor",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000008-0bb82992c0eb.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "70",
+    "title": "Inferencia bayesiana y el método de máxima entropía",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000043-eb2957751239.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "71",
+    "title": "Introducción al álgebra lineal",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000044-204968142c57.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "45",
+    "title": "La casa de los espíritus",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000030-c78433dbae44.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "46",
+    "title": "La ciudad y los perros",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000013-3d9a3ffe7035.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "82",
+    "title": "La genealogía de la moral",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000026-26fcbd0dabe9.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "47",
+    "title": "La Ilíada",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000019-8039b46f6a32.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "83",
+    "title": "La República",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000056-6d9506beae9e.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "48",
+    "title": "Los miserables",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000054-fe0fdb7fdd82.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "49",
+    "title": "Madame Bovary",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000015-219ca801124c.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "72",
+    "title": "Matemática estructural",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000046-16e1f40ce870.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "86",
+    "title": "Meditaciones",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000037-c3fa6daeb218.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "85",
+    "title": "Meditaciones metafísicas",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000020-0eb2ac315613.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "50",
+    "title": "Moby Dick",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000021-86bb100040cb.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "84",
+    "title": "Más allá del bien y del mal",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000025-41cf64eb537a.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "73",
+    "title": "Métodos numéricos aplicados a la ingeniería",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000048-3f3528aa2b7d.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "74",
+    "title": "Métodos numéricos para ingenieros",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000003-6249aab14969.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "51",
+    "title": "Orgullo y prejuicio",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000033-541b16122de7.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "52",
+    "title": "Pedro Páramo",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000039-a27819d45f6e.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "75",
+    "title": "Problemas resueltos de álgebra lineal",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000012-0b128b7cc271.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "53",
+    "title": "Rayuela",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000027-7a8520bbdab9.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "54",
+    "title": "Romeo y Julieta",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000036-7e4f0adf170d.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "87",
+    "title": "Sobre la libertad",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000023-d6ead8529220.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "55",
+    "title": "Soldados de Salamina",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000032-12d4196d1f21.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "88",
+    "title": "Tractatus Logico-Philosophicus",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000041-3499d99d15ce.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "56",
+    "title": "Álgebra Baldor",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000009-4c913e2c7914.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "57",
+    "title": "Álgebra lineal",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000034-9c9fd78eb909.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "58",
+    "title": "Álgebra lineal",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000006-942d503cab30.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "59",
+    "title": "Álgebra lineal y sus aplicaciones",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000004-79eace1d30c0.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  },
+  {
+    "id": "81",
+    "title": "Ética a Nicómaco",
+    "source": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000022-3b1726043bc7.webp",
+    "naturalWidth": 600,
+    "naturalHeight": 900,
+    "fit": "contain",
+    "frameBackground": "rgba(0, 0, 0, 0)"
+  }
+]

@@ -50,14 +50,19 @@ public class CustomerOrderController {
 
     @GetMapping
     @Operation(summary = "Consultar pedidos propios", description = "Ordenados por fecha de creación y número de pedido descendentes.")
-    @ApiResponse(responseCode = "200", description = "Página de pedidos", content = @Content(schema = @Schema(implementation = PageResponse.class)))
+    @ApiResponse(responseCode = "200", description = "Página de pedidos con resúmenes históricos de compra, entrega y factura")
     public PageResponse<Summary> list(@AuthenticationPrincipal Jwt jwt,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(50) int pageSize) {
         var result = service.list(actorId(jwt), page, pageSize);
-        return new PageResponse<>(result.items().stream().map(order -> new Summary(order.orderId(),
+        return new PageResponse<>(result.items().stream().map(order -> {
+            var post = order.postPurchase();
+            return new Summary(order.orderId(),
                 order.createdAt().toString(), order.orderState(), money(order.total()),
-                order.paymentState())).toList(), page, pageSize, Long.toString(result.totalCount()));
+                order.paymentState(),post.purchaseState(),post.fulfillmentMethod(),post.shipmentState(),
+                post.estimatedDeliveryFrom(),post.estimatedDeliveryTo(),post.itemCount(),post.unitCount(),
+                post.itemSummary(),post.invoiceState(),post.invoicePdfAvailable(),post.invoiceXmlAvailable());
+        }).toList(), page, pageSize, Long.toString(result.totalCount()));
     }
 
     @GetMapping("/{orderId}")
@@ -68,6 +73,7 @@ public class CustomerOrderController {
         var order = service.detail(actorId(jwt), orderId);
         var address = order.address();
         var payment = order.payment();
+        var post = order.postPurchase();
         return new Detail(order.orderId(), order.orderState(), money(order.subtotal()), money(order.total()),
                 order.createdAt().toString(), order.updatedAt().toString(),
                 order.items().stream().map(item -> new Item(item.orderItemId(), item.editionId(), item.sku(),
@@ -80,7 +86,8 @@ public class CustomerOrderController {
                         payment.reference(), payment.resultDetail(), payment.createdAt(), payment.updatedAt()),
                 order.stateHistory().stream().map(history -> new History(history.historyId(),
                         history.actorUserId(), history.origin(), history.previousState(), history.newState(),
-                        history.at())).toList());
+                        history.at())).toList(),post.purchaseState(),post.fulfillment(),post.shipment(),
+                PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions());
     }
 
     @PostMapping("/{orderId}/cancel")

@@ -1,6 +1,7 @@
 package com.pliego.modules.catalog.api;
 
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 
 /** Wire representations for ADMIN catalog resources. IDs and totals stay decimal strings. */
@@ -24,8 +25,10 @@ public final class AdminCatalogResponses {
     public record Book(String bookId, String title, String subtitle, String synopsis, String state,
             List<BookAuthor> authors, List<BookCategory> categories, String createdAt, String updatedAt) { }
     public record Edition(String editionId, String bookId, String bookTitle, String publisherId,
-            String publisherName, String sku, String isbn13, String language, String format,
-            Integer pageCount, String publicationDate, String price, String coverUrl,
+            String publisherName, String sku, String isbn13, String language, @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format,
+            @Schema(nullable = true) Integer pageCount, String publicationDate, String price, String coverUrl,
             String coverLicense, String coverSourceUrl, String coverAttribution, String state,
-            int stockActual, String createdAt, String updatedAt) { }
+            Integer stockActual, String createdAt, String updatedAt,
+            @Schema(nullable = true, allowableValues = {"EPUB", "PDF"}) String ebookFileFormat,
+        @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators) { }
 }

@@ -134,7 +134,7 @@ class CartApiIntegrationTest {
 
         gateway.cart = new Cart("40", "ACTIVE", List.of(
                 new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 3,
-                        new BigDecimal("19.90"), new BigDecimal("59.70"), true, null)),
+                        new BigDecimal("19.90"), new BigDecimal("59.70"), true, null, "PAPERBACK")),
                 new BigDecimal("59.70"));
         String body = mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.cartId").value("40"))
@@ -150,9 +150,9 @@ class CartApiIntegrationTest {
     void currentPricesSubtotalsAndTotalUseExactDecimalStringsAndUnavailableItemsRemainVisible() throws Exception {
         gateway.cart = new Cart("40", "ACTIVE", List.of(
                 new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 2,
-                        new BigDecimal("19.90"), new BigDecimal("39.80"), true, null),
+                        new BigDecimal("19.90"), new BigDecimal("39.80"), true, null, "PAPERBACK"),
                 new CartItem("101", "251", "Animal Farm", "George Orwell", "PLG-LIT-002", null, 1,
-                        new BigDecimal("12.35"), new BigDecimal("12.35"), false, "P2042")),
+                        new BigDecimal("12.35"), new BigDecimal("12.35"), false, "P2042", "PAPERBACK")),
                 new BigDecimal("52.15"));
 
         String body = mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))

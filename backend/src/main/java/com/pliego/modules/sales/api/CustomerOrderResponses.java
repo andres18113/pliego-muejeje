@@ -1,18 +1,28 @@
 package com.pliego.modules.sales.api;
 
 import java.util.List;
+import com.pliego.modules.sales.application.PostPurchaseModels;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /** Customer order representations; identifiers and money are JSON strings. */
 public final class CustomerOrderResponses {
 
     private CustomerOrderResponses() { }
 
+    @Schema(name="CustomerOrderSummary")
     public record Summary(String orderId, String createdAt, String orderState,
-            String total, String paymentState) { }
+            String total, String paymentState, String purchaseState, String fulfillmentMethod,
+            String shipmentState, String estimatedDeliveryFrom, String estimatedDeliveryTo,
+            long itemCount, long unitCount, List<PostPurchaseModels.ItemSummary> itemSummary,
+            String invoiceState, boolean invoicePdfAvailable, boolean invoiceXmlAvailable) { }
 
+    @Schema(name="CustomerOrderDetail")
     public record Detail(String orderId, String orderState, String subtotal, String total,
             String createdAt, String updatedAt, List<Item> items, Address address,
-            Payment payment, List<History> stateHistory) { }
+            Payment payment, List<History> stateHistory, String purchaseState,
+            PostPurchaseModels.Fulfillment fulfillment, PostPurchaseModels.Shipment shipment,
+            PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
+            PostPurchaseModels.Actions availableActions) { }
 
     public record Item(String orderItemId, String editionId, String sku, String isbn,
             String title, String authors, String publisher, String format, String language,

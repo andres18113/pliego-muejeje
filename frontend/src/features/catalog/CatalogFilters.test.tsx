@@ -22,24 +22,26 @@ describe("catalog facets", () => {
   });
 });
 describe("CatalogFilters", () => {
-  it("offers only real format choices and applies a draft explicitly", async () => {
+  it("offers only real format choices and applies a choice immediately", async () => {
     const apply = show("?category=literatura&que=Libro&page=2");
-    expect(screen.queryByRole("button", { name: "Idioma" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Precio (USD)" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("group", { name: "Idioma" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Precio (USD)" })).not.toBeInTheDocument();
+    expect(screen.getByRole("group", { name: "Formato" })).toBeInTheDocument();
     await userEvent.click(screen.getByRole("radio", { name: "Tapa dura" }));
-    expect(apply).not.toHaveBeenCalled();
-    await userEvent.click(screen.getByRole("button", { name: "Aplicar filtros" }));
     expect(apply).toHaveBeenCalledWith(expect.objectContaining({ format: "HARDCOVER", category: "literatura", query: "Libro", page: 0 }));
   });
   it("validates typed monetary ranges without submitting invalid criteria", async () => {
     const apply = show("?minPrice=10&maxPrice=40", { ...options, minimumPrice: "1.00", maximumPrice: "90.00" });
     const user = userEvent.setup();
-    await user.click(screen.getByRole("button", { name: "Precio (USD)" }));
     await user.clear(screen.getByLabelText("Precio mínimo"));
     await user.type(screen.getByLabelText("Precio mínimo"), "80");
-    await user.click(screen.getByRole("button", { name: "Aplicar filtros" }));
+    await user.click(screen.getByRole("button", { name: "Aplicar precio" }));
     await waitFor(() => expect(screen.getByRole("alert")).toHaveTextContent("El precio mínimo no puede ser mayor"));
     expect(apply).not.toHaveBeenCalled();
+    await user.clear(screen.getByLabelText("Precio mínimo"));
+    await user.type(screen.getByLabelText("Precio mínimo"), "15");
+    await user.click(screen.getByRole("button", { name: "Aplicar precio" }));
+    expect(apply).toHaveBeenCalledWith(expect.objectContaining({ minPrice: "15", maxPrice: "40.00", page: 0 }));
   });
   it("can clear a current filter even when metadata is no longer available", async () => {
     const apply = show("?format=HARDCOVER&category=literatura");

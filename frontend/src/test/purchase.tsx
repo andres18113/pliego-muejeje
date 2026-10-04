@@ -1,4 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { render } from "@testing-library/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { createMemoryRouter, RouterProvider, type RouteObject } from "react-router-dom";
@@ -20,7 +21,7 @@ export function stubApi(routes: Record<string, Handler | Handler[]>) {
     if (!entry && key === "POST /api/v1/auth/refresh") return new Response(null, { status: 204 });
     if (!entry && key === "POST /api/v1/auth/logout") return new Response(null, { status: 204 });
     if (!entry && key === "GET /api/v1/reference/countries") return json([{ code: "EC", name: "Ecuador" }, { code: "CO", name: "Colombia" }]);
-    if (!entry && key === "GET /api/v1/reference/transfer-details") return json({ bank: "Banco PLIEGO", beneficiary: "PLIEGO Tienda", accountType: "Corriente", accountNumber: "0000000000", identification: "0000000000000" });
+    if (!entry && key === "GET /api/v1/reference/transfer-details") return json({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
     if (!entry && key === "GET /api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE" });
     if (!entry) return json({ title: "Sin ruta de prueba", detail: key }, 599);
     if (Array.isArray(entry)) {
@@ -69,13 +70,13 @@ export function renderPurchaseRoute(
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const router = createMemoryRouter(routes, { initialEntries: [initialEntry] });
   const view = render(
-    <QueryClientProvider client={queryClient}>
+    <PliegoThemeProvider><QueryClientProvider client={queryClient}>
       <SessionProvider restoreOnMount={false}>
         <SignedIn role={role}>
           <RouterProvider router={router} />
         </SignedIn>
       </SessionProvider>
-    </QueryClientProvider>,
+    </QueryClientProvider></PliegoThemeProvider>,
   );
   return { ...view, router, queryClient };
 }

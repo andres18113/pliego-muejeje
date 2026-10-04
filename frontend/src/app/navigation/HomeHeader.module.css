@@ -1,0 +1,3 @@
+/* Explicit Home variant: the Home opens on paper; ultramar is reserved for the wordmark
+   and the page's own brand moments. All other routes retain the shared header unchanged. */
+.header [data-testid="header-cart-count"] { color: var(--store-ink); background: var(--store-yellow); }

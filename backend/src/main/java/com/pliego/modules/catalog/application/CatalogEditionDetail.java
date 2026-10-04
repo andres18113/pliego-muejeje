@@ -8,11 +8,12 @@ public record CatalogEditionDetail(String editionId, String bookId, String title
         String synopsis, List<Author> authors, List<Category> categories, Publisher publisher,
         String isbn13, String sku, String language, String format, Integer pageCount,
         LocalDate publicationDate, BigDecimal price, String coverUrl, String coverLicense,
-        String coverSourceUrl, String coverAttribution, boolean available) {
+        String coverSourceUrl, String coverAttribution, boolean available, String ebookFileFormat, Integer audioDurationSeconds, List<String> narrators) {
 
     public CatalogEditionDetail {
         authors = List.copyOf(authors);
         categories = List.copyOf(categories);
+        narrators = List.copyOf(narrators);
     }
 
     public record Author(String authorId, String name, int order) {

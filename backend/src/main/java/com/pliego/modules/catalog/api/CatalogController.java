@@ -68,7 +68,8 @@ public class CatalogController {
             @RequestParam(required = false) @DecimalMin("0.00") BigDecimal minPrice,
             @RequestParam(required = false) @DecimalMin("0.00") BigDecimal maxPrice,
             @RequestParam(required = false) @Pattern(regexp = "(?i)[a-z]{2,3}") String language,
-            @RequestParam(required = false) @Pattern(regexp = "PAPERBACK|HARDCOVER") String format,
+            @RequestParam(required = false) @Pattern(regexp = "PAPERBACK|HARDCOVER|EBOOK|AUDIOBOOK",
+                    message = "El formato debe ser PAPERBACK, HARDCOVER, EBOOK o AUDIOBOOK.") String format,
             @RequestParam(defaultValue = "TITLE_ASC") @Pattern(regexp = "TITLE_ASC|PRICE_ASC|PRICE_DESC") String sort,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @jakarta.validation.constraints.Max(50) int pageSize) {
@@ -116,7 +117,7 @@ public class CatalogController {
         return new CatalogEditionSummaryResponse(edition.editionId(), edition.bookId(), edition.title(),
                 edition.authors(), edition.publisher(), edition.isbn13(), money(edition.price()),
                 edition.coverUrl(), edition.coverLicense(), edition.coverAttribution(), edition.format(),
-                edition.language(), edition.available());
+                edition.language(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators());
     }
 
     private static CatalogEditionDetailResponse toDetailResponse(CatalogEditionDetail edition) {
@@ -133,7 +134,7 @@ public class CatalogController {
                 edition.isbn13(), edition.sku(), edition.language(), edition.format(), edition.pageCount(),
                 edition.publicationDate() == null ? null : CONTRACT_DATE.format(edition.publicationDate()),
                 money(edition.price()), edition.coverUrl(), edition.coverLicense(), edition.coverSourceUrl(),
-                edition.coverAttribution(), edition.available());
+                edition.coverAttribution(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators());
     }
 
     private static String money(BigDecimal amount) {

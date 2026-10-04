@@ -39,4 +39,26 @@ public class AdminOrderService {
     public Cancellation cancel(long actorUserId, long orderId) {
         return gateway.cancel(actorUserId, orderId);
     }
+
+    @Transactional
+    public PostPurchaseModels.Shipment transitionShipment(long actorUserId, long orderId, String targetState) {
+        gateway.transitionShipment(actorUserId,orderId,targetState);
+        return gateway.detail(actorUserId,orderId).postPurchase().shipment();
+    }
+
+    @Transactional
+    public PostPurchaseModels.Shipment updateTracking(long actorUserId, long orderId, PostPurchaseModels.Tracking tracking) {
+        gateway.updateTracking(actorUserId,orderId,tracking);
+        return gateway.detail(actorUserId,orderId).postPurchase().shipment();
+    }
+
+    @Transactional
+    public long issueInvoice(long actorUserId, long orderId, PostPurchaseModels.IssueInvoice invoice) {
+        return gateway.issueInvoice(actorUserId,orderId,invoice);
+    }
+
+    @Transactional
+    public long issueCreditNote(long actorUserId, long orderId, String documentNumber, String reason) {
+        return gateway.issueCreditNote(actorUserId,orderId,documentNumber,reason);
+    }
 }

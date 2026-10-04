@@ -11,6 +11,7 @@ import { useCountries } from "@/shared/api/reference";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { CountryPicker } from "@/shared/ui/CountryPicker";
 import { InternationalPhoneField, isValidPhoneNumber } from "@/shared/ui/InternationalPhoneField";
+import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 
 const required = (label: string, max: number) => z.string().trim()
   .min(1, `Escribe ${label}.`)
@@ -156,7 +157,10 @@ export function AddressForm({
       aria-labelledby="address-form-heading"
     >
       <h3 ref={headingRef} tabIndex={-1} id="address-form-heading">{address ? `Editar ${address.alias}` : "Nueva dirección"}</h3>
-      {problem && <p className="purchase-notice purchase-notice--error" role="alert">{problem}</p>}
+      {problem && <p
+        className="purchase-notice purchase-notice--error"
+        role="alert"
+      >{problem}</p>}
       <div className="address-form-grid">
         {fields.map((field) => {
           const error = errors[field.name]?.message;
@@ -229,11 +233,16 @@ export function AddressForm({
         <Button
           variant="primary"
           type="submit"
-          disabled={disabled || isSubmitting || countries.isPending || countries.isError || (!address && !profile.data)}
-          aria-disabled={isSubmitting || undefined}
+          disabled={disabled || countries.isPending || countries.isError || (!address && !profile.data)}
+          aria-disabled={disabled || isSubmitting || countries.isPending || countries.isError || (!address && !profile.data) || undefined}
           aria-busy={isSubmitting || undefined}
         >
-          {isSubmitting ? "Guardando…" : "Guardar dirección"}
+          <TransactionButtonLabel
+            state={isSubmitting ? "pending" : "idle"}
+            idle="Guardar dirección"
+            pending="Guardando…"
+            success="Guardada"
+          />
         </Button>
         {onCancel && <Button variant="text" type="button" onClick={onCancel}>Cancelar</Button>}
       </div>

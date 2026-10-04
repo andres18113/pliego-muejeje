@@ -6,6 +6,9 @@ import java.util.List;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Max;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
@@ -49,14 +52,21 @@ public final class AdminCatalogRequests {
             @NotBlank(message = "El idioma no puede estar vacío.")
             @Pattern(regexp = "(?i)[a-z]{2,3}", message = "El idioma no tiene un formato válido.") String language,
             @NotBlank(message = "El formato no puede estar vacío.")
-            @Pattern(regexp = "PAPERBACK|HARDCOVER", message = "El formato debe ser PAPERBACK o HARDCOVER.") String format,
-            @NotNull(message = "El número de páginas es obligatorio.") Integer pageCount, LocalDate publicationDate,
+            @Pattern(regexp = "PAPERBACK|HARDCOVER|EBOOK|AUDIOBOOK", message = "El formato debe ser PAPERBACK, HARDCOVER, EBOOK o AUDIOBOOK.") @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format,
+            @Positive(message = "El número de páginas debe ser positivo.") @Max(value = 100000, message = "El número de páginas excede el límite permitido.") @Schema(nullable = true) Integer pageCount, LocalDate publicationDate,
             @NotBlank(message = "El precio no puede estar vacío.")
             @Pattern(regexp = "[0-9]{1,9}\\.[0-9]{2}", message = "El precio debe tener dos posiciones decimales.") String price,
             @Size(max = 2048, message = "La URL de portada excede la longitud permitida.") String coverUrl,
             @Size(max = 32, message = "La licencia de portada excede la longitud permitida.") String coverLicense,
             @Size(max = 2048, message = "La URL de origen excede la longitud permitida.") String coverSourceUrl,
-            @Size(max = 500, message = "La atribución de portada excede la longitud permitida.") String coverAttribution) { }
+            @Size(max = 500, message = "La atribución de portada excede la longitud permitida.") String coverAttribution,
+            @Pattern(regexp = "EPUB|PDF", message = "El formato del eBook debe ser EPUB o PDF.")
+            @Schema(nullable = true, allowableValues = {"EPUB", "PDF"}) String ebookFileFormat,
+            @Positive(message = "La duración debe ser positiva y expresarse en segundos.")
+            @Schema(nullable = true) Integer audioDurationSeconds,
+            @Size(max = 32, message = "Se permiten hasta 32 narradores.")
+            List<@NotBlank(message = "El nombre del narrador no puede estar vacío.")
+                @Size(max = 200, message = "El nombre del narrador excede la longitud permitida.") String> narrators) { }
 
     /** bookId and sku are deliberately absent because they are immutable after creation. */
     public record EditionUpdate(@NotBlank(message = "El identificador de la editorial no puede estar vacío.")
@@ -65,12 +75,19 @@ public final class AdminCatalogRequests {
             @NotBlank(message = "El idioma no puede estar vacío.")
             @Pattern(regexp = "(?i)[a-z]{2,3}", message = "El idioma no tiene un formato válido.") String language,
             @NotBlank(message = "El formato no puede estar vacío.")
-            @Pattern(regexp = "PAPERBACK|HARDCOVER", message = "El formato debe ser PAPERBACK o HARDCOVER.") String format,
-            @NotNull(message = "El número de páginas es obligatorio.") Integer pageCount, LocalDate publicationDate,
+            @Pattern(regexp = "PAPERBACK|HARDCOVER|EBOOK|AUDIOBOOK", message = "El formato debe ser PAPERBACK, HARDCOVER, EBOOK o AUDIOBOOK.") @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format,
+            @Positive(message = "El número de páginas debe ser positivo.") @Max(value = 100000, message = "El número de páginas excede el límite permitido.") @Schema(nullable = true) Integer pageCount, LocalDate publicationDate,
             @NotBlank(message = "El precio no puede estar vacío.")
             @Pattern(regexp = "[0-9]{1,9}\\.[0-9]{2}", message = "El precio debe tener dos posiciones decimales.") String price,
             @Size(max = 2048, message = "La URL de portada excede la longitud permitida.") String coverUrl,
             @Size(max = 32, message = "La licencia de portada excede la longitud permitida.") String coverLicense,
             @Size(max = 2048, message = "La URL de origen excede la longitud permitida.") String coverSourceUrl,
-            @Size(max = 500, message = "La atribución de portada excede la longitud permitida.") String coverAttribution) { }
+            @Size(max = 500, message = "La atribución de portada excede la longitud permitida.") String coverAttribution,
+            @Pattern(regexp = "EPUB|PDF", message = "El formato del eBook debe ser EPUB o PDF.")
+            @Schema(nullable = true, allowableValues = {"EPUB", "PDF"}) String ebookFileFormat,
+            @Positive(message = "La duración debe ser positiva y expresarse en segundos.")
+            @Schema(nullable = true) Integer audioDurationSeconds,
+            @Size(max = 32, message = "Se permiten hasta 32 narradores.")
+            List<@NotBlank(message = "El nombre del narrador no puede estar vacío.")
+                @Size(max = 200, message = "El nombre del narrador excede la longitud permitida.") String> narrators) { }
 }

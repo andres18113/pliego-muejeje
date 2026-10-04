@@ -31,21 +31,26 @@ import tools.jackson.databind.ObjectMapper;
 @Repository
 public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements CustomerOrderGateway {
 
-    private static final String LIST = "SELECT order_id,created_at,order_state,total,payment_state,total_count "
+    private static final String LIST = "SELECT order_id,created_at,order_state,total,payment_state,total_count,"
+            + "purchase_state,fulfillment_method,shipment_state,estimated_delivery_from,estimated_delivery_to,"
+            + "item_count,unit_count,item_summary::text,invoice_state,invoice_pdf_available,invoice_xml_available "
             + "FROM pliego.fn_customer_orders(?,?,?)";
     private static final String DETAIL = "SELECT order_id,order_state,subtotal,total,created_at,updated_at,"
             + "items::text AS items,address::text AS address,payment::text AS payment,"
-            + "state_history::text AS state_history FROM pliego.fn_customer_order_detail(?,?)";
+            + "state_history::text AS state_history,purchase_state,fulfillment::text,shipment::text,invoice::text,"
+            + "credit_notes::text,available_actions::text FROM pliego.fn_customer_order_detail(?,?)";
     private static final String CANCEL = "CALL pliego.sp_order_cancel(?,?,?,?,?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
+    private final PostPurchaseRowMapper postPurchase;
 
     public JdbcCustomerOrderGateway(DatabaseExceptionTranslator exceptionTranslator, JdbcTemplate jdbcTemplate,
             ObjectMapper objectMapper) {
         super(exceptionTranslator);
         this.jdbcTemplate = jdbcTemplate;
         this.objectMapper = objectMapper;
+        this.postPurchase = new PostPurchaseRowMapper(objectMapper);
     }
 
     @Override
@@ -73,7 +78,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
             statement.setInt(3, pageSize);
         }, (rs, row) -> new CountedSummary(new Summary(Long.toString(rs.getLong("order_id")),
                 rs.getObject("created_at", OffsetDateTime.class).toInstant(), rs.getString("order_state"),
-                rs.getBigDecimal("total"), rs.getString("payment_state")), rs.getLong("total_count")));
+                rs.getBigDecimal("total"), rs.getString("payment_state"), postPurchase.summary(rs)), rs.getLong("total_count")));
     }
 
     @Override
@@ -124,7 +129,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
                     new Payment(text(payment, "paymentId"), text(payment, "method"),
                             text(payment, "state"), decimal(payment, "amount"),
                             text(payment, "reference"), text(payment, "resultDetail"),
-                            text(payment, "createdAt"), text(payment, "updatedAt")), parseHistory(history));
+                            text(payment, "createdAt"), text(payment, "updatedAt")), parseHistory(history),postPurchase.detail(rs));
         };
     }
 

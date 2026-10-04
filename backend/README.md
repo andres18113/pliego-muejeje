@@ -78,7 +78,7 @@ PLIEGO_TRANSFER_IDENTIFICATION=<RUC or identification; optional>
 
 For example, generate a development secret with `openssl rand -hex 32` and export the result as `PLIEGO_JWT_SECRET`. The application interprets its UTF-8 bytes as the HS256 key and rejects values shorter than 32 bytes.
 
-The public `GET /api/v1/reference/countries` endpoint serves ISO country codes with Spanish names from the Java locale reference. `GET /api/v1/reference/transfer-details` serves the transfer instructions from the configuration above. Local defaults are demonstration values; set all five transfer variables for any non-demo deployment.
+The public `GET /api/v1/reference/countries` endpoint serves ISO country codes with Spanish names from the Java locale reference. `GET /api/v1/reference/transfer-details` serves the transfer instructions from the configuration above. Set the five transfer variables to the account details used by the store.
 
 Authentication is available at `POST /api/v1/auth/register` and `POST /api/v1/auth/login`. Login returns a 30-minute bearer JWT and sets a host-only, `HttpOnly`, `Secure`, `SameSite=Strict` refresh cookie. `POST /api/v1/auth/refresh` restores and rotates the cookie-backed session; the session expires absolutely after 30 days. `POST /api/v1/auth/logout` revokes the session and expires the cookie. PostgreSQL stores only a SHA-256 digest of the opaque refresh credential. Keep `PLIEGO_AUTH_COOKIE_SECURE=true` in deployed HTTPS environments; set it to `false` only for local plain-HTTP development. If the frontend uses a separate origin, list its exact origin in `PLIEGO_CORS_ALLOWED_ORIGINS`; credentialed CORS does not allow wildcard origins. The authenticated CUSTOMER profile and address routes are `GET/PUT /api/v1/me`, `GET/POST /api/v1/me/addresses`, `PUT/DELETE /api/v1/me/addresses/{addressId}`, and `PUT /api/v1/me/addresses/{addressId}/primary`. These operations derive the actor from the verified JWT and delegate business rules to the approved Database API routines. Human-facing REST errors and validation feedback are in Spanish; machine-readable codes stay stable.
 
@@ -110,3 +110,46 @@ mvn spring-boot:run
 ```
 
 PostgreSQL 18.x is the approved database baseline. Migrations V001–V019 remain byte-for-byte identical to the approved archive; V020 onward contain additive corrections and contract amendments, including V024's separation of cover delivery URLs from unresolved licensing metadata. V025 makes cart-item `unavailabilityReason` report the canonical SQLSTATE (`P2043`, `P2042`, `P3002`). Domain errors publish the PostgreSQL SQLSTATE as the Problem Details `code`; symbolic names are documentation labels only. See the [canonical domain error codes amendment](../docs/api-amendments/0003-canonical-domain-error-codes-v1.0.3.md). The handoff and OpenAPI links are also available from the [repository README](../README.md).
+
+## Simulated digital editions (V032)
+
+`EBOOK` and `AUDIOBOOK` are edition formats alongside `PAPERBACK` and `HARDCOVER`.
+Categories stay thematic. eBooks may declare `ebookFileFormat` (`EPUB`/`PDF`);
+audiobooks require positive `audioDurationSeconds` and ordered `narrators`.
+Physical page counts remain required; audiobook page counts must be absent.
+Digital editions have no inventory row and are available while book and edition
+are active. Cart digital quantities are one; mixed checkout/cancellation moves
+only physical stock. ADMIN edition `stockActual` is null for digital formats.
+
+Existing physical requests and SQL command signatures remain supported. Use a
+new edition to change between physical and digital fulfillment. Covers and the
+CDN pipeline retain their existing conventions. The development importer accepts
+digital staging and never seeds digital stock. The frontend and digital content
+upload/delivery/playback are outside this implementation. The existing simulated
+checkout still requires an address and retains its order-state workflow.
+
+See [API amendment v1.0.7](../docs/api-amendments/0007-digital-editions-v1.0.7.md)
+and [ADR-0016](../docs/adr/0016-digital-editions-and-stockless-availability.md).
+
+## Post-purchase lifecycle (V033–V034)
+
+Customer orders retain `/api/v1/orders` and their immutable purchased-item/delivery
+snapshots. Lists add compact historical items and fulfillment/invoice summaries;
+customer/admin details add `purchaseState`, fulfillment, shipment/tracking history,
+typed invoice, credit-note summaries and server-authoritative `availableActions`.
+The existing overall `orderState` remains compatible; commercial state, payment,
+shipment and issuance are separately represented. Physical orders use HOME_DELIVERY;
+digital-only orders have no physical shipment. Editing saved addresses never changes
+an existing order; post-purchase address replacement is unavailable.
+
+ADMIN commands under `/api/v1/admin/orders/{orderId}` add shipment transitions,
+tracking updates, explicit commercial invoice issuance and full credit-note issuance
+after refund. Issued document identity/address/line/tax/total snapshots are immutable.
+Existing v1 totals perform no tax computation; `NOT_ASSESSED` distinguishes this from
+any claim of tax exemption or fiscal compliance. Carrier, pickup, fiscal numbering,
+tax computation, document artifacts and SRI integration remain future work.
+
+V033 backfills physical shipments from purchased formats and recorded state history;
+V034 adds typed invoice/document extension tables without fabricating old invoices.
+The CI gate now expects 34 migrations. See [API amendment v1.0.8](../docs/api-amendments/0008-post-purchase-v1.0.8.md)
+and [ADR-0017](../docs/adr/0017-post-purchase-lifecycle-and-documents.md).

@@ -1,8 +1,9 @@
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { motion, useReducedMotion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeft, Check, ChevronDown, CreditCard, Landmark, MapPin } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -19,12 +20,20 @@ import {
   type CheckoutResult,
 } from "@/shared/api/orders";
 import { FieldMessage } from "@/shared/ui/Field";
+import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 import { useTransferDetails } from "@/shared/api/reference";
+import { AmericanExpressLogoIcon } from "react-svg-credit-card-payment-icons/americanexpress";
+import { DinersClubLogoIcon } from "react-svg-credit-card-payment-icons/dinersclub";
+import { MastercardLogoIcon } from "react-svg-credit-card-payment-icons/mastercard";
+import { VisaLogoIcon } from "react-svg-credit-card-payment-icons/visa";
 import { AddressForm } from "./AddressForm";
 import { cartQueryKey, cartUnitCount, useCustomerCart } from "./cartQuery";
 import { ReadFailure } from "./CartPage";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
-import { detectCardBrand, formatCardNumber, isLuhnValid, normalizeCardNumber, unavailabilityText, unitsLabel, type CardBrand } from "./purchaseText";
+import { detectCardBrand, formatCardNumber, isLuhnValid, normalizeCardNumber, unitsLabel, type CardBrand } from "./purchaseText";
+import { StockStatus } from "@/features/catalog/StockStatus";
+import { availabilityConflictMessage } from "@/features/catalog/stockStatusModel";
+import surface from "@/features/catalog/availabilitySurface.module.css";
 import { TransferFacts } from "./TransferFacts";
 
 const checkoutSchema = z.object({
@@ -38,29 +47,26 @@ const checkoutSchema = z.object({
   if (values.paymentMethod !== "CARD") return;
   const digits = normalizeCardNumber(values.cardNumber);
   if (!digits) {
-    context.addIssue({ code: "custom", path: ["cardNumber"], message: "Escribe un número de tarjeta de prueba." });
+    context.addIssue({ code: "custom", path: ["cardNumber"], message: "Escribe el número de tu tarjeta." });
   } else if (!/^[0-9]{12,19}$/.test(digits)) {
-    context.addIssue({ code: "custom", path: ["cardNumber"], message: "El número debe tener entre 12 y 19 dígitos." });
+    context.addIssue({ code: "custom", path: ["cardNumber"], message: "El número de tarjeta debe tener entre 12 y 19 dígitos." });
   } else if (!isLuhnValid(digits)) {
-    context.addIssue({ code: "custom", path: ["cardNumber"], message: "Este número no es válido. Revisa los dígitos." });
+    context.addIssue({ code: "custom", path: ["cardNumber"], message: "Este número de tarjeta no es válido. Revisa los dígitos." });
   }
-  if (!/^(0[1-9]|1[0-2])\s*\/\s*\d{2}$/.test(values.expiration)) {
-    context.addIssue({ code: "custom", path: ["expiration"], message: "Escribe el vencimiento en formato MM/AA." });
-  } else {
-    const [month, year] = values.expiration.split("/").map((part) => Number(part.trim()));
-    const now = new Date();
-    if (2000 + year < now.getFullYear() || (2000 + year === now.getFullYear() && month < now.getMonth() + 1)) {
-      context.addIssue({ code: "custom", path: ["expiration"], message: "La tarjeta está vencida." });
-    }
+  if (!isValidCardExpiry(values.expiration)) {
+    context.addIssue({ code: "custom", path: ["expiration"], message: "Escribe la fecha de caducidad en formato MM/AA." });
+  } else if (!isCardExpiryCurrent(values.expiration)) {
+    context.addIssue({ code: "custom", path: ["expiration"], message: "La fecha de caducidad de la tarjeta ya venció." });
   }
   const cvvLength = detectCardBrand(values.cardNumber) === "amex" ? 4 : 3;
-  if (!new RegExp(`^\\d{${cvvLength}}$`).test(values.cvv)) context.addIssue({ code: "custom", path: ["cvv"], message: `Escribe los ${cvvLength} dígitos del código de seguridad.` });
-  if (!values.cardholder.trim()) context.addIssue({ code: "custom", path: ["cardholder"], message: "Escribe el nombre que figura en la tarjeta." });
+  if (!new RegExp(`^\\d{${cvvLength}}$`).test(values.cvv)) context.addIssue({ code: "custom", path: ["cvv"], message: `El código de seguridad debe tener ${cvvLength} dígitos.` });
+  if (!values.cardholder.trim()) context.addIssue({ code: "custom", path: ["cardholder"], message: "Escribe el nombre del titular de la tarjeta." });
 });
 
 type CheckoutValues = z.input<typeof checkoutSchema>;
 type Phase = "idle" | "checking" | "submitting" | "unknown" | "reconciling";
 type Problem = { title: string; detail: string; action?: "cart" };
+const supportedCardBrands: CardBrand[] = ["visa", "mastercard", "amex", "diners"];
 
 export function CheckoutPage() {
   return (
@@ -85,6 +91,7 @@ function CheckoutContent() {
   });
   const submitLock = useRef(false);
   const baselineOrderId = useRef<string | null>(null);
+  const cardNumberServerError = useRef<string | null>(null);
   const problemRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>("idle");
   const [problem, setProblem] = useState<Problem | null>(null);
@@ -94,10 +101,12 @@ function CheckoutContent() {
 
   const {
     register,
+    control,
     handleSubmit,
     watch,
     setValue,
     setError,
+    clearErrors,
     getValues,
     resetField,
     formState: { errors },
@@ -108,6 +117,8 @@ function CheckoutContent() {
     shouldFocusError: false,
   });
   const cardNumberRegistration = register("cardNumber");
+  const cvvRegistration = register("cvv");
+  const reduceMotion = useReducedMotion();
   const paymentMethod = watch("paymentMethod");
   const cardNumber = watch("cardNumber");
   const cardBrand = detectCardBrand(cardNumber);
@@ -182,6 +193,7 @@ function CheckoutContent() {
     const displayedCart = cartQuery.data;
     if (!displayedCart) return;
     submitLock.current = true;
+    cardNumberServerError.current = null;
     setProblem(null);
     setPhase("checking");
 
@@ -230,6 +242,7 @@ function CheckoutContent() {
         return;
       }
 
+      const transactionStartedAt = Date.now();
       setPhase("submitting");
       let result: CheckoutResult;
       try {
@@ -239,16 +252,23 @@ function CheckoutContent() {
           cardNumber: values.paymentMethod === "CARD" ? normalizeCardNumber(values.cardNumber) : undefined,
         });
       } catch (error) {
+        await holdTransactionFeedback(transactionStartedAt, reduceMotion);
         await handleCheckoutError(error);
         return;
       }
 
+      await holdTransactionFeedback(transactionStartedAt, reduceMotion);
       await queryClient.invalidateQueries({ queryKey: cartQueryKey });
       navigate(`/orders/${result.orderId}`, { replace: true });
     } finally {
       // Never keep the card number after an attempt, whatever the outcome.
       resetField("cardNumber", { defaultValue: "" });
       resetField("cvv", { defaultValue: "" });
+      if (cardNumberServerError.current) {
+        setError("cardNumber", { type: "server", message: cardNumberServerError.current });
+        cardNumberServerError.current = null;
+        requestAnimationFrame(() => document.getElementById("checkout-card-number")?.focus());
+      }
       submitLock.current = false;
     }
   }, focusFirstInvalid);
@@ -266,7 +286,7 @@ function CheckoutContent() {
     setPhase("idle");
     const code = error.code;
     // Canonical SQLSTATE wire codes; see API amendment v1.0.3.
-    if (code === "P3002" || code === "P2042" || code === "P2043" || code === "P2041" || code === "P3001") {
+    if (availabilityConflictMessage(code)) {
       await cartQuery.refetch();
       setProblem({
         title: "La disponibilidad cambió y no se creó el pedido.",
@@ -281,11 +301,12 @@ function CheckoutContent() {
       setChangingAddress(true);
       setError("addressId", { message: "Esa dirección ya no está disponible. Elige otra o agrega una nueva." }, { shouldFocus: true });
     } else if (code === "INVALID_CARD_NUMBER") {
-      setError("cardNumber", { message: `${error.detail} Vuelve a escribirlo.` }, { shouldFocus: true });
+      cardNumberServerError.current = `Número de tarjeta: ${error.detail} Vuelve a escribirlo.`;
+      setError("cardNumber", { type: "server", message: cardNumberServerError.current });
     } else if (code === "P5007") {
       setProblem({
         title: "No se creó el pedido.",
-        detail: "Ocurrió un problema temporal al registrar el pago simulado. Puedes volver a confirmar la compra.",
+        detail: "Ocurrió un problema temporal al registrar el pago. Puedes volver a confirmar la compra.",
       });
     } else if (error.status === 403) {
       setProblem({ title: "Tu cuenta no puede finalizar compras.", detail: error.detail });
@@ -377,7 +398,7 @@ function CheckoutContent() {
                 {addressesQuery.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus direcciones. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void addressesQuery.refetch()}>Actualizar</Button></p>}
                 {addressNotice && <p className="purchase-notice purchase-notice--success" role="status">{addressNotice}</p>}
                 {selectedAddress && !changingAddress && !addingAddress && <div className="checkout-selected-address">
-                  <MapPin aria-hidden="true" size={21} />
+                  <MaterialSymbol name="location_on" aria-hidden="true" size={21} />
                   <div><strong>{selectedAddress.alias}{selectedAddress.primary && <span className="choice-tag">Principal</span>}</strong><p>{selectedAddress.line1}{selectedAddress.line2 ? `, ${selectedAddress.line2}` : ""} · {selectedAddress.city}, {selectedAddress.province}</p><span>{selectedAddress.phone}</span></div>
                 </div>}
                 {addresses.length > 0 && changingAddress && !addingAddress && (
@@ -439,15 +460,15 @@ function CheckoutContent() {
                 <legend>Método de pago</legend>
                 <label className="payment-method-option">
                   <input className="visually-hidden" type="radio" value="CARD" disabled={busy} {...register("paymentMethod")} />
-                  <span className="payment-method-icon"><CreditCard aria-hidden="true" size={19} /></span>
+                  <span className="payment-method-icon"><MaterialSymbol name="credit_card" aria-hidden="true" size={19} /></span>
                   <span className="payment-method-copy"><strong>Tarjeta</strong><span>Crédito o débito</span></span>
-                  <span className="payment-method-selected"><Check aria-hidden="true" size={15} /></span>
+                  <span className="payment-method-selected"><MaterialSymbol name="check" aria-hidden="true" size={15} /></span>
                 </label>
                 <label className="payment-method-option">
                   <input className="visually-hidden" type="radio" value="TRANSFER" disabled={busy} {...register("paymentMethod")} />
-                  <span className="payment-method-icon"><Landmark aria-hidden="true" size={19} /></span>
+                  <span className="payment-method-icon"><MaterialSymbol name="account_balance" aria-hidden="true" size={19} /></span>
                   <span className="payment-method-copy"><strong>Transferencia</strong><span>Con referencia de pedido</span></span>
-                  <span className="payment-method-selected"><Check aria-hidden="true" size={15} /></span>
+                  <span className="payment-method-selected"><MaterialSymbol name="check" aria-hidden="true" size={15} /></span>
                 </label>
               </fieldset>
               {errors.paymentMethod && (
@@ -456,6 +477,17 @@ function CheckoutContent() {
 
               {paymentMethod === "CARD" && (
                 <div className="checkout-card-fields">
+                  <div className="card-security-header">
+                    <div className="card-security-title">
+                      <MaterialSymbol name="lock" aria-hidden="true" size={17} />
+                      <span>Proceso de compra seguro</span>
+                    </div>
+                    <ul className="card-brand-list" aria-label="Tarjetas aceptadas">
+                      {supportedCardBrands.map((brand) => (
+                        <li key={brand}><CardBrandMark brand={brand} accepted /></li>
+                      ))}
+                    </ul>
+                  </div>
                   <div className="form-field checkout-card">
                     <label htmlFor="checkout-card-number">Número de tarjeta</label>
                     <div className="card-number-control">
@@ -473,25 +505,99 @@ function CheckoutContent() {
                         {...cardNumberRegistration}
                         onChange={(event) => {
                           const input = event.currentTarget;
+                          const previousDigits = normalizeCardNumber(getValues("cardNumber"));
+                          const nextDigits = normalizeCardNumber(input.value);
+                          const appendedToIncompleteNumber = nextDigits.startsWith(previousDigits)
+                            && nextDigits.length > previousDigits.length;
+                          const moveForward = isCompleteValidCardNumber(input.value)
+                            && (caretIsAfterLastDigit(input) || appendedToIncompleteNumber);
                           const digitsBeforeCaret = input.value.slice(0, input.selectionStart ?? input.value.length).replace(/\D/g, "").length;
                           input.value = formatCardNumber(input.value);
                           void cardNumberRegistration.onChange(event);
+                          if (errors.cardNumber) clearErrors("cardNumber");
                           const caret = positionAfterDigits(input.value, digitsBeforeCaret);
-                          requestAnimationFrame(() => input.setSelectionRange(caret, caret));
+                          if (moveForward) requestAnimationFrame(() => document.getElementById("checkout-expiration")?.focus());
+                          else input.setSelectionRange(caret, caret);
                         }}
                       />
                       {cardBrand && <CardBrandMark brand={cardBrand} />}
                     </div>
                   {errors.cardNumber && <FieldMessage id="card-number-error" tone="error">{errors.cardNumber.message}</FieldMessage>}
                   </div>
-                  <div className="form-field"><label htmlFor="checkout-expiration">Vencimiento (MM/AA)</label><input id="checkout-expiration" inputMode="numeric" autoComplete="cc-exp" maxLength={7} disabled={busy} aria-invalid={Boolean(errors.expiration) || undefined} aria-describedby={errors.expiration ? "expiration-error" : undefined} {...register("expiration")} />{errors.expiration && <FieldMessage id="expiration-error" tone="error">{errors.expiration.message}</FieldMessage>}</div>
-                  <div className="form-field"><label htmlFor="checkout-cvv">CVV</label><input id="checkout-cvv" type="password" inputMode="numeric" autoComplete="cc-csc" maxLength={cardBrand === "amex" ? 4 : 3} disabled={busy} aria-invalid={Boolean(errors.cvv) || undefined} aria-describedby={errors.cvv ? "cvv-error" : undefined} {...register("cvv")} />{errors.cvv && <FieldMessage id="cvv-error" tone="error">{errors.cvv.message}</FieldMessage>}</div>
+                  <div className="form-field">
+                    <label htmlFor="checkout-expiration">Caducidad (MM/AA)</label>
+                    <Controller
+                      control={control}
+                      name="expiration"
+                      render={({ field }) => (
+                        <input
+                          id="checkout-expiration"
+                          ref={field.ref}
+                          name={field.name}
+                          type="text"
+                          inputMode="numeric"
+                          autoComplete="cc-exp"
+                          maxLength={7}
+                          value={field.value}
+                          disabled={busy}
+                          aria-invalid={Boolean(errors.expiration) || undefined}
+                          aria-describedby={errors.expiration ? "expiration-error" : undefined}
+                          onBlur={field.onBlur}
+                          onChange={(event) => {
+                            const input = event.currentTarget;
+                            const previousDigits = getValues("expiration").replace(/\D/g, "");
+                            const nextDigits = input.value.replace(/\D/g, "");
+                            const appendedToIncompleteExpiry = nextDigits.startsWith(previousDigits)
+                              && nextDigits.length > previousDigits.length;
+                            const moveForward = (caretIsAfterLastDigit(input) || appendedToIncompleteExpiry)
+                              && nextDigits.length === 4
+                              && isCardExpiryCurrent(input.value);
+                            const digitsBeforeCaret = input.value.slice(0, input.selectionStart ?? input.value.length).replace(/\D/g, "").length;
+                            const formatted = formatCardExpiry(input.value);
+                            field.onChange(formatted);
+                            const caret = positionAfterDigits(formatted, digitsBeforeCaret);
+                            if (errors.expiration) clearErrors("expiration");
+                            requestAnimationFrame(() => {
+                              if (moveForward) document.getElementById("checkout-cvv")?.focus();
+                              else input.setSelectionRange(caret, caret);
+                            });
+                          }}
+                        />
+                      )}
+                    />
+                    {errors.expiration && <FieldMessage id="expiration-error" tone="error">{errors.expiration.message}</FieldMessage>}
+                  </div>
+                  <div className="form-field">
+                    <label htmlFor="checkout-cvv">Código de seguridad</label>
+                    <input
+                      id="checkout-cvv"
+                      type="password"
+                      inputMode="numeric"
+                      autoComplete="cc-csc"
+                      maxLength={cardBrand === "amex" ? 4 : 3}
+                      disabled={busy}
+                      aria-invalid={Boolean(errors.cvv) || undefined}
+                      aria-describedby={errors.cvv ? "cvv-error" : undefined}
+                      {...cvvRegistration}
+                      onChange={(event) => {
+                        const input = event.currentTarget;
+                        const length = cardBrand === "amex" ? 4 : 3;
+                        const moveForward = caretIsAfterLastDigit(input) && new RegExp(`^\\d{${length}}$`).test(input.value);
+                        const caret = input.selectionStart ?? input.value.length;
+                        input.value = input.value.replace(/\D/g, "").slice(0, length);
+                        void cvvRegistration.onChange(event);
+                        if (errors.cvv) clearErrors("cvv");
+                        if (moveForward) requestAnimationFrame(() => document.getElementById("checkout-cardholder")?.focus());
+                        else input.setSelectionRange(Math.min(caret, input.value.length), Math.min(caret, input.value.length));
+                      }}
+                    />
+                    {errors.cvv && <FieldMessage id="cvv-error" tone="error">{errors.cvv.message}</FieldMessage>}
+                  </div>
                   <div className="form-field checkout-cardholder"><label htmlFor="checkout-cardholder">Nombre en la tarjeta</label><input id="checkout-cardholder" autoComplete="cc-name" maxLength={120} disabled={busy} aria-invalid={Boolean(errors.cardholder) || undefined} aria-describedby={errors.cardholder ? "cardholder-error" : undefined} {...register("cardholder")} />{errors.cardholder && <FieldMessage id="cardholder-error" tone="error">{errors.cardholder.message}</FieldMessage>}</div>
-                  <p className="checkout-card-note">Esta compra es una demostración. Usa datos de prueba; no se realiza ningún cobro. El código de seguridad no se envía.</p>
                 </div>
               )}
               {paymentMethod === "TRANSFER" && (
-                transferDetails.isPending ? <p className="purchase-loading" role="status">Consultando datos bancarios…</p> : transferDetails.isError || !transferDetails.data ? <ReadFailure title="No pudimos consultar los datos bancarios." onRetry={() => void transferDetails.refetch()} retrying={transferDetails.isFetching} /> : <div className="transfer-instructions"><p>Al confirmar tu pedido recibirás una referencia para identificar la transferencia. Esta compra es una demostración: no envíes dinero.</p><TransferFacts details={transferDetails.data} amount={cart.totalCurrent} /></div>
+                transferDetails.isPending ? <p className="purchase-loading" role="status">Consultando datos bancarios…</p> : transferDetails.isError || !transferDetails.data ? <ReadFailure title="No pudimos consultar los datos bancarios." onRetry={() => void transferDetails.refetch()} retrying={transferDetails.isFetching} /> : <div className="transfer-instructions"><p>Al confirmar tu pedido recibirás una referencia para identificar la transferencia.</p><TransferFacts details={transferDetails.data} amount={cart.totalCurrent} /></div>
               )}
             </section>
 
@@ -499,9 +605,15 @@ function CheckoutContent() {
 
             <div className="checkout-submit">
               {busy && (
-                <p className="purchase-loading" role="status">
+                <motion.p
+                  className="purchase-loading"
+                  role="status"
+                  initial={reduceMotion ? false : { opacity: 0, y: 3 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={reduceMotion ? { duration: 0 } : { duration: 0.16, ease: [0.16, 1, 0.3, 1] }}
+                >
                   {phase === "checking" ? "Confirmando tu carrito…" : "Procesando tu pago…"}
-                </p>
+                </motion.p>
               )}
               {unavailable && (
                 <p className="purchase-summary-blocker" role="status">
@@ -512,13 +624,20 @@ function CheckoutContent() {
                 variant="primary"
                 type="submit"
                 className="purchase-primary"
+                aria-label={busy ? "Procesando compra" : `Pagar ${formatUsd(cart.totalCurrent)}`}
                 aria-disabled={submitBlocked || undefined}
                 aria-busy={busy || undefined}
                 onClick={(event) => {
                   if (submitBlocked) event.preventDefault();
                 }}
               >
-                {busy ? "Procesando…" : `Pagar ${formatUsd(cart.totalCurrent)}`}
+                <TransactionButtonLabel
+                  state={busy ? "pending" : "idle"}
+                  idle={`Pagar ${formatUsd(cart.totalCurrent)}`}
+                  pending="Procesando…"
+                  success="Pedido creado"
+                  reserve={`Pagar ${formatUsd(cart.totalCurrent)}`}
+                />
               </Button>
             </div>
           </form>
@@ -533,7 +652,7 @@ function CheckoutContent() {
 function CheckoutHeading() {
   return (
     <header className="purchase-heading">
-      <Link className="purchase-back" to="/cart"><ArrowLeft aria-hidden="true" size={16} /><span>Volver al carrito</span></Link>
+      <Link className="purchase-back" to="/cart"><MaterialSymbol name="arrow_back" aria-hidden="true" size={16} /><span>Volver al carrito</span></Link>
       <h1>Finalizar compra</h1>
       <p>Elige dónde recibir tu pedido y cómo pagarlo.</p>
     </header>
@@ -555,7 +674,7 @@ function CheckoutSummaryDisclosure({ cart }: { cart: CartDetail }) {
       <summary>
         <span>Tu pedido · {unitsLabel(cartUnitCount(cart.items))}</span>
         <strong>{formatUsd(cart.totalCurrent)}</strong>
-        <ChevronDown aria-hidden="true" size={18} className="disclosure-chevron" />
+        <MaterialSymbol name="expand_more" aria-hidden="true" size={18} className="disclosure-chevron" />
       </summary>
       <CheckoutSummaryBody cart={cart} />
     </details>
@@ -565,7 +684,7 @@ function CheckoutSummaryDisclosure({ cart }: { cart: CartDetail }) {
 function CheckoutSummaryBody({ cart }: { cart: CartDetail }) {
   return (
     <>
-      <ul className="summary-lines">
+      <ul className={`summary-lines ${surface.surface}`}>
         {cart.items.map((item) => (
           <li key={item.cartItemId}>
             <span className="summary-line-title">{item.title}</span>
@@ -573,7 +692,7 @@ function CheckoutSummaryBody({ cart }: { cart: CartDetail }) {
               {unitsLabel(item.quantity)} × {formatUsd(item.currentPrice)}
             </span>
             {!item.available && (
-              <span className="summary-line-unavailable">{unavailabilityText(item.unavailabilityReason)}</span>
+              <StockStatus available={item.available} unavailabilityReason={item.unavailabilityReason} size="compact" className={surface.summaryStatus} />
             )}
             <span className="summary-line-subtotal">{formatUsd(item.currentSubtotal)}</span>
           </li>
@@ -598,12 +717,65 @@ function positionAfterDigits(value: string, digitCount: number) {
   return value.length;
 }
 
-function CardBrandMark({ brand }: { brand: CardBrand }) {
+function formatCardExpiry(value: string) {
+  const digits = value.replace(/\D/g, "").slice(0, 4);
+  if (digits.length < 2) return digits;
+  if (digits.length === 2) return `${digits} /`;
+  return `${digits.slice(0, 2)} / ${digits.slice(2)}`;
+}
+
+function caretIsAfterLastDigit(input: HTMLInputElement) {
+  const caret = input.selectionStart;
+  return caret === input.selectionEnd
+    && input.value.slice(0, caret ?? 0).replace(/\D/g, "").length === input.value.replace(/\D/g, "").length;
+}
+
+function isCompleteValidCardNumber(value: string) {
+  const digits = normalizeCardNumber(value);
+  const brand = detectCardBrand(digits);
+  const lengths: Record<CardBrand, number[]> = {
+    visa: [13, 16, 19],
+    mastercard: [16],
+    amex: [15],
+    diners: [14],
+  };
+  return brand !== null && lengths[brand].includes(digits.length) && isLuhnValid(digits);
+}
+
+function isValidCardExpiry(value: string) {
+  return /^(0[1-9]|1[0-2])\s*\/\s*\d{2}$/.test(value);
+}
+
+function isCardExpiryCurrent(value: string) {
+  const match = /^(0[1-9]|1[0-2])\s*\/\s*(\d{2})$/.exec(value);
+  if (!match) return false;
+  const month = Number(match[1]);
+  const year = Number(match[2]);
+  const now = new Date();
+  return 2000 + year > now.getFullYear()
+    || (2000 + year === now.getFullYear() && month >= now.getMonth() + 1);
+}
+
+async function holdTransactionFeedback(startedAt: number, reduceMotion: boolean | null) {
+  const minimumVisibleMs = reduceMotion ? 320 : 520;
+  const remainingMs = minimumVisibleMs - (Date.now() - startedAt);
+  if (remainingMs > 0) await new Promise<void>((resolve) => window.setTimeout(resolve, remainingMs));
+}
+
+function CardBrandMark({ brand, accepted = false }: { brand: CardBrand; accepted?: boolean }) {
   const names: Record<CardBrand, string> = {
     visa: "Visa", mastercard: "Mastercard", amex: "American Express", diners: "Diners Club",
   };
-  return <span className={`card-brand-mark card-brand-mark--${brand}`} role="img" aria-label={`${names[brand]} detectada`}>
-    {brand === "mastercard" ? <><i /><i /><span>mastercard</span></> : brand === "amex" ? "AMEX" : brand === "diners" ? "DINERS" : "VISA"}
+  const logoProps = { "aria-hidden": true as const, focusable: false as const, width: accepted ? 48 : 42, height: accepted ? 28 : 25 };
+  const logo = brand === "visa"
+    ? <VisaLogoIcon {...logoProps} />
+    : brand === "mastercard"
+    ? <MastercardLogoIcon {...logoProps} />
+    : brand === "amex"
+    ? <AmericanExpressLogoIcon {...logoProps} />
+    : <DinersClubLogoIcon {...logoProps} />;
+  return <span className={`card-brand-mark${accepted ? " card-brand-mark--accepted" : ""}`} role="img" aria-label={accepted ? names[brand] : `${names[brand]} detectada`}>
+    {logo}
   </span>;
 }
 
@@ -646,7 +818,7 @@ function AddressChoice({ address, disabled, onSelect, ...field }: {
     <label className="choice">
       <input type="radio" value={address.addressId} disabled={disabled} {...field} onChange={(event) => { void field.onChange(event); onSelect(); }} />
       <span className="choice-copy">
-        <strong><MapPin aria-hidden="true" size={17} />{address.alias}{address.primary && <span className="choice-tag">Principal</span>}</strong>
+        <strong><MaterialSymbol name="location_on" aria-hidden="true" size={17} />{address.alias}{address.primary && <span className="choice-tag">Principal</span>}</strong>
         {lines.map((line) => <span key={line}>{line}</span>)}
         <span>{address.phone}</span>
       </span>

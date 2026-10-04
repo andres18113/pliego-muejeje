@@ -1,18 +1,25 @@
 package com.pliego.modules.sales.api;
 
 import java.util.List;
+import com.pliego.modules.sales.application.PostPurchaseModels;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /** Administrative order wire models; all identifiers and monetary values are JSON strings. */
 public final class AdminOrderResponses {
     private AdminOrderResponses() { }
 
+    @Schema(name="AdminOrderSummary")
     public record Summary(String orderId, String customerId, String customerName,
             String createdAt, String orderState, String total, String paymentState) { }
 
+    @Schema(name="AdminOrderDetail")
     public record Detail(String orderId, String customerId, String customerEmail, String customerName,
             String orderState, String subtotal, String total, String createdAt, String updatedAt,
             List<Item> items, Address address, Payment payment, List<History> stateHistory,
-            List<InventoryMovement> inventoryMovements) {
+            List<InventoryMovement> inventoryMovements, String purchaseState,
+            PostPurchaseModels.Fulfillment fulfillment, PostPurchaseModels.Shipment shipment,
+            PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
+            PostPurchaseModels.Actions availableActions) {
         public Detail {
             items = List.copyOf(items);
             stateHistory = List.copyOf(stateHistory);

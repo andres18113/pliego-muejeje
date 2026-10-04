@@ -200,14 +200,17 @@ public class AdminCatalogController {
             @RequestParam(required = false) String query,
             @RequestParam(required = false) @Pattern(regexp = STATE_PATTERN) String state,
             @RequestParam(required = false) @Positive Long bookId,
+            @RequestParam(required = false) @Pattern(regexp = "PAPERBACK|HARDCOVER|EBOOK|AUDIOBOOK",
+                message = "El formato debe ser PAPERBACK, HARDCOVER, EBOOK o AUDIOBOOK.") String format,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(50) int pageSize) {
-        var result = service.searchEditions(actorId(jwt), new EditionSearch(query, state, bookId, page, pageSize));
+        var result = service.searchEditions(actorId(jwt), new EditionSearch(query, state, bookId, page, pageSize, format));
         return page(result, page, pageSize, row -> new AdminCatalogResponses.Edition(row.editionId(), row.bookId(),
                 row.bookTitle(), row.publisherId(), row.publisherName(), row.sku(), row.isbn13(), row.language(),
                 row.format(), row.pageCount(), row.publicationDate() == null ? null : row.publicationDate().toString(),
                 row.price().setScale(2, RoundingMode.UNNECESSARY).toPlainString(), row.coverUrl(), row.coverLicense(),
-                row.coverSourceUrl(), row.coverAttribution(), row.state(), row.stockActual(), row.createdAt(), row.updatedAt()));
+                row.coverSourceUrl(), row.coverAttribution(), row.state(), row.stockActual(), row.createdAt(), row.updatedAt(),
+                row.ebookFileFormat(), row.audioDurationSeconds(), row.narrators()));
     }
 
     @PostMapping(path = "/editions", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -217,7 +220,8 @@ public class AdminCatalogController {
         long id = service.createEdition(actorId(jwt), new EditionCreateData(Long.parseLong(request.bookId()),
                 Long.parseLong(request.publisherId()), request.sku(), request.isbn13(), request.language(),
                 request.format(), request.pageCount(), request.publicationDate(), new java.math.BigDecimal(request.price()),
-                request.coverUrl(), request.coverLicense(), request.coverSourceUrl(), request.coverAttribution()));
+                request.coverUrl(), request.coverLicense(), request.coverSourceUrl(), request.coverAttribution(),
+                request.ebookFileFormat(), request.audioDurationSeconds(), request.narrators()));
         return ResponseEntity.status(HttpStatus.CREATED).body(new AdminCatalogResponses.EditionCreated(Long.toString(id)));
     }
 
@@ -228,7 +232,8 @@ public class AdminCatalogController {
         service.updateEdition(actorId(jwt), editionId, new EditionUpdateData(Long.parseLong(request.publisherId()),
                 request.isbn13(), request.language(), request.format(), request.pageCount(), request.publicationDate(),
                 new java.math.BigDecimal(request.price()), request.coverUrl(), request.coverLicense(),
-                request.coverSourceUrl(), request.coverAttribution()));
+                request.coverSourceUrl(), request.coverAttribution(),
+                request.ebookFileFormat(), request.audioDurationSeconds(), request.narrators()));
         return ResponseEntity.noContent().build();
     }
 

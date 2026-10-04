@@ -17,14 +17,170 @@ async function fillCheckout(user: ReturnType<typeof userEvent.setup>, method: "T
   await user.click(screen.getByRole("radio", { name: new RegExp(method) }));
   if (card !== undefined) {
     await user.type(screen.getByLabelText("Número de tarjeta"), card);
-    await user.type(screen.getByLabelText("Vencimiento (MM/AA)"), "12/30");
-    await user.type(screen.getByLabelText("CVV"), "123");
+    await user.type(screen.getByLabelText("Caducidad (MM/AA)"), "12/30");
+    await user.type(screen.getByLabelText("Código de seguridad"), "123");
     await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
   }
 }
 
 describe("CheckoutPage", () => {
   afterEach(() => vi.unstubAllGlobals());
+
+  it("shows only card brands supported by the current validator before entry", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/);
+
+    await user.click(screen.getByRole("radio", { name: /Tarjeta/ }));
+
+    expect(screen.getByText("Proceso de compra seguro")).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Tarjetas aceptadas" })).toBeInTheDocument();
+    for (const brand of ["Visa", "Mastercard", "American Express", "Diners Club"]) {
+      expect(screen.getByRole("img", { name: brand })).toBeInTheDocument();
+    }
+    expect(screen.queryByRole("img", { name: /Discover|JCB/ })).not.toBeInTheDocument();
+  });
+
+  it("formats expiry digits as MM / AA and remains editable with the keyboard", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/);
+    await user.click(screen.getByRole("radio", { name: /Tarjeta/ }));
+
+    const expiry = screen.getByLabelText("Caducidad (MM/AA)");
+    await user.type(expiry, "1");
+    expect(expiry).toHaveValue("1");
+    await user.type(expiry, "a");
+    expect(expiry).toHaveValue("1");
+    await user.type(expiry, "0");
+    expect(expiry).toHaveValue("10 /");
+    await user.type(expiry, "2");
+    expect(expiry).toHaveValue("10 / 2");
+    await user.type(expiry, "0");
+    expect(expiry).toHaveValue("10 / 20");
+    await user.keyboard("{Backspace}");
+    expect(expiry).toHaveValue("10 / 2");
+    await user.type(expiry, "0");
+    expect(expiry).toHaveValue("10 / 20");
+    await user.type(expiry, "789");
+    expect(expiry).toHaveValue("10 / 20");
+    expect(expiry).toHaveAttribute("inputmode", "numeric");
+  });
+
+  it("advances through valid card fields and keeps focus on incomplete or invalid values", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+    await fillCheckout(user, "Tarjeta");
+
+    const number = screen.getByLabelText("Número de tarjeta");
+    await user.type(number, "411111111111111");
+    expect(number).toHaveFocus();
+    await user.keyboard("1");
+    const expiry = screen.getByLabelText("Caducidad (MM/AA)");
+    await waitFor(() => expect(expiry).toHaveFocus());
+
+    await user.type(expiry, "1328");
+    expect(expiry).toHaveFocus();
+    await user.clear(expiry);
+    await user.type(expiry, "1228");
+    const cvv = screen.getByLabelText("Código de seguridad");
+    await waitFor(() => expect(cvv).toHaveFocus());
+
+    await user.type(cvv, "12");
+    expect(cvv).toHaveFocus();
+    await user.keyboard("3");
+    await waitFor(() => expect(screen.getByLabelText("Nombre en la tarjeta")).toHaveFocus());
+  });
+
+  it("keeps transaction feedback visible before navigating to the created order", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+      "GET /api/v1/orders": () => json({ items: [], page: 0, pageSize: 1, totalCount: "0" }),
+      "POST /api/v1/checkout": () => json(approved, 201),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+    await fillCheckout(user, "Transferencia");
+    const submittedAt = Date.now();
+
+    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+
+    expect(await screen.findByText("Procesando tu pago…")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
+    expect(Date.now() - submittedAt).toBeGreaterThanOrEqual(480);
+  });
+
+  it("rejects expiry months outside 01–12, identifies the field, and focuses it", async () => {
+    const api = stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+
+    await fillCheckout(user, "Tarjeta", "4111111111111111");
+    const expiry = screen.getByLabelText("Caducidad (MM/AA)");
+    await user.clear(expiry);
+    await user.type(expiry, "1328");
+    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+
+    expect(await screen.findByText("Escribe la fecha de caducidad en formato MM/AA.")).toBeInTheDocument();
+    expect(expiry).toHaveAttribute("aria-invalid", "true");
+    expect(expiry).toHaveFocus();
+    expect(api.count("POST", "/api/v1/checkout")).toBe(0);
+  });
+
+  it("rejects an expired month and year before sending checkout", async () => {
+    const api = stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+
+    await fillCheckout(user, "Tarjeta", "4111111111111111");
+    const previousMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1);
+    const expiredDigits = `${String(previousMonth.getMonth() + 1).padStart(2, "0")}${String(previousMonth.getFullYear() % 100).padStart(2, "0")}`;
+    const expiry = screen.getByLabelText("Caducidad (MM/AA)");
+    await user.clear(expiry);
+    await user.type(expiry, expiredDigits);
+    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+
+    expect(await screen.findByText("La fecha de caducidad de la tarjeta ya venció.")).toBeInTheDocument();
+    expect(expiry).toHaveFocus();
+    expect(api.count("POST", "/api/v1/checkout")).toBe(0);
+  });
+
+  it("uses the shared searchable country picker for a new checkout address", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([]),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+
+    const country = await screen.findByRole("combobox", { name: "País de entrega" });
+    await user.click(country);
+    const search = await screen.findByRole("combobox", { name: "Buscar país de entrega" });
+    await user.type(search, "Colom");
+    await user.keyboard("{ArrowDown}{Enter}");
+
+    expect(country).toHaveTextContent("Colombia");
+    expect(screen.queryByRole("combobox", { name: "Buscar país de entrega" })).not.toBeInTheDocument();
+  });
 
   it("sends one CARD checkout with the saved address and opens the created order", async () => {
     const api = stubApi({
@@ -64,9 +220,29 @@ describe("CheckoutPage", () => {
     await fillCheckout(user, "Tarjeta", "4111111111111112");
     await user.click(screen.getByRole("button", { name: /Pagar/ }));
 
-    expect(await screen.findByText("Este número no es válido. Revisa los dígitos.")).toBeInTheDocument();
+    expect(await screen.findByText("Este número de tarjeta no es válido. Revisa los dígitos.")).toBeInTheDocument();
     expect(screen.getByLabelText("Número de tarjeta")).toHaveFocus();
     expect(api.count("POST", "/api/v1/checkout")).toBe(0);
+  });
+
+  it("identifies the card-number field in a server validation error", async () => {
+    const api = stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+      "GET /api/v1/orders": () => json({ items: [], page: 0, pageSize: 1, totalCount: "0" }),
+      "POST /api/v1/checkout": () => problem(400, "INVALID_CARD_NUMBER", "Número de tarjeta no válido", "El número no pasó la validación."),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+
+    await fillCheckout(user, "Tarjeta", "4111111111111111");
+    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+
+    await waitFor(() => expect(api.count("POST", "/api/v1/checkout")).toBe(1));
+    expect(await screen.findByText("Número de tarjeta: El número no pasó la validación. Vuelve a escribirlo.")).toBeInTheDocument();
+    expect(screen.getByLabelText("Número de tarjeta")).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByLabelText("Número de tarjeta")).toHaveValue("");
+    await waitFor(() => expect(screen.getByLabelText("Número de tarjeta")).toHaveFocus());
   });
 
   it("detects American Express and accepts its four-digit security code", async () => {
@@ -80,9 +256,9 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
     await fillCheckout(user, "Tarjeta", "378282246310005");
     expect(screen.getByRole("img", { name: "American Express detectada" })).toBeInTheDocument();
-    expect(screen.getByLabelText("CVV")).toHaveAttribute("maxlength", "4");
-    await user.clear(screen.getByLabelText("CVV"));
-    await user.type(screen.getByLabelText("CVV"), "1234");
+    expect(screen.getByLabelText("Código de seguridad")).toHaveAttribute("maxlength", "4");
+    await user.clear(screen.getByLabelText("Código de seguridad"));
+    await user.type(screen.getByLabelText("Código de seguridad"), "1234");
     await user.click(screen.getByRole("button", { name: /Pagar/ }));
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
     expect(api.calls.find((call) => call.method === "POST")?.body).toMatchObject({ cardNumber: "378282246310005" });
@@ -100,8 +276,8 @@ describe("CheckoutPage", () => {
 
     await fillCheckout(user, "Tarjeta", "4111111111111111");
     await user.click(screen.getByRole("radio", { name: /Transferencia/ }));
-    expect(await screen.findByText("Banco PLIEGO")).toBeInTheDocument();
-    expect(screen.getByText("0000000000")).toBeInTheDocument();
+    expect(await screen.findByText("Banco Guayaquil")).toBeInTheDocument();
+    expect(screen.getByText("2557897233")).toBeInTheDocument();
     expect(screen.queryByLabelText("Número de tarjeta")).not.toBeInTheDocument();
     await user.click(screen.getByRole("radio", { name: /Tarjeta/ }));
     expect(screen.getByLabelText("Número de tarjeta")).toHaveValue("");

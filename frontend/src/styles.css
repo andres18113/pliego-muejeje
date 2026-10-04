@@ -234,9 +234,6 @@ a:hover { color: var(--forest); }
 .transaction-button-label-current { display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
 .transaction-button-label-current[data-animate] { animation: transaction-label-in 160ms cubic-bezier(.16, 1, .3, 1); }
 @keyframes transaction-label-in { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: translateY(0); } }
-.search-error { grid-column: 1 / -1; margin: 0; color: var(--error); font-weight: 600; }
-.catalog-search .search-error { margin-top: 8px; }
-.search-help { display: block; padding-top: 2px; color: var(--secondary-ink); font-size: 11px; line-height: 1.3; }
 
 .detail-synopsis h2,
 .detail-categories h2 {
@@ -264,11 +261,7 @@ a:hover { color: var(--forest); }
 .text-button { border: 0; padding: 2px 0; background: transparent; color: var(--pine); font-weight: var(--weight-strong); text-align: left; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; cursor: pointer; }
 .text-button:hover { color: var(--forest); }
 .field-error { color: var(--error); font-size: 11px; line-height: 1.35; }
-.filter-validation { margin: 12px 0 0; color: var(--error); font-weight: 600; }
-.clear-search { font-size: 11px; }
 
-.catalog-results { padding-top: 18px; padding-bottom: 48px; }
-.result-status { min-height: 1px; color: var(--secondary-ink); font-size: 12px; }
 .edition-favorites-read-error { margin: 0 0 12px; color: var(--error); font-size: 13px; }
 .book-cover { margin: 0; }
 .cover-frame { position: relative; overflow: hidden; aspect-ratio: 2 / 3; background: var(--paper); box-shadow: 0 9px 20px rgb(28 37 30 / 14%); }

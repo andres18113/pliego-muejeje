@@ -80,7 +80,8 @@ for (const scheme of ["Light", "Dark"] as const) {
         for (const card of geometry.measurements) {
           expect(card.ratio).toBeCloseTo(2 / 3, 2);
           expect(card.overflow, `${dataset} ${width}px card overflow`).toBe(false);
-          expect(card.titleHeight).toBeLessThanOrEqual(card.titleLineHeight * 2 + 1);
+          // Titles wrap naturally; a four-line clamp only guards pathological lengths.
+          expect(card.titleHeight).toBeLessThanOrEqual(card.titleLineHeight * 4 + 1);
           for (const target of card.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); expect(target.name).toBeTruthy(); }
         }
         for (let start = 0; start < 12; start += geometry.columns) {
@@ -99,15 +100,15 @@ test("BookCard: keyboard order, full names, separate actions and navigation", as
   const link = first.locator("[data-bookcard-link]");
   await link.focus();
   await page.keyboard.press("Tab");
+  await expect(first.locator("[data-bookcard-cart]")).toBeFocused();
+  await page.keyboard.press("Space");
+  await expect(first.getByRole("status")).toHaveText("Agregado al carrito.");
+  await page.keyboard.press("Tab");
   await expect(first.locator("[data-bookcard-favorite]")).toBeFocused();
   await page.keyboard.press("Space");
   await expect(first.locator("[data-bookcard-favorite]")).toHaveAttribute("aria-pressed", "true");
   await expect(first.getByRole("status")).toHaveText("Agregado a favoritos.");
   await expect(page).toHaveURL(/\/dev\/theme$/);
-  await page.keyboard.press("Tab");
-  await expect(first.locator("[data-bookcard-cart]")).toBeFocused();
-  await page.keyboard.press("Space");
-  await expect(first.getByRole("status")).toHaveText("Agregado al carrito.");
   await page.keyboard.press("Shift+Tab");
   await page.keyboard.press("Shift+Tab");
   await expect(link).toBeFocused();

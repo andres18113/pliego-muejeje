@@ -40,19 +40,18 @@ export function orderDateLabel(value: string) {
   }).format(date);
 }
 
+export function orderShortDateLabel(value: string) {
+  const date = new Date(value);
+  return Number.isNaN(date.valueOf()) ? "Fecha no disponible" : new Intl.DateTimeFormat("es-EC", {
+    day: "numeric", month: "short", year: "numeric", timeZone: "America/Guayaquil",
+  }).format(date);
+}
+
 export function orderMomentLabel(value: string) {
   const date = new Date(value);
   return Number.isNaN(date.valueOf()) ? "Fecha no disponible" : new Intl.DateTimeFormat("es-EC", {
     dateStyle: "medium", timeStyle: "short", timeZone: "America/Guayaquil",
   }).format(date);
-}
-
-/** `reason` is the canonical SQLSTATE reported by `GET /cart` (API amendment v1.0.3). */
-export function unavailabilityText(reason: CartLine["unavailabilityReason"]) {
-  if (reason === "P3002") return "No hay existencias suficientes para esta cantidad.";
-  if (reason === "P2042") return "Esta edición ya no está a la venta.";
-  if (reason === "P2043") return "Este libro ya no está a la venta.";
-  return "No está disponible por ahora.";
 }
 
 /** Inactive editions and books cannot change quantity; only removal is meaningful. */
