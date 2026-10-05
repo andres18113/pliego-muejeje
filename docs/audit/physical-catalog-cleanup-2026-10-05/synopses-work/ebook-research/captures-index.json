@@ -1,0 +1,1659 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000057",
+      "title": "Filosofía del conocimiento (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000057-297298cd05.html",
+          "capture_sha256": "7f19f656c981ac8465fb255fc45efaa774d2e34266d4003b6c86408c9b41b2d8",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000057-297298cd05.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000061",
+      "title": "Medicina intensiva",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67148",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000061-75ab5b32de.html",
+          "capture_sha256": "22560ba11eed31842d144b6b97445d876c8ac883f94ec953f4e17b4c5214f012",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000061-75ab5b32de.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000062",
+      "title": "Las tareas de la filosofía",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000062-0912f5b115.html",
+          "capture_sha256": "eb5c3070954f6f85a8c1dd093ebc27ec54b0ddaa250b7eca892ff7246b1cddd4",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000062-0912f5b115.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "title": "Matemática estructural",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000063-7aec98d226.html",
+          "capture_sha256": "0546a06925a832364148d64ea0dfb34d21526745b5cac418b390eb7611f95aaa",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000063-7aec98d226.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000064",
+      "title": "Fundamentos de matemáticas",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000064-03e773bcf2.html",
+          "capture_sha256": "d975971aabbb48281bb7fe6bd23a9daa80665ff3909fbba9dd0a5e1832f37307",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000064-03e773bcf2.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000065",
+      "title": "La mujer en la historia",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000065-0824793d09.html",
+          "capture_sha256": "10bf2eea3193c1a62dd7c46fd2e5de6ac20f1eefa0d536bc98a4a2f4a08aaac5",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000065-0824793d09.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000068",
+      "title": "Historia económica",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000068-92491a5310.html",
+          "capture_sha256": "1bb54e026598bf73e9c8146a8d31194fe80e726e0134e9e77d3900c344505121",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000068-92491a5310.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000069",
+      "title": "Sociología jurídica",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000069-09083ac523.html",
+          "capture_sha256": "7d6aac664ebf5bf7fd4957bf45ca07ca1f1529b66eba7430fa0f128a40280b01",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000069-09083ac523.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000071",
+      "title": "Invitación a la sociología de la comunicación",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000071-5b73868913.html",
+          "capture_sha256": "0a50e246c6cf35c8d8096d51d518dcd85988e7a50428334a2ed25a0a296ad0ae",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000071-5b73868913.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000072",
+      "title": "Psicología de la competición",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000072-5105f8c1d8.html",
+          "capture_sha256": "4c4bb466bd50754623a64771974ed80ea0d5dcd49b40f55de638ef00cfd6c40f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000072-5105f8c1d8.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000073",
+      "title": "Hacia la medicina del futuro",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72621",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000073-164b3182f2.html",
+          "capture_sha256": "1c011b6fda0d366d4e1470d3a73ca6a4124b14c29c692427d89b0af3e695b319",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000073-164b3182f2.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000078",
+      "title": "Química experimental (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000078-5c3f45f051.html",
+          "capture_sha256": "c3d19e19752702ebd36755379e28f6c7303d74aca7691709e34421c2a0c3cfd0",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000078-5c3f45f051.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000079",
+      "title": "Literaturas compartidas",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66439",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000079-dda238b555.html",
+          "capture_sha256": "89bcb30ab5564236ff6ca30e7a6570adfe936b6fa82e9aa9f1b379e5baab76d7",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000079-dda238b555.txt"
+        },
+        {
+          "url": "https://libros.fahce.unlp.edu.ar/index.php/libros/catalog/book/5",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000079-65f8294d4d.html",
+          "capture_sha256": "14ff54b4eebe280893041922fbdbf9c6c61867a4d6beb58f7df1eeb07e6a5b27",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000079-65f8294d4d.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000081",
+      "title": "Historia",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000081-dcb4f134ef.html",
+          "capture_sha256": "ef4e36513d75c6f91b545941f09a398dd0795d428d521025e6e91494cf3d744c",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000081-dcb4f134ef.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000082",
+      "title": "Historia de Irlanda (3a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000082-82068d7e3c.html",
+          "capture_sha256": "27221af2db14a2645a8549c04a92cad21a68fa72af123d3dd74b38d32b056a4e",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000082-82068d7e3c.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000083",
+      "title": "Biotecnología aplicada a la medicina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53028",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000083-6fc84c3efb.html",
+          "capture_sha256": "28435d45d1a4c1a96dd1cc435baf7eba349ab52a58d552dab28ace28bf1d638f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000083-6fc84c3efb.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000089",
+      "title": "Literatura universal",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000089-618178e1a1.html",
+          "capture_sha256": "ccdf34d938f5d34c41212b71e4bb5ff0a9a43465e9edd14f59a25bda6a92a38e",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000089-618178e1a1.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000090",
+      "title": "Filosofía de la cultura (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000090-3114e5e320.html",
+          "capture_sha256": "4b4514a59a8b038a16138dbf2de799043d0fa5d1d59a47deb174ad3c0d1ed81a",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000090-3114e5e320.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000091",
+      "title": "El lenguaje de la medicina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58272",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000091-758d65652e.html",
+          "capture_sha256": "4ac477ef78530ab0571a25f86a5bf9d8f66b4fb2248348d9625046cb9d7f465c",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000091-758d65652e.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000092",
+      "title": "Introducción a las matemáticas",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000092-153c77cc6c.html",
+          "capture_sha256": "d52c08e5cfcc5bfa9d6217e8956bb2783f9a536ca77e6405eeb7f5b1a38fadf7",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000092-153c77cc6c.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000093",
+      "title": "Historia mínima de los feminismos en América Latina",
+      "sources": [
+        {
+          "url": "https://libros.colmex.mx/tienda/historia-minima-de-los-feminismos-en-america-latina/",
+          "error": "HTTP Error 403: Forbidden"
+        },
+        {
+          "url": "https://libros.colmex.mx/tienda/historia-minima-de-los-feminismos-en-america-latina/",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/publisher-search-capture.json",
+          "capture_sha256": "dba12157cf3c30524d421d1940bbc0bf852040ee5fa47ee57c986887717be936",
+          "capture_method": "WEB_TOOL_CACHED_PUBLIC_PUBLISHER"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000094",
+      "title": "Anatomía general",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36379",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000094-ad593b6f9c.html",
+          "capture_sha256": "0e0ee13423615d0f028645f55a45e281439ee541d0d8ca27e333d81d697a272b",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000094-ad593b6f9c.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000095",
+      "title": "Romancero gitano",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35142",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000095-16cbab3c1f.html",
+          "capture_sha256": "e210bc53f016a3815caa41ba257967ddf0992a247dba3d05af4efebd6205e671",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000095-16cbab3c1f.txt"
+        },
+        {
+          "url": "https://www.editorialalma.com/libros/romancero-gitano",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000095-699f1612d8.html",
+          "capture_sha256": "70ce83fdd0f790c20fb4d4f7ebcf908e7eb6dda0c9de2d59cbdf1da64efe1ad9",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000095-699f1612d8.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000099",
+      "title": "Fundamentos de informática",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000099-bd3c9e03ce.html",
+          "capture_sha256": "143751032b00d9278024c1f6fbe6c84177652e05221ac4fc9cc58b9e1ed38ee0",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000099-bd3c9e03ce.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000102",
+      "title": "Proyectos de investigación en ciencias sociales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000102-1937e461bd.html",
+          "capture_sha256": "f2a8afbffde3b3fd59a9bb1a1cb330b042e871f2e159f4f3d8407ce763bba297",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000102-1937e461bd.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000103",
+      "title": "Sociología del mal",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000103-444722692e.html",
+          "capture_sha256": "f92b8aaa00f67d35aab875cc3f9dfad3bbd07fd9e1f008db2b826b0cc9995e75",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000103-444722692e.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000104",
+      "title": "Biología de hongos",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000104-6a8457f421.html",
+          "capture_sha256": "13be51beaaf707476ac1f15b8d494effa83e149ba96d64aedc9b346b46664e00",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000104-6a8457f421.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000105",
+      "title": "Lo imposible en matemáticas",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000105-8249539d2b.html",
+          "capture_sha256": "cf81565454a273b78e3bee606f70d649a76157b4d6643ef040d4c67ff26c113f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000105-8249539d2b.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000106",
+      "title": "Filosofía de la ciencia (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000106-50203888e7.html",
+          "capture_sha256": "db608ea3e6dac002b4026925ace0e44b3595cbd9737e10d360def2b7c6f06fcc",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000106-50203888e7.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000107",
+      "title": "Filosofía y palomitas",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000107-c482647bf7.html",
+          "capture_sha256": "61897396c87644892a70224ee7785c8135efc8566f8fb7ac5d0ef89c2c5bf1fb",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000107-c482647bf7.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000112",
+      "title": "Sociología de la religión",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000112-2ee792e336.html",
+          "capture_sha256": "92b3c47ba177bc9e0b932ee5d9d64266e7ca94c4e3d70e94b2134347e6b374b8",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000112-2ee792e336.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000114",
+      "title": "Historia de Francia",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000114-a40891a0c6.html",
+          "capture_sha256": "20fd45f66286ab8a09a3774ffcf211ae7bfe2844a53e603a9f7191a52c9b34c3",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000114-a40891a0c6.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000115",
+      "title": "Aproximación a la sociología contemporánea",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000115-0c9f9b15c3.html",
+          "capture_sha256": "fdd0c8102d2a6a7ef37d16a652ab4858daf374e3691e4ac4d658990d63778b28",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000115-0c9f9b15c3.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000116",
+      "title": "Ecología química",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000116-9005436244.html",
+          "capture_sha256": "cf665c8d72da3385c4273cc0ede46ae0ba1e2275f2564202b94899760f36224f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000116-9005436244.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000119",
+      "title": "Medicina de bolsillo (5a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125329",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000119-96702d8aa6.html",
+          "capture_sha256": "19919cf23b82bbef5cc4a1b3a2aeab26eb24aa5fcaf33d7bf25c508dfb753016",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000119-96702d8aa6.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000121",
+      "title": "La física en la medicina (3a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71950",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000121-2851700b2a.html",
+          "capture_sha256": "2d6879cc38011309a863a56315569bd253b245e4db798b41f9c65062cbea1ff7",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000121-2851700b2a.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000122",
+      "title": "Literatura clásica",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000122-1aa991dd01.html",
+          "capture_sha256": "f0605ad18774caae83854e23d80385119df3423545dbd4d720133f8d0c58edf2",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000122-1aa991dd01.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000123",
+      "title": "Filosofía del renacimiento",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000123-74aff825cc.html",
+          "capture_sha256": "1c5391b52425e79847335c8c2b50a5eaca073cd2c41ed40573c388f1c47d659e",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000123-74aff825cc.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000128",
+      "title": "Las matemáticas ocultas",
+      "sources": [
+        {
+          "url": "https://www.alianzaeditorial.es/primer_capitulo/las-matematicas-ocultas.pdf",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000128-e05d4d3ab8.pdf",
+          "capture_sha256": "fea08555fc4954c1bc358a6dfd04455b82dbc9429ee0b5eb17f611280bfbfd2c"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000129",
+      "title": "El mundo de la psicología",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000129-c15cf8490c.html",
+          "capture_sha256": "ef2bc6a4d8e4fb12115dbfb66648f74ef467b1ad0f906c494941ea9629f73d05",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000129-c15cf8490c.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000131",
+      "title": "Las matemáticas de la luz",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000131-b9a809579e.html",
+          "capture_sha256": "b6bcc75ad26fb13b374c4cc201cb1af35c0fb98d5543d020243297af16e63072",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000131-b9a809579e.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000133",
+      "title": "Hackear la ciencia social: una invitación a la investigación social en entornos digitales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000133-727ec021ed.html",
+          "capture_sha256": "14aba7521ca14e33f98c6b86266e35f5ce99a194990de19850794f5c8d27511a",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000133-727ec021ed.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000134",
+      "title": "Filosofía del lenguaje",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000134-9bfc6110f1.html",
+          "capture_sha256": "ca606c3483a2e83a9b99a80b8d997cb430ec4cc05d9802833a95f5bca89e55fe",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000134-9bfc6110f1.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000136",
+      "title": "Psicología del niño (18a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000136-f0f24e95ac.html",
+          "capture_sha256": "f2434180b521b73cf3b5775ab4079bf053ee05a7039615571c692882e93f8832",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000136-f0f24e95ac.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000140",
+      "title": "Medicina Legal (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB118658",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000140-b5750ffb99.html",
+          "capture_sha256": "c0efe0ffb6ebfcc2703348d6711a510e15f50b0c6c0bcd958977daa42c87883f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000140-b5750ffb99.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000145",
+      "title": "Estadística en psicología",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000145-3d2d955dfe.html",
+          "capture_sha256": "ea5b126eff1c4cc6758eacc7c737c9dde611484acd781c526239037033de7606",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000145-3d2d955dfe.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000148",
+      "title": "Homosexualidad y psicología (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000148-69678216e2.html",
+          "capture_sha256": "84b4860c68f4984ffb4264aadcdfda02a6e36b70fbd67bc0ed15647a0daeb6d9",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000148-69678216e2.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000150",
+      "title": "Bioquímica para Medicina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB223081",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000150-88d89b38cc.html",
+          "capture_sha256": "0f2d59d080443af2058fc4d107295776e1342400e4cdb3a17c865b4c43c75c98",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000150-88d89b38cc.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000152",
+      "title": "Matemática en espiral",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000152-d4dcb0b337.html",
+          "capture_sha256": "f5387de2483f6f188299d492b65de96b51748b194176834ed858ec49af177818",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000152-d4dcb0b337.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000154",
+      "title": "Láser en medicina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72229",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000154-a7da5c3fb8.html",
+          "capture_sha256": "63f8f932c8d068d30c4271dc88dd4534ff038bb0594594f1bbee231bc07d7b50",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000154-a7da5c3fb8.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000155",
+      "title": "El rombo de las investigaciones de las ciencias sociales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000155-bce5f62c98.html",
+          "capture_sha256": "85b68b4160e0f96f23bbfcf3e7422b4eaff7e7f6b554b12897fa5b6eb795db8e",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000155-bce5f62c98.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000156",
+      "title": "Desarrollo de microservicios con Python",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000156-7305beb803.html",
+          "capture_sha256": "ba0ef9fc54e076a3f512b1f96597c19e1e47f08119b4d5413b315bad864cbf01",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000156-7305beb803.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000159",
+      "title": "Literatura y cine",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000159-9a0288ceef.html",
+          "capture_sha256": "74c8968b04c97cbdf5a67c7055a5843c71a73654c1ac74b89090b3e8a8ce56a7",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000159-9a0288ceef.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000160",
+      "title": "Literatura Oriental",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000160-18b1597423.html",
+          "capture_sha256": "91eb7eb4bf15cdd13510fa564093781f649775dc0cde387fc8caac57c4e28fe0",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000160-18b1597423.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000163",
+      "title": "Páginas de historia",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000163-6b5dac4c38.html",
+          "capture_sha256": "b0a477d92cbf419c36e329a6dfd1b3a8d9a7fc8523953f53d909444eded730f3",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000163-6b5dac4c38.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000165",
+      "title": "Psicología de las masas (6a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000165-d3455e7c40.html",
+          "capture_sha256": "73f9b01a5455403a051ff9274a79cff58d99711d80d207e694d42a2c42dadc91",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000165-d3455e7c40.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000167",
+      "title": "Historia de la India (3a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000167-8baefac98f.html",
+          "capture_sha256": "52cb69d50ab855a3f2f573a4326bab43b14ced9c333a7245b0c7411abab0bf82",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000167-8baefac98f.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000168",
+      "title": "Filosofía fundamental",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000168-8638dd18b8.html",
+          "capture_sha256": "5ac87cb8a380a410a01a20347e336728aba1823cbfd72187c765475d4b351a57",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000168-8638dd18b8.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000169",
+      "title": "Introducción a la Medicina",
+      "sources": [
+        {
+          "url": "https://www.digitaliapublishing.com/a/37227/introduccion-a-la-medicina",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000169-cfca2aab77.html",
+          "capture_sha256": "cf0fb010feeb1808fb899d9c1b7f0e2f40aa9be4199511c9770dc057f22a58c0",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000169-cfca2aab77.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000170",
+      "title": "Historia de los Estados Unidos de América",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000170-3812118639.html",
+          "capture_sha256": "84895cd08daa58c5f626e3dd71e1be588e710fe5b6793da5cd3d5dbe5d945b04",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000170-3812118639.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000171",
+      "title": "Análisis matemático",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000171-3f033107e3.html",
+          "capture_sha256": "bb2a289fe6ad6dd9b316b05ecd0fafc0cd9e3a863ed6e167758212fc935f6a4e",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000171-3f033107e3.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000173",
+      "title": "Historia de Cádiz",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000173-094c811960.html",
+          "capture_sha256": "21d0c7903610dd1399c7b6537b46de3f5d7fefcf2ffece9641885a00b57fbe39",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000173-094c811960.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000176",
+      "title": "Las matemáticas de nuestra vida",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000176-c31af1d57b.html",
+          "capture_sha256": "5914ec59e725c579901d7bf2af29e76d0a5bc32ba9c8d9dba821f04d40ed331b",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000176-c31af1d57b.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000178",
+      "title": "Historia de historias",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117062",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000178-ae914bfc21.html",
+          "capture_sha256": "b6dd2e7b5fe4ec3223dfd91c9077eba7f57c76d85e1ae43207fdbe0b29f1cbfb",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000178-ae914bfc21.txt"
+        },
+        {
+          "url": "https://books.apple.com/pe/book/historia-de-historias/id1360276353",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000178-a05494ff03.html",
+          "capture_sha256": "e5a6fd75b26a87dd250e8f53195298f632cd269301a5034bd34ae3d060b82aff",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000178-a05494ff03.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000179",
+      "title": "Biología para ciencias ambientales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000179-9c42c4a55e.html",
+          "capture_sha256": "389bb5395909d7806d2c8e77704a1673584314abe213c52ea740212e17de20a1",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000179-9c42c4a55e.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000182",
+      "title": "Tragedia y sociología",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000182-7630011a03.html",
+          "capture_sha256": "be66d6405f6fe9f0344aaec93f1f2a6702f7e2636f3eff244eeb2f909ad612c6",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000182-7630011a03.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000183",
+      "title": "Administración de proyectos de informática",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000183-e30f61b615.html",
+          "capture_sha256": "5d88dc2d226b23aa756c16a6d75a96ac22e9197c5da6c106519a21f9ded4e7d0",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000183-e30f61b615.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000185",
+      "title": "La era victoriana en literatura",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000185-da11303074.html",
+          "capture_sha256": "e15fc609e7616060e893e809ae2ebbfe56ced9761618d841346c300a19be87de",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000185-da11303074.txt"
+        },
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119/Details",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000185-185a9af1d3.html",
+          "capture_sha256": "05c1ca3765b8aac7b4dc9b770fe0dd3c7bda7ad7254e27b508149f725165a36f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000185-185a9af1d3.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000191",
+      "title": "Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/programacion-e-inteligencia-artificial-informatica/tkinter-desarrollo-de-interfaces-graficas-con-python-2-o-edicion/",
+          "error": "HTTP Error 403: Forbidden"
+        },
+        {
+          "url": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/programacion-e-inteligencia-artificial-informatica/tkinter-desarrollo-de-interfaces-graficas-con-python-2-o-edicion/",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/publisher-web-capture.json",
+          "capture_sha256": "a2d85637b54a840e539ceb14e741e048af6563581091a164841ef3b8cb24732d",
+          "capture_method": "WEB_TOOL_CACHED_PUBLIC_PUBLISHER"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000193",
+      "title": "Filosofía como metanoética",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000193-92523fc5e7.html",
+          "capture_sha256": "3413d0bcdab158e4042fc52e36daa27d23e93013b945498c2de6db6a108696d5",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000193-92523fc5e7.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000194",
+      "title": "Historia de Yucatán",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000194-85e81de2a0.html",
+          "capture_sha256": "fc853228efadb3773741360acaeed3a89c66c6f1ad6a4410e8ae9e8b4ff2ddf2",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000194-85e81de2a0.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000198",
+      "title": "Introducción a la física",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000198-3157938e16.html",
+          "capture_sha256": "d048444082b288a4ec3639ae068b0c9c8447f4c4cf0baa53e57c63fb5ee7ff69",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000198-3157938e16.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000199",
+      "title": "Psicología diferencial",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000199-cf4baa84f0.html",
+          "capture_sha256": "cf229386b0e8e0935dd41290a6f4159c02d8b7571b09a298fa85c3455aeb4d43",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000199-cf4baa84f0.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000200",
+      "title": "Análisis matemático",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000200-dd4e18eaa4.html",
+          "capture_sha256": "0c09a26c96e23d0b73e01127be04c756e9ef69161cdec72333c2ae7f5fdc46f1",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000200-dd4e18eaa4.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000201",
+      "title": "Historia de Tlaxcala",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000201-a0ae87bdb1.html",
+          "capture_sha256": "9e41ae071fb4bdb12e49a929a514109b765c779d38b6d70e13087b5c537b08ad",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000201-a0ae87bdb1.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000204",
+      "title": "Psicología social",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000204-0fa67883b0.html",
+          "capture_sha256": "f15f4bc6dffd34f59bdc39bbfe626ab418e82c988f5c071c299ee98f78293462",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000204-0fa67883b0.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000206",
+      "title": "Física del estado sólido",
+      "sources": [
+        {
+          "url": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000206-331661eab1.html",
+          "capture_sha256": "780b68f8e4bd792dd9d1b6eff06a839426389bf2efe96b6e79c92aeadf0650b6",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000206-331661eab1.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000210",
+      "title": "Síndromes en medicina interna",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67143",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000210-95ae5319da.html",
+          "capture_sha256": "701103386e832be9e343c4838a8772ffff4b4f0c75182f43d308ecaa86b9f7e3",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000210-95ae5319da.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000211",
+      "title": "Historia de Rusia",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000211-9081884686.html",
+          "capture_sha256": "f19c66223784984871ff5097bb19bb8ba8db80011ea02907fd199adbd96a08bd",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000211-9081884686.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000212",
+      "title": "El ABC de la medicina interna",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72757",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000212-04cba98f60.html",
+          "capture_sha256": "18913c0697aa3f933c9cffa921b22c1440fee2c317416e8be592730cfd78db31",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000212-04cba98f60.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000214",
+      "title": "Filosofía de la religión",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000214-1a34d1dd4a.html",
+          "capture_sha256": "48a9cea77e92dab89e8e47645816c46269260244a87dd26d4023b690d86902e3",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000214-1a34d1dd4a.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000215",
+      "title": "La mujer en el ejercicio de la medicina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40870",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000215-b617f8b986.html",
+          "capture_sha256": "21ad26abf73f68599a86c370715a2df1b6e386e79cc895cd4e0b78af4512aa9c",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000215-b617f8b986.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000216",
+      "title": "El uso de la encuesta en las ciencias sociales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000216-30adaa85fb.html",
+          "capture_sha256": "499064069a20b5aebb34b9ce041bd4fe17f07b0e1a8ddcd7e68ad8e859ed2a5c",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000216-30adaa85fb.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000217",
+      "title": "Electrocardiografía en medicina prehospitalaria",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73456",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000217-08671c587a.html",
+          "capture_sha256": "f3a7a6bc439d1c25bbb8433e59a540f0ab7dc43b50884f72671f6afe8a1db72d",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000217-08671c587a.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000218",
+      "title": "Psicología de la personalidad",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000218-28cee0c58b.html",
+          "capture_sha256": "177218db1f2499263f5f20f2cc6b0011965cc7b1caba41599b95554e6f8c8b72",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000218-28cee0c58b.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000219",
+      "title": "Problemas de Física (27a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000219-5e9abf2fb7.html",
+          "capture_sha256": "e0a67328895601b07f1a93a7335eec8a8749a9fdb5e47cfcb65ce3a96191297a",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000219-5e9abf2fb7.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000221",
+      "title": "¿Qué es Filosofía?",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000221-4d3a5efa10.html",
+          "capture_sha256": "04509a4b4e8647c1dc27b965bcd0a29db5cc08a63ce00ea91b12d9e9e715c6bb",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000221-4d3a5efa10.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000222",
+      "title": "Física experimental",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000222-e1023657bb.html",
+          "capture_sha256": "e0f32c007947c37aef014d18b825233dce7671337b6bd78a5c3b712092f15250",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000222-e1023657bb.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000223",
+      "title": "Otra historia de Córdoba",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000223-f218c8d286.html",
+          "capture_sha256": "9b43c0b45d7a3874041c36e7d1778ca70863d7c34e7a464067755cb264044e6b",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000223-f218c8d286.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000226",
+      "title": "Las ciencias sociales en discusión",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000226-fbfc681256.html",
+          "capture_sha256": "3cde95b5e5fa73451e6fb2b3c81897cfd9a2fa00eb8f12d22c98cef511e00dde",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000226-fbfc681256.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000228",
+      "title": "Filosofía antigua",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000228-5cb04738ef.html",
+          "capture_sha256": "81fa1c982b58bf08a9e213e169de872d864d839ec3bdb07aa4928036e24d4158",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000228-5cb04738ef.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000229",
+      "title": "La literatura dramática",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000229-a6d637a84f.html",
+          "capture_sha256": "999c7b27661f0f110de322e0441c5e470dd7ef66c7bc4c69f8638997204641b7",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000229-a6d637a84f.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000233",
+      "title": "Mantenimiento de equipos informáticos",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000233-9edafe2bb5.html",
+          "capture_sha256": "c4bae65c2674009a402a8a2b0833336839349175dfe700f638692ad39447df6d",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000233-9edafe2bb5.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000237",
+      "title": "Diccionario etimológico de medicina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB42785",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000237-0a302c2419.html",
+          "capture_sha256": "aed40aa636612c3910bd02d54bdecf08cbcb28a056e2d4a6e047352cfe607823",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000237-0a302c2419.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000238",
+      "title": "Historia mínima del indigenismo en América Latina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000238-17b9a17869.html",
+          "capture_sha256": "d8c236cf2884d614e38835fbc25ff2f57d345ff196544d21b05997c136df3b5d",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000238-17b9a17869.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000239",
+      "title": "La filosofía de la tecnología",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000239-977b260489.html",
+          "capture_sha256": "e616a917b1d243a82f0059e8cd003092cbe8428ab3f924f206fba22a1971f865",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000239-977b260489.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000240",
+      "title": "Matemáticas básicas (4a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000240-c13b0d088b.html",
+          "capture_sha256": "55c8d916f89ad02d0b5aa08e35492b9dca1a8f7db623d58d423048d6c4df9fe1",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000240-c13b0d088b.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000241",
+      "title": "Historia de Córdoba",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000241-e07afd6d9e.html",
+          "capture_sha256": "0073a8594304799d51bcb0c466813161975b273542b9dbc9d1e1c6cfb989be38",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000241-e07afd6d9e.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000246",
+      "title": "Historia mínima del constitucionalismo en América Latina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000246-6de8d61017.html",
+          "capture_sha256": "9629a203706f63f0fa1ef4c56fbd8937648f1dec514a938c374a996f83d67492",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000246-6de8d61017.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000247",
+      "title": "Filosofía general",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000247-905898ac7d.html",
+          "capture_sha256": "f6abc2618da393e5a12ad890dfc629c2ef3f66ed4a97c5497b085f23dacc2d9c",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000247-905898ac7d.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000249",
+      "title": "Psicología clínica",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000249-ed9e6762dd.html",
+          "capture_sha256": "24e0ba4c8d3adb02c728b84bf367babe9736460ac350854870243ef2ee14ba34",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000249-ed9e6762dd.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000250",
+      "title": "Historia de México",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000250-59ee667e5d.html",
+          "capture_sha256": "8ad1165c1634b7f7b52fc39ecb96a96b9bcbc0dafb896c1e8818578a52d812d0",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000250-59ee667e5d.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000252",
+      "title": "Sociología del saber",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000252-743d048d4b.html",
+          "capture_sha256": "18ae6b25ef354e9c12723dbf345ca49a7310269a35cdd886d85b50dc924d6c91",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000252-743d048d4b.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000254",
+      "title": "Historia y filosofía de la medicina",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73999",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000254-61ec5b3af4.html",
+          "capture_sha256": "ae9ffded99a09862806e54bd92ceeff0f0bad42a06401807b9453641865cf992",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000254-61ec5b3af4.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000255",
+      "title": "Historia de la cultura en la América hispánica",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000255-b7b0a4ff15.html",
+          "capture_sha256": "7573e733a76271b559f29a9a669cd28eaabb5fbe3235d480f76b7cc3c01993f1",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000255-b7b0a4ff15.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000256",
+      "title": "Historia mínima de Estados Unidos de América",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000256-9d3829ee0d.html",
+          "capture_sha256": "84bacc76dde835f52dee34f6b4a59d8bbc1b593e5b044955a78cf48d716bf0a9",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000256-9d3829ee0d.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000257",
+      "title": "Sociología de las organizaciones complejas",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000257-48c2d86e3a.html",
+          "capture_sha256": "5812b6738b127067b8155e51f4698571946fdef81e806e17e3cd558446b27ec4",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000257-48c2d86e3a.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000258",
+      "title": "Física fundamental",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000258-e41a374bc5.html",
+          "capture_sha256": "9d35053069bb37ca739af2022ce32bf01915f0245ab10c3ca5db25461b325bc9",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000258-e41a374bc5.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000259",
+      "title": "Historia de América",
+      "sources": [
+        {
+          "url": "https://www.alianzaeditorial.es/libro/manuales/historia-de-america-carlos-malamud-9788420669359/",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000259-10b5683081.html",
+          "capture_sha256": "87b479dfe291410078cd03fd4ed49ac2c8681f8baff7bbbe97e227e4b9e35bd2",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000259-10b5683081.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "title": "Técnicas de la auditoría informática",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000262-0a841780fc.html",
+          "capture_sha256": "d5afba51392c147e6feeb9147f620d907562b8fdac4b7d0c3555abf8036e08cb",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000262-0a841780fc.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000265",
+      "title": "Fundamentos de la medicina forense",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58579",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000265-14fe2c1c2f.html",
+          "capture_sha256": "9dbdd81c46e75cabdf90cb65621fd9906a4e4f6b92b4b9417dfb9aa2602bb27f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000265-14fe2c1c2f.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000267",
+      "title": "La sociología como vocación",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000267-101a371bef.html",
+          "capture_sha256": "acf33e080cd423e5d4c73008ef7992083cd56816e43c9acf9d267a8d20ce2499",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000267-101a371bef.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000268",
+      "title": "Iniciación a las matemáticas",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000268-a6b9d4ddc3.html",
+          "capture_sha256": "eca88254637f8809efc2ca1a089c8563e34affd80be966cf317e71994d26dc0f",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000268-a6b9d4ddc3.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000270",
+      "title": "Filosofía política",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000270-870a41e085.html",
+          "capture_sha256": "f6139fac6d12fbbb904bf7d7413102f8508326602f408afd54965a47bafb6ed8",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000270-870a41e085.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000271",
+      "title": "La psicología y su pluralidad",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000271-63a2d4d2b3.html",
+          "capture_sha256": "8ed2a5a86a5d5347261b0a2443729e5d812e2a9d526785fd76880424fd038607",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000271-63a2d4d2b3.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000272",
+      "title": "Fundamentos de robótica (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000272-ffd700f6f3.html",
+          "capture_sha256": "d822d013b2ab295bc4de8aa83109f3e659fe99d023d68a08e3ab19561769a0cc",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000272-ffd700f6f3.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000274",
+      "title": "Fundamentos de las ciencias sociales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000274-66e0bfbdb4.html",
+          "capture_sha256": "12496a424d3f204174b4f7f259aa55813838d5972545e5a60456ed22adc32db4",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000274-66e0bfbdb4.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000277",
+      "title": "Filosofía contemporánea",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000277-9deb275511.html",
+          "capture_sha256": "9ea4280f2ba6b0a0f3ef628d08b626c794d10b88842ce1e482c2d8a8a52a7672",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000277-9deb275511.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000278",
+      "title": "Física de la música",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000278-b2eb658afa.html",
+          "capture_sha256": "9eda83ade57968408cf76b78572ea80496fbc779443b41d43d1eb48f11b00d96",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000278-b2eb658afa.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000280",
+      "title": "La explicación del comportamiento social: más tuercas y tornillos para las ciencias sociales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000280-c9dd380eba.html",
+          "capture_sha256": "5eaf0d82950a1237221c789518722ff624d5353b2ee654f07ba8ab63e970e727",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000280-c9dd380eba.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000286",
+      "title": "Estadística matemática",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000286-44ec289adb.html",
+          "capture_sha256": "b99b98232b64738f07a9de8a96acaf3c2e35712fdf7da913bc7e5bc418157506",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000286-44ec289adb.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000289",
+      "title": "Pensar en la matemática",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000289-be9984af20.html",
+          "capture_sha256": "4329ff38592eb6679dce138a1bdfb1b5f62dae05f5a079f1831b512d4b8ab968",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000289-be9984af20.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000290",
+      "title": "Psicología. Lo inconsciente",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000290-d97c53e41c.html",
+          "capture_sha256": "d67519abbc07887e35497b299556e35d66baba3a53e6fd92dd45fb2b10011470",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000290-d97c53e41c.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000295",
+      "title": "Física y programación",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000295-1b9df27cf2.html",
+          "capture_sha256": "7ce8a95955cf58bb28e1194f3a340a3afe67ee0d369d8298e920c9231bd0bd45",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000295-1b9df27cf2.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000296",
+      "title": "Filosofía moderna",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000296-a3394b5811.html",
+          "capture_sha256": "56ca1b279a14f9f93e0b12ac6df7c109ac4f83ef5cbcd810377026ecae161e12",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000296-a3394b5811.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000298",
+      "title": "Medicina humanitaria",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53098",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000298-3cb1904eb1.html",
+          "capture_sha256": "902ed2f393933240d5f09e387a973671d2d96c62e4a4758a1fc7c65dc40b3932",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000298-3cb1904eb1.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000299",
+      "title": "Informática forense",
+      "sources": [
+        {
+          "url": "https://www.marcombo.com/archivo/author_book/ortiz/",
+          "error": "HTTP Error 403: Forbidden"
+        },
+        {
+          "url": "https://www.marcombo.com/archivo/author_book/ortiz/",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/publisher-search-capture.json",
+          "capture_sha256": "dba12157cf3c30524d421d1940bbc0bf852040ee5fa47ee57c986887717be936",
+          "capture_method": "WEB_TOOL_CACHED_PUBLIC_PUBLISHER"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000300",
+      "title": "Química orgánica",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000300-9c7dd65563.html",
+          "capture_sha256": "c7d0b954fa523c9e35ca1e14fbf60453f8fb5ccbbfdeb5a2808d1b642a08ed48",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000300-9c7dd65563.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000302",
+      "title": "Historia de Italia (2a. ed.)",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000302-16df5b2539.html",
+          "capture_sha256": "b614eeba68470a3c5ccc403ffde50934cabce85967826c47cd4a0c3bb639625d",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000302-16df5b2539.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000303",
+      "title": "Psicología: polimodal",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000303-090a6e4d51.html",
+          "capture_sha256": "96b2633479e2d72dcbea6cf6ffcc99d25d1075643b0bb06f928e63a7ada531b9",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000303-090a6e4d51.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000304",
+      "title": "Filosofía medieval",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000304-7b7514c308.html",
+          "capture_sha256": "90fbcd63d78190c15de20a2f80a742b07e122699637ab18242d8e6b17f7154f3",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000304-7b7514c308.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000308",
+      "title": "Biología cuántica",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000308-5c1c3d7471.html",
+          "capture_sha256": "46e09a0310a5aac5cb1db047f7abe73a927f43bb5647280366e65aac44c222ca",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000308-5c1c3d7471.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000309",
+      "title": "Cómo y cuándo aplicar un robot industrial",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000309-09ebf7548d.html",
+          "capture_sha256": "67cfc8056032567efb60d093a183385751c878daf7bd16e28fed173cc7e91c9d",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000309-09ebf7548d.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000313",
+      "title": "Las matemáticas de los cristales",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000313-6c2501638a.html",
+          "capture_sha256": "efe7a4daa6d12ac11c8b13d758e64c8ac2dca1823450c0cb2a13700f0452125e",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000313-6c2501638a.txt"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000315",
+      "title": "¿Qué es la filosofía?",
+      "sources": [
+        {
+          "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+          "capture_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000315-be253efed3.html",
+          "capture_sha256": "8b087e40f32a69134bb79160527b569fa7fa87ea601414a3d9efc2b9aec31617",
+          "text_path": "docs/audit/physical-catalog-cleanup-2026-10-05/synopses-work/ebook-research/PLG-BK-000315-be253efed3.txt"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,3672 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000058",
+      "book_id": "143",
+      "title": "Diccionario básico de antropología",
+      "subtitle": null,
+      "authors": [
+        "Campo A., A. Lorena"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Ediciones Abya-Yala",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79954",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79954.html",
+          "capture_sha256": "242dc6e8fbe113d57215e8d7fda5989e20d3206cf99a8a062c91071cf21b33f4",
+          "observed_text": "Quito : Ediciones Abya-Yala, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79954.html",
+          "capture_sha256": "242dc6e8fbe113d57215e8d7fda5989e20d3206cf99a8a062c91071cf21b33f4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000059",
+      "book_id": "153",
+      "title": "Historia mínima de Filipinas",
+      "subtitle": null,
+      "authors": [
+        "Machuca Chávez, Paulina"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194884",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194884",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194884.html",
+          "capture_sha256": "fc3078953c0a971761a47b1740e266a766c6fef45e30e0ab8c52541a22bace3e",
+          "observed_text": "Ciudad de México, México : El Colegio de México, 2020."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194884",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194884.html",
+          "capture_sha256": "fc3078953c0a971761a47b1740e266a766c6fef45e30e0ab8c52541a22bace3e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000060",
+      "book_id": "98",
+      "title": "Ética básica (3a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Etxeberria Mauleón, Xabier"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Universidad de Deusto",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34160",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34160.html",
+          "capture_sha256": "2e90a5d1416e2bb7ab9cb428bdf08909b95209cd96a991042d6bb65c08fd0915",
+          "observed_text": "Universidad de Deusto,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34160.html",
+          "capture_sha256": "2e90a5d1416e2bb7ab9cb428bdf08909b95209cd96a991042d6bb65c08fd0915",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000066",
+      "book_id": "156",
+      "title": "Historia mínima de la eugenesia en América Latina",
+      "subtitle": null,
+      "authors": [
+        "Reggiani, Andrés Horacio"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194927",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194927",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194927.html",
+          "capture_sha256": "c6d8276b4a66d406c82d208dbcbecaecc28951f0ee6fa24689ed72ccf4a77c9d",
+          "observed_text": "Ciudad de México : El Colegio de México, 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194927",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194927.html",
+          "capture_sha256": "c6d8276b4a66d406c82d208dbcbecaecc28951f0ee6fa24689ed72ccf4a77c9d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000067",
+      "book_id": "152",
+      "title": "Historia mínima de Cuba",
+      "subtitle": null,
+      "authors": [
+        "Zanetti Lecuona, Oscar"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193629",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193629",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193629.html",
+          "capture_sha256": "4e3a606313f3aa3190fd62120626e652dfa29ff81d9f2411d1ad2b631064fbf4",
+          "observed_text": "México. D.F. : El Colegio de México, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193629",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193629.html",
+          "capture_sha256": "4e3a606313f3aa3190fd62120626e652dfa29ff81d9f2411d1ad2b631064fbf4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000070",
+      "book_id": "127",
+      "title": "La geometría de las ciudades",
+      "subtitle": null,
+      "authors": [
+        "Sorando Muzás, José María"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Los libros de la Catarata",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233100",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-98a184bad47674ce.html",
+          "capture_sha256": "76d972c775dc8c920d8c7049e9501e1dd66f0467ba4563aa53acec7d3e537a00",
+          "observed_text": "Madrid : Los libros de la Catarata, 2020."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-98a184bad47674ce.html",
+          "capture_sha256": "76d972c775dc8c920d8c7049e9501e1dd66f0467ba4563aa53acec7d3e537a00",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000074",
+      "book_id": "112",
+      "title": "La confesión: novela",
+      "subtitle": null,
+      "authors": [
+        "Hailji"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Editorial Verbum",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270884",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270884",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns270884.html",
+          "capture_sha256": "75ce941b31226ea982c64abb530f18dd756356f6a9b057e6e2b55c171a0c6e1e",
+          "observed_text": "Editorial Verbum,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270884",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns270884.html",
+          "capture_sha256": "75ce941b31226ea982c64abb530f18dd756356f6a9b057e6e2b55c171a0c6e1e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000075",
+      "book_id": "154",
+      "title": "Historia mínima de Israel",
+      "subtitle": null,
+      "authors": [
+        "Sznajder, Mario"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/214100",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214100",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/214100.html",
+          "capture_sha256": "b4e7ae2d1a85addd9da42854747588b18db243c84235828e1de878399a47afb8",
+          "observed_text": "Ciudad de México, México : El Colegio de México, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214100",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/214100.html",
+          "capture_sha256": "b4e7ae2d1a85addd9da42854747588b18db243c84235828e1de878399a47afb8",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000076",
+      "book_id": "100",
+      "title": "Ética de la sexualidad",
+      "subtitle": null,
+      "authors": [
+        "Bonete, Enrique"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Desclée de Brouwer",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47807",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47807",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47807.html",
+          "capture_sha256": "9b2ac0f704cfcbdce3e2f0f633525df9749e5f607580da2a777e4865954cdf65",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000077",
+      "book_id": "102",
+      "title": "Ética general (6a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Rodríguez Luño, Ángel"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "EUNSA",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46946",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46946.html",
+          "capture_sha256": "6c765b9c1b7181887192301f2ecd027f917b3b79b45628625258873fd8c6d132",
+          "observed_text": "Eunsa,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46946.html",
+          "capture_sha256": "6c765b9c1b7181887192301f2ecd027f917b3b79b45628625258873fd8c6d132",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000080",
+      "book_id": "131",
+      "title": "Astronomía: de la tierra al cosmos",
+      "subtitle": null,
+      "authors": [
+        "Zandanel, Armando Eugenio"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Editorial Maipue",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/112787",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a754808d8c97445.html",
+          "capture_sha256": "e21f6fc6218d0d63acce57c2c209da116e72912b73e359b862baa5c854518158",
+          "observed_text": "Ituzaingó : Editorial Maipue, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a754808d8c97445.html",
+          "capture_sha256": "e21f6fc6218d0d63acce57c2c209da116e72912b73e359b862baa5c854518158",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000084",
+      "book_id": "167",
+      "title": "Historia mínima del PRI",
+      "subtitle": null,
+      "authors": [
+        "Hernández Rodríguez, Rogelio"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194981",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194981",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194981.html",
+          "capture_sha256": "4e20fc7fe825c725fe142aa4e5826b0838e0749e66c1d1f556cbd5c8058f8d23",
+          "observed_text": "México, D.F. : El Colegio de México, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194981",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194981.html",
+          "capture_sha256": "4e20fc7fe825c725fe142aa4e5826b0838e0749e66c1d1f556cbd5c8058f8d23",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000086",
+      "book_id": "171",
+      "title": "Anatomía y fisiología básicas en el niño",
+      "subtitle": null,
+      "authors": [
+        "Carbonero Celis, Carmen",
+        "Cañizares Márquez, José María"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Wanceulen Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63446",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ccecc542047c16dd.html",
+          "capture_sha256": "2ad0bef570ec383c67ae509fdbe481a774d6fd09b8c9830ee6542a84c65e89d3",
+          "observed_text": "Sevilla : Wanceulen Editorial, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ccecc542047c16dd.html",
+          "capture_sha256": "2ad0bef570ec383c67ae509fdbe481a774d6fd09b8c9830ee6542a84c65e89d3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000087",
+      "book_id": "174",
+      "title": "Fisiología respiratoria (8a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "West, John B."
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Wolters Kluwer Health",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124823",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6aa70e9b3495e853.html",
+          "capture_sha256": "255bdda43c46ea0322dc8b5bf9198e18cc76deaa4934e7c8aa661f39c2231bdc",
+          "observed_text": "Barcelona : Wolters Kluwer Health, 2009."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6aa70e9b3495e853.html",
+          "capture_sha256": "255bdda43c46ea0322dc8b5bf9198e18cc76deaa4934e7c8aa661f39c2231bdc",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000088",
+      "book_id": "178",
+      "title": "Manual de práctica de semiología clínica",
+      "subtitle": null,
+      "authors": [
+        "Chaveco Pérez, Moraima"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Universidad Abierta para Adultos",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/294232",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000096",
+      "book_id": "189",
+      "title": "Historia de la psicología en Colombia",
+      "subtitle": null,
+      "authors": [
+        "Ardila, Rubén"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Manual Moderno",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71159",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71159.html",
+          "capture_sha256": "d28a4415fec42dc4228d86c2d58a2f1bd54e7bbdbf9a5a5442ba4acd2bb56f90",
+          "observed_text": "Bogotá : Manual Moderno, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71159.html",
+          "capture_sha256": "d28a4415fec42dc4228d86c2d58a2f1bd54e7bbdbf9a5a5442ba4acd2bb56f90",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000097",
+      "book_id": "158",
+      "title": "Historia mínima de la Inquisición",
+      "subtitle": null,
+      "authors": [
+        "Torres Puga, Gabriel"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194928",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194928",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194928.html",
+          "capture_sha256": "9518897e4fe42f7a31fc98362a9de1a8ae7d92f2c52e4b4afed43dc5dbfd21bc",
+          "observed_text": "Ciudad de México, México : El Colegio de México, 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194928",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194928.html",
+          "capture_sha256": "9518897e4fe42f7a31fc98362a9de1a8ae7d92f2c52e4b4afed43dc5dbfd21bc",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000098",
+      "book_id": "124",
+      "title": "Geometría elemental",
+      "subtitle": null,
+      "authors": [
+        "Pogorélov, A. V."
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Instituto Politécnico Nacional",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/104762",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-41593a3c01bb3bb5.html",
+          "capture_sha256": "1717ea615c8bf86c79ca9ab49c6580486aa3f781c3ff3cc450c95abb4b8b63b0",
+          "observed_text": "México : Instituto Politécnico Nacional, 1998."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-41593a3c01bb3bb5.html",
+          "capture_sha256": "1717ea615c8bf86c79ca9ab49c6580486aa3f781c3ff3cc450c95abb4b8b63b0",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000101",
+      "book_id": "149",
+      "title": "Historia mínima de Brasil",
+      "subtitle": null,
+      "authors": [
+        "Fausto, Boris"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/226347",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB226347",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/226347.html",
+          "capture_sha256": "43cb50517da8a525484d4f8c10233f03a6c5f009112dced93a7dd460a69be909",
+          "observed_text": "Ciudad de México : El Colegio de México, 2022."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB226347/Details",
+          "capture_path": "/tmp/pliego-digital-completion/social/brasil-marc.html",
+          "capture_sha256": "c94e05c029fc3ec05d7d8e7731381fbee5d2fc300219bfddef8077b9ea74012b",
+          "observed_text": "008: spa; 041 1 |a spa |h por"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000108",
+      "book_id": "170",
+      "title": "Pirámides, templos y estrellas: astronomía y arqueología en el Egipto antiguo",
+      "subtitle": null,
+      "authors": [
+        "Belmonte Avilés, Juan Antonio"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Crítica",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293627",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000109",
+      "book_id": "148",
+      "title": "Cleopatra: una vida",
+      "subtitle": null,
+      "authors": [
+        "Schiff, Stacy"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Fondo de Cultura Económica",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247386",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247386",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/247386.html",
+          "capture_sha256": "a0e01181a6bedda3626eb405260804827dca597755203913e6ee75c383d35f2f",
+          "observed_text": "México : Fondo de Cultura Económica, 2023."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247386",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/247386.html",
+          "capture_sha256": "a0e01181a6bedda3626eb405260804827dca597755203913e6ee75c383d35f2f",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000110",
+      "book_id": "91",
+      "title": "Escritos sobre ética",
+      "subtitle": null,
+      "authors": [
+        "García, Camilo"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "La Carreta Editores",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70889",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns70889.html",
+          "capture_sha256": "0066f381f2916403576eac685b1c49904187adceaf76b69c5ae6a82fc23258f3",
+          "observed_text": "La Carreta Editores,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns70889.html",
+          "capture_sha256": "0066f381f2916403576eac685b1c49904187adceaf76b69c5ae6a82fc23258f3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000111",
+      "book_id": "117",
+      "title": "Novelas amorosas y ejemplares",
+      "subtitle": null,
+      "authors": [
+        "Zayas y Sotomayor, María de"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Editorial Verbum",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/267853",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB267853",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns267853.html",
+          "capture_sha256": "2a177e8df2e04082270026c3c236f56a109575a0e2ae2bcd763cfea3d1579f5e",
+          "observed_text": "Editorial Verbum,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB267853",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns267853.html",
+          "capture_sha256": "2a177e8df2e04082270026c3c236f56a109575a0e2ae2bcd763cfea3d1579f5e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000113",
+      "book_id": "163",
+      "title": "Historia mínima de los judíos en la antigüedad",
+      "subtitle": null,
+      "authors": [
+        "Roitman, Adolfo D."
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194893",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194893",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194893.html",
+          "capture_sha256": "9ea8d751b2e0b3665a3e304eabc969b45ee4d49462ae1211f6433f09d6f467e2",
+          "observed_text": "Ciudad de México, México : El Colegio de México, 2020."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194893",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194893.html",
+          "capture_sha256": "9ea8d751b2e0b3665a3e304eabc969b45ee4d49462ae1211f6433f09d6f467e2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000117",
+      "book_id": "187",
+      "title": "Escritos de psicoterapia cognitiva",
+      "subtitle": null,
+      "authors": [
+        "Keegan, Eduardo"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Eudeba",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66218",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/66218.html",
+          "capture_sha256": "ae6509fbe2588d82cb97ee3743ab13706ec9702530bd9fb56784746be83c792c",
+          "observed_text": "Buenos Aires, Argentina : Eudeba, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/66218.html",
+          "capture_sha256": "ae6509fbe2588d82cb97ee3743ab13706ec9702530bd9fb56784746be83c792c",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000120",
+      "book_id": "165",
+      "title": "Historia mínima de Rusia",
+      "subtitle": null,
+      "authors": [
+        "Matos Franco, Rainer María"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/214112",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214112",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/214112.html",
+          "capture_sha256": "36bdf490656cb36f0766372eeb28ae731349b4a9441be607a574c38f60698ee8",
+          "observed_text": "Ciudad de México, México : El Colegio de México, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214112",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/214112.html",
+          "capture_sha256": "36bdf490656cb36f0766372eeb28ae731349b4a9441be607a574c38f60698ee8",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000124",
+      "book_id": "125",
+      "title": "Geometría riemanniana",
+      "subtitle": null,
+      "authors": [
+        "Sánchez Morgado, Héctor",
+        "Óscar A. Palmas Velasco"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad Nacional Autónoma de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/74615",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e802891e2e2bf310.html",
+          "capture_sha256": "be917ec1098370fbbbee80453b4845f02834c311401eb89efbba78ced2081d0b",
+          "observed_text": "México D.F. : Universidad Nacional Autónoma de México, 2007."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e802891e2e2bf310.html",
+          "capture_sha256": "be917ec1098370fbbbee80453b4845f02834c311401eb89efbba78ced2081d0b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000125",
+      "book_id": "104",
+      "title": "Ética y libertad",
+      "subtitle": null,
+      "authors": [
+        "Roman Garate"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Universidad de Deusto",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34123",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34123.html",
+          "capture_sha256": "ac4ddaae00b102e6e5c19336b7f1729b057c22a11772d5cc3ad2f552a32f330f",
+          "observed_text": "Universidad de Deusto,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34123.html",
+          "capture_sha256": "ac4ddaae00b102e6e5c19336b7f1729b057c22a11772d5cc3ad2f552a32f330f",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000126",
+      "book_id": "103",
+      "title": "Ética y cultura",
+      "subtitle": null,
+      "authors": [
+        "Ricoeur, Paul"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Prometeo Libros",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191960",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191960.html",
+          "capture_sha256": "fb512dacf96f220b0d9203be960793b082d0a8860f2ca931b1c81da443d3eda2",
+          "observed_text": "Prometeo Libros,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191960.html",
+          "capture_sha256": "fb512dacf96f220b0d9203be960793b082d0a8860f2ca931b1c81da443d3eda2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000127",
+      "book_id": "201",
+      "title": "El manual de Arduino",
+      "subtitle": null,
+      "authors": [
+        "Aliverti, Paolo"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Marcombo",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280056",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3a1c22b02c0a373c.html",
+          "capture_sha256": "79544e60ab300720d2724d67b3ffc3863299249432d290f3686e0d51d4e0c6f6",
+          "observed_text": "Barcelona (España) : Marcombo, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3a1c22b02c0a373c.html",
+          "capture_sha256": "79544e60ab300720d2724d67b3ffc3863299249432d290f3686e0d51d4e0c6f6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000130",
+      "book_id": "116",
+      "title": "Novela negra con argentinos",
+      "subtitle": null,
+      "authors": [
+        "Valenzuela, Luisa"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Fondo de Cultura Económica",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/218933",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB218933",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns218933.html",
+          "capture_sha256": "de354cf0a07232cfcc1f79f193904a3cc16dca87dfc599095d4702bb2212e72f",
+          "observed_text": "Fondo de Cultura Económica,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB218933",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns218933.html",
+          "capture_sha256": "de354cf0a07232cfcc1f79f193904a3cc16dca87dfc599095d4702bb2212e72f",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000132",
+      "book_id": "173",
+      "title": "El médico en casa: manual de consulta",
+      "subtitle": null,
+      "authors": [
+        "Carrete, Paula",
+        "Rubinstein, Esteban",
+        "Zárate, Miguel"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Delhospital ; NED",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/121496",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-60f254fb894b8c6a.html",
+          "capture_sha256": "b8d3f7e590d5323136afbd89ad4f21aac8aa123e424e37b58e46ae2579d97758",
+          "observed_text": "Buenos Aires : [Barcelona] : Delhospital ; NED, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-60f254fb894b8c6a.html",
+          "capture_sha256": "b8d3f7e590d5323136afbd89ad4f21aac8aa123e424e37b58e46ae2579d97758",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000135",
+      "book_id": "146",
+      "title": "Sociología criminal",
+      "subtitle": null,
+      "authors": [
+        "Ferri, Enrico"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Ediciones Olejnik",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/251021",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/251021.html",
+          "capture_sha256": "ba328f99a374b2fc7db53a52b708e195e0fb151a4b889ec83bed0a4333e715fb",
+          "observed_text": "Argentina : Ediciones Olejnik, 2022."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/251021.html",
+          "capture_sha256": "ba328f99a374b2fc7db53a52b708e195e0fb151a4b889ec83bed0a4333e715fb",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000137",
+      "book_id": "182",
+      "title": "Semiología: sistema craneomandibular",
+      "subtitle": null,
+      "authors": [
+        "Bustillo Verbel, Rosa Lia",
+        "Espitia Nieto, Sandra"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial Unimagdalena",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/105476",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a1df67176eecdd4.html",
+          "capture_sha256": "80b9e2ce10be209d9c5096b58b1a76c8a573141b6ea0c701fbc6502b63573038",
+          "observed_text": "Santa Marta : Editorial Unimagdalena, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a1df67176eecdd4.html",
+          "capture_sha256": "80b9e2ce10be209d9c5096b58b1a76c8a573141b6ea0c701fbc6502b63573038",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000138",
+      "book_id": "118",
+      "title": "Valentín: novela histórica",
+      "subtitle": null,
+      "authors": [
+        "Hernández Beltrán, Rosalío"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Plaza y Valdés",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39199",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39199.html",
+          "capture_sha256": "949374a1455e0e4b19f57934a177811659c7e13a7c93689de05c5abcae5061c4",
+          "observed_text": "Plaza y Valdés,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39199.html",
+          "capture_sha256": "949374a1455e0e4b19f57934a177811659c7e13a7c93689de05c5abcae5061c4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000139",
+      "book_id": "195",
+      "title": "Psicología del Poder",
+      "subtitle": null,
+      "authors": [
+        "Población, Pablo"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Ediciones Morata, S. L",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/189415",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/189415.html",
+          "capture_sha256": "e42784b70a8f4b722117d9c7b4109269c849e2fb6ee1bccaa3bc8677864a55b3",
+          "observed_text": "España : Ediciones Morata, S. L., 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/189415.html",
+          "capture_sha256": "e42784b70a8f4b722117d9c7b4109269c849e2fb6ee1bccaa3bc8677864a55b3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000141",
+      "book_id": "150",
+      "title": "Historia mínima de Centroamérica",
+      "subtitle": null,
+      "authors": [
+        "Pastor, Rodolfo"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México, Centro de Estudios Históricos",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193611",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193611",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193611.html",
+          "capture_sha256": "8f83b7078090436f27aabc2757643deb47fd4545b55c387beca5e3fdabc4cce3",
+          "observed_text": "México, D.F. : El Colegio de México, Centro de Estudios Históricos, 2011."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193611",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193611.html",
+          "capture_sha256": "8f83b7078090436f27aabc2757643deb47fd4545b55c387beca5e3fdabc4cce3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000142",
+      "book_id": "93",
+      "title": "La ética en la era de la tecnociencia",
+      "subtitle": null,
+      "authors": [
+        "Pulgar Castro, Rodrigo"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "RIL editores",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106271",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns106271.html",
+          "capture_sha256": "48c3ef7d4326e0a6ef2255ca760d6db2e6afc431470eabfc8e4cfb3b36744abd",
+          "observed_text": "RIL editores,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns106271.html",
+          "capture_sha256": "48c3ef7d4326e0a6ef2255ca760d6db2e6afc431470eabfc8e4cfb3b36744abd",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000143",
+      "book_id": "130",
+      "title": "Apuntes de ecología microbiana",
+      "subtitle": null,
+      "authors": [
+        "Gutiérrez Castrejón, Teodoro"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Instituto Politécnico Nacional",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72775",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e8a8d5d56c6bbdae.html",
+          "capture_sha256": "45b0cebf615f621ec62bf4ad4e92df86185618890a36ce0b40afce0f8f554cd7",
+          "observed_text": "México : Instituto Politécnico Nacional, 1996."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e8a8d5d56c6bbdae.html",
+          "capture_sha256": "45b0cebf615f621ec62bf4ad4e92df86185618890a36ce0b40afce0f8f554cd7",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000146",
+      "book_id": "138",
+      "title": "Magnetismo en Geología y la prospección magnética terrestre",
+      "subtitle": null,
+      "authors": [
+        "Lasfargues, Pierre"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Instituto Politécnico Nacional",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72209",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-09f707889516a345.html",
+          "capture_sha256": "238a95f1c6423b3e0d0e21d7b93c2355c9b0c566f2a5c11c461377adf13d4d20",
+          "observed_text": "México : Instituto Politécnico Nacional, 1995."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-09f707889516a345.html",
+          "capture_sha256": "238a95f1c6423b3e0d0e21d7b93c2355c9b0c566f2a5c11c461377adf13d4d20",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000147",
+      "book_id": "115",
+      "title": "Las novelas de Torquemada",
+      "subtitle": null,
+      "authors": [
+        "Pérez Galdós, Benito"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Alianza Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216008",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://www.alianzaeditorial.es/primer_capitulo/las-novelas-de-torquemada.pdf",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/web-publisher-samples.json",
+          "capture_sha256": "65b311bd01df23f16a73fc5cca073569c1491f523b69fb7dca576edaf0447478",
+          "observed_text": "Voy a contar cómo fue al quemadero el inhumano"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000149",
+      "book_id": "109",
+      "title": "Discurso y conflicto en la novela",
+      "subtitle": null,
+      "authors": [
+        "Parrilla Sotomayor, Eduardo Enrique"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Plaza y Valdés, S.A. de C.V.",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39117",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39117.html",
+          "capture_sha256": "926c5ce33b7961b4decc1fc6aa72643893af11d2a8c430912b9335e058f68838",
+          "observed_text": "Plaza y Valdés, S.A. de C.V.,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39117.html",
+          "capture_sha256": "926c5ce33b7961b4decc1fc6aa72643893af11d2a8c430912b9335e058f68838",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000151",
+      "book_id": "136",
+      "title": "Introducción a la geología (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Iriondo, Martín Horacio"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Editorial Brujas",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78025",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b57cdac6c1c6043b.html",
+          "capture_sha256": "14ff1ad9be9f34d75d8638067bf458b44f82b5474e0d22c2d075cb31fdd92d6d",
+          "observed_text": "Córdoba : Editorial Brujas, 2009."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b57cdac6c1c6043b.html",
+          "capture_sha256": "14ff1ad9be9f34d75d8638067bf458b44f82b5474e0d22c2d075cb31fdd92d6d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000153",
+      "book_id": "135",
+      "title": "Glosario botánico ilustrado",
+      "subtitle": null,
+      "authors": [
+        "Esteras Pérez, Francisco Javier",
+        "Sanchis Duato, Enrique"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Universitat Politècnica de València",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219257",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-9ce9ae3a37f15e8d.html",
+          "capture_sha256": "236add93b7dea0f1e7ccbf450ac0a9e1170de46685e58d477e2cafc919f736e3",
+          "observed_text": "Valencia, España : Universitat Politècnica de València, 2022."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-9ce9ae3a37f15e8d.html",
+          "capture_sha256": "236add93b7dea0f1e7ccbf450ac0a9e1170de46685e58d477e2cafc919f736e3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000157",
+      "book_id": "106",
+      "title": "Ética y psicoanálisis",
+      "subtitle": null,
+      "authors": [
+        "Fromm, Erich"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Fondo de Cultura Económica",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/173449",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns173449.html",
+          "capture_sha256": "128882548b3e6f3a46eb4140262ad6a93bbb2228432427f37b65565bc91d27f2",
+          "observed_text": "FCE - Fondo de Cultura Económica,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns173449.html",
+          "capture_sha256": "128882548b3e6f3a46eb4140262ad6a93bbb2228432427f37b65565bc91d27f2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000158",
+      "book_id": "133",
+      "title": "Colapso: cuando el clima lo cambia todo",
+      "subtitle": null,
+      "authors": [
+        "Baquedano, Manuel"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Editorial Cuarto Propio",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/190898",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ea66d96a5be19bc6.html",
+          "capture_sha256": "2e105a2f8e949b2769b741a83e0dabb727c72c66e641ef6989d85a3f839d5f67",
+          "observed_text": "Santiago de Chile : Editorial Cuarto Propio, 2019."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ea66d96a5be19bc6.html",
+          "capture_sha256": "2e105a2f8e949b2769b741a83e0dabb727c72c66e641ef6989d85a3f839d5f67",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000161",
+      "book_id": "169",
+      "title": "Los hombres del faraón: el ejército a finales del Reino Nuevo en el Antiguo Egipto",
+      "subtitle": null,
+      "authors": [
+        "Alonso García, José"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Universidad de Deusto",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34085",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34085",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/34085.html",
+          "capture_sha256": "d15e666e8e4489d05e8ab3c3160ff3db4a2fc1842bf302155a50f717b829a626",
+          "observed_text": "Bilbao : Universidad de Deusto, 2009."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34085",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/34085.html",
+          "capture_sha256": "d15e666e8e4489d05e8ab3c3160ff3db4a2fc1842bf302155a50f717b829a626",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000162",
+      "book_id": "206",
+      "title": "Redes locales",
+      "subtitle": null,
+      "authors": [
+        "Molina Robles, Francisco José"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "RA-MA Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62450",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-88143ffe0f91701c.html",
+          "capture_sha256": "2bc9a0392b7092facd3c95a0c6a7b6ee5248ccf323918325b6e38446df967f76",
+          "observed_text": "Madrid : RA-MA Editorial, [2014]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-88143ffe0f91701c.html",
+          "capture_sha256": "2bc9a0392b7092facd3c95a0c6a7b6ee5248ccf323918325b6e38446df967f76",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000164",
+      "book_id": "179",
+      "title": "Neuroanatomía, funcional y clínica (5a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Bustamante B., Jairo"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial Médica Celsus",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280790",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2d193ee8f693ac3d.html",
+          "capture_sha256": "bbe8d7f941c8291a936f7de5d090135b5948f3e6cccc81ad4c7c7bfe7fcbb31a",
+          "observed_text": "Bogotá : Editorial Médica Celsus, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2d193ee8f693ac3d.html",
+          "capture_sha256": "bbe8d7f941c8291a936f7de5d090135b5948f3e6cccc81ad4c7c7bfe7fcbb31a",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000166",
+      "book_id": "161",
+      "title": "Historia mínima de las constituciones en México",
+      "subtitle": null,
+      "authors": [
+        "Serrano Migallón, Fernando"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193644",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193644",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193644.html",
+          "capture_sha256": "681a37b44fb317acc57c254bd950de4e034a3f6565710d15460da9843fe5ded1",
+          "observed_text": "México, D.F. : El Colegio de México, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193644",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193644.html",
+          "capture_sha256": "681a37b44fb317acc57c254bd950de4e034a3f6565710d15460da9843fe5ded1",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000172",
+      "book_id": "186",
+      "title": "Crítica de la psicoterapia integrativa",
+      "subtitle": null,
+      "authors": [
+        "Guillermo Cepeda Armijos"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Ediciones Abya-Yala",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79874",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79874.html",
+          "capture_sha256": "ed614cb719f3726c1df7a07594d692935b1da6ff1e68fd90e158f2ebe87f7660",
+          "observed_text": "Quito : Ediciones Abya-Yala, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79874.html",
+          "capture_sha256": "ed614cb719f3726c1df7a07594d692935b1da6ff1e68fd90e158f2ebe87f7660",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000174",
+      "book_id": "114",
+      "title": "Lady Susan y otras novelas",
+      "subtitle": null,
+      "authors": [
+        "Jane Austen"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Alianza Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122857",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://alianzaeditorial.es/primer_capitulo/lady-susan-y-otras-novelas.pdf",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/web-publisher-samples.json",
+          "capture_sha256": "65b311bd01df23f16a73fc5cca073569c1491f523b69fb7dca576edaf0447478",
+          "observed_text": "Mi querido cuñado: No puedo seguir negándome el placer"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000175",
+      "book_id": "177",
+      "title": "Manual de fisiología articular",
+      "subtitle": null,
+      "authors": [
+        "Guzmán Velasco, Adriana"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Manual Moderno",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71151",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-c8a5563777e61d13.html",
+          "capture_sha256": "ca98a114bd841c8446ca9a7f248b9be984a78aa976a579c73d127df4d608f9ae",
+          "observed_text": "Bogotá : Manual Moderno, 2007."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-c8a5563777e61d13.html",
+          "capture_sha256": "ca98a114bd841c8446ca9a7f248b9be984a78aa976a579c73d127df4d608f9ae",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000177",
+      "book_id": "140",
+      "title": "Antropología de la religión",
+      "subtitle": null,
+      "authors": [
+        "Duch, Lluís"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Herder Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45819",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/45819.html",
+          "capture_sha256": "c595ed5389a1dfbb88ae87cb201373c51730f415ea84511592912dccab5f4b25",
+          "observed_text": "Barcelona : Herder Editorial, [2001]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/45819.html",
+          "capture_sha256": "c595ed5389a1dfbb88ae87cb201373c51730f415ea84511592912dccab5f4b25",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000180",
+      "book_id": "191",
+      "title": "Principios de una psicoterapia de la psicosis",
+      "subtitle": null,
+      "authors": [
+        "Álvarez, José María"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Xoroi Edicions",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128573",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/128573.html",
+          "capture_sha256": "f82fe4b9bc30772f2f3e0e051b9a61453181ee9e7fb9121df7fd34c58874d093",
+          "observed_text": "[Barcelona] : Xoroi Edicions, [2020]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/128573.html",
+          "capture_sha256": "f82fe4b9bc30772f2f3e0e051b9a61453181ee9e7fb9121df7fd34c58874d093",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000181",
+      "book_id": "197",
+      "title": "Temas de psicología práctica",
+      "subtitle": null,
+      "authors": [
+        "Sarráis Oteo, Fernando"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "EUNSA",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47120",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/47120.html",
+          "capture_sha256": "d84c9e245576a4e0745cda62f4dbd285b094c2a5d82766d457ad3faef1b15412",
+          "observed_text": "Pamplona : EUNSA, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/47120.html",
+          "capture_sha256": "d84c9e245576a4e0745cda62f4dbd285b094c2a5d82766d457ad3faef1b15412",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000184",
+      "book_id": "151",
+      "title": "Historia mínima de Chile",
+      "subtitle": null,
+      "authors": [
+        "Sagredo Baeza, Rafael"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México : Turner",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193635",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193635",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193635.html",
+          "capture_sha256": "17f88070f48fe6ee204d62a23638b2d6ebb8e0ea529e717876b0b7a42d488dd3",
+          "observed_text": "México, D.F. : El Colegio de México : Turner, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193635",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193635.html",
+          "capture_sha256": "17f88070f48fe6ee204d62a23638b2d6ebb8e0ea529e717876b0b7a42d488dd3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000186",
+      "book_id": "199",
+      "title": "Arduino práctico. Edición 2022",
+      "subtitle": null,
+      "authors": [
+        "Lozano Equisoain, Daniel"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Anaya Multimedia",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/300709",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000187",
+      "book_id": "164",
+      "title": "Historia mínima de Perú",
+      "subtitle": null,
+      "authors": [
+        "Contreras, Carlos",
+        "Zuloaga, Marina"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México : Turner",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193634",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193634",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193634.html",
+          "capture_sha256": "e6816c24bed8ed71a7866794b54c9cdd0975d5d83d0221b1200bbfee10fe9613",
+          "observed_text": "México, D.F : El Colegio de México : Turner, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193634",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193634.html",
+          "capture_sha256": "e6816c24bed8ed71a7866794b54c9cdd0975d5d83d0221b1200bbfee10fe9613",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000188",
+      "book_id": "166",
+      "title": "Historia mínima de Uruguay",
+      "subtitle": null,
+      "authors": [
+        "Caetano, Gerardo"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194885",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194885",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194885.html",
+          "capture_sha256": "ed1380b3f174db914fedd0d8eeefd83c64197cfccc6da0669de42d44ae50b9ed",
+          "observed_text": "Ciudad de México : El Colegio de México, 2020."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194885",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194885.html",
+          "capture_sha256": "ed1380b3f174db914fedd0d8eeefd83c64197cfccc6da0669de42d44ae50b9ed",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000189",
+      "book_id": "121",
+      "title": "Estadística Inferencial",
+      "subtitle": null,
+      "authors": [
+        "Llinás Solano, Humberto"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad del Norte",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70060",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-84c02787a4bc623d.html",
+          "capture_sha256": "f808fe82c3dc2399e46bb36e39122b2d23d61dc580319e1f47df77a164586f83",
+          "observed_text": "Barranquilla : Universidad del Norte, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-84c02787a4bc623d.html",
+          "capture_sha256": "f808fe82c3dc2399e46bb36e39122b2d23d61dc580319e1f47df77a164586f83",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000190",
+      "book_id": "144",
+      "title": "Manual de Sociología de la Familia",
+      "subtitle": null,
+      "authors": [
+        "Donati, Pierpaolo"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "EUNSA, Ediciones Universidad de Navarra",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47451",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/47451.html",
+          "capture_sha256": "12af456be7d6e3aa87c1e788fdd5db65f60bb84e45eeefd03c97abe2276d4853",
+          "observed_text": "Pamplona : EUNSA, Ediciones Universidad de Navarra, c2003."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/47451.html",
+          "capture_sha256": "12af456be7d6e3aa87c1e788fdd5db65f60bb84e45eeefd03c97abe2276d4853",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000192",
+      "book_id": "157",
+      "title": "Historia mínima de la globalización temprana",
+      "subtitle": null,
+      "authors": [
+        "Hausberger, Bernd"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México, Centro de Estudios Históricos",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194996",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194996",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194996.html",
+          "capture_sha256": "c48d685766c4ebb621cc2083dd421884537591ec85ec2d5b1ee534b9b2b765e3",
+          "observed_text": "Ciudad de México, México : El Colegio de México, Centro de Estudios Históricos, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194996",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194996.html",
+          "capture_sha256": "c48d685766c4ebb621cc2083dd421884537591ec85ec2d5b1ee534b9b2b765e3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000195",
+      "book_id": "180",
+      "title": "Oxígeno: fisiología, terapéutica, toxicidad",
+      "subtitle": null,
+      "authors": [
+        "Cristancho Gómez, William"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial El Manual Moderno",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128358",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6c6624b4dbb6c732.html",
+          "capture_sha256": "dbb963aef81e3718c90908f2b84c6a165751e5156a88d3e11d8a916a76018eae",
+          "observed_text": "Bogotá : Editorial El Manual Moderno, 2019."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6c6624b4dbb6c732.html",
+          "capture_sha256": "dbb963aef81e3718c90908f2b84c6a165751e5156a88d3e11d8a916a76018eae",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000197",
+      "book_id": "183",
+      "title": "Temas claves: neuroanatomía (4a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Fix, James D."
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Wolters Kluwer Health : Lippincott Williams & Wilkins",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124809",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8b4726e2a5b9d46d.html",
+          "capture_sha256": "b0dbc1c0570268cf68da03ed57fbf944c50b01ec418ae47ceb070119fa3f8814",
+          "observed_text": "Estados Unidos : Wolters Kluwer Health : Lippincott Williams & Wilkins, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8b4726e2a5b9d46d.html",
+          "capture_sha256": "b0dbc1c0570268cf68da03ed57fbf944c50b01ec418ae47ceb070119fa3f8814",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000202",
+      "book_id": "129",
+      "title": "Una introducción a la geometría fractal",
+      "subtitle": null,
+      "authors": [
+        "Sabogal, Sonia",
+        "Arenas, Gilberto"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Ediciones UIS",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117594",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8af061372fbf6a49.html",
+          "capture_sha256": "46c7c1ca324210b2ccb8de26888cfc589882e7c9b02c446ea4daae2d8c4ec68f",
+          "observed_text": "Bucaramanga : Ediciones UIS, 2011."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8af061372fbf6a49.html",
+          "capture_sha256": "46c7c1ca324210b2ccb8de26888cfc589882e7c9b02c446ea4daae2d8c4ec68f",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000203",
+      "book_id": "96",
+      "title": "¿Hay que desconstruir la metafísica?",
+      "subtitle": null,
+      "authors": [
+        "Aubenque, Pierre"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Encuentro",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61805",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns61805.html",
+          "capture_sha256": "a5374ea134c231e0c4d1f3fe8a87aa3159d7c3faf918c410e2a58525f286bbba",
+          "observed_text": "Encuentro,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns61805.html",
+          "capture_sha256": "a5374ea134c231e0c4d1f3fe8a87aa3159d7c3faf918c410e2a58525f286bbba",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000205",
+      "book_id": "126",
+      "title": "Inferencia estadística",
+      "subtitle": null,
+      "authors": [
+        "Miguel Ángel Gómez Villegas"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Ediciones Díaz de Santos",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52874",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e7e528202ac4b259.html",
+          "capture_sha256": "3bca5fd1844a144225a657a60d6e596a4e18b2d447bc965a3d2d7636fadb0ac7",
+          "observed_text": "Madrid : Ediciones Díaz de Santos, 2005."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e7e528202ac4b259.html",
+          "capture_sha256": "3bca5fd1844a144225a657a60d6e596a4e18b2d447bc965a3d2d7636fadb0ac7",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000207",
+      "book_id": "205",
+      "title": "Programación web en java",
+      "subtitle": null,
+      "authors": [
+        "José Miguel Ordax Cassá"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Ministerio de Educación de España",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49347",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-eae0b77aee05260e.html",
+          "capture_sha256": "f886c5a5d0f44e8748a530fbf23b15a0f5d319197729603eb3cbc437272cb2e6",
+          "observed_text": "Madrid : Ministerio de Educación de España, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-eae0b77aee05260e.html",
+          "capture_sha256": "f886c5a5d0f44e8748a530fbf23b15a0f5d319197729603eb3cbc437272cb2e6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000209",
+      "book_id": "113",
+      "title": "La novela rosa",
+      "subtitle": null,
+      "authors": [
+        "González Lejárraga, Antonio"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Consejo Superior de Investigaciones Científicas",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41629",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns41629.html",
+          "capture_sha256": "4503965e9d7824a6049575be406a2322da67c4769fb02036a5703b1f02325a71",
+          "observed_text": "Consejo Superior de Investigaciones Científicas,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns41629.html",
+          "capture_sha256": "4503965e9d7824a6049575be406a2322da67c4769fb02036a5703b1f02325a71",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000213",
+      "book_id": "108",
+      "title": "Cómo se hace una novela",
+      "subtitle": null,
+      "authors": [
+        "Unamuno, Miguel de"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Editorial Verbum",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217630",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB217630",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns217630.html",
+          "capture_sha256": "41b674632f82e259529ea0e3518f5f27988ece2c60dfc9fb6e4094d63960bfe8",
+          "observed_text": "Editorial Verbum,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB217630",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns217630.html",
+          "capture_sha256": "41b674632f82e259529ea0e3518f5f27988ece2c60dfc9fb6e4094d63960bfe8",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000224",
+      "book_id": "142",
+      "title": "Cultura, antropología y otras tonterías",
+      "subtitle": null,
+      "authors": [
+        "Ángel Díaz de Rada"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Trotta",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61258",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61258.html",
+          "capture_sha256": "ee53f421e7b08371579e78d4989c9266e01372d69ad116ee72f2beaa2b6f9290",
+          "observed_text": "Madrid : Trotta, 2010."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61258.html",
+          "capture_sha256": "ee53f421e7b08371579e78d4989c9266e01372d69ad116ee72f2beaa2b6f9290",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000227",
+      "book_id": "188",
+      "title": "Historia de la psicología",
+      "subtitle": null,
+      "authors": [
+        "Santamaría, Carlos"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Ariel",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293923",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000230",
+      "book_id": "139",
+      "title": "Manual de zoología",
+      "subtitle": null,
+      "authors": [
+        "Muñoz del Viejo, Antonio",
+        "Pérez Bote, José Luis",
+        "Rubio, Eduardo da Silva"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Universidad de Extremadura, Servicio de Publicaciones",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289642",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://publicauex.unex.es/libro/manual-de-zoologia_135809/",
+          "capture_path": "/tmp/pliego-digital-completion/science/primary-86010fab55fc2abf.html",
+          "capture_sha256": "6302e2d1c80c7a26c64ece136727926276538ce327cb67a6b307773f2082dd4f",
+          "observed_text": "Muñoz del Viejo A, Silva Rubio E da, Pérez Bote JL. Manual de zoología. Universidad de Extremadura, Servicio de Publicaciones."
+        },
+        {
+          "source_url": "https://publicauex.unex.es/libro/manual-de-zoologia_135809/",
+          "capture_path": "/tmp/pliego-digital-completion/science/primary-86010fab55fc2abf.html",
+          "capture_sha256": "6302e2d1c80c7a26c64ece136727926276538ce327cb67a6b307773f2082dd4f",
+          "observed_text": "Idioma Castellano"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000231",
+      "book_id": "132",
+      "title": "Botánica aplicada",
+      "subtitle": null,
+      "authors": [
+        "Molina Abril, José Antonio"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Dextra Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131465",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f8ceb3a2ee2a1163.html",
+          "capture_sha256": "7bb3b0115356d00f612b062887cdadb1fda9d99b2c51b63c52e578bc34fdd357",
+          "observed_text": "Madrid : Dextra Editorial, 2019."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f8ceb3a2ee2a1163.html",
+          "capture_sha256": "7bb3b0115356d00f612b062887cdadb1fda9d99b2c51b63c52e578bc34fdd357",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000232",
+      "book_id": "122",
+      "title": "Estadística y muestreo (14a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Martínez Bencardino, Ciro"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Ecoe Ediciones",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125946",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3fdc91d85e14cdbc.html",
+          "capture_sha256": "c8ba1c956a7e44ffee7f85d4a56398bd3ee52133ce83ce9dd301af1c3aa48380",
+          "observed_text": "Bogotá : Ecoe Ediciones, 2019."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3fdc91d85e14cdbc.html",
+          "capture_sha256": "c8ba1c956a7e44ffee7f85d4a56398bd3ee52133ce83ce9dd301af1c3aa48380",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000234",
+      "book_id": "203",
+      "title": "Inteligencia artificial",
+      "subtitle": null,
+      "authors": [
+        "López de Mántaras Badia, Ramón",
+        "Meseguer González, Pedro"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "CSIC : Los Libros de la Catarata",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233793",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-28ed8585d496008a.html",
+          "capture_sha256": "30b17684ee5cc6d9d8fac51965ba0dc9c0bbe01ccb672110c12531ea75d56e2e",
+          "observed_text": "Madrid : CSIC : Los Libros de la Catarata, [2017]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-28ed8585d496008a.html",
+          "capture_sha256": "30b17684ee5cc6d9d8fac51965ba0dc9c0bbe01ccb672110c12531ea75d56e2e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000235",
+      "book_id": "99",
+      "title": "Ética de la comunicación",
+      "subtitle": null,
+      "authors": [
+        "Prado Flores, Rogelio del"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Editorial Gedisa",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128281",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns128281.html",
+          "capture_sha256": "e02942244d980aa22a81aa2d00bf3b8705bf922eeaccf1e24a6c6e4344cd7713",
+          "observed_text": "Editorial Gedisa,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns128281.html",
+          "capture_sha256": "e02942244d980aa22a81aa2d00bf3b8705bf922eeaccf1e24a6c6e4344cd7713",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000236",
+      "book_id": "119",
+      "title": "Cálculo avanzado: introducción",
+      "subtitle": null,
+      "authors": [
+        "Caicedo Contreras, José Francisco"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad Nacional de Colombia. Facultad de Ciencias",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127754",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2e70a2bb71e8dfd5.html",
+          "capture_sha256": "e1eb89ad04425c2038242a6927957368a8ff349bb97ef9f72d00a9a1caba08f4",
+          "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2e70a2bb71e8dfd5.html",
+          "capture_sha256": "e1eb89ad04425c2038242a6927957368a8ff349bb97ef9f72d00a9a1caba08f4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000242",
+      "book_id": "185",
+      "title": "Constructivismo y psicoterapia (3a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Feixas Viaplana, Guillem",
+        "Villegas Besora, Manuel"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Desclée de Brouwer",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47644",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/47644.html",
+          "capture_sha256": "2a85d9b755de0439a5105dbaabec255622ee10b250038302888e4e32555321bb",
+          "observed_text": "Bilbao : Desclée de Brouwer, c2004."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/47644.html",
+          "capture_sha256": "2a85d9b755de0439a5105dbaabec255622ee10b250038302888e4e32555321bb",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000243",
+      "book_id": "181",
+      "title": "Proceso de valoración semiológica de Chávez para el cuidado de enfermería",
+      "subtitle": null,
+      "authors": [
+        "Barragán Becerra, Julián Andrés",
+        "Moreno Mojica, Claudia María",
+        "Hernández Bernal, Nubia Esperanza"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial UPTC",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219236",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ae42295f28b58397.html",
+          "capture_sha256": "925c2c0ac96375306b2c8e6a19c26fd8ea6e1eb7110140ed26efb82fe7354299",
+          "observed_text": "Tunja : Editorial UPTC, 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ae42295f28b58397.html",
+          "capture_sha256": "925c2c0ac96375306b2c8e6a19c26fd8ea6e1eb7110140ed26efb82fe7354299",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000245",
+      "book_id": "97",
+      "title": "¿Qué es eso llamado metafísica?",
+      "subtitle": null,
+      "authors": [
+        "Garrett, Brian"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Alianza Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45443",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://nextory.com/es/book/que-es-eso-llamado-metafisica-5625981",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/web-nextory-open.json",
+          "capture_sha256": "9308991f065d838c879e8ee18a87e9d38527e35e335d229d58172bfe451d2631",
+          "observed_text": "Autor/a: Brian Garrett Idioma: Español Editorial: Alianza Editorial Traducción: Fabio Morales García"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000248",
+      "book_id": "193",
+      "title": "Psicología del crecimiento interior",
+      "subtitle": null,
+      "authors": [
+        "Ramírez Villafáñez, Amado"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Ediciones Díaz de Santos",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63002",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/63002.html",
+          "capture_sha256": "e8aecc6a201480e68da28bf107ce4c95504306dee317d2233d7f9dd900cd058d",
+          "observed_text": "Madrid : Ediciones Díaz de Santos, 2015."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/63002.html",
+          "capture_sha256": "e8aecc6a201480e68da28bf107ce4c95504306dee317d2233d7f9dd900cd058d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000251",
+      "book_id": "202",
+      "title": "Iniciación a JavaScript",
+      "subtitle": null,
+      "authors": [
+        "Jorge Mohedano"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Ministerio de Educación de España",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49349",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-42b57ca3d9730e7e.html",
+          "capture_sha256": "970b0a8e578775ba0c37702ef79fb1ecb31206941e9e362cd5b7d3345e31e1fc",
+          "observed_text": "Madrid : Ministerio de Educación de España, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-42b57ca3d9730e7e.html",
+          "capture_sha256": "970b0a8e578775ba0c37702ef79fb1ecb31206941e9e362cd5b7d3345e31e1fc",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000253",
+      "book_id": "190",
+      "title": "Lecciones de psicología cognitiva",
+      "subtitle": null,
+      "authors": [
+        "Fernández, Humberto"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Universidad Abierta Interamericana",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/77154",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/77154.html",
+          "capture_sha256": "2a16b92107f12f8eb47888c2d4ea5180965c60454346b3d69451d370847dd668",
+          "observed_text": "Buenos Aires : Universidad Abierta Interamericana, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/77154.html",
+          "capture_sha256": "2a16b92107f12f8eb47888c2d4ea5180965c60454346b3d69451d370847dd668",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000260",
+      "book_id": "172",
+      "title": "Anatomía y fisiología del sistema nervioso central",
+      "subtitle": null,
+      "authors": [
+        "Velayos, José Luis",
+        "Diéguez, Godofredo"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "CEU Ediciones",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/43244",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-7716c6d896d5a7b7.html",
+          "capture_sha256": "9961dd01c174d60091a46eddf86fc033170705cf74c961e9bd66514992b6fb76",
+          "observed_text": "Madrid : CEU Ediciones, 2015."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-7716c6d896d5a7b7.html",
+          "capture_sha256": "9961dd01c174d60091a46eddf86fc033170705cf74c961e9bd66514992b6fb76",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000261",
+      "book_id": "111",
+      "title": "Está temblando. Novela",
+      "subtitle": null,
+      "authors": [
+        "Pérez de Arce, Hermógenes"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Editorial El Roble",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/195499",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns195499.html",
+          "capture_sha256": "7839378ac9726c4bd1f7a331ee7e83650bf2776a68e0d1fccc40600acde4fc40",
+          "observed_text": "Editorial El Roble,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns195499.html",
+          "capture_sha256": "7839378ac9726c4bd1f7a331ee7e83650bf2776a68e0d1fccc40600acde4fc40",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000263",
+      "book_id": "160",
+      "title": "Historia mínima de la transición democrática en México",
+      "subtitle": null,
+      "authors": [
+        "Woldenberg, José"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193613",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193613",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193613.html",
+          "capture_sha256": "fa3b24b30aacb7a3c2d1fbedba610f29a8235c3103d555082c60ea865acf8a2e",
+          "observed_text": "México, D.F. : El Colegio de México, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193613",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193613.html",
+          "capture_sha256": "fa3b24b30aacb7a3c2d1fbedba610f29a8235c3103d555082c60ea865acf8a2e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000264",
+      "book_id": "95",
+      "title": "Metafísica de la web",
+      "subtitle": null,
+      "authors": [
+        "Ferraris, Maurizio"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Dykinson",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/159993",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns159993.html",
+          "capture_sha256": "a525d82012765c069d54ee1a153707d12423f076edcba67cbd7a821679084e0b",
+          "observed_text": "Dykinson,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns159993.html",
+          "capture_sha256": "a525d82012765c069d54ee1a153707d12423f076edcba67cbd7a821679084e0b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000266",
+      "book_id": "147",
+      "title": "Sociología del Renacimiento",
+      "subtitle": null,
+      "authors": [
+        "Martín, Alfred von"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Fondo de Cultura Económica",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110396",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/110396.html",
+          "capture_sha256": "87aaf5171cc89370966fabc1a3971fc54563c3288a55814cee8ed81f6b468df4",
+          "observed_text": "México : Fondo de Cultura Económica, 1946."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/110396.html",
+          "capture_sha256": "87aaf5171cc89370966fabc1a3971fc54563c3288a55814cee8ed81f6b468df4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000269",
+      "book_id": "128",
+      "title": "La geometría del universo",
+      "subtitle": null,
+      "authors": [
+        "Leon, Manuel de"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Los libros de la Catarata",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/239571",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB239571",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-a73c8fe399446f23.html",
+          "capture_sha256": "d841e7969100eccd9343a079f02f287134682ab8201943f93b829023e49a845d",
+          "observed_text": "Madrid : Los libros de la Catarata, 2012."
+        },
+        {
+          "source_url": "https://www.iberlibro.com/9788483197769/Geometr%C3%ADa-Universo-Qu%C3%A9-Le%C3%B3n-Manuel-8483197766/plp",
+          "capture_path": "/tmp/pliego-digital-completion/social/geometry-search-log.json",
+          "capture_sha256": "fd6321ed578085121272e9395a6b6313a8d5af38d5d0f82ed813ae59267d9996",
+          "observed_text": "Idioma: Español; ISBN 13: 9788483197769; De León, Manuel; LOS LIBROS DE LA CATARATA"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000273",
+      "book_id": "200",
+      "title": "Bases de datos avanzadas",
+      "subtitle": null,
+      "authors": [
+        "Aramburu Cabo, María José",
+        "Sanz Blasco, Ismael"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Universitat Jaume I. Servei de Comunicació i Publicacions",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51741",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-00ba28dbbd8adb65.html",
+          "capture_sha256": "2d92e5d475bd6edf9e65be0a27c9202b23f7c8a1f3b706aee0a8ad3ae91eba35",
+          "observed_text": "Castelló de la Plana : Universitat Jaume I. Servei de Comunicació i Publicacions, [2013]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-00ba28dbbd8adb65.html",
+          "capture_sha256": "2d92e5d475bd6edf9e65be0a27c9202b23f7c8a1f3b706aee0a8ad3ae91eba35",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000275",
+      "book_id": "123",
+      "title": "Fundamentos de estadística",
+      "subtitle": null,
+      "authors": [
+        "Peña, Daniel"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Alianza Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45429",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://dialnet.unirioja.es/servlet/libro?codigo=369575",
+          "capture_path": "/tmp/pliego-digital-completion/science/dialnet-fundamentos.html",
+          "capture_sha256": "d3751c52247be9ad4776b46c08c1e8b847d3e4a401ffa125f3b2806706eb87cb",
+          "observed_text": "Autores: Daniel Peña Sánchez de Rivera; Editores: Alianza Editorial; Idioma: español"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000276",
+      "book_id": "92",
+      "title": "La responsividad ética",
+      "subtitle": null,
+      "authors": [
+        "Patiño González, Susana Magdalena"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Plaza y Valdés, S.L.",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59505",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59505.html",
+          "capture_sha256": "ff3ab7366cd456523b24d929420ca3849233759cc0116e7a871fd0726b613305",
+          "observed_text": "Plaza y Valdés, S.L.,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59505.html",
+          "capture_sha256": "ff3ab7366cd456523b24d929420ca3849233759cc0116e7a871fd0726b613305",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000279",
+      "book_id": "107",
+      "title": "Cómo comportarse en la multitud: una novela",
+      "subtitle": null,
+      "authors": [
+        "Bordas, Camille"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Malpaso Ediciones",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117024",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117024",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117024.html",
+          "capture_sha256": "7f9a25d160a6adcfd44281e2e58e718bd1b87ddbee495c4b26f068c764d86785",
+          "observed_text": "Malpaso Ediciones,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117024",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117024.html",
+          "capture_sha256": "7f9a25d160a6adcfd44281e2e58e718bd1b87ddbee495c4b26f068c764d86785",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000281",
+      "book_id": "120",
+      "title": "Estadística aplicada básica (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Moore, David S."
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Antoni Bosch editor",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60046",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6193d7218a6f349d.html",
+          "capture_sha256": "87d9c0982d4972ab3ef1c144e8fb7416d3d067fca457e815cd67267b03a56b6b",
+          "observed_text": "Madrid : Antoni Bosch editor, 2005."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6193d7218a6f349d.html",
+          "capture_sha256": "87d9c0982d4972ab3ef1c144e8fb7416d3d067fca457e815cd67267b03a56b6b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000282",
+      "book_id": "155",
+      "title": "Historia mínima de la deuda externa de Latinoamérica",
+      "subtitle": null,
+      "authors": [
+        "Marichal Salinas, Carlos"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193604",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193604",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193604.html",
+          "capture_sha256": "8ea59f8da0a7968ca1e9b29ec7daa6289f25643d1db8e42d223c657f37aa8aae",
+          "observed_text": "México, D.F. : El Colegio de México, 2015."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193604",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193604.html",
+          "capture_sha256": "8ea59f8da0a7968ca1e9b29ec7daa6289f25643d1db8e42d223c657f37aa8aae",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000284",
+      "book_id": "176",
+      "title": "Fundamentos de farmacología oncológica",
+      "subtitle": null,
+      "authors": [
+        "Cevallos Barrera, Edwin",
+        "Duque Proaño, Galo"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Universidad del Azuay",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233834",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-dc33785bd60e4578.html",
+          "capture_sha256": "97d61a8416b43c96c619f99789e7d1314a5e681909208d121f55512ae35aa610",
+          "observed_text": "Cuenca : Universidad del Azuay, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-dc33785bd60e4578.html",
+          "capture_sha256": "97d61a8416b43c96c619f99789e7d1314a5e681909208d121f55512ae35aa610",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000285",
+      "book_id": "162",
+      "title": "Historia mínima de las izquierdas en México",
+      "subtitle": null,
+      "authors": [
+        "Rodríguez Kuri, Ariel"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México, Centro de Estudios Históricos",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194932",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194932",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194932.html",
+          "capture_sha256": "1cf88c9eeb5dd600e540f0dc14f1b82e7c47a4b21d3f4ec3484c2d1d346b3f67",
+          "observed_text": "Ciudad de México, México : El Colegio de México, Centro de Estudios Históricos, 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194932",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194932.html",
+          "capture_sha256": "1cf88c9eeb5dd600e540f0dc14f1b82e7c47a4b21d3f4ec3484c2d1d346b3f67",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000287",
+      "book_id": "175",
+      "title": "Fisiología y fisiopatología pulmonar: estudios de casos (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "West, John B."
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Wolters Kluwer Health",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125026",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-da20f31c48dae892.html",
+          "capture_sha256": "8e294b297059344d4db49b3b6440b8828a21c531bde3987bb8b3a771012409f0",
+          "observed_text": "Barcelona : Wolters Kluwer Health, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-da20f31c48dae892.html",
+          "capture_sha256": "8e294b297059344d4db49b3b6440b8828a21c531bde3987bb8b3a771012409f0",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000288",
+      "book_id": "194",
+      "title": "Psicología del delincuente",
+      "subtitle": null,
+      "authors": [
+        "Pollitz, Paul"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Ediciones Olejnik",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/240116",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/240116.html",
+          "capture_sha256": "62f8f561643ecc63e786f8ec06416b048d9046a2328194b4708fc5ed7bb0c429",
+          "observed_text": "Santiago de Chile : Ediciones Olejnik, 2019."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/240116.html",
+          "capture_sha256": "62f8f561643ecc63e786f8ec06416b048d9046a2328194b4708fc5ed7bb0c429",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000291",
+      "book_id": "159",
+      "title": "Historia mínima de la Revolución cubana",
+      "subtitle": null,
+      "authors": [
+        "Rojas, Rafael"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193640",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193640",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193640.html",
+          "capture_sha256": "b1820965cdc010036db7e78735a741bf35469ea09d8896724f32442fcf2f9511",
+          "observed_text": "México, D.F. : El Colegio de México, 2015."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193640",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/193640.html",
+          "capture_sha256": "b1820965cdc010036db7e78735a741bf35469ea09d8896724f32442fcf2f9511",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000292",
+      "book_id": "137",
+      "title": "La astronomía es fácil",
+      "subtitle": null,
+      "authors": [
+        "Lopesino, Jordi"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Marcombo",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281683",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f4e93bafe1053b4c.html",
+          "capture_sha256": "76a138a2243f5b11cb5837f3e5e0874eac88fc288d9c88adf25bd6e457db0e28",
+          "observed_text": "Barcelona (España) : Marcombo, 2023."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f4e93bafe1053b4c.html",
+          "capture_sha256": "76a138a2243f5b11cb5837f3e5e0874eac88fc288d9c88adf25bd6e457db0e28",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000293",
+      "book_id": "110",
+      "title": "El retorno de los desplazados: novela",
+      "subtitle": null,
+      "authors": [
+        "Gordillo Barahona, Beatriz"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Grado Cero",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/288325",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://porrua.mx/el-retorno-de-los-desplazados-9789942717696.html",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/fallback-publisher3.html",
+          "capture_sha256": "b8984ef65125b3ead5994a6dc66445e8d748ae477fb3f4d9b7065205bb185871",
+          "observed_text": "Formato Ebook Editorial Grado Cero Editores Autor(es) Beatriz Gordillo Barahona Idioma Español / Castellano"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000294",
+      "book_id": "168",
+      "title": "Historia mínima del Tequila",
+      "subtitle": null,
+      "authors": [
+        "Muria, José M."
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/287524",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000297",
+      "book_id": "94",
+      "title": "La ética explorada",
+      "subtitle": null,
+      "authors": [
+        "González, Ana Marta"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "EUNSA",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47307",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47307.html",
+          "capture_sha256": "6d1288cfaf8e10f3f45d9523a97542ad7ee192f446a6e1714caaf3796d28f1d2",
+          "observed_text": "EUNSA,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47307.html",
+          "capture_sha256": "6d1288cfaf8e10f3f45d9523a97542ad7ee192f446a6e1714caaf3796d28f1d2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000301",
+      "book_id": "198",
+      "title": "Teoría y técnica de la psicoterapia psicoanalítica",
+      "subtitle": null,
+      "authors": [
+        "González Núñez, José de Jesús",
+        "Rodríguez Cortés, María del Pilar"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Plaza y Valdés, S.A. de C.V",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75485",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/75485.html",
+          "capture_sha256": "bf8b575d6c7c4e37d6e9ef1fd62535ba5e85c81ad6b413c184f4afd38a37afc9",
+          "observed_text": "México D.F. : Plaza y Valdés, S.A. de C.V., 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/75485.html",
+          "capture_sha256": "bf8b575d6c7c4e37d6e9ef1fd62535ba5e85c81ad6b413c184f4afd38a37afc9",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000305",
+      "book_id": "204",
+      "title": "Linux para usuarios",
+      "subtitle": null,
+      "authors": [
+        "Francisco Torres Escobar"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Ministerio de Educación, Cultura y Deporte",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49377",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b031fc1cca8cb329.html",
+          "capture_sha256": "9b96c1b0ebc122b855bf62733c336318c7a975d26ab2981930ddccf5d53785f0",
+          "observed_text": "Madrid : Ministerio de Educación, Cultura y Deporte, [2014]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b031fc1cca8cb329.html",
+          "capture_sha256": "9b96c1b0ebc122b855bf62733c336318c7a975d26ab2981930ddccf5d53785f0",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000306",
+      "book_id": "196",
+      "title": "Psicoterapia, asesoramiento y consejería (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Lucio Balarezo Chiriboga"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Editorial de la Pontificia Universidad Católica del Ecuador",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/80166",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/80166.html",
+          "capture_sha256": "9e3c66335fbed297da39ffb9c1332a05aeb84ced9f38a7b4804d653e5d0b358c",
+          "observed_text": "Quito : Editorial de la Pontificia Universidad Católica del Ecuador, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/80166.html",
+          "capture_sha256": "9e3c66335fbed297da39ffb9c1332a05aeb84ced9f38a7b4804d653e5d0b358c",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000307",
+      "book_id": "192",
+      "title": "Psicología de la música",
+      "subtitle": null,
+      "authors": [
+        "Schön, Daniele",
+        "Akiva-Kabiri, Lilach",
+        "Vecchi, Tomaso"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Alianza Editorial",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216569",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000310",
+      "book_id": "134",
+      "title": "Ecología del Paisaje",
+      "subtitle": null,
+      "authors": [
+        "Farina, Almo"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Universidad de Alicante",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60609",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b734e320648e8926.html",
+          "capture_sha256": "08c9080a4c98e6c9b05717477c4d621562ec3b3b29e6ff1cd9d26edd16deebf6",
+          "observed_text": "Alicante : Universidad de Alicante, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b734e320648e8926.html",
+          "capture_sha256": "08c9080a4c98e6c9b05717477c4d621562ec3b3b29e6ff1cd9d26edd16deebf6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000311",
+      "book_id": "207",
+      "title": "Revolución artificial: aplicaciones basadas en inteligencia artificial",
+      "subtitle": null,
+      "authors": [
+        "Entenova Gnosis"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Orbe Formación",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/298017",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://biblioteca-apps.uces.edu.ar/rv/knowledgebase.php?article=478",
+          "capture_path": "/tmp/pliego-digital-completion/science/primary-17c764bb83d656f8.html",
+          "capture_sha256": "f250f749faf4587f9b14a2e0cdcdf8c005679d71060f1953e852fe9cf546ac9a",
+          "observed_text": "Gnosis, E. (2026). Revolución artificial: aplicaciones basadas en inteligencia artificial. Orbe Formación. https://elibro.net/es/lc/uces/titulos/298017"
+        },
+        {
+          "source_url": "https://nodovox.com/record.php?id=730228",
+          "capture_path": "/tmp/pliego-digital-completion/literature/artificial/nodovox-exact730228.html",
+          "capture_sha256": "c698409e9b5175dbf660519f4ab96c0da99902290db70a157fd61482ef4ff81a",
+          "observed_text": "Autor / responsable Entenova Gnosis Editorial Orbe Formación Año 2026 Idioma Español"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000312",
+      "book_id": "141",
+      "title": "Antropología de la sexualidad (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Choza, Jacinto"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Editorial Thémata",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59981",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/59981.html",
+          "capture_sha256": "ff0ebcd82e17c2ffee4f23a71573a2b4606b8f894ba2a7a29f89ea62f7aa2005",
+          "observed_text": "Sevilla : Editorial Thémata, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/59981.html",
+          "capture_sha256": "ff0ebcd82e17c2ffee4f23a71573a2b4606b8f894ba2a7a29f89ea62f7aa2005",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000314",
+      "book_id": "145",
+      "title": "Paisajes de antropología urbana",
+      "subtitle": null,
+      "authors": [
+        "Cátedra, María"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Genueve Ediciones",
+      "isbn13": null,
+      "format": "AUDIOBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59734",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/59734.html",
+          "capture_sha256": "0520836c74f2a4949acf9668513116959149ed88857666a7bb2abe82123108c2",
+          "observed_text": "[Cuenca] : Genueve Ediciones, [2012]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/59734.html",
+          "capture_sha256": "0520836c74f2a4949acf9668513116959149ed88857666a7bb2abe82123108c2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    }
+  ]
+}

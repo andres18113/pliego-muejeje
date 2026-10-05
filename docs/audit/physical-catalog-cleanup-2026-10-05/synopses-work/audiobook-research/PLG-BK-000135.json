@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000135",
+  "title": "Sociología criminal",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:08.807869+00:00",
+      "response_sha256": "956298ad52f9c0d1c8d3629fcfe70f4dec4ae620f3701fe5b6d260792e4fad5e",
+      "extraction_sha256": "554f976a8cf39c68c726466db7e298af2ff5ce403fa533010519ac7c0b0b1bbc",
+      "text": "Guardado en: Autor Principal: Ferri, Enrico, (autor.) Otros Autores: Soto Hernández, Antonio, (traductor.) , Agurto Gonzáles, Carlos Antonio, (edición.) , Quequejana Mamani, Sonia Lidia, (edición.) , Choque Cuenca, Benigno, (edición.) Formato: eBook Idioma: Spanish Publicado: Argentina : Ediciones Olejnik, 2022. Series: Biblioteca de Criminología. Materias: Criminología. Derecho penal. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/251021  ",
+      "observed_page_title": "Existencias: Sociología criminal /",
+      "title_check_response_sha256": "1ae28cf607bf85f3bd1e4e1c468e5a99e12c651403cbddcd90737ed00953ba67",
+      "title_checked_at_utc": "2026-10-05T19:39:52.171128+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.104908+00:00",
+      "response_sha256": "f3f46595d095042472c9fe2d6e7e2e31cbda1db8aa9613ec33d37d76f5aba17c",
+      "extraction_sha256": "554f976a8cf39c68c726466db7e298af2ff5ce403fa533010519ac7c0b0b1bbc",
+      "text": "Guardado en: Autor Principal: Ferri, Enrico, (autor.) Otros Autores: Soto Hernández, Antonio, (traductor.) , Agurto Gonzáles, Carlos Antonio, (edición.) , Quequejana Mamani, Sonia Lidia, (edición.) , Choque Cuenca, Benigno, (edición.) Formato: eBook Idioma: Spanish Publicado: Argentina : Ediciones Olejnik, 2022. Series: Biblioteca de Criminología. Materias: Criminología. Derecho penal. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/251021  "
+    }
+  ]
+}

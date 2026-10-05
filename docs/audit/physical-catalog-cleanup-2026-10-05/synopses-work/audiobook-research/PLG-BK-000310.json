@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000310",
+  "title": "Ecología del Paisaje",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:34.500208+00:00",
+      "response_sha256": "c3fd57827e9f70370a616eff4524351dc77196041775348923693f9d62466ab0",
+      "extraction_sha256": "c393b6c142d2415c1adb9d6c1d9e673a80db7023672457e6dff47841190c52e1",
+      "text": "Guardado en: Autor Principal: Farina, Almo. Otros Autores: Herrero Martín, Rosa Ana, (traductor.) Formato: eBook Idioma: Spanish Publicado: Alicante : Universidad de Alicante, 2016. Materias: Landscape ecology. Paisaje. Ecología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/60609  ",
+      "observed_page_title": "Existencias: Ecología del paisaje /",
+      "title_check_response_sha256": "d1f7e7c6b16e5ad3b22a2c007f36d7d804a7b531e9b2bba78497630a895e278f",
+      "title_checked_at_utc": "2026-10-05T19:39:56.497328+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:35.766196+00:00",
+      "response_sha256": "8e5e8a9f9a47e6512c7d6654de33267f44516af9dc6d1969a3a07e0b7cf71834",
+      "extraction_sha256": "c393b6c142d2415c1adb9d6c1d9e673a80db7023672457e6dff47841190c52e1",
+      "text": "Guardado en: Autor Principal: Farina, Almo. Otros Autores: Herrero Martín, Rosa Ana, (traductor.) Formato: eBook Idioma: Spanish Publicado: Alicante : Universidad de Alicante, 2016. Materias: Landscape ecology. Paisaje. Ecología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/60609  "
+    }
+  ]
+}

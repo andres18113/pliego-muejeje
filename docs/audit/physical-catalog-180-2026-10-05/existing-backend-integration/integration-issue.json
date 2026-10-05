@@ -1,0 +1,49 @@
+{
+  "existing_issue": true,
+  "catalog_http_500_cause": "Live catalog endpoint/gateway expects productType routine overloads absent from database at Flyway044. Legacy search routines work directly.",
+  "live_api_parameter_names": [
+    "que",
+    "title",
+    "author",
+    "isbn13",
+    "category",
+    "minPrice",
+    "maxPrice",
+    "language",
+    "format",
+    "productType",
+    "sort",
+    "page",
+    "pageSize"
+  ],
+  "database_routine_checks": {
+    "legacy_search": {
+      "exit": 0,
+      "summary": "success"
+    },
+    "legacy_global_search": {
+      "exit": 0,
+      "summary": "success"
+    },
+    "new_search": {
+      "exit": 1,
+      "summary": "undefined function signature"
+    },
+    "new_global_search": {
+      "exit": 1,
+      "summary": "undefined function signature"
+    }
+  },
+  "running_java_pid": 32105,
+  "startup_findings": {
+    "normal_log": "successful startup 2026-10-05T11:26 on Java25 with Flyway044; no fatal startup exception recorded",
+    "warnings": "Maven Guava sun.misc.Unsafe deprecation warning and SpringDoc configuration warnings; not startup failures",
+    "other_log": "/tmp/pliego-storefront-migration.log records V046 fn_help_categories unquoted position syntax error; current source now quotes position. This is a separate logged SQL migration failure, not proof of the user-reported Java startup failure.",
+    "shared_root_cause": "Cannot establish linkage to unspecified reported startup error from available logs; no fatal failure in normal log."
+  },
+  "affected_concurrent_files": [
+    "backend/src/main/java/com/pliego/modules/catalog/gateway/JdbcCatalogGateway.java",
+    "backend/src/main/resources/db/migration/V046__storefront_navigation_and_help.sql"
+  ],
+  "mutations_performed": "none; no app restart, deployment, source writes or database writes"
+}

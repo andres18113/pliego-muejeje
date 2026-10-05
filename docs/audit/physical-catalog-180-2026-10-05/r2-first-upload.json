@@ -1,0 +1,10 @@
+{
+  "local_count": 180,
+  "uploaded": 180,
+  "skipped": 0,
+  "verified_count": 179,
+  "prefix": "covers/editions/v2/",
+  "errors": [
+    "covers/editions/v2/PLG-BK-000432-829bb755fb49.webp: verification HEAD failed (TypeError)"
+  ]
+}

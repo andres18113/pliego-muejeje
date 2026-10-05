@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000109",
+  "title": "Cleopatra: una vida",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247386",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:03.739125+00:00",
+      "response_sha256": "83be9b9baf54e8288b967beefe2fde914b501beabd27dffe9638cc35952c814d",
+      "extraction_sha256": "93de3ba834ae46248432f78b592ec2c6c5b854a913bd47f5b4de2d0f48787f16",
+      "text": "Guardado en: Autor Principal: Schiff, Stacy, 1961, (autora.) Otros Autores: Martínez Gómez, Mirna del Carmen, (traductora.) Formato: eBook Idioma: Spanish Publicado: México : Fondo de Cultura Económica, 2023. Series: Historia. Materias: Cleopatra, > Reina de Egipto, > -30 BC, > biografía. Antiguo Egipto > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/247386  ",
+      "observed_page_title": "Existencias: Cleopatra :",
+      "title_check_response_sha256": "6c8474088fe5d9a9be49f2d465140743dcf37a96319f849d33486208104a01b5",
+      "title_checked_at_utc": "2026-10-05T19:39:50.649943+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247386/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:05.168802+00:00",
+      "response_sha256": "96641785eb82603a5bb6e3495369e001ea7f6e53214111cb259c206d3e52ff94",
+      "extraction_sha256": "93de3ba834ae46248432f78b592ec2c6c5b854a913bd47f5b4de2d0f48787f16",
+      "text": "Guardado en: Autor Principal: Schiff, Stacy, 1961, (autora.) Otros Autores: Martínez Gómez, Mirna del Carmen, (traductora.) Formato: eBook Idioma: Spanish Publicado: México : Fondo de Cultura Económica, 2023. Series: Historia. Materias: Cleopatra, > Reina de Egipto, > -30 BC, > biografía. Antiguo Egipto > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/247386  "
+    }
+  ]
+}

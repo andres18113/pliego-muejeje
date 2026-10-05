@@ -2,501 +2,6 @@
   "schema": "pliego-cover-manifest-v1",
   "records": [
     {
-      "isbn13": "9781915088406",
-      "title": "El retrato de Dorian Gray",
-      "original_file": "Literatura/el-retrato-de-dorian-gray.webp",
-      "old_sku": "LIT-010",
-      "permanent_sku": "PLG-BK-000001",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000001-52ead14866be.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp"
-    },
-    {
-      "isbn13": "9786070738548",
-      "title": "El extranjero",
-      "original_file": "Literatura/el-extranjero.webp",
-      "old_sku": "LIT-007",
-      "permanent_sku": "PLG-BK-000002",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000002-ca452ee580f4.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000002-ca452ee580f4.webp"
-    },
-    {
-      "isbn13": "9786071512949",
-      "title": "Métodos numéricos para ingenieros",
-      "original_file": "Matemáticas/metodos-numericos-para-ingenieros.webp",
-      "old_sku": "MAT-019",
-      "permanent_sku": "PLG-BK-000003",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000003-6249aab14969.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000003-6249aab14969.webp"
-    },
-    {
-      "isbn13": "9786073259521",
-      "title": "Álgebra lineal y sus aplicaciones",
-      "original_file": "Matemáticas/algebra-lineal-y-su-aplicacion.webp",
-      "old_sku": "MAT-004",
-      "permanent_sku": "PLG-BK-000004",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000004-79eace1d30c0.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000004-79eace1d30c0.webp"
-    },
-    {
-      "isbn13": "9786074816631",
-      "title": "Análisis numérico",
-      "original_file": "Matemáticas/analisis-numerico-richard-l-burden-j-douglas-faires.webp",
-      "old_sku": "MAT-009",
-      "permanent_sku": "PLG-BK-000005",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000005-41b83fcf3974.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000005-41b83fcf3974.webp"
-    },
-    {
-      "isbn13": "9786075263113",
-      "title": "Álgebra lineal",
-      "original_file": "Matemáticas/algebra-lineal-una-introduccion-moderna-4-edicion.webp",
-      "old_sku": "MAT-003",
-      "permanent_sku": "PLG-BK-000006",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000006-942d503cab30.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000006-942d503cab30.webp"
-    },
-    {
-      "isbn13": "9786075266312",
-      "title": "Ecuaciones diferenciales con aplicaciones de modelado",
-      "original_file": "Matemáticas/ecuaciones-diferenciales.webp",
-      "old_sku": "MAT-013",
-      "permanent_sku": "PLG-BK-000007",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000007-d2e55c4175ca.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000007-d2e55c4175ca.webp"
-    },
-    {
-      "isbn13": "9786075502069",
-      "title": "Geometría y trigonometría Baldor",
-      "original_file": "Matemáticas/geometria-trigonemetria-baldor.webp",
-      "old_sku": "MAT-014",
-      "permanent_sku": "PLG-BK-000008",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000008-0bb82992c0eb.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000008-0bb82992c0eb.webp"
-    },
-    {
-      "isbn13": "9786075502090",
-      "title": "Álgebra Baldor",
-      "original_file": "Matemáticas/alegebra-de-baldor.webp",
-      "old_sku": "MAT-001",
-      "permanent_sku": "PLG-BK-000009",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000009-4c913e2c7914.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000009-4c913e2c7914.webp"
-    },
-    {
-      "isbn13": "9786124441073",
-      "title": "Análisis matemático IV",
-      "original_file": "Matemáticas/ANALISIS-MATEMATICO-IV-Calculo-Vectorial.webp",
-      "old_sku": "MAT-008",
-      "permanent_sku": "PLG-BK-000010",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000010-9edf89eab2f1.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000010-9edf89eab2f1.webp"
-    },
-    {
-      "isbn13": "9786124441141",
-      "title": "Cálculo y análisis vectorial",
-      "original_file": "Matemáticas/Cálculo-analisis-vectorial.webp",
-      "old_sku": "MAT-010",
-      "permanent_sku": "PLG-BK-000011",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000011-48509a85c734.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000011-48509a85c734.webp"
-    },
-    {
-      "isbn13": "9786124441165",
-      "title": "Problemas resueltos de álgebra lineal",
-      "original_file": "Matemáticas/problemas-resueltps-de-al.webp",
-      "old_sku": "MAT-020",
-      "permanent_sku": "PLG-BK-000012",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000012-0b128b7cc271.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000012-0b128b7cc271.webp"
-    },
-    {
-      "isbn13": "9786125020727",
-      "title": "La ciudad y los perros",
-      "original_file": "Literatura/la-ciudad-y-los-perros.webp",
-      "old_sku": "LIT-013",
-      "permanent_sku": "PLG-BK-000013",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000013-3d9a3ffe7035.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000013-3d9a3ffe7035.webp"
-    },
-    {
-      "isbn13": "9786287745131",
-      "title": "Cien años de soledad",
-      "original_file": "Literatura/cien-anos-de-soledad.webp",
-      "old_sku": "LIT-002",
-      "permanent_sku": "PLG-BK-000014",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000014-b456b439611b.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000014-b456b439611b.webp"
-    },
-    {
-      "isbn13": "9788410011045",
-      "title": "Madame Bovary",
-      "original_file": "Literatura/madame-bovary.webp",
-      "old_sku": "LIT-016",
-      "permanent_sku": "PLG-BK-000015",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000015-219ca801124c.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000015-219ca801124c.webp"
-    },
-    {
-      "isbn13": "9788413370200",
-      "title": "Así habló Zaratustra",
-      "original_file": "Filosofia/asi-hablo-zaratustra.webp",
-      "old_sku": "FIL-002",
-      "permanent_sku": "PLG-BK-000016",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000016-d230fc853c6f.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000016-d230fc853c6f.webp"
-    },
-    {
-      "isbn13": "9788413371696",
-      "title": "Crítica de la razón práctica",
-      "original_file": "Filosofia/critica-de-la-razon-practica.webp",
-      "old_sku": "FIL-003",
-      "permanent_sku": "PLG-BK-000017",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000017-41c9a4ae0f39.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000017-41c9a4ae0f39.webp"
-    },
-    {
-      "isbn13": "9788413371702",
-      "title": "Crítica de la razón pura",
-      "original_file": "Filosofia/critica-de-la-razon-pura.webp",
-      "old_sku": "FIL-004",
-      "permanent_sku": "PLG-BK-000018",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000018-9795eea29c87.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000018-9795eea29c87.webp"
-    },
-    {
-      "isbn13": "9788413372945",
-      "title": "La Ilíada",
-      "original_file": "Literatura/la-iliada.webp",
-      "old_sku": "LIT-014",
-      "permanent_sku": "PLG-BK-000019",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000019-8039b46f6a32.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000019-8039b46f6a32.webp"
-    },
-    {
-      "isbn13": "9788413373423",
-      "title": "Meditaciones metafísicas",
-      "original_file": "Filosofia/meditaciones-metafisicas.webp",
-      "old_sku": "FIL-011",
-      "permanent_sku": "PLG-BK-000020",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000020-0eb2ac315613.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000020-0eb2ac315613.webp"
-    },
-    {
-      "isbn13": "9788413373836",
-      "title": "Moby Dick",
-      "original_file": "Literatura/moby-dick.webp",
-      "old_sku": "LIT-017",
-      "permanent_sku": "PLG-BK-000021",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000021-86bb100040cb.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000021-86bb100040cb.webp"
-    },
-    {
-      "isbn13": "9788413376936",
-      "title": "Ética a Nicómaco",
-      "original_file": "Filosofia/etica-a-nicomaco.webp",
-      "old_sku": "FIL-007",
-      "permanent_sku": "PLG-BK-000022",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000022-3b1726043bc7.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000022-3b1726043bc7.webp"
-    },
-    {
-      "isbn13": "9788417666439",
-      "title": "Sobre la libertad",
-      "original_file": "Filosofia/sobre-la-libertad.webp",
-      "old_sku": "FIL-013",
-      "permanent_sku": "PLG-BK-000023",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000023-d6ead8529220.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000023-d6ead8529220.webp"
-    },
-    {
-      "isbn13": "9788419190123",
-      "title": "El gran Gatsby",
-      "original_file": "Literatura/el-gran-gatsby.webp",
-      "old_sku": "LIT-008",
-      "permanent_sku": "PLG-BK-000024",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000024-edb8b7717a8b.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000024-edb8b7717a8b.webp"
-    },
-    {
-      "isbn13": "9788419599940",
-      "title": "Más allá del bien y del mal",
-      "original_file": "Filosofia/mas-alla-del-bien-y-del-mal.webp",
-      "old_sku": "FIL-010",
-      "permanent_sku": "PLG-BK-000025",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000025-41cf64eb537a.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000025-41cf64eb537a.webp"
-    },
-    {
-      "isbn13": "9788419651730",
-      "title": "La genealogía de la moral",
-      "original_file": "Filosofia/genealogia-de-la-moral.webp",
-      "old_sku": "FIL-008",
-      "permanent_sku": "PLG-BK-000026",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000026-26fcbd0dabe9.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000026-26fcbd0dabe9.webp"
-    },
-    {
-      "isbn13": "9788420414706",
-      "title": "Rayuela",
-      "original_file": "Literatura/rayuela.webp",
-      "old_sku": "LIT-020",
-      "permanent_sku": "PLG-BK-000027",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000027-7a8520bbdab9.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000027-7a8520bbdab9.webp"
-    },
-    {
-      "isbn13": "9788429150049",
-      "title": "Análisis matemático",
-      "original_file": "Matemáticas/analisis-matematico-apostol.webp",
-      "old_sku": "MAT-005",
-      "permanent_sku": "PLG-BK-000028",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000028-5c3053a00867.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000028-5c3053a00867.webp"
-    },
-    {
-      "isbn13": "9788432172281",
-      "title": "Don Quijote de la Mancha",
-      "original_file": "Literatura/don-quijote.webp",
-      "old_sku": "LIT-005",
-      "permanent_sku": "PLG-BK-000029",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000029-37c3121f9eca.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000029-37c3121f9eca.webp"
-    },
-    {
-      "isbn13": "9788466362085",
-      "title": "La casa de los espíritus",
-      "original_file": "Literatura/la-casa-de-los-espiritus.webp",
-      "old_sku": "LIT-012",
-      "permanent_sku": "PLG-BK-000030",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000030-c78433dbae44.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000030-c78433dbae44.webp"
-    },
-    {
-      "isbn13": "9788466378581",
-      "title": "El amor en los tiempos del cólera",
-      "original_file": "Literatura/el-amor-en-tiempos-de-colera.webp",
-      "old_sku": "LIT-006",
-      "permanent_sku": "PLG-BK-000031",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000031-ef11f23f18e2.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000031-ef11f23f18e2.webp"
-    },
-    {
-      "isbn13": "9788466388627",
-      "title": "Soldados de Salamina",
-      "original_file": "Literatura/soldados-de-salamina.webp",
-      "old_sku": "LIT-022",
-      "permanent_sku": "PLG-BK-000032",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000032-12d4196d1f21.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000032-12d4196d1f21.webp"
-    },
-    {
-      "isbn13": "9788467070835",
-      "title": "Orgullo y prejuicio",
-      "original_file": "Literatura/orgullo-y-prejuicio.webp",
-      "old_sku": "LIT-018",
-      "permanent_sku": "PLG-BK-000033",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000033-541b16122de7.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000033-541b16122de7.webp"
-    },
-    {
-      "isbn13": "9788476157589",
-      "title": "Álgebra lineal",
-      "original_file": "Matemáticas/algebra-lineal-serie-schaum.webp",
-      "old_sku": "MAT-002",
-      "permanent_sku": "PLG-BK-000034",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000034-9c9fd78eb909.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000034-9c9fd78eb909.webp"
-    },
-    {
-      "isbn13": "9788478883608",
-      "title": "Anna Karénina",
-      "original_file": "Literatura/anna-karenina.webp",
-      "old_sku": "LIT-001",
-      "permanent_sku": "PLG-BK-000035",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000035-b62b28e2ae01.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000035-b62b28e2ae01.webp"
-    },
-    {
-      "isbn13": "9788490743720",
-      "title": "Romeo y Julieta",
-      "original_file": "Literatura/romeo-y-julieta.webp",
-      "old_sku": "LIT-021",
-      "permanent_sku": "PLG-BK-000036",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000036-7e4f0adf170d.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000036-7e4f0adf170d.webp"
-    },
-    {
-      "isbn13": "9788490745113",
-      "title": "Meditaciones",
-      "original_file": "Filosofia/meditaciones.webp",
-      "old_sku": "FIL-012",
-      "permanent_sku": "PLG-BK-000037",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000037-c3fa6daeb218.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000037-c3fa6daeb218.webp"
-    },
-    {
-      "isbn13": "9788490747681",
-      "title": "Crimen y castigo",
-      "original_file": "Literatura/crimen-y-castigo.webp",
-      "old_sku": "LIT-003",
-      "permanent_sku": "PLG-BK-000038",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000038-ff38aafc3811.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000038-ff38aafc3811.webp"
-    },
-    {
-      "isbn13": "9788493442606",
-      "title": "Pedro Páramo",
-      "original_file": "Literatura/pedro-paramo.webp",
-      "old_sku": "LIT-019",
-      "permanent_sku": "PLG-BK-000039",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000039-a27819d45f6e.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000039-a27819d45f6e.webp"
-    },
-    {
-      "isbn13": "9788497592437",
-      "title": "Crónica de una muerte anunciada",
-      "original_file": "Literatura/cronica-de-una-muerte-anunciada.webp",
-      "old_sku": "LIT-004",
-      "permanent_sku": "PLG-BK-000040",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000040-e2551aada44a.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000040-e2551aada44a.webp"
-    },
-    {
-      "isbn13": "9788499538761",
-      "title": "Tractatus Logico-Philosophicus",
-      "original_file": "Filosofia/tractatus-logico-philosophicus.webp",
-      "old_sku": "FIL-014",
-      "permanent_sku": "PLG-BK-000041",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000041-3499d99d15ce.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000041-3499d99d15ce.webp"
-    },
-    {
-      "isbn13": "9789585062665",
-      "title": "Inferencia bayesiana y el método de máxima entropía",
-      "original_file": "Matemáticas/inferencia-bayesana.webp",
-      "old_sku": "MAT-015",
-      "permanent_sku": "PLG-BK-000043",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000043-eb2957751239.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000043-eb2957751239.webp"
-    },
-    {
-      "isbn13": "9789585082656",
-      "title": "Introducción al álgebra lineal",
-      "original_file": "Matemáticas/Introducción-al-algebra-lineal.webp",
-      "old_sku": "MAT-016",
-      "permanent_sku": "PLG-BK-000044",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000044-204968142c57.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000044-204968142c57.webp"
-    },
-    {
-      "isbn13": "9789585581685",
-      "title": "El mito de Sísifo",
-      "original_file": "Literatura/el-mito-de-sisifo.webp",
-      "old_sku": "LIT-009",
-      "permanent_sku": "PLG-BK-000045",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000045-d2fd169f1556.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000045-d2fd169f1556.webp"
-    },
-    {
-      "isbn13": "9789586954525",
-      "title": "Matemática estructural",
-      "original_file": "Matemáticas/Matematica-Estructural.webp",
-      "old_sku": "MAT-017",
-      "permanent_sku": "PLG-BK-000046",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000046-16e1f40ce870.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000046-16e1f40ce870.webp"
-    },
-    {
-      "isbn13": "9789681849740",
-      "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
-      "original_file": "Matemáticas/ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera-william-e-boyce-richard-c-diprima.webp",
-      "old_sku": "MAT-011",
-      "permanent_sku": "PLG-BK-000047",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000047-aa33471e3d31.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000047-aa33471e3d31.webp"
-    },
-    {
-      "isbn13": "9789702402589",
-      "title": "Métodos numéricos aplicados a la ingeniería",
-      "original_file": "Matemáticas/metodos-numericos-aplicados-a-la-ingenieria-antonio-nieves-hurtado-federico-c-dominguez-sanchez.webp",
-      "old_sku": "MAT-018",
-      "permanent_sku": "PLG-BK-000048",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000048-3f3528aa2b7d.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000048-3f3528aa2b7d.webp"
-    },
-    {
-      "isbn13": "9789702605928",
-      "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
-      "original_file": "Matemáticas/ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera.webp",
-      "old_sku": "MAT-012",
-      "permanent_sku": "PLG-BK-000049",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000049-ff9728f0ddef.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000049-ff9728f0ddef.webp"
-    },
-    {
-      "isbn13": "9789875666474",
-      "title": "Ficciones",
-      "original_file": "Literatura/ficciones.webp",
-      "old_sku": "LIT-011",
-      "permanent_sku": "PLG-BK-000050",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000050-beb18072d331.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000050-beb18072d331.webp"
-    },
-    {
-      "isbn13": "9789972813665",
-      "title": "Análisis matemático II",
-      "original_file": "Matemáticas/analisis-matematico-ii.webp",
-      "old_sku": "MAT-007",
-      "permanent_sku": "PLG-BK-000051",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000051-319fe6c039de.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000051-319fe6c039de.webp"
-    },
-    {
-      "isbn13": "9789972813818",
-      "title": "Análisis matemático I",
-      "original_file": "Matemáticas/analisis-matematico-i-calculo-diferencial-moises-lazaro-carrion.webp",
-      "old_sku": "MAT-006",
-      "permanent_sku": "PLG-BK-000052",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000052-b80e012ee00e.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000052-b80e012ee00e.webp"
-    },
-    {
-      "isbn13": "9791370180652",
-      "title": "Discurso del método",
-      "original_file": "Filosofia/discurso-del-metodo.webp",
-      "old_sku": "FIL-005",
-      "permanent_sku": "PLG-BK-000053",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp"
-    },
-    {
-      "isbn13": "9791387692865",
-      "title": "Los miserables",
-      "original_file": "Literatura/los-miserables.webp",
-      "old_sku": "LIT-015",
-      "permanent_sku": "PLG-BK-000054",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000054-fe0fdb7fdd82.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000054-fe0fdb7fdd82.webp"
-    },
-    {
-      "isbn13": "9798215299210",
-      "title": "El príncipe",
-      "original_file": "Filosofia/el-principe.webp",
-      "old_sku": "FIL-006",
-      "permanent_sku": "PLG-BK-000055",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000055-78a9bcec4411.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000055-78a9bcec4411.webp"
-    },
-    {
-      "isbn13": "9798224715541",
-      "title": "La República",
-      "original_file": "Filosofia/la-republica.webp",
-      "old_sku": "FIL-009",
-      "permanent_sku": "PLG-BK-000056",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000056-6d9506beae9e.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000056-6d9506beae9e.webp"
-    },
-    {
       "isbn13": null,
       "title": "Filosofía del conocimiento (2a. ed.)",
       "original_file": "Ebook/Filosofia/portadas/ebook-c740fdc211f952d1.webp",
@@ -918,21 +423,6 @@
     },
     {
       "isbn13": null,
-      "title": "La literatura española",
-      "original_file": "Ebook/Literatura/portadas/ebook-404c350b49f8d484.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000085",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000085-468d68de2243.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000085-468d68de2243.webp",
-      "format": "EBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "NOT_APPLICABLE"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
       "title": "Anatomía y fisiología básicas en el niño",
       "original_file": "Audiolibros/medicina/portadas/audiobook-ccecc542047c16dd.webp",
       "old_sku": null,
@@ -1134,21 +624,6 @@
       "permanent_sku": "PLG-BK-000099",
       "r2_object_key": "covers/editions/v2/PLG-BK-000099-35be0191f4c1.webp",
       "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000099-35be0191f4c1.webp",
-      "format": "EBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "NOT_APPLICABLE"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
-      "title": "Filosofía para Irene",
-      "original_file": "Ebook/Filosofia/portadas/ebook-6866fe06c580051a.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000100",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000100-6784c3d88265.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000100-6784c3d88265.webp",
       "format": "EBOOK",
       "simulation": {
         "price": "SIMULATED/DEMO",
@@ -1404,21 +879,6 @@
       "permanent_sku": "PLG-BK-000117",
       "r2_object_key": "covers/editions/v2/PLG-BK-000117-ebd90f80a420.webp",
       "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000117-ebd90f80a420.webp",
-      "format": "AUDIOBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "SIMULATED/DEMO"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
-      "title": "Ética y política",
-      "original_file": "Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000118",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000118-a04a3956529a.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000118-a04a3956529a.webp",
       "format": "AUDIOBOOK",
       "simulation": {
         "price": "SIMULATED/DEMO",
@@ -1798,21 +1258,6 @@
       "simulation": {
         "price": "SIMULATED/DEMO",
         "audio": "SIMULATED/DEMO"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
-      "title": "Psicología general (3a. ed.)",
-      "original_file": "Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000144",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000144-ce836530b65f.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000144-ce836530b65f.webp",
-      "format": "EBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "NOT_APPLICABLE"
       },
       "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
     },
@@ -2583,21 +2028,6 @@
     },
     {
       "isbn13": null,
-      "title": "24 ideas para una psicoterapia breve (2a. ed.)",
-      "original_file": "Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000196",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000196-6611a0c58763.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000196-6611a0c58763.webp",
-      "format": "AUDIOBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "SIMULATED/DEMO"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
       "title": "Temas claves: neuroanatomía (4a. ed.)",
       "original_file": "Audiolibros/medicina/portadas/audiobook-8b4726e2a5b9d46d.webp",
       "old_sku": null,
@@ -2758,21 +2188,6 @@
       "simulation": {
         "price": "SIMULATED/DEMO",
         "audio": "SIMULATED/DEMO"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
-      "title": "Literatura española",
-      "original_file": "Ebook/Literatura/portadas/ebook-b6e98eacfdbf3d38.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000208",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000208-4d567317e96b.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000208-4d567317e96b.webp",
-      "format": "EBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "NOT_APPLICABLE"
       },
       "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
     },
@@ -2943,21 +2358,6 @@
     },
     {
       "isbn13": null,
-      "title": "Psicología médica",
-      "original_file": "Ebook/psicologia/portadas/ebook-67511892222078e9.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000220",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000220-47a264509afa.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000220-47a264509afa.webp",
-      "format": "EBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "NOT_APPLICABLE"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
       "title": "¿Qué es Filosofía?",
       "original_file": "Ebook/Filosofia/portadas/ebook-14fff49a1571571a.webp",
       "old_sku": null,
@@ -3009,21 +2409,6 @@
       "permanent_sku": "PLG-BK-000224",
       "r2_object_key": "covers/editions/v2/PLG-BK-000224-6426eb226d4c.webp",
       "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000224-6426eb226d4c.webp",
-      "format": "AUDIOBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "SIMULATED/DEMO"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
-      "title": "Ética de las nanotecnologías",
-      "original_file": "Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000225",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000225-dffd36793130.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000225-dffd36793130.webp",
       "format": "AUDIOBOOK",
       "simulation": {
         "price": "SIMULATED/DEMO",
@@ -3298,21 +2683,6 @@
       "simulation": {
         "price": "SIMULATED/DEMO",
         "audio": "SIMULATED/DEMO"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
-      "title": "Sociologías de la moda",
-      "original_file": "Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000244",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp",
-      "format": "EBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "NOT_APPLICABLE"
       },
       "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
     },
@@ -3888,21 +3258,6 @@
     },
     {
       "isbn13": null,
-      "title": "La literatura",
-      "original_file": "Ebook/Literatura/portadas/ebook-5c51985965164200.webp",
-      "old_sku": null,
-      "permanent_sku": "PLG-BK-000283",
-      "r2_object_key": "covers/editions/v2/PLG-BK-000283-b557443a890a.webp",
-      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000283-b557443a890a.webp",
-      "format": "EBOOK",
-      "simulation": {
-        "price": "SIMULATED/DEMO",
-        "audio": "NOT_APPLICABLE"
-      },
-      "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
-    },
-    {
-      "isbn13": null,
       "title": "Fundamentos de farmacología oncológica",
       "original_file": "Audiolibros/medicina/portadas/audiobook-dc33785bd60e4578.webp",
       "old_sku": null,
@@ -4380,6 +3735,1590 @@
         "audio": "NOT_APPLICABLE"
       },
       "provenance": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
+    },
+    {
+      "isbn13": null,
+      "title": "Manual de medicina basada en evidencias",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-39575.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000316",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000316-5814e110f94a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000316-5814e110f94a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Crónica matemática",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-294684.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000317",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000317-b569eaa7c6e7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000317-b569eaa7c6e7.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Goya en las literaturas",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-130675.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000318",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000318-d3973ec97236.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000318-d3973ec97236.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "De mano en mano",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-279263.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000319",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000319-f2975e413c59.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000319-f2975e413c59.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemáticas en la vida cotidiana",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-44690.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000320",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000320-1773d8ed60d9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000320-1773d8ed60d9.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Lulu o la flauta mágica",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-187476.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000321",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000321-b1cce2adb804.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000321-b1cce2adb804.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemáticas y deportes",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-293647.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000322",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000322-4136256898ff.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000322-4136256898ff.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La oveja roja",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-218594.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000323",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000323-cd78d6159753.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000323-cd78d6159753.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicopatología básica (5a. ed.)",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-69322.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000324",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000324-3627cef212b0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000324-3627cef212b0.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cuentos de Panamá",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-223473.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000325",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000325-da46a63d3d79.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000325-da46a63d3d79.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "En la ciudad",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-276322.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000326",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000326-4bf7ddabe9aa.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000326-4bf7ddabe9aa.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Peter Pan",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-189720.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000327",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000327-ccd772a0ea7e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000327-ccd772a0ea7e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura Universal",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-224092.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000328",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000328-508cd4289cdd.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000328-508cd4289cdd.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología Social: la importancia de los otros y de los grupos",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-281230.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000329",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000329-1fe568f4a35f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000329-1fe568f4a35f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cimientos matemáticos",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-285322.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000330",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000330-69f9861de557.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000330-69f9861de557.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de medicina: dermatología (8a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-186712.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000331",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000331-0bb8a7f5aea1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000331-0bb8a7f5aea1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cuentos completos, 1",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-299429.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000332",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000332-ad802eff1747.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000332-ad802eff1747.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía de la inteligencia",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-59630.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000333",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000333-499377aff250.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000333-499377aff250.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de medicina: enfoque del paciente en medicina intensiva",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-292418.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000334",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000334-083d4f4224c9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000334-083d4f4224c9.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las matemáticas del cosmos",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-293177.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000335",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000335-8d21a22097ce.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000335-8d21a22097ce.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de análisis matemático",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-41939.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000336",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000336-99b1888c768c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000336-99b1888c768c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Qué es y para qué sirve la filosofía",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-214575.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000337",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000337-84ee31c24b99.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000337-84ee31c24b99.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de medicina: medicina psicosomática y psiquiatría de enlace",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-186736.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000338",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000338-026abd937c59.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000338-026abd937c59.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofia de la tecnologia",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-213696.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000339",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000339-f1f426469fe1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000339-f1f426469fe1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Razonamiento y lenguaje matemático",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-36731.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000340",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000340-d0bc9c4220a8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000340-d0bc9c4220a8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemáticas x matemáticas",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-284719.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000341",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000341-56881281e619.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000341-56881281e619.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemática básica",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-280647.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000342",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000342-2105d4b850c1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000342-2105d4b850c1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura y comunicación",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-60620.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000343",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000343-348e138ad03d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000343-348e138ad03d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Los doce trabajos de Heracles",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-250033.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000344",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000344-5575a50f7443.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000344-5575a50f7443.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El marco teórico de la psicología social",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-212765.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000345",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000345-51c807975f40.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000345-51c807975f40.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cuentos completos, 2",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-299430.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000346",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000346-257e66aedf9b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000346-257e66aedf9b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cuentos",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-305127.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000347",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000347-da8df7e17052.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000347-da8df7e17052.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología social y de las organizaciones: comportamientos interpersonales",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-60836.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000348",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000348-1cf533176b17.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000348-1cf533176b17.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura y Derecho",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-274254.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000349",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000349-8f070b13c71f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000349-8f070b13c71f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Lenguaje y literatura",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-74064.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000350",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000350-50aaa5b2303e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000350-50aaa5b2303e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía de la imagen",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-113899.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000351",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000351-741adc4bbab6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000351-741adc4bbab6.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La Reina de las Nieves y otros cuentos",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-299436.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000352",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000352-5085261f0b63.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000352-5085261f0b63.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura general",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-36432.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000353",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000353-7ba08b78b790.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000353-7ba08b78b790.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Tratado de Medicina Cardiovascular",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-125738.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000354",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000354-f40a6f38ca87.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000354-f40a6f38ca87.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Escritos sobre literatura",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-268787.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000355",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000355-48000e7054ba.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000355-48000e7054ba.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemática superior",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-176646.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000356",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000356-9c474a0e302b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000356-9c474a0e302b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía del espíritu",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-190904.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000357",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000357-407a9fe4e093.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000357-407a9fe4e093.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura 2",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-234713.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000358",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000358-8705569a1817.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000358-8705569a1817.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemáticas con GeoGebra",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-222652.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000360",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000360-033ad5638659.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000360-033ad5638659.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Locos por las matemáticas",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-294202.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000361",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000361-f5a476dc050d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000361-f5a476dc050d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Escuela y psicopatología",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-59629.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000362",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000362-9c5792b939d7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000362-9c5792b939d7.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Manual de psicopatología clínica (2a. ed.)",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-114406.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000363",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000363-ba0e48dcd7b6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000363-ba0e48dcd7b6.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Análisis matemático",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-175890.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000364",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000364-347de2e90f36.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000364-347de2e90f36.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Mujeres en la literatura: escritoras",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-41052.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000365",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000365-957e8953eb2b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000365-957e8953eb2b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Mi nuevo amigo",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-205684.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000366",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000366-66d02838f311.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000366-66d02838f311.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología social de la comunicación: aspectos teóricos y prácticos",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-60488.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000367",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000367-24ecf6e429d8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000367-24ecf6e429d8.webp"
+    },
+    {
+      "isbn13": "9781413510683",
+      "title": "Cuentos de Andersen. Tomo I",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-35347.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000368",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000368-da8832e4035a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000368-da8832e4035a.webp"
+    },
+    {
+      "isbn13": "9781413576580",
+      "title": "Cuentos de Andersen. Tomo II",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-35382.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000369",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000369-416940dcbf28.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000369-416940dcbf28.webp"
+    },
+    {
+      "isbn13": "9781413591989",
+      "title": "La literatura francesa. La Transición",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-35246.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000370",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000370-3075de2d964a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000370-3075de2d964a.webp"
+    },
+    {
+      "isbn13": "9786071606549",
+      "title": "El cristal con que se mira",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-276629.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000371",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000371-f70757afe24e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000371-f70757afe24e.webp"
+    },
+    {
+      "isbn13": "9786071672780",
+      "title": "Matemáticas de colores",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-216197.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000372",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000372-065bba22574e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000372-065bba22574e.webp"
+    },
+    {
+      "isbn13": "9786071682659",
+      "title": "Literatura y dinero",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-266569.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000373",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000373-8c67930b1393.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000373-8c67930b1393.webp"
+    },
+    {
+      "isbn13": "9786074011982",
+      "title": "Sobre lectura, literatura y educación",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-38240.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000374",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000374-a228a352469c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000374-a228a352469c.webp"
+    },
+    {
+      "isbn13": "9786074014266",
+      "title": "Bienestar social y democracia: psicología social",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-38444.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000375",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000375-5cbe95e6d72e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000375-5cbe95e6d72e.webp"
+    },
+    {
+      "isbn13": "9786074385434",
+      "title": "Matemáticas 1 (2a. ed.)",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-39499.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000376",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000376-d06d0517233b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000376-d06d0517233b.webp"
+    },
+    {
+      "isbn13": "9786074480436",
+      "title": "Neuropsicología del desarrollo infantil",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-39599.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000377",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000377-8ce841df3892.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000377-8ce841df3892.webp"
+    },
+    {
+      "isbn13": "9786074483819",
+      "title": "Medicina forense (3a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-39690.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000378",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000378-081908ef6d3e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000378-081908ef6d3e.webp"
+    },
+    {
+      "isbn13": "9786074486599",
+      "title": "De la psicología cognitiva a la neuropsicología",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-39774.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000379",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000379-4ae004fc8ecc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000379-4ae004fc8ecc.webp"
+    },
+    {
+      "isbn13": "9786074486896",
+      "title": "Neuropsicología del envejecimiento",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-39787.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000380",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000380-74fb1f928477.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000380-74fb1f928477.webp"
+    },
+    {
+      "isbn13": "9786074487411",
+      "title": "Neuropsicología y analfabetismo",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-39810.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000381",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000381-a97b06c18e31.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000381-a97b06c18e31.webp"
+    },
+    {
+      "isbn13": "9786074488074",
+      "title": "Neuropsicología clínica (2a. ed.)",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-242475.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000382",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000382-4648bef67fbb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000382-4648bef67fbb.webp"
+    },
+    {
+      "isbn13": "9786077411147",
+      "title": "Temas selectos en medicina crítica",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-40315.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000383",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000383-64e983aeb2d7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000383-64e983aeb2d7.webp"
+    },
+    {
+      "isbn13": "9786077411208",
+      "title": "Tópicos de medicina intensiva para el anestesiólogo",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-40318.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000384",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000384-f48fa99739f6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000384-f48fa99739f6.webp"
+    },
+    {
+      "isbn13": "9786077411222",
+      "title": "Manual de medicina prehospitalaria de urgencia",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-40319.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000385",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000385-d3ce02e9e1bc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000385-d3ce02e9e1bc.webp"
+    },
+    {
+      "isbn13": "9786077411321",
+      "title": "Medicina forense",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-40328.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000386",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000386-c13dfa0704b0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000386-c13dfa0704b0.webp"
+    },
+    {
+      "isbn13": "9786077411499",
+      "title": "Manual de medicina interna hospitalaria",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-40334.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000387",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000387-27addce591e9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000387-27addce591e9.webp"
+    },
+    {
+      "isbn13": "9786077504047",
+      "title": "Medicina perioperatoria",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-40553.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000388",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000388-ef5fdd9298d4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000388-ef5fdd9298d4.webp"
+    },
+    {
+      "isbn13": "9786078283057",
+      "title": "Funciones cerebrales y psicopatología",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-40832.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000389",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000389-725968de7e0c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000389-725968de7e0c.webp"
+    },
+    {
+      "isbn13": "9786078289646",
+      "title": "Filosofía de la convivencia",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-40911.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000390",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000390-d2c065f3dcad.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000390-d2c065f3dcad.webp"
+    },
+    {
+      "isbn13": "9786078289752",
+      "title": "Pensamiento y literatura en Guerrero",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-40916.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000391",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000391-e7d4da6aa0c1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000391-e7d4da6aa0c1.webp"
+    },
+    {
+      "isbn13": "9786078628711",
+      "title": "Matemáticas financieras",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-130920.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000392",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000392-5b238c0cd7dc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000392-5b238c0cd7dc.webp"
+    },
+    {
+      "isbn13": "9786079106058",
+      "title": "El Principito",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-130433.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000393",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000393-f681243b42c3.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000393-f681243b42c3.webp"
+    },
+    {
+      "isbn13": "9786079124793",
+      "title": "Educación y filosofía",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-41033.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000394",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000394-f213c275e813.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000394-f213c275e813.webp"
+    },
+    {
+      "isbn13": "9786079124854",
+      "title": "Entrecruces: cine y literatura",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-41039.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000395",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000395-20666df65daf.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000395-20666df65daf.webp"
+    },
+    {
+      "isbn13": "9786079315764",
+      "title": "Alicia en el país de las maravillas",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-130438.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000396",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000396-bb6730d4fede.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000396-bb6730d4fede.webp"
+    },
+    {
+      "isbn13": "9786079443672",
+      "title": "Alicia a través del espejo y lo que encontró allí",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-127201.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000397",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000397-79ff964b5d4e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000397-79ff964b5d4e.webp"
+    },
+    {
+      "isbn13": "9786287505247",
+      "title": "Enfoques en Medicina Interna",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-291966.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000398",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000398-7adfac551558.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000398-7adfac551558.webp"
+    },
+    {
+      "isbn13": "9786287768277",
+      "title": "Fundamentos de la matemática",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-288457.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000399",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000399-95f07dfa0af0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000399-95f07dfa0af0.webp"
+    },
+    {
+      "isbn13": "9788400107055",
+      "title": "Las matemáticas de la pandemia",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-170282.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000400",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000400-61b37b1c4ace.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000400-61b37b1c4ace.webp"
+    },
+    {
+      "isbn13": "9788410675452",
+      "title": "¿Para qué sirven las matemáticas?",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-296085.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000401",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000401-1e736e681b12.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000401-1e736e681b12.webp"
+    },
+    {
+      "isbn13": "9788413523019",
+      "title": "Matemáticas y literatura",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-233505.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000402",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000402-c8ddffce11f4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000402-c8ddffce11f4.webp"
+    },
+    {
+      "isbn13": "9788413523965",
+      "title": "Matemáticas competentes",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-235663.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000403",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000403-148144c41dd3.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000403-148144c41dd3.webp"
+    },
+    {
+      "isbn13": "9788413524290",
+      "title": "Matemáticas y deporte",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-235664.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000404",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000404-c9f491176d96.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000404-c9f491176d96.webp"
+    },
+    {
+      "isbn13": "9788413620701",
+      "title": "Filosofía: ¿Por qué importa?",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-216032.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000405",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000405-18b635bf97ae.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000405-18b635bf97ae.webp"
+    },
+    {
+      "isbn13": "9788415295570",
+      "title": "Psicopatología del trabajo",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-42096.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000406",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000406-e4ad64834ccd.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000406-e4ad64834ccd.webp"
+    },
+    {
+      "isbn13": "9788415419532",
+      "title": "Medicina del dolor de bolsillo",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-108252.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000407",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000407-f3230944208d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000407-f3230944208d.webp"
+    },
+    {
+      "isbn13": "9788415419587",
+      "title": "Pediatría para estudiantes de medicina (3a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-125304.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000408",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000408-44bb079fa6e8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000408-44bb079fa6e8.webp"
+    },
+    {
+      "isbn13": "9788415684008",
+      "title": "Introducción a la medicina clínica (3a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-125312.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000409",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000409-477188b4e6d4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000409-477188b4e6d4.webp"
+    },
+    {
+      "isbn13": "9788415684107",
+      "title": "Manual de medicina cardiovascular (4a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-108234.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000410",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000410-06ee0bd6d473.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000410-06ee0bd6d473.webp"
+    },
+    {
+      "isbn13": "9788416919833",
+      "title": "Literatura en el laboratorio",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-118623.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000412",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000412-2bb50718fe90.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000412-2bb50718fe90.webp"
+    },
+    {
+      "isbn13": "9788417690441",
+      "title": "Elogio de la literatura",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-126732.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000413",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000413-2dbed11e127a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000413-2dbed11e127a.webp"
+    },
+    {
+      "isbn13": "9788418550768",
+      "title": "La filosofía del engaño",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-209572.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000414",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000414-0c57b32d8ea8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000414-0c57b32d8ea8.webp"
+    },
+    {
+      "isbn13": "9788425426551",
+      "title": "La filosofía de la religión",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-45767.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000415",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000415-64e8d6c5db8c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000415-64e8d6c5db8c.webp"
+    },
+    {
+      "isbn13": "9788425427282",
+      "title": "Psicopatología de la vida amorosa",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-45789.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000416",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000416-e1d75dceef05.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000416-e1d75dceef05.webp"
+    },
+    {
+      "isbn13": "9788425443695",
+      "title": "Otra filosofía cristiana",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-126189.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000417",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000417-3dd52dcc04ad.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000417-3dd52dcc04ad.webp"
+    },
+    {
+      "isbn13": "9788431321802",
+      "title": "Introducción a la filosofía (3a. ed.)",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-46931.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000418",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000418-155f6b011371.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000418-155f6b011371.webp"
+    },
+    {
+      "isbn13": "9788431325244",
+      "title": "Filosofía de la historia (3a. ed.)",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-47023.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000419",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000419-fc5bc08db68e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000419-fc5bc08db68e.webp"
+    },
+    {
+      "isbn13": "9788431327552",
+      "title": "Filosofía de la educación (3a. ed.)",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-47101.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000420",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000420-b0b58c4d3e1c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000420-b0b58c4d3e1c.webp"
+    },
+    {
+      "isbn13": "9788431328061",
+      "title": "Retos matemáticos con soluciones",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-47112.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000421",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000421-635a2c55be6e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000421-635a2c55be6e.webp"
+    },
+    {
+      "isbn13": "9788431331085",
+      "title": "Filosofía de la ciencia",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-47268.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000422",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000422-5e757cf00b49.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000422-5e757cf00b49.webp"
+    },
+    {
+      "isbn13": "9788431331511",
+      "title": "Psicopatología",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-47310.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000423",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000423-b9fcde5354d0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000423-b9fcde5354d0.webp"
+    },
+    {
+      "isbn13": "9788437068480",
+      "title": "Matemáticas empresariales",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-293121.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000424",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000424-960539af1e2a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000424-960539af1e2a.webp"
+    },
+    {
+      "isbn13": "9788446026181",
+      "title": "La literatura griega y su tradición",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-49551.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000425",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000425-16cf625f5871.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000425-16cf625f5871.webp"
+    },
+    {
+      "isbn13": "9788446029328",
+      "title": "Las aventuras de Pinocho",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-116636.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000426",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000426-3a42830687cb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000426-3a42830687cb.webp"
+    },
+    {
+      "isbn13": "9788446038993",
+      "title": "Qué hacemos con la literatura",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-116153.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000427",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000427-a8c7ce31018d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000427-a8c7ce31018d.webp"
+    },
+    {
+      "isbn13": "9788448145637",
+      "title": "Harrison: manual de medicina (16a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-50076.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000428",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000428-63defc371a47.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000428-63defc371a47.webp"
+    },
+    {
+      "isbn13": "9788448198213",
+      "title": "Introducción a la neuropsicología",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-50292.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000429",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000429-b4c214204262.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000429-b4c214204262.webp"
+    },
+    {
+      "isbn13": "9788478981038",
+      "title": "Estudios sobre literatura y suicidio",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-52623.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000430",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000430-a398b3f5b36f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000430-a398b3f5b36f.webp"
+    },
+    {
+      "isbn13": "9788479784140",
+      "title": "Psicopatología de la relación conyugal",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-52971.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000431",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000431-b36fc2e223d7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000431-b36fc2e223d7.webp"
+    },
+    {
+      "isbn13": "9788484091141",
+      "title": "Surrealismo y literatura en España",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-54616.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000432",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000432-829bb755fb49.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000432-829bb755fb49.webp"
+    },
+    {
+      "isbn13": "9788484091288",
+      "title": "Surrealismo y literatura en Europa",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-54617.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000433",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000433-b39a482b39a5.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000433-b39a482b39a5.webp"
+    },
+    {
+      "isbn13": "9788484892465",
+      "title": "Lengua y literatura de Borges",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-37026.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000434",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000434-5c4db67e82b7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000434-5c4db67e82b7.webp"
+    },
+    {
+      "isbn13": "9788484897279",
+      "title": "Literatura de la Independencia, independencia de la literatura",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-173423.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000435",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000435-4b4fffc7411c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000435-4b4fffc7411c.webp"
+    },
+    {
+      "isbn13": "9788487189104",
+      "title": "Medicina comunitaria",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-55461.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000436",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000436-bb5f359beab2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000436-bb5f359beab2.webp"
+    },
+    {
+      "isbn13": "9788487189296",
+      "title": "Fundamentos de medicina preventiva",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-55467.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000437",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000437-464b5a233928.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000437-464b5a233928.webp"
+    },
+    {
+      "isbn13": "9788490310304",
+      "title": "Filosofía fundamental",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-56775.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000438",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000438-404dc1c75937.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000438-404dc1c75937.webp"
+    },
+    {
+      "isbn13": "9788490850145",
+      "title": "Ética y medicina",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-58034.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000439",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000439-51aee3bcf579.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000439-51aee3bcf579.webp"
+    },
+    {
+      "isbn13": "9788490858097",
+      "title": "Psicología Social de Género: proyecto docente",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-58284.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000440",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000440-697c27b9da08.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000440-697c27b9da08.webp"
+    },
+    {
+      "isbn13": "9788491044338",
+      "title": "50 experimentos imprescindibles para entender la psicología social",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-115677.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000441",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000441-83b9f60f16ba.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000441-83b9f60f16ba.webp"
+    },
+    {
+      "isbn13": "9788491819097",
+      "title": "Filosofía de la redención",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-215557.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000443",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000443-2962aee99215.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000443-2962aee99215.webp"
+    },
+    {
+      "isbn13": "9788492536627",
+      "title": "Literatura y turismo",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-42015.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000444",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000444-e353dd5173a2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000444-e353dd5173a2.webp"
+    },
+    {
+      "isbn13": "9788493480769",
+      "title": "Economía y literatura",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-59660.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000445",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000445-f5f42613870a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000445-f5f42613870a.webp"
+    },
+    {
+      "isbn13": "9788496921351",
+      "title": "NMS Medicina Interna (6a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-125737.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000446",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000446-3b7b67b9216d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000446-3b7b67b9216d.webp"
+    },
+    {
+      "isbn13": "9788497429009",
+      "title": "Cuentos de la selva",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-111845.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000447",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000447-535040bba4b2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000447-535040bba4b2.webp"
+    },
+    {
+      "isbn13": "9788497847391",
+      "title": "Filosofía para médicos",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-61165.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000448",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000448-1667560357b8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000448-1667560357b8.webp"
+    },
+    {
+      "isbn13": "9788497884556",
+      "title": "Filosofía política",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-56653.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000449",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000449-258f073a57e4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000449-258f073a57e4.webp"
+    },
+    {
+      "isbn13": "9788498235623",
+      "title": "El cuento en la literatura infantil",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-33736.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000450",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000450-2391588342df.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000450-2391588342df.webp"
+    },
+    {
+      "isbn13": "9788498491104",
+      "title": "Fundamentos matemáticos de la ingeniería",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-35676.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000451",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000451-2407e2605059.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000451-2407e2605059.webp"
+    },
+    {
+      "isbn13": "9788498798098",
+      "title": "Filosofía ciudadana",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-126172.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000452",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000452-dfd19427fb2e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000452-dfd19427fb2e.webp"
+    },
+    {
+      "isbn13": "9788499163123",
+      "title": "Psicopatología y caos",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-51252.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000453",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000453-9b9ca14536c6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000453-9b9ca14536c6.webp"
+    },
+    {
+      "isbn13": "9788499401553",
+      "title": "Psicología social: algunas claves para entender la conducta humana",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-112862.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000454",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000454-d3687b3d3baf.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000454-d3687b3d3baf.webp"
+    },
+    {
+      "isbn13": "9788499402024",
+      "title": "Psicología social crítica",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-106697.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000455",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000455-2190462ff6be.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000455-2190462ff6be.webp"
+    },
+    {
+      "isbn13": "9788499538785",
+      "title": "Ratón Pérez",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-165552.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000456",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000456-e6c9a5e5dd2f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000456-e6c9a5e5dd2f.webp"
+    },
+    {
+      "isbn13": "9789567052066",
+      "title": "Matemáticas fundamentales",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-190600.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000457",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000457-f5a21b3a91f7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000457-f5a21b3a91f7.webp"
+    },
+    {
+      "isbn13": "9789585023734",
+      "title": "Un mundo de fantasía. Selección de cuentos infantiles clásicos",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-302446.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000458",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000458-460eb0dae947.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000458-460eb0dae947.webp"
+    },
+    {
+      "isbn13": "9789586704854",
+      "title": "¿...Enseñar filosofía?",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-175382.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000459",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000459-769f92cc07c6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000459-769f92cc07c6.webp"
+    },
+    {
+      "isbn13": "9789587386554",
+      "title": "Misticismo y filosofía",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-69705.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000460",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000460-97ff1a8afbe8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000460-97ff1a8afbe8.webp"
+    },
+    {
+      "isbn13": "9789587416503",
+      "title": "El mito de la filosofía",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-69977.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000461",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000461-01d1dd88f7a0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000461-01d1dd88f7a0.webp"
+    },
+    {
+      "isbn13": "9789587604214",
+      "title": "Lecciones de psicología social",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-235981.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000462",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000462-740dfa22029d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000462-740dfa22029d.webp"
+    },
+    {
+      "isbn13": "9789587619560",
+      "title": "Psicología social y justicia",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-130020.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000463",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000463-e5622718f527.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000463-e5622718f527.webp"
+    },
+    {
+      "isbn13": "9789587651065",
+      "title": "Matemática fundamental para matemáticos",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-175410.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000464",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000464-e499114542f7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000464-e499114542f7.webp"
+    },
+    {
+      "isbn13": "9789587896824",
+      "title": "Cándida",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-287118.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000465",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000465-8d7a3c972603.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000465-8d7a3c972603.webp"
+    },
+    {
+      "isbn13": "9789587981827",
+      "title": "Métodos matemáticos (2a. ed.)",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-218340.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000466",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000466-7574f1bdb1ba.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000466-7574f1bdb1ba.webp"
+    },
+    {
+      "isbn13": "9789588843520",
+      "title": "Fundamentos de medicina: medicina vascular",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-186709.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000467",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000467-4d917fffa9cb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000467-4d917fffa9cb.webp"
+    },
+    {
+      "isbn13": "9789588843728",
+      "title": "Fundamentos de medicina: reumatología (8a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-186697.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000468",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000468-72241337882a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000468-72241337882a.webp"
+    },
+    {
+      "isbn13": "9789588993157",
+      "title": "Neuropsicología infantil",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-128416.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000469",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000469-286db709fd2e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000469-286db709fd2e.webp"
+    },
+    {
+      "isbn13": "9789588993270",
+      "title": "Tres perspectivas en psicología social: paradigmas latinoamericano, europeo y estadounidense",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-128417.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000470",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000470-eda89c788a11.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000470-eda89c788a11.webp"
+    },
+    {
+      "isbn13": "9789588993782",
+      "title": "Neuropsicología escolar",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-219483.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000471",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000471-08fc085f428a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000471-08fc085f428a.webp"
+    },
+    {
+      "isbn13": "9789589076460",
+      "title": "Fundamentos de medicina: cardiología (7a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-186713.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000472",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000472-a1cb1ed1eecd.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000472-a1cb1ed1eecd.webp"
+    },
+    {
+      "isbn13": "9789589327760",
+      "title": "Anestesiología y medicina perioperatoria (5a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-280793.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000473",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000473-c545f362d820.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000473-c545f362d820.webp"
+    },
+    {
+      "isbn13": "9789589446188",
+      "title": "Psicología social de la salud: promoción y prevención",
+      "original_file": "Fisicos180/Psicología/portadas/physical-elibrary-71142.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000474",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000474-7f8e600c5885.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000474-7f8e600c5885.webp"
+    },
+    {
+      "isbn13": "9789681601775",
+      "title": "Historia de la literatura alemana",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-110465.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000475",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000475-6d7c28d2577c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000475-6d7c28d2577c.webp"
+    },
+    {
+      "isbn13": "9789708171106",
+      "title": "Compendio de literatura universal",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-40395.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000476",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000476-372ed26f0fbc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000476-372ed26f0fbc.webp"
+    },
+    {
+      "isbn13": "9789871368709",
+      "title": "Cuentos infantiles: para los niños de jardín de infantes",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-196982.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000477",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000477-79b749e57b20.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000477-79b749e57b20.webp"
+    },
+    {
+      "isbn13": "9789871368716",
+      "title": "Cuentos para chiquitines",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-196983.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000478",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000478-7e1b91979da0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000478-7e1b91979da0.webp"
+    },
+    {
+      "isbn13": "9789871860296",
+      "title": "Medicina ambulatoria (2a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-105481.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000479",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000479-5a676af30244.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000479-5a676af30244.webp"
+    },
+    {
+      "isbn13": "9789871860852",
+      "title": "Medicina vascular y clínica quirúrgica para estudiantes de medicina",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-299779.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000480",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000480-b9c31c3cb3c8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000480-b9c31c3cb3c8.webp"
+    },
+    {
+      "isbn13": "9789873313172",
+      "title": "Borges y la literatura policial",
+      "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-77251.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000481",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000481-10cb0e7a0bcb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000481-10cb0e7a0bcb.webp"
+    },
+    {
+      "isbn13": "9789875740884",
+      "title": "¿Qué es la filosofía? (3a. ed.)",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-187892.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000482",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000482-b05103b13a74.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000482-b05103b13a74.webp"
+    },
+    {
+      "isbn13": "9789875746343",
+      "title": "¿Qué es la filosofía judía?",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-191389.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000483",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000483-17125952edb6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000483-17125952edb6.webp"
+    },
+    {
+      "isbn13": "9789875748842",
+      "title": "Filosofía de las artes",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-191383.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000484",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000484-71f140dd38b6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000484-71f140dd38b6.webp"
+    },
+    {
+      "isbn13": "9789875749771",
+      "title": "Fragmentos para una filosofía",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-203010.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000485",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000485-99eff09c669a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000485-99eff09c669a.webp"
+    },
+    {
+      "isbn13": "9789876821117",
+      "title": "Robin Hood",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-199354.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000486",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000486-36b8a8f6d055.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000486-36b8a8f6d055.webp"
+    },
+    {
+      "isbn13": "9789876821520",
+      "title": "La lomita mágica",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-201530.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000487",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000487-57798c2236e4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000487-57798c2236e4.webp"
+    },
+    {
+      "isbn13": "9789878321783",
+      "title": "El hijo de las escobas",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-163183.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000489",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000489-0338d6040bb9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000489-0338d6040bb9.webp"
+    },
+    {
+      "isbn13": "9789878331508",
+      "title": "Filosofía en diálogo",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-188187.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000490",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000490-0980cc68c5a9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000490-0980cc68c5a9.webp"
+    },
+    {
+      "isbn13": "9789878461755",
+      "title": "Matemática 4",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-227602.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000491",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000491-492b450469ec.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000491-492b450469ec.webp"
+    },
+    {
+      "isbn13": "9789879066959",
+      "title": "Cuentos infantiles para contar y jugar",
+      "original_file": "Fisicos180/Infantil y Juvenil/portadas/physical-elibrary-201587.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000492",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000492-a1a057861401.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000492-a1a057861401.webp"
+    },
+    {
+      "isbn13": "9789879493168",
+      "title": "Filosofía",
+      "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-78949.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000493",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000493-0a3afaa4e098.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000493-0a3afaa4e098.webp"
+    },
+    {
+      "isbn13": "9789945870305",
+      "title": "Matemática hoy",
+      "original_file": "Fisicos180/Matemáticas/portadas/physical-elibrary-175802.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000494",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000494-58cdd1f5b024.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000494-58cdd1f5b024.webp"
+    },
+    {
+      "isbn13": "9789962678649",
+      "title": "Manual práctico de medicina (4a. ed.)",
+      "original_file": "Fisicos180/Medicina/portadas/physical-elibrary-166523.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000495",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000495-8afe9ae9b446.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000495-8afe9ae9b446.webp"
     }
   ]
 }

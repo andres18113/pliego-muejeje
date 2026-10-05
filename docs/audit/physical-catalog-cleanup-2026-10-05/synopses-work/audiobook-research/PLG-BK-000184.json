@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000184",
+  "title": "Historia mínima de Chile",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193635",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:16.239898+00:00",
+      "response_sha256": "46d144366097d6cbea9cba2eb9d8f866d9b9567d61b45537d9f4acec3ec9628d",
+      "extraction_sha256": "29bfedb15b39cd08e3c781360e7cfadfaa7a7be53f124f740179fd1550550cb4",
+      "text": "Guardado en: Autor Principal: Sagredo B., Rafael, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México : Turner, 2014. Edición: Primera edición. Series: Historia mínima. Materias: Chile > History. Chile > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193635  ",
+      "observed_page_title": "Existencias: Historia mínima de Chile /",
+      "title_check_response_sha256": "eec6c7c8193266369d6c76c502ccb19df162c2ec430227387bdfdb646c75c307",
+      "title_checked_at_utc": "2026-10-05T19:40:08.651594+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193635/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:17.548728+00:00",
+      "response_sha256": "e5d97cc94d885be83160a2622464d649335750055dc1c879031d6a980b26309c",
+      "extraction_sha256": "29bfedb15b39cd08e3c781360e7cfadfaa7a7be53f124f740179fd1550550cb4",
+      "text": "Guardado en: Autor Principal: Sagredo B., Rafael, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México : Turner, 2014. Edición: Primera edición. Series: Historia mínima. Materias: Chile > History. Chile > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193635  "
+    }
+  ]
+}

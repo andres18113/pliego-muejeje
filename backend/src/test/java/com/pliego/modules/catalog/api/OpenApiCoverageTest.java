@@ -37,7 +37,10 @@ class OpenApiCoverageTest {
             com.pliego.modules.cart.api.CartController.class,
             com.pliego.modules.sales.api.CheckoutController.class,
             com.pliego.modules.sales.api.CustomerOrderController.class,
-            com.pliego.modules.sales.api.AdminOrderController.class);
+            com.pliego.modules.sales.api.AdminOrderController.class,
+            com.pliego.modules.storefront.api.StorefrontController.class,
+            com.pliego.modules.help.api.HelpController.class,
+            com.pliego.modules.library.api.LibraryController.class);
 
     private static boolean isEndpoint(Method method) {
         return method.isAnnotationPresent(GetMapping.class)
@@ -61,7 +64,7 @@ class OpenApiCoverageTest {
             }
         }
         assertThat(endpoints).as("REST total including public catalog, customer favorites, post-purchase routes and email change")
-                .isEqualTo(76);
+                .isEqualTo(82);
     }
 
     @Test
@@ -78,7 +81,8 @@ class OpenApiCoverageTest {
         for (Class<?> controller : CONTROLLERS) {
             boolean secured = controller.isAnnotationPresent(SecurityRequirement.class);
             String name = controller.getSimpleName();
-            if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("PickupLocationController")) {
+            if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("PickupLocationController")
+                    || name.equals("StorefrontController") || name.equals("HelpController")) {
                 assertThat(secured).as("%s must stay public", name).isFalse();
             } else {
                 assertThat(secured).as("%s must require bearerJwt", name).isTrue();

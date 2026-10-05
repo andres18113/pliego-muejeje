@@ -896,6 +896,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/storefront/navigation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar la navegación de la tienda
+         * @description Proyección compacta de Catálogo, Ofertas y Ayuda. Los destacados se ordenan por ventas aprobadas de los últimos 30 días; el desempate y la selección de respaldo usan fecha de creación e identificador de edición.
+         */
+        get: operations["getStorefrontNavigation"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/reference/transfer-details": {
         parameters: {
             query?: never;
@@ -985,6 +1005,43 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/library": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar títulos digitales propios
+         * @description Incluye propiedad revocada para conservar historial de compra.
+         */
+        get: operations["listOwnedDigitalItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/library/{ownedItemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consultar propiedad y compra de un título digital propio */
+        get: operations["getOwnedDigitalItem"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/favorites": {
         parameters: {
             query?: never;
@@ -1017,6 +1074,57 @@ export interface paths {
          * @description Devuelve si cada edición solicitada pertenece a los favoritos del cliente. Admite hasta 50 identificadores por petición.
          */
         get: operations["favoriteStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/help/categories": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consultar temas publicados de ayuda */
+        get: operations["listHelpCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/help/articles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Buscar artículos publicados de ayuda */
+        get: operations["searchHelpArticles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/help/articles/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consultar un artículo publicado de ayuda */
+        get: operations["getHelpArticle"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1508,7 +1616,7 @@ export interface components {
              * @default HOME_DELIVERY
              * @enum {string}
              */
-            fulfillmentMethod: "HOME_DELIVERY" | "STORE_PICKUP";
+            fulfillmentMethod: "HOME_DELIVERY" | "STORE_PICKUP" | "DIGITAL_ONLY";
             pickupLocationId?: string;
         };
         CheckoutResponse: {
@@ -1751,6 +1859,55 @@ export interface components {
             value: string | null;
             expectedVersion: string;
         };
+        StorefrontFeaturedProduct: {
+            editionId?: string;
+            bookId?: string;
+            title?: string;
+            authors?: string;
+            coverUrl?: string | null;
+            format?: string;
+            /** @enum {string} */
+            productType?: "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+            price?: string;
+            offer?: components["schemas"]["StorefrontPromotionalOffer"];
+            href?: string;
+        };
+        StorefrontNavigationCategory: {
+            slug?: string;
+            name?: string;
+            parentSlug?: string | null;
+            href?: string;
+        };
+        StorefrontNavigationResponse: {
+            sections?: components["schemas"]["StorefrontNavigationSection"][];
+        };
+        StorefrontNavigationSection: {
+            /** @enum {string} */
+            key?: "PHYSICAL" | "EBOOK" | "AUDIOBOOK" | "OFFERS" | "HELP";
+            label?: string;
+            href?: string;
+            featured?: components["schemas"]["StorefrontFeaturedProduct"][];
+            categories?: components["schemas"]["StorefrontNavigationCategory"][];
+            allHref?: string | null;
+            bestSellingHref?: string | null;
+            offersHref?: string | null;
+            activeOfferCount?: string;
+        };
+        StorefrontPromotionalOffer: {
+            offerId?: string;
+            originalPrice?: string;
+            discountAmount?: string;
+            startsAt?: string;
+            endsAt?: string;
+            /** Format: int32 */
+            daysRemaining?: number;
+            endingSoon?: boolean;
+            offerCopy?: string | null;
+            terms?: string | null;
+            effectivePrice?: string;
+            savingsAmount?: string;
+            savingsPercent?: string;
+        };
         TransferDetails: {
             bank?: string;
             beneficiary?: string;
@@ -1950,6 +2107,62 @@ export interface components {
              */
             version?: string;
         };
+        LibraryAction: {
+            /** @enum {string} */
+            type?: "VIEW_ORDER" | "HELP";
+            label?: string;
+            href?: string;
+        };
+        LibraryItem: {
+            ownedItemId?: string;
+            editionId?: string;
+            coverUrl?: string | null;
+            title?: string;
+            authors?: string;
+            /** @enum {string} */
+            productType?: "EBOOK" | "AUDIOBOOK";
+            /** Format: date-time */
+            acquiredAt?: string;
+            /** @enum {string} */
+            ownershipState?: "OWNED" | "REVOKED";
+            /** @enum {string} */
+            accessState?: "OWNERSHIP_ONLY" | "REVOKED";
+            /** @description Siempre false; no se entrega contenido digital en esta simulación. */
+            contentAccessSupported?: boolean;
+            metadata?: components["schemas"]["LibraryMetadata"];
+            sourcePurchases?: components["schemas"]["LibrarySourcePurchase"][];
+            availableActions?: components["schemas"]["LibraryAction"][];
+        };
+        LibraryMetadata: {
+            isbn?: string | null;
+            publisher?: string;
+            language?: string;
+            /** Format: int32 */
+            pageCount?: number | null;
+            publicationDate?: string | null;
+            ebookFileFormat?: string | null;
+            /** Format: int32 */
+            audioDurationSeconds?: number | null;
+            narrators?: string[];
+        };
+        LibrarySourcePurchase: {
+            orderId?: string;
+            orderItemId?: string;
+            /** Format: date-time */
+            acquiredAt?: string;
+            paymentState?: string;
+            orderState?: string;
+            /** @enum {string} */
+            grantState?: "ACTIVE" | "REVOKED";
+        };
+        PageResponseLibraryItem: {
+            items?: components["schemas"]["LibraryItem"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            totalCount?: string;
+        };
         CustomerFavorite: {
             editionId?: string;
             bookId?: string;
@@ -2002,6 +2215,46 @@ export interface components {
             phone?: string;
             /** @example true */
             primary?: boolean;
+        };
+        HelpCategory: {
+            slug?: string;
+            title?: string;
+            /** Format: int32 */
+            position?: number;
+            /** @enum {string} */
+            applicability?: "GENERAL" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+        };
+        HelpCategoryListResponse: {
+            items?: components["schemas"]["HelpCategory"][];
+        };
+        HelpArticleSummary: {
+            slug?: string;
+            categorySlug?: string;
+            title?: string;
+            summary?: string;
+            /** Format: int32 */
+            position?: number;
+            /** @enum {string} */
+            applicability?: "GENERAL" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+        };
+        PageResponseHelpArticleSummary: {
+            items?: components["schemas"]["HelpArticleSummary"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            totalCount?: string;
+        };
+        HelpArticle: {
+            slug?: string;
+            categorySlug?: string;
+            title?: string;
+            summary?: string;
+            /** Format: int32 */
+            position?: number;
+            /** @enum {string} */
+            applicability?: "GENERAL" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+            body?: string;
         };
         CatalogEditionSearchResponse: {
             items?: components["schemas"]["CatalogEditionSummaryResponse"][];
@@ -2137,6 +2390,11 @@ export interface components {
              * @example 2026-10-07
              */
             estimatedDeliveryTo?: string | null;
+            requiresPhysicalFulfillment?: boolean;
+            /** Format: int32 */
+            physicalItemCount?: number;
+            /** Format: int32 */
+            digitalItemCount?: number;
         };
         CartItem: {
             cartItemId?: string;
@@ -4145,6 +4403,26 @@ export interface operations {
             };
         };
     };
+    getStorefrontNavigation: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StorefrontNavigationResponse"];
+                };
+            };
+        };
+    };
     transferDetails: {
         parameters: {
             query?: never;
@@ -4259,6 +4537,52 @@ export interface operations {
             };
         };
     };
+    listOwnedDigitalItems: {
+        parameters: {
+            query?: {
+                productType?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["PageResponseLibraryItem"];
+                };
+            };
+        };
+    };
+    getOwnedDigitalItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                ownedItemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["LibraryItem"];
+                };
+            };
+        };
+    };
     listFavorites: {
         parameters: {
             query?: {
@@ -4359,6 +4683,74 @@ export interface operations {
             };
         };
     };
+    listHelpCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpCategoryListResponse"];
+                };
+            };
+        };
+    };
+    searchHelpArticles: {
+        parameters: {
+            query?: {
+                que?: string;
+                category?: string;
+                applicability?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PageResponseHelpArticleSummary"];
+                };
+            };
+        };
+    };
+    getHelpArticle: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HelpArticle"];
+                };
+            };
+        };
+    };
     offers: {
         parameters: {
             query?: {
@@ -4450,6 +4842,7 @@ export interface operations {
                 maxPrice?: number;
                 language?: string;
                 format?: string;
+                productType?: string;
                 sort?: string;
                 page?: number;
                 pageSize?: number;

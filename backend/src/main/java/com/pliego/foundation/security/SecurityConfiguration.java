@@ -81,6 +81,7 @@ public class SecurityConfiguration {
                                 "/api/v1/auth/refresh", "/api/v1/auth/logout", "/api/v1/auth/verify-email",
                                 "/api/v1/auth/resend-verification", "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password").permitAll()
                         .requestMatchers("/api/v1/catalog/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/storefront/**", "/api/v1/help/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/reference/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/pickup-locations").permitAll()
                         .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")

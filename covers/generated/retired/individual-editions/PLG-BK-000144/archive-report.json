@@ -1,0 +1,194 @@
+{
+  "sku": "PLG-BK-000144",
+  "reason": "Retiro explícito solicitado por el usuario por presentación de portada",
+  "original_file": "Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+  "original_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+  "source_records": [
+    {
+      "staging": "/home/andres18123/PLIEGO/covers/Ebook/psicologia/staging.json",
+      "record": {
+        "portadaArchivo": "portadas/ebook-555c90c48e9c9991.webp",
+        "libro": {
+          "titulo": "Psicología general (3a. ed.)",
+          "subtitulo": null,
+          "sinopsis": null,
+          "autores": [
+            {
+              "nombre": "Eva Laura García González",
+              "orden": 1
+            }
+          ],
+          "categorias": [
+            "Psicología"
+          ]
+        },
+        "edicion": {
+          "editorial": "Larousse - Grupo Editorial Patria",
+          "isbn13": null,
+          "idioma": "es",
+          "formato": "EBOOK",
+          "paginas": null,
+          "anioPublicacion": null,
+          "fechaPublicacion": null,
+          "precio": "5.99",
+          "sku": "PLG-BK-000144",
+          "inventarioInicial": null,
+          "ebookFileFormat": null,
+          "audioDurationSeconds": null,
+          "narrators": [],
+          "portada": {
+            "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000144-ce836530b65f.webp",
+            "licencia": null,
+            "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+            "atribucion": null
+          }
+        },
+        "observacionesStaging": [],
+        "preparacion": {
+          "schema": "pliego-digital-edition-preparation-v1",
+          "candidate_id": "ebook-555c90c48e9c9991",
+          "publication_status": "PUBLISHED",
+          "work": {
+            "action": "CREATE_NEW_WORK",
+            "bookId": "335",
+            "status": "CREATED_VERIFIED",
+            "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+            "evidence": {
+              "catalog_search_scope": "ALL_STATES",
+              "snapshot_book_count": 63,
+              "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+              "same_title_book_ids": []
+            },
+            "proposal_key": "work-616b1e7a5433bfb3"
+          },
+          "author_bindings": [
+            {
+              "name": "Eva Laura García González",
+              "order": 1,
+              "authorId": null,
+              "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+            }
+          ],
+          "raw_authorship": "Eva Laura García González",
+          "field_provenance": {
+            "edicion.editorial": {
+              "kind": "REAL_SOURCE",
+              "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+              "observed_text": "México D.F. : Larousse - Grupo Editorial Patria, [2014]",
+              "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+              "capture_sha256": "3a080303072da9420987ae1a443f58b1503329043fa39608b7110fb134c2adb3",
+              "capture_path": "/tmp/pliego-digital-completion/social/uns/40402.html",
+              "capture_format": "SOURCE_RESPONSE",
+              "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+              "real_source_claim": true
+            },
+            "edicion.idioma": {
+              "kind": "VERIFIED",
+              "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+              "observed_text": "Idioma: Spanish",
+              "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+              "capture_sha256": "3a080303072da9420987ae1a443f58b1503329043fa39608b7110fb134c2adb3",
+              "capture_path": "/tmp/pliego-digital-completion/social/uns/40402.html",
+              "capture_format": "SOURCE_RESPONSE",
+              "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+              "real_source_claim": true
+            },
+            "edicion.precio": {
+              "kind": "SIMULATED/DEMO",
+              "source": "User-authorized academic demonstration pricing",
+              "currency": "USD",
+              "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+              "real_source_claim": false,
+              "commercial_price_claim": false,
+              "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+            },
+            "edicion.isbn13": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.ebookFileFormat": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.audioDurationSeconds": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.narrators": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "libro.titulo": {
+              "kind": "REAL_FROM_INVENTORY",
+              "inventory": "covers/Ebook/inventario.csv",
+              "row": 71,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+              "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+              "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+            },
+            "libro.autores": {
+              "kind": "REAL_FROM_INVENTORY",
+              "raw_value": "Eva Laura García González",
+              "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+              "inventory": "covers/Ebook/inventario.csv",
+              "row": 71,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+              "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+              "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+            },
+            "libro.categorias": {
+              "kind": "REAL_FROM_INVENTORY",
+              "inventory": "covers/Ebook/inventario.csv",
+              "row": 71,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+              "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+              "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+            },
+            "edicion.formato": {
+              "kind": "BATCH_CLASSIFICATION",
+              "source": "covers/Ebook/inventario.csv"
+            }
+          },
+          "stock_action": "NONE_DIGITAL",
+          "sku_status": "PROPOSED_NOT_RESERVED",
+          "audio_metadata_type": "NOT_APPLICABLE",
+          "demo_public_label_required": true,
+          "demo_price_authorized": true,
+          "price_metadata_type": "SIMULATED/DEMO",
+          "metadata_blockers": [],
+          "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+          "source": {
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 71,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+            "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "category_binding": {
+            "name": "Psicología",
+            "categoryId": null,
+            "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+          },
+          "planned_staging": "Ebook/psicologia/staging.json",
+          "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+          "readiness_errors": [],
+          "ready_for_future_publication": true,
+          "imported_edition_id": "337",
+          "imported_book_id": "335"
+        }
+      }
+    }
+  ]
+}

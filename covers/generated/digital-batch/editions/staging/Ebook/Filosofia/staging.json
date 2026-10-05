@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Filosofía antigua",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pastor presenta una aproximación a la filosofía antigua. La obra sitúa el interés por las preguntas filosóficas en un horizonte histórico específico y permite orientar la lectura hacia esa tradición del pensamiento. Un texto para quienes desean explorar las ideas de la Antigüedad y ampliar su conocimiento de las etapas que forman parte de la historia de la filosofía.",
         "autores": [
           {
             "nombre": "Pastor, W. F.",
@@ -184,7 +184,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "209",
-        "imported_book_id": "208"
+        "imported_book_id": "208",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofía. Philosophy. Philosophy, Ancient. Filosofía antigua Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -192,7 +203,7 @@
       "libro": {
         "titulo": "Filosofía como metanoética",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Tanabe Hajime propone una reflexión filosófica bajo el concepto de metanoética. La obra se sitúa en un ámbito bibliográfico asociado a la filosofía budista y permite dirigir la mirada hacia ese horizonte de pensamiento. Una lectura para quienes desean explorar la relación entre filosofía y tradición budista a través de una propuesta específica de este autor.",
         "autores": [
           {
             "nombre": "Hajime, Tanabe",
@@ -369,7 +380,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "210",
-        "imported_book_id": "209"
+        "imported_book_id": "209",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Buddhist philosophy. Budismo. Filosofía. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -377,7 +399,7 @@
       "libro": {
         "titulo": "Filosofía contemporánea",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pastor orienta esta obra hacia la filosofía contemporánea. El libro permite acercarse a una etapa del pensamiento y situar las preguntas filosóficas dentro de un horizonte histórico. Una lectura para quienes desean ampliar su conocimiento de la disciplina y dirigir su interés hacia las formas de reflexión que reúne el ámbito contemporáneo.",
         "autores": [
           {
             "nombre": "Pastor, W. F.",
@@ -554,7 +576,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "211",
-        "imported_book_id": "210"
+        "imported_book_id": "210",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofía. Philosophy. Philosophy, Modern. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -562,7 +595,7 @@
       "libro": {
         "titulo": "Filosofía de la ciencia (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La ciencia plantea preguntas filosóficas sobre su propia actividad y sobre el conocimiento que produce. Mariano Artigas dedica esta obra al campo de la filosofía de la ciencia. Su lectura permite acercarse a la reflexión sobre el sentido del saber científico y a la relación entre las prácticas de investigación y las preguntas generales sobre la realidad.",
         "autores": [
           {
             "nombre": "Artigas, Mariano",
@@ -739,7 +772,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "212",
-        "imported_book_id": "211"
+        "imported_book_id": "211",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Ciencia > Filosofía. Science > Philosophy. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -747,7 +791,7 @@
       "libro": {
         "titulo": "Filosofía de la cultura (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La cultura también puede convertirse en una pregunta filosófica. Jacinto Choza dedica esta obra a ese ámbito, donde las formas de vida y las creaciones humanas invitan a pensar su sentido. La lectura ofrece una aproximación a la filosofía cultural y al interés por comprender cómo la experiencia humana se expresa y toma forma en la cultura.",
         "autores": [
           {
             "nombre": "Choza, Jacinto",
@@ -924,7 +968,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "213",
-        "imported_book_id": "212"
+        "imported_book_id": "212",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Culture > Philosophy. Filosofía cultural. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -932,7 +987,7 @@
       "libro": {
         "titulo": "Filosofía de la religión",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Mauricio Beuchot Puente dedica esta obra a la filosofía de la religión. La relación entre fe y razón forma parte del ámbito temático del libro y abre preguntas sobre la experiencia religiosa desde el pensamiento filosófico. Una lectura para quienes desean explorar ese encuentro y considerar cómo la religión puede convertirse en objeto de reflexión.",
         "autores": [
           {
             "nombre": "Beuchot Puente, Mauricio",
@@ -1109,7 +1164,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "214",
-        "imported_book_id": "213"
+        "imported_book_id": "213",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Religion > Philosophy. Religión > Filosofía. Faith and reason. Razón y fe. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1117,7 +1183,7 @@
       "libro": {
         "titulo": "Filosofía del conocimiento (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una reflexión sobre el conocimiento humano y las preguntas que surgen al intentar comprender la realidad. La teoría del conocimiento constituye su eje y permite situar cuestiones como la relación entre quien conoce y aquello que puede conocer. Un acercamiento filosófico para lectores interesados en examinar los fundamentos de nuestras afirmaciones sobre el mundo.",
         "autores": [
           {
             "nombre": "Corazón González, Rafael",
@@ -1294,7 +1360,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "215",
-        "imported_book_id": "214"
+        "imported_book_id": "214",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Philosophy. Filosofía. Knowledge, Theory of. Teoría del conocimiento. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1302,7 +1379,7 @@
       "libro": {
         "titulo": "Filosofía del lenguaje",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Eduardo de Bustos Guadaño se adentra en el lenguaje como objeto de reflexión filosófica. La obra se sitúa en el estudio de las lenguas y de las preguntas que plantea su relación con nuestra experiencia. Una lectura para quienes desean examinar cómo el lenguaje interviene en el pensamiento y abrirse a los problemas propios de la filosofía del lenguaje.",
         "autores": [
           {
             "nombre": "Bustos Guadaño, Eduardo de",
@@ -1479,7 +1556,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "216",
-        "imported_book_id": "215"
+        "imported_book_id": "215",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Lenguaje y lenguas > Filosofía. Language and languages > Philosophy. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1487,7 +1575,7 @@
       "libro": {
         "titulo": "Filosofía del renacimiento",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El Renacimiento es el marco histórico de esta aproximación al pensamiento filosófico. Pastor dedica su obra a la filosofía renacentista y a su lugar dentro de la historia de las ideas. Una lectura para quienes desean situar sus preguntas sobre la filosofía en un período específico y conocer un ámbito de reflexión asociado a esa etapa cultural.",
         "autores": [
           {
             "nombre": "Pastor, W. F.",
@@ -1664,7 +1752,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "217",
-        "imported_book_id": "216"
+        "imported_book_id": "216",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofía. Philosophy. Philosophy, Renaissance. Filosofía renacentista Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1672,7 +1771,7 @@
       "libro": {
         "titulo": "Filosofía fundamental",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Jaime Balmes se acerca a la filosofía desde la pregunta por sus fundamentos. La obra permite orientar la lectura hacia el examen de las bases sobre las que se sostiene el pensamiento filosófico. Un texto para quienes desean relacionarse con la tradición de esta disciplina y considerar su búsqueda de principios desde la voz de este autor.",
         "autores": [
           {
             "nombre": "Balmes, Jaime",
@@ -1849,7 +1948,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "218",
-        "imported_book_id": "217"
+        "imported_book_id": "217",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Philosophy. Filosofía. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1857,7 +1967,7 @@
       "libro": {
         "titulo": "Filosofía general",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pastor propone una aproximación general al ámbito de la filosofía. El libro orienta el interés hacia una disciplina que convierte nuestras preguntas sobre la realidad en materia de reflexión. Una lectura para quienes desean construir un marco inicial para su estudio y acercarse al ejercicio de pensar desde una perspectiva filosófica.",
         "autores": [
           {
             "nombre": "Pastor, W. F.",
@@ -2034,7 +2144,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "219",
-        "imported_book_id": "218"
+        "imported_book_id": "218",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofía. Philosophy. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2042,7 +2163,7 @@
       "libro": {
         "titulo": "Filosofía medieval",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pastor dirige esta obra hacia la filosofía medieval. El libro ofrece una aproximación al pensamiento dentro de un marco histórico específico y permite situar el interés filosófico en esa tradición. Una lectura para quienes desean conocer el ámbito medieval de las ideas y ampliar su comprensión de las etapas que forman parte de la historia de la filosofía.",
         "autores": [
           {
             "nombre": "Pastor, W. F.",
@@ -2219,7 +2340,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "220",
-        "imported_book_id": "219"
+        "imported_book_id": "219",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofía. Philosophy. Philosophy, Medieval. Filosofía medieval Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2227,7 +2359,7 @@
       "libro": {
         "titulo": "Filosofía moderna",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pastor dedica esta obra a la filosofía moderna. El libro sitúa el pensamiento filosófico en una etapa histórica y permite orientar el estudio hacia ese horizonte de ideas. Una lectura para quienes desean conocer la tradición moderna y ampliar su relación con las preguntas que forman parte de la historia de la filosofía.",
         "autores": [
           {
             "nombre": "Pastor, W. F.",
@@ -2404,7 +2536,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "221",
-        "imported_book_id": "220"
+        "imported_book_id": "220",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofía. Philosophy. Philosophy, Modern. Filosofía moderna Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2597,7 +2740,7 @@
       "libro": {
         "titulo": "Filosofía política",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Alfredo Cruz Prados aborda la política como objeto de reflexión filosófica. La obra se vincula con las preguntas de la ciencia política y permite dirigir la atención hacia su dimensión de pensamiento. Una lectura para quienes desean examinar el sentido de la vida política y acercarse a un campo donde las cuestiones colectivas se convierten en problemas filosóficos.",
         "autores": [
           {
             "nombre": "Cruz Prados, Alfredo",
@@ -2774,7 +2917,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "223",
-        "imported_book_id": "222"
+        "imported_book_id": "222",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Political science > Philosophy. Ciencia política. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2782,7 +2936,7 @@
       "libro": {
         "titulo": "Filosofía y palomitas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "José Manuel Reina Garnacho propone acercarse a la filosofía desde un título que reúne reflexión y vida cotidiana. La obra está situada en el ámbito de la filosofía contemporánea. Una lectura para quienes se interesan por el ejercicio de preguntar y pensar, y por la posibilidad de reconocer inquietudes filosóficas en experiencias que forman parte de la vida común.",
         "autores": [
           {
             "nombre": "Reina Garnacho, José Manuel",
@@ -2959,7 +3113,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "224",
-        "imported_book_id": "223"
+        "imported_book_id": "223",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofía contemporánea. Philosophy. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2967,7 +3132,7 @@
       "libro": {
         "titulo": "La filosofía de la tecnología",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Anna Sarsanedas plantea la tecnología como objeto de reflexión filosófica. La obra orienta la atención hacia las preguntas que surgen al pensar su presencia en la experiencia humana. Una lectura para quienes desean acercarse a la filosofía de la tecnología y relacionar su interés por los medios técnicos con una búsqueda de comprensión de su sentido.",
         "autores": [
           {
             "nombre": "Sarsanedas, Anna",
@@ -3144,7 +3309,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "225",
-        "imported_book_id": "224"
+        "imported_book_id": "224",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Technology > Philosophy. Tecnología > Filosofía. Technology > Spain. Tecnología > España. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3152,7 +3328,7 @@
       "libro": {
         "titulo": "Las tareas de la filosofía",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "¿Qué tareas puede asumir la filosofía cuando interroga nuestra experiencia y nuestras formas de pensar? Román Cuartango sitúa esa pregunta en el centro de una obra dedicada a la actividad filosófica. La lectura invita a considerar el sentido de esta disciplina y el lugar que ocupa en la elaboración de preguntas sobre la realidad y la vida humana.",
         "autores": [
           {
             "nombre": "Cuartango, Román",
@@ -3329,7 +3505,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "226",
-        "imported_book_id": "225"
+        "imported_book_id": "225",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Philosophy. Filosofía. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3337,7 +3524,7 @@
       "libro": {
         "titulo": "¿Qué es Filosofía?",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "William Betancourt Delgado pregunta por la filosofía y por su enseñanza. La obra se vincula bibliográficamente con la historia del pensamiento y con autores como Heráclito, Nietzsche y Heidegger. Una lectura para quienes desean explorar el sentido de la actividad filosófica y poner esa inquietud en relación con su dimensión histórica y educativa.",
         "autores": [
           {
             "nombre": "Betancourt Delgado, William",
@@ -3514,7 +3701,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "227",
-        "imported_book_id": "226"
+        "imported_book_id": "226",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Heidegger, Martin, > 1889 - 1976. Heráclito de Éfeso, > 576 - 480 a.c. Nietzsche, Friedrich Wilhelm, > 1844 - 1900. Educación. Enseñanza de la filosofía. Filosofía. Historia de la filosofía. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3522,7 +3720,7 @@
       "libro": {
         "titulo": "¿Qué es la filosofía?",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Martin Heidegger plantea la pregunta por la filosofía como centro de esta obra. El texto permite acercarse al sentido de la actividad filosófica desde la voz de este autor. Una lectura para quienes desean examinar qué significa preguntar filosóficamente y relacionar esa inquietud con una búsqueda de comprensión del pensamiento y de su ejercicio.",
         "autores": [
           {
             "nombre": "Heidegger, Martin",
@@ -3699,7 +3897,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "228",
-        "imported_book_id": "227"
+        "imported_book_id": "227",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Philosophy. Filosofía. Dialectical materialism. Materialismo dialéctico. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

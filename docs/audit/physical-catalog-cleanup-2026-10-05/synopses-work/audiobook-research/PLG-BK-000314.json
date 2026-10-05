@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000314",
+  "title": "Paisajes de antropología urbana",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:36.027128+00:00",
+      "response_sha256": "adeb685e88564a288e21e6e1ad2cd4aeb31710bf257b2393644a30fdbe8402b0",
+      "extraction_sha256": "0ee4c162b52bda6cd5e16c1e5630ddc2e6a6041eb1a3bfe27068555b70d60790",
+      "text": "Guardado en: Autor Principal: Cátedra, María. Formato: eBook Idioma: Spanish Publicado: [Cuenca] : Genueve Ediciones, [2012] Series: Ciencias sociales y humanidades ; 6. Materias: Urban anthropology. Antropología urbana. Easter. Pascua. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/59734  ",
+      "observed_page_title": "Existencias: Paisajes de antropología urbana /",
+      "title_check_response_sha256": "8d19b3c432c50a335b24db41fe1ff8569aa8e72338e1c09b5cb4fd752d3f31fd",
+      "title_checked_at_utc": "2026-10-05T19:39:58.184816+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:37.336279+00:00",
+      "response_sha256": "d52cb4a98a59fc53b96e6e0b0e3a50b1279e74fc0da50c78a4377896dae877d0",
+      "extraction_sha256": "0ee4c162b52bda6cd5e16c1e5630ddc2e6a6041eb1a3bfe27068555b70d60790",
+      "text": "Guardado en: Autor Principal: Cátedra, María. Formato: eBook Idioma: Spanish Publicado: [Cuenca] : Genueve Ediciones, [2012] Series: Ciencias sociales y humanidades ; 6. Materias: Urban anthropology. Antropología urbana. Easter. Pascua. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/59734  "
+    }
+  ]
+}

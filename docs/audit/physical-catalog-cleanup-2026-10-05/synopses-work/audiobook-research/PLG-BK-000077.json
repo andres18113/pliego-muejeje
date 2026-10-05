@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000077",
+  "title": "Ética general (6a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:00.752107+00:00",
+      "response_sha256": "c3a9cb21a9df118f72632d5930cbd56f4fa0474ae1910e96f05ad7f60f972f75",
+      "extraction_sha256": "6aa983e0eb9dfa95831a65c26e7a1b8777cfc85a0ad0d995cb9d73c6bc2f0e4f",
+      "text": "Guardado en: Autor Principal: Rodríguez Luño, Ángel. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Pamplona : Eunsa, 2010. Edición: 6a ed. Series: Iniciación filosófica Materias: Ética > Manuales. Ethics > Textbooks. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/46946  ",
+      "observed_page_title": "Existencias: Ética general",
+      "title_check_response_sha256": "c036c44e3825b99627e4b41bdde512ae24abe2d378f24c79ac13dea73ad23421",
+      "title_checked_at_utc": "2026-10-05T19:40:05.292312+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:02.060934+00:00",
+      "response_sha256": "ec1b1f76c9e49a11bc7af6e4c519c1ce82dd59ae41be623c09e63cde14f02b36",
+      "extraction_sha256": "6aa983e0eb9dfa95831a65c26e7a1b8777cfc85a0ad0d995cb9d73c6bc2f0e4f",
+      "text": "Guardado en: Autor Principal: Rodríguez Luño, Ángel. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Pamplona : Eunsa, 2010. Edición: 6a ed. Series: Iniciación filosófica Materias: Ética > Manuales. Ethics > Textbooks. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/46946  "
+    }
+  ]
+}

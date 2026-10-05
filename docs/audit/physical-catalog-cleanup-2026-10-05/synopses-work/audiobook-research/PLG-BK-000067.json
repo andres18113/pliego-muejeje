@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000067",
+  "title": "Historia mínima de Cuba",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193629",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:58.093600+00:00",
+      "response_sha256": "cb039ebf0d11600b2adbe9165453c77c9b2c5bcc4c4286c060b720831bb3f8f7",
+      "extraction_sha256": "55392067c2ce4b1eec40efdad482993a027698355c011e249db31801fa5bb181",
+      "text": "Guardado en: Autor Principal: Zanetti Lecuona, Óscar, 1946- (autor.) Formato: eBook Idioma: Spanish Publicado: México. D.F. : El Colegio de México, 2013. Edición: Primera edición. Series: Historia mínima. Materias: Cuba > History. Cuba > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193629  ",
+      "observed_page_title": "Existencias: Historia mínima de Cuba /",
+      "title_check_response_sha256": "2be3e90ad49f47fbfe6527178f028063612c6280e384cb76e066460dab32e524",
+      "title_checked_at_utc": "2026-10-05T19:39:53.721195+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193629/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:59.540797+00:00",
+      "response_sha256": "475369c5b5b486e0063565cbe51a92f52210f751ffd39dc337ddb693c7ab5c48",
+      "extraction_sha256": "55392067c2ce4b1eec40efdad482993a027698355c011e249db31801fa5bb181",
+      "text": "Guardado en: Autor Principal: Zanetti Lecuona, Óscar, 1946- (autor.) Formato: eBook Idioma: Spanish Publicado: México. D.F. : El Colegio de México, 2013. Edición: Primera edición. Series: Historia mínima. Materias: Cuba > History. Cuba > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193629  "
+    }
+  ]
+}

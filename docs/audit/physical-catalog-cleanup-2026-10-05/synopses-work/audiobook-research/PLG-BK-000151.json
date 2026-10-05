@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000151",
+  "title": "Introducción a la geología (2a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:11.514500+00:00",
+      "response_sha256": "5bc74cfb0f1e9b97456e85cdfc3141e92f1f141c79a1f9d3b2d632f7c62649f2",
+      "extraction_sha256": "8b9e75630bbda85795af2c6fcef7a2f2b6b421a0ed3d54fa0291ffe00f67d98f",
+      "text": "Guardado en: Autor Principal: Iriondo, Martín H. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Córdoba : Editorial Brujas, 2009. Edición: 2a. ed. Materias: Geología. Geology. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/78025  ",
+      "observed_page_title": "Existencias: Introducción a la geología",
+      "title_check_response_sha256": "664e304a745c7a28ad9ea464f8451706e3325bd346a41ba6a46fa53cdd5ecc0e",
+      "title_checked_at_utc": "2026-10-05T19:40:07.788543+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:12.816539+00:00",
+      "response_sha256": "f07106f973e6c5e1d821d02504b92a0d99ccba4d0d14adb7d5130d52f25a2e6a",
+      "extraction_sha256": "8b9e75630bbda85795af2c6fcef7a2f2b6b421a0ed3d54fa0291ffe00f67d98f",
+      "text": "Guardado en: Autor Principal: Iriondo, Martín H. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Córdoba : Editorial Brujas, 2009. Edición: 2a. ed. Materias: Geología. Geology. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/78025  "
+    }
+  ]
+}

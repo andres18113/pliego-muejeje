@@ -17,7 +17,7 @@ public final class CartResponses {
             String estimatedDeliveryFrom,
             @Schema(nullable = true, format = "date", example = "2026-10-07",
                     description = "Último día de la ventana de entrega a domicilio: dos días después del primero; null si el carrito no incluye libros físicos.")
-            String estimatedDeliveryTo) { }
+            String estimatedDeliveryTo, boolean requiresPhysicalFulfillment, int physicalItemCount, int digitalItemCount) { }
 
     @Schema(name = "CartItem")
     public record Item(String cartItemId, String editionId, String title, String authors, String sku,

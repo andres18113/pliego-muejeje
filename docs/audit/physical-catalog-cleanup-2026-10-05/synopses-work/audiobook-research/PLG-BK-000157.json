@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000157",
+  "title": "Ética y psicoanálisis",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:11.695220+00:00",
+      "response_sha256": "cad2adf52841f1346acedb21d9e27acbacf9619fe69ef991d00873d1167e548a",
+      "extraction_sha256": "6a46f842de9e3482a6bf13159c38587a9d05d4c562693ff8b4273fd02b80144b",
+      "text": "Guardado en: Autor Principal: Fromm, Erich, 1900-1980, (autor.) Otros Autores: Fuente, Ramón de La, (revisión.) , Morck, Heriberto F., (traductor.) Formato: eBook Idioma: Spanish Publicado: Cuidad de México : FCE - Fondo de Cultura Económica, 2021. Series: Breviarios ; 74. Materias: Ethics. Psychoanalysis. Ética. Psiconálisis. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/173449  ",
+      "observed_page_title": "Existencias: Ética y psicoanálisis /",
+      "title_check_response_sha256": "c017b70a731dfa7b4767ea049d30697d5ab97a2564a0c69b823db21f755c0517",
+      "title_checked_at_utc": "2026-10-05T19:39:53.746220+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:13.005065+00:00",
+      "response_sha256": "bf5cc88d68504e345173159b80e2a307658b50aa9c74d18d8824c44068394c87",
+      "extraction_sha256": "6a46f842de9e3482a6bf13159c38587a9d05d4c562693ff8b4273fd02b80144b",
+      "text": "Guardado en: Autor Principal: Fromm, Erich, 1900-1980, (autor.) Otros Autores: Fuente, Ramón de La, (revisión.) , Morck, Heriberto F., (traductor.) Formato: eBook Idioma: Spanish Publicado: Cuidad de México : FCE - Fondo de Cultura Económica, 2021. Series: Breviarios ; 74. Materias: Ethics. Psychoanalysis. Ética. Psiconálisis. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/173449  "
+    }
+  ]
+}

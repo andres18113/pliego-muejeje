@@ -1,0 +1,42 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000390",
+      "category": "filosofia",
+      "quantity": 2,
+      "available": true
+    },
+    {
+      "sku": "PLG-BK-000368",
+      "category": "infantil-y-juvenil",
+      "quantity": 2,
+      "available": true
+    },
+    {
+      "sku": "PLG-BK-000450",
+      "category": "literatura",
+      "quantity": 2,
+      "available": true
+    },
+    {
+      "sku": "PLG-BK-000451",
+      "category": "matematicas",
+      "quantity": 2,
+      "available": true
+    },
+    {
+      "sku": "PLG-BK-000316",
+      "category": "medicina",
+      "quantity": 2,
+      "available": true
+    },
+    {
+      "sku": "PLG-BK-000375",
+      "category": "psicologia",
+      "quantity": 2,
+      "available": true
+    }
+  ],
+  "existing_items_preserved": true,
+  "catalog_inventory_unchanged_by_cart": true
+}

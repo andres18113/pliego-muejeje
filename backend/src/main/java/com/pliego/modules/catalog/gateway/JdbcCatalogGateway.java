@@ -124,10 +124,10 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
             }, catalogSearchRowMapper());
         }
         if (query.query() != null && !query.query().isBlank()) {
-            return jdbcTemplate.query(query.offersOnly() ? CATALOG_GLOBAL_SEARCH_QUERY.replace("fn_catalog_search_global(", "fn_catalog_search_global_offers(") : CATALOG_GLOBAL_SEARCH_QUERY,
-                    statement -> bindGlobalSearch(statement, query, page), catalogSearchRowMapper());
+            return jdbcTemplate.query(CATALOG_GLOBAL_SEARCH_QUERY.replace("fn_catalog_search_global(?,?,?,?,?,?,?,?,?)", "fn_catalog_search_global(?,?,?,?,?,?,?,?,?,?)"),
+                    statement -> { bindGlobalSearch(statement, query, page); setNullableString(statement, 10, query.productType()); }, catalogSearchRowMapper());
         }
-        return jdbcTemplate.query(query.offersOnly() ? CATALOG_SEARCH_QUERY.replace("fn_catalog_search(", "fn_catalog_search_offers(") : CATALOG_SEARCH_QUERY, statement -> bindSearch(statement, query, page),
+        return jdbcTemplate.query(CATALOG_SEARCH_QUERY.replace("fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?)", "fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?,?)"), statement -> { bindSearch(statement, query, page); setNullableString(statement, 12, query.productType()); },
                 catalogSearchRowMapper());
     }
 

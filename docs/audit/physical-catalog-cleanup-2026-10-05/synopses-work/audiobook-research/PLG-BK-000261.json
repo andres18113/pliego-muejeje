@@ -1,0 +1,33 @@
+{
+  "sku": "PLG-BK-000261",
+  "title": "Está temblando. Novela",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:26.325825+00:00",
+      "response_sha256": "a39983ed403801d411b047ac925546337ad0f723c18ce7fc2736113b7de3c092",
+      "extraction_sha256": "63a48114ebe9780c8f0e05f3527557c7fb564638efb0fc7148361ca31c983b28",
+      "text": "Guardado en: Autor Principal: Pérez de Arce, Hermógenes, (autor.) Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : Editorial El Roble, 2015. Materias: Chile > History > Fiction. Chile > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/195499  ",
+      "observed_page_title": "Existencias: Está temblando. Novela /",
+      "title_check_response_sha256": "a51dd3caaf5f31a9ddc2d75e5a7856c2711082b2f20a3bde6c49231023e8bce4",
+      "title_checked_at_utc": "2026-10-05T19:40:06.000612+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:27.640981+00:00",
+      "response_sha256": "e2cc9ebccaf9bf31218c20d50f725646aa4b861e53058e2cd6c341ddb1577cef",
+      "extraction_sha256": "63a48114ebe9780c8f0e05f3527557c7fb564638efb0fc7148361ca31c983b28",
+      "text": "Guardado en: Autor Principal: Pérez de Arce, Hermógenes, (autor.) Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : Editorial El Roble, 2015. Materias: Chile > History > Fiction. Chile > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/195499  "
+    },
+    {
+      "url": "https://books.apple.com/br/book/est%C3%A1-temblando/id1001193816",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:39:51.393650+00:00",
+      "response_sha256": "17d86b7f7318c2f95b25494d19627f601068293c159f7beef2e52cd6659e9e04",
+      "extraction_sha256": "7fb4d877db3c8804f48863fe90bc85ab1f4d02dcbd99c4fc69651d4f7f1a9115",
+      "text": "âEstÃ¡ Temblando de HermÃ³genes PÃ©rez de Arce no AppleÂ Books Apple Loja Mac iPad iPhone Apple Watch AirPods TV e Casa Entretenimento Acessórios Suporte 0 + AppleÂ Books PrÃ©via Local Nav Abrir menu Local Nav Fechar menu Top livros Top audiolivros EstÃ¡ Temblando Novela HermÃ³genes PÃ©rez de Arce R$Â 67,90 R$Â 67,90 DescriÃ§Ã£o da editora Inmersa en la realidad chilena, sobre todo la de su capa dirigente y en los avatares que depara a Ã©sta la polÃ­tica, enfoca con ojo crÃ­ticoÂ los sucesivos cambios que los desenlaces electorales y militares van provocando en el modo de vida chileno. GÃNERO FicÃ§Ã£o e literatura LANÃADO 2015 26 de maio IDIOMA ES Espanhol PÃGINAS 672 EDITORA Editorial El Roble VENDEDOR CANOPUS Editorial Digital LLC. TAMANHO 1,4 MB Mais livros de HermÃ³genes PÃ©rez de Arce Trampantojo 2025 Historia de la RevoluciÃ³n Militar Chilena 4a EdiciÃ³n 2024 Miserias morales de la chilenidad actual 2016 Historia de la RevoluciÃ³n Militar Chilena 1973 - 1990 2018 Ni Verdad Ni ReconciliaciÃ³n 2015 La Verdad del Juicio a Pinochet 2015 Outras formas de comprar: encontre uma Apple Store ou revendedor Apple na sua região. Ou ligue para 0800-761-0867. Rua Leopoldo Couto de Magalhães Jr., 700, 7º andar, Itaim Bibi. São Paulo, SP. CEP: 04542-000. Os Serviços de Mídia da Apple são fornecidos pela Apple Services LATAM LLC. Brasil Copyright © 2024 Apple Inc. Todos os direitos reservados. Apple Computer Brasil Ltda. CNPJ: 00.623.904/0003-35 Política de Privacidade Avisos legais Mapa do site"
+    }
+  ]
+}

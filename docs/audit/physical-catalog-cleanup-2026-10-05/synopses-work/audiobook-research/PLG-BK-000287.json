@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000287",
+  "title": "Fisiología y fisiopatología pulmonar: estudios de casos (2a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:30.822803+00:00",
+      "response_sha256": "7b4f12eca1ae672b43e105c2ff57a2258ac61163e2a7f0348411b729fc52e21f",
+      "extraction_sha256": "209e141799b04b0e8595f426aa00465885893ebc5747e54b0eddd0226aeb7764",
+      "text": "Guardado en: Autor Principal: West, John B. Otros Autores: Jaquotor, Ma. Jesús del Sol, (traductor.) Formato: eBook Idioma: Spanish Publicado: Barcelona : Wolters Kluwer Health, 2014. Edición: 2a. edición. Materias: Lungs > Physiology. Lungs > Pathophysiology. Pulmones > Fisiología. Pulmones > Fisiopatología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/125026  ",
+      "observed_page_title": "Existencias: Fisiología y fisiopatología pulmonar :",
+      "title_check_response_sha256": "0900abe9e0a2def707e28dddf7d11f712b959102f9058c0ce410e33ecf5a18eb",
+      "title_checked_at_utc": "2026-10-05T19:39:59.250272+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:32.141580+00:00",
+      "response_sha256": "bb35410bc48baf6786491a26b4e261f82f8a0031c7016e4739ecf2e829336912",
+      "extraction_sha256": "209e141799b04b0e8595f426aa00465885893ebc5747e54b0eddd0226aeb7764",
+      "text": "Guardado en: Autor Principal: West, John B. Otros Autores: Jaquotor, Ma. Jesús del Sol, (traductor.) Formato: eBook Idioma: Spanish Publicado: Barcelona : Wolters Kluwer Health, 2014. Edición: 2a. edición. Materias: Lungs > Physiology. Lungs > Pathophysiology. Pulmones > Fisiología. Pulmones > Fisiopatología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/125026  "
+    }
+  ]
+}

@@ -15,6 +15,13 @@ class DatabaseExceptionTranslatorTest {
     private final DatabaseExceptionTranslator translator = new DatabaseExceptionTranslator();
 
     @Test
+    void ownershipLookupKeepsItsStableNotFoundWireCode() {
+        var translated = translator.translate(new SQLException("private ownership detail", "P6001"));
+        assertEquals(HttpStatus.NOT_FOUND, translated.error().httpStatus());
+        assertEquals("P6001", translated.error().sqlState());
+    }
+
+    @Test
     void translatesDomainSqlStateThroughSpringDataAccessException() {
         SQLException sqlException = new SQLException("private postgres detail", "P3002");
         var translated = translator.translate(new DataAccessResourceFailureException("jdbc failure", sqlException));

@@ -107,7 +107,7 @@ BEGIN
     IF items->0->>'unavailabilityReason' IS DISTINCT FROM 'P2043' THEN RAISE EXCEPTION 'Inactive work not reflected'; END IF;
     CALL pliego.sp_book_set_status(a,book,'ACTIVE');
     -- Digital-only checkout: no stock or movement, retained format snapshot, cancellation restores zero.
-    CALL pliego.sp_checkout(user_id,address,'TRANSFER','APPROVED',order_id,order_state,payment_state,total,reference);
+    CALL pliego.sp_checkout(user_id,NULL,'TRANSFER','APPROVED','DIGITAL_ONLY',NULL,order_id,order_state,payment_state,total,reference);
     IF total<>11.50 OR order_state<>'CONFIRMED' OR EXISTS(SELECT 1 FROM pliego.movimiento_inventario WHERE pedido_id=order_id)
         OR NOT EXISTS(SELECT 1 FROM pliego.pedido_item WHERE pedido_id=order_id AND formato_snapshot='EBOOK') THEN
         RAISE EXCEPTION 'Digital-only checkout wrong'; END IF;
@@ -134,7 +134,7 @@ BEGIN
     IF NOT EXISTS(SELECT 1 FROM pliego.fn_public_category_list() WHERE category_slug='v032-tema') THEN
         RAISE EXCEPTION 'Digital-only theme missing'; END IF;
     CALL pliego.sp_cart_add_item(user_id,audio,1,cart,item,quantity);
-    CALL pliego.sp_checkout(user_id,address,'TRANSFER','REJECTED',order_id,order_state,payment_state,total,reference);
+    CALL pliego.sp_checkout(user_id,NULL,'TRANSFER','REJECTED','DIGITAL_ONLY',NULL,order_id,order_state,payment_state,total,reference);
     IF payment_state<>'REJECTED' OR EXISTS(SELECT 1 FROM pliego.movimiento_inventario WHERE pedido_id=order_id)
         OR (SELECT c.state FROM pliego.fn_cart_get(user_id)c) IS DISTINCT FROM 'ACTIVE' THEN
         RAISE EXCEPTION 'Rejected digital payment mutated cart/stock'; END IF;

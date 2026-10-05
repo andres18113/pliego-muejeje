@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000242",
+  "title": "Constructivismo y psicoterapia (3a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:23.757738+00:00",
+      "response_sha256": "046ee2a89040163c91142c287d7bc213f7f57b2c0d1da7064d8d05bf64aea492",
+      "extraction_sha256": "e9d1ea82f69e7f90fd5e4a70bbfe05bb75cbb84adadd98b9a5216019cc473ab4",
+      "text": "Guardado en: Autor Principal: Feixas i Viaplana, Guillem. Autor Corporativo: e-libro, Corp. Otros Autores: Villegas Besora, Manuel. Formato: eBook Idioma: Spanish Publicado: Bilbao : Desclée de Brouwer, c2004. Edición: 3a. ed. rev. Series: Biblioteca de Psicología ; 105 Materias: Psicoterapia. Constructivismo(Filosofía) Psychotherapy. Constructivism (Philosophy) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47644  ",
+      "observed_page_title": "Existencias: Constructivismo y psicoterapia",
+      "title_check_response_sha256": "b231aadf2c0d4da26a773bc29e01202cf1e93a80fc5e215f821996f36ed45892",
+      "title_checked_at_utc": "2026-10-05T19:40:02.052066+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:25.305566+00:00",
+      "response_sha256": "8b467ea4254e6f265b93222e000e76b035f56bddb78dc863107dc2b26cfbbe8b",
+      "extraction_sha256": "e9d1ea82f69e7f90fd5e4a70bbfe05bb75cbb84adadd98b9a5216019cc473ab4",
+      "text": "Guardado en: Autor Principal: Feixas i Viaplana, Guillem. Autor Corporativo: e-libro, Corp. Otros Autores: Villegas Besora, Manuel. Formato: eBook Idioma: Spanish Publicado: Bilbao : Desclée de Brouwer, c2004. Edición: 3a. ed. rev. Series: Biblioteca de Psicología ; 105 Materias: Psicoterapia. Constructivismo(Filosofía) Psychotherapy. Constructivism (Philosophy) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47644  "
+    }
+  ]
+}

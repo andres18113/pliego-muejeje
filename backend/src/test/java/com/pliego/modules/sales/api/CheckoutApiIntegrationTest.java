@@ -64,6 +64,24 @@ class CheckoutApiIntegrationTest {
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.orderState").value("CONFIRMED"));
     }
 
+    @Test
+    void digitalOnlyAcceptsNoPhysicalFulfillment() throws Exception {
+        mvc.perform(post("/api/v1/checkout").header("Authorization", token("100", "CUSTOMER"))
+                .header("Idempotency-Key", UUID.randomUUID().toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"fulfillmentMethod\":\"DIGITAL_ONLY\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}"))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.orderState").value("CONFIRMED"));
+    }
+
+    @Test
+    void digitalOnlyRejectsAddressOrPickup() throws Exception {
+        mvc.perform(post("/api/v1/checkout").header("Authorization", token("100", "CUSTOMER"))
+                .header("Idempotency-Key", UUID.randomUUID().toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"fulfillmentMethod\":\"DIGITAL_ONLY\",\"addressId\":\"1\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}"))
+                .andExpect(status().isBadRequest());
+    }
+
     private static final String CARD = "4242424242424242";
     private static final String APPROVED_REFERENCE = "SIM-550e8400-e29b-41d4-a716-446655440000";
     @Autowired MockMvc mvc;

@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Escritos sobre ética",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una colección de escritos que toma la ética como terreno de reflexión sobre la acción humana. Su carácter de colección permite acercarse al tema mediante textos reunidos bajo una misma preocupación filosófica. La lectura invita a pensar los criterios con que valoramos la conducta y las preguntas que surgen cuando intentamos justificar nuestras decisiones ante nosotros mismos y ante otras personas.",
         "autores": [
           {
             "nombre": "García, Camilo",
@@ -192,7 +192,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "92",
-        "imported_book_id": "91"
+        "imported_book_id": "91",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000110.json; SHA-256 de respuesta HTTP: 2e03f659d493e0c9b688af0898d8e86b9989b3e8d26fb53b3464685bfc8e7f6e"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -200,7 +211,7 @@
       "libro": {
         "titulo": "La responsividad ética",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La responsividad ética se sitúa en el cruce entre responsabilidad y reflexión moral. El título invita a considerar la acción humana desde la pregunta por la respuesta que damos y por los criterios que la orientan. Una lectura para quienes desean aproximarse a este concepto y pensar el sentido de responder ante situaciones, exigencias y otras personas.",
         "autores": [
           {
             "nombre": "Patiño González, Susana Magdalena",
@@ -385,7 +396,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "93",
-        "imported_book_id": "92"
+        "imported_book_id": "92",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000276.json; SHA-256 de respuesta HTTP: 58c490ca5889dd071125184ec040939b6fc86f64fa3ac10a25abf0b67cdf9d21"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -393,7 +415,7 @@
       "libro": {
         "titulo": "La ética en la era de la tecnociencia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La ciencia y la tecnología se plantean como ámbitos que también requieren una reflexión moral. La obra invita a pensar qué criterios acompañan la actividad tecnocientífica y por qué sus efectos abren preguntas éticas. Una lectura para acercarse al vínculo entre conocimiento, capacidad de intervención y responsabilidad, desde el encuentro de la filosofía con las transformaciones científicas y tecnológicas.",
         "autores": [
           {
             "nombre": "Pulgar Castro, Rodrigo",
@@ -578,7 +600,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "94",
-        "imported_book_id": "93"
+        "imported_book_id": "93",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000142.json; SHA-256 de respuesta HTTP: 23fc7be760c2025296fd7c1d81ec5157976f86375cb570e732669813d08f847a"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -586,7 +619,7 @@
       "libro": {
         "titulo": "La ética explorada",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La ética se presenta como un territorio para la exploración filosófica. El título invita a acercarse a las preguntas morales con una disposición de búsqueda y examen de las razones que orientan la conducta. Una lectura para quienes desean pensar qué significa valorar nuestras acciones y reconocer el lugar de esa reflexión en la experiencia humana.",
         "autores": [
           {
             "nombre": "González, Ana Marta",
@@ -771,7 +804,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "95",
-        "imported_book_id": "94"
+        "imported_book_id": "94",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000297.json; SHA-256 de respuesta HTTP: 148ac3052e7563b6636ba00e5dbdca73a12ee04aeae4c2d5a6efd6c31ce65257"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -779,7 +823,7 @@
       "libro": {
         "titulo": "Metafísica de la web",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La web se aborda desde una perspectiva filosófica vinculada con las tecnologías de la información. El título invita a interrogar el significado de los sitios web y del entorno que forman, más allá de su uso cotidiano. Una lectura para quienes desean pensar la experiencia digital como un campo de preguntas sobre la realidad y el conocimiento.",
         "autores": [
           {
             "nombre": "Ferraris, Maurizio",
@@ -964,7 +1008,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "96",
-        "imported_book_id": "95"
+        "imported_book_id": "95",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000264.json; SHA-256 de respuesta HTTP: aaadb2a309ab1084195235a83421ad39e3f643918a137d3ec7721e21becce5e7"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -972,7 +1027,7 @@
       "libro": {
         "titulo": "¿Hay que desconstruir la metafísica?",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La metafísica se aborda desde una pregunta sobre la conveniencia de su desconstrucción. El título invita a interrogar el lugar de esta disciplina y las posibilidades de someter sus planteamientos a revisión filosófica. Una lectura para quienes desean acercarse al debate sobre la metafísica y pensar qué significa cuestionar los marcos desde los que se formula el conocimiento.",
         "autores": [
           {
             "nombre": "Aubenque, Pierre",
@@ -1157,7 +1212,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "97",
-        "imported_book_id": "96"
+        "imported_book_id": "96",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000203.json; SHA-256 de respuesta HTTP: 1104438516df97e0e52401377b77012b3677a8ffb0d97bc3bfaa9c8231ddab4d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1165,7 +1231,7 @@
       "libro": {
         "titulo": "¿Qué es eso llamado metafísica?",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La metafísica se presenta como una pregunta filosófica que merece ser aclarada antes de avanzar en su estudio. El título invita a acercarse al significado de este campo y a reconocer su lugar dentro de la filosofía. Una lectura para quienes desean comenzar a orientarse en las cuestiones metafísicas y disponer de una primera referencia conceptual.",
         "autores": [
           {
             "nombre": "Garrett, Brian",
@@ -1348,7 +1414,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "98",
-        "imported_book_id": "97"
+        "imported_book_id": "97",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://nextory.com/es/book/que-es-eso-llamado-metafisica-5625981",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000245.json; SHA-256 de respuesta HTTP: 2d880870cc48e2aa4a472f92033ff94a4fec172db86f95837047b297e2584337"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1356,7 +1433,7 @@
       "libro": {
         "titulo": "Ética básica (3a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una aproximación a los fundamentos de la ética y a las preguntas que orientan la reflexión sobre la conducta humana. El énfasis en lo básico invita a distinguir el juicio moral de la mera opinión y a pensar qué razones sostienen nuestras decisiones. Una lectura para iniciar el estudio filosófico de la responsabilidad y la vida en común.",
         "autores": [
           {
             "nombre": "Etxeberria Mauleón, Xabier",
@@ -1541,7 +1618,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "99",
-        "imported_book_id": "98"
+        "imported_book_id": "98",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000060.json; SHA-256 de respuesta HTTP: af3190320e1164ebcd79da17876d85722d2988d0cb64a9dcd9d3f67ab6523d1d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1549,7 +1637,7 @@
       "libro": {
         "titulo": "Ética de la comunicación",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La comunicación y los medios masivos se examinan como actividades con una dimensión moral. La obra invita a considerar los criterios éticos que acompañan la circulación de mensajes y su presencia en la vida social. Una lectura para quienes desean pensar la relación entre comunicación y responsabilidad, tanto en el trato entre personas como en el espacio público.",
         "autores": [
           {
             "nombre": "Prado Flores, Rogelio del",
@@ -1734,7 +1822,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "100",
-        "imported_book_id": "99"
+        "imported_book_id": "99",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000235.json; SHA-256 de respuesta HTTP: 21fc27a501c5cd1373c22c7b58dd460ae13aed1356ec54a9b617dc3408b28e04"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1742,7 +1841,7 @@
       "libro": {
         "titulo": "Ética de la sexualidad",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La sexualidad se aborda como un ámbito de reflexión ética que también guarda relación con la educación y las perspectivas religiosas. El tema abre preguntas sobre los criterios con que se valoran las conductas y se orientan las relaciones humanas. Una lectura para pensar la dimensión moral de la vida sexual y su lugar en la formación de las personas.",
         "autores": [
           {
             "nombre": "Bonete, Enrique",
@@ -1926,7 +2025,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "101",
-        "imported_book_id": "100"
+        "imported_book_id": "100",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47807",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000076.json; SHA-256 de respuesta HTTP: 7f47b4bf3cc73934f9696c4d5516a24cbc15737c175cc84bd8886ed59aa74d5d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2127,7 +2237,7 @@
       "libro": {
         "titulo": "Ética general (6a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Un manual dedicado a la ética como campo general de estudio de la conducta humana. Su orientación permite acercarse a los criterios del juicio moral y a la necesidad de dar razones sobre lo que hacemos. Puede servir como entrada a las preguntas filosóficas que acompañan las decisiones personales y la convivencia con otras personas.",
         "autores": [
           {
             "nombre": "Rodríguez Luño, Ángel",
@@ -2312,7 +2422,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "103",
-        "imported_book_id": "102"
+        "imported_book_id": "102",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000077.json; SHA-256 de respuesta HTTP: c3a9cb21a9df118f72632d5930cbd56f4fa0474ae1910e96f05ad7f60f972f75"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2320,7 +2441,7 @@
       "libro": {
         "titulo": "Ética y cultura",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La ética se pone en relación con la cultura y con la hermenéutica, el campo filosófico de la interpretación. Ese cruce invita a preguntarse por el sentido que adquieren los juicios morales dentro de distintas formas de comprender el mundo. Una lectura para acercarse a la dimensión interpretativa de la ética y a su vínculo con la experiencia cultural.",
         "autores": [
           {
             "nombre": "Ricoeur, Paul",
@@ -2505,7 +2626,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "104",
-        "imported_book_id": "103"
+        "imported_book_id": "103",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000126.json; SHA-256 de respuesta HTTP: 770cb244debfce710580a74960c79d6a61d1af0c78e2d07babed74f82da6d4aa"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2513,7 +2645,7 @@
       "libro": {
         "titulo": "Ética y libertad",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La relación entre ética y libertad abre preguntas sobre lo que significa actuar y responder por las propias decisiones. Esta obra invita a pensar ambos conceptos de manera conjunta, dentro de un marco de reflexión filosófica. Una lectura para quienes desean examinar cómo la libertad se conecta con los criterios morales y con la posibilidad de orientar la conducta humana.",
         "autores": [
           {
             "nombre": "Roman Garate",
@@ -2698,7 +2830,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "105",
-        "imported_book_id": "104"
+        "imported_book_id": "104",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000125.json; SHA-256 de respuesta HTTP: 431d2b80a2ebe680df91310ef17fa1a62de16c70aff539717e0bba74b8a96b7c"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2899,7 +3042,7 @@
       "libro": {
         "titulo": "Ética y psicoanálisis",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Ética y psicoanálisis se ponen en relación como campos desde los que interrogar la experiencia humana. El tema invita a pensar el encuentro entre la reflexión moral y una perspectiva dedicada a la vida psíquica. Una lectura para quienes desean explorar cómo las preguntas sobre la conducta, la responsabilidad y el sujeto pueden abrirse al diálogo entre filosofía y psicoanálisis.",
         "autores": [
           {
             "nombre": "Fromm, Erich",
@@ -3084,7 +3227,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "107",
-        "imported_book_id": "106"
+        "imported_book_id": "106",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000157.json; SHA-256 de respuesta HTTP: cad2adf52841f1346acedb21d9e27acbacf9619fe69ef991d00873d1167e548a"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

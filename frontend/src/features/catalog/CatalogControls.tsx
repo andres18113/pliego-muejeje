@@ -8,7 +8,7 @@ import type { CatalogCriteria } from "./catalogUrl";
 import classes from "./exploration.module.css";
 
 const countFormat = new Intl.NumberFormat("es-EC");
-type Removable = "query" | "category" | "minPrice" | "maxPrice" | "language" | "format";
+type Removable = "query" | "category" | "minPrice" | "maxPrice" | "language" | "format" | "productType";
 
 /**
  * Orientation first (which collection, how many editions), then the controls that refine it: the
@@ -24,13 +24,15 @@ export function CatalogControls({ criteria, categories, options, optionsError, p
   const count = auxiliaryFilterCount(criteria) + Number(Boolean(criteria.category));
   const canFilter = categories.length > 0 || facets.format || facets.language || facets.price || Boolean(optionsError) || count > 0;
   const categoryName = categories.find((category) => category.slug === criteria.category)?.name ?? criteria.category;
+  const mediaLabel = criteria.productType === "PHYSICAL" ? "Libros físicos" : criteria.productType === "EBOOK" ? "eBooks" : criteria.productType === "AUDIOBOOK" ? "Audiolibros" : null;
   const applied: { field: Removable; label: string }[] = [];
+  if (mediaLabel) applied.push({ field: "productType", label: mediaLabel });
   if (criteria.query) applied.push({ field: "query", label: `«${criteria.query}»` });
   if (criteria.category) applied.push({ field: "category", label: categoryName });
   if (criteria.format) applied.push({ field: "format", label: formatEdition(criteria.format) });
   if (criteria.language) applied.push({ field: "language", label: formatLanguage(criteria.language) });
   if (criteria.minPrice || criteria.maxPrice) applied.push({ field: "minPrice", label: criteria.minPrice && criteria.maxPrice ? `${formatUsd(criteria.minPrice)}–${formatUsd(criteria.maxPrice)}` : criteria.minPrice ? `Desde ${formatUsd(criteria.minPrice)}` : `Hasta ${formatUsd(criteria.maxPrice)}` });
-  const title = criteria.query ? `Resultados para «${criteria.query}»` : criteria.category ? categoryName : "Todos los libros";
+  const title = criteria.query ? `Resultados para «${criteria.query}»` : criteria.category ? categoryName : mediaLabel ?? "Todos los libros";
 
   // One bounded lavender band: orientation (collection + count) beside the controls that refine it;
   // applied criteria join it on a second line only when they exist.
@@ -40,7 +42,7 @@ export function CatalogControls({ criteria, categories, options, optionsError, p
       <p className={classes.resultCount}>{pending ? "Buscando…" : total !== undefined ? `${countFormat.format(total)} ${total === 1n ? "edición" : "ediciones"}` : ""}</p>
     </header>
     <div className={classes.tools}>
-      {facets.priceSort && <label className={classes.sortLabel}><span>Ordenar</span><NativeSelect aria-label="Ordenar por" value={criteria.sort} onChange={(event) => onChange({ ...criteria, sort: event.currentTarget.value as CatalogCriteria["sort"], page: 0 })} data={[{ value: "TITLE_ASC", label: "Título, A–Z" }, { value: "PRICE_ASC", label: "Precio: menor a mayor" }, { value: "PRICE_DESC", label: "Precio: mayor a menor" }]} rightSection={<MaterialSymbol name="expand_more" size={20} />} classNames={{ root: classes.sort, input: classes.sortInput }} /></label>}
+      {facets.priceSort && <label className={classes.sortLabel}><span>Ordenar</span><NativeSelect aria-label="Ordenar por" value={criteria.sort} onChange={(event) => onChange({ ...criteria, sort: event.currentTarget.value as CatalogCriteria["sort"], page: 0 })} data={[{ value: "BEST_SELLING", label: "Más vendidos" }, { value: "TITLE_ASC", label: "Título, A–Z" }, { value: "PRICE_ASC", label: "Precio: menor a mayor" }, { value: "PRICE_DESC", label: "Precio: mayor a menor" }]} rightSection={<MaterialSymbol name="expand_more" size={20} />} classNames={{ root: classes.sort, input: classes.sortInput }} /></label>}
       {canFilter && <Button ref={filterTrigger} variant="outline" radius="xl" className={classes.filterButton} data-active={count > 0 || undefined}
         leftSection={<MaterialSymbol name="filter_list" size={20} />} aria-label={count > 0 ? `Filtros, ${count} ${count === 1 ? "activo" : "activos"}` : undefined} aria-haspopup="dialog" aria-expanded={filtersOpen} onClick={onToggleFilters}
         rightSection={count > 0 ? <span className={classes.filterCount} aria-hidden="true">{count}</span> : undefined}>

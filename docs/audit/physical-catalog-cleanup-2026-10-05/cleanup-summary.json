@@ -1,0 +1,10 @@
+{
+  "legacy_deactivated": 55,
+  "unrelated_editions_preserved": 449,
+  "active_format_counts": {
+    "PAPERBACK": 180,
+    "EBOOK": 142,
+    "AUDIOBOOK": 117
+  },
+  "immutable_r2_objects_deleted": 0
+}

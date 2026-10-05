@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000282",
+  "title": "Historia mínima de la deuda externa de Latinoamérica",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193604",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:29.323948+00:00",
+      "response_sha256": "69d5dfb1c577026be67d80c4a7585cd57da92acd175d789f5a7b3b53da3c33f4",
+      "extraction_sha256": "cdd60cc22d4bde0c15871681503e8f686cfaf438d84d68a1c173b6c60a4cae77",
+      "text": "Guardado en: Autor Principal: Marichal, Carlos, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2015. Series: Historia mínima. Materias: Deuda externa > América Latina > Historia > Siglo XIX. Debts, External > Latin America > History. Deuda externaAmérica Latina > Historia > Siglo XX. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193604  ",
+      "observed_page_title": "Existencias: Historia mínima de la deuda externa de Latinoamérica 1820-2010 /",
+      "title_check_response_sha256": "a5e8919263c90de8b6f1796b20e27b8a3c55ec3794d79b99bff9d7745b926455",
+      "title_checked_at_utc": "2026-10-05T19:40:05.198266+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193604/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:30.627624+00:00",
+      "response_sha256": "790ce9f55a23cfb5c0304a321e05137e9c9ed47dae61b9a801300e1b2a1fced6",
+      "extraction_sha256": "cdd60cc22d4bde0c15871681503e8f686cfaf438d84d68a1c173b6c60a4cae77",
+      "text": "Guardado en: Autor Principal: Marichal, Carlos, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2015. Series: Historia mínima. Materias: Deuda externa > América Latina > Historia > Siglo XIX. Debts, External > Latin America > History. Deuda externaAmérica Latina > Historia > Siglo XX. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193604  "
+    }
+  ]
+}

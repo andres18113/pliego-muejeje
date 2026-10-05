@@ -14,6 +14,8 @@ Durations persist in PostgreSQL `home_delivery_config`. Change them for future s
 
 ## Architecture
 
+V045–V048 add media-scoped 30-day BEST_SELLING catalog sorting, public storefront navigation and published Help, plus authenticated ownership-only Mi biblioteca list/detail. DIGITAL_ONLY checkout omits address/pickup and creates no physical fulfillment; mixed orders retain one payment with physical-only logistics. Approved payment grants digital ownership atomically; cancellation/refund revokes the source while another valid purchase preserves ownership. Digital-only orders cannot enter physical delivery states. There are no readers, players, downloads or content delivery. See [ADR-0026](../docs/adr/0026-storefront-help-and-digital-ownership.md) and the [Claude handoff](../docs/frontend/claude-storefront-library-handoff-2026-10-05.md). The PostgreSQL CI gate now expects 48 migrations.
+
 This is one deployable with modules grouped by business context. Add implementation as vertical slices; do not add placeholder Controllers or Services.
 
 ```text

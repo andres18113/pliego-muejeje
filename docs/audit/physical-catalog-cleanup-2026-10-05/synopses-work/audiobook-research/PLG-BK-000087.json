@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000087",
+  "title": "Fisiología respiratoria (8a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:01.027195+00:00",
+      "response_sha256": "c87be68eca1577756747cf76faa20a013fa844c18d6d9f9a1cbc3f6cce9b924c",
+      "extraction_sha256": "02750443c4ac2e90c2a6758bb9cc01a703bb3d4b9fb7e5bd7c40226d62c7f66d",
+      "text": "Guardado en: Autor Principal: West, John B, (autor.) Otros Autores: Jaquolot, María Jesús del Sol, (traductor.) Formato: eBook Idioma: Spanish Publicado: Barcelona : Wolters Kluwer Health, 2009. Edición: 8a. edición. Materias: Respiration. Respiración. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/124823  ",
+      "observed_page_title": "Existencias: Fisiología respiratoria /",
+      "title_check_response_sha256": "a6ff5d83cce513006bf13e3423f471dfa12a988c8fb885ed8cc9bd39871ff2dd",
+      "title_checked_at_utc": "2026-10-05T19:40:06.551088+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:02.365000+00:00",
+      "response_sha256": "e8984fb439d468d8e196fb43f01e2d17cdf79221982d730b1647850943055532",
+      "extraction_sha256": "02750443c4ac2e90c2a6758bb9cc01a703bb3d4b9fb7e5bd7c40226d62c7f66d",
+      "text": "Guardado en: Autor Principal: West, John B, (autor.) Otros Autores: Jaquolot, María Jesús del Sol, (traductor.) Formato: eBook Idioma: Spanish Publicado: Barcelona : Wolters Kluwer Health, 2009. Edición: 8a. edición. Materias: Respiration. Respiración. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/124823  "
+    }
+  ]
+}

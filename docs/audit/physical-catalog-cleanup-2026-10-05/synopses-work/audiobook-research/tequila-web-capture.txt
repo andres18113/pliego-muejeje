@@ -1,0 +1,8 @@
+L89: # Historia mínima del tequila
+L91: ## José M. Murià
+L95: ## Año 2024
+L97: ## 171 págs.
+L101: ## 1a.Edición
+L103: ## ISBN/ISSN 978-607-564-627-5
+L116: Inicia con la exposición de la procedencia y naturaleza de ese agave al que distintos pueblos que habitaron el Altiplano Central de México antes de la llegada de los españoles llamaron metl, guada, atocamba, kaku yste; cuenta acerca de los vestigios de prehispánicos alambiques y sigue su sendero entre múltiples avatares hasta llegar a la industrialización e internacionalización del tequila en la época moderna, habiendo acompañado a la nación mexicana durante sus propias vicisitudes.
+L117: En esta obra, la anécdota que confirma el nacimiento del tequila ha sido encontrada y se convirtió en un cúmulo de anécdotas, relatos históricos y datos sobre la producción y consumo, cuya amena lectura bien puede ser acompañada con “ni menos de uno ni más de tres” caballitos de tequila.

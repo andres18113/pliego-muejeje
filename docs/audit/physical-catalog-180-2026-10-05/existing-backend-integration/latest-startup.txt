@@ -1,0 +1,70 @@
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper (file:/usr/share/maven/lib/guava.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.common.util.concurrent.AbstractFuture$UnsafeAtomicHelper
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[[1;34mINFO[m] Scanning for projects...
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m---------------------< [0;36mcom.pliego:pliego-backend[0;1m >----------------------[m
+[[1;34mINFO[m] [1mBuilding pliego-backend 0.1.0-SNAPSHOT[m
+[[1;34mINFO[m]   from pom.xml
+[[1;34mINFO[m] [1m--------------------------------[ jar ]---------------------------------[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m>>> [0;32mspring-boot:4.1.1:run[m [1m(default-cli)[0;1m > [0;1mtest-compile[m @ [36mpliego-backend[0;1m >>>[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.5.0:resources[m [1m(default-resources)[m @ [36mpliego-backend[0;1m ---[m
+[[1;34mINFO[m] Copying 45 resources from src/main/resources to target/classes
+[[1;34mINFO[m] Copying 1 resource from ../shared/validation to target/classes/validation
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.15.0:compile[m [1m(default-compile)[m @ [36mpliego-backend[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged source code[m.
+[[1;34mINFO[m] Compiling 190 source files with javac [debug parameters release 25] to target/classes
+[[1;34mINFO[m] /home/andres18123/PLIEGO/backend/src/main/java/com/pliego/foundation/validation/PersonRules.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /home/andres18123/PLIEGO/backend/src/main/java/com/pliego/foundation/validation/PersonRules.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mresources:3.5.0:testResources[m [1m(default-testResources)[m @ [36mpliego-backend[0;1m ---[m
+[[1;34mINFO[m] Copying 0 resource from src/test/resources to target/test-classes
+[[1;34mINFO[m] Copying 1 resource from ../shared/validation to target/test-classes/validation
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mcompiler:3.15.0:testCompile[m [1m(default-testCompile)[m @ [36mpliego-backend[0;1m ---[m
+[[1;34mINFO[m] Recompiling the module because of [1mchanged dependency[m.
+[[1;34mINFO[m] Compiling 17 source files with javac [debug parameters release 25] to target/test-classes
+[[1;34mINFO[m] /home/andres18123/PLIEGO/backend/src/test/java/com/pliego/foundation/validation/PersonRulesTest.java: Some input files use or override a deprecated API.
+[[1;34mINFO[m] /home/andres18123/PLIEGO/backend/src/test/java/com/pliego/foundation/validation/PersonRulesTest.java: Recompile with -Xlint:deprecation for details.
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m<<< [0;32mspring-boot:4.1.1:run[m [1m(default-cli)[0;1m < [0;1mtest-compile[m @ [36mpliego-backend[0;1m <<<[m
+[[1;34mINFO[m] 
+[[1;34mINFO[m] 
+[[1;34mINFO[m] [1m--- [0;32mspring-boot:4.1.1:run[m [1m(default-cli)[m @ [36mpliego-backend[0;1m ---[m
+[[1;34mINFO[m] Attaching agents: []
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.1.1)
+
+2026-10-05T11:26:07.912-05:00  INFO 32105 --- [pliego-backend] [           main] com.pliego.PliegoApplication             : Starting PliegoApplication using Java 25.0.4.1 with PID 32105 (/home/andres18123/PLIEGO/backend/target/classes started by andres18123 in /home/andres18123/PLIEGO/backend)
+2026-10-05T11:26:07.914-05:00  INFO 32105 --- [pliego-backend] [           main] com.pliego.PliegoApplication             : No active profile set, falling back to 1 default profile: "default"
+2026-10-05T11:26:08.845-05:00  INFO 32105 --- [pliego-backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 8080 (http)
+2026-10-05T11:26:08.852-05:00  INFO 32105 --- [pliego-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-10-05T11:26:08.852-05:00  INFO 32105 --- [pliego-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+2026-10-05T11:26:08.873-05:00  INFO 32105 --- [pliego-backend] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 920 ms
+2026-10-05T11:26:08.919-05:00  INFO 32105 --- [pliego-backend] [           main] o.s.boot.web.servlet.RegistrationBean    : Filter traceIdFilterRegistration was not registered (disabled)
+2026-10-05T11:26:08.919-05:00  INFO 32105 --- [pliego-backend] [           main] o.s.boot.web.servlet.RegistrationBean    : Filter authSessionRequestFilterRegistration was not registered (disabled)
+2026-10-05T11:26:09.330-05:00  INFO 32105 --- [pliego-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-05T11:26:09.395-05:00  INFO 32105 --- [pliego-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@289f15e9
+2026-10-05T11:26:09.395-05:00  INFO 32105 --- [pliego-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-05T11:26:09.405-05:00  INFO 32105 --- [pliego-backend] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://127.0.0.1:55432/pliego (PostgreSQL 18.6)
+2026-10-05T11:26:09.452-05:00  INFO 32105 --- [pliego-backend] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 44 migrations (execution time 00:00.024s)
+2026-10-05T11:26:09.470-05:00  INFO 32105 --- [pliego-backend] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 044
+2026-10-05T11:26:09.472-05:00  INFO 32105 --- [pliego-backend] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2026-10-05T11:26:09.961-05:00  INFO 32105 --- [pliego-backend] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 8080 (http) with context path '/'
+2026-10-05T11:26:09.966-05:00  INFO 32105 --- [pliego-backend] [           main] com.pliego.PliegoApplication             : Started PliegoApplication in 2.391 seconds (process running for 2.669)
+2026-10-05T11:26:09.967-05:00  WARN 32105 --- [pliego-backend] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-10-05T11:26:09.967-05:00  WARN 32105 --- [pliego-backend] [           main] o.s.core.events.SpringDocAppInitializer  : SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-10-05T11:26:10.294-05:00  INFO 32105 --- [pliego-backend] [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-10-05T11:26:10.294-05:00  INFO 32105 --- [pliego-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2026-10-05T11:26:10.295-05:00  INFO 32105 --- [pliego-backend] [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+2026-10-05T11:26:11.036-05:00  INFO 32105 --- [pliego-backend] [nio-8080-exec-1] o.springdoc.api.AbstractOpenApiResource  : Init duration for springdoc-openapi is: 721 ms

@@ -1,0 +1,389 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000001",
+      "editionId": "43",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000002",
+      "editionId": "40",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000003",
+      "editionId": "74",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000004",
+      "editionId": "59",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000005",
+      "editionId": "64",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000006",
+      "editionId": "58",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000007",
+      "editionId": "68",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000008",
+      "editionId": "69",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "HARDCOVER"
+    },
+    {
+      "sku": "PLG-BK-000009",
+      "editionId": "56",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "HARDCOVER"
+    },
+    {
+      "sku": "PLG-BK-000010",
+      "editionId": "63",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000011",
+      "editionId": "65",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000012",
+      "editionId": "75",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000013",
+      "editionId": "46",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000014",
+      "editionId": "35",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "HARDCOVER"
+    },
+    {
+      "sku": "PLG-BK-000015",
+      "editionId": "49",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000016",
+      "editionId": "76",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000017",
+      "editionId": "77",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000018",
+      "editionId": "78",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000019",
+      "editionId": "47",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000020",
+      "editionId": "85",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000021",
+      "editionId": "50",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000022",
+      "editionId": "81",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000023",
+      "editionId": "87",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000024",
+      "editionId": "41",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000025",
+      "editionId": "84",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "HARDCOVER"
+    },
+    {
+      "sku": "PLG-BK-000026",
+      "editionId": "82",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000027",
+      "editionId": "53",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000028",
+      "editionId": "60",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000029",
+      "editionId": "38",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000030",
+      "editionId": "45",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000031",
+      "editionId": "39",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "HARDCOVER"
+    },
+    {
+      "sku": "PLG-BK-000032",
+      "editionId": "55",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000033",
+      "editionId": "51",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "HARDCOVER"
+    },
+    {
+      "sku": "PLG-BK-000034",
+      "editionId": "57",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000035",
+      "editionId": "34",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000036",
+      "editionId": "54",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000037",
+      "editionId": "86",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000038",
+      "editionId": "36",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000039",
+      "editionId": "52",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000040",
+      "editionId": "37",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000041",
+      "editionId": "88",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000043",
+      "editionId": "70",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000044",
+      "editionId": "71",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000045",
+      "editionId": "42",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000046",
+      "editionId": "72",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000047",
+      "editionId": "66",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000048",
+      "editionId": "73",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000049",
+      "editionId": "67",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000050",
+      "editionId": "44",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000051",
+      "editionId": "62",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000052",
+      "editionId": "61",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000053",
+      "editionId": "79",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000054",
+      "editionId": "48",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "HARDCOVER"
+    },
+    {
+      "sku": "PLG-BK-000055",
+      "editionId": "80",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    },
+    {
+      "sku": "PLG-BK-000056",
+      "editionId": "83",
+      "previous_state": "ACTIVE",
+      "state": "INACTIVE",
+      "format": "PAPERBACK"
+    }
+  ]
+}

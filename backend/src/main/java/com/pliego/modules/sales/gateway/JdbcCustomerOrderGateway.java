@@ -115,8 +115,8 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
             JsonNode payment = parseJson(rs.getString("payment"), "payment");
             JsonNode history = parseJson(rs.getString("state_history"), "state history");
             var extras=postPurchase.detail(rs);
-            boolean pickup=extras.fulfillment()!=null && "STORE_PICKUP".equals(extras.fulfillment().method());
-            if (!items.isArray() || (address==null ? !pickup : !address.isObject()) || !payment.isObject() || !history.isArray()) {
+            boolean requiresDeliveryAddress=extras.fulfillment()!=null && "HOME_DELIVERY".equals(extras.fulfillment().method());
+            if (!items.isArray() || (address==null ? requiresDeliveryAddress : !address.isObject()) || !payment.isObject() || !history.isArray()) {
                 throw new SQLException("Order detail Function returned incomplete JSON", "XX000");
             }
             return new Detail(Long.toString(rs.getLong("order_id")), rs.getString("order_state"),

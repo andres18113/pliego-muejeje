@@ -1,0 +1,13 @@
+{
+  "languages": [
+    "es"
+  ],
+  "formats": [
+    "AUDIOBOOK",
+    "EBOOK",
+    "HARDCOVER",
+    "PAPERBACK"
+  ],
+  "minimumPrice": "4.99",
+  "maximumPrice": "89.95"
+}

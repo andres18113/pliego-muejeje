@@ -1,0 +1,4431 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000057",
+      "book_id": "214",
+      "title": "Filosofía del conocimiento (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Corazón González, Rafael"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "EUNSA",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46926",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46926.html",
+          "capture_sha256": "bffc490cee90c8a39d35419b485b41852daeda3e985426aab6306c7bda863832",
+          "observed_text": "Eunsa,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46926.html",
+          "capture_sha256": "bffc490cee90c8a39d35419b485b41852daeda3e985426aab6306c7bda863832",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000061",
+      "book_id": "322",
+      "title": "Medicina intensiva",
+      "subtitle": null,
+      "authors": [
+        "Lovesio, Carlos"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Corpus Editorial",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67148",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67148",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-7eb366f26ec5faeb.html",
+          "capture_sha256": "7a5f2b6462ed0e56ed611619a605f814649045755eb97b7060705ddcab0b2d1b",
+          "observed_text": "Rosario : Corpus Editorial, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67148",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-7eb366f26ec5faeb.html",
+          "capture_sha256": "7a5f2b6462ed0e56ed611619a605f814649045755eb97b7060705ddcab0b2d1b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000062",
+      "book_id": "225",
+      "title": "Las tareas de la filosofía",
+      "subtitle": null,
+      "authors": [
+        "Cuartango, Román"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Editorial de la Universidad de Cantabria",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53385",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns53385.html",
+          "capture_sha256": "eeb7e9efe6925e74afd9785327438c1e65a2ee3be34f20ab195125725c1cd9c2",
+          "observed_text": "Editorial de la Universidad de Cantabria,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns53385.html",
+          "capture_sha256": "eeb7e9efe6925e74afd9785327438c1e65a2ee3be34f20ab195125725c1cd9c2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "book_id": "72",
+      "title": "Matemática estructural",
+      "subtitle": null,
+      "authors": [
+        "Andrés Forero Cuervo"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad de los Andes",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": "Introducción rigurosa a las matemáticas desde la teoría de conjuntos, la lógica y los métodos de demostración.\nDesarrolla inducción, conteo, divisibilidad, relaciones, funciones, equivalencia, cardinalidad y nociones de estructura e isomorfismo.\nSu propósito es fortalecer el razonamiento formal y preparar al estudiante para cursos matemáticos de mayor abstracción.",
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69334",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ecb575e0c500e089.html",
+          "capture_sha256": "bad4757c82f3ada6901f9fb5ffc77e19d86d11fceab0dc0272c9d212e6054992",
+          "observed_text": "Bogotá : Universidad de los Andes, 2009."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ecb575e0c500e089.html",
+          "capture_sha256": "bad4757c82f3ada6901f9fb5ffc77e19d86d11fceab0dc0272c9d212e6054992",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000064",
+      "book_id": "244",
+      "title": "Fundamentos de matemáticas",
+      "subtitle": null,
+      "authors": [
+        "Zalamea Traba, Fernando"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Matemáticas",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128447",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-e7ad27a2d7986fb8.html",
+          "capture_sha256": "c155a80650e081503202bd3fc82b5d26815bb1d3e22d5814b0b49c7d6d88539d",
+          "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Matemáticas, 2000."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-e7ad27a2d7986fb8.html",
+          "capture_sha256": "c155a80650e081503202bd3fc82b5d26815bb1d3e22d5814b0b49c7d6d88539d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000065",
+      "book_id": "304",
+      "title": "La mujer en la historia",
+      "subtitle": null,
+      "authors": [
+        "Bel Bravo, María Antonia"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Encuentro, S.A",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61616",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61616.html",
+          "capture_sha256": "e964748b069d5b8af5783ceecdc25bc6b6d71f051c923b3c0ab448e7de0fabd3",
+          "observed_text": "Madrid : Ediciones Encuentro, S.A., 1998."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61616.html",
+          "capture_sha256": "e964748b069d5b8af5783ceecdc25bc6b6d71f051c923b3c0ab448e7de0fabd3",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000068",
+      "book_id": "299",
+      "title": "Historia económica",
+      "subtitle": null,
+      "authors": [
+        "José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Universidad Nacional de Educación a Distancia",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48793",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/48793.html",
+          "capture_sha256": "f0cb350d3c87a57ab7efbab7f4b7b51e01dbd4c4d4cad950eb81f1101c43d931",
+          "observed_text": "Madrid : Universidad Nacional de Educación a Distancia, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/48793.html",
+          "capture_sha256": "f0cb350d3c87a57ab7efbab7f4b7b51e01dbd4c4d4cad950eb81f1101c43d931",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000069",
+      "book_id": "282",
+      "title": "Sociología jurídica",
+      "subtitle": null,
+      "authors": [
+        "Hernández, Pedro Pablo"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Universidad Abierta para Adultos",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175607",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/175607.html",
+          "capture_sha256": "35d04e9d81f3c7cbcc8e8113681b880c0ff2934a57740dfc0683ad0e34df9817",
+          "observed_text": "Santiago de los Caballeros : Universidad Abierta para Adultos, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/175607.html",
+          "capture_sha256": "35d04e9d81f3c7cbcc8e8113681b880c0ff2934a57740dfc0683ad0e34df9817",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000071",
+      "book_id": "273",
+      "title": "Invitación a la sociología de la comunicación",
+      "subtitle": null,
+      "authors": [
+        "Busquet Duran, Jordi",
+        "Medina Cambrón, Alfons"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Editorial UOC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57712",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/57712.html",
+          "capture_sha256": "38b07b6a84a9d922f4cd7bf1b7e354c64e94d85ac14db347998b3ea4f4c7f922",
+          "observed_text": "Barcelona : Editorial UOC, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/57712.html",
+          "capture_sha256": "38b07b6a84a9d922f4cd7bf1b7e354c64e94d85ac14db347998b3ea4f4c7f922",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000072",
+      "book_id": "330",
+      "title": "Psicología de la competición",
+      "subtitle": null,
+      "authors": [
+        "Martín-Albo Lucas, José",
+        "Núñez Alonso, Juan Luis"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Wanceulen Editorial",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60221",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/60221.html",
+          "capture_sha256": "c59de5f307a649dd80eda3c3d36062f6c1a5ee705decba5a85a61a2eea1490bf",
+          "observed_text": "Sevilla : Wanceulen Editorial, 2004."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/60221.html",
+          "capture_sha256": "c59de5f307a649dd80eda3c3d36062f6c1a5ee705decba5a85a61a2eea1490bf",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000073",
+      "book_id": "314",
+      "title": "Hacia la medicina del futuro",
+      "subtitle": null,
+      "authors": [
+        "Alcazar Montenegro, Heberto"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Instituto Politécnico Nacional",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72621",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72621",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c62fc0afaeebeef1.html",
+          "capture_sha256": "92bfcf7fab52c2b49d0ef5dc1ff2c3cfe58ec8fd8bcafdfd703aa5c9fbe7a51d",
+          "observed_text": "México : Instituto Politécnico Nacional, 1996."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72621",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c62fc0afaeebeef1.html",
+          "capture_sha256": "92bfcf7fab52c2b49d0ef5dc1ff2c3cfe58ec8fd8bcafdfd703aa5c9fbe7a51d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000078",
+      "book_id": "266",
+      "title": "Química experimental (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Pacheco Espejel, Martha Patricia",
+        "Alvarado Arellano, Martha",
+        "Sánchez Aguilar, Josefina"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Grupo Editorial Patria",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40187",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d2d6d2bdfba7e8fe.html",
+          "capture_sha256": "fa51c1f49d9f049ad44ba0591ea726c9088f69ce38196a84a153e5876c527182",
+          "observed_text": "Ciudad de México : Grupo Editorial Patria, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d2d6d2bdfba7e8fe.html",
+          "capture_sha256": "fa51c1f49d9f049ad44ba0591ea726c9088f69ce38196a84a153e5876c527182",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000079",
+      "book_id": "238",
+      "title": "Literaturas compartidas",
+      "subtitle": null,
+      "authors": [
+        "Basile, Teresa - Foffani, Enrique"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Editorial de la Universidad Nacional de La Plata",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66439",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66439",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns66439.html",
+          "capture_sha256": "0d84913075cbfc151713a74fc7b6a6ab7c53dd1f95da11f36372a63aeb059750",
+          "observed_text": "D - Editorial de la Universidad Nacional de La Plata,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66439",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns66439.html",
+          "capture_sha256": "0d84913075cbfc151713a74fc7b6a6ab7c53dd1f95da11f36372a63aeb059750",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000081",
+      "book_id": "285",
+      "title": "Historia",
+      "subtitle": null,
+      "authors": [
+        "Javier Gálvez S."
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Editorial Javier Gálvez",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79196",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79196.html",
+          "capture_sha256": "f66d3bcdb75ba932a24371e03ca99b0b45dbf26af9ee3742400532c9f2c70a6e",
+          "observed_text": "Ecuador : Editorial Javier Gálvez, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79196.html",
+          "capture_sha256": "f66d3bcdb75ba932a24371e03ca99b0b45dbf26af9ee3742400532c9f2c70a6e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000082",
+      "book_id": "290",
+      "title": "Historia de Irlanda (3a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "O’Beirne Ranelagh, John"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Akal",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49812",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49812.html",
+          "capture_sha256": "bb55ca4b151caaf4593b89eccd870716b1aeec36115eddaedd04e685d3787cd0",
+          "observed_text": "Madrid : Ediciones Akal, [2014]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49812.html",
+          "capture_sha256": "bb55ca4b151caaf4593b89eccd870716b1aeec36115eddaedd04e685d3787cd0",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000083",
+      "book_id": "308",
+      "title": "Biotecnología aplicada a la medicina",
+      "subtitle": null,
+      "authors": [
+        "Tresguerres, Jesús Ángel",
+        "Martínez Fernández, Vicente",
+        "Navas Serrano, Víctor"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Ediciones Díaz de Santos",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53028",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53028",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-1013c1955d12bfac.html",
+          "capture_sha256": "633341cc2007243a484898021f27c35054211383fc89f6b852be720550541db6",
+          "observed_text": "Madrid : Ediciones Díaz de Santos, 2003."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53028",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-1013c1955d12bfac.html",
+          "capture_sha256": "633341cc2007243a484898021f27c35054211383fc89f6b852be720550541db6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000089",
+      "book_id": "236",
+      "title": "Literatura universal",
+      "subtitle": null,
+      "authors": [
+        "Reyes, Alfonso"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Fondo de Cultura Económica",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110738",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110738.html",
+          "capture_sha256": "96047ecd7afad12fc91f792f87bdcffe3325343355c59c644b8223f6df39f697",
+          "observed_text": "FCE - Fondo de Cultura Económica,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110738.html",
+          "capture_sha256": "96047ecd7afad12fc91f792f87bdcffe3325343355c59c644b8223f6df39f697",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000090",
+      "book_id": "212",
+      "title": "Filosofía de la cultura (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Choza, Jacinto"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Editorial Thémata",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59773",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59773.html",
+          "capture_sha256": "7d022c80bdf13f3904c191ed3ed25041fc51a9339ce49628d92648871fc19cf5",
+          "observed_text": "Editorial Thémata,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59773.html",
+          "capture_sha256": "7d022c80bdf13f3904c191ed3ed25041fc51a9339ce49628d92648871fc19cf5",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000091",
+      "book_id": "311",
+      "title": "El lenguaje de la medicina",
+      "subtitle": null,
+      "authors": [
+        "Sarmiento González, Ramón",
+        "Vilches Vivancos, Fernando"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Dykinson",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58272",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58272",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-02ab3e1a2d1bf720.html",
+          "capture_sha256": "f5f11983842e445c2fefeb354afd9fb7927edca91cfdcf71b6eb5f742f0e1b4c",
+          "observed_text": "Madrid : Dykinson, [2016]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58272",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-02ab3e1a2d1bf720.html",
+          "capture_sha256": "f5f11983842e445c2fefeb354afd9fb7927edca91cfdcf71b6eb5f742f0e1b4c",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000092",
+      "book_id": "246",
+      "title": "Introducción a las matemáticas",
+      "subtitle": null,
+      "authors": [
+        "Arévalo Ovalle, Diego",
+        "Zambrano Valentín, Martha Helena",
+        "Chappe Chappe, Angélica"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Editorial Politécnico Grancolombiano",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70987",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0bb555fed263f27e.html",
+          "capture_sha256": "2b0cced1e3f59d66db10150d94cec87de26abd6d4ffe6f226e1ac28a04fd68cc",
+          "observed_text": "Bogotá : Editorial Politécnico Grancolombiano, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0bb555fed263f27e.html",
+          "capture_sha256": "2b0cced1e3f59d66db10150d94cec87de26abd6d4ffe6f226e1ac28a04fd68cc",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000093",
+      "book_id": "301",
+      "title": "Historia mínima de los feminismos en América Latina",
+      "subtitle": null,
+      "authors": [
+        "Barrancos, Dora"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194902",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000094",
+      "book_id": "306",
+      "title": "Anatomía general",
+      "subtitle": null,
+      "authors": [
+        "Gutiérrez, Francisco"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36379",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36379",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-36d210b116c5c9e4.html",
+          "capture_sha256": "31ef2c44021f2412479d56fbb15a1d36a42b0c65f24e6edeafbb27b3c28327f2",
+          "observed_text": "[Miami, FL] : [Firmas Press], [2010?]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36379",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-36d210b116c5c9e4.html",
+          "capture_sha256": "31ef2c44021f2412479d56fbb15a1d36a42b0c65f24e6edeafbb27b3c28327f2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000095",
+      "book_id": "240",
+      "title": "Romancero gitano",
+      "subtitle": null,
+      "authors": [
+        "García Lorca, Federico"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "El Cid Editor",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35142",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35142",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns35142.html",
+          "capture_sha256": "ab540d9ef2ec08d7f7175784acb7936a3b9a2460fb7d7bceaa6e216154af5670",
+          "observed_text": "El Cid Editor,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35142",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns35142.html",
+          "capture_sha256": "ab540d9ef2ec08d7f7175784acb7936a3b9a2460fb7d7bceaa6e216154af5670",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000099",
+      "book_id": "343",
+      "title": "Fundamentos de informática",
+      "subtitle": null,
+      "authors": [
+        "Weber, Juan"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Jorge Sarmiento Editor - Universitas",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175150",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9a7f987260e27217.html",
+          "capture_sha256": "a84f702ecb543c53572bec117102be11d2f3fe2fcc778732bad03c92c190291c",
+          "observed_text": "Córdoba : Jorge Sarmiento Editor - Universitas, 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9a7f987260e27217.html",
+          "capture_sha256": "a84f702ecb543c53572bec117102be11d2f3fe2fcc778732bad03c92c190291c",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000102",
+      "book_id": "277",
+      "title": "Proyectos de investigación en ciencias sociales",
+      "subtitle": null,
+      "authors": [
+        "Marisa D’Aquino",
+        "Rodríguez, Ethel"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Editorial Maipue",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79012",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79012.html",
+          "capture_sha256": "f3ff73aae2cf06aea3ed905e974fcd1b56aeb12fff4616c898af9187073db482",
+          "observed_text": "Buenos Aires : Editorial Maipue, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/79012.html",
+          "capture_sha256": "f3ff73aae2cf06aea3ed905e974fcd1b56aeb12fff4616c898af9187073db482",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000103",
+      "book_id": "280",
+      "title": "Sociología del mal",
+      "subtitle": null,
+      "authors": [
+        "Giner de San Julián, Salvador"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Los libros de la Catarata",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/235194",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/235194.html",
+          "capture_sha256": "1c1d99b5fe8a44e15f86d70e13ec8d8b63637d6ce3974808d49d77d2258f0d13",
+          "observed_text": "Madrid : Los libros de la Catarata, 2015."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/235194.html",
+          "capture_sha256": "1c1d99b5fe8a44e15f86d70e13ec8d8b63637d6ce3974808d49d77d2258f0d13",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000104",
+      "book_id": "256",
+      "title": "Biología de hongos",
+      "subtitle": null,
+      "authors": [
+        "Cepero, María Caridad"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Universidad de los Andes",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69414",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9e0170ed63685c45.html",
+          "capture_sha256": "6958eed77d127fef3fa1cc7a2dea724e6def40d2ebfe25410ad1adb2f1cfe3c7",
+          "observed_text": "Bogotá : Universidad de los Andes, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9e0170ed63685c45.html",
+          "capture_sha256": "6958eed77d127fef3fa1cc7a2dea724e6def40d2ebfe25410ad1adb2f1cfe3c7",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000105",
+      "book_id": "251",
+      "title": "Lo imposible en matemáticas",
+      "subtitle": null,
+      "authors": [
+        "Prieto de Castro, Carlos"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Fondo de Cultura Económica",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37796",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d3d40c615e3ed52f.html",
+          "capture_sha256": "cd15f2d63616c39f81308973e4172feaf188cb0aa5b26ba3f3610e766ea5dd66",
+          "observed_text": "México, D.F. : Fondo de Cultura Económica, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d3d40c615e3ed52f.html",
+          "capture_sha256": "cd15f2d63616c39f81308973e4172feaf188cb0aa5b26ba3f3610e766ea5dd66",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000106",
+      "book_id": "211",
+      "title": "Filosofía de la ciencia (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Artigas, Mariano"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "EUNSA",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46920",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46920.html",
+          "capture_sha256": "fcf6e25b71fb5c700e91a381609a49e8bcb5475814511f7aa3dbe476e8f9d51f",
+          "observed_text": "Ediciones Universidad de Navarra,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46920.html",
+          "capture_sha256": "fcf6e25b71fb5c700e91a381609a49e8bcb5475814511f7aa3dbe476e8f9d51f",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000107",
+      "book_id": "223",
+      "title": "Filosofía y palomitas",
+      "subtitle": null,
+      "authors": [
+        "Reina Garnacho, José Manuel"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Ediciones Alfar",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52635",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns52635.html",
+          "capture_sha256": "fa080947867fe4cb122b4e8be7dd5aa5c2bb5884da7d722d6295159387abfa74",
+          "observed_text": "Ediciones Alfar,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns52635.html",
+          "capture_sha256": "fa080947867fe4cb122b4e8be7dd5aa5c2bb5884da7d722d6295159387abfa74",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000112",
+      "book_id": "278",
+      "title": "Sociología de la religión",
+      "subtitle": null,
+      "authors": [
+        "Weber, Max"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Akal",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/169287",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/169287.html",
+          "capture_sha256": "e900ea1b444cdbaf1b5f9a9489920b5b8a8a7407e34c7203191a259c0ec53de6",
+          "observed_text": "Tres Cantos, Madrid : Akal, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/169287.html",
+          "capture_sha256": "e900ea1b444cdbaf1b5f9a9489920b5b8a8a7407e34c7203191a259c0ec53de6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000114",
+      "book_id": "289",
+      "title": "Historia de Francia",
+      "subtitle": null,
+      "authors": [
+        "Price, Roger"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Akal",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49779",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49779.html",
+          "capture_sha256": "1f74efc9dd4c91fcd6b472b99c434075207afdd0319eb8532f5d6ddd9a5955a6",
+          "observed_text": "Madrid : Ediciones Akal, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49779.html",
+          "capture_sha256": "1f74efc9dd4c91fcd6b472b99c434075207afdd0319eb8532f5d6ddd9a5955a6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000115",
+      "book_id": "268",
+      "title": "Aproximación a la sociología contemporánea",
+      "subtitle": null,
+      "authors": [
+        "Tardivo, Giuliano"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Editorial UOC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58619",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/58619.html",
+          "capture_sha256": "8baa21c25e08b77ba9dce8fbc6dde0b57a13e0b1bbe225abb05bb90899410708",
+          "observed_text": "Barcelona : Editorial UOC, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/58619.html",
+          "capture_sha256": "8baa21c25e08b77ba9dce8fbc6dde0b57a13e0b1bbe225abb05bb90899410708",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000116",
+      "book_id": "258",
+      "title": "Ecología química",
+      "subtitle": null,
+      "authors": [
+        "Anaya Lang, Ana Luisa"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Plaza y Valdés, S.A. de C.V",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75520",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9fd94e585e52923a.html",
+          "capture_sha256": "cda99a7d4de9c77d4a524fb7253320ce595160d3c54bf9947639e4eef1f21228",
+          "observed_text": "México D.F. : Plaza y Valdés, S.A. de C.V., 2003."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9fd94e585e52923a.html",
+          "capture_sha256": "cda99a7d4de9c77d4a524fb7253320ce595160d3c54bf9947639e4eef1f21228",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000119",
+      "book_id": "320",
+      "title": "Medicina de bolsillo (5a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Sabatine, Marc S."
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Wolters Kluwer Health",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125329",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125329",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a53be3387773971a.html",
+          "capture_sha256": "43c277b7fd9b4ae58410f185892a0ba8595ef743938a0d733425e24eff737c79",
+          "observed_text": "Barcelona : Wolters Kluwer Health, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125329",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a53be3387773971a.html",
+          "capture_sha256": "43c277b7fd9b4ae58410f185892a0ba8595ef743938a0d733425e24eff737c79",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000121",
+      "book_id": "317",
+      "title": "La física en la medicina (3a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Piña Barba, María Cristina"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "FCE : SEP : CONACy",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71950",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71950",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fd0821640112f205.html",
+          "capture_sha256": "3cdf1b69d309b207810ce8a882fa150c8cabba8768a07166f8ec5b812a814e90",
+          "observed_text": "México D. F. : FCE : SEP : CONACy, 2002."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71950",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fd0821640112f205.html",
+          "capture_sha256": "3cdf1b69d309b207810ce8a882fa150c8cabba8768a07166f8ec5b812a814e90",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000122",
+      "book_id": "233",
+      "title": "Literatura clásica",
+      "subtitle": null,
+      "authors": [
+        "Álvarez Bravo, Armando"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36434",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36434.html",
+          "capture_sha256": "32a4f08ec2a11809c66591e1b2ed35d4251c36281af8957951014c102e375b87",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36434.html",
+          "capture_sha256": "32a4f08ec2a11809c66591e1b2ed35d4251c36281af8957951014c102e375b87",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000123",
+      "book_id": "216",
+      "title": "Filosofía del renacimiento",
+      "subtitle": null,
+      "authors": [
+        "Pastor, W. F."
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36350",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36350.html",
+          "capture_sha256": "46382552b360dd99f5534e51ced64cc4cd6624ba9edf6c0fcd74d977cf9d41d5",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36350.html",
+          "capture_sha256": "46382552b360dd99f5534e51ced64cc4cd6624ba9edf6c0fcd74d977cf9d41d5",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000128",
+      "book_id": "250",
+      "title": "Las matemáticas ocultas",
+      "subtitle": null,
+      "authors": [
+        "Jamet, Robin"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Alianza Editorial",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122863",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000129",
+      "book_id": "325",
+      "title": "El mundo de la psicología",
+      "subtitle": null,
+      "authors": [
+        "Ardila, Rubén"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "El Manual Moderno",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71138",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71138.html",
+          "capture_sha256": "2cc2b8b6e2cb2af2bd2990f40fde78f0c7205246020238147bce4861ec34763c",
+          "observed_text": "Bogotá : El Manual Moderno, 2011."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71138.html",
+          "capture_sha256": "2cc2b8b6e2cb2af2bd2990f40fde78f0c7205246020238147bce4861ec34763c",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000131",
+      "book_id": "247",
+      "title": "Las matemáticas de la luz",
+      "subtitle": null,
+      "authors": [
+        "Timón, Ágata",
+        "León, Manuel de"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Editorial CSIC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100206",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-130f04b7f33dfe76.html",
+          "capture_sha256": "79bdf8042c88571afac1c28428536cc7560e4ff5f49ca1c9f4fac8afa1edc218",
+          "observed_text": "Madrid : Editorial CSIC, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-130f04b7f33dfe76.html",
+          "capture_sha256": "79bdf8042c88571afac1c28428536cc7560e4ff5f49ca1c9f4fac8afa1edc218",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000133",
+      "book_id": "272",
+      "title": "Hackear la ciencia social: una invitación a la investigación social en entornos digitales",
+      "subtitle": null,
+      "authors": [
+        "Morales i Gras, Jordi"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Editorial UOC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/213815",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/213815.html",
+          "capture_sha256": "59d5c7c3a0bb403f90dfda2cca75cfa88c152b7b65ecf025f6f20030283aece8",
+          "observed_text": "Barcelona : Editorial UOC, 2022."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/213815.html",
+          "capture_sha256": "59d5c7c3a0bb403f90dfda2cca75cfa88c152b7b65ecf025f6f20030283aece8",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000134",
+      "book_id": "215",
+      "title": "Filosofía del lenguaje",
+      "subtitle": null,
+      "authors": [
+        "Bustos Guadaño, Eduardo de"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "UNED - Universidad Nacional de Educación a Distancia",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48712",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48712.html",
+          "capture_sha256": "ea9e7555b04358dfcf295edb5c9dba523c2479b0f7b3ecd887bb52e43b384018",
+          "observed_text": "UNED - Universidad Nacional de Educación a Distancia,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48712.html",
+          "capture_sha256": "ea9e7555b04358dfcf295edb5c9dba523c2479b0f7b3ecd887bb52e43b384018",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000136",
+      "book_id": "333",
+      "title": "Psicología del niño (18a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Piaget, Jean",
+        "Inhelder, Bärbel"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Ediciones Morata",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116205",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/116205.html",
+          "capture_sha256": "dc5e2bcd19e8217a44fb9ffdab13e05aec14198a846ffbe1bfb3e6368a0daed9",
+          "observed_text": "Madrid : Ediciones Morata, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/116205.html",
+          "capture_sha256": "dc5e2bcd19e8217a44fb9ffdab13e05aec14198a846ffbe1bfb3e6368a0daed9",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000140",
+      "book_id": "323",
+      "title": "Medicina Legal (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Carrillo Olmedo, Pedro Manuel"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Corporación de Estudios y Publicaciones",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/118658",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB118658",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fb9ab4ccfe851ce8.html",
+          "capture_sha256": "f4b5cd0a73f7113682e80de9a557812f3e244292e378f91e7b3ceedaf0fd39f4",
+          "observed_text": "Quito : Corporación de Estudios y Publicaciones, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB118658",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fb9ab4ccfe851ce8.html",
+          "capture_sha256": "f4b5cd0a73f7113682e80de9a557812f3e244292e378f91e7b3ceedaf0fd39f4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000145",
+      "book_id": "326",
+      "title": "Estadística en psicología",
+      "subtitle": null,
+      "authors": [
+        "Bologna, Eduardo"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Editorial Brujas",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78041",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/78041.html",
+          "capture_sha256": "8cfe2ce2d1aae464d34a0a5385cd66bf06ae91e3d9bd96d85b775e7f3ab14f47",
+          "observed_text": "Córdoba, Argentina : Editorial Brujas, 2010."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/78041.html",
+          "capture_sha256": "8cfe2ce2d1aae464d34a0a5385cd66bf06ae91e3d9bd96d85b775e7f3ab14f47",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000148",
+      "book_id": "327",
+      "title": "Homosexualidad y psicología (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Ardila, Rubén"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "El Manual Moderno",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71137",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71137.html",
+          "capture_sha256": "39e207a3cb7dbee6e22cd601338d944d01ab4c439264ddd058a75ffd2269eaa4",
+          "observed_text": "Bogotá : El Manual Moderno, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71137.html",
+          "capture_sha256": "39e207a3cb7dbee6e22cd601338d944d01ab4c439264ddd058a75ffd2269eaa4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000150",
+      "book_id": "307",
+      "title": "Bioquímica para Medicina",
+      "subtitle": null,
+      "authors": [
+        "Araque Marín, Pedronel"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Fondo Editorial EIA",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/223081",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB223081",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8bacb70c2a10b291.html",
+          "capture_sha256": "e0fa7860ae81dce3bb47b745a88228475347dd3e460fa575d73845e99e69f4d9",
+          "observed_text": "Envigado : Fondo Editorial EIA, 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB223081",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8bacb70c2a10b291.html",
+          "capture_sha256": "e0fa7860ae81dce3bb47b745a88228475347dd3e460fa575d73845e99e69f4d9",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000152",
+      "book_id": "252",
+      "title": "Matemática en espiral",
+      "subtitle": null,
+      "authors": [
+        "Falconí Asanza, Aldo",
+        "Hernández Crespo, Franco Manuel"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Editorial Universo Sur",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131900",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f92c6a802890688d.html",
+          "capture_sha256": "f4589553c4257894fd6a768463e0c5a91a46cbd5be60023550abc0a454073c79",
+          "observed_text": "Cuba : Editorial Universo Sur, 2020."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f92c6a802890688d.html",
+          "capture_sha256": "f4589553c4257894fd6a768463e0c5a91a46cbd5be60023550abc0a454073c79",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000154",
+      "book_id": "319",
+      "title": "Láser en medicina",
+      "subtitle": null,
+      "authors": [
+        "Martí López, Luis",
+        "Altamirano Aguilar, Jorge H."
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Instituto Politécnico Nacional",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72229",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72229",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2dfe127dab4c883.html",
+          "capture_sha256": "aedfa3e3b95dcd928dce15e23b1b3573ea70533cd91ae63361c4bd6d2e485984",
+          "observed_text": "México, D.F. : Instituto Politécnico Nacional, 1997."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72229",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2dfe127dab4c883.html",
+          "capture_sha256": "aedfa3e3b95dcd928dce15e23b1b3573ea70533cd91ae63361c4bd6d2e485984",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000155",
+      "book_id": "269",
+      "title": "El rombo de las investigaciones de las ciencias sociales",
+      "subtitle": null,
+      "authors": [
+        "Zayas Agüero, Pedro Manuel"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "eumed.net",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34517",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/34517.html",
+          "capture_sha256": "59766f3b0c59e0dde9402eda2db5a0bddc8e3cf471c1c4a9867995532da366f5",
+          "observed_text": "S.l. : eumed.net, [2010]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/34517.html",
+          "capture_sha256": "59766f3b0c59e0dde9402eda2db5a0bddc8e3cf471c1c4a9867995532da366f5",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000156",
+      "book_id": "342",
+      "title": "Desarrollo de microservicios con Python",
+      "subtitle": null,
+      "authors": [
+        "Ortega Candel, José Manuel"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Marcombo",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281693",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-df981df71d5c210c.html",
+          "capture_sha256": "c37a7196ca7d14076f22aee8a04f92d988a7641c79874588e5a3a10430fd8bd8",
+          "observed_text": "Barcelona (España) : Marcombo, 2024."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-df981df71d5c210c.html",
+          "capture_sha256": "c37a7196ca7d14076f22aee8a04f92d988a7641c79874588e5a3a10430fd8bd8",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000159",
+      "book_id": "237",
+      "title": "Literatura y cine",
+      "subtitle": null,
+      "authors": [
+        "Gutiérrez Carbajo, Francisco"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "UNED - Universidad Nacional de Educación a Distancia",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48881",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48881.html",
+          "capture_sha256": "a769976a9fb127b57e5601b24cb3959cc21088b3ff9b48e1efd06bb3f97b45d6",
+          "observed_text": "UNED - Universidad Nacional de Educación a Distancia,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48881.html",
+          "capture_sha256": "a769976a9fb127b57e5601b24cb3959cc21088b3ff9b48e1efd06bb3f97b45d6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000160",
+      "book_id": "235",
+      "title": "Literatura Oriental",
+      "subtitle": null,
+      "authors": [
+        "Álvarez Bravo, Armando"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36433",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36433.html",
+          "capture_sha256": "935835836f503cb7d85931fbc1a0ef68314cbb4ee460a1e935aed59f2d77fa8b",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36433.html",
+          "capture_sha256": "935835836f503cb7d85931fbc1a0ef68314cbb4ee460a1e935aed59f2d77fa8b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000163",
+      "book_id": "239",
+      "title": "Páginas de historia",
+      "subtitle": null,
+      "authors": [
+        "Mitre, Bartolomé"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "El Cid Editor",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36151",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36151.html",
+          "capture_sha256": "7a8e4db41d69d93e22e31e1bcbb8af00cfa3b145f0900d36d61c36f5d4a456fb",
+          "observed_text": "El Cid Editor,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36151.html",
+          "capture_sha256": "7a8e4db41d69d93e22e31e1bcbb8af00cfa3b145f0900d36d61c36f5d4a456fb",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000165",
+      "book_id": "332",
+      "title": "Psicología de las masas (6a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Le Bon, Gustave"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Ediciones Morata",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116203",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/116203.html",
+          "capture_sha256": "08c95cf5ccae975d4d7b6e1ac333b7b7df483582faf7e2296b06d220060b777a",
+          "observed_text": "Madrid : Ediciones Morata, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/116203.html",
+          "capture_sha256": "08c95cf5ccae975d4d7b6e1ac333b7b7df483582faf7e2296b06d220060b777a",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000167",
+      "book_id": "293",
+      "title": "Historia de la India (3a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Metcalf, Barbara D. - Metcalf, Thomas R."
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Akal",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49813",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49813.html",
+          "capture_sha256": "683d80573c4497d8a9bb455181a7fa58bdcc6e3c03070a566b9716a3aacdfc13",
+          "observed_text": "Madrid : Ediciones Akal, [2014]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49813.html",
+          "capture_sha256": "683d80573c4497d8a9bb455181a7fa58bdcc6e3c03070a566b9716a3aacdfc13",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000168",
+      "book_id": "217",
+      "title": "Filosofía fundamental",
+      "subtitle": null,
+      "authors": [
+        "Balmes, Jaime"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Editorial Linkgua",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34402",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34402.html",
+          "capture_sha256": "160ad59341f854c6a712e4623f8a1db224a0cfbbde7623eecdb37f168c26470b",
+          "observed_text": "[Editorial Linkgua],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34402.html",
+          "capture_sha256": "160ad59341f854c6a712e4623f8a1db224a0cfbbde7623eecdb37f168c26470b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000169",
+      "book_id": "316",
+      "title": "Introducción a la Medicina",
+      "subtitle": null,
+      "authors": [
+        "Barona, Josep Lluís"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Universitat de València",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293446",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://www.digitaliapublishing.com/a/37227/introduccion-a-la-medicina",
+          "capture_path": "/tmp/pliego-digital-completion/root-sources/digitalia-medicine.html",
+          "capture_sha256": "cf0fb010feeb1808fb899d9c1b7f0e2f40aa9be4199511c9770dc057f22a58c0",
+          "observed_text": "Language: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000170",
+      "book_id": "294",
+      "title": "Historia de los Estados Unidos de América",
+      "subtitle": null,
+      "authors": [
+        "Grant, Susan-Mary"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Akal",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49811",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49811.html",
+          "capture_sha256": "10b8ada7cf016bbba12aa33d801ea6a4d999809721920fd2777590e750521ccb",
+          "observed_text": "Madrid : Ediciones Akal, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49811.html",
+          "capture_sha256": "10b8ada7cf016bbba12aa33d801ea6a4d999809721920fd2777590e750521ccb",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000171",
+      "book_id": "241",
+      "title": "Análisis matemático",
+      "subtitle": null,
+      "authors": [
+        "Roca Martínez, Alicia",
+        "Jornet, David",
+        "Montesinos Santalucia, Vicente"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad Politécnica de Valencia",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60568",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a0afc19150ca51a9.html",
+          "capture_sha256": "702b727dc4e5a156ab24102238f6f99ee0f53ee04b1fb88807b165dc433d4f56",
+          "observed_text": "Valencia : Universidad Politécnica de Valencia, 2003."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a0afc19150ca51a9.html",
+          "capture_sha256": "702b727dc4e5a156ab24102238f6f99ee0f53ee04b1fb88807b165dc433d4f56",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000173",
+      "book_id": "287",
+      "title": "Historia de Cádiz",
+      "subtitle": null,
+      "authors": [
+        "Horozco, Agustín de"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Universidad de Cádiz, Servicio de Publicaciones",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/33935",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/33935.html",
+          "capture_sha256": "563888a71ec45735223cd90475029c19d306e00654519c58ca667d8e77b7596e",
+          "observed_text": "Cádiz : Universidad de Cádiz, Servicio de Publicaciones, 2017."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/33935.html",
+          "capture_sha256": "563888a71ec45735223cd90475029c19d306e00654519c58ca667d8e77b7596e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000176",
+      "book_id": "249",
+      "title": "Las matemáticas de nuestra vida",
+      "subtitle": null,
+      "authors": [
+        "Sepulcre Martínez, Juan Matías",
+        "Segura Abad, Lorena",
+        "Mulero González, Julio"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Publicacions Universitat Alacant",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117208",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f8eb2117edbe4873.html",
+          "capture_sha256": "8029b0d93da10f796c4bab0592edc4dd304832b02b13ae1938d06e13602b99e2",
+          "observed_text": "Alicante : Publicacions Universitat Alacant, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f8eb2117edbe4873.html",
+          "capture_sha256": "8029b0d93da10f796c4bab0592edc4dd304832b02b13ae1938d06e13602b99e2",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000178",
+      "book_id": "228",
+      "title": "Historia de historias",
+      "subtitle": null,
+      "authors": [
+        "Uribe, Álvaro"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Malpaso Ediciones",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117062",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117062",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117062.html",
+          "capture_sha256": "9a5f2d1b3af9cd1937fe86dc26decd213ac09b14937fd896f87146a6f6f00a3b",
+          "observed_text": "Malpaso Ediciones,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117062",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117062.html",
+          "capture_sha256": "9a5f2d1b3af9cd1937fe86dc26decd213ac09b14937fd896f87146a6f6f00a3b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000179",
+      "book_id": "257",
+      "title": "Biología para ciencias ambientales",
+      "subtitle": null,
+      "authors": [
+        "Pallotti Sagripanti, C. G.",
+        "Sanchis Duato, E."
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Universitat Politècnica de València",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/153581",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8598c47d271fd83e.html",
+          "capture_sha256": "86c23c825f8bb723007d7206edd80e231d3a5789d858d1958d9712f29a644e53",
+          "observed_text": "Valencia : Universitat Politècnica de València, 2020."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8598c47d271fd83e.html",
+          "capture_sha256": "86c23c825f8bb723007d7206edd80e231d3a5789d858d1958d9712f29a644e53",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000182",
+      "book_id": "284",
+      "title": "Tragedia y sociología",
+      "subtitle": null,
+      "authors": [
+        "Ramos Torre, Ramón"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Centro de Investigaciones Sociológicas",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52118",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/52118.html",
+          "capture_sha256": "2b22944ab3b9cef2536ba1d426288d1efa3becccc90fa291829dbcf531172092",
+          "observed_text": "Madrid : Centro de Investigaciones Sociológicas, 2018."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/52118.html",
+          "capture_sha256": "2b22944ab3b9cef2536ba1d426288d1efa3becccc90fa291829dbcf531172092",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000183",
+      "book_id": "340",
+      "title": "Administración de proyectos de informática",
+      "subtitle": null,
+      "authors": [
+        "Toro López, Francisco J."
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Ecoe Ediciones",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131877",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b421ab6f24f50249.html",
+          "capture_sha256": "298395ffb962e6d38985893d8b359bc4cf643f0916491d8318c833b5f434666d",
+          "observed_text": "Bogotá : Ecoe Ediciones, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b421ab6f24f50249.html",
+          "capture_sha256": "298395ffb962e6d38985893d8b359bc4cf643f0916491d8318c833b5f434666d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000185",
+      "book_id": "229",
+      "title": "La era victoriana en literatura",
+      "subtitle": null,
+      "authors": [
+        "Chesterton, Gilbert Keith"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Prometeo Libros",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191119",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191119.html",
+          "capture_sha256": "1d87cb00b745b4c81b0ee472b428958a21eb083950a92f58b7749a3178e9b999",
+          "observed_text": "Prometeo Libros,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119/Details",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191119-details.html",
+          "capture_sha256": "0e0c7d5661bf2662f57940c5bb4df9b905aae55608ff73df77e605469ee9e29a",
+          "observed_text": "041 1 |a spa |h eng"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000191",
+      "book_id": "347",
+      "title": "Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Domínguez Mínguez, Tomás"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Marcombo",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286814",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000193",
+      "book_id": "209",
+      "title": "Filosofía como metanoética",
+      "subtitle": null,
+      "authors": [
+        "Hajime, Tanabe"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Herder Editorial",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45764",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45764.html",
+          "capture_sha256": "ca45dbc645d094c777ac44a3b43bb31b69534cb58ce1787406d6eaa5eb247307",
+          "observed_text": "Herder Editorial,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45764.html",
+          "capture_sha256": "ca45dbc645d094c777ac44a3b43bb31b69534cb58ce1787406d6eaa5eb247307",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000194",
+      "book_id": "298",
+      "title": "Historia de Yucatán",
+      "subtitle": null,
+      "authors": [
+        "Cogolludo, Diego López de"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Editorial Linkgua",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61593",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61593.html",
+          "capture_sha256": "0b8fc3f93831a8d1ab0d890b45c76e491991fdc67cdeb7b2f9982ccf6b3778d0",
+          "observed_text": "[Barcelona] : [Editorial Linkgua], 2011."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61593.html",
+          "capture_sha256": "0b8fc3f93831a8d1ab0d890b45c76e491991fdc67cdeb7b2f9982ccf6b3778d0",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000198",
+      "book_id": "264",
+      "title": "Introducción a la física",
+      "subtitle": null,
+      "authors": [
+        "Lara Barragán Gómez, Antonio",
+        "Núñez Trejo, Héctor"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Grupo Editorial Patria",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39447",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-197928bfdeb8ee42.html",
+          "capture_sha256": "9afb36a4a946bf6678b0f5724d84cb713f0c3e553fb8a3bbcc06d800721c52d6",
+          "observed_text": "México D.F. : Grupo Editorial Patria, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-197928bfdeb8ee42.html",
+          "capture_sha256": "9afb36a4a946bf6678b0f5724d84cb713f0c3e553fb8a3bbcc06d800721c52d6",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000199",
+      "book_id": "334",
+      "title": "Psicología diferencial",
+      "subtitle": null,
+      "authors": [
+        "Matud Aznar, María del Pilar",
+        "Marrero Quevedo, Rosario J.",
+        "Carballeira Abella, Mónica"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Biblioteca Nueva",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106631",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/106631.html",
+          "capture_sha256": "82181d827c5f43d700bd827b9e05d05e73b3b32e14d73aaf91ba831f998594be",
+          "observed_text": "Madrid : Biblioteca Nueva, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/106631.html",
+          "capture_sha256": "82181d827c5f43d700bd827b9e05d05e73b3b32e14d73aaf91ba831f998594be",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000200",
+      "book_id": "242",
+      "title": "Análisis matemático",
+      "subtitle": null,
+      "authors": [
+        "Takeuchi, Yu"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad Nacional de Colombia. Facultad de Ciencias",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127753",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-714897609843648e.html",
+          "capture_sha256": "683318d257aebe42f22e5875c16a44bebb371218b98d84e8c0f1d30284b11b4b",
+          "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-714897609843648e.html",
+          "capture_sha256": "683318d257aebe42f22e5875c16a44bebb371218b98d84e8c0f1d30284b11b4b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000201",
+      "book_id": "297",
+      "title": "Historia de Tlaxcala",
+      "subtitle": null,
+      "authors": [
+        "Muñoz y Camargo, Diego"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Editorial Linkgua",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62415",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/62415.html",
+          "capture_sha256": "68230be6fef05aa8826c887e7115be633031fe89ce257b39a1a679f1df83fce4",
+          "observed_text": "[Barcelona] : [Editorial Linkgua], 2011."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/62415.html",
+          "capture_sha256": "68230be6fef05aa8826c887e7115be633031fe89ce257b39a1a679f1df83fce4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000204",
+      "book_id": "337",
+      "title": "Psicología social",
+      "subtitle": null,
+      "authors": [
+        "Bello Dávila, Zoe",
+        "Casales Fernández, Julio César"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Editorial Félix Varela",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71802",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71802.html",
+          "capture_sha256": "d26ea6bf1fa4abb3a62f6a9087fd2c9bb2eeedb08b32fd0d24ba60a36865c9c9",
+          "observed_text": "Ciudad de la Habana : Editorial Félix Varela, 2005."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/71802.html",
+          "capture_sha256": "d26ea6bf1fa4abb3a62f6a9087fd2c9bb2eeedb08b32fd0d24ba60a36865c9c9",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000206",
+      "book_id": "260",
+      "title": "Física del estado sólido",
+      "subtitle": null,
+      "authors": [
+        "Meléndez Martínez, Juan J."
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Universidad de Extremadura, Servicio de Publicaciones",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289288",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+          "capture_path": "/tmp/pliego-digital-completion/science/primary-331661eab1cc4d23.html",
+          "capture_sha256": "780b68f8e4bd792dd9d1b6eff06a839426389bf2efe96b6e79c92aeadf0650b6",
+          "observed_text": "Meléndez Martínez, J. J. (2012). Física del estado sólido. Universidad de Extremadura, Servicio de Publicaciones."
+        },
+        {
+          "source_url": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+          "capture_path": "/tmp/pliego-digital-completion/science/primary-331661eab1cc4d23.html",
+          "capture_sha256": "780b68f8e4bd792dd9d1b6eff06a839426389bf2efe96b6e79c92aeadf0650b6",
+          "observed_text": "Idioma Castellano"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000210",
+      "book_id": "324",
+      "title": "Síndromes en medicina interna",
+      "subtitle": null,
+      "authors": [
+        "Sanguinetti, Carlos A."
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Corpus Editorial",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67143",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67143",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-24ff9f953ed9a282.html",
+          "capture_sha256": "8a9677bd6acafc451ee618e17e6d45e2b1a31f54f1dc6b5393e86a5224c7d48c",
+          "observed_text": "Rosario : Corpus Editorial, 2007."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67143",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-24ff9f953ed9a282.html",
+          "capture_sha256": "8a9677bd6acafc451ee618e17e6d45e2b1a31f54f1dc6b5393e86a5224c7d48c",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000211",
+      "book_id": "296",
+      "title": "Historia de Rusia",
+      "subtitle": null,
+      "authors": [
+        "Bushkovitch, Paul"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Akal",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49810",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49810.html",
+          "capture_sha256": "777e3c7b0525402042cfddea83b6cc25a06d64fe325fbd89402a54088ea3f11a",
+          "observed_text": "Madrid : Ediciones Akal, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49810.html",
+          "capture_sha256": "777e3c7b0525402042cfddea83b6cc25a06d64fe325fbd89402a54088ea3f11a",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000212",
+      "book_id": "310",
+      "title": "El ABC de la medicina interna",
+      "subtitle": null,
+      "authors": [
+        "Moreno Sánchez, Francisco",
+        "Jáuregui Camargo, Laura",
+        "Halabe Cherem, José"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial Alfil",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72757",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72757",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-3adc3af0416192dc.html",
+          "capture_sha256": "1648eea642f1b3adcc4d09bdb0f92248c3e7a549b9ca1f750c8b5bce1fa42f92",
+          "observed_text": "México D.F. : Editorial Alfil, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72757",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-3adc3af0416192dc.html",
+          "capture_sha256": "1648eea642f1b3adcc4d09bdb0f92248c3e7a549b9ca1f750c8b5bce1fa42f92",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000214",
+      "book_id": "213",
+      "title": "Filosofía de la religión",
+      "subtitle": null,
+      "authors": [
+        "Beuchot Puente, Mauricio"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "ITESO - Instituto Tecnológico y de Estudios Superiores de Occidente",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40946",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns40946.html",
+          "capture_sha256": "b9efb2514344ee53217b0713986df318a85515e202d96dc0bdade291c867d4df",
+          "observed_text": "ITESO - Instituto Tecnológico y de Estudios Superiores de Occidente,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns40946.html",
+          "capture_sha256": "b9efb2514344ee53217b0713986df318a85515e202d96dc0bdade291c867d4df",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000215",
+      "book_id": "318",
+      "title": "La mujer en el ejercicio de la medicina",
+      "subtitle": null,
+      "authors": [
+        "Carrillo Esper, Raúl",
+        "Dubón Peniche, María del Carmen",
+        "Elizondo Argueta, Sandra",
+        "Carrillo Córdova, Dulce María"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial Alfil, S. A. de C. V",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40870",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40870",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-35f5ee7cd1dbd914.html",
+          "capture_sha256": "4f4b1f3f209945a1c127544de8190155423692c9bb5e97ebead07d1010d433a9",
+          "observed_text": "México D.F. : Editorial Alfil, S. A. de C. V., 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40870",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-35f5ee7cd1dbd914.html",
+          "capture_sha256": "4f4b1f3f209945a1c127544de8190155423692c9bb5e97ebead07d1010d433a9",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000216",
+      "book_id": "270",
+      "title": "El uso de la encuesta en las ciencias sociales",
+      "subtitle": null,
+      "authors": [
+        "Aníbal Quispe Limaylla"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Ediciones Díaz de Santos",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62860",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/62860.html",
+          "capture_sha256": "0be6e30a0b0b16cc01fd4d643ced90b6026626081390c037b0f2d4e9cc440825",
+          "observed_text": "Madrid : Ediciones Díaz de Santos, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/62860.html",
+          "capture_sha256": "0be6e30a0b0b16cc01fd4d643ced90b6026626081390c037b0f2d4e9cc440825",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000217",
+      "book_id": "312",
+      "title": "Electrocardiografía en medicina prehospitalaria",
+      "subtitle": null,
+      "authors": [
+        "Illescas Fernández, Gerardo José"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial Alfil",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73456",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73456",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9d3e8cac852073e.html",
+          "capture_sha256": "4fff2cfc078743621f9433f814485f2991eed5ad80e5658cc45fd9932529de26",
+          "observed_text": "México D.F. : Editorial Alfil, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73456",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9d3e8cac852073e.html",
+          "capture_sha256": "4fff2cfc078743621f9433f814485f2991eed5ad80e5658cc45fd9932529de26",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000218",
+      "book_id": "331",
+      "title": "Psicología de la personalidad",
+      "subtitle": null,
+      "authors": [
+        "Bermúdez Moreno, José",
+        "Pérez-García, Ana María",
+        "Ruiz Caballero, José Antonio",
+        "Sanjuán Suárez, Pilar",
+        "Rueda Laffond, Beatriz"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Universidad Nacional de Educación a Distancia",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48581",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/48581.html",
+          "capture_sha256": "ce9f9a58d3c7e5efde07a871d2cf2e7c04acb5fb34bcc0b379569f5369715ebf",
+          "observed_text": "Madrid : Universidad Nacional de Educación a Distancia, 2011."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/48581.html",
+          "capture_sha256": "ce9f9a58d3c7e5efde07a871d2cf2e7c04acb5fb34bcc0b379569f5369715ebf",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000219",
+      "book_id": "265",
+      "title": "Problemas de Física (27a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Burbano García, Enrique",
+        "Gracia Muñoz, Carlos"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Editorial Tébar Flores",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270906",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-80b87603433ba1ab.html",
+          "capture_sha256": "a42d940c6f98b38ee282f06192668a4d7f86ef1145f40a39c90c6c278262ae96",
+          "observed_text": "Madrid : Editorial Tébar Flores, uuuu."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-80b87603433ba1ab.html",
+          "capture_sha256": "a42d940c6f98b38ee282f06192668a4d7f86ef1145f40a39c90c6c278262ae96",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000221",
+      "book_id": "226",
+      "title": "¿Qué es Filosofía?",
+      "subtitle": null,
+      "authors": [
+        "Betancourt Delgado, William"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Programa Editorial Universidad del Valle",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/221757",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns221757.html",
+          "capture_sha256": "526676eb87d9073c8d67bea0db91fa2b2f980e92ee8808bb9ca3123900885d99",
+          "observed_text": "Programa Editorial Universidad del Valle,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns221757.html",
+          "capture_sha256": "526676eb87d9073c8d67bea0db91fa2b2f980e92ee8808bb9ca3123900885d99",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000222",
+      "book_id": "261",
+      "title": "Física experimental",
+      "subtitle": null,
+      "authors": [
+        "Ardila, Ángel Miguel"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Física",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128446",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9dc9b16ce0ee11b.html",
+          "capture_sha256": "77ace4aa2ec648e812bfedc9bfacf3699ce2142a968218c8cc00e18ad32b290c",
+          "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Física, 2007."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9dc9b16ce0ee11b.html",
+          "capture_sha256": "77ace4aa2ec648e812bfedc9bfacf3699ce2142a968218c8cc00e18ad32b290c",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000223",
+      "book_id": "305",
+      "title": "Otra historia de Córdoba",
+      "subtitle": null,
+      "authors": [
+        "Galisteo, Roger"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Bubok Publishing",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51298",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/51298.html",
+          "capture_sha256": "2960721ef085c1652d88790b8f219a5199e3d9ed71d9d975350ab0abfc1efa30",
+          "observed_text": "Madrid : Bubok Publishing, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/51298.html",
+          "capture_sha256": "2960721ef085c1652d88790b8f219a5199e3d9ed71d9d975350ab0abfc1efa30",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000226",
+      "book_id": "276",
+      "title": "Las ciencias sociales en discusión",
+      "subtitle": null,
+      "authors": [
+        "Bunge, Mario"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Sudamericana",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35499",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/35499.html",
+          "capture_sha256": "252feb0ce19235eb728eae6b578460124e437f2ab0c3290361d6861253e0db43",
+          "observed_text": "Buenos Aires, Argentina : Sudamericana, c1999."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/35499.html",
+          "capture_sha256": "252feb0ce19235eb728eae6b578460124e437f2ab0c3290361d6861253e0db43",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000228",
+      "book_id": "208",
+      "title": "Filosofía antigua",
+      "subtitle": null,
+      "authors": [
+        "Pastor, W. F."
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36348",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36348.html",
+          "capture_sha256": "8cda1cd504e841fa77a2ca85d75ccc32efcb3f8e4ea6a6cbebb8d7d41a03399d",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36348.html",
+          "capture_sha256": "8cda1cd504e841fa77a2ca85d75ccc32efcb3f8e4ea6a6cbebb8d7d41a03399d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000229",
+      "book_id": "231",
+      "title": "La literatura dramática",
+      "subtitle": null,
+      "authors": [
+        "Foguet, Francesc - Santamaria, Núria"
+      ],
+      "category": [
+        "Literatura"
+      ],
+      "publisher": "Editorial UOC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/156644",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns156644.html",
+          "capture_sha256": "af213ed1bafda6bf914d1cfea9e34be373c1e0504b311765e2df4ba5cd8e8a70",
+          "observed_text": "Editorial UOC,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns156644.html",
+          "capture_sha256": "af213ed1bafda6bf914d1cfea9e34be373c1e0504b311765e2df4ba5cd8e8a70",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000233",
+      "book_id": "346",
+      "title": "Mantenimiento de equipos informáticos",
+      "subtitle": null,
+      "authors": [
+        "Morán Flores, Claudio"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Ministerio de Educación y Formación Profesional de España",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127225",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ad439734605ce67e.html",
+          "capture_sha256": "a0d91b2c2d5be08dc4e348dfd50b1d1eae060b47524030ccf9adde5e7dab5a1e",
+          "observed_text": "Madrid, España : Ministerio de Educación y Formación Profesional de España, 2019."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ad439734605ce67e.html",
+          "capture_sha256": "a0d91b2c2d5be08dc4e348dfd50b1d1eae060b47524030ccf9adde5e7dab5a1e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000237",
+      "book_id": "309",
+      "title": "Diccionario etimológico de medicina",
+      "subtitle": null,
+      "authors": [
+        "Segura Munguía, Santiago"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Universidad de Deusto",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/42785",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB42785",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-732305bbd6f1cb11.html",
+          "capture_sha256": "d7662749a0e48ea5545b7a67567d91b1a0b30d9a16111d359288602374510451",
+          "observed_text": "Bilbao : Universidad de Deusto, 2004."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB42785",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-732305bbd6f1cb11.html",
+          "capture_sha256": "d7662749a0e48ea5545b7a67567d91b1a0b30d9a16111d359288602374510451",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000238",
+      "book_id": "303",
+      "title": "Historia mínima del indigenismo en América Latina",
+      "subtitle": null,
+      "authors": [
+        "Fábregas Puig, Andrés A."
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216374",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/216374.html",
+          "capture_sha256": "3f42e8d35811d2a9ea5814dca6be98efcd9425ea67a148db52603f8a69e3edbf",
+          "observed_text": "Ciudad de México, México : El Colegio de México, 2022."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/216374.html",
+          "capture_sha256": "3f42e8d35811d2a9ea5814dca6be98efcd9425ea67a148db52603f8a69e3edbf",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000239",
+      "book_id": "224",
+      "title": "La filosofía de la tecnología",
+      "subtitle": null,
+      "authors": [
+        "Sarsanedas, Anna"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Editorial UOC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57841",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns57841.html",
+          "capture_sha256": "422a465424c5d397be3ef4b250a8e196a5a239472a5f07a660e769cf1e9bdc55",
+          "observed_text": "Editorial UOC,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns57841.html",
+          "capture_sha256": "422a465424c5d397be3ef4b250a8e196a5a239472a5f07a660e769cf1e9bdc55",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000240",
+      "book_id": "253",
+      "title": "Matemáticas básicas (4a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Escudero Trujillo, Rafael"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad del Norte",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69967",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b2ba6d8bffd99663.html",
+          "capture_sha256": "e10b5ff6705106e2be79124a6a2b8463b34860a882aaa325ff08b070484d0742",
+          "observed_text": "Barranquilla : Universidad del Norte, [2015]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b2ba6d8bffd99663.html",
+          "capture_sha256": "e10b5ff6705106e2be79124a6a2b8463b34860a882aaa325ff08b070484d0742",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000241",
+      "book_id": "288",
+      "title": "Historia de Córdoba",
+      "subtitle": null,
+      "authors": [
+        "Aguilar Gavilán, Enrique"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Sílex",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52407",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/52407.html",
+          "capture_sha256": "799ffce6c79ae720ab818ec5c60e6bf98f73b7adbf7a663dcf19602bf15d8d21",
+          "observed_text": "Madrid : Ediciones Sílex, [1995]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/52407.html",
+          "capture_sha256": "799ffce6c79ae720ab818ec5c60e6bf98f73b7adbf7a663dcf19602bf15d8d21",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000246",
+      "book_id": "302",
+      "title": "Historia mínima del constitucionalismo en América Latina",
+      "subtitle": null,
+      "authors": [
+        "Portillo Valdés, José M."
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194943",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194943.html",
+          "capture_sha256": "b64955530b899e0d4d9cf48649d400e1b385200ed8cd76a23030475a60ff8b69",
+          "observed_text": "México, D.F. : El Colegio de México, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194943.html",
+          "capture_sha256": "b64955530b899e0d4d9cf48649d400e1b385200ed8cd76a23030475a60ff8b69",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000247",
+      "book_id": "218",
+      "title": "Filosofía general",
+      "subtitle": null,
+      "authors": [
+        "Pastor, W. F."
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36347",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36347.html",
+          "capture_sha256": "9f97e9dc0446dde18c768441edf39ded6b9016847237dd6874ed2c63c9951003",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36347.html",
+          "capture_sha256": "9f97e9dc0446dde18c768441edf39ded6b9016847237dd6874ed2c63c9951003",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000249",
+      "book_id": "329",
+      "title": "Psicología clínica",
+      "subtitle": null,
+      "authors": [
+        "Sánchez Escobedo, Pedro Antonio"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Manual Moderno",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100383",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/100383.html",
+          "capture_sha256": "baa20c850a7029751c70331c601308948a47fa2ea67aea84bf920a91ce77ea25",
+          "observed_text": "México, D.F. : Manual Moderno, 2008."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/100383.html",
+          "capture_sha256": "baa20c850a7029751c70331c601308948a47fa2ea67aea84bf920a91ce77ea25",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000250",
+      "book_id": "295",
+      "title": "Historia de México",
+      "subtitle": null,
+      "authors": [
+        "Cavo, Andrés"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Universidad Nacional Autónoma de México",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37244",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/37244.html",
+          "capture_sha256": "5d3a98739460feae67fb900e2617d649628b84d743c93b9911fa281863e3ee2b",
+          "observed_text": "México D.F. : Universidad Nacional Autónoma de México, 2013."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/37244.html",
+          "capture_sha256": "5d3a98739460feae67fb900e2617d649628b84d743c93b9911fa281863e3ee2b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000252",
+      "book_id": "281",
+      "title": "Sociología del saber",
+      "subtitle": null,
+      "authors": [
+        "Max Scheler"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "El Cid Editor",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36197",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/36197.html",
+          "capture_sha256": "6436eb36d2a5dc21dbcbe7210218b370260073af5634a9a2425069055bf04a06",
+          "observed_text": "Santa Fe : El Cid Editor, [2004]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/36197.html",
+          "capture_sha256": "6436eb36d2a5dc21dbcbe7210218b370260073af5634a9a2425069055bf04a06",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000254",
+      "book_id": "315",
+      "title": "Historia y filosofía de la medicina",
+      "subtitle": null,
+      "authors": [
+        "León Hernández, Saúl",
+        "Lara Padilla, Eleazar",
+        "Camarena Olmedo, Javier"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Instituto Politécnico Nacional",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73999",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73999",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8538d91358940113.html",
+          "capture_sha256": "acf1c3879ca805ab03d18a2b5ed948e9a43ea50358a62f12276b98f22f68f510",
+          "observed_text": "México D.F. : Instituto Politécnico Nacional, 2000."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73999",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8538d91358940113.html",
+          "capture_sha256": "acf1c3879ca805ab03d18a2b5ed948e9a43ea50358a62f12276b98f22f68f510",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000255",
+      "book_id": "292",
+      "title": "Historia de la cultura en la América hispánica",
+      "subtitle": null,
+      "authors": [
+        "Henríquez Ureña, Pedro"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "FCE - Fondo de Cultura Económica",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110160",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/110160.html",
+          "capture_sha256": "2bfd7d51b27a3222bd48a4c3a108cd8356e149ccfe3bbffa7e5b23f0a20d1b09",
+          "observed_text": "México D.F. : FCE - Fondo de Cultura Económica, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/110160.html",
+          "capture_sha256": "2bfd7d51b27a3222bd48a4c3a108cd8356e149ccfe3bbffa7e5b23f0a20d1b09",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000256",
+      "book_id": "300",
+      "title": "Historia mínima de Estados Unidos de América",
+      "subtitle": null,
+      "authors": [
+        "Pani, Erika"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "El Colegio de México, Centro de Estudios Históricos",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194936",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194936.html",
+          "capture_sha256": "0fdaa7ce0e70bfe59773eef2e5858b872448caf271530fc819666dd953d6e4bd",
+          "observed_text": "Ciudad de México : El Colegio de México, Centro de Estudios Históricos, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/194936.html",
+          "capture_sha256": "0fdaa7ce0e70bfe59773eef2e5858b872448caf271530fc819666dd953d6e4bd",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000257",
+      "book_id": "279",
+      "title": "Sociología de las organizaciones complejas",
+      "subtitle": null,
+      "authors": [
+        "Ruiz Olabuénaga, José Ignacio"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Universidad de Deusto",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34008",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/34008.html",
+          "capture_sha256": "f45db3e55438fd5ad003e7872df2c17429c79bde9fb7e4042e3c6699139e848a",
+          "observed_text": "Bilbao : Universidad de Deusto, 2007."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/34008.html",
+          "capture_sha256": "f45db3e55438fd5ad003e7872df2c17429c79bde9fb7e4042e3c6699139e848a",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000258",
+      "book_id": "262",
+      "title": "Física fundamental",
+      "subtitle": null,
+      "authors": [
+        "Gómez Espíndola, José del Carmen",
+        "González Pineda, Campo Elías",
+        "Mayoral Ramírez, César Alberto"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Ecoe Ediciones",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131876",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4f4ad6da3cd6e43c.html",
+          "capture_sha256": "fb439e61dfca7c6a1c6b9f50b679d01b3855dc3593c36ecfe4994427cf334d24",
+          "observed_text": "Bogotá : Ecoe Ediciones, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4f4ad6da3cd6e43c.html",
+          "capture_sha256": "fb439e61dfca7c6a1c6b9f50b679d01b3855dc3593c36ecfe4994427cf334d24",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000259",
+      "book_id": "286",
+      "title": "Historia de América",
+      "subtitle": null,
+      "authors": [
+        "Malamud, Carlos"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Alianza Editorial",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/304769",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "book_id": "348",
+      "title": "Técnicas de la auditoría informática",
+      "subtitle": null,
+      "authors": [
+        "Derrien, Yann"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Marcombo",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45891",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-72ebb91eb6d24946.html",
+          "capture_sha256": "d5ca34c88bc4e77d8b67753b5ad015074c140110dc24d8368d8b936bf35a4b8e",
+          "observed_text": "Barcelona : Marcombo, 1994."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-72ebb91eb6d24946.html",
+          "capture_sha256": "d5ca34c88bc4e77d8b67753b5ad015074c140110dc24d8368d8b936bf35a4b8e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000265",
+      "book_id": "313",
+      "title": "Fundamentos de la medicina forense",
+      "subtitle": null,
+      "authors": [
+        "Pérez Pérez, Rosa M."
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Editorial UOC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58579",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58579",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-83015172611403ff.html",
+          "capture_sha256": "3132ab46330b5433875b690c3d26576285f4a6f6b581d07bd9b54ff6018ca3e1",
+          "observed_text": "Barcelona : Editorial UOC, 2016."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58579",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-83015172611403ff.html",
+          "capture_sha256": "3132ab46330b5433875b690c3d26576285f4a6f6b581d07bd9b54ff6018ca3e1",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000267",
+      "book_id": "275",
+      "title": "La sociología como vocación",
+      "subtitle": null,
+      "authors": [
+        "Alberdi Alonso, Inés"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Centro de Investigaciones Sociológicas",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/170159",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/170159.html",
+          "capture_sha256": "c5fa4c6cf98fca457ee09a557bfaf3a309af0c14ec41780d8f33a57d07336064",
+          "observed_text": "Madrid : Centro de Investigaciones Sociológicas, 2020."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/170159.html",
+          "capture_sha256": "c5fa4c6cf98fca457ee09a557bfaf3a309af0c14ec41780d8f33a57d07336064",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000268",
+      "book_id": "245",
+      "title": "Iniciación a las matemáticas",
+      "subtitle": null,
+      "authors": [
+        "Juan Manuel García Dozagarat",
+        "Fernando Alonso Molina"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Ministerio de Educación",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49195",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-47d0e535b02ad600.html",
+          "capture_sha256": "a538197cf5d74b622bb9891d7e17871d36635cb952dd4d58c22c16aedfebeccf",
+          "observed_text": "[Madrid] : Ministerio de Educación, [2011]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-47d0e535b02ad600.html",
+          "capture_sha256": "a538197cf5d74b622bb9891d7e17871d36635cb952dd4d58c22c16aedfebeccf",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000270",
+      "book_id": "222",
+      "title": "Filosofía política",
+      "subtitle": null,
+      "authors": [
+        "Cruz Prados, Alfredo"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "EUNSA",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47080",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47080.html",
+          "capture_sha256": "658fa238b949678c8db060feda6a2b02f959f612d5ce86b50bbf9060c793e771",
+          "observed_text": "EUNSA,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47080.html",
+          "capture_sha256": "658fa238b949678c8db060feda6a2b02f959f612d5ce86b50bbf9060c793e771",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000271",
+      "book_id": "328",
+      "title": "La psicología y su pluralidad",
+      "subtitle": null,
+      "authors": [
+        "Colombo, María Elena"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Eudeba",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119841",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/119841.html",
+          "capture_sha256": "b5084ad826484959f77342d4b9d7b29e1772498225c739374f8326c3f7388141",
+          "observed_text": "Buenos Aires : Eudeba, 2012."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/119841.html",
+          "capture_sha256": "b5084ad826484959f77342d4b9d7b29e1772498225c739374f8326c3f7388141",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000272",
+      "book_id": "344",
+      "title": "Fundamentos de robótica (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Antonio Barrientos"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "McGraw-Hill, Interamericana de España",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/50193",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f21784d4bc1ea6cb.html",
+          "capture_sha256": "c3e3b74bcdec5ff24fdb8312ad7b2c09df93629eacaa0339df56d850ca9440ee",
+          "observed_text": "Madrid : McGraw-Hill, Interamericana de España, [2007]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f21784d4bc1ea6cb.html",
+          "capture_sha256": "c3e3b74bcdec5ff24fdb8312ad7b2c09df93629eacaa0339df56d850ca9440ee",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000274",
+      "book_id": "271",
+      "title": "Fundamentos de las ciencias sociales",
+      "subtitle": null,
+      "authors": [
+        "Neurath, Otto"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Ediciones Olejnik",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247167",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/247167.html",
+          "capture_sha256": "da2305aa9187387ebe18409055da45dba8d940b73e32467ee905744b288a9073",
+          "observed_text": "Santiago de Chile : Ediciones Olejnik, 2019."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/247167.html",
+          "capture_sha256": "da2305aa9187387ebe18409055da45dba8d940b73e32467ee905744b288a9073",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000277",
+      "book_id": "210",
+      "title": "Filosofía contemporánea",
+      "subtitle": null,
+      "authors": [
+        "Pastor, W. F."
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36352",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36352.html",
+          "capture_sha256": "a4bd05b1f77451ccba2083782d55951eab9d62ac2349abc237cc9e5a2426b8cb",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36352.html",
+          "capture_sha256": "a4bd05b1f77451ccba2083782d55951eab9d62ac2349abc237cc9e5a2426b8cb",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000278",
+      "book_id": "259",
+      "title": "Física de la música",
+      "subtitle": null,
+      "authors": [
+        "Félix, Julián"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "El Cid Editor",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35789",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-406219fdd9361588.html",
+          "capture_sha256": "d96fe1810d267bec39e29c53756b39adb4da113b134f11583c5617e8e3dc1281",
+          "observed_text": "[Santa Fe] : El Cid Editor, 2004."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-406219fdd9361588.html",
+          "capture_sha256": "d96fe1810d267bec39e29c53756b39adb4da113b134f11583c5617e8e3dc1281",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000280",
+      "book_id": "274",
+      "title": "La explicación del comportamiento social: más tuercas y tornillos para las ciencias sociales",
+      "subtitle": null,
+      "authors": [
+        "Elster, Jon"
+      ],
+      "category": [
+        "Ciencias Sociales"
+      ],
+      "publisher": "Editorial Gedisa",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61137",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61137.html",
+          "capture_sha256": "154141cdb34f72e4509e617c1c58589e44ff2c3be92ea5c6e46e0a7064e03d7f",
+          "observed_text": "Barcelona : Editorial Gedisa, 2010."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/61137.html",
+          "capture_sha256": "154141cdb34f72e4509e617c1c58589e44ff2c3be92ea5c6e46e0a7064e03d7f",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000286",
+      "book_id": "243",
+      "title": "Estadística matemática",
+      "subtitle": null,
+      "authors": [
+        "Cepeda Cuervo, Edilberto"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Estadística",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/129009",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4c43b7b6b2f7d801.html",
+          "capture_sha256": "ace22b21503a3fb2d838cec8824baa49f44ad14cc3846bf8dd876d2b9a26148b",
+          "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Estadística, 2015."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4c43b7b6b2f7d801.html",
+          "capture_sha256": "ace22b21503a3fb2d838cec8824baa49f44ad14cc3846bf8dd876d2b9a26148b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000289",
+      "book_id": "254",
+      "title": "Pensar en la matemática",
+      "subtitle": null,
+      "authors": [
+        "Lorenzo Martínez, Javier de"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Comares",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/162803",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2773c7db8f50e89.html",
+          "capture_sha256": "0eb39da1b1fd7b3bbc6e72fcc9aea3b9f3d255720500691df1ba09d59eaa9c58",
+          "observed_text": "Albolote, Granada : Comares, 2015."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2773c7db8f50e89.html",
+          "capture_sha256": "0eb39da1b1fd7b3bbc6e72fcc9aea3b9f3d255720500691df1ba09d59eaa9c58",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000290",
+      "book_id": "338",
+      "title": "Psicología. Lo inconsciente",
+      "subtitle": null,
+      "authors": [
+        "Töpf, José",
+        "Rojo, Heberto A."
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Eudeba",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119908",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/119908.html",
+          "capture_sha256": "26aa340089c9d7cf0a6b2f36443ac7d3dfc6dd628a8958601641cc1bc280c70b",
+          "observed_text": "Ciudad Autónoma de Buenos Aires : Eudeba, 2014."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/119908.html",
+          "capture_sha256": "26aa340089c9d7cf0a6b2f36443ac7d3dfc6dd628a8958601641cc1bc280c70b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000295",
+      "book_id": "263",
+      "title": "Física y programación",
+      "subtitle": null,
+      "authors": [
+        "Merino Arranz, David",
+        "Rossinyol Casals, Emma",
+        "Perez-Navarro, Antoni"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "Editorial UOC",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/188309",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ffd0c6ebbc7e8688.html",
+          "capture_sha256": "1d3aa661b19d1d5f15b868770d2e5b719d5f4ad57e8728d10b06c1f745273e06",
+          "observed_text": "Barcelona : Editorial UOC, 2021."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ffd0c6ebbc7e8688.html",
+          "capture_sha256": "1d3aa661b19d1d5f15b868770d2e5b719d5f4ad57e8728d10b06c1f745273e06",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000296",
+      "book_id": "220",
+      "title": "Filosofía moderna",
+      "subtitle": null,
+      "authors": [
+        "Pastor, W. F."
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36351",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36351.html",
+          "capture_sha256": "a9c3bd2dc04c45ea3f850843a775892d449c1d33a0cded7631790808df64978d",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36351.html",
+          "capture_sha256": "a9c3bd2dc04c45ea3f850843a775892d449c1d33a0cded7631790808df64978d",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000298",
+      "book_id": "321",
+      "title": "Medicina humanitaria",
+      "subtitle": null,
+      "authors": [
+        "Estébanez Estébanez, Pilar"
+      ],
+      "category": [
+        "Medicina"
+      ],
+      "publisher": "Ediciones Díaz de Santos",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53098",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53098",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-26949727c7f52ee9.html",
+          "capture_sha256": "baf9731fc3ba64462c94b431a973bca8e1c64b71cfa664cb3ad28ea67f1f27e9",
+          "observed_text": "Madrid : Ediciones Díaz de Santos, 2005."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53098",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-26949727c7f52ee9.html",
+          "capture_sha256": "baf9731fc3ba64462c94b431a973bca8e1c64b71cfa664cb3ad28ea67f1f27e9",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000299",
+      "book_id": "345",
+      "title": "Informática forense",
+      "subtitle": null,
+      "authors": [
+        "Ortiz, Luis"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Marcombo",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286803",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": []
+    },
+    {
+      "sku": "PLG-BK-000300",
+      "book_id": "267",
+      "title": "Química orgánica",
+      "subtitle": null,
+      "authors": [
+        "Cabildo Miranda, María del Pilar"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "UNED - Universidad Nacional de Educación a Distancia",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48371",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-39051a640e5a8148.html",
+          "capture_sha256": "6093f656777a15cff55924b8a6299591694a64aca77bf1a03e781033450cda7e",
+          "observed_text": "Madrid : UNED - Universidad Nacional de Educación a Distancia, [2008]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-39051a640e5a8148.html",
+          "capture_sha256": "6093f656777a15cff55924b8a6299591694a64aca77bf1a03e781033450cda7e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000302",
+      "book_id": "291",
+      "title": "Historia de Italia (2a. ed.)",
+      "subtitle": null,
+      "authors": [
+        "Duggan, Christopher"
+      ],
+      "category": [
+        "Historia"
+      ],
+      "publisher": "Ediciones Akal",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49780",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49780.html",
+          "capture_sha256": "a47e9eb6bd93255ad5e2461a7edd5df7c27d93c0c45dd985cb3fc097a7376282",
+          "observed_text": "Madrid : Ediciones Akal, [2017]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/49780.html",
+          "capture_sha256": "a47e9eb6bd93255ad5e2461a7edd5df7c27d93c0c45dd985cb3fc097a7376282",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000303",
+      "book_id": "339",
+      "title": "Psicología: polimodal",
+      "subtitle": null,
+      "authors": [
+        "Divenosa, Marisa",
+        "Costa, Ivana"
+      ],
+      "category": [
+        "Psicología"
+      ],
+      "publisher": "Maipue",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78946",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/78946.html",
+          "capture_sha256": "d94d83040f148ea375f1118e383056656440c13eb77dbeac926b32977d00a5ef",
+          "observed_text": "Ituzaingó : Maipue, 2002."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+          "capture_path": "/tmp/pliego-digital-completion/social/uns/78946.html",
+          "capture_sha256": "d94d83040f148ea375f1118e383056656440c13eb77dbeac926b32977d00a5ef",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000304",
+      "book_id": "219",
+      "title": "Filosofía medieval",
+      "subtitle": null,
+      "authors": [
+        "Pastor, W. F."
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Firmas Press",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36349",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36349.html",
+          "capture_sha256": "eb9e6b5a2e194cc3488cd9504d29ea7179e9bacbf4a19dd209efc8c3715e8b08",
+          "observed_text": "[Firmas Press],"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36349.html",
+          "capture_sha256": "eb9e6b5a2e194cc3488cd9504d29ea7179e9bacbf4a19dd209efc8c3715e8b08",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000308",
+      "book_id": "255",
+      "title": "Biología cuántica",
+      "subtitle": null,
+      "authors": [
+        "Miret Artés, Salvador"
+      ],
+      "category": [
+        "Ciencias"
+      ],
+      "publisher": "CSIC : Los Libros de la Catarata",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233731",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a5f63174410bc51e.html",
+          "capture_sha256": "10cdf81d52991fdbd07dea840b8565061e4ca85b8fde41cb53027cb71d9d70a4",
+          "observed_text": "Madrid : CSIC : Los Libros de la Catarata, [2019]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a5f63174410bc51e.html",
+          "capture_sha256": "10cdf81d52991fdbd07dea840b8565061e4ca85b8fde41cb53027cb71d9d70a4",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000309",
+      "book_id": "341",
+      "title": "Cómo y cuándo aplicar un robot industrial",
+      "subtitle": null,
+      "authors": [
+        "Daniel Audí Piera"
+      ],
+      "category": [
+        "Tecnología e Informática"
+      ],
+      "publisher": "Marcombo",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45841",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0657617b175f64ec.html",
+          "capture_sha256": "1931dc48f958f1fae073c9dd29b1b728401abd5db48524da10c7d4e425e44a5e",
+          "observed_text": "Barcelona : Marcombo, 1988."
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0657617b175f64ec.html",
+          "capture_sha256": "1931dc48f958f1fae073c9dd29b1b728401abd5db48524da10c7d4e425e44a5e",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000313",
+      "book_id": "248",
+      "title": "Las matemáticas de los cristales",
+      "subtitle": null,
+      "authors": [
+        "León, Manuel de",
+        "Timón, Ágata"
+      ],
+      "category": [
+        "Matemáticas"
+      ],
+      "publisher": "Editorial CSIC Consejo Superior de Investigaciones Científicas : Los Libros de la Catarata",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41821",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-eca4b568c194b9d0.html",
+          "capture_sha256": "9943571d9bfcf61048af7e35263e81a14f2d9f5d777c6fdb049ff8257a3be90b",
+          "observed_text": "Madrid : Editorial CSIC Consejo Superior de Investigaciones Científicas : Los Libros de la Catarata, [2015]"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+          "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-eca4b568c194b9d0.html",
+          "capture_sha256": "9943571d9bfcf61048af7e35263e81a14f2d9f5d777c6fdb049ff8257a3be90b",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    },
+    {
+      "sku": "PLG-BK-000315",
+      "book_id": "227",
+      "title": "¿Qué es la filosofía?",
+      "subtitle": null,
+      "authors": [
+        "Heidegger, Martin"
+      ],
+      "category": [
+        "Filosofía"
+      ],
+      "publisher": "Herder Editorial",
+      "isbn13": null,
+      "format": "EBOOK",
+      "existing_synopsis": null,
+      "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45723",
+      "source_description": {},
+      "observed_metadata": {},
+      "primary_cached_sources": [
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45723.html",
+          "capture_sha256": "5651d770bec6fca829a3b4cf18b5fadda0d8b46d6fd39bf03fc154984158f455",
+          "observed_text": "Herder Editorial,"
+        },
+        {
+          "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+          "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45723.html",
+          "capture_sha256": "5651d770bec6fca829a3b4cf18b5fadda0d8b46d6fd39bf03fc154984158f455",
+          "observed_text": "Idioma: Spanish"
+        }
+      ]
+    }
+  ]
+}

@@ -19,6 +19,9 @@ const academicMapReference = { latitude: -.21, longitude: -78.4914 };
 
 /** Snapshot-owned destination, readiness, payment and prices; catalog reads supply only cover assets. */
 export function SuccessfulOrderConfirmation({ order, headingRef }: { order: OrderDetail; headingRef: Ref<HTMLHeadingElement> }) {
+  // The response reports no fulfillment for a digital-only purchase.
+  const hasPhysicalFulfillment = order.fulfillment != null;
+  const digitalItems = order.items.filter(item => item.format === "EBOOK" || item.format === "AUDIOBOOK");
   const pickup = order.fulfillment?.method === "STORE_PICKUP" ? order.fulfillment.pickup : null;
   const method = fulfillmentMethodLabel(order.fulfillment?.method);
   const deliveryWindow = order.shipment ? deliveryWindowLabel(order.shipment.estimatedDeliveryFrom, order.shipment.estimatedDeliveryTo) : null;
@@ -54,12 +57,12 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
       </header>
 
       <div className={classes.layout}>
-        <section className={classes.destination} aria-label="Destino confirmado">
+        {hasPhysicalFulfillment && <section className={classes.destination} aria-label="Destino confirmado">
           <LocationMap latitude={mapCoordinates.latitude} longitude={mapCoordinates.longitude}
             label={location?.name ?? "referencia de PUCE"} callout={callout}
             linkLabel={location ? undefined : "Ver mapa de referencia"} />
           {!location && <p className={classes.mapReference}>Referencia PUCE para esta demo; no ubica la dirección de entrega.</p>}
-        </section>
+        </section>}
 
         <aside className={classes.immediate} aria-labelledby="confirmation-immediate-heading">
           <h2 id="confirmation-immediate-heading">Tu pedido</h2>
@@ -98,20 +101,21 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
           <Link className={classes.orderAction} to={`/orders/${order.orderId}`} replace state={null}>Ver pedido completo</Link>
         </section>
 
-        <section className={classes.fulfillment} aria-labelledby="confirmation-fulfillment-heading" data-confirmation="fulfillment">
+        {hasPhysicalFulfillment && <section className={classes.fulfillment} aria-labelledby="confirmation-fulfillment-heading" data-confirmation="fulfillment">
           <header className={classes.fulfillmentHead}>
             <h2 id="confirmation-fulfillment-heading">{fulfillmentHeading}</h2>
             {location ? <p>Horario de atención: {openingHoursLabel(location)}</p> : deliveryWindow && <p>{deliveryWindow}</p>}
           </header>
-          <ul>{order.items.map((item, index) => {
-            const cover = coverQueries[index]?.data;
+          <ul>{order.items.filter(item => item.format !== "EBOOK" && item.format !== "AUDIOBOOK").map((item) => {
+            const cover = coverQueries[order.items.indexOf(item)]?.data;
             return <li key={item.orderItemId}>
               <div className={classes.bookCover}><BookCover url={cover?.coverUrl ?? null} license={cover?.coverLicense ?? null} attribution={cover?.coverAttribution ?? null} title={item.title} size="compact" decorative /></div>
               <strong className={classes.bookTitle}>{item.title}</strong>
               <div className={classes.priceQuantity}><span>{formatUsd(item.unitPrice)}<span className="visually-hidden"> por unidad</span></span><span>Cantidad: {item.quantity}</span></div>
             </li>;
           })}</ul>
-        </section>
+        </section>}
+        {digitalItems.length > 0 && <section aria-labelledby="confirmation-digital-heading"><h2 id="confirmation-digital-heading">Compras digitales</h2><ul>{digitalItems.map(item => <li key={item.orderItemId}>{item.title} · Cantidad: {item.quantity}</li>)}</ul><p>La titularidad se registra en tu cuenta después del pago aprobado.</p><ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca</ButtonLink></section>}
       </div>
       <Link className={classes.continue} to="/catalog">Seguir explorando el catálogo</Link>
     </div>

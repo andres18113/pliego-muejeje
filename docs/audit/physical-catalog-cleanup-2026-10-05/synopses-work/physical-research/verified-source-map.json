@@ -1,0 +1,291 @@
+{
+  "records": [
+    {
+      "index": 0,
+      "sku": "PLG-BK-000316",
+      "url": "https://biblioteca.izt.uam.mx/vufind/Record/ManualModerno_000001",
+      "verified_basis": "Resumen bibliotecario explícito: revisiones sistemáticas, metaanálisis, lectura y confiabilidad de investigación médica",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 1,
+      "sku": "PLG-BK-000317",
+      "url": "https://noticias.mcd.gob.gt/wp-content/uploads/2025/06/Web-Programa-Filgua-2025.pdf",
+      "verified_basis": "Programa oficial FILGUA: experiencia de Santiago Martínez, medalla de plata en Olimpiadas de Matemáticas y viaje a Indonesia en 2024; corrige la caracterización inicial como novela",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 3,
+      "sku": "PLG-BK-000319",
+      "url": "https://www.fondodeculturaeconomica.com/Ficha/9786071685605/F",
+      "verified_basis": "Resumen FCE: diez historias conectadas por un billete de doscientos pesos y deseos individuales de niños",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 4,
+      "sku": "PLG-BK-000320",
+      "url": "https://investigacion.ujaen.es/documentos/5eebf24629995209f42619e4?lang=gl",
+      "verified_basis": "Resumen institucional UJA: matemáticas en telefonía, cajeros y predicción meteorológica",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 5,
+      "sku": "PLG-BK-000321",
+      "url": "https://www.libros.unam.mx/catalog/product/view/id/6102/s/lulu-o-la-flauta-magica-9786073014649-libro/category/2/",
+      "verified_basis": "Resumen editorial UNAM: hada, flauta encantada, rescate de su hija y poder creador de la música",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 7,
+      "sku": "PLG-BK-000323",
+      "url": "https://redcol.minciencias.gov.co/Record/Poli2_89e4b0f66b1904646daa69809e84ab87/Details",
+      "verified_basis": "Registro institucional agregado: título, autoría, cuento ilustrado creado en Escuela de Diseño; no aporta trama adicional",
+      "kind": "METADATA"
+    },
+    {
+      "index": 8,
+      "sku": "PLG-BK-000324",
+      "url": "https://perfilesycapacidades.javeriana.edu.co/es/publications/psicopatolog%C3%ADa-b%C3%A1sica/",
+      "verified_basis": "Resumen institucional de quinta edición: enfoque didáctico de conducta, psiquismo unitario y complejo",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 12,
+      "sku": "PLG-BK-000328",
+      "url": "https://web.siia.unam.mx/siia-publico/c/busqueda_individual.php?id=169186",
+      "verified_basis": "Registro autoral UNAM que confirma obra; descripción pública sigue basada en título y materias, sin inventar índice",
+      "kind": "METADATA"
+    },
+    {
+      "index": 18,
+      "sku": "PLG-BK-000334",
+      "url": "https://cib.org.co/producto/enfoque-del-paciente-en-medicina-intensiva/",
+      "verified_basis": "Resumen editorial CIB: problemas de sistemas y órganos, enfoque multidisciplinar, nutrición, enfermería y terapia respiratoria",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 24,
+      "sku": "PLG-BK-000340",
+      "url": "https://descubridor.uni.edu.ni/Record/ELB36731/Details",
+      "verified_basis": "Ficha bibliotecaria: título, autor y materias Mathematics-Study and teaching; no contenido específico adicional",
+      "kind": "METADATA"
+    },
+    {
+      "index": 26,
+      "sku": "PLG-BK-000342",
+      "url": "https://repositorio.umariana.edu.co/items/fad9bd18-074b-42cc-924a-fc3199848ec7",
+      "verified_basis": "Resumen institucional: teoría de números, proporcionalidad, matemática financiera y estadística básica",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 33,
+      "sku": "PLG-BK-000349",
+      "url": "https://repositorio.unam.mx/contenidos/ficha/literatura-y-derecho-5017797?as=0&c=2Qvzen&d=false&i=3&q=%2A%3A%2A&t=search_0&v=1",
+      "verified_basis": "Ficha UNAM: literatura jurídica y lenguaje jurídico; descripción temática original sin atribuir capítulos",
+      "kind": "METADATA"
+    },
+    {
+      "index": 38,
+      "sku": "PLG-BK-000354",
+      "url": "https://www.wolterskluwer.com/en/solutions/ovid/tratado-de-medicina-cardiovascular-10062",
+      "verified_basis": "Resumen editor: imagen, intervención coronaria, arritmias, insuficiencia cardiaca y genética molecular cardiovascular",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 46,
+      "sku": "PLG-BK-000363",
+      "url": "https://herdereditorial.com/catalogo/psicologia/manual-de-psicopatologia-clinica-9788425433276",
+      "verified_basis": "Resumen Herder de segunda edición: DSM-5, diagnóstico diferencial y casos clínicos",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 48,
+      "sku": "PLG-BK-000365",
+      "url": "https://grupodestiempos.com/wp-content/uploads/2025/07/Mujeres_en_la_literatura_Lillian_von_der-1.pdf",
+      "verified_basis": "Publicación editorial del volumen; sinopsis conservadora apoyada en título, editoras y materia bibliográfica",
+      "kind": "METADATA"
+    },
+    {
+      "index": 51,
+      "sku": "PLG-BK-000368",
+      "url": "https://biblioteca.usam.edu.sv/cgi-bin/koha/opac-detail.pl?biblionumber=36916&query_desc=",
+      "verified_basis": "Ficha biblioteca confirma primer tomo y autor; no se atribuyen cuentos concretos a la selección",
+      "kind": "METADATA"
+    },
+    {
+      "index": 53,
+      "sku": "PLG-BK-000370",
+      "url": "https://www.cervantesvirtual.com/obra-visor/la-literatura-francesa-moderna-la-transicion--0/html/",
+      "verified_basis": "Texto primario: romanticismo a realismo, Stendhal, Mérimée y Balzac",
+      "kind": "PRIMARY_TEXT"
+    },
+    {
+      "index": 58,
+      "sku": "PLG-BK-000375",
+      "url": "https://maporrua.com.mx/product/bienestar-social-y-democracia/",
+      "verified_basis": "Resumen editorial: trabajos de coloquio, problemas mexicanos, psicología social y evaluación de logros democráticos",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 61,
+      "sku": "PLG-BK-000378",
+      "url": "https://recursos.manualmoderno.com/apoyos_electronicos/9786074483819/ingr_9786074483819.php",
+      "verified_basis": "Página del editor confirma tercera edición y Grandini; áreas temáticas proceden de base verificada suministrada",
+      "kind": "METADATA"
+    },
+    {
+      "index": 66,
+      "sku": "PLG-BK-000383",
+      "url": "https://editalfil.com/producto/temas-selectos-en-medicina-critica-cqamc-vol-xx/",
+      "verified_basis": "Resumen e índice editorial: control glucémico, delirium y nutrición en cuidados críticos quirúrgicos",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 69,
+      "sku": "PLG-BK-000386",
+      "url": "https://editalfil.com/producto/medicina-forense/",
+      "verified_basis": "Ficha y presentación editor confirman obra de los autores Trujillo; descripción general forense",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 71,
+      "sku": "PLG-BK-000388",
+      "url": "https://editalfil.com/producto/medicina-perioperatoria-clinicas-mexicanas-de-medicina-interna-2/",
+      "verified_basis": "Ficha editorial exacta de Enrique Díaz Greene, primera edición 2008; se descarta homónimo 2022 con otros autores",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 89,
+      "sku": "PLG-BK-000406",
+      "url": "https://minoydavila.com.ar/producto/psicopatologia-del-trabajo/",
+      "verified_basis": "Resumen e índice editor: organización laboral, salud mental, enfoque clínico e intervenciones institucionales",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 96,
+      "sku": "PLG-BK-000414",
+      "url": "https://www.elviejotopo.com/libro/la-filosofia-del-engano/",
+      "verified_basis": "Resumen editor: crítica de Lidia Falcón a posverdad, monarquía, Unión Europea y discursos políticos",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 98,
+      "sku": "PLG-BK-000416",
+      "url": "https://herdereditorial.com/catalogo/psicologia/psicopatologia-de-la-vida-amorosa-9788425427282",
+      "verified_basis": "Resumen Herder: expectativas amorosas, mitos de permanencia, fidelidad y perfección, historias y mecanismos de malestar",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 102,
+      "sku": "PLG-BK-000420",
+      "url": "https://ebooks.eunsa.es/library/publication/filosofia-de-la-educacion-1587054178",
+      "verified_basis": "Resumen EUNSA: manual dirigido a iniciación pedagógica y filosófica; lectores universitarios",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 107,
+      "sku": "PLG-BK-000425",
+      "url": "https://www.akal.com/libro/la-literatura-griega-y-su-tradicion_34157/",
+      "verified_basis": "Resumen e índice Akal: Odisea, Antígona, Banquete y recepción moderna principalmente española",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 108,
+      "sku": "PLG-BK-000426",
+      "url": "https://www.akal.com/libro/las-aventuras-de-pinocho_35309/",
+      "verified_basis": "Resumen Akal: muñeco de madera, pruebas morales y transformación en niño",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 119,
+      "sku": "PLG-BK-000437",
+      "url": "https://www.editdiazdesantos.com/libros/materias/ciencias-de-la-salud/medicina-preventiva-S562.php",
+      "verified_basis": "Catálogo del editor confirma obra Muir Gray; descripción temática original basada en título y materias",
+      "kind": "METADATA"
+    },
+    {
+      "index": 126,
+      "sku": "PLG-BK-000445",
+      "url": "https://www.ecobook.com/libros/economia-y-literatura/9788493480769",
+      "verified_basis": "Resumen e índice del editor Ecobook: 19 economistas, ideas económicas y obras Cervantes Shakespeare Dickens",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 129,
+      "sku": "PLG-BK-000448",
+      "url": "https://www.gedisa.com/promo/Catalogo2014Humanidades.pdf",
+      "verified_basis": "Catálogo Gedisa confirma autor y título; descripción temática original sin atribuir capítulos concretos",
+      "kind": "METADATA"
+    },
+    {
+      "index": 130,
+      "sku": "PLG-BK-000449",
+      "url": "https://www.une.es/media/Ou1/File/Boletines/Primavera2008%281%29.pdf",
+      "verified_basis": "Boletín oficial de editoriales universitarias: resumen UOC, fundamentos y democracia",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 132,
+      "sku": "PLG-BK-000451",
+      "url": "https://www.dykinson.com/libros/fundamentos-matematicos-de-la-ingenieria/9788498491104/",
+      "verified_basis": "Resumen e índice Dykinson: álgebra lineal geometría cálculo ecuaciones diferenciales y cálculo numérico; experiencia docente",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 137,
+      "sku": "PLG-BK-000456",
+      "url": "https://linkgua-ediciones.com/producto/raton-perez/",
+      "verified_basis": "Resumen Linkgua: rey Buby, cuento escrito para Alfonso XIII de niño y caída de diente",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 142,
+      "sku": "PLG-BK-000461",
+      "url": "https://www.uninorte.edu.co/es/web/grupo-prensa/w/jesus-ferro-bayona-presenta-el-mito-de-la-filosofia",
+      "verified_basis": "Nota de universidad editora confirma ensayos filosóficos; temas ya observados en base suministrada",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 144,
+      "sku": "PLG-BK-000463",
+      "url": "https://portaldelibros.unal.edu.co/catalog/product/view/id/772/s/gpd-psicologyua-social-y-justicia-9789587619560/",
+      "verified_basis": "Resumen editorial UNAL: conflictos jurídicos, crimen, tejido social, resocialización y derechos de víctimas",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 147,
+      "sku": "PLG-BK-000466",
+      "url": "https://facartes.uniandes.edu.co/medios/facartes/Catalogo_novedades_2022-2_web.pdf",
+      "verified_basis": "Catálogo editorial de segunda edición: variable compleja Fourier Laplace ecuaciones diferenciales y requisitos cálculo/álgebra",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 156,
+      "sku": "PLG-BK-000475",
+      "url": "https://www.fondodeculturaeconomica.com/Ficha/9789681601775/F",
+      "verified_basis": "Resumen FCE: primeras manifestaciones hasta posterior a Segunda Guerra Mundial, géneros autores y momentos de desarrollo",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 162,
+      "sku": "PLG-BK-000481",
+      "url": "https://biblioteca.usam.edu.sv/cgi-bin/koha/opac-detail.pl?biblionumber=54099&query_desc=",
+      "verified_basis": "Ficha biblioteca: Borges, crítica y literatura detectivesca; subtítulo proviene de portada suministrada",
+      "kind": "METADATA"
+    },
+    {
+      "index": 171,
+      "sku": "PLG-BK-000491",
+      "url": "https://maipue.com.ar/producto/matematica-4/",
+      "verified_basis": "Contenidos editorial Maipue: reales sucesiones álgebra ecuaciones combinatoria funciones trigonometría; autoras exactas",
+      "kind": "SUMMARY"
+    },
+    {
+      "index": 173,
+      "sku": "PLG-BK-000493",
+      "url": "https://digitales.maipue.com.ar/library/publication/filosofia-1611774990",
+      "verified_basis": "Ficha edición Filosofía de Costa y Divenosa: historia lógica ética conocimiento antropología debates contemporáneos; no se confunde con Un espacio de pensamiento",
+      "kind": "SUMMARY"
+    }
+  ]
+}

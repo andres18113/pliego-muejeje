@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000205",
+  "title": "Inferencia estadística",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:20.315236+00:00",
+      "response_sha256": "00fa19c55b60bdca3e91f59334dd0f0104f6f6200e4c763558e23e931a7913ce",
+      "extraction_sha256": "4f08bd0db8912f8a3c53e35908ecb7d08611e1f1b096578f33b165f5fd67be61",
+      "text": "Guardado en: Autor Principal: Gómez Villegas, Miguel Ángel. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Madrid : Ediciones Díaz de Santos, 2005. Materias: Matemáticas. Estadística. Teoría. Teoría de las probabilidades. Mathematical statistics. Statistics. Probabilities. Mathematics. Mathematical models. Theory. Estadística matemática Metodos matemáticos Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/52874  ",
+      "observed_page_title": "Existencias: Inferencia estadística",
+      "title_check_response_sha256": "82d14984069c6966bb3e63df91901112758efb399bddc43fd862d423cae403a7",
+      "title_checked_at_utc": "2026-10-05T19:39:59.838219+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:21.692513+00:00",
+      "response_sha256": "1385202ffed49becdc949999c78a2201f419bc2845d80cb0e76b27f2ed1dc85c",
+      "extraction_sha256": "4f08bd0db8912f8a3c53e35908ecb7d08611e1f1b096578f33b165f5fd67be61",
+      "text": "Guardado en: Autor Principal: Gómez Villegas, Miguel Ángel. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Madrid : Ediciones Díaz de Santos, 2005. Materias: Matemáticas. Estadística. Teoría. Teoría de las probabilidades. Mathematical statistics. Statistics. Probabilities. Mathematics. Mathematical models. Theory. Estadística matemática Metodos matemáticos Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/52874  "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000139",
+  "title": "Psicología del Poder",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:09.017095+00:00",
+      "response_sha256": "6805f0c22d8b9b79c4e06da47c8955d540c0f4536cfbf7972936693615f8f805",
+      "extraction_sha256": "7d4c24969d8b145157543b79f9cf9e79c4eb2e2bb71a0cf8a0bb7067ee4dd0ef",
+      "text": "Guardado en: Autor Principal: Población, Pablo, (autor.) Formato: eBook Idioma: Spanish Publicado: España : Ediciones Morata, S. L., 2021. Materias: Psychology. Psicología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/189415  ",
+      "observed_page_title": "Existencias: Psicología del Poder /",
+      "title_check_response_sha256": "4d0711b9b4bab998367d5618b781b5efd81e95cd90216bf7418c49dfbe8dbcb0",
+      "title_checked_at_utc": "2026-10-05T19:39:53.619916+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.325225+00:00",
+      "response_sha256": "01e90f0a1f5519314b1390c25595e11a80938fc9e0e1ce296d7ed9ff5b25b7dd",
+      "extraction_sha256": "7d4c24969d8b145157543b79f9cf9e79c4eb2e2bb71a0cf8a0bb7067ee4dd0ef",
+      "text": "Guardado en: Autor Principal: Población, Pablo, (autor.) Formato: eBook Idioma: Spanish Publicado: España : Ediciones Morata, S. L., 2021. Materias: Psychology. Psicología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/189415  "
+    }
+  ]
+}

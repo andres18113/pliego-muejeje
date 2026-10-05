@@ -15,7 +15,7 @@ from collections import defaultdict
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from cover_catalog import discover_staging, pipeline_lock, read_manifest
+from cover_catalog import EXCLUDED_SKUS, discover_staging, pipeline_lock, read_manifest, retired_records
 
 
 REGISTRY_NAME = "sku-registry.json"
@@ -420,6 +420,13 @@ def prepare_covers(covers_dir: Path) -> dict[str, Any]:
         raise PreparationError(report)
 
     identity_index, source_index = _registry_indexes(registry)
+    try:
+        retired = retired_records(root)
+    except ValueError as error:
+        report["errors"].append(str(error))
+        raise PreparationError(report) from error
+    retired_skus = {row["permanent_sku"] for row in retired}
+    retired_isbns = {row["isbn13"] for row in retired if row.get("isbn13")}
     existing_skus = [
         int(match.group(1))
         for assignment in registry["assignments"]
@@ -435,6 +442,10 @@ def prepare_covers(covers_dir: Path) -> dict[str, Any]:
         identity_match = identity_index.get(entry.get("identity_key"))
         source_match = source_index.get(entry["source_key"])
         found = {id(item): item for item in (identity_match, source_match) if item is not None}
+        if (entry.get("old_sku") in retired_skus or entry.get("isbn13") in retired_isbns
+                or any(item["sku"] in retired_skus for item in found.values())):
+            report["conflicts"].append(f"{entry['where']} intenta reintroducir una edición retirada")
+            continue
         if len(found) > 1:
             report["conflicts"].append(
                 f"{entry['where']} matches different registry assignments by identity and source path"
@@ -450,6 +461,8 @@ def prepare_covers(covers_dir: Path) -> dict[str, Any]:
 
     new_assignments: list[dict[str, Any]] = []
     for entry in sorted(unassigned, key=lambda item: (item["identity_key"], item["source_key"])):
+        while f"PLG-BK-{next_sequence:06d}" in retired_skus | EXCLUDED_SKUS:
+            next_sequence += 1
         sku = f"PLG-BK-{next_sequence:06d}"
         next_sequence += 1
         assignment = {"sku": sku, "identity_keys": [], "source_keys": []}

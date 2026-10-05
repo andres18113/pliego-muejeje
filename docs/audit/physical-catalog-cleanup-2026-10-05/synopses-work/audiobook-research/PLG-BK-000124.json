@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000124",
+  "title": "Geometría riemanniana",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:06.294805+00:00",
+      "response_sha256": "16eae6c0151c5cc16e648a84ef231f26610373caaddecd048c5dfe2eedc2c0fb",
+      "extraction_sha256": "3c4271930c9d1a53ac4724311b9e4cd12e9811de41635c38831c07b497646f55",
+      "text": "Guardado en: Autor Principal: Sánchez Morgado, Héctor. Otros Autores: Palmas Velasco, Óscar A, (autor.) Formato: eBook Idioma: Spanish Publicado: México D.F. : Universidad Nacional Autónoma de México, 2007. Series: Prensas de ciencias. Materias: Geometry, Riemannian. Geometría riemanniana. Geometry > Problems, exercises, etc. Geometría > Problemas, ejercicios, etc. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/74615  ",
+      "observed_page_title": "Existencias: Geometría riemanniana /",
+      "title_check_response_sha256": "e444a31310968f5538e33bb3769cdb14de1f4e9cdbd51af65faeb61eae9993eb",
+      "title_checked_at_utc": "2026-10-05T19:39:57.897321+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:07.565302+00:00",
+      "response_sha256": "739490347b693476bb9be1343a00a5a511c0f3b5d6f8a0441e0c958377ba5436",
+      "extraction_sha256": "3c4271930c9d1a53ac4724311b9e4cd12e9811de41635c38831c07b497646f55",
+      "text": "Guardado en: Autor Principal: Sánchez Morgado, Héctor. Otros Autores: Palmas Velasco, Óscar A, (autor.) Formato: eBook Idioma: Spanish Publicado: México D.F. : Universidad Nacional Autónoma de México, 2007. Series: Prensas de ciencias. Materias: Geometry, Riemannian. Geometría riemanniana. Geometry > Problems, exercises, etc. Geometría > Problemas, ejercicios, etc. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/74615  "
+    }
+  ]
+}

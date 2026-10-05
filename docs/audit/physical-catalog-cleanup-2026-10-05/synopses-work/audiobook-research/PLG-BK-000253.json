@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000253",
+  "title": "Lecciones de psicología cognitiva",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:25.874049+00:00",
+      "response_sha256": "382d3fd154790bbc2be22ed9340d0b47c978646a13417ef69ffd897639c3d020",
+      "extraction_sha256": "bee9e3abb3c6d9d04bc31aec52dbe5b50584942dd7ae84865766fbb52c8375ea",
+      "text": "Guardado en: Autor Principal: Fernández, Humberto. Formato: eBook Idioma: Spanish Publicado: Buenos Aires : Universidad Abierta Interamericana, 2013. Materias: Psicología cognitiva. Cognitive psychology. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/77154  ",
+      "observed_page_title": "Existencias: Lecciones de psicología cognitiva /",
+      "title_check_response_sha256": "d74cf292a299fe57edf67f7f7c06e0c9190de1598edd07579d3395fe16b0688b",
+      "title_checked_at_utc": "2026-10-05T19:39:58.194540+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:27.302099+00:00",
+      "response_sha256": "04b9c8337e176f628367b969c8b4699e7621ea9bfb35d2fa84f1e7e5383ad070",
+      "extraction_sha256": "bee9e3abb3c6d9d04bc31aec52dbe5b50584942dd7ae84865766fbb52c8375ea",
+      "text": "Guardado en: Autor Principal: Fernández, Humberto. Formato: eBook Idioma: Spanish Publicado: Buenos Aires : Universidad Abierta Interamericana, 2013. Materias: Psicología cognitiva. Cognitive psychology. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/77154  "
+    }
+  ]
+}

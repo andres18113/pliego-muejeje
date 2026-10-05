@@ -21,8 +21,8 @@ public record CheckoutRequest(
         @Pattern(regexp = "^[1-9][0-9]{0,18}$", message = "El carrito debe ser un identificador decimal positivo.")
         @DecimalMax(value = "9223372036854775807", message = "El carrito debe ser un identificador decimal positivo.")
         String expectedCartId,
-        @Pattern(regexp = "HOME_DELIVERY|STORE_PICKUP", message = "El método de entrega no es válido.")
-        @Schema(defaultValue = "HOME_DELIVERY", allowableValues = {"HOME_DELIVERY", "STORE_PICKUP"}) String fulfillmentMethod,
+        @Pattern(regexp = "HOME_DELIVERY|STORE_PICKUP|DIGITAL_ONLY", message = "El método de entrega no es válido.")
+        @Schema(defaultValue = "HOME_DELIVERY", allowableValues = {"HOME_DELIVERY", "STORE_PICKUP", "DIGITAL_ONLY"}) String fulfillmentMethod,
         @Pattern(regexp = "^[1-9][0-9]{0,18}$", message = "El punto de retiro debe ser un identificador positivo.")
         @DecimalMax(value = "9223372036854775807", message = "El punto de retiro debe ser un identificador positivo.") String pickupLocationId) {
 
@@ -30,12 +30,13 @@ public record CheckoutRequest(
         fulfillmentMethod = fulfillmentMethod == null ? "HOME_DELIVERY" : fulfillmentMethod;
     }
 
-    @AssertTrue(message = "Selecciona dirección para entrega a domicilio o punto para retiro, sin combinar ambos.")
+    @AssertTrue(message = "Selecciona los datos de entrega física o compra digital sin dirección ni retiro.")
     @com.fasterxml.jackson.annotation.JsonIgnore
     public boolean isFulfillmentValid() {
         return "HOME_DELIVERY".equals(fulfillmentMethod)
                 ? addressId != null && pickupLocationId == null
-                : "STORE_PICKUP".equals(fulfillmentMethod) && addressId == null && pickupLocationId != null;
+                : "STORE_PICKUP".equals(fulfillmentMethod) ? addressId == null && pickupLocationId != null
+                : "DIGITAL_ONLY".equals(fulfillmentMethod) && addressId == null && pickupLocationId == null;
     }
 
     public CheckoutRequest(String addressId, String paymentMethod, String simulationOutcome, String cardNumber, String expectedCartId) {

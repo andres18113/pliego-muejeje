@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000101",
+  "title": "Historia mínima de Brasil",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB226347",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:03.597795+00:00",
+      "response_sha256": "2652145f1f67508ad8cbf4efc891d51dc3fbd1f8059143cb2ee0fa98279ebf1a",
+      "extraction_sha256": "45bfd86c29871f6574c7dbdd2d139f5e5b920d63a407c1328b935728a32b71b0",
+      "text": "Guardado en: Autor Principal: Fausto, Boris, 1930- (autor.) Otros Autores: Fausto, Sérgio, (colaborador.) , Abramo, Paula, 1980- (traductor.) Formato: eBook Idioma: Spanish Portuguese Publicado: Ciudad de México : El Colegio de México, 2022. Edición: Primera edición electrónica. Series: Colección Historias Mínimas ; 11. Materias: Brasil > Historia. Brasil > Política y gobierno. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/226347  ",
+      "observed_page_title": "Existencias: Historia mínima de Brasil /",
+      "title_check_response_sha256": "95a4af9089000e713198dc8c5af13966e3fc3444a84bc4b0988ebba226cdcc6f",
+      "title_checked_at_utc": "2026-10-05T19:39:50.767803+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB226347/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:04.903324+00:00",
+      "response_sha256": "f0f12301165974f5168aaf865b3074a41fc9ce9ea26bd4889cd551bb80cd78fb",
+      "extraction_sha256": "45bfd86c29871f6574c7dbdd2d139f5e5b920d63a407c1328b935728a32b71b0",
+      "text": "Guardado en: Autor Principal: Fausto, Boris, 1930- (autor.) Otros Autores: Fausto, Sérgio, (colaborador.) , Abramo, Paula, 1980- (traductor.) Formato: eBook Idioma: Spanish Portuguese Publicado: Ciudad de México : El Colegio de México, 2022. Edición: Primera edición electrónica. Series: Colección Historias Mínimas ; 11. Materias: Brasil > Historia. Brasil > Política y gobierno. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/226347  "
+    }
+  ]
+}

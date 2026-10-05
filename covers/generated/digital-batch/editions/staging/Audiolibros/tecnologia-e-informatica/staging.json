@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Arduino práctico. Edición 2022",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Daniel Lozano Equisoain introduce Arduino desde la creación del primer proyecto hasta desarrollos de mayor complejidad. La propuesta parte de las nociones de programación y del uso del entorno Arduino IDE, con código y explicación de los prototipos. Un recorrido práctico para empezar a conectar ideas, componentes y programas o para retomar conocimientos de esta plataforma.",
         "autores": [
           {
             "nombre": "Lozano Equisoain, Daniel",
@@ -184,7 +184,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "200",
-        "imported_book_id": "199"
+        "imported_book_id": "199",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.anayamultimedia.es/libro/manuales-imprescindibles/arduino-practico-edicion-2022-daniel-lozano-equisoain-9788441544987/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000186.json; SHA-256 de respuesta HTTP: 67cf9f175f26b8b7676fad8125bae3b7d5700b058b4c1b22c8195e4ce825f0a9"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -192,7 +203,7 @@
       "libro": {
         "titulo": "Bases de datos avanzadas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Las bases de datos se abordan desde un nivel avanzado dentro del campo de la informática. El título invita a profundizar en un ámbito dedicado a organizar y trabajar con información en sistemas computacionales. Una lectura para quienes desean ampliar su orientación en este terreno y acercarse a preguntas que requieren ir más allá de una introducción básica.",
         "autores": [
           {
             "nombre": "Aramburu Cabo, María José",
@@ -387,7 +398,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "201",
-        "imported_book_id": "200"
+        "imported_book_id": "200",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000273.json; SHA-256 de respuesta HTTP: 42a5cc4a065fe6ceb876c6e9af2d9d00e7049a9f3e75a1895619088c583894f3"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -395,7 +417,7 @@
       "libro": {
         "titulo": "El manual de Arduino",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Arduino se presenta como tema de un manual relacionado con la programación, los sistemas integrados y el internet de las cosas. El enfoque invita a conectar el código con dispositivos que interactúan con su entorno. Una lectura para quienes buscan orientarse en esta plataforma y situar su uso dentro de proyectos en los que se encuentran informática y electrónica.",
         "autores": [
           {
             "nombre": "Aliverti, Paolo",
@@ -580,7 +602,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "202",
-        "imported_book_id": "201"
+        "imported_book_id": "201",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000127.json; SHA-256 de respuesta HTTP: 658b031d446af9144392b8e9fd5de3b5b16c40bc370efc09fbbcd3a40f5e9049"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -588,7 +621,7 @@
       "libro": {
         "titulo": "Iniciación a JavaScript",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "JavaScript constituye el punto de partida de una obra que se presenta como iniciación a este lenguaje de programación. El enfoque invita a familiarizarse con un campo técnico desde sus primeras nociones. Una lectura para quienes desean comenzar a orientarse en el lenguaje y construir una base antes de avanzar hacia usos y programas de mayor complejidad.",
         "autores": [
           {
             "nombre": "Jorge Mohedano",
@@ -773,7 +806,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "203",
-        "imported_book_id": "202"
+        "imported_book_id": "202",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000251.json; SHA-256 de respuesta HTTP: 953a26e7cc64e9663afdba4f868c07457c07a8c9bbbe46612472ab64762f37a3"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -781,7 +825,7 @@
       "libro": {
         "titulo": "Inteligencia artificial",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La inteligencia artificial constituye el tema central de esta obra, situada en el estudio de una de las áreas de la informática. Su título ofrece una entrada general para pensar el campo y sus preguntas. Una lectura para quienes desean familiarizarse con este ámbito y comenzar a situar sus conceptos antes de profundizar en aplicaciones o desarrollos específicos.",
         "autores": [
           {
             "nombre": "López de Mántaras Badia, Ramón",
@@ -976,7 +1020,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "204",
-        "imported_book_id": "203"
+        "imported_book_id": "203",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000234.json; SHA-256 de respuesta HTTP: 3dcd9291074a3a80a774a66e0bf918a8742562d3cf950e1a1ee4f2e0b2518bbe"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -984,7 +1039,7 @@
       "libro": {
         "titulo": "Linux para usuarios",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Linux se presenta desde la perspectiva de sus usuarios, dentro del estudio de los sistemas operativos para computadoras. El título invita a acercarse a este entorno desde su utilización y a situarlo en el ámbito de la informática. Una lectura para quienes desean orientarse en Linux y familiarizarse con el lenguaje de un sistema operativo.",
         "autores": [
           {
             "nombre": "Francisco Torres Escobar",
@@ -1169,7 +1224,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "205",
-        "imported_book_id": "204"
+        "imported_book_id": "204",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000305.json; SHA-256 de respuesta HTTP: 762a543177933c770b9e149dd7b59d7bafbe94bc97c4c517d9c7a3c5d62c2a3d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1177,7 +1243,7 @@
       "libro": {
         "titulo": "Programación web en java",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Java se estudia desde su aplicación a la programación web. El enfoque del título invita a relacionar un lenguaje de programación con el desarrollo de programas destinados al entorno de la web. Una lectura para quienes desean orientarse en ese ámbito técnico y situar el uso de Java dentro de un contexto concreto de creación de aplicaciones.",
         "autores": [
           {
             "nombre": "José Miguel Ordax Cassá",
@@ -1362,7 +1428,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "206",
-        "imported_book_id": "205"
+        "imported_book_id": "205",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000207.json; SHA-256 de respuesta HTTP: 0d68388acf1ed73bfae8e626369edc48c7255357a71c252ffc891cd61fb8bdba"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1370,7 +1447,7 @@
       "libro": {
         "titulo": "Redes locales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Las redes locales se presentan como una parte del estudio de las redes informáticas. El tema invita a comprender el espacio de conexión entre equipos cercanos y su lugar dentro de las comunicaciones entre computadoras. Una lectura para quienes desean familiarizarse con este ámbito técnico y situar la red local como una estructura de intercambio de información.",
         "autores": [
           {
             "nombre": "Molina Robles, Francisco José",
@@ -1555,7 +1632,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "207",
-        "imported_book_id": "206"
+        "imported_book_id": "206",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000162.json; SHA-256 de respuesta HTTP: 86957ac6f92e579b579be179a8141458727c1d11b8cd57245e024fdaac6aa22d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1563,7 +1651,7 @@
       "libro": {
         "titulo": "Revolución artificial: aplicaciones basadas en inteligencia artificial",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La inteligencia artificial se presenta desde sus aplicaciones prácticas en distintos sectores y su relación con la productividad y la innovación empresarial. La obra ofrece una entrada a conceptos y herramientas de este campo. Una lectura para quienes desean orientarse en el uso de la inteligencia artificial y situar sus posibilidades dentro de actividades concretas.",
         "autores": [
           {
             "nombre": "Entenova Gnosis",
@@ -1748,7 +1836,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "208",
-        "imported_book_id": "207"
+        "imported_book_id": "207",
+        "synopsis_provenance": {
+          "basis_kind": "INSTITUTIONAL_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://nodovox.com/record.php?id=730228",
+              "basis": "Paráfrasis original de la descripción institucional pública. Evidencia: audiobook-research/PLG-BK-000311.json; SHA-256 de respuesta HTTP: c698409e9b5175dbf660519f4ab96c0da99902290db70a157fd61482ef4ff81a"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

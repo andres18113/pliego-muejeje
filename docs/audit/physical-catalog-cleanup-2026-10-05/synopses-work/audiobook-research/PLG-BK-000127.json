@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000127",
+  "title": "El manual de Arduino",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:06.449369+00:00",
+      "response_sha256": "658b031d446af9144392b8e9fd5de3b5b16c40bc370efc09fbbcd3a40f5e9049",
+      "extraction_sha256": "97ae90633433c96ceb6dc76f49d2b081d66de09c1c4c876084c0e7df18a77267",
+      "text": "Guardado en: Autor Principal: Aliverti, Paolo, (autor.) Formato: eBook Idioma: Spanish Publicado: Barcelona (España) : Marcombo, 2016. Materias: Ordenadores > Sistemas Integrados. Internet de las cosas. Ordenadores > Programación. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/280056  ",
+      "observed_page_title": "Existencias: El manual de Arduino /",
+      "title_check_response_sha256": "3e462e2635930efa31505c3e7554aef6b3c9caa20fa8ea08a7daa4827e6ae77e",
+      "title_checked_at_utc": "2026-10-05T19:40:01.182670+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:07.742377+00:00",
+      "response_sha256": "95a6304aa73db54848a628f9e815ac9ea95e31d747c46369c9456b3ded51c7fe",
+      "extraction_sha256": "97ae90633433c96ceb6dc76f49d2b081d66de09c1c4c876084c0e7df18a77267",
+      "text": "Guardado en: Autor Principal: Aliverti, Paolo, (autor.) Formato: eBook Idioma: Spanish Publicado: Barcelona (España) : Marcombo, 2016. Materias: Ordenadores > Sistemas Integrados. Internet de las cosas. Ordenadores > Programación. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/280056  "
+    }
+  ]
+}

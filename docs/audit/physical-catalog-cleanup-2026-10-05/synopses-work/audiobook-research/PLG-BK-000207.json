@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000207",
+  "title": "Programación web en java",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:20.526058+00:00",
+      "response_sha256": "0d68388acf1ed73bfae8e626369edc48c7255357a71c252ffc891cd61fb8bdba",
+      "extraction_sha256": "5c1ffc219566de3a5bfd1023a0aab73cdd6fd0817c21e95dbbcc51e7927ea289",
+      "text": "Guardado en: Autor Principal: Ordax Cassá, José Miguel. Otros Autores: Aranzazu Ocaña Díaz Ufano, Pilar. Formato: eBook Idioma: Spanish Publicado: Madrid : Ministerio de Educación de España, 2012. Series: Aula mentor Materias: Java (Lenguaje de programación) Java (Computer program language) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/49347  ",
+      "observed_page_title": "Existencias: Programación web en java /",
+      "title_check_response_sha256": "3fb683485d61daf3f5bf08622b9c60a063d3790af986e2970d6014725bf78672",
+      "title_checked_at_utc": "2026-10-05T19:40:03.331684+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:21.907232+00:00",
+      "response_sha256": "06b4695dd929aa6cd55194392ae3aee2b3416deed31f8241bd44c5bf4001b7e7",
+      "extraction_sha256": "5c1ffc219566de3a5bfd1023a0aab73cdd6fd0817c21e95dbbcc51e7927ea289",
+      "text": "Guardado en: Autor Principal: Ordax Cassá, José Miguel. Otros Autores: Aranzazu Ocaña Díaz Ufano, Pilar. Formato: eBook Idioma: Spanish Publicado: Madrid : Ministerio de Educación de España, 2012. Series: Aula mentor Materias: Java (Lenguaje de programación) Java (Computer program language) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/49347  "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000117",
+  "title": "Escritos de psicoterapia cognitiva",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:06.185677+00:00",
+      "response_sha256": "702b2cedf8b0de1c5a9658c7e91e7fa8c6a4f7d7e1b88fbd399715b77f2c881a",
+      "extraction_sha256": "3122173194ce8236f944428afe7acaf0ba3834a7c511e5445170be6a6bbad06f",
+      "text": "Guardado en: Autor Principal: Keegan, Eduardo. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Buenos Aires, Argentina : Eudeba, 2008. Edición: 1a ed. 1a. reimp. Materias: Psicoterapia. Psicología cognitiva. Cognitive therapy. Psicologia cognitiva Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/66218  ",
+      "observed_page_title": "Existencias: Escritos de psicoterapia cognitiva",
+      "title_check_response_sha256": "4fa5fb261714a0b95aa02ce7b405feb9d80c8121b168ff51815ec0ab5088acee",
+      "title_checked_at_utc": "2026-10-05T19:39:59.902991+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:07.508858+00:00",
+      "response_sha256": "578390b146399f8995c0e0d485670b84700f97c36b7703f60d26953172b4fbc3",
+      "extraction_sha256": "3122173194ce8236f944428afe7acaf0ba3834a7c511e5445170be6a6bbad06f",
+      "text": "Guardado en: Autor Principal: Keegan, Eduardo. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Buenos Aires, Argentina : Eudeba, 2008. Edición: 1a ed. 1a. reimp. Materias: Psicoterapia. Psicología cognitiva. Cognitive therapy. Psicologia cognitiva Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/66218  "
+    }
+  ]
+}

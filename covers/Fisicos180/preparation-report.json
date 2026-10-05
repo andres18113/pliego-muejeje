@@ -1,0 +1,20 @@
+{
+  "schema": "pliego-physical-edition-preparation-v1",
+  "records": 180,
+  "categories": {
+    "Medicina": 30,
+    "Psicología": 30,
+    "Filosofía": 30,
+    "Matemáticas": 30,
+    "Infantil y Juvenil": 30,
+    "Literatura": 30
+  },
+  "work_actions": {
+    "CREATE_NEW_WORK": 180
+  },
+  "print_isbns": 128,
+  "demo_identifiers": 52,
+  "source_originals_preserved": 180,
+  "lossless_webp_derivatives": 180,
+  "pending_identities": []
+}

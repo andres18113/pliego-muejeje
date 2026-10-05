@@ -14,7 +14,7 @@ async function install(page: Page) {
     if (path === "/api/v1/me") return json({ customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (path === "/api/v1/me/addresses") return json([{ addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null,
       city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]);
-    if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", subtotal: "18.50", taxRate: "15.00", taxAmount: "2.78", shippingAmount: "0.00", total: "21.28", totalCurrent: "21.28",
+    if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 1, digitalItemCount: 0, subtotal: "18.50", taxRate: "15.00", taxAmount: "2.78", shippingAmount: "0.00", total: "21.28", totalCurrent: "21.28",
       estimatedDeliveryFrom: "2026-10-05", estimatedDeliveryTo: "2026-10-07", items: [{ cartItemId: "1", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez", sku: "TEST-42", coverUrl: null,
         quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, unavailabilityReason: null }] });
     if (path === "/api/v1/pickup-locations") return locationState === "error"

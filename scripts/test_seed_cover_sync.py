@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import copy
-import shutil
+import hashlib
 import importlib.util
 import json
 import sys
@@ -11,6 +11,8 @@ import tempfile
 import unittest
 from pathlib import Path
 from typing import Any
+
+from fixtures.catalog_helpers import RETIRED_DIGITAL_SKUS, RETIRED_PHYSICAL_SKUS, physical_catalog
 
 
 SCRIPT = Path(__file__).with_name("seed-development-catalog.py")
@@ -37,23 +39,39 @@ class FakeApi:
 
 
 class SeedCoverSyncTests(unittest.TestCase):
+    def test_prepared_digital_replay_preserves_curated_synopses(self) -> None:
+        root = Path(__file__).resolve().parents[1] / 'covers'
+        active = {}
+        for path in seed_module.discover_staging(root):
+            for row in json.loads(path.read_text())['libros']:
+                if row['edicion'].get('formato') in {'EBOOK', 'AUDIOBOOK'}:
+                    active[row['edicion']['sku']] = row
+        prepared = {}
+        for path in (root / 'generated/digital-batch/editions/staging').rglob('staging.json'):
+            for row in json.loads(path.read_text())['libros']:
+                prepared[row['edicion']['sku']] = row
+        self.assertTrue(active)
+        self.assertTrue(set(active).issubset(prepared))
+        for sku, row in active.items():
+            with self.subTest(sku=sku):
+                self.assertEqual(prepared[sku]['libro']['sinopsis'], row['libro']['sinopsis'])
+                self.assertEqual(prepared[sku]['preparacion'].get('synopsis_provenance'),
+                                 row['preparacion'].get('synopsis_provenance'))
+
 
     def test_stockless_digital_staging_without_isbn_preserves_registry_and_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
-            sources = []
-            for source in seed_module.DEFAULT_STAGING_FILES:
-                target = root / source.parent.name / source.name
-                target.parent.mkdir(parents=True)
-                shutil.copyfile(source, target)
-                sources.append(target)
+            source = root / "categoria-sintetica/staging.json"
+            source.parent.mkdir()
             registry_path = root / "sku-registry.json"
-            registry = json.loads(seed_module.DEFAULT_SKU_REGISTRY.read_text())
-            covers = seed_module.load_cover_manifest(seed_module.DEFAULT_COVER_MANIFEST)
-            source = sources[2]
-            document = json.loads(source.read_text())
-            reference = next(row for row in document["libros"] if row["libro"]["titulo"] == "Discurso del método")
-            for number, format_name in [(57, "EBOOK"), (58, "AUDIOBOOK")]:
+            registry = {"assignments": []}
+            covers = {}
+            document = {"libros": []}
+            reference = {"libro": {"titulo": "Obra sintética", "autores": [{"nombre": "Autora", "orden": 1}],
+                                   "categorias": ["Categoría Sintética"], "sinopsis": None},
+                         "edicion": {"editorial": "Editorial de prueba", "idioma": "es"}}
+            for number, format_name in [(900_001, "EBOOK"), (900_002, "AUDIOBOOK")]:
                 record = copy.deepcopy(reference)
                 record["portadaArchivo"] = f"digital-{format_name.lower()}.webp"
                 record["edicion"].update(isbn13=None, sku=None, formato=format_name, paginas=None)
@@ -64,12 +82,12 @@ class SeedCoverSyncTests(unittest.TestCase):
                 document["libros"].append(record)
                 sku = f"PLG-BK-{number:06d}"
                 registry["assignments"].append({"sku": sku, "identity_keys": [f"fallback:test-{format_name}"],
-                    "source_keys": [f"Filosofia/{source.name}#{record['portadaArchivo']}"]})
+                    "source_keys": [f"categoria-sintetica/{source.name}#{record['portadaArchivo']}"]})
                 covers[sku] = {"isbn13": None, "title": reference["libro"]["titulo"],
                     "coverUrl": f"https://covers.pliegolibros.com/covers/editions/v2/{sku}-0123456789ab.webp"}
             source.write_text(json.dumps(document))
             registry_path.write_text(json.dumps(registry))
-            seeds = seed_module.load_catalog_seeds(covers, registry_path, tuple(sources))
+            seeds = seed_module.load_catalog_seeds(covers, registry_path, (source,))
             digital = [seed for seed in seeds if seed.format in {"EBOOK", "AUDIOBOOK"}]
             self.assertEqual(len(digital), 2)
             self.assertTrue(all(seed.stock == 0 and seed.isbn13 is None and seed.page_count is None for seed in digital))
@@ -120,7 +138,9 @@ class SeedCoverSyncTests(unittest.TestCase):
         records = manifest["records"]
 
         self.assertEqual(seed_module.DEFAULT_COVER_MANIFEST.name, "manifest-normalized.json")
-        self.assertEqual(len(covers), 55)
+        self.assertEqual(set(covers), {record["permanent_sku"] for record in records}
+                         - seed_module.EXCLUDED_CATALOG_SKUS)
+        self.assertEqual(len(records), len({record["permanent_sku"] for record in records}))
         self.assertNotIn("PLG-BK-000042", covers)
         self.assertTrue(all("/covers/editions/v2/" in cover["coverUrl"] for cover in covers.values()))
         for record in records:
@@ -131,17 +151,110 @@ class SeedCoverSyncTests(unittest.TestCase):
                 record["cover_url"],
             )
 
-    def test_real_staging_catalog_maps_all_eligible_entries_by_isbn_and_sku(self) -> None:
-        covers = seed_module.load_cover_manifest(seed_module.DEFAULT_COVER_MANIFEST)
-        seeds = seed_module.load_catalog_seeds(
-            covers, seed_module.DEFAULT_SKU_REGISTRY, seed_module.DEFAULT_STAGING_FILES
-        )
+    def test_isolated_physical_staging_maps_by_fallback_identity_and_sku(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            staging = physical_catalog(root)
+            covers = seed_module.load_cover_manifest(root / "generated/manifest-normalized.json")
+            seeds = seed_module.load_catalog_seeds(covers, root / "sku-registry.json", (staging,))
+            records = json.loads(staging.read_text())["libros"]
+            assignments = json.loads((root / "sku-registry.json").read_text())["assignments"]
+            sku_by_source = {source: assignment["sku"] for assignment in assignments
+                             for source in assignment["source_keys"]}
+            expected = {}
+            for record in records:
+                key = f"{staging.relative_to(root).as_posix()}#{record['portadaArchivo']}"
+                sku = sku_by_source[key]
+                if sku not in seed_module.EXCLUDED_CATALOG_SKUS:
+                    expected[sku] = record
+            self.assertEqual({seed.sku for seed in seeds}, set(expected))
+            self.assertEqual(set(covers), set(expected))
+            self.assertEqual({seed.format for seed in seeds}, {"PAPERBACK", "HARDCOVER"})
+            for seed in seeds:
+                self.assertIsNone(seed.isbn13)
+                self.assertEqual(seed.title, expected[seed.sku]["libro"]["titulo"])
+                self.assertEqual(seed.cover_url, covers[seed.sku]["coverUrl"])
+                self.assertGreaterEqual(seed.stock, seed_module.LOCAL_DEVELOPMENT_MINIMUM_STOCK)
+            self.assertNotIn("PLG-BK-000042", {seed.sku for seed in seeds})
 
-        self.assertEqual(len(seeds), 55)
-        self.assertEqual({seed.sku for seed in seeds}, set(covers))
-        self.assertTrue(all(seed.isbn13 and seed.title for seed in seeds))
-        self.assertTrue(all(seed.stock >= seed_module.LOCAL_DEVELOPMENT_MINIMUM_STOCK for seed in seeds))
-        self.assertNotIn("PLG-BK-000042", {seed.sku for seed in seeds})
+    def test_retired_historical_digital_records_and_sku_assignments_remain_unchanged(self) -> None:
+        baseline = json.loads(Path(__file__).with_name("fixtures").joinpath("prior-cover-catalog.json").read_text())
+        manifest = json.loads(seed_module.DEFAULT_COVER_MANIFEST.read_text())
+        registry = json.loads(seed_module.DEFAULT_SKU_REGISTRY.read_text())
+        retired_manifest = json.loads((seed_module.DEFAULT_SKU_REGISTRY.parent / "retired-manifest.json").read_text())
+        retired = {record["permanent_sku"]: record for record in retired_manifest["records"]}
+        records = {record["permanent_sku"]: record for record in manifest["records"]}
+        assignments = {assignment["sku"]: assignment for assignment in registry["assignments"]}
+        self.assertEqual(len(assignments), len(registry["assignments"]))
+        self.assertEqual(len(records), len(manifest["records"]))
+        # User-requested removal is an identity exception, not a global count adjustment.
+        retired_digital = RETIRED_DIGITAL_SKUS
+        self.assertTrue(retired_digital.issubset(baseline["digital_manifest_sha256"]))
+        self.assertEqual(set(retired), set(baseline["historical_manifest_sha256"])
+                         | retired_digital | RETIRED_PHYSICAL_SKUS)
+        self.assertEqual(len(retired), len(retired_manifest["records"]))
+        self.assertTrue(set(retired).isdisjoint(records))
+        self.assertTrue(set(retired).issubset(assignments))
+        for group, current in (("historical_manifest_sha256", retired),
+                               ("digital_manifest_sha256", records | retired),
+                               ("prior_registry_sha256", assignments)):
+            for sku, expected_digest in baseline[group].items():
+                with self.subTest(group=group, sku=sku):
+                    self.assertIn(sku, current)
+                    digest = hashlib.sha256(json.dumps(current[sku], sort_keys=True, ensure_ascii=False,
+                                                       separators=(",", ":")).encode()).hexdigest()
+                    self.assertEqual(digest, expected_digest)
+        self.assertTrue(set(records).issubset(assignments))
+        self.assertEqual({sku for sku, record in records.items()
+                          if record.get("format") in {"EBOOK", "AUDIOBOOK"}},
+                         set(baseline["digital_manifest_sha256"]) - retired_digital)
+        self.assertEqual(retired["PLG-BK-000196"]["format"], "AUDIOBOOK")
+        self.assertEqual(retired["PLG-BK-000196"]["title"], "24 ideas para una psicoterapia breve (2a. ed.)")
+        identities = {}
+        sources = {}
+        for sku, assignment in assignments.items():
+            self.assertTrue(assignment["identity_keys"])
+            for key in assignment["identity_keys"]:
+                self.assertNotIn(key, identities, f"Identidad duplicada: {key}")
+                identities[key] = sku
+            for source in assignment["source_keys"]:
+                self.assertNotIn(source, sources, f"Fuente duplicada: {source}")
+                sources[source] = sku
+        self.assertIn("PLG-BK-000042", assignments)
+        self.assertNotIn("PLG-BK-000042", records)
+        for sku, record in records.items():
+            if record.get("isbn13"):
+                self.assertEqual(identities[f"isbn13:{record['isbn13']}"], sku)
+            else:
+                self.assertTrue(any(key.startswith("fallback:") for key in assignments[sku]["identity_keys"]))
+            self.assertIn(record.get("format", "PAPERBACK"), {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"})
+
+    def test_generic_seed_rejects_real_specialized_digital_staging(self) -> None:
+        root = seed_module.DEFAULT_SKU_REGISTRY.parent
+        covers = seed_module.load_cover_manifest(seed_module.DEFAULT_COVER_MANIFEST)
+        files = [path for path in seed_module.discover_staging(root)
+                 if path.relative_to(root).parts[0] in {"Ebook", "Audiolibros"}]
+        self.assertTrue(files)
+        digital_skus = set()
+        for path in files:
+            document = json.loads(path.read_text())
+            with self.subTest(staging=path.relative_to(root)):
+                with self.assertRaisesRegex(seed_module.ApiError, "importador.*DEMO"):
+                    seed_module.load_catalog_seeds(covers, seed_module.DEFAULT_SKU_REGISTRY, (path,))
+                for row in document["libros"]:
+                    edition = row["edicion"]
+                    synopsis = row["libro"]["sinopsis"]
+                    self.assertIsInstance(synopsis, str)
+                    self.assertTrue(synopsis.strip())
+                    self.assertNotRegex(synopsis, r"(?i)\b(?:DEMO|SIMULATED)\b")
+                    self.assertIn(edition["formato"], {"EBOOK", "AUDIOBOOK"})
+                    self.assertIsNone(edition["isbn13"])
+                    self.assertIn(edition["sku"], covers)
+                    self.assertNotIn(edition["sku"], digital_skus)
+                    digital_skus.add(edition["sku"])
+        manifest = json.loads(seed_module.DEFAULT_COVER_MANIFEST.read_text())
+        self.assertEqual(digital_skus, {record["permanent_sku"] for record in manifest["records"]
+                                       if record.get("format") in {"EBOOK", "AUDIOBOOK"}})
 
     def test_exclusion_is_enforced_even_if_manifest_contains_the_sku(self) -> None:
         excluded_sku = "PLG-BK-000042"

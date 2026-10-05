@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Biología cuántica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Salvador Miret Artés reúne biología y mecánica cuántica en una obra dedicada a su encuentro. El libro permite dirigir la atención hacia un ámbito de estudio que conecta dos campos científicos. Una lectura para quienes desean explorar las preguntas que surgen al relacionar el conocimiento de la vida con la perspectiva de la física cuántica.",
         "autores": [
           {
             "nombre": "Miret Artés, Salvador",
@@ -184,7 +184,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "257",
-        "imported_book_id": "255"
+        "imported_book_id": "255",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Biología. Mecánica cuántica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -192,7 +203,7 @@
       "libro": {
         "titulo": "Biología de hongos",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Los hongos constituyen el objeto de estudio de la micología. María Caridad Cepero presenta una obra dedicada a su biología y al conocimiento de este grupo de organismos. La lectura ofrece una entrada al ámbito micológico para quienes desean comprender mejor la diversidad de la vida y orientar su interés hacia el estudio específico de los hongos.",
         "autores": [
           {
             "nombre": "Cepero, María Caridad",
@@ -369,7 +380,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "258",
-        "imported_book_id": "256"
+        "imported_book_id": "256",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mycology. Hongo. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -377,7 +399,7 @@
       "libro": {
         "titulo": "Biología para ciencias ambientales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La biología constituye una base de conocimiento para el estudio de las ciencias ambientales. Esta obra dirige la atención hacia ese vínculo y hacia el interés por comprender la vida dentro de una formación orientada al ambiente. Una aproximación para quienes buscan relacionar la disciplina biológica con preguntas sobre los seres vivos y su contexto.",
         "autores": [
           {
             "nombre": "Pallotti Sagripanti, C. G.",
@@ -564,7 +586,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "259",
-        "imported_book_id": "257"
+        "imported_book_id": "257",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Biology. Biología. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -572,7 +605,7 @@
       "libro": {
         "titulo": "Ecología química",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La ecología química estudia una dimensión de las relaciones entre los organismos y su entorno. Ana Luisa Anaya Lang dedica esta obra a ese campo de encuentro entre conocimientos ecológicos y químicos. La lectura invita a considerar la importancia de los procesos químicos dentro del estudio de la vida y de las relaciones que configuran los sistemas ecológicos.",
         "autores": [
           {
             "nombre": "Anaya Lang, Ana Luisa",
@@ -749,7 +782,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "260",
-        "imported_book_id": "258"
+        "imported_book_id": "258",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Chemical ecology. Ecología química. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -757,7 +801,7 @@
       "libro": {
         "titulo": "Física de la música",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Julián Félix explora el encuentro entre física y música. La acústica, la teoría musical y los instrumentos forman parte del ámbito temático de la obra. Una lectura para quienes desean pensar la experiencia musical desde sus relaciones con el sonido y acercarse al conocimiento físico de una actividad que también pertenece al mundo de la creación artística.",
         "autores": [
           {
             "nombre": "Félix, Julián",
@@ -934,7 +978,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "261",
-        "imported_book_id": "259"
+        "imported_book_id": "259",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Música. Acústica. Teoría musical. Instrumentos musicales. Music > Acoustics and physics. Music theory. Musical instruments. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -942,7 +997,7 @@
       "libro": {
         "titulo": "Física del estado sólido",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Juan José Meléndez Martínez ofrece una visión del estado sólido que reúne el comportamiento de metales y aislantes con dispositivos semiconductores, magnetismo y superconductividad. La obra nace de su experiencia docente y está dirigida a estudiantes de etapas avanzadas de formación universitaria. Una referencia para profundizar en el estudio físico de la materia sólida y de sus propiedades.",
         "autores": [
           {
             "nombre": "Meléndez Martínez, Juan J.",
@@ -1119,7 +1174,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "262",
-        "imported_book_id": "260"
+        "imported_book_id": "260",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+              "basis": "La sinopsis de la Universidad de Extremadura confirma metales, aislantes, semiconductores, magnetismo y superconductividad, y público de grado avanzado y posgrado."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1127,7 +1193,7 @@
       "libro": {
         "titulo": "Física experimental",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La experimentación permite relacionar las preguntas de la física con la observación de fenómenos. Ángel Miguel Ardila presenta una obra dedicada a ese ámbito y a su vínculo con la enseñanza. Una lectura para quienes desean acercarse al trabajo experimental como parte del aprendizaje físico y pensar la relación entre la experiencia y los conceptos de la disciplina.",
         "autores": [
           {
             "nombre": "Ardila, Ángel Miguel",
@@ -1304,7 +1370,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "263",
-        "imported_book_id": "261"
+        "imported_book_id": "261",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Physics > Experiments. Physics > Study and teaching. Física experimetal. Física > Enseñanza. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1312,7 +1389,7 @@
       "libro": {
         "titulo": "Física fundamental",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "José del Carmen Gómez Espíndola, Campo Elías González Pineda y César Alberto Mayoral Ramírez presentan una obra de fundamentos físicos. El libro se vincula con la enseñanza de la física en el ámbito universitario. Una lectura para quienes desean construir una base de estudio de la disciplina y fortalecer su comprensión dentro de una formación superior.",
         "autores": [
           {
             "nombre": "Gómez Espíndola, José del Carmen",
@@ -1509,7 +1586,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "264",
-        "imported_book_id": "262"
+        "imported_book_id": "262",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Physics > Study and teaching. Education, Higher. Física > Enseñanza. Enseñanza superior. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1517,7 +1605,7 @@
       "libro": {
         "titulo": "Física y programación",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "David Merino Arranz, Emma Rossinyol Casals y Antoni Perez-Navarro reúnen física y programación en una obra situada entre ambas disciplinas. El procesamiento de datos forma parte de su ámbito bibliográfico. Una lectura para quienes desean relacionar el estudio de los fenómenos físicos con el trabajo informático y explorar preguntas que conectan conocimiento científico y programación.",
         "autores": [
           {
             "nombre": "Merino Arranz, David",
@@ -1714,7 +1802,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "265",
-        "imported_book_id": "263"
+        "imported_book_id": "263",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Electronic data processing. Physics. Física. Proceso de datos. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1722,7 +1821,7 @@
       "libro": {
         "titulo": "Introducción a la física",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una aproximación inicial al estudio de la física mediante un texto asociado a la enseñanza y a la resolución de problemas. Antonio Lara Barragán Gómez y Héctor Núñez Trejo presentan una obra para acercarse a esa disciplina. La lectura permite relacionar el aprendizaje de conceptos físicos con el trabajo de razonamiento que exige plantear y resolver ejercicios.",
         "autores": [
           {
             "nombre": "Lara Barragán Gómez, Antonio",
@@ -1909,7 +2008,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "266",
-        "imported_book_id": "264"
+        "imported_book_id": "264",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Physics > Textbooks. Física > Libros de texto. Physics > Problems, exercises, etc. Física > Problemas, ejercicios, etc. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1917,7 +2027,7 @@
       "libro": {
         "titulo": "Problemas de Física (27a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Enrique Burbano García y Carlos Gracia Muñoz reúnen una obra dedicada al trabajo con problemas de física. El libro relaciona el aprendizaje de la disciplina con la práctica de resolver ejercicios. Una lectura para quienes desean desarrollar su razonamiento físico y acercarse a los conceptos mediante las preguntas que plantea su aplicación en problemas.",
         "autores": [
           {
             "nombre": "Burbano García, Enrique",
@@ -2104,7 +2214,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "267",
-        "imported_book_id": "265"
+        "imported_book_id": "265",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Física. Física > Problemas, ejercicios, etc. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2112,7 +2233,7 @@
       "libro": {
         "titulo": "Química experimental (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El laboratorio ocupa un lugar central en el aprendizaje de la química. Este libro reúne el estudio experimental con problemas y ejercicios, vinculando la enseñanza de la disciplina con la observación de fenómenos. Una propuesta de lectura para estudiantes interesados en comprender la química mediante el trabajo práctico y en relacionar sus conceptos con la experiencia experimental.",
         "autores": [
           {
             "nombre": "Pacheco Espejel, Martha Patricia",
@@ -2309,7 +2430,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "268",
-        "imported_book_id": "266"
+        "imported_book_id": "266",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Química experimental. Química > Problemas y ejercicios. Chemistry > Study and teaching. Chemistry > Experiments. Chemistry > Problems, exercises, etc. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2317,7 +2449,7 @@
       "libro": {
         "titulo": "Química orgánica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "María del Pilar Cabildo Miranda presenta una obra dedicada al estudio de la química orgánica. El libro orienta el interés hacia una de las ramas de la disciplina química. Una lectura para quienes desean profundizar en ese campo de conocimiento y construir una relación más sólida con las preguntas y los conceptos que acompañan su estudio.",
         "autores": [
           {
             "nombre": "Cabildo Miranda, María del Pilar",
@@ -2494,7 +2626,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "269",
-        "imported_book_id": "267"
+        "imported_book_id": "267",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Chemistry, Organic. Química orgánica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

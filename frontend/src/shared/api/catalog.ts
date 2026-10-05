@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { components, operations } from "./generated";
+import type { components, paths } from "./generated";
 import { apiClient } from "./client";
 import { isRecord, toApiRequestError } from "./errors";
 import { digitalMetadataFields, editionFormatSchema, validateDigitalMetadata, type EditionFormat } from "./editionFormats";
@@ -108,7 +108,8 @@ export type EditionSearch = {
   maxPrice: string;
   language: string;
   format: "" | EditionFormat;
-  sort: "TITLE_ASC" | "PRICE_ASC" | "PRICE_DESC";
+  productType?: "" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+  sort: "TITLE_ASC" | "PRICE_ASC" | "PRICE_DESC" | "BEST_SELLING";
   page: number;
   pageSize: number;
 };
@@ -160,13 +161,14 @@ export async function getPublicCatalogFilterOptions(signal?: AbortSignal): Promi
 }
 
 export async function searchPublicEditions(search: EditionSearch, signal?: AbortSignal) {
-  const query: NonNullable<operations["search"]["parameters"]["query"]> = {
+  const query: NonNullable<paths["/api/v1/catalog/editions"]["get"]["parameters"]["query"]> = {
     ...(search.query ? { que: search.query } : {}),
     ...(search.category ? { category: search.category } : {}),
     ...(search.minPrice ? { minPrice: search.minPrice as unknown as number } : {}),
     ...(search.maxPrice ? { maxPrice: search.maxPrice as unknown as number } : {}),
     ...(search.language ? { language: search.language } : {}),
     ...(search.format ? { format: search.format } : {}),
+    ...(search.productType ? { productType: search.productType } : {}),
     sort: search.sort,
     page: search.page,
     pageSize: search.pageSize,

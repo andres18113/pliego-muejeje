@@ -103,5 +103,845 @@
     "mode": "fill",
     "focalX": 0.5,
     "focalY": 0.5
+  },
+  "PLG-BK-000316": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "1b63e5901c865b94cfcc3b99100bc6d81cac290b56ad76fa47201fc90eb0ac9f"
+  },
+  "PLG-BK-000317": {
+    "reviewedCropBox": [
+      0,
+      0,
+      213.33333333333334,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Alineación izquierda protege texto/marca en borde izquierdo.",
+    "reviewedSourceSha256": "1b046246d0dd75bfef3b5d3022cb99f44750a36334f82526dc5283b9a7e5fc6d"
+  },
+  "PLG-BK-000319": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "1941238153ff2cbbd8cb909906b062c6f562789d0a62abad33bdc412b59b7a26"
+  },
+  "PLG-BK-000320": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "952c87d6fca59609d01f0b15fddff760ad776f5be68858f437148c3ba931adc7"
+  },
+  "PLG-BK-000322": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "3c3a6e68b81a35e5a01d147f0b226e8a63fca9b299e06b2f5357f6d26bf05618"
+  },
+  "PLG-BK-000325": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "e86f7c2e8fa376ae590f121543b69c6aa9dc8550201e85a91b63c119f6db4f46"
+  },
+  "PLG-BK-000326": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "f8820d57fc61d2f465b31990e8431dc72cec6030e14ca19316e5535747149245"
+  },
+  "PLG-BK-000327": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "76d4808264ca03c156582272f762986f493d46cafdff7d293e77bd25565accae"
+  },
+  "PLG-BK-000328": {
+    "reviewedCropBox": [
+      0,
+      0,
+      213.33333333333334,
+      320
+    ],
+    "reviewedSourceSha256": "5ff9e3828dbe1726867ed20ea0a6fcca737bac3644cc303e9b5ade5bedc39358",
+    "reviewedCropReason": "Revisión comparativa de original y salida normalizada: desplazar el recorte mínimo 2:3 para conservar la autoría/rotulación en el borde izquierdo. No se recortan título, autoría ni marcas editoriales."
+  },
+  "PLG-BK-000332": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "2703fe0674a9340558271e8b0d8af77c20e3ab9fc5f27b141281cdc4a8231b87"
+  },
+  "PLG-BK-000334": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "f21f0b19b4c33e5f57a013f935ea3fbb76d4030e555b84672b6c85c4c74f25d1"
+  },
+  "PLG-BK-000337": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "7c308b11a10a9f59e1231b4eb9c6f1b5d4a75af99909c2acb3df399bbf7a9829"
+  },
+  "PLG-BK-000340": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "14782b223ddd4419a8dff69f765a5d37b236a1f00dad620638f5f792f20eca12"
+  },
+  "PLG-BK-000342": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "685fd9fc2a1934457de6698893f292080405bdf4e7fd05c8bff53f7c9188504b"
+  },
+  "PLG-BK-000344": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "7d505cba68477d8646138611b8731863be946fe0931875e6dfac0979890f3190"
+  },
+  "PLG-BK-000345": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "0077dcee01dedf210922aa2a6aec9bcaa92f5b75f622c1fd401fe83a68e0f51e"
+  },
+  "PLG-BK-000346": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "c5fca090cf59ba88347b7cf9de9f4b2dbee27196bd6177dd0760d3e9525eb8dd"
+  },
+  "PLG-BK-000347": {
+    "reviewedCropBox": [
+      0,
+      0,
+      213.33333333333334,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Alineación izquierda protege texto/marca en borde izquierdo.",
+    "reviewedSourceSha256": "792ef56ea5a65a2fa17fc3001cdef1ec55ef4b66dac59d8f4dc79bdd1ea06fba"
+  },
+  "PLG-BK-000348": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "0f1ea0d96c79e77489232931c41ef1a93db81ede5ac5df566ffb935d6e4d2f67"
+  },
+  "PLG-BK-000356": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "e96b0c97777156494e767b2ed4530277b92da42d306f6cfff2a0679edde8b997"
+  },
+  "PLG-BK-000358": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "8af1009c6fae165669dc3402ae339ffc1fe0e452c3d44edc45316ad055fbc130"
+  },
+  "PLG-BK-000360": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "64bb73fb84436c7eb5b00677f3264db20eca4989829f257568430dec7d4ceae9"
+  },
+  "PLG-BK-000364": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "b399ce868fbe972629feca46ba0b8774db77d2e2788f095129368a893830fd2e"
+  },
+  "PLG-BK-000365": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "213e3af91f2f2c7181a2b64dd239365e2f9daf2252914b5df067b6abfbff0d71"
+  },
+  "PLG-BK-000366": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "e0897c757792872a25943b62414b7576f95f0ceb1efcfb1936d646e6797bd909"
+  },
+  "PLG-BK-000370": {
+    "reviewedCropBox": [
+      0,
+      0,
+      213.33333333333334,
+      320
+    ],
+    "reviewedSourceSha256": "63aa959f5ff461465410dcc8b1fed81895effbae092654d55407854a5c3930d6",
+    "reviewedCropReason": "Revisión comparativa de original y salida normalizada: desplazar el recorte mínimo 2:3 para conservar la autoría/rotulación en el borde izquierdo. No se recortan título, autoría ni marcas editoriales."
+  },
+  "PLG-BK-000371": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "901a9fe7376c230d28f9ed20d822b503364fc68e93450fb6ed1126082faf00b3"
+  },
+  "PLG-BK-000372": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "fbe818fdb45416ec879ff5fcb0c0eb0b731fda56498e482405146c326284d768"
+  },
+  "PLG-BK-000374": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "624e45f7664c33dced24e237fa9a900eae097553baf721b5ed08c8b584104e00"
+  },
+  "PLG-BK-000375": {
+    "reviewedCropBox": [
+      0,
+      0,
+      213.33333333333334,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Alineación izquierda protege texto/marca en borde izquierdo.",
+    "reviewedSourceSha256": "0a03f48ed3f12bb8b6b214e0bcb99af699f5443b2247f4425aa4e3f13b39bc49"
+  },
+  "PLG-BK-000376": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "bef96782fa2b1bdbf48dffbe2afd6a65ed6502a2703502b5eb76cf2b5009d177"
+  },
+  "PLG-BK-000385": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "60a39a1f47c7357883da4fb3ea4535c1321a1e0fa89837d260ad44c0bec49dde"
+  },
+  "PLG-BK-000386": {
+    "reviewedCropBox": [
+      0,
+      0,
+      213.33333333333334,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Alineación izquierda protege texto/marca en borde izquierdo.",
+    "reviewedSourceSha256": "b39ac2caef91122f38675b5b698a07569fa652daa498ca2adddffbbd53c5e959"
+  },
+  "PLG-BK-000387": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "75a30fd52fc08444021c70ea69a46a0c0261c612cd714e8480e035c6b098b1e8"
+  },
+  "PLG-BK-000388": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "3c6d4bd53b111e34ea2e1a9caa60b3984e742b0b19d908721690f7663da0180b"
+  },
+  "PLG-BK-000389": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "a1529f99660cab98781c2a84bd03a23cecb6a41e2334d7f4e0df88ff4f3e13c9"
+  },
+  "PLG-BK-000392": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "c96f40c8500490cf046e22c91dca4cd24e675d24671c33919ac6d863401120af"
+  },
+  "PLG-BK-000394": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "dbf0b03a6fc278e4a4d63f7eecba53f882e5258381ed3fc5d98d38deda68eb49"
+  },
+  "PLG-BK-000395": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "191caaceaf5fa64a6a5e4b1c74f4a79f4670ecf4377a1cef0c2d307e98272388"
+  },
+  "PLG-BK-000396": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "7ab629be3de7b646e42421ce9ebf6c1fb6b0e3662fd7a51b0b72ea95063ce98d"
+  },
+  "PLG-BK-000397": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "5bd3b05db39897ae7d61e66c33a52ea33213ba2b2302c614c66f056015c58ee5"
+  },
+  "PLG-BK-000398": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "e2b85223341514756d06d3b568f695bad3c822eb82d776b8e61d7abd46bb9fe8"
+  },
+  "PLG-BK-000399": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "75affc8227ad24f520065dc0995de0af484d673a157b87387a6c95c2620fa464"
+  },
+  "PLG-BK-000404": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "e9f321de6768dc7ee6233bb69e39c7df128debdea646998cdb65dd43a2572641"
+  },
+  "PLG-BK-000407": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "e6f6a2df32cc44368ea172886765e1922479bce51e5ba8b4961a1a827b7b99df"
+  },
+  "PLG-BK-000409": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "71b3d352b0fbbf04f5f457898f5ba98b3420c65cf8c9e8ba23bb7a35f688589e"
+  },
+  "PLG-BK-000415": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "03dc5da1ab2a7dd88b044065217d8a6df01048cabba0bb47921601568447f189"
+  },
+  "PLG-BK-000423": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "32c7c31b4c961b2171ad591a9aab795738077b84281cfa54c34a31fa3c6735dd"
+  },
+  "PLG-BK-000425": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "7a93e996d7eb82c13884f3e6e9aeb2820ebc35442bfb2f20dd144ab466d41e68"
+  },
+  "PLG-BK-000430": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "4d42fb8d2e22ce3a4ac860d48ad4124547cdae999045dcab63a9cd806323383b"
+  },
+  "PLG-BK-000431": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "c8f042d7668b8e854621951d73bbbe4a7ae8bf99c05c4e39be86cfa5259d065d"
+  },
+  "PLG-BK-000432": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "28a49cab1dd41194cabd707a8f6a89ff712722edda8aca6ce24e8fac2bcf439c"
+  },
+  "PLG-BK-000433": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "dd4ccfbcfc4809df46afd09d4bd99366150ccf10037997b41d34afcda3d8ef55"
+  },
+  "PLG-BK-000434": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "82c97c024b4d051e3586972e61b473b998169651ed363404b3a75637dd96fff5"
+  },
+  "PLG-BK-000435": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "cf526264d9c102499d1791beb7a6ca812c73cb9dd2d1878ae504f267d71bcce5"
+  },
+  "PLG-BK-000438": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "d6d4c2618a43e690ccea17c5e718f30b51bc01b3055b166c19906fd73d65b661"
+  },
+  "PLG-BK-000440": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "a27a375741096bce127b26171c37f3c47de0ceb69179d29afc77b5f7f6f46cfc"
+  },
+  "PLG-BK-000441": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "f8b110efcf7f4f9381dd88ec9f004351e7e91d20f8a2b36801f9530147e2f7a3"
+  },
+  "PLG-BK-000442": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "6cd99ce56f428f21a9029cbda0e6f09102adcf5fd7a8e100d49fed69a0626598"
+  },
+  "PLG-BK-000444": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "444ade5b0e2146b090dc5fcb609acafc3f1e7bc5ea51a4a32585b41b0a327ac9"
+  },
+  "PLG-BK-000447": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "4fc73352cae4343a639d91d2cf117a7624ffa6e98b63e161c16a322c0ba8f80c"
+  },
+  "PLG-BK-000449": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "66f001ba882273b4bd237e8ac8cd74f33b961b65aa31d5a869364b44fff98f16"
+  },
+  "PLG-BK-000458": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "c808ceec5703a8adda32cb1c2b391c2a733057c6da3ce6ce17932bcfbf07304d"
+  },
+  "PLG-BK-000459": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "7af13b1ae28bf4ed949b3db784edecd6ac91865c98655b20faa8c387ff5513a7"
+  },
+  "PLG-BK-000461": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "c1c2bd050041a62c9f86521ed1bd17e8cdb7c492abff3a717263dd80a182c559"
+  },
+  "PLG-BK-000462": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "4d04c062b4260ca7ce15b03298a63fe7af998ce92518708b244f40cd7aa3dd51"
+  },
+  "PLG-BK-000464": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "7ba29762f90e0f3020fdcfe0074a9e7c48bacbc80926558a0bcb784789463365"
+  },
+  "PLG-BK-000468": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "647e566648679836e1263d371c58e9c59aba6748599884292241d6913bf0c375"
+  },
+  "PLG-BK-000471": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "6e2e0d6e5c416b2801bc54bba07aa3c1874b2e8f6d61bce679efa95ee6782b6f"
+  },
+  "PLG-BK-000476": {
+    "reviewedCropBox": [
+      6.666666666666667,
+      0,
+      220.0,
+      320
+    ],
+    "reviewedSourceSha256": "24beae421d6c3ed33ea3362fafa51e3e3b4ec8b0a605433e1b868548e641459c",
+    "reviewedCropReason": "Revisión comparativa de original y salida normalizada: desplazar el recorte mínimo 2:3 para conservar el título en el borde derecho. No se recortan título, autoría ni marcas editoriales."
+  },
+  "PLG-BK-000477": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "a9b86e723c9682fb9e46206210c25e8a364d29f9a143128bc226772741f7cd6c"
+  },
+  "PLG-BK-000478": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "33393bcaec781e633e9bfb1f575650ec57826803538dea9e0000c1ddca5b868f"
+  },
+  "PLG-BK-000480": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "3a138ab776224c90e062e922561ff95c5a70178080e4db5f38e3470990512036"
+  },
+  "PLG-BK-000481": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "e8e9d904faf36afb9ddf6e449c30d650ddda7a01bc85698d9e2a501ec316bc17"
+  },
+  "PLG-BK-000482": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "8ae0f0a1cf73a743f22492c2ff787bd5bca4ed059171849edc5f9b8c5df92d71"
+  },
+  "PLG-BK-000486": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "bc25e034f19776d506d5a48c439906a3e8386ecb368a37869b79fd72685ebce6"
+  },
+  "PLG-BK-000487": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "f8e85357e195d62b4a040fc838f2f2bc08b4c46ab7df7a9636793431ecb10eeb"
+  },
+  "PLG-BK-000489": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "4caa898c0b1ade3155ecc16f47a85bda0f210dc4e0080d76fc9179d37e74d83e"
+  },
+  "PLG-BK-000490": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "ceb1dafef2e42ee8d8c3edc589c9db98a7d6df4df5a33ec00a58dfc784be0ff8"
+  },
+  "PLG-BK-000491": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "f8e83f2c057d802577db1970bffa046e92f2c966a4258f49448be4ecf5c0f116"
+  },
+  "PLG-BK-000492": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "86e8ed100eb65cdb66f205928c37d7a7d58ea73e95cdc8966e9cd20c0af2750e"
+  },
+  "PLG-BK-000493": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "db8f428f7f2dbe2cf92ee61b6b56fefae49a0c567edc63389c2ae6673c2c351f"
+  },
+  "PLG-BK-000494": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "5e6a84bd568ed437b51a7fe30f4ae253e9502ebc93cbfc44c24ef4a9bec9be4b"
+  },
+  "PLG-BK-000495": {
+    "reviewedCropBox": [
+      3.3333333333333335,
+      0,
+      216.66666666666669,
+      320
+    ],
+    "reviewedCropReason": "Revisión visual del original y su hoja de contacto: cubierta plana editorial completa; eliminar únicamente 6,67 px horizontales de borde/ilustración exterior para 2:3, conservando título, autoría y logotipos. Recorte centrado mínimo; marcas dentro del área conservada.",
+    "reviewedSourceSha256": "30addab379860e1a8c8211d62b5dd2cfe0bfa6d555e99f052e0c183e96c6580e"
   }
 }

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000141",
+  "title": "Historia mínima de Centroamérica",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193611",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:09.069430+00:00",
+      "response_sha256": "e352e784630f85f7f8493403bc2ac8057e289c104b7c6e57b3fb6643aee15ab3",
+      "extraction_sha256": "a3194a0963c4018afdd450cb1359ac18e0ce12f3d029b3162765ddb5b95c367d",
+      "text": "Guardado en: Autor Principal: Pastor, Rodolfo, (autor.) Otros Autores: Pastor, Rodolfo. Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, Centro de Estudios Históricos, 2011. Edición: Primera edición. Materias: Central America > History. América Central > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193611  ",
+      "observed_page_title": "Existencias: Historia mínima de Centroamérica /",
+      "title_check_response_sha256": "5689183f59eea5ce26e42df8ebd45ef2e0f00d50652340492025915e0521b292",
+      "title_checked_at_utc": "2026-10-05T19:40:08.799086+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193611/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.375836+00:00",
+      "response_sha256": "3d2a285c9d8b06e8d40583b3db895554bb76ca3bd828b37aa93209ad676bd791",
+      "extraction_sha256": "a3194a0963c4018afdd450cb1359ac18e0ce12f3d029b3162765ddb5b95c367d",
+      "text": "Guardado en: Autor Principal: Pastor, Rodolfo, (autor.) Otros Autores: Pastor, Rodolfo. Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, Centro de Estudios Históricos, 2011. Edición: Primera edición. Materias: Central America > History. América Central > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193611  "
+    }
+  ]
+}

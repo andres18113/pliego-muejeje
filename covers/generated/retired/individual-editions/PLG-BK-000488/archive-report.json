@@ -1,0 +1,524 @@
+{
+  "sku": "PLG-BK-000488",
+  "reason": "Retiro explícito solicitado por el usuario por presentación de portada",
+  "original_file": "Fisicos180/Literatura/portadas/physical-elibrary-110514.webp",
+  "original_sha256": "46822ba3476410fbf8dfa1905fe8c0205404638247574552b0befd0fbac5b1b0",
+  "source_records": [
+    {
+      "staging": "/home/andres18123/PLIEGO/covers/Fisicos180/Literatura/staging.json",
+      "record": {
+        "portadaArchivo": "portadas/physical-elibrary-110514.webp",
+        "libro": {
+          "titulo": "El burgués: entre la historia y la literatura",
+          "subtitulo": null,
+          "sinopsis": "Analiza la representación del burgués en la literatura europea moderna mediante retratos individuales relacionados con la historia del capitalismo. [Precio DEMO en USD.]\n[Catálogo físico SIMULATED/DEMO: encuadernación, idioma, páginas y existencias académicas; disponibilidad física no verificada.]",
+          "autores": [
+            {
+              "nombre": "Moretti, Franco",
+              "orden": 1
+            }
+          ],
+          "categorias": [
+            "Literatura"
+          ]
+        },
+        "edicion": {
+          "editorial": "FCE - Fondo de Cultura Económica",
+          "idioma": "es",
+          "formato": "PAPERBACK",
+          "isbn13": "9789877190601",
+          "paginas": 391,
+          "precio": "34.95",
+          "sku": "PLG-BK-000488",
+          "inventarioInicial": 10,
+          "fechaPublicacion": null,
+          "ebookFileFormat": null,
+          "audioDurationSeconds": null,
+          "narrators": [],
+          "portada": {
+            "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000488-202aca7173b5.webp",
+            "licencia": null,
+            "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+            "atribucion": null
+          }
+        },
+        "preparacion": {
+          "schema": "pliego-physical-edition-preparation-v1",
+          "candidate_id": "physical-elibrary-110514",
+          "publication_status": "IMPORTED",
+          "work": {
+            "action": "CREATE_NEW_WORK",
+            "bookId": null,
+            "status": "PROPOSED_NOT_CREATED",
+            "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+            "evidence": {
+              "catalog_search_scope": "ALL_STATES",
+              "snapshot_book_count": 321,
+              "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+              "same_title_book_ids": []
+            },
+            "proposal_key": "work-8571ca31f198e5ac"
+          },
+          "author_bindings": [
+            {
+              "name": "Moretti, Franco",
+              "order": 1,
+              "authorId": null,
+              "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+            }
+          ],
+          "raw_authorship": "Moretti, Franco",
+          "field_provenance": {
+            "edicion.editorial": {
+              "kind": "REAL_SOURCE",
+              "source": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+              "observed_text": "FCE - Fondo de Cultura Económica",
+              "real_source_claim": true
+            },
+            "edicion.idioma": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Código académico es; idioma físico no verificado."
+            },
+            "edicion.formato": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "PAPERBACK académico; encuadernación física no verificada."
+            },
+            "edicion.paginas": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Páginas académicas deterministas; no paginación bibliográfica.",
+              "algorithm": "80 + first 8 SHA256 hex digits of UTF8(PLIEGO-DEMO-PHYSICAL-PAGES-v1,newline,candidate_id) mod 521"
+            },
+            "edicion.precio": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Precio DEMO del inventario; no cotización comercial.",
+              "currency": "USD",
+              "source_evidence": {
+                "value": 34.95,
+                "currency": "USD",
+                "status": "DEMO",
+                "market_price_verified": false,
+                "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                "category_demo_range_usd": [
+                  12.95,
+                  34.95
+                ]
+              }
+            },
+            "edicion.inventarioInicial": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "10 unidades académicas; existencia física no verificada.",
+              "physical_availability_verified": false
+            },
+            "edicion.isbn13": {
+              "kind": "REAL_SOURCE",
+              "source_evidence": {
+                "value": "9789877190601",
+                "status": "observed_print_isbn",
+                "observed_print_isbn": "9789877190601",
+                "observed_print_isbn_checksum_valid": true,
+                "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                "not_an_official_isbn": false
+              },
+              "real_source_claim": true
+            }
+          },
+          "demo_public_label_required": true,
+          "physical_catalog_type": "SIMULATED/DEMO",
+          "stock_action": "SIMULATED_INITIAL_STOCK_10",
+          "sku_status": "ASSIGNED_PERMANENT",
+          "source": {
+            "inventory_identifier": "9789877190601",
+            "original_path": "originales/Literatura/El burgués_ entre la historia y la literatura - Moretti, Franco.jpg",
+            "provenance": {
+              "book_id": "110514",
+              "category": "Literatura",
+              "relative_path": "Literatura/El burgués_ entre la historia y la literatura - Moretti, Franco.jpg",
+              "source_catalog_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+              "image": {
+                "sha256": "85cb429c74c7756d3752acd7d335048acaf3cc7d95a00ba10b511164c098b7cc",
+                "width": 220,
+                "height": 320,
+                "format": "JPEG",
+                "original_bytes_preserved": true,
+                "transformations": [],
+                "visually_reviewed": true,
+                "source": "Portada original visible en la ficha eLibro; no se descargó el libro"
+              },
+              "fields": {
+                "categoria": {
+                  "value": "Literatura",
+                  "status": "classification",
+                  "basis": "Categoría de selección de este catálogo académico"
+                },
+                "titulo": {
+                  "value": "El burgués: entre la historia y la literatura",
+                  "status": "observed",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514"
+                },
+                "autor": {
+                  "value": "Moretti, Franco",
+                  "status": "observed_contributors_with_roles",
+                  "contributors": [
+                    {
+                      "name": "Moretti, Franco",
+                      "role": "autor"
+                    }
+                  ],
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "raw_collector_role": "autor",
+                  "raw_collector_contributors": null
+                },
+                "isbn": {
+                  "value": "9789877190601",
+                  "status": "observed_print_isbn",
+                  "observed_print_isbn": "9789877190601",
+                  "observed_print_isbn_checksum_valid": true,
+                  "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "not_an_official_isbn": false
+                },
+                "descripcion": {
+                  "value": "Analiza la representación del burgués en la literatura europea moderna mediante retratos individuales relacionados con la historia del capitalismo. [Precio DEMO en USD.]",
+                  "base_description": "Analiza la representación del burgués en la literatura europea moderna mediante retratos individuales relacionados con la historia del capitalismo.",
+                  "status": "source_summary_paraphrase",
+                  "basis": "Paráfrasis breve del resumen visible de eLibro",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "demo_annotations_added": [
+                    "Precio DEMO en USD."
+                  ]
+                },
+                "precio": {
+                  "value": 34.95,
+                  "currency": "USD",
+                  "status": "DEMO",
+                  "market_price_verified": false,
+                  "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                  "category_demo_range_usd": [
+                    12.95,
+                    34.95
+                  ]
+                },
+                "nombre_archivo": {
+                  "value": "El burgués_ entre la historia y la literatura - Moretti, Franco.jpg",
+                  "status": "derived",
+                  "rule": "Título - responsables con rol.ext; únicamente caracteres no válidos en Windows sustituidos por guion bajo"
+                },
+                "fuente_portada": {
+                  "value": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "status": "observed_catalog_page",
+                  "note": "La página de origen puede requerir acceso institucional; no es un enlace permanente al archivo de imagen"
+                }
+              },
+              "digital_isbn": {
+                "observed": "9786071633293",
+                "checksum_valid": true,
+                "used_as_print_isbn": false
+              },
+              "physical_catalog": {
+                "status": "DEMO",
+                "physical_availability_verified": false,
+                "commercial_offer_verified": false
+              },
+              "observed_metadata": {
+                "catalog_authors": [
+                  "Moretti, Franco"
+                ],
+                "publisher": "FCE - Fondo de Cultura Económica",
+                "subjects": "Middle class in literature , Clase media en literatura , Literature -- History and criticism , Literatura -- Historia y crítica",
+                "pages": 247,
+                "edition": null,
+                "language": "Spanish",
+                "year": 2014,
+                "classification": "Crítica Literaria /Materias y Temas / Eventos Históricos",
+                "author_verification": "Ficha bibliográfica cotejada con portada; nombres principales y roles ajustados a los créditos legibles de portada cuando difieren.",
+                "observed_at": "2026-10-05",
+                "visual_qa": "Inspección visual en hoja de contacto y ampliación individual de los casos dudosos; portada específica no vacía, no GIF de carga."
+              }
+            },
+            "cover_sha256": "46822ba3476410fbf8dfa1905fe8c0205404638247574552b0befd0fbac5b1b0",
+            "original_sha256": "85cb429c74c7756d3752acd7d335048acaf3cc7d95a00ba10b511164c098b7cc",
+            "transformations": [
+              {
+                "operation": "LOSSLESS_WEBP_ENCODING",
+                "decoded_pixels_preserved": true
+              }
+            ]
+          },
+          "import_receipt": {
+            "editionId": "433",
+            "bookId": "429"
+          }
+        }
+      }
+    },
+    {
+      "staging": "covers/generated/json/Fisicos180/Literatura/staging.json",
+      "record": {
+        "portadaArchivo": "portadas/physical-elibrary-110514.webp",
+        "libro": {
+          "titulo": "El burgués: entre la historia y la literatura",
+          "subtitulo": null,
+          "sinopsis": "Analiza la representación del burgués en la literatura europea moderna mediante retratos individuales relacionados con la historia del capitalismo. [Precio DEMO en USD.]\n[Catálogo físico SIMULATED/DEMO: encuadernación, idioma, páginas y existencias académicas; disponibilidad física no verificada.]",
+          "autores": [
+            {
+              "nombre": "Moretti, Franco",
+              "orden": 1
+            }
+          ],
+          "categorias": [
+            "Literatura"
+          ]
+        },
+        "edicion": {
+          "editorial": "FCE - Fondo de Cultura Económica",
+          "idioma": "es",
+          "formato": "PAPERBACK",
+          "isbn13": "9789877190601",
+          "paginas": 391,
+          "precio": "34.95",
+          "sku": "PLG-BK-000488",
+          "inventarioInicial": 10,
+          "fechaPublicacion": null,
+          "ebookFileFormat": null,
+          "audioDurationSeconds": null,
+          "narrators": [],
+          "portada": {
+            "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000488-202aca7173b5.webp",
+            "licencia": null,
+            "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+            "atribucion": null
+          }
+        },
+        "preparacion": {
+          "schema": "pliego-physical-edition-preparation-v1",
+          "candidate_id": "physical-elibrary-110514",
+          "publication_status": "IMPORTED",
+          "work": {
+            "action": "CREATE_NEW_WORK",
+            "bookId": null,
+            "status": "PROPOSED_NOT_CREATED",
+            "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+            "evidence": {
+              "catalog_search_scope": "ALL_STATES",
+              "snapshot_book_count": 321,
+              "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+              "same_title_book_ids": []
+            },
+            "proposal_key": "work-8571ca31f198e5ac"
+          },
+          "author_bindings": [
+            {
+              "name": "Moretti, Franco",
+              "order": 1,
+              "authorId": null,
+              "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+            }
+          ],
+          "raw_authorship": "Moretti, Franco",
+          "field_provenance": {
+            "edicion.editorial": {
+              "kind": "REAL_SOURCE",
+              "source": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+              "observed_text": "FCE - Fondo de Cultura Económica",
+              "real_source_claim": true
+            },
+            "edicion.idioma": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Código académico es; idioma físico no verificado."
+            },
+            "edicion.formato": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "PAPERBACK académico; encuadernación física no verificada."
+            },
+            "edicion.paginas": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Páginas académicas deterministas; no paginación bibliográfica.",
+              "algorithm": "80 + first 8 SHA256 hex digits of UTF8(PLIEGO-DEMO-PHYSICAL-PAGES-v1,newline,candidate_id) mod 521"
+            },
+            "edicion.precio": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Precio DEMO del inventario; no cotización comercial.",
+              "currency": "USD",
+              "source_evidence": {
+                "value": 34.95,
+                "currency": "USD",
+                "status": "DEMO",
+                "market_price_verified": false,
+                "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                "category_demo_range_usd": [
+                  12.95,
+                  34.95
+                ]
+              }
+            },
+            "edicion.inventarioInicial": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "10 unidades académicas; existencia física no verificada.",
+              "physical_availability_verified": false
+            },
+            "edicion.isbn13": {
+              "kind": "REAL_SOURCE",
+              "source_evidence": {
+                "value": "9789877190601",
+                "status": "observed_print_isbn",
+                "observed_print_isbn": "9789877190601",
+                "observed_print_isbn_checksum_valid": true,
+                "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                "not_an_official_isbn": false
+              },
+              "real_source_claim": true
+            }
+          },
+          "demo_public_label_required": true,
+          "physical_catalog_type": "SIMULATED/DEMO",
+          "stock_action": "SIMULATED_INITIAL_STOCK_10",
+          "sku_status": "ASSIGNED_PERMANENT",
+          "source": {
+            "inventory_identifier": "9789877190601",
+            "original_path": "originales/Literatura/El burgués_ entre la historia y la literatura - Moretti, Franco.jpg",
+            "provenance": {
+              "book_id": "110514",
+              "category": "Literatura",
+              "relative_path": "Literatura/El burgués_ entre la historia y la literatura - Moretti, Franco.jpg",
+              "source_catalog_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+              "image": {
+                "sha256": "85cb429c74c7756d3752acd7d335048acaf3cc7d95a00ba10b511164c098b7cc",
+                "width": 220,
+                "height": 320,
+                "format": "JPEG",
+                "original_bytes_preserved": true,
+                "transformations": [],
+                "visually_reviewed": true,
+                "source": "Portada original visible en la ficha eLibro; no se descargó el libro"
+              },
+              "fields": {
+                "categoria": {
+                  "value": "Literatura",
+                  "status": "classification",
+                  "basis": "Categoría de selección de este catálogo académico"
+                },
+                "titulo": {
+                  "value": "El burgués: entre la historia y la literatura",
+                  "status": "observed",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514"
+                },
+                "autor": {
+                  "value": "Moretti, Franco",
+                  "status": "observed_contributors_with_roles",
+                  "contributors": [
+                    {
+                      "name": "Moretti, Franco",
+                      "role": "autor"
+                    }
+                  ],
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "raw_collector_role": "autor",
+                  "raw_collector_contributors": null
+                },
+                "isbn": {
+                  "value": "9789877190601",
+                  "status": "observed_print_isbn",
+                  "observed_print_isbn": "9789877190601",
+                  "observed_print_isbn_checksum_valid": true,
+                  "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "not_an_official_isbn": false
+                },
+                "descripcion": {
+                  "value": "Analiza la representación del burgués en la literatura europea moderna mediante retratos individuales relacionados con la historia del capitalismo. [Precio DEMO en USD.]",
+                  "base_description": "Analiza la representación del burgués en la literatura europea moderna mediante retratos individuales relacionados con la historia del capitalismo.",
+                  "status": "source_summary_paraphrase",
+                  "basis": "Paráfrasis breve del resumen visible de eLibro",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "demo_annotations_added": [
+                    "Precio DEMO en USD."
+                  ]
+                },
+                "precio": {
+                  "value": 34.95,
+                  "currency": "USD",
+                  "status": "DEMO",
+                  "market_price_verified": false,
+                  "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                  "category_demo_range_usd": [
+                    12.95,
+                    34.95
+                  ]
+                },
+                "nombre_archivo": {
+                  "value": "El burgués_ entre la historia y la literatura - Moretti, Franco.jpg",
+                  "status": "derived",
+                  "rule": "Título - responsables con rol.ext; únicamente caracteres no válidos en Windows sustituidos por guion bajo"
+                },
+                "fuente_portada": {
+                  "value": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110514",
+                  "status": "observed_catalog_page",
+                  "note": "La página de origen puede requerir acceso institucional; no es un enlace permanente al archivo de imagen"
+                }
+              },
+              "digital_isbn": {
+                "observed": "9786071633293",
+                "checksum_valid": true,
+                "used_as_print_isbn": false
+              },
+              "physical_catalog": {
+                "status": "DEMO",
+                "physical_availability_verified": false,
+                "commercial_offer_verified": false
+              },
+              "observed_metadata": {
+                "catalog_authors": [
+                  "Moretti, Franco"
+                ],
+                "publisher": "FCE - Fondo de Cultura Económica",
+                "subjects": "Middle class in literature , Clase media en literatura , Literature -- History and criticism , Literatura -- Historia y crítica",
+                "pages": 247,
+                "edition": null,
+                "language": "Spanish",
+                "year": 2014,
+                "classification": "Crítica Literaria /Materias y Temas / Eventos Históricos",
+                "author_verification": "Ficha bibliográfica cotejada con portada; nombres principales y roles ajustados a los créditos legibles de portada cuando difieren.",
+                "observed_at": "2026-10-05",
+                "visual_qa": "Inspección visual en hoja de contacto y ampliación individual de los casos dudosos; portada específica no vacía, no GIF de carga."
+              }
+            },
+            "cover_sha256": "46822ba3476410fbf8dfa1905fe8c0205404638247574552b0befd0fbac5b1b0",
+            "original_sha256": "85cb429c74c7756d3752acd7d335048acaf3cc7d95a00ba10b511164c098b7cc",
+            "transformations": [
+              {
+                "operation": "LOSSLESS_WEBP_ENCODING",
+                "decoded_pixels_preserved": true
+              }
+            ]
+          },
+          "import_receipt": {
+            "editionId": "433",
+            "bookId": "429"
+          }
+        }
+      }
+    }
+  ]
+}

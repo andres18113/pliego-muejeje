@@ -143,6 +143,28 @@ def read_manifest(path: Path) -> dict:
     return document
 
 
+def retired_records(root: Path) -> list[dict]:
+    """The optional retirement ledger is separate from the publishable manifest."""
+    return read_manifest(root / "retired-manifest.json")["records"]
+
+
+def reject_retired_records(records: list[dict], retired: list[dict]) -> None:
+    skus = {row["permanent_sku"] for row in retired}
+    isbns = {row["isbn13"] for row in retired if row.get("isbn13")}
+    for row in records:
+        if not isinstance(row, dict):
+            raise ValueError("El manifiesto contiene un registro inválido.")
+        if row.get("permanent_sku") in skus or row.get("isbn13") in isbns:
+            raise ValueError("El catálogo activo intenta reintroducir una edición retirada.")
+
+
+def publication_existing_keys(root: Path, active: list[dict], own_skus: set[str]) -> set[str]:
+    retired = retired_records(root)
+    reject_retired_records(active, retired)
+    return ({row["r2_object_key"] for row in active if row["permanent_sku"] not in own_skus}
+            | {row["r2_object_key"] for row in retired})
+
+
 def write_json(path: Path, document: dict) -> None:
     import json
     write_bytes(path, (json.dumps(document, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))

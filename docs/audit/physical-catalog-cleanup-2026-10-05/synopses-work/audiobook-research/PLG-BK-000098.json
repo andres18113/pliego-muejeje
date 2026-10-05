@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000098",
+  "title": "Geometría elemental",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:03.364020+00:00",
+      "response_sha256": "6387bcb9c1f8fd3aa2ca8ee98bf3129a85762ab0591ce34990e00a0b54ac3d08",
+      "extraction_sha256": "0b29a1faddce6f09b8154ef1bcf80f0e74750c51dfb514a59817d442dda2a579",
+      "text": "Guardado en: Autor Principal: Pogorélov, A. V. Otros Autores: Vega, Carlos. Formato: eBook Idioma: Spanish Publicado: México : Instituto Politécnico Nacional, 1998. Materias: Geometría. Geometry. Geometria Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/104762  ",
+      "observed_page_title": "Existencias: Geometría elemental",
+      "title_check_response_sha256": "6b3efea38d3296ce834ea3cf6f985e03dba7fdc3ef7388b0e7635e56676c45c7",
+      "title_checked_at_utc": "2026-10-05T19:39:53.639680+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:04.688908+00:00",
+      "response_sha256": "350f5bda05bde055ddd440c923b37b064dbed4f7b2aa2b717476962049c1c5e8",
+      "extraction_sha256": "0b29a1faddce6f09b8154ef1bcf80f0e74750c51dfb514a59817d442dda2a579",
+      "text": "Guardado en: Autor Principal: Pogorélov, A. V. Otros Autores: Vega, Carlos. Formato: eBook Idioma: Spanish Publicado: México : Instituto Politécnico Nacional, 1998. Materias: Geometría. Geometry. Geometria Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/104762  "
+    }
+  ]
+}

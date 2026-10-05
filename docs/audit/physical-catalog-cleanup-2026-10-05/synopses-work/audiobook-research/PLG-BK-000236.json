@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000236",
+  "title": "Cálculo avanzado: introducción",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:23.364239+00:00",
+      "response_sha256": "a6cefc72a0578830f55849cd0146bb0fa6d509c99423bc58efe6667cfe4afe47",
+      "extraction_sha256": "5539bd7432a9261fab462b986293ef752b523f590cbf1a714e65f95c0a47eaff",
+      "text": "Guardado en: Autor Principal: Caicedo Contreras, José Francisco, 1939- (autor.) Formato: eBook Idioma: Spanish Publicado: Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias, 2012. Edición: Segunda edición. Series: Colección textos. Materias: Calculus. Mathematical analysis. Nonlinear functional analysis. Banach algebras. Cálculo. Análisis matemático. Análisis funcional no lineal. Teoría de los grupos. Espacios de Banach. Algebras de Banach. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/127754  ",
+      "observed_page_title": "Existencias: Cálculo avanzado :",
+      "title_check_response_sha256": "b3d5cd33b6380a85e8926d3d2ca7de9b19078a70410aecc0fb20a2abe594e6da",
+      "title_checked_at_utc": "2026-10-05T19:40:06.653271+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:25.085201+00:00",
+      "response_sha256": "d9f6b18328097d736a097d698a6d541e32e2fe81f4bb58a23ead0073342de0fc",
+      "extraction_sha256": "5539bd7432a9261fab462b986293ef752b523f590cbf1a714e65f95c0a47eaff",
+      "text": "Guardado en: Autor Principal: Caicedo Contreras, José Francisco, 1939- (autor.) Formato: eBook Idioma: Spanish Publicado: Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias, 2012. Edición: Segunda edición. Series: Colección textos. Materias: Calculus. Mathematical analysis. Nonlinear functional analysis. Banach algebras. Cálculo. Análisis matemático. Análisis funcional no lineal. Teoría de los grupos. Espacios de Banach. Algebras de Banach. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/127754  "
+    }
+  ]
+}

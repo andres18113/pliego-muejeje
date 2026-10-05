@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000248",
+  "title": "Psicología del crecimiento interior",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:24.659202+00:00",
+      "response_sha256": "d08fef57d01cca49ef524f93fe736fc1d57812988450a374a1af934f36601d8b",
+      "extraction_sha256": "1278d7b9ad7e6f14ca732a20a5dc20cfa37e9b7bb7fa8fe3073121d5d2a28718",
+      "text": "Guardado en: Autor Principal: Ramírez Villafañe, Amado. Formato: eBook Idioma: Spanish Publicado: Madrid : Ediciones Díaz de Santos, 2015. Materias: Psychology. Growth and Development. Psicología. Crecimiento y desarrollo. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/63002  ",
+      "observed_page_title": "Existencias: Psicología del crecimiento interior /",
+      "title_check_response_sha256": "3d8e0b7cd1ed5b4c26a117f2230798d68130abdc6f8b69e66623c9bea62fec46",
+      "title_checked_at_utc": "2026-10-05T19:39:55.144150+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:26.305063+00:00",
+      "response_sha256": "a2f0a8d24b3cee533247d129d42b126f5328b762bfc6b6c2b687a7b57da53dd4",
+      "extraction_sha256": "1278d7b9ad7e6f14ca732a20a5dc20cfa37e9b7bb7fa8fe3073121d5d2a28718",
+      "text": "Guardado en: Autor Principal: Ramírez Villafañe, Amado. Formato: eBook Idioma: Spanish Publicado: Madrid : Ediciones Díaz de Santos, 2015. Materias: Psychology. Growth and Development. Psicología. Crecimiento y desarrollo. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/63002  "
+    }
+  ]
+}

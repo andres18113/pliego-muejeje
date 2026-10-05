@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000059",
+  "title": "Historia mínima de Filipinas",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194884",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:58.122848+00:00",
+      "response_sha256": "b98355a592a2f133dc245a402a9da43fb87d75b6caba287bde34892685285f05",
+      "extraction_sha256": "b2c57beda9b7f12288b2f4157dbc1b23da23d963a1b2b0e85e41f7e8bf4df1a3",
+      "text": "Guardado en: Autor Principal: Machuca Chávez, Claudia Paulina, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2020. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Philippines > History. Filipinas > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194884  ",
+      "observed_page_title": "Existencias: Historia minima de Filipinas /",
+      "title_check_response_sha256": "e5f44a5958b91b026d5eb29f9689964a87d93dd9ce92a1c257491ecb3880f0c3",
+      "title_checked_at_utc": "2026-10-05T19:39:55.091923+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194884/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:59.574908+00:00",
+      "response_sha256": "cce9efd5c11a018e648af250147694c5d616161371d7998f835a184a21a95697",
+      "extraction_sha256": "b2c57beda9b7f12288b2f4157dbc1b23da23d963a1b2b0e85e41f7e8bf4df1a3",
+      "text": "Guardado en: Autor Principal: Machuca Chávez, Claudia Paulina, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2020. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Philippines > History. Filipinas > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194884  "
+    }
+  ]
+}

@@ -1,0 +1,194 @@
+{
+  "sku": "PLG-BK-000244",
+  "reason": "Retiro explícito solicitado por el usuario por presentación de portada",
+  "original_file": "Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+  "original_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+  "source_records": [
+    {
+      "staging": "/home/andres18123/PLIEGO/covers/Ebook/ciencias-sociales/staging.json",
+      "record": {
+        "portadaArchivo": "portadas/ebook-a028e089a115927a.webp",
+        "libro": {
+          "titulo": "Sociologías de la moda",
+          "subtitulo": null,
+          "sinopsis": null,
+          "autores": [
+            {
+              "nombre": "Mansilla Viedma, Pedro",
+              "orden": 1
+            }
+          ],
+          "categorias": [
+            "Ciencias Sociales"
+          ]
+        },
+        "edicion": {
+          "editorial": "Los libros de la Catarata",
+          "isbn13": null,
+          "idioma": "es",
+          "formato": "EBOOK",
+          "paginas": null,
+          "anioPublicacion": null,
+          "fechaPublicacion": null,
+          "precio": "4.99",
+          "sku": "PLG-BK-000244",
+          "inventarioInicial": null,
+          "ebookFileFormat": null,
+          "audioDurationSeconds": null,
+          "narrators": [],
+          "portada": {
+            "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp",
+            "licencia": null,
+            "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+            "atribucion": null
+          }
+        },
+        "observacionesStaging": [],
+        "preparacion": {
+          "schema": "pliego-digital-edition-preparation-v1",
+          "candidate_id": "ebook-a028e089a115927a",
+          "publication_status": "PUBLISHED",
+          "work": {
+            "action": "CREATE_NEW_WORK",
+            "bookId": "283",
+            "status": "CREATED_VERIFIED",
+            "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+            "evidence": {
+              "catalog_search_scope": "ALL_STATES",
+              "snapshot_book_count": 63,
+              "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+              "same_title_book_ids": []
+            },
+            "proposal_key": "work-4cd21985cbb520c0"
+          },
+          "author_bindings": [
+            {
+              "name": "Mansilla Viedma, Pedro",
+              "order": 1,
+              "authorId": null,
+              "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+            }
+          ],
+          "raw_authorship": "Mansilla Viedma, Pedro",
+          "field_provenance": {
+            "edicion.editorial": {
+              "kind": "REAL_SOURCE",
+              "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+              "observed_text": "Madrid : Los libros de la Catarata, 2025.",
+              "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+              "capture_sha256": "3e73d6d7ed5f69a4d026cabe6979d6735ff9a76928d74470d614283d1168da06",
+              "capture_path": "/tmp/pliego-digital-completion/social/uns/283021.html",
+              "capture_format": "SOURCE_RESPONSE",
+              "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+              "real_source_claim": true
+            },
+            "edicion.idioma": {
+              "kind": "VERIFIED",
+              "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+              "observed_text": "Idioma: Spanish",
+              "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+              "capture_sha256": "3e73d6d7ed5f69a4d026cabe6979d6735ff9a76928d74470d614283d1168da06",
+              "capture_path": "/tmp/pliego-digital-completion/social/uns/283021.html",
+              "capture_format": "SOURCE_RESPONSE",
+              "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+              "real_source_claim": true
+            },
+            "edicion.precio": {
+              "kind": "SIMULATED/DEMO",
+              "source": "User-authorized academic demonstration pricing",
+              "currency": "USD",
+              "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+              "real_source_claim": false,
+              "commercial_price_claim": false,
+              "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+            },
+            "edicion.isbn13": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.ebookFileFormat": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.audioDurationSeconds": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.narrators": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "libro.titulo": {
+              "kind": "REAL_FROM_INVENTORY",
+              "inventory": "covers/Ebook/inventario.csv",
+              "row": 125,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+              "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+              "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+            },
+            "libro.autores": {
+              "kind": "REAL_FROM_INVENTORY",
+              "raw_value": "Mansilla Viedma, Pedro",
+              "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+              "inventory": "covers/Ebook/inventario.csv",
+              "row": 125,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+              "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+              "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+            },
+            "libro.categorias": {
+              "kind": "REAL_FROM_INVENTORY",
+              "inventory": "covers/Ebook/inventario.csv",
+              "row": 125,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+              "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+              "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+            },
+            "edicion.formato": {
+              "kind": "BATCH_CLASSIFICATION",
+              "source": "covers/Ebook/inventario.csv"
+            }
+          },
+          "stock_action": "NONE_DIGITAL",
+          "sku_status": "PROPOSED_NOT_RESERVED",
+          "audio_metadata_type": "NOT_APPLICABLE",
+          "demo_public_label_required": true,
+          "demo_price_authorized": true,
+          "price_metadata_type": "SIMULATED/DEMO",
+          "metadata_blockers": [],
+          "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+          "source": {
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 125,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+            "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "category_binding": {
+            "name": "Ciencias Sociales",
+            "categoryId": null,
+            "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+          },
+          "planned_staging": "Ebook/ciencias-sociales/staging.json",
+          "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+          "readiness_errors": [],
+          "ready_for_future_publication": true,
+          "imported_edition_id": "285",
+          "imported_book_id": "283"
+        }
+      }
+    }
+  ]
+}

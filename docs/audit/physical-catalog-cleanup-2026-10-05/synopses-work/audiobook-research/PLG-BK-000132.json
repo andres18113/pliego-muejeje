@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000132",
+  "title": "El médico en casa: manual de consulta",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:06.699383+00:00",
+      "response_sha256": "0c3a735a3bcf1b38ee3cbefe23f211e27f242f02a919b658f84d2db86813dcb3",
+      "extraction_sha256": "91b91888499baa2b5e1f242e3f8ae8c1f0e9eb92d2a155634705321c45391214",
+      "text": "Guardado en: Autor Principal: Carrete, Paula, (autor.) Otros Autores: Rubinstein, Esteban, (autor.) , Zárate, Miguel (médico), (autor.) Formato: eBook Idioma: Spanish Publicado: Buenos Aires : [Barcelona] : Delhospital ; NED, 2017. Series: Medicina para la comunidad Materias: Semiología médica. Medicine, Popular. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/121496  ",
+      "observed_page_title": "Existencias: El médico en casa /",
+      "title_check_response_sha256": "498b7930e3cf436031c139bc0e47f54b490f0c2361fca6b4778a691bb3e47a3c",
+      "title_checked_at_utc": "2026-10-05T19:39:58.060722+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:08.027431+00:00",
+      "response_sha256": "bf9adcd5966bcc5b119d8ad04730fffd2c9a5d1b4e71be0d9775696e08feba33",
+      "extraction_sha256": "91b91888499baa2b5e1f242e3f8ae8c1f0e9eb92d2a155634705321c45391214",
+      "text": "Guardado en: Autor Principal: Carrete, Paula, (autor.) Otros Autores: Rubinstein, Esteban, (autor.) , Zárate, Miguel (médico), (autor.) Formato: eBook Idioma: Spanish Publicado: Buenos Aires : [Barcelona] : Delhospital ; NED, 2017. Series: Medicina para la comunidad Materias: Semiología médica. Medicine, Popular. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/121496  "
+    }
+  ]
+}

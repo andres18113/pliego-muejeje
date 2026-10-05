@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000305",
+  "title": "Linux para usuarios",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:33.482024+00:00",
+      "response_sha256": "762a543177933c770b9e149dd7b59d7bafbe94bc97c4c517d9c7a3c5d62c2a3d",
+      "extraction_sha256": "525a5d26329b90abf4677a22f9ebfb33f3962ae5c1e26695c234250a2e3efbb8",
+      "text": "Guardado en: Autor Principal: Pizarro Galán, Ana María. Otros Autores: Torres Escobar, Francisco. Formato: eBook Idioma: Spanish Publicado: Madrid : Ministerio de Educación, Cultura y Deporte, [2014] Series: Aula mentor. Informática. Materias: Linux. Sistemas operativos (Computadoras) Operating systems (Computers) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/49377  ",
+      "observed_page_title": "Existencias: Linux para usuarios /",
+      "title_check_response_sha256": "6d7698cddf54933d2360613cd5e6a16e93eabe7079f67cc54078149e0444f79c",
+      "title_checked_at_utc": "2026-10-05T19:39:59.365470+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:34.759845+00:00",
+      "response_sha256": "301c682e7a76c614b5d13cb5596256e693256c687be1a6f6f10b378bbf423063",
+      "extraction_sha256": "525a5d26329b90abf4677a22f9ebfb33f3962ae5c1e26695c234250a2e3efbb8",
+      "text": "Guardado en: Autor Principal: Pizarro Galán, Ana María. Otros Autores: Torres Escobar, Francisco. Formato: eBook Idioma: Spanish Publicado: Madrid : Ministerio de Educación, Cultura y Deporte, [2014] Series: Aula mentor. Informática. Materias: Linux. Sistemas operativos (Computadoras) Operating systems (Computers) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/49377  "
+    }
+  ]
+}

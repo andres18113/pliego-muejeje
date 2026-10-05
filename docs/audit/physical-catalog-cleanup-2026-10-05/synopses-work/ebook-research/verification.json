@@ -1,0 +1,25 @@
+{
+  "records": 135,
+  "input_records": 135,
+  "sku_set_exact": true,
+  "identity_exact": true,
+  "unique_synopses": 135,
+  "word_range": [
+    51,
+    62
+  ],
+  "sentence_range": [
+    3,
+    4
+  ],
+  "verified_capture_files": 135,
+  "basis_kinds": {
+    "TITLE_SUBJECT_EDITORIAL_DESCRIPTION": 126,
+    "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE": 6,
+    "PRIMARY_PUBLISHER_PREVIEW_PARAPHRASE": 1,
+    "PRIMARY_DISTRIBUTOR_CONTENTS_PARAPHRASE": 1,
+    "PUBLISHER_DISTRIBUTED_ABSTRACT_PARAPHRASE": 1
+  },
+  "output_sha256": "6a61a603f068b224f5f2cf505d40cfea3a8e94f35a26eed868cfa5846bdc3b9d",
+  "failures": []
+}

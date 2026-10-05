@@ -198,7 +198,7 @@
       "libro": {
         "titulo": "Constructivismo y psicoterapia (3a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Constructivismo y psicoterapia se encuentran en una propuesta que relaciona una perspectiva filosófica con el trabajo terapéutico. El tema invita a pensar qué supone comprender la experiencia desde procesos de construcción de significado. Una lectura para quienes desean situar este cruce dentro del campo de la psicoterapia y abrir preguntas sobre sus fundamentos de comprensión del sujeto.",
         "autores": [
           {
             "nombre": "Feixas Viaplana, Guillem",
@@ -391,7 +391,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "186",
-        "imported_book_id": "185"
+        "imported_book_id": "185",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000242.json; SHA-256 de respuesta HTTP: 046ee2a89040163c91142c287d7bc213f7f57b2c0d1da7064d8d05bf64aea492"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -399,7 +410,7 @@
       "libro": {
         "titulo": "Crítica de la psicoterapia integrativa",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicoterapia integrativa se plantea como objeto de examen crítico dentro del campo de la psicoterapia. El título invita a pensar qué supone reunir perspectivas terapéuticas y qué preguntas suscita esa pretensión de integración. Una lectura para quienes desean reflexionar sobre el sentido de este enfoque y situarlo como un problema de discusión en el trabajo psicoterapéutico.",
         "autores": [
           {
             "nombre": "Guillermo Cepeda Armijos",
@@ -582,7 +593,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "187",
-        "imported_book_id": "186"
+        "imported_book_id": "186",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000172.json; SHA-256 de respuesta HTTP: ececf0e72414daefd232786d21631022f0dcc58a0d9915cccb4ca58c4746c37c"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -590,7 +612,7 @@
       "libro": {
         "titulo": "Escritos de psicoterapia cognitiva",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicoterapia cognitiva constituye el punto de encuentro de estos escritos sobre psicoterapia y psicología cognitiva. La obra invita a pensar la relación entre los procesos de conocimiento y el trabajo terapéutico. Una lectura para quienes desean situar este enfoque dentro del campo de la psicoterapia y acercarse al lenguaje con el que se estudia la experiencia psicológica.",
         "autores": [
           {
             "nombre": "Keegan, Eduardo",
@@ -773,7 +795,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "188",
-        "imported_book_id": "187"
+        "imported_book_id": "187",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000117.json; SHA-256 de respuesta HTTP: 702b2cedf8b0de1c5a9658c7e91e7fa8c6a4f7d7e1b88fbd399715b77f2c881a"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -781,7 +814,7 @@
       "libro": {
         "titulo": "Historia de la psicología",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Carlos Santamaría aborda el desarrollo de la psicología desde su consolidación como disciplina independiente. El recorrido permite pensar el tránsito desde su cercanía a la filosofía hasta su condición de ciencia y profesión con demanda social. Una entrada histórica para situar el campo psicológico y comprender que sus formas de conocimiento tienen una trayectoria.",
         "autores": [
           {
             "nombre": "Santamaría, Carlos",
@@ -959,7 +992,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "189",
-        "imported_book_id": "188"
+        "imported_book_id": "188",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.planetadelibros.com/libro-historia-de-la-psicologia/267060",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000227.json; SHA-256 de respuesta HTTP: 49793c2f04fda6ce77b0223b819fced13759db5080ba3f4423b8360e8752ac5e"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -967,7 +1011,7 @@
       "libro": {
         "titulo": "Historia de la psicología en Colombia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicología en Colombia se presenta como una disciplina con una trayectoria histórica propia. El foco nacional invita a conocer cómo se ha constituido ese campo y a situar sus cambios en un contexto concreto. Una lectura para quienes desean acercarse a la historia colombiana de la psicología y reconocer la dimensión temporal de su desarrollo profesional y académico.",
         "autores": [
           {
             "nombre": "Ardila, Rubén",
@@ -1150,7 +1194,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "190",
-        "imported_book_id": "189"
+        "imported_book_id": "189",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000096.json; SHA-256 de respuesta HTTP: b2fbbafa20ddf8e07857b41589a5dfa6ad21bf7286dd196de2e47898f1012186"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1158,7 +1213,7 @@
       "libro": {
         "titulo": "Lecciones de psicología cognitiva",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicología cognitiva se presenta en forma de lecciones que ofrecen una entrada al estudio de este campo. El tema invita a mirar la experiencia psicológica desde la perspectiva de los procesos de conocimiento. Una lectura para quienes desean familiarizarse con el lenguaje de la disciplina y situar sus preguntas dentro del estudio de la mente humana.",
         "autores": [
           {
             "nombre": "Fernández, Humberto",
@@ -1341,7 +1396,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "191",
-        "imported_book_id": "190"
+        "imported_book_id": "190",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000253.json; SHA-256 de respuesta HTTP: 382d3fd154790bbc2be22ed9340d0b47c978646a13417ef69ffd897639c3d020"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1349,7 +1415,7 @@
       "libro": {
         "titulo": "Principios de una psicoterapia de la psicosis",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicosis constituye el centro de una reflexión sobre los principios del trabajo psicoterapéutico. La obra se sitúa en el campo de la psicoterapia de las enfermedades mentales y propone un punto de partida para pensar ese ámbito. Una lectura para quienes desean orientarse en la relación entre comprensión de la psicosis y fundamentos de la intervención terapéutica.",
         "autores": [
           {
             "nombre": "Álvarez, José María",
@@ -1532,7 +1598,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "192",
-        "imported_book_id": "191"
+        "imported_book_id": "191",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000180.json; SHA-256 de respuesta HTTP: 0504cf1f1123e2c7256d48d44ae5cbe5cbcdf1ab0e0827318603ec9877105079"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1540,7 +1617,7 @@
       "libro": {
         "titulo": "Psicología de la música",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Daniele Schön, Lilach Akiva-Kabiri y Tomaso Vecchi relacionan la experiencia musical con la psicología y las neurociencias cognitivas. La obra presenta teorías sobre este campo y pregunta por lo que ocurre al escuchar música, por el aprendizaje instrumental y por la musicoterapia. Una introducción para conocer el encuentro entre funcionamiento cerebral, actividad musical y estudio psicológico.",
         "autores": [
           {
             "nombre": "Schön, Daniele",
@@ -1738,7 +1815,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "193",
-        "imported_book_id": "192"
+        "imported_book_id": "192",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.alianzaeditorial.es/libro/ciencias-sociales/psicologia-de-la-musica-daniele-schon-9788491817178/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000307.json; SHA-256 de respuesta HTTP: ad11e5a754e44b7ae923f579c2e0bb00d687b7c983d06cff6d93e6d049918170"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1746,7 +1834,7 @@
       "libro": {
         "titulo": "Psicología del crecimiento interior",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El crecimiento interior se vincula con la psicología y con el estudio del crecimiento y el desarrollo. El tema invita a pensar los cambios de la experiencia personal desde una perspectiva psicológica. Una lectura para quienes desean acercarse a esa dimensión de la vida y reflexionar sobre la relación entre desarrollo humano y comprensión de uno mismo.",
         "autores": [
           {
             "nombre": "Ramírez Villafáñez, Amado",
@@ -1929,7 +2017,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "194",
-        "imported_book_id": "193"
+        "imported_book_id": "193",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000248.json; SHA-256 de respuesta HTTP: d08fef57d01cca49ef524f93fe736fc1d57812988450a374a1af934f36601d8b"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1937,7 +2036,7 @@
       "libro": {
         "titulo": "Psicología del delincuente",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicología del delincuente se sitúa en el ámbito de la psicología criminal y del estudio de la conducta delictiva. El tema invita a pensar esa conducta como objeto de comprensión psicológica. Una lectura para quienes desean orientarse en la relación entre experiencia humana y criminalidad y acercarse al lenguaje con el que se examina el comportamiento delictivo.",
         "autores": [
           {
             "nombre": "Pollitz, Paul",
@@ -2120,7 +2219,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "195",
-        "imported_book_id": "194"
+        "imported_book_id": "194",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000288.json; SHA-256 de respuesta HTTP: 04dc288eef48b0efed1f79a24e5fc2342b9bc1c5e60a3006bfaf1d110b531d13"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2128,7 +2238,7 @@
       "libro": {
         "titulo": "Psicología del Poder",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El poder se convierte en una pregunta psicológica: cómo pensarlo desde el estudio de la conducta y la experiencia humana. Esta obra abre un espacio para reflexionar sobre una dimensión que atraviesa las relaciones entre personas. Una lectura para quienes desean acercarse a la conexión entre psicología y poder y situar ese vínculo como un problema de comprensión del comportamiento.",
         "autores": [
           {
             "nombre": "Población, Pablo",
@@ -2311,7 +2421,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "196",
-        "imported_book_id": "195"
+        "imported_book_id": "195",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000139.json; SHA-256 de respuesta HTTP: 6805f0c22d8b9b79c4e06da47c8955d540c0f4536cfbf7972936693615f8f805"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2319,7 +2440,7 @@
       "libro": {
         "titulo": "Psicoterapia, asesoramiento y consejería (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Psicoterapia, asesoramiento y consejería se reúnen como ámbitos relacionados con el acompañamiento psicológico. El título invita a pensar qué preguntas comparten y cómo pueden situarse dentro del trabajo de ayuda a las personas. Una lectura para quienes desean orientarse en esas formas de atención y reflexionar sobre su relación con la comprensión de la experiencia humana.",
         "autores": [
           {
             "nombre": "Lucio Balarezo Chiriboga",
@@ -2502,7 +2623,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "197",
-        "imported_book_id": "196"
+        "imported_book_id": "196",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000306.json; SHA-256 de respuesta HTTP: 2a4d5c587c4413ee695153f3da56a300adbe5559b15b6bd95f8572253f3f4f69"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2510,7 +2642,7 @@
       "libro": {
         "titulo": "Temas de psicología práctica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicología se aproxima aquí desde una orientación práctica que invita a relacionar su estudio con la experiencia humana. El título abre una entrada a temas de la disciplina desde preguntas sobre su aplicación. Una lectura para quienes desean conectar el lenguaje psicológico con situaciones de la vida y reflexionar sobre el uso del conocimiento del comportamiento.",
         "autores": [
           {
             "nombre": "Sarráis Oteo, Fernando",
@@ -2693,7 +2825,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "198",
-        "imported_book_id": "197"
+        "imported_book_id": "197",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000181.json; SHA-256 de respuesta HTTP: 0c00f8e68b8bf53a4561dd1954fc4772f3119016f6431ad73cc6af236c583656"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2701,7 +2844,7 @@
       "libro": {
         "titulo": "Teoría y técnica de la psicoterapia psicoanalítica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicoterapia psicoanalítica se aborda desde la relación entre teoría y técnica, dentro de un campo vinculado con la filosofía de la psicoterapia. El tema invita a pensar cómo los fundamentos de un enfoque se conectan con su práctica. Una lectura para quienes desean orientarse en la terapia psicoanalítica y acercarse al vínculo entre comprensión conceptual y trabajo terapéutico.",
         "autores": [
           {
             "nombre": "González Núñez, José de Jesús",
@@ -2894,7 +3037,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "199",
-        "imported_book_id": "198"
+        "imported_book_id": "198",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000301.json; SHA-256 de respuesta HTTP: dcc94d28bf0167f57d802b643d460a885a445e5ea610a278c5ce0a024e84e952"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

@@ -18,9 +18,9 @@ public final class CustomerOrderResponses {
 
     @Schema(name="CustomerOrderDetail")
     public record Detail(String orderId, String orderState, String subtotal, String total,
-            String createdAt, String updatedAt, List<Item> items, Address address,
+            String createdAt, String updatedAt, List<Item> items, @Schema(nullable=true) Address address,
             Payment payment, List<History> stateHistory, String purchaseState,
-            PostPurchaseModels.Fulfillment fulfillment, PostPurchaseModels.Shipment shipment,
+            @Schema(nullable=true) PostPurchaseModels.Fulfillment fulfillment, @Schema(nullable=true) PostPurchaseModels.Shipment shipment,
             PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
             PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount) { }
 

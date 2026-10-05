@@ -21,6 +21,9 @@ const calendarDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
 const cartDetailSchema = z.object({
   cartId: z.string().min(1).nullable(),
+  requiresPhysicalFulfillment: z.boolean(),
+  physicalItemCount: z.number().int().nonnegative().optional(),
+  digitalItemCount: z.number().int().nonnegative().optional(),
   state: z.string().nullable(),
   items: z.array(z.object({
     cartItemId: z.string().min(1),

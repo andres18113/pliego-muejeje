@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000137",
+  "title": "Semiología: sistema craneomandibular",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:08.796196+00:00",
+      "response_sha256": "943e6068db11c23b9998787033644126fe99a1f9461663208f677748a402507d",
+      "extraction_sha256": "3d5a9a744ea213e82679e154e93720b0cc29c6473527357e12a6541b58e782a9",
+      "text": "Guardado en: Autor Principal: Bustillo Verbel, Rosa Lia. Otros Autores: Espitia Nieto, Sandra, (autor.) Formato: eBook Idioma: Spanish Publicado: Santa Marta : Editorial Unimagdalena, 2018. Materias: Skull > Diseases. Jaws > Diseases. Diagnosis. Cráneo > Enfermedades. Enfermedades maxilares. Diagnóstico. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/105476  ",
+      "observed_page_title": "Existencias: Semiología :",
+      "title_check_response_sha256": "35b87876ba0cf656e00bc4fba9a57932a6122b6a178cf138ae9f06f445a3a082",
+      "title_checked_at_utc": "2026-10-05T19:40:05.227666+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.082243+00:00",
+      "response_sha256": "7e2457c222575fe0ade08848e4af02d37dc2c1e928026ed28c2083cf2e869525",
+      "extraction_sha256": "3d5a9a744ea213e82679e154e93720b0cc29c6473527357e12a6541b58e782a9",
+      "text": "Guardado en: Autor Principal: Bustillo Verbel, Rosa Lia. Otros Autores: Espitia Nieto, Sandra, (autor.) Formato: eBook Idioma: Spanish Publicado: Santa Marta : Editorial Unimagdalena, 2018. Materias: Skull > Diseases. Jaws > Diseases. Diagnosis. Cráneo > Enfermedades. Enfermedades maxilares. Diagnóstico. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/105476  "
+    }
+  ]
+}

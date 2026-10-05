@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000235",
+  "title": "Ética de la comunicación",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:23.233570+00:00",
+      "response_sha256": "21fc27a501c5cd1373c22c7b58dd460ae13aed1356ec54a9b617dc3408b28e04",
+      "extraction_sha256": "92869a5e29828d4aa6d7fef1b6eb536cb162f5eb262bbb09fde76cb2cf999a27",
+      "text": "Guardado en: Autor Principal: Prado Flores, Rogelio del. Formato: eBook Idioma: Spanish Publicado: Barcelona : Editorial Gedisa, 2018. Materias: Communication > Moral and ethical aspects. Mass media > Moral and ethical aspects. Comunicación > Aspectos morales y éticos. Medios de comunicación masiva > Aspectos morales y éticos. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/128281  ",
+      "observed_page_title": "Existencias: Ética de la comunicación /",
+      "title_check_response_sha256": "fcde880c4f3464f314a99d2ead19562eb203f8e7391db74d87e0cc541556cb9e",
+      "title_checked_at_utc": "2026-10-05T19:39:52.269123+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:24.595535+00:00",
+      "response_sha256": "94db11bf99d9f25ba2c52a3db5db8d138845810c63df6b1b96466e8bcb701a66",
+      "extraction_sha256": "92869a5e29828d4aa6d7fef1b6eb536cb162f5eb262bbb09fde76cb2cf999a27",
+      "text": "Guardado en: Autor Principal: Prado Flores, Rogelio del. Formato: eBook Idioma: Spanish Publicado: Barcelona : Editorial Gedisa, 2018. Materias: Communication > Moral and ethical aspects. Mass media > Moral and ethical aspects. Comunicación > Aspectos morales y éticos. Medios de comunicación masiva > Aspectos morales y éticos. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/128281  "
+    }
+  ]
+}

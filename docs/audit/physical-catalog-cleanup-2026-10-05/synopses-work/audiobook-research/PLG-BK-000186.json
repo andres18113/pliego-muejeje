@@ -1,0 +1,30 @@
+{
+  "sku": "PLG-BK-000186",
+  "title": "Arduino práctico. Edición 2022",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB300709",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:16.172944+00:00",
+      "response_sha256": "69d3b16f390f4725cac3fc9ea81e44dcb1ba3629c09e2b5c2d1dd6bd66fcb0d7",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB300709/Details",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:17.388544+00:00",
+      "response_sha256": "e1c65cddd0676724af5def5b143d5be9b2784a73072014e5ad02cdb4d0620fdf",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://www.anayamultimedia.es/libro/manuales-imprescindibles/arduino-practico-edicion-2022-daniel-lozano-equisoain-9788441544987/",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:58.217502+00:00",
+      "response_sha256": "67cf9f175f26b8b7676fad8125bae3b7d5700b058b4c1b22c8195e4ce825f0a9",
+      "extraction_sha256": "774890ef7ac36a0ef1d15d50c101de422b31566a5a78f2585ffcfd09a3b95416",
+      "text": "Sinopsis Este libro te permitirá dar forma y vida a tus propios proyectos de Arduino desde el inicio y sin necesidad de tener conocimientos previos en programación. Sin un rango de edad específico, describe desde las nociones básicas necesarias para poder crear tu primer proyecto, hasta desarrollos más avanzados para aquellos que quieran subir de nivel en la creación de sus ideas. Ya seas alguien que quiere comenzar en este mundo, o que quiere refrescar sus conocimientos, este libro te permitirá llevar a la realidad tus pensamientos e ideas dentro del mundo de la tecnología. Su formato paso a paso, su lenguaje comprensible y la inclusión de imágenes de los prototipos te ayudarán a no tener dudas ni bloqueos durante el desarrollo de tus proyectos. Incluye imágenes, códigos fuente y descripciones de cómo se han realizado los diferentes proyectos, facilitando al máximo su claridad y compresión, realizados con el entorno de programación del propio fabricante, el entorno Arduino IDE, cuyo funcionamiento se explica con gran detalle, haciendo uso de los ejemplos proporcionados por la plataforma y ampliando algunos de ellos para aprender a realizar fantásticas creaciones más allá de nuestra imaginación. "
+    }
+  ]
+}

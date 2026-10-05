@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Historia de historias",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Álvaro Uribe reúne su narrativa breve en un volumen que transita por la sátira, la fantasía y la ficción histórica. Los cuentos también se acercan al misterio y a las preguntas de la imaginación filosófica. Una lectura para quienes disfrutan de las formas breves y desean explorar la variedad de registros de un escritor de la literatura mexicana.",
         "autores": [
           {
             "nombre": "Uribe, Álvaro",
@@ -184,7 +184,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "229",
-        "imported_book_id": "228"
+        "imported_book_id": "228",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_DISTRIBUTED_ABSTRACT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://books.apple.com/pe/book/historia-de-historias/id1360276353",
+              "basis": "La descripción editorial de Malpaso distribuida en Apple Books verifica cuentos reunidos de Álvaro Uribe y diversidad de registros: sátira, fantasía, ficción histórica y relatos policiales."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -192,7 +203,7 @@
       "libro": {
         "titulo": "La era victoriana en literatura",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Gilbert Keith Chesterton se acerca a la literatura inglesa del siglo XIX desde su relación con la era victoriana. La obra pertenece al campo de la historia y la crítica literarias. Una lectura para quienes desean explorar ese período a través de sus letras y atender a la mirada de Chesterton sobre una etapa de la tradición inglesa.",
         "autores": [
           {
             "nombre": "Chesterton, Gilbert Keith",
@@ -369,7 +380,22 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "230",
-        "imported_book_id": "229"
+        "imported_book_id": "229",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: English literature > 19th century > History and criticism. Literatura inglesa > Siglo XIX > Historia y crítica. Libros electrónicos."
+            },
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119/Details",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: English literature > 19th century > History and criticism. Literatura inglesa > Siglo XIX > Historia y crítica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -562,7 +588,7 @@
       "libro": {
         "titulo": "La literatura dramática",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Francesc Foguet y Núria Santamaria centran esta obra en la literatura dramática. El libro se inscribe en el ámbito de la historia y la crítica del drama. Una lectura para quienes desean acercarse a la escritura teatral como forma literaria y pensar su estudio desde las preguntas que reúnen interpretación, tradición y conocimiento de las letras.",
         "autores": [
           {
             "nombre": "Foguet, Francesc - Santamaria, Núria",
@@ -739,7 +765,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "232",
-        "imported_book_id": "231"
+        "imported_book_id": "231",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Drama > History and criticism. Drama > Historia y crítica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -932,7 +969,7 @@
       "libro": {
         "titulo": "Literatura clásica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La literatura clásica conserva un lugar propio dentro del estudio de las letras. Armando Álvarez Bravo presenta una obra dedicada a ese ámbito y al acercamiento a una tradición literaria. La lectura permite orientar el interés hacia textos y formas de creación que siguen formando parte de la memoria cultural y de las preguntas del estudio literario.",
         "autores": [
           {
             "nombre": "Álvarez Bravo, Armando",
@@ -1109,7 +1146,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "234",
-        "imported_book_id": "233"
+        "imported_book_id": "233",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Literatura. Classical literature. Literatura clásica Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1302,7 +1350,7 @@
       "libro": {
         "titulo": "Literatura Oriental",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La literatura oriental constituye el centro de esta obra de Armando Álvarez Bravo. El libro orienta la mirada hacia un ámbito de las letras que invita a ampliar los marcos habituales del estudio literario. Una aproximación para quienes desean explorar otras tradiciones de creación y acercarse a la diversidad de experiencias que reúne la literatura.",
         "autores": [
           {
             "nombre": "Álvarez Bravo, Armando",
@@ -1479,7 +1527,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "236",
-        "imported_book_id": "235"
+        "imported_book_id": "235",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Literatura. Oriental literature. Literatura oriental Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1487,7 +1546,7 @@
       "libro": {
         "titulo": "Literatura universal",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Alfonso Reyes dirige la mirada hacia la literatura en una obra de alcance universal. El libro se sitúa en el estudio de la creación literaria y permite acercarse a ese campo desde la voz de uno de sus ensayistas. Una lectura para quienes buscan ampliar su relación con las letras y pensar la literatura más allá de un marco exclusivamente nacional.",
         "autores": [
           {
             "nombre": "Reyes, Alfonso",
@@ -1664,7 +1723,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "237",
-        "imported_book_id": "236"
+        "imported_book_id": "236",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Literature. Literatura universal. Literatura. Spanish language materials. Materiales en español. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1672,7 +1742,7 @@
       "libro": {
         "titulo": "Literatura y cine",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Francisco Gutiérrez Carbajo estudia el encuentro entre literatura y cine. La obra relaciona ese vínculo con el lenguaje cinematográfico y con el análisis del discurso, situando ambas formas de expresión en un espacio de reflexión compartido. Una lectura para quienes desean pensar cómo los textos y las imágenes participan en la construcción de sentidos y experiencias culturales.",
         "autores": [
           {
             "nombre": "Gutiérrez Carbajo, Francisco",
@@ -1849,7 +1919,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "238",
-        "imported_book_id": "237"
+        "imported_book_id": "237",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Motion pictures and literature. Cine y literatura. Motion pictures and language. Cine y lenguaje. Discourse analysis. Análisis del discurso. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1857,7 +1938,7 @@
       "libro": {
         "titulo": "Literaturas compartidas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La literatura contemporánea comparte espacios y fronteras con otras expresiones de la cultura. Este volumen coordinado por Teresa Basile y Enrique Foffani examina esos encuentros sin establecer una jerarquía fija entre saberes. Sus reflexiones atienden a las continuidades y diferencias entre literatura, tradición y experiencia cultural, y a las nuevas formas de lectura que tales relaciones hacen posibles.",
         "autores": [
           {
             "nombre": "Basile, Teresa - Foffani, Enrique",
@@ -2034,7 +2115,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "239",
-        "imported_book_id": "238"
+        "imported_book_id": "238",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://libros.fahce.unlp.edu.ar/index.php/libros/catalog/book/5",
+              "basis": "La sinopsis editorial identifica una obra colectiva acerca de las relaciones sin jerarquía entre literatura contemporánea, tradición y otras esferas culturales."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2042,7 +2134,7 @@
       "libro": {
         "titulo": "Páginas de historia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Bartolomé Mitre reúne en estas páginas una escritura vinculada a la historia y a la tradición literaria argentina. La obra se sitúa en el horizonte del siglo XIX. Una lectura que permite acercarse a la relación entre letras e historia desde un autor asociado a ese contexto y explorar el pasado mediante la experiencia de su escritura.",
         "autores": [
           {
             "nombre": "Mitre, Bartolomé",
@@ -2219,7 +2311,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "240",
-        "imported_book_id": "239"
+        "imported_book_id": "239",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Literatura. Formas y géneros literarios. Literature. Argentine literature. Spanish literature > 19th century. Argentina > Siglo XIX. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2227,7 +2330,7 @@
       "libro": {
         "titulo": "Romancero gitano",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El poemario reúne romances en los que las metáforas transforman la tradición popular en una voz poética singular. Con la cultura gitana como eje, Federico García Lorca aborda el amor, la muerte y la pasión. Una lectura para acercarse al encuentro entre tradición y modernidad y a la intensidad de una de sus obras poéticas.",
         "autores": [
           {
             "nombre": "García Lorca, Federico",
@@ -2404,7 +2507,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "241",
-        "imported_book_id": "240"
+        "imported_book_id": "240",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.editorialalma.com/libros/romancero-gitano",
+              "basis": "La ficha de Editorial Alma identifica el poemario de Lorca y sus motivos poéticos; se describe la obra compartida, sin atribuir a esta edición material adicional."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Anatomía y fisiología básicas en el niño",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La anatomía y la fisiología infantil constituyen el eje de esta aproximación al cuerpo del niño. La relación entre estructura y funcionamiento abre un marco para comprender sus características corporales, con vínculos con el estudio de la educación física. Una lectura inicial para quienes necesitan situar el organismo infantil dentro de un lenguaje anatómico y fisiológico básico.",
         "autores": [
           {
             "nombre": "Carbonero Celis, Carmen",
@@ -202,7 +202,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "172",
-        "imported_book_id": "171"
+        "imported_book_id": "171",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000086.json; SHA-256 de respuesta HTTP: 6ed35a53ee085fc033a002379e1768f00dab31c61018bfd2e90a54bbf465a876"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -210,7 +221,7 @@
       "libro": {
         "titulo": "Anatomía y fisiología del sistema nervioso central",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El sistema nervioso central se aborda a través de dos dimensiones complementarias: anatomía y fisiología. La relación entre estructura y funcionamiento invita a construir una visión conjunta de este ámbito del organismo. Una lectura para quienes desean orientarse en su estudio y reconocer por qué el conocimiento anatómico adquiere sentido al conectarse con la actividad fisiológica.",
         "autores": [
           {
             "nombre": "Velayos, José Luis",
@@ -405,7 +416,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "173",
-        "imported_book_id": "172"
+        "imported_book_id": "172",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000260.json; SHA-256 de respuesta HTTP: 565400ff25fcffae5c7a266aa343f320b085e28b411715b86301e81bc1213a35"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -413,7 +435,7 @@
       "libro": {
         "titulo": "El médico en casa: manual de consulta",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Un manual de consulta que sitúa la medicina de divulgación y la semiología médica en el entorno del hogar. Su tema invita a familiarizarse con el lenguaje utilizado para describir los problemas de salud y sus manifestaciones. Una lectura para quienes buscan una primera orientación sobre conceptos médicos y desean comprender mejor la manera de nombrar signos y síntomas.",
         "autores": [
           {
             "nombre": "Carrete, Paula",
@@ -618,7 +640,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "174",
-        "imported_book_id": "173"
+        "imported_book_id": "173",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000132.json; SHA-256 de respuesta HTTP: 0c3a735a3bcf1b38ee3cbefe23f211e27f242f02a919b658f84d2db86813dcb3"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -626,7 +659,7 @@
       "libro": {
         "titulo": "Fisiología respiratoria (8a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El funcionamiento de la respiración es el centro de esta obra de fisiología. Su tema permite acercarse al proceso respiratorio desde una perspectiva que relaciona el organismo con una de sus funciones esenciales. Es una lectura orientada a quienes buscan estudiar las bases fisiológicas de la respiración y construir un marco para comprender mejor su significado corporal.",
         "autores": [
           {
             "nombre": "West, John B.",
@@ -811,7 +844,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "175",
-        "imported_book_id": "174"
+        "imported_book_id": "174",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000087.json; SHA-256 de respuesta HTTP: c87be68eca1577756747cf76faa20a013fa844c18d6d9f9a1cbc3f6cce9b924c"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -819,7 +863,7 @@
       "libro": {
         "titulo": "Fisiología y fisiopatología pulmonar: estudios de casos (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La fisiología y la fisiopatología pulmonar se relacionan mediante el estudio de casos. Ese enfoque invita a conectar el funcionamiento de los pulmones con las preguntas que plantea su alteración en contextos concretos. Una lectura para quienes desean acercarse a la relación entre comprensión fisiológica y análisis clínico dentro del estudio del sistema pulmonar.",
         "autores": [
           {
             "nombre": "West, John B.",
@@ -1004,7 +1048,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "176",
-        "imported_book_id": "175"
+        "imported_book_id": "175",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000287.json; SHA-256 de respuesta HTTP: 7b4f12eca1ae672b43e105c2ff57a2258ac61163e2a7f0348411b729fc52e21f"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1012,7 +1067,7 @@
       "libro": {
         "titulo": "Fundamentos de farmacología oncológica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La farmacología oncológica ofrece una entrada al estudio de los medicamentos dentro del campo de la oncología. El énfasis en sus fundamentos invita a situar este ámbito desde sus bases conceptuales. Una lectura para quienes desean orientarse en la relación entre conocimiento farmacológico y atención oncológica antes de profundizar en cuestiones terapéuticas de mayor especialización.",
         "autores": [
           {
             "nombre": "Cevallos Barrera, Edwin",
@@ -1207,7 +1262,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "177",
-        "imported_book_id": "176"
+        "imported_book_id": "176",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000284.json; SHA-256 de respuesta HTTP: a2a700409d9e91c7616463182d218c6f514dc6528d09113125f8665c6f8fd5cd"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1215,7 +1281,7 @@
       "libro": {
         "titulo": "Manual de fisiología articular",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La fisiología articular se sitúa en el cruce entre el estudio de las articulaciones y la mecánica humana. El manual invita a relacionar el funcionamiento corporal con las estructuras que hacen posible el movimiento. Una lectura para quienes buscan orientarse en la dimensión fisiológica de las articulaciones y aproximarse al cuerpo desde una perspectiva funcional.",
         "autores": [
           {
             "nombre": "Guzmán Velasco, Adriana",
@@ -1400,7 +1466,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "178",
-        "imported_book_id": "177"
+        "imported_book_id": "177",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000175.json; SHA-256 de respuesta HTTP: a60a03380980ec4e21a107262713d7d62f0d4c22cfe18f131e46a04592e7db3a"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1408,7 +1485,7 @@
       "libro": {
         "titulo": "Manual de práctica de semiología clínica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Moraima Chaveco Pérez relaciona el aprendizaje de la semiología clínica con la práctica del examen físico y la identificación de signos y síntomas. El manual aborda la valoración de distintos sistemas corporales dentro de la formación en enfermería. Su propuesta ayuda a conectar los conceptos estudiados en clase con la observación clínica y la planificación del cuidado de los pacientes.",
         "autores": [
           {
             "nombre": "Chaveco Pérez, Moraima",
@@ -1585,7 +1662,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "179",
-        "imported_book_id": "178"
+        "imported_book_id": "178",
+        "synopsis_provenance": {
+          "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.digitaliapublishing.com/a/160115/manual-de-practica-de-semiologia-clinica",
+              "basis": "Paráfrasis original de la descripción pública de distribución. Evidencia: audiobook-research/PLG-BK-000088.json; SHA-256 de respuesta HTTP: a836c3cf74bea3e75a4eae7697710807fff1353d7badc7378b6bef82f55fb20c"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1593,7 +1681,7 @@
       "libro": {
         "titulo": "Neuroanatomía, funcional y clínica (5a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La neuroanatomía se aborda en relación con la función y la clínica, dentro de un campo vinculado con la neurología. La obra invita a conectar el conocimiento de las estructuras nerviosas con su significado funcional. Una lectura para quienes desean orientarse en este cruce y construir un marco anatómico desde el que comprender mejor las preguntas de la práctica neurológica.",
         "autores": [
           {
             "nombre": "Bustamante B., Jairo",
@@ -1778,7 +1866,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "180",
-        "imported_book_id": "179"
+        "imported_book_id": "179",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000164.json; SHA-256 de respuesta HTTP: d5185fbeb7b1ec8f7e6a796545c34ed639824697bd400bbe5ba27c3192d17a0d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1786,7 +1885,7 @@
       "libro": {
         "titulo": "Oxígeno: fisiología, terapéutica, toxicidad",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El oxígeno se estudia desde sus efectos fisiológicos, su uso terapéutico y su posible toxicidad. La relación entre estas dimensiones invita a considerar que una misma sustancia puede tener funciones y efectos distintos según su utilización. Una lectura para acercarse al campo de la oxigenoterapia y situar sus preguntas dentro del conocimiento del funcionamiento corporal.",
         "autores": [
           {
             "nombre": "Cristancho Gómez, William",
@@ -1971,7 +2070,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "181",
-        "imported_book_id": "180"
+        "imported_book_id": "180",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000195.json; SHA-256 de respuesta HTTP: b81b07446b63a803de44a95b0f45ef3f332622c693240cbe2bdd66c394f030b2"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1979,7 +2089,7 @@
       "libro": {
         "titulo": "Proceso de valoración semiológica de Chávez para el cuidado de enfermería",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La valoración semiológica para el cuidado de enfermería se sitúa en relación con la condición clínica y humana de la persona. La propuesta identificada con Chávez invita a conectar el examen con el proceso de cuidado. Una lectura para quienes desean acercarse a la valoración como parte del trabajo enfermero y pensar el vínculo entre observación clínica y atención.",
         "autores": [
           {
             "nombre": "Barragán Becerra, Julián Andrés",
@@ -2184,7 +2294,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "182",
-        "imported_book_id": "181"
+        "imported_book_id": "181",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000243.json; SHA-256 de respuesta HTTP: fd28e41af7293257ae2e466d7b5bfb2e9b7c9104eb1fccb9c3951a04acfcd8b7"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2192,7 +2313,7 @@
       "libro": {
         "titulo": "Semiología: sistema craneomandibular",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El sistema craneomandibular se estudia desde la semiología y el diagnóstico, con atención a las enfermedades del cráneo y los maxilares. El libro invita a relacionar las manifestaciones clínicas con una región anatómica específica. Una lectura para quienes necesitan orientarse en el lenguaje del examen craneomandibular y comprender el lugar de los signos dentro de la valoración clínica.",
         "autores": [
           {
             "nombre": "Bustillo Verbel, Rosa Lia",
@@ -2387,7 +2508,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "183",
-        "imported_book_id": "182"
+        "imported_book_id": "182",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000137.json; SHA-256 de respuesta HTTP: 943e6068db11c23b9998787033644126fe99a1f9461663208f677748a402507d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2395,7 +2527,7 @@
       "libro": {
         "titulo": "Temas claves: neuroanatomía (4a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La neuroanatomía se presenta como un conjunto de temas claves para orientarse en el estudio del sistema nervioso. El énfasis temático invita a construir un marco de lectura centrado en la dimensión anatómica de este campo. Una obra para quienes desean familiarizarse con su lenguaje y disponer de una referencia antes de profundizar en cuestiones neurológicas más específicas.",
         "autores": [
           {
             "nombre": "Fix, James D.",
@@ -2580,7 +2712,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "184",
-        "imported_book_id": "183"
+        "imported_book_id": "183",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000197.json; SHA-256 de respuesta HTTP: 7c98396c32d592ba2722573fbcb67da041a2d145c7e57518863084566106e8ac"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

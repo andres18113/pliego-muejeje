@@ -219,3 +219,18 @@ describe("CatalogPage", () => {
     expect(requestedCategories).toEqual(["inactiva", null]);
   });
 });
+
+it("shows media scope as a removable criterion instead of retaining an invisible filter", async () => {
+  const requested: string[] = [];
+  vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
+    const url = new URL(requestUrl(input));
+    if (url.pathname.endsWith("/categories")) return jsonResponse([]);
+    if (url.pathname.endsWith("/filter-options")) return jsonResponse({ languages: [], formats: [], minimumPrice: null, maximumPrice: null });
+    requested.push(url.search);
+    return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
+  }));
+  const user = userEvent.setup();
+  renderCatalog("/catalog?productType=EBOOK&sort=BEST_SELLING");
+  await user.click(await screen.findByRole("button", { name: "Quitar eBooks" }));
+  await waitFor(() => expect(requested).toContain("?sort=BEST_SELLING&page=0&pageSize=20"));
+});

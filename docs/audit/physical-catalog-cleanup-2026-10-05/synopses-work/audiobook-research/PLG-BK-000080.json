@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000080",
+  "title": "Astronomía: de la tierra al cosmos",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:00.885825+00:00",
+      "response_sha256": "248bb1477bd947ea207c772edf6a3497f52c40f40255ac0744acc33d48c40b5b",
+      "extraction_sha256": "577bffe199763519a8159457e3abcf52e6f111064b90fc7976e7642704c321ae",
+      "text": "Guardado en: Autor Principal: Zandanel, Armando. Formato: eBook Idioma: Spanish Publicado: Ituzaingó : Editorial Maipue, 2018. Series: Conciencia. Materias: Astronomy. Astronomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/112787  ",
+      "observed_page_title": "Existencias: Astronomía :",
+      "title_check_response_sha256": "34de4bc6fbde62f0ebcf760c0ee066fa39f7c9347e23b4127f52cff923232a44",
+      "title_checked_at_utc": "2026-10-05T19:39:50.822547+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:02.256187+00:00",
+      "response_sha256": "0b6d0780658388931b2320ac0bc7b9800e4ad01770f3501a73454cf6de5569f0",
+      "extraction_sha256": "577bffe199763519a8159457e3abcf52e6f111064b90fc7976e7642704c321ae",
+      "text": "Guardado en: Autor Principal: Zandanel, Armando. Formato: eBook Idioma: Spanish Publicado: Ituzaingó : Editorial Maipue, 2018. Series: Conciencia. Materias: Astronomy. Astronomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/112787  "
+    }
+  ]
+}

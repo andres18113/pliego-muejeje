@@ -1,0 +1,132 @@
+{
+  "records": 114,
+  "unique_synopses": 114,
+  "exact_input_set": true,
+  "basis_kinds": {
+    "TITLE_SUBJECT_EDITORIAL_DESCRIPTION": 97,
+    "PUBLISHER_SYNOPSIS_PARAPHRASE": 11,
+    "DISTRIBUTOR_SYNOPSIS_PARAPHRASE": 4,
+    "PRIMARY_TEXT_PARAPHRASE": 1,
+    "INSTITUTIONAL_SYNOPSIS_PARAPHRASE": 1
+  },
+  "issues": [],
+  "title_variants": [
+    {
+      "sku": "PLG-BK-000060",
+      "catalog_title": "Ética básica (3a. ed.)",
+      "source_title": "Existencias: Etica básica"
+    },
+    {
+      "sku": "PLG-BK-000077",
+      "catalog_title": "Ética general (6a. ed.)",
+      "source_title": "Existencias: Ética general"
+    },
+    {
+      "sku": "PLG-BK-000080",
+      "catalog_title": "Astronomía: de la tierra al cosmos",
+      "source_title": "Existencias: Astronomía :"
+    },
+    {
+      "sku": "PLG-BK-000084",
+      "catalog_title": "Historia mínima del PRI",
+      "source_title": "Existencias: Historia mínima del Partido Revolucionario /"
+    },
+    {
+      "sku": "PLG-BK-000087",
+      "catalog_title": "Fisiología respiratoria (8a. ed.)",
+      "source_title": "Existencias: Fisiología respiratoria /"
+    },
+    {
+      "sku": "PLG-BK-000109",
+      "catalog_title": "Cleopatra: una vida",
+      "source_title": "Existencias: Cleopatra :"
+    },
+    {
+      "sku": "PLG-BK-000132",
+      "catalog_title": "El médico en casa: manual de consulta",
+      "source_title": "Existencias: El médico en casa /"
+    },
+    {
+      "sku": "PLG-BK-000137",
+      "catalog_title": "Semiología: sistema craneomandibular",
+      "source_title": "Existencias: Semiología :"
+    },
+    {
+      "sku": "PLG-BK-000138",
+      "catalog_title": "Valentín: novela histórica",
+      "source_title": "Existencias: Valentín :"
+    },
+    {
+      "sku": "PLG-BK-000151",
+      "catalog_title": "Introducción a la geología (2a. ed.)",
+      "source_title": "Existencias: Introducción a la geología"
+    },
+    {
+      "sku": "PLG-BK-000158",
+      "catalog_title": "Colapso: cuando el clima lo cambia todo",
+      "source_title": "Existencias: Colapso :"
+    },
+    {
+      "sku": "PLG-BK-000161",
+      "catalog_title": "Los hombres del faraón: el ejército a finales del Reino Nuevo en el Antiguo Egipto",
+      "source_title": "Existencias: Los hombres del faraón"
+    },
+    {
+      "sku": "PLG-BK-000164",
+      "catalog_title": "Neuroanatomía, funcional y clínica (5a. ed.)",
+      "source_title": "Existencias: Neuroanatomía, funcional y clínica /"
+    },
+    {
+      "sku": "PLG-BK-000187",
+      "catalog_title": "Historia mínima de Perú",
+      "source_title": "Existencias: Historia mínima del Perú /"
+    },
+    {
+      "sku": "PLG-BK-000195",
+      "catalog_title": "Oxígeno: fisiología, terapéutica, toxicidad",
+      "source_title": "Existencias: Oxígeno :"
+    },
+    {
+      "sku": "PLG-BK-000197",
+      "catalog_title": "Temas claves: neuroanatomía (4a. ed.)",
+      "source_title": "Existencias: Neuroanatomía /"
+    },
+    {
+      "sku": "PLG-BK-000232",
+      "catalog_title": "Estadística y muestreo (14a. ed.)",
+      "source_title": "Existencias: Estadística y muestreo /"
+    },
+    {
+      "sku": "PLG-BK-000236",
+      "catalog_title": "Cálculo avanzado: introducción",
+      "source_title": "Existencias: Cálculo avanzado :"
+    },
+    {
+      "sku": "PLG-BK-000242",
+      "catalog_title": "Constructivismo y psicoterapia (3a. ed.)",
+      "source_title": "Existencias: Constructivismo y psicoterapia"
+    },
+    {
+      "sku": "PLG-BK-000281",
+      "catalog_title": "Estadística aplicada básica (2a. ed.)",
+      "source_title": "Existencias: Estadística aplicada básica"
+    },
+    {
+      "sku": "PLG-BK-000287",
+      "catalog_title": "Fisiología y fisiopatología pulmonar: estudios de casos (2a. ed.)",
+      "source_title": "Existencias: Fisiología y fisiopatología pulmonar :"
+    },
+    {
+      "sku": "PLG-BK-000306",
+      "catalog_title": "Psicoterapia, asesoramiento y consejería (2a. ed.)",
+      "source_title": "Existencias: Psicoterapia, asesoramiento y consejería /"
+    },
+    {
+      "sku": "PLG-BK-000312",
+      "catalog_title": "Antropología de la sexualidad (2a. ed.)",
+      "source_title": "Existencias: Antropología de la sexualidad /"
+    }
+  ],
+  "word_min": 53,
+  "word_max": 63
+}

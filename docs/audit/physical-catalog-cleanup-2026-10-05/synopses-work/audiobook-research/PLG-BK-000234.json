@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000234",
+  "title": "Inteligencia artificial",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:23.034297+00:00",
+      "response_sha256": "3dcd9291074a3a80a774a66e0bf918a8742562d3cf950e1a1ee4f2e0b2518bbe",
+      "extraction_sha256": "ba6ca6e54ded0f8cd6b902b0a15afc3788b577a47db8a67b9a381e8f06c59b4d",
+      "text": "Guardado en: Autor Principal: López de Mántaras, Ramon, 1952- (autor.) Otros Autores: Meseguer, Pedro, (autor.) Formato: eBook Idioma: Spanish Publicado: Madrid : CSIC : Los Libros de la Catarata, [2017] Series: ¿Qué sabemos de? ; 87. Materias: Inteligencia artificial. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/233793  ",
+      "observed_page_title": "Existencias: Inteligencia artificial /",
+      "title_check_response_sha256": "0e3cb1614da1a2bddac292433b512c939655f314dba967ac32b2be6e0367e03e",
+      "title_checked_at_utc": "2026-10-05T19:40:03.836729+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:24.354706+00:00",
+      "response_sha256": "8cf8ff8696e81e0cd1364dd84cb1d6aebe8cf25cceb9b39310f97e07fec68c1a",
+      "extraction_sha256": "ba6ca6e54ded0f8cd6b902b0a15afc3788b577a47db8a67b9a381e8f06c59b4d",
+      "text": "Guardado en: Autor Principal: López de Mántaras, Ramon, 1952- (autor.) Otros Autores: Meseguer, Pedro, (autor.) Formato: eBook Idioma: Spanish Publicado: Madrid : CSIC : Los Libros de la Catarata, [2017] Series: ¿Qué sabemos de? ; 87. Materias: Inteligencia artificial. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/233793  "
+    }
+  ]
+}

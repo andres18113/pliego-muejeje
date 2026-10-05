@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000292",
+  "title": "La astronomía es fácil",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:32.820625+00:00",
+      "response_sha256": "854ed5c1a097f26a2631521f3a9566b744244ee4f6351e4520eb2d34ca023855",
+      "extraction_sha256": "19f45f64940859d494d4fab605e91bcd0b8372a3c4f002bc31bf3ed41a12af05",
+      "text": "Guardado en: Autor Principal: Lopesino, Jordi, (Autor.) Otros Autores: Coll-Vinent, Anna, (traductora.) , Alberola, Anna, (corrección.) Formato: eBook Idioma: Spanish Publicado: Barcelona (España) : Marcombo, 2023. Materias: Astronomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/281683  ",
+      "observed_page_title": "Existencias: La astronomía es fácil /",
+      "title_check_response_sha256": "27991c115965e09daa7ce24b193e43ccea97488caef19abbd20c4dbcba7effaf",
+      "title_checked_at_utc": "2026-10-05T19:39:50.797103+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:34.107449+00:00",
+      "response_sha256": "dce65c43cb5bc6fb0817080d468817ea09cd18981f5de3d4def73673b4d0d9a6",
+      "extraction_sha256": "19f45f64940859d494d4fab605e91bcd0b8372a3c4f002bc31bf3ed41a12af05",
+      "text": "Guardado en: Autor Principal: Lopesino, Jordi, (Autor.) Otros Autores: Coll-Vinent, Anna, (traductora.) , Alberola, Anna, (corrección.) Formato: eBook Idioma: Spanish Publicado: Barcelona (España) : Marcombo, 2023. Materias: Astronomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/281683  "
+    }
+  ]
+}

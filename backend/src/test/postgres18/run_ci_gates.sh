@@ -65,13 +65,13 @@ fi
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '44:44' ]]; then
-    printf 'Expected 44 successful versioned Flyway migrations through V044; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '48:48' ]]; then
+    printf 'Expected 48 successful versioned Flyway migrations through V048; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"
 
-for gate in checkout_gate.sql customer_orders_gate.sql admin_orders_gate.sql catalog_public_categories_gate.sql catalog_public_filter_options_gate.sql catalog_cover_delivery_gate.sql cart_unavailability_codes_gate.sql catalog_global_search_gate.sql catalog_filter_facets_gate.sql digital_editions_gate.sql post_purchase_gate.sql customer_email_change_gate.sql numeric_validation_gate.sql transactional_email_gate.sql store_pickup_gate.sql monetary_projection_gate.sql delivery_window_gate.sql offers_gate.sql; do
+for gate in checkout_gate.sql customer_orders_gate.sql admin_orders_gate.sql catalog_public_categories_gate.sql catalog_public_filter_options_gate.sql catalog_cover_delivery_gate.sql cart_unavailability_codes_gate.sql catalog_global_search_gate.sql catalog_contract_gate.sql catalog_filter_facets_gate.sql digital_editions_gate.sql post_purchase_gate.sql customer_email_change_gate.sql numeric_validation_gate.sql transactional_email_gate.sql store_pickup_gate.sql monetary_projection_gate.sql delivery_window_gate.sql offers_gate.sql digital_ownership_gate.sql storefront_help_gate.sql; do
     printf 'Running %s\n' "$gate"
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done
@@ -83,7 +83,7 @@ for gate in checkout_last_unit.py order_cancel_concurrency.py address_primary_co
 done
 
 for gate in checkout_http_gate.py customer_orders_http_gate.py admin_orders_http_gate.py \
-    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py home_delivery_http_gate.py offers_http_gate.py; do
+    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py home_delivery_http_gate.py offers_http_gate.py library_checkout_http_gate.py storefront_help_http_gate.py; do
     printf 'Running %s\n' "$gate"
     timeout 180s python3 "$script_dir/$gate"
 done

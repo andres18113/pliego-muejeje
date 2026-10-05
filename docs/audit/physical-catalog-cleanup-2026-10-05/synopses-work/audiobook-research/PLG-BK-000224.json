@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000224",
+  "title": "Cultura, antropología y otras tonterías",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:21.261997+00:00",
+      "response_sha256": "8835bb8d427efdb5a81784f7e437db32dfcaefc2043b0a3e8df68dc8ce1f94a6",
+      "extraction_sha256": "2361ef3666abf8d7586c4fdfcfacadea14bdfcd326e0a6fe34638e54f93b52a1",
+      "text": "Guardado en: Autor Principal: Díaz de Rada, Ángel. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Madrid : Trotta, 2010. Materias: Cultura. Culture. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/61258  ",
+      "observed_page_title": "Existencias: Cultura, antropología y otras tonterías",
+      "title_check_response_sha256": "3a2ee1f2d14210daf34960c982cbb583c7f4763f27913a899dc7eb464cb36b9d",
+      "title_checked_at_utc": "2026-10-05T19:40:04.660717+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:22.555924+00:00",
+      "response_sha256": "f15ab255a9e7268cc6fe173524f9b2969e7e77102bd1edb85fc279dfcb6d02bd",
+      "extraction_sha256": "2361ef3666abf8d7586c4fdfcfacadea14bdfcd326e0a6fe34638e54f93b52a1",
+      "text": "Guardado en: Autor Principal: Díaz de Rada, Ángel. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Madrid : Trotta, 2010. Materias: Cultura. Culture. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/61258  "
+    }
+  ]
+}

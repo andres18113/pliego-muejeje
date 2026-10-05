@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000197",
+  "title": "Temas claves: neuroanatomía (4a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:18.712445+00:00",
+      "response_sha256": "7c98396c32d592ba2722573fbcb67da041a2d145c7e57518863084566106e8ac",
+      "extraction_sha256": "df589efb1af71756d0f0a5ec4c0e9f12bf27d2a9c46c4bf870bb56cde5917c2f",
+      "text": "Guardado en: Autor Principal: Fix, James D, (autor.) Otros Autores: Harvey, Deon M., (colaborador.) , Fontán Fontán, Fernando, (traductor.) Formato: eBook Idioma: Spanish Publicado: Estados Unidos : Wolters Kluwer Health : Lippincott Williams & Wilkins, 2013. Edición: 4a. edición. Series: Temas clave. Materias: Neuroanatomy. Neuroanatomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/124809  ",
+      "observed_page_title": "Existencias: Neuroanatomía /",
+      "title_check_response_sha256": "0b32a0fa9dc0df6066aad5136705d36d9e020a418470bf1686d0012c3c352c6c",
+      "title_checked_at_utc": "2026-10-05T19:40:00.742309+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:20.041215+00:00",
+      "response_sha256": "5527c9c2bd5c36f58b7fa2cfbdc95e5576d142a21b487578ceebc026bede22b7",
+      "extraction_sha256": "df589efb1af71756d0f0a5ec4c0e9f12bf27d2a9c46c4bf870bb56cde5917c2f",
+      "text": "Guardado en: Autor Principal: Fix, James D, (autor.) Otros Autores: Harvey, Deon M., (colaborador.) , Fontán Fontán, Fernando, (traductor.) Formato: eBook Idioma: Spanish Publicado: Estados Unidos : Wolters Kluwer Health : Lippincott Williams & Wilkins, 2013. Edición: 4a. edición. Series: Temas clave. Materias: Neuroanatomy. Neuroanatomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/124809  "
+    }
+  ]
+}

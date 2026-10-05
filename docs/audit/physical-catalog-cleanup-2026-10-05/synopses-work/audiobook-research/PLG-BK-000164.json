@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000164",
+  "title": "Neuroanatomía, funcional y clínica (5a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:12.086580+00:00",
+      "response_sha256": "d5185fbeb7b1ec8f7e6a796545c34ed639824697bd400bbe5ba27c3192d17a0d",
+      "extraction_sha256": "c646228894519ef84c7283b1d64c29e6c02f5fc5a2254a298037a6955ae0a6d7",
+      "text": "Guardado en: Autor Principal: Bustamante B., Jairo, (autor.) Formato: eBook Idioma: Spanish Publicado: Bogotá : Editorial Médica Celsus, 2016. Edición: 5a edición. Materias: Neuroanatomía. Neurología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/280790  ",
+      "observed_page_title": "Existencias: Neuroanatomía, funcional y clínica /",
+      "title_check_response_sha256": "9d7b64ce5292f5ac30363a48412e62941c7f7982930590902d65a1d958ae97d8",
+      "title_checked_at_utc": "2026-10-05T19:39:55.078945+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:13.765314+00:00",
+      "response_sha256": "9585d361316efbe465610b2db5aaecaaf3e0b093b0b4066b7d32a3e29b755508",
+      "extraction_sha256": "c646228894519ef84c7283b1d64c29e6c02f5fc5a2254a298037a6955ae0a6d7",
+      "text": "Guardado en: Autor Principal: Bustamante B., Jairo, (autor.) Formato: eBook Idioma: Spanish Publicado: Bogotá : Editorial Médica Celsus, 2016. Edición: 5a edición. Materias: Neuroanatomía. Neurología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/280790  "
+    }
+  ]
+}

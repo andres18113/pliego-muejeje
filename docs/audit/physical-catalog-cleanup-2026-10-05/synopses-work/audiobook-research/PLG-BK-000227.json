@@ -1,0 +1,30 @@
+{
+  "sku": "PLG-BK-000227",
+  "title": "Historia de la psicología",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB293923",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:21.292860+00:00",
+      "response_sha256": "3619fef38add0b659c309b4549831f0ce5b92a44f8e7ded7f6f6994f77423fe7",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB293923/Details",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:22.517038+00:00",
+      "response_sha256": "9c2437a9f049d6b6b0ccc51b4f394400f83ed1a9c858e75c14e1ada1a2ee6b6c",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://www.planetadelibros.com/libro-historia-de-la-psicologia/267060",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:56.381188+00:00",
+      "response_sha256": "49793c2f04fda6ce77b0223b819fced13759db5080ba3f4423b8360e8752ac5e",
+      "extraction_sha256": "71152c9d7908371a38aeceedc1b319ca2e354ab5f8f6e19cdf7d850c9e1f1c20",
+      "text": "Sinopsis de Historia de la psicología La Psicología ha pasado en pocos años de ser un pasatiempo interesante para algunos profesores del departamento de Filosofía, a convertirse en una profesión de gran demanda social y una ciencia bien establecida. Este libro es testigo de ese extraordinario proceso. El libro hace hincapié en el desarrollo de la psicología a partir de su consolidación como disciplina independiente. No... Leer más Leer fragmento Historia de la psicología Leer fragmento Añadir reseña "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000142",
+  "title": "La ética en la era de la tecnociencia",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:09.110564+00:00",
+      "response_sha256": "23fc7be760c2025296fd7c1d81ec5157976f86375cb570e732669813d08f847a",
+      "extraction_sha256": "29383e059451ae0a00577a882d91014eb3fb4fe8a1de3b32f46a281c6c664805",
+      "text": "Guardado en: Autor Principal: Pulgar Castro, Rodrigo. Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : RIL editores, 2017. Materias: Technology > Moral and ethical aspects. Science > Moral and ethical aspects. Tecnología > Aspectos morales y éticos. Ciencia > Aspectos morales y éticos. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/106271  ",
+      "observed_page_title": "Existencias: La ética en la era de la tecnociencia /",
+      "title_check_response_sha256": "0c399706afd2a5599d5de76e1922b9ed72fb18a34f6e10e1b68b60592e6a07a1",
+      "title_checked_at_utc": "2026-10-05T19:40:01.173140+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.491414+00:00",
+      "response_sha256": "dc3a3c35ad512c96b39db53d8cf6207c7dcd04cdc8cca87806a90182913ccc83",
+      "extraction_sha256": "29383e059451ae0a00577a882d91014eb3fb4fe8a1de3b32f46a281c6c664805",
+      "text": "Guardado en: Autor Principal: Pulgar Castro, Rodrigo. Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : RIL editores, 2017. Materias: Technology > Moral and ethical aspects. Science > Moral and ethical aspects. Tecnología > Aspectos morales y éticos. Ciencia > Aspectos morales y éticos. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/106271  "
+    }
+  ]
+}

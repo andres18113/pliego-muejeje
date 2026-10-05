@@ -20,6 +20,7 @@ export type CheckoutCommand = {
 } & (
   | { fulfillmentMethod?: "HOME_DELIVERY"; addressId: string; pickupLocationId?: never }
   | { fulfillmentMethod: "STORE_PICKUP"; pickupLocationId: string; addressId?: never }
+  | { fulfillmentMethod: "DIGITAL_ONLY"; addressId?: never; pickupLocationId?: never }
 );
 
 const checkoutResultSchema = z.object({
@@ -49,7 +50,9 @@ export class CheckoutOutcomeUnknown extends Error {
 }
 
 export async function submitCheckout(command: CheckoutCommand, key: string): Promise<CheckoutResult> {
-  const destination = command.fulfillmentMethod === "STORE_PICKUP"
+  const destination = command.fulfillmentMethod === "DIGITAL_ONLY"
+    ? { fulfillmentMethod: "DIGITAL_ONLY" as const }
+    : command.fulfillmentMethod === "STORE_PICKUP"
     ? { fulfillmentMethod: command.fulfillmentMethod, pickupLocationId: command.pickupLocationId }
     : { addressId: command.addressId, fulfillmentMethod: "HOME_DELIVERY" as const };
   const body = {

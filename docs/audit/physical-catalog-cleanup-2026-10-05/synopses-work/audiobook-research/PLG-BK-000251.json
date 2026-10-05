@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000251",
+  "title": "Iniciación a JavaScript",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:25.507801+00:00",
+      "response_sha256": "953a26e7cc64e9663afdba4f868c07457c07a8c9bbbe46612472ab64762f37a3",
+      "extraction_sha256": "ade37f53ce2e13ccb7ddc27ee228ec0bb2a00dd884d5861730da9b3c131e46e0",
+      "text": "Guardado en: Autor Principal: Mohedano, Jorge. Otros Autores: Saiz, José Miguel. , Salazar Román, Pedro. Formato: eBook Idioma: Spanish Publicado: Madrid : Ministerio de Educación de España, 2012. Series: Aula mentor Materias: JavaScript (Computer program language) JavaScript (Lenguaje de programación) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/49349  ",
+      "observed_page_title": "Existencias: Iniciación a javascript /",
+      "title_check_response_sha256": "567945255db1cb638387f8527d6d80953970f4a32d556e72a4044caa1f75a4d7",
+      "title_checked_at_utc": "2026-10-05T19:40:02.604162+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:26.842252+00:00",
+      "response_sha256": "eb72df6b9738aafc1b7505a6c5cfd3c6abab8f6f378c069412e2d34e0857521b",
+      "extraction_sha256": "ade37f53ce2e13ccb7ddc27ee228ec0bb2a00dd884d5861730da9b3c131e46e0",
+      "text": "Guardado en: Autor Principal: Mohedano, Jorge. Otros Autores: Saiz, José Miguel. , Salazar Román, Pedro. Formato: eBook Idioma: Spanish Publicado: Madrid : Ministerio de Educación de España, 2012. Series: Aula mentor Materias: JavaScript (Computer program language) JavaScript (Lenguaje de programación) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/49349  "
+    }
+  ]
+}

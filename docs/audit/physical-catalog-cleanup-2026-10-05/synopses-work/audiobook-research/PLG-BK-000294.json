@@ -1,0 +1,47 @@
+{
+  "sku": "PLG-BK-000294",
+  "title": "Historia mínima del Tequila",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB287524",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:31.964257+00:00",
+      "response_sha256": "ab34dab2176c35a2852f857b7e4736c0c219608e2cd4bd2750eec37c23d3ec04",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB287524/Details",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:33.193346+00:00",
+      "response_sha256": "fef5394d05972a29c43150f9137b47cc69909abefb5db8a6dd3aed2dd875ffa8",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://search.worldcat.org/es/title/1528347086",
+      "http_status": 403,
+      "retrieved_at_utc": "2026-10-05T19:35:56.898843+00:00",
+      "response_sha256": "524fed03fa1e923c210f5dd3da8e1ad995c39814a97fd2e51105ee7b925315fc",
+      "extraction_sha256": "ae0b26c68939e8214056c2517af3b5091f1c674c8aef5f1e1fbab7804a78829b",
+      "text": "Just a moment... Enable JavaScript and cookies to continue"
+    },
+    {
+      "url": "https://libros.colmex.mx/tienda/historia-minima-del-tequila/",
+      "http_status": 403,
+      "retrieved_at_utc": "2026-10-05T19:39:50.834106+00:00",
+      "response_sha256": "3d5be4e3650183f17256192cc8a86bc5a5182799935885ba50ec92eff731ec53",
+      "extraction_sha256": "ae0b26c68939e8214056c2517af3b5091f1c674c8aef5f1e1fbab7804a78829b",
+      "text": "Just a moment... Enable JavaScript and cookies to continue"
+    },
+    {
+      "url": "https://libros.colmex.mx/tienda/historia-minima-del-tequila/",
+      "retrieval_method": "web.run public extracted page",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:41:03.608911+00:00",
+      "capture_sha256": "0600b828b652b9439ca42476e7aef05dbcf7661c2771307da9785cf500477f37",
+      "extraction_sha256": "0600b828b652b9439ca42476e7aef05dbcf7661c2771307da9785cf500477f37",
+      "text": "L89: # Historia mínima del tequila\nL91: ## José M. Murià\nL95: ## Año 2024\nL97: ## 171 págs.\nL101: ## 1a.Edición\nL103: ## ISBN/ISSN 978-607-564-627-5\nL116: Inicia con la exposición de la procedencia y naturaleza de ese agave al que distintos pueblos que habitaron el Altiplano Central de México antes de la llegada de los españoles llamaron metl, guada, atocamba, kaku yste; cuenta acerca de los vestigios de prehispánicos alambiques y sigue su sendero entre múltiples avatares hasta llegar a la industrialización e internacionalización del tequila en la época moderna, habiendo acompañado a la nación mexicana durante sus propias vicisitudes.\nL117: En esta obra, la anécdota que confirma el nacimiento del tequila ha sido encontrada y se convirtió en un cúmulo de anécdotas, relatos históricos y datos sobre la producción y consumo, cuya amena lectura bien puede ser acompañada con “ni menos de uno ni más de tres” caballitos de tequila.\n"
+    }
+  ]
+}

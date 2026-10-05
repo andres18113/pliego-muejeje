@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:18445",
+      "url": "http://127.0.0.1:18081",
       "description": "Generated server url"
     }
   ],
@@ -23,6 +23,14 @@
     {
       "name": "Checkout",
       "description": "Finaliza el carrito mediante un pago académico simulado."
+    },
+    {
+      "name": "Mi biblioteca",
+      "description": "Propiedad de ediciones digitales adquiridas; no entrega contenido."
+    },
+    {
+      "name": "Ayuda pública",
+      "description": "Solo categorías y artículos publicados; GENERAL se incluye en los filtros de aplicabilidad."
     },
     {
       "name": "Customer",
@@ -2922,6 +2930,28 @@
         ]
       }
     },
+    "/api/v1/storefront/navigation": {
+      "get": {
+        "tags": [
+          "Navegación pública"
+        ],
+        "summary": "Consultar la navegación de la tienda",
+        "description": "Proyección compacta de Catálogo, Ofertas y Ayuda. Los destacados se ordenan por ventas aprobadas de los últimos 30 días; el desempate y la selección de respaldo usan fecha de creación e identificador de edición.",
+        "operationId": "getStorefrontNavigation",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StorefrontNavigationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/reference/transfer-details": {
       "get": {
         "tags": [
@@ -3078,6 +3108,105 @@
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/me/library": {
+      "get": {
+        "tags": [
+          "Mi biblioteca"
+        ],
+        "summary": "Consultar títulos digitales propios",
+        "description": "Incluye propiedad revocada para conservar historial de compra.",
+        "operationId": "listOwnedDigitalItems",
+        "parameters": [
+          {
+            "name": "productType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "EBOOK|AUDIOBOOK"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseLibraryItem"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/me/library/{ownedItemId}": {
+      "get": {
+        "tags": [
+          "Mi biblioteca"
+        ],
+        "summary": "Consultar propiedad y compra de un título digital propio",
+        "operationId": "getOwnedDigitalItem",
+        "parameters": [
+          {
+            "name": "ownedItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/LibraryItem"
                 }
               }
             }
@@ -3248,6 +3377,137 @@
             "bearerJwt": []
           }
         ]
+      }
+    },
+    "/api/v1/help/categories": {
+      "get": {
+        "tags": [
+          "Ayuda pública"
+        ],
+        "summary": "Consultar temas publicados de ayuda",
+        "operationId": "listHelpCategories",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HelpCategoryListResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/help/articles": {
+      "get": {
+        "tags": [
+          "Ayuda pública"
+        ],
+        "summary": "Buscar artículos publicados de ayuda",
+        "operationId": "searchHelpArticles",
+        "parameters": [
+          {
+            "name": "que",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 140,
+              "minLength": 0
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "maxLength": 140,
+              "minLength": 0,
+              "pattern": "[a-z0-9]+(?:-[a-z0-9]+)*"
+            }
+          },
+          {
+            "name": "applicability",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "GENERAL|PHYSICAL|EBOOK|AUDIOBOOK"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0,
+              "minimum": 0
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 20,
+              "maximum": 50,
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseHelpArticleSummary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/help/articles/{slug}": {
+      "get": {
+        "tags": [
+          "Ayuda pública"
+        ],
+        "summary": "Consultar un artículo publicado de ayuda",
+        "operationId": "getHelpArticle",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 140,
+              "minLength": 0,
+              "pattern": "[a-z0-9]+(?:-[a-z0-9]+)*"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HelpArticle"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/api/v1/catalog/offers": {
@@ -3485,13 +3745,22 @@
             }
           },
           {
+            "name": "productType",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "PHYSICAL|EBOOK|AUDIOBOOK"
+            }
+          },
+          {
             "name": "sort",
             "in": "query",
             "required": false,
             "schema": {
               "type": "string",
               "default": "TITLE_ASC",
-              "pattern": "TITLE_ASC|PRICE_ASC|PRICE_DESC"
+              "pattern": "TITLE_ASC|PRICE_ASC|PRICE_DESC|BEST_SELLING"
             }
           },
           {
@@ -4785,9 +5054,10 @@
             "default": "HOME_DELIVERY",
             "enum": [
               "HOME_DELIVERY",
-              "STORE_PICKUP"
+              "STORE_PICKUP",
+              "DIGITAL_ONLY"
             ],
-            "pattern": "HOME_DELIVERY|STORE_PICKUP"
+            "pattern": "HOME_DELIVERY|STORE_PICKUP|DIGITAL_ONLY"
           },
           "pickupLocationId": {
             "type": "string",
@@ -5545,6 +5815,183 @@
           "value"
         ]
       },
+      "StorefrontFeaturedProduct": {
+        "type": "object",
+        "properties": {
+          "editionId": {
+            "type": "string"
+          },
+          "bookId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "string"
+          },
+          "coverUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "format": {
+            "type": "string"
+          },
+          "productType": {
+            "type": "string",
+            "enum": [
+              "PHYSICAL",
+              "EBOOK",
+              "AUDIOBOOK"
+            ]
+          },
+          "price": {
+            "type": "string"
+          },
+          "offer": {
+            "type": "null",
+            "$ref": "#/components/schemas/StorefrontPromotionalOffer"
+          },
+          "href": {
+            "type": "string"
+          }
+        }
+      },
+      "StorefrontNavigationCategory": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "parentSlug": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "href": {
+            "type": "string"
+          }
+        }
+      },
+      "StorefrontNavigationResponse": {
+        "type": "object",
+        "properties": {
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StorefrontNavigationSection"
+            }
+          }
+        }
+      },
+      "StorefrontNavigationSection": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string",
+            "enum": [
+              "PHYSICAL",
+              "EBOOK",
+              "AUDIOBOOK",
+              "OFFERS",
+              "HELP"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          },
+          "featured": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StorefrontFeaturedProduct"
+            }
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StorefrontNavigationCategory"
+            }
+          },
+          "allHref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "bestSellingHref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "offersHref": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "activeOfferCount": {
+            "type": "string"
+          }
+        }
+      },
+      "StorefrontPromotionalOffer": {
+        "type": "object",
+        "properties": {
+          "offerId": {
+            "type": "string"
+          },
+          "originalPrice": {
+            "type": "string"
+          },
+          "discountAmount": {
+            "type": "string"
+          },
+          "startsAt": {
+            "type": "string"
+          },
+          "endsAt": {
+            "type": "string"
+          },
+          "daysRemaining": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "endingSoon": {
+            "type": "boolean"
+          },
+          "offerCopy": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "terms": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "effectivePrice": {
+            "type": "string"
+          },
+          "savingsAmount": {
+            "type": "string"
+          },
+          "savingsPercent": {
+            "type": "string"
+          }
+        }
+      },
       "TransferDetails": {
         "type": "object",
         "properties": {
@@ -5768,6 +6215,7 @@
             }
           },
           "address": {
+            "type": "null",
             "$ref": "#/components/schemas/Address"
           },
           "payment": {
@@ -5783,9 +6231,11 @@
             "type": "string"
           },
           "fulfillment": {
+            "type": "null",
             "$ref": "#/components/schemas/Fulfillment"
           },
           "shipment": {
+            "type": "null",
             "$ref": "#/components/schemas/Shipment"
           },
           "invoice": {
@@ -6105,6 +6555,190 @@
           }
         }
       },
+      "LibraryAction": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "VIEW_ORDER",
+              "HELP"
+            ]
+          },
+          "label": {
+            "type": "string"
+          },
+          "href": {
+            "type": "string"
+          }
+        }
+      },
+      "LibraryItem": {
+        "type": "object",
+        "properties": {
+          "ownedItemId": {
+            "type": "string"
+          },
+          "editionId": {
+            "type": "string"
+          },
+          "coverUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "string"
+          },
+          "productType": {
+            "type": "string",
+            "enum": [
+              "EBOOK",
+              "AUDIOBOOK"
+            ]
+          },
+          "acquiredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ownershipState": {
+            "type": "string",
+            "enum": [
+              "OWNED",
+              "REVOKED"
+            ]
+          },
+          "accessState": {
+            "type": "string",
+            "enum": [
+              "OWNERSHIP_ONLY",
+              "REVOKED"
+            ]
+          },
+          "contentAccessSupported": {
+            "type": "boolean",
+            "description": "Siempre false; no se entrega contenido digital en esta simulación."
+          },
+          "metadata": {
+            "$ref": "#/components/schemas/LibraryMetadata"
+          },
+          "sourcePurchases": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibrarySourcePurchase"
+            }
+          },
+          "availableActions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibraryAction"
+            }
+          }
+        }
+      },
+      "LibraryMetadata": {
+        "type": "object",
+        "properties": {
+          "isbn": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "pageCount": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "publicationDate": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "ebookFileFormat": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "audioDurationSeconds": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "int32"
+          },
+          "narrators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "LibrarySourcePurchase": {
+        "type": "object",
+        "properties": {
+          "orderId": {
+            "type": "string"
+          },
+          "orderItemId": {
+            "type": "string"
+          },
+          "acquiredAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "paymentState": {
+            "type": "string"
+          },
+          "orderState": {
+            "type": "string"
+          },
+          "grantState": {
+            "type": "string",
+            "enum": [
+              "ACTIVE",
+              "REVOKED"
+            ]
+          }
+        }
+      },
+      "PageResponseLibraryItem": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LibraryItem"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "string"
+          }
+        }
+      },
       "CustomerFavorite": {
         "type": "object",
         "properties": {
@@ -6250,6 +6884,126 @@
           "primary": {
             "type": "boolean",
             "example": true
+          }
+        }
+      },
+      "HelpCategory": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "applicability": {
+            "type": "string",
+            "enum": [
+              "GENERAL",
+              "PHYSICAL",
+              "EBOOK",
+              "AUDIOBOOK"
+            ]
+          }
+        }
+      },
+      "HelpCategoryListResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HelpCategory"
+            }
+          }
+        }
+      },
+      "HelpArticleSummary": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "categorySlug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "applicability": {
+            "type": "string",
+            "enum": [
+              "GENERAL",
+              "PHYSICAL",
+              "EBOOK",
+              "AUDIOBOOK"
+            ]
+          }
+        }
+      },
+      "PageResponseHelpArticleSummary": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HelpArticleSummary"
+            }
+          },
+          "page": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "string"
+          }
+        }
+      },
+      "HelpArticle": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "categorySlug": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "string"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "applicability": {
+            "type": "string",
+            "enum": [
+              "GENERAL",
+              "PHYSICAL",
+              "EBOOK",
+              "AUDIOBOOK"
+            ]
+          },
+          "body": {
+            "type": "string"
           }
         }
       },
@@ -6696,6 +7450,17 @@
             "format": "date",
             "description": "Último día de la ventana de entrega a domicilio: dos días después del primero; null si el carrito no incluye libros físicos.",
             "example": "2026-10-07"
+          },
+          "requiresPhysicalFulfillment": {
+            "type": "boolean"
+          },
+          "physicalItemCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "digitalItemCount": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -6868,6 +7633,7 @@
             }
           },
           "address": {
+            "type": "null",
             "$ref": "#/components/schemas/Address"
           },
           "payment": {
@@ -6889,9 +7655,11 @@
             "type": "string"
           },
           "fulfillment": {
+            "type": "null",
             "$ref": "#/components/schemas/Fulfillment"
           },
           "shipment": {
+            "type": "null",
             "$ref": "#/components/schemas/Shipment"
           },
           "invoice": {

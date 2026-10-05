@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000125",
+  "title": "Ética y libertad",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:06.380486+00:00",
+      "response_sha256": "431d2b80a2ebe680df91310ef17fa1a62de16c70aff539717e0bba74b8a96b7c",
+      "extraction_sha256": "85e0885f6f37650a6aa2dee59e3b76bdd87213c585a3f7a9a06b4d6e56070923",
+      "text": "Guardado en: Autor Principal: Garate, Roman. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Universidad de Deusto, 1995. Materias: Ética. Libertad. Ethics. Liberty. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/34123  ",
+      "observed_page_title": "Existencias: Ética y libertad",
+      "title_check_response_sha256": "9f979289859c6132d2e5da56cd4c39904957c265c61ac957107cb095a0a83a5b",
+      "title_checked_at_utc": "2026-10-05T19:40:03.503586+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:07.732754+00:00",
+      "response_sha256": "b7229783ef6c4ce169cc567a0efc84a248ad360d7f82abacbbd0a43310cc5e64",
+      "extraction_sha256": "85e0885f6f37650a6aa2dee59e3b76bdd87213c585a3f7a9a06b4d6e56070923",
+      "text": "Guardado en: Autor Principal: Garate, Roman. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Universidad de Deusto, 1995. Materias: Ética. Libertad. Ethics. Liberty. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/34123  "
+    }
+  ]
+}

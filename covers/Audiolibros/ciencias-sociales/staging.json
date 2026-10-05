@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Antropología de la religión",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La religión se presenta como un campo de estudio para la antropología y como una realidad con historia. El tema invita a mirar las prácticas y concepciones religiosas dentro de la experiencia humana y social. Una lectura para quienes desean acercarse a la perspectiva antropológica sobre la religión y abrir preguntas sobre su lugar en las formas de vida.",
         "autores": [
           {
             "nombre": "Duch, Lluís",
@@ -190,7 +190,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "141",
-        "imported_book_id": "140"
+        "imported_book_id": "140",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000177.json; SHA-256 de respuesta HTTP: 0e90c00b7edbc4d8d9c9238072f52d8a2f256948044e08d5ab16eded8bca7b27"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -198,7 +209,7 @@
       "libro": {
         "titulo": "Antropología de la sexualidad (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La sexualidad se aborda desde la antropología y en relación con las costumbres y el comportamiento sexual. La obra invita a mirar este aspecto de la experiencia humana dentro de un contexto cultural. Una lectura para quienes desean pensar cómo las prácticas sexuales pueden estudiarse como parte de las formas de vida y de las relaciones sociales.",
         "autores": [
           {
             "nombre": "Choza, Jacinto",
@@ -381,7 +392,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "142",
-        "imported_book_id": "141"
+        "imported_book_id": "141",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000312.json; SHA-256 de respuesta HTTP: abbd72d7f23a48dfbc452f2b9829389c15124f8dcd3d11d7b8c5ecd316ed5cb3"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -389,7 +411,7 @@
       "libro": {
         "titulo": "Cultura, antropología y otras tonterías",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La cultura se convierte en un motivo de reflexión dentro de una obra que la relaciona, desde su título, con la antropología. El tono de esa formulación invita a cuestionar las maneras de hablar del mundo cultural. Una lectura para quienes desean acercarse a este terreno y pensar cómo se utilizan los conceptos con que describimos la vida social.",
         "autores": [
           {
             "nombre": "Ángel Díaz de Rada",
@@ -572,7 +594,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "143",
-        "imported_book_id": "142"
+        "imported_book_id": "142",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000224.json; SHA-256 de respuesta HTTP: 8835bb8d427efdb5a81784f7e437db32dfcaefc2043b0a3e8df68dc8ce1f94a6"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -580,7 +613,7 @@
       "libro": {
         "titulo": "Diccionario básico de antropología",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Un punto de entrada al vocabulario con el que la antropología estudia a las sociedades humanas y sus formas de vida. Su carácter de diccionario permite acercarse a la disciplina a través de sus términos, con una lectura de consulta que ayuda a situar conceptos y a comprender mejor el lenguaje de los estudios culturales y sociales.",
         "autores": [
           {
             "nombre": "Campo A., A. Lorena",
@@ -763,7 +796,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "144",
-        "imported_book_id": "143"
+        "imported_book_id": "143",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000058.json; SHA-256 de respuesta HTTP: c108dd56c463415b6a1308274af0ab10a76761dfbca175c4dde2ecb331aeb830"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -771,7 +815,7 @@
       "libro": {
         "titulo": "Manual de Sociología de la Familia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La familia se presenta como un objeto de estudio sociológico, dentro del análisis de las relaciones y formas de organización social. El manual invita a pensar este ámbito de la vida cotidiana con el lenguaje de la sociología. Una lectura para quienes desean acercarse a la dimensión social de las familias y plantear preguntas sobre su lugar en la sociedad.",
         "autores": [
           {
             "nombre": "Donati, Pierpaolo",
@@ -954,7 +998,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "145",
-        "imported_book_id": "144"
+        "imported_book_id": "144",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000190.json; SHA-256 de respuesta HTTP: 6e6c5a84f93f5dc465d3f9598a605b3ab431decc32f49b7666f92204b845f813"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -962,7 +1017,7 @@
       "libro": {
         "titulo": "Paisajes de antropología urbana",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La antropología urbana propone una mirada sobre la vida social en las ciudades. El título invita a acercarse a distintos paisajes urbanos desde preguntas acerca de la experiencia humana y sus formas de organización. Una lectura para quienes desean explorar el encuentro entre ciudad y cultura y situar el espacio urbano como terreno del estudio antropológico.",
         "autores": [
           {
             "nombre": "Cátedra, María",
@@ -1145,7 +1200,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "146",
-        "imported_book_id": "145"
+        "imported_book_id": "145",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000314.json; SHA-256 de respuesta HTTP: adeb685e88564a288e21e6e1ad2cd4aeb31710bf257b2393644a30fdbe8402b0"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1153,7 +1219,7 @@
       "libro": {
         "titulo": "Sociología criminal",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La sociología criminal propone una entrada al estudio social del delito, dentro del campo de la criminología y en relación con el derecho penal. La obra invita a pensar la conducta delictiva más allá de una acción aislada y a situarla en un contexto colectivo. Una lectura para acercarse a las preguntas que vinculan sociedad, criminalidad y respuesta jurídica.",
         "autores": [
           {
             "nombre": "Ferri, Enrico",
@@ -1336,7 +1402,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "147",
-        "imported_book_id": "146"
+        "imported_book_id": "146",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000135.json; SHA-256 de respuesta HTTP: 956298ad52f9c0d1c8d3629fcfe70f4dec4ae620f3701fe5b6d260792e4fad5e"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1344,7 +1421,7 @@
       "libro": {
         "titulo": "Sociología del Renacimiento",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El Renacimiento se sitúa en una perspectiva sociológica relacionada con la historia social medieval y con las condiciones sociales de Italia. La obra invita a acercarse a ese periodo desde su dimensión colectiva. Una lectura para quienes desean pensar las transformaciones históricas en relación con la vida social y reconocer el contexto desde el que se estudia el mundo renacentista.",
         "autores": [
           {
             "nombre": "Martín, Alfred von",
@@ -1527,7 +1604,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "148",
-        "imported_book_id": "147"
+        "imported_book_id": "147",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000266.json; SHA-256 de respuesta HTTP: 02dbdbc9a55ba541936a4dcedd5904d55ce8154b6500307bc57826e63bdf4762"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

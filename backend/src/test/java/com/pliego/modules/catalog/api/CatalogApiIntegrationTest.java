@@ -93,6 +93,20 @@ class CatalogApiIntegrationTest {
     @Autowired
     FakeCatalogGateway gateway;
 
+    @ParameterizedTest
+    @ValueSource(strings = {"PHYSICAL", "EBOOK", "AUDIOBOOK"})
+    void bestSellingProductTypeReachesGatewayInBothSearchModes(String productType) throws Exception {
+        for (String query : List.of("", "Una obra")) {
+            mvc.perform(get("/api/v1/catalog/editions").param("productType", productType)
+                            .param("sort", "BEST_SELLING").param("que", query))
+                    .andExpect(status().isOk());
+            assertEquals(productType, gateway.lastQuery.productType());
+            assertEquals("BEST_SELLING", gateway.lastQuery.sort());
+        }
+        mvc.perform(get("/api/v1/catalog/editions").param("productType", "VIDEO"))
+                .andExpect(status().isBadRequest());
+    }
+
     @Test
     void offersRouteValidatesAndForwardsPagination() throws Exception {
         mvc.perform(get("/api/v1/catalog/offers").param("page", "2").param("pageSize", "5"))

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000172",
+  "title": "Crítica de la psicoterapia integrativa",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:14.378508+00:00",
+      "response_sha256": "ececf0e72414daefd232786d21631022f0dcc58a0d9915cccb4ca58c4746c37c",
+      "extraction_sha256": "fcb4ed8c5a4d71d849f80c96adb0f644ae40e908ecad84baa0272b59aea09cf0",
+      "text": "Guardado en: Autor Principal: Cepeda Armijos, Guillermo. Formato: eBook Idioma: Spanish Publicado: Quito : Ediciones Abya-Yala, 2013. Materias: Psychotherapy. Psicoterapia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/79874  ",
+      "observed_page_title": "Existencias: Crítica de la psicoterapia integrativa /",
+      "title_check_response_sha256": "23bebff38d31260f3e90b49420a4f5be1b83b93d6857d6fd882d2faa1f21810c",
+      "title_checked_at_utc": "2026-10-05T19:40:02.531535+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:16.264839+00:00",
+      "response_sha256": "885451431931375edb96a520bfbded0dc1c195530404ea064ee660b91818bc3b",
+      "extraction_sha256": "fcb4ed8c5a4d71d849f80c96adb0f644ae40e908ecad84baa0272b59aea09cf0",
+      "text": "Guardado en: Autor Principal: Cepeda Armijos, Guillermo. Formato: eBook Idioma: Spanish Publicado: Quito : Ediciones Abya-Yala, 2013. Materias: Psychotherapy. Psicoterapia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/79874  "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000284",
+  "title": "Fundamentos de farmacología oncológica",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:29.380957+00:00",
+      "response_sha256": "a2a700409d9e91c7616463182d218c6f514dc6528d09113125f8665c6f8fd5cd",
+      "extraction_sha256": "68a4637d77ed2844926d02f112d172271ee061138f8383d73899cb2b32164e99",
+      "text": "Guardado en: Autor Principal: Cevallos Barrera, Edwin, (autor.) Otros Autores: Duque Proaño, Galo, (autor.) Formato: eBook Idioma: Spanish Publicado: Cuenca : Universidad del Azuay, 2018. Materias: Oncología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/233834  ",
+      "observed_page_title": "Existencias: Fundamentos de farmacología oncológica /",
+      "title_check_response_sha256": "4c58d904c5297850fd5232570475f3ec188dcb1bcebbd14f9852123530a70341",
+      "title_checked_at_utc": "2026-10-05T19:40:01.212763+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:30.738933+00:00",
+      "response_sha256": "690a7fca54be15dcbe68f6e7d4b0354c9858910e900ce10d81ce10719b64b81f",
+      "extraction_sha256": "68a4637d77ed2844926d02f112d172271ee061138f8383d73899cb2b32164e99",
+      "text": "Guardado en: Autor Principal: Cevallos Barrera, Edwin, (autor.) Otros Autores: Duque Proaño, Galo, (autor.) Formato: eBook Idioma: Spanish Publicado: Cuenca : Universidad del Azuay, 2018. Materias: Oncología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/233834  "
+    }
+  ]
+}

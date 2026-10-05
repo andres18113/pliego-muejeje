@@ -10,6 +10,19 @@ permissions:
   contents: read
 
 jobs:
+  python-catalog:
+    name: Python catalog and cover pipeline
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install cover pipeline dependencies
+        run: |
+          python3 -m venv .venv-covers
+          .venv-covers/bin/python -m pip install -r scripts/requirements-covers.txt
+      - name: Run all Python catalog and cover tests
+        run: .venv-covers/bin/python -m unittest discover -s scripts -p 'test_*.py'
+
   frontend:
     name: Frontend quality gates
     runs-on: ubuntu-latest

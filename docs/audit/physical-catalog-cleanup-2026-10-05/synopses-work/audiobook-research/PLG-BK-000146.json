@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000146",
+  "title": "Magnetismo en Geología y la prospección magnética terrestre",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:09.311604+00:00",
+      "response_sha256": "c3b27862587696e0c3e3f11f151a2996a78a8b3b12e7b3c6b198890fcec9899d",
+      "extraction_sha256": "6f8164f1ff5b87a514d601ace3437dcde4d3de35a7a6b74cdac0747a936bedb4",
+      "text": "Guardado en: Autor Principal: Lasfargues, Pierre. Autor Corporativo: e-libro, Corp. Otros Autores: Campos Enríquez, Oscar. Formato: eBook Idioma: Spanish Publicado: México : Instituto Politécnico Nacional, 1995. Materias: Geomagnetismo. Prospección > Métodos. Geomagnetism. Prospecting > Geophysical methods. Prospeccion > Metodos Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/72209  ",
+      "observed_page_title": "Existencias: El magnetismo en geología y la prospección magnética terrestre",
+      "title_check_response_sha256": "365d6f10b08914d498519beb903afa861af62bd5b73341418aecf8a2e249f2fb",
+      "title_checked_at_utc": "2026-10-05T19:39:53.718755+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.673932+00:00",
+      "response_sha256": "46be020e324263decd4ee5f8c796af79aeb1e7d9a690c0bef1c30f67d3db5567",
+      "extraction_sha256": "6f8164f1ff5b87a514d601ace3437dcde4d3de35a7a6b74cdac0747a936bedb4",
+      "text": "Guardado en: Autor Principal: Lasfargues, Pierre. Autor Corporativo: e-libro, Corp. Otros Autores: Campos Enríquez, Oscar. Formato: eBook Idioma: Spanish Publicado: México : Instituto Politécnico Nacional, 1995. Materias: Geomagnetismo. Prospección > Métodos. Geomagnetism. Prospecting > Geophysical methods. Prospeccion > Metodos Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/72209  "
+    }
+  ]
+}

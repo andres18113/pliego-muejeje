@@ -86,6 +86,9 @@ export function cartBody(items: Partial<CartItemFixture>[] = [{}], total?: strin
   const lines = items.map((item, index) => ({ ...cartItem(index), ...item }));
   return {
     cartId: lines.length ? "40" : null,
+    requiresPhysicalFulfillment: lines.some(line => line.format !== "EBOOK" && line.format !== "AUDIOBOOK"),
+    physicalItemCount: lines.filter(line => line.format !== "EBOOK" && line.format !== "AUDIOBOOK").length,
+    digitalItemCount: lines.filter(line => line.format === "EBOOK" || line.format === "AUDIOBOOK").length,
     state: lines.length ? "ACTIVE" : null,
     items: lines,
     totalCurrent: total ?? lines.reduce((sum, line) => sum + Number(line.currentSubtotal), 0).toFixed(2),

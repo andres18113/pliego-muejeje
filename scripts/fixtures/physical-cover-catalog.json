@@ -1,0 +1,1094 @@
+{
+  "inventory_book_ids": {
+    "PLG-BK-000316": "39575",
+    "PLG-BK-000317": "294684",
+    "PLG-BK-000318": "130675",
+    "PLG-BK-000319": "279263",
+    "PLG-BK-000320": "44690",
+    "PLG-BK-000321": "187476",
+    "PLG-BK-000322": "293647",
+    "PLG-BK-000323": "218594",
+    "PLG-BK-000324": "69322",
+    "PLG-BK-000325": "223473",
+    "PLG-BK-000326": "276322",
+    "PLG-BK-000327": "189720",
+    "PLG-BK-000328": "224092",
+    "PLG-BK-000329": "281230",
+    "PLG-BK-000330": "285322",
+    "PLG-BK-000331": "186712",
+    "PLG-BK-000332": "299429",
+    "PLG-BK-000333": "59630",
+    "PLG-BK-000334": "292418",
+    "PLG-BK-000335": "293177",
+    "PLG-BK-000336": "41939",
+    "PLG-BK-000337": "214575",
+    "PLG-BK-000338": "186736",
+    "PLG-BK-000339": "213696",
+    "PLG-BK-000340": "36731",
+    "PLG-BK-000341": "284719",
+    "PLG-BK-000342": "280647",
+    "PLG-BK-000343": "60620",
+    "PLG-BK-000344": "250033",
+    "PLG-BK-000345": "212765",
+    "PLG-BK-000346": "299430",
+    "PLG-BK-000347": "305127",
+    "PLG-BK-000348": "60836",
+    "PLG-BK-000349": "274254",
+    "PLG-BK-000350": "74064",
+    "PLG-BK-000351": "113899",
+    "PLG-BK-000352": "299436",
+    "PLG-BK-000353": "36432",
+    "PLG-BK-000354": "125738",
+    "PLG-BK-000355": "268787",
+    "PLG-BK-000356": "176646",
+    "PLG-BK-000357": "190904",
+    "PLG-BK-000358": "234713",
+    "PLG-BK-000359": "293542",
+    "PLG-BK-000360": "222652",
+    "PLG-BK-000361": "294202",
+    "PLG-BK-000362": "59629",
+    "PLG-BK-000363": "114406",
+    "PLG-BK-000364": "175890",
+    "PLG-BK-000365": "41052",
+    "PLG-BK-000366": "205684",
+    "PLG-BK-000367": "60488",
+    "PLG-BK-000368": "35347",
+    "PLG-BK-000369": "35382",
+    "PLG-BK-000370": "35246",
+    "PLG-BK-000371": "276629",
+    "PLG-BK-000372": "216197",
+    "PLG-BK-000373": "266569",
+    "PLG-BK-000374": "38240",
+    "PLG-BK-000375": "38444",
+    "PLG-BK-000376": "39499",
+    "PLG-BK-000377": "39599",
+    "PLG-BK-000378": "39690",
+    "PLG-BK-000379": "39774",
+    "PLG-BK-000380": "39787",
+    "PLG-BK-000381": "39810",
+    "PLG-BK-000382": "242475",
+    "PLG-BK-000383": "40315",
+    "PLG-BK-000384": "40318",
+    "PLG-BK-000385": "40319",
+    "PLG-BK-000386": "40328",
+    "PLG-BK-000387": "40334",
+    "PLG-BK-000388": "40553",
+    "PLG-BK-000389": "40832",
+    "PLG-BK-000390": "40911",
+    "PLG-BK-000391": "40916",
+    "PLG-BK-000392": "130920",
+    "PLG-BK-000393": "130433",
+    "PLG-BK-000394": "41033",
+    "PLG-BK-000395": "41039",
+    "PLG-BK-000396": "130438",
+    "PLG-BK-000397": "127201",
+    "PLG-BK-000398": "291966",
+    "PLG-BK-000399": "288457",
+    "PLG-BK-000400": "170282",
+    "PLG-BK-000401": "296085",
+    "PLG-BK-000402": "233505",
+    "PLG-BK-000403": "235663",
+    "PLG-BK-000404": "235664",
+    "PLG-BK-000405": "216032",
+    "PLG-BK-000406": "42096",
+    "PLG-BK-000407": "108252",
+    "PLG-BK-000408": "125304",
+    "PLG-BK-000409": "125312",
+    "PLG-BK-000410": "108234",
+    "PLG-BK-000411": "94662",
+    "PLG-BK-000412": "118623",
+    "PLG-BK-000413": "126732",
+    "PLG-BK-000414": "209572",
+    "PLG-BK-000415": "45767",
+    "PLG-BK-000416": "45789",
+    "PLG-BK-000417": "126189",
+    "PLG-BK-000418": "46931",
+    "PLG-BK-000419": "47023",
+    "PLG-BK-000420": "47101",
+    "PLG-BK-000421": "47112",
+    "PLG-BK-000422": "47268",
+    "PLG-BK-000423": "47310",
+    "PLG-BK-000424": "293121",
+    "PLG-BK-000425": "49551",
+    "PLG-BK-000426": "116636",
+    "PLG-BK-000427": "116153",
+    "PLG-BK-000428": "50076",
+    "PLG-BK-000429": "50292",
+    "PLG-BK-000430": "52623",
+    "PLG-BK-000431": "52971",
+    "PLG-BK-000432": "54616",
+    "PLG-BK-000433": "54617",
+    "PLG-BK-000434": "37026",
+    "PLG-BK-000435": "173423",
+    "PLG-BK-000436": "55461",
+    "PLG-BK-000437": "55467",
+    "PLG-BK-000438": "56775",
+    "PLG-BK-000439": "58034",
+    "PLG-BK-000440": "58284",
+    "PLG-BK-000441": "115677",
+    "PLG-BK-000442": "217195",
+    "PLG-BK-000443": "215557",
+    "PLG-BK-000444": "42015",
+    "PLG-BK-000445": "59660",
+    "PLG-BK-000446": "125737",
+    "PLG-BK-000447": "111845",
+    "PLG-BK-000448": "61165",
+    "PLG-BK-000449": "56653",
+    "PLG-BK-000450": "33736",
+    "PLG-BK-000451": "35676",
+    "PLG-BK-000452": "126172",
+    "PLG-BK-000453": "51252",
+    "PLG-BK-000454": "112862",
+    "PLG-BK-000455": "106697",
+    "PLG-BK-000456": "165552",
+    "PLG-BK-000457": "190600",
+    "PLG-BK-000458": "302446",
+    "PLG-BK-000459": "175382",
+    "PLG-BK-000460": "69705",
+    "PLG-BK-000461": "69977",
+    "PLG-BK-000462": "235981",
+    "PLG-BK-000463": "130020",
+    "PLG-BK-000464": "175410",
+    "PLG-BK-000465": "287118",
+    "PLG-BK-000466": "218340",
+    "PLG-BK-000467": "186709",
+    "PLG-BK-000468": "186697",
+    "PLG-BK-000469": "128416",
+    "PLG-BK-000470": "128417",
+    "PLG-BK-000471": "219483",
+    "PLG-BK-000472": "186713",
+    "PLG-BK-000473": "280793",
+    "PLG-BK-000474": "71142",
+    "PLG-BK-000475": "110465",
+    "PLG-BK-000476": "40395",
+    "PLG-BK-000477": "196982",
+    "PLG-BK-000478": "196983",
+    "PLG-BK-000479": "105481",
+    "PLG-BK-000480": "299779",
+    "PLG-BK-000481": "77251",
+    "PLG-BK-000482": "187892",
+    "PLG-BK-000483": "191389",
+    "PLG-BK-000484": "191383",
+    "PLG-BK-000485": "203010",
+    "PLG-BK-000486": "199354",
+    "PLG-BK-000487": "201530",
+    "PLG-BK-000488": "110514",
+    "PLG-BK-000489": "163183",
+    "PLG-BK-000490": "188187",
+    "PLG-BK-000491": "227602",
+    "PLG-BK-000492": "201587",
+    "PLG-BK-000493": "78949",
+    "PLG-BK-000494": "175802",
+    "PLG-BK-000495": "166523"
+  },
+  "original_sources": {
+    "PLG-BK-000316": {
+      "original_path": "originales/Medicina/Manual de medicina basada en evidencias - Arceo Díaz, José Luis; Ornelas Aguirre, José Manuel; Domínguez Salcido, Susana.jpg",
+      "sha256": "2949452422c4b0303b9a22d9894ba27c151efbe38be21448c7dc8c57b8b60bfc"
+    },
+    "PLG-BK-000317": {
+      "original_path": "originales/Infantil y Juvenil/Crónica matemática - Mejía, Selene.jpg",
+      "sha256": "67a4f8271ed9c3c380c9c32220202e2f1c5828f57ab13175787f2603466ced7c"
+    },
+    "PLG-BK-000318": {
+      "original_path": "originales/Literatura/Goya en las literaturas - Romero Tobar, Leonardo.jpg",
+      "sha256": "36f65718a74e8166ad5948df05c7030b0c36f37a26d26d026b3db7b82692535b"
+    },
+    "PLG-BK-000319": {
+      "original_path": "originales/Infantil y Juvenil/De mano en mano - Molina, Alicia.jpg",
+      "sha256": "5d0d69c3c5ce3e98776286c030ab2b688556ed70040a104c3f1056ee9534a626"
+    },
+    "PLG-BK-000320": {
+      "original_path": "originales/Matemáticas/Matemáticas en la vida cotidiana - Quesada Teruel, José María (coord.).jpg",
+      "sha256": "135071c7a4c15df25c4f97812d7ce31592f794bbe95ecb38d8a057a07b252680"
+    },
+    "PLG-BK-000321": {
+      "original_path": "originales/Infantil y Juvenil/Lulu o la flauta mágica - Liebeskind, August Jacob.jpg",
+      "sha256": "920547d99363e962e9b356cb8d65d069dc0ce34ac16c97ff9c4ed62f762d356a"
+    },
+    "PLG-BK-000322": {
+      "original_path": "originales/Matemáticas/Matemáticas y deportes - Hernandez Garciadiego, Carlos.jpg",
+      "sha256": "747f40b826e8318e075297ae71ea8d49e0d9423b27a65a19735f40059fa63ef9"
+    },
+    "PLG-BK-000323": {
+      "original_path": "originales/Infantil y Juvenil/La oveja roja - Bejarano Hernández, María Luisa.jpg",
+      "sha256": "49a5fe51767aed208e7a288f95e1b196fe06b6bd39cd9c848a0720d58488b7e7"
+    },
+    "PLG-BK-000324": {
+      "original_path": "originales/Psicología/Psicopatología básica (5a. ed.) - Hernández Bayona, Guillermo.jpg",
+      "sha256": "00a61dd7091e46784342eb397e0fa955a4763546a0dcc527f0e46911f7fb685b"
+    },
+    "PLG-BK-000325": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos de Panamá - Hackshaw, Yolanda.jpg",
+      "sha256": "7cf8056bc8d914aeba2569aef3f1dde962ec1244e1c3394dae93809e8af55c6f"
+    },
+    "PLG-BK-000326": {
+      "original_path": "originales/Infantil y Juvenil/En la ciudad - Gil Solares, Luis Fernando.jpg",
+      "sha256": "efce0bd4b53919f13b234126e9c44836fbb209be3b39d4b6069603c2466f70bf"
+    },
+    "PLG-BK-000327": {
+      "original_path": "originales/Infantil y Juvenil/Peter Pan - Barrie, James Matthew.jpg",
+      "sha256": "8250f93468e9f2f3a44ee43e3d7a541548c7001842a5d1af8939e95f13e239f7"
+    },
+    "PLG-BK-000328": {
+      "original_path": "originales/Literatura/Literatura Universal - Peña Reyes, Guido; Cabildo Salomón, Alfredo.jpg",
+      "sha256": "83f2334297eb2ae6398e7f65c4d40fd46914a2c530c07dc9cd6a52a40c29edee"
+    },
+    "PLG-BK-000329": {
+      "original_path": "originales/Psicología/Psicología Social_ la importancia de los otros y de los grupos - Navas Luque, Marisol.jpg",
+      "sha256": "2e18d56389c9c0ab48a0e01daf88d8a8129f6bd8f7208e0271650e13bc2525d0"
+    },
+    "PLG-BK-000330": {
+      "original_path": "originales/Matemáticas/Cimientos matemáticos - Pérez, Eric Pauli.jpg",
+      "sha256": "99973dc28dbfefac43772b93cc01460c083e2f13109f17964bf272b288b70cf0"
+    },
+    "PLG-BK-000331": {
+      "original_path": "originales/Medicina/Fundamentos de medicina_ dermatología (8a. ed.) - Falabella Falabella, Rafael; Victoria Chaparro, Jairo; Barona Cabal, María Isabel.jpg",
+      "sha256": "0de0d468bd83517d633a3c7ed32475d4885fbc5e7430122fc8637541acc065b5"
+    },
+    "PLG-BK-000332": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos completos, 1 - Grimm, Jacob; Grimm, Wilhelm.jpg",
+      "sha256": "0fd97ebc3d19f5e19a8bcac58b10c1f5764c12729295a383c296ea6188a355d6"
+    },
+    "PLG-BK-000333": {
+      "original_path": "originales/Filosofía/Filosofía de la inteligencia - Oriol, Manuel (ed.).jpg",
+      "sha256": "1851cff3065546b5a9bee0033e8fbcf5d864a17d9b7c88125a2791fa517ff770"
+    },
+    "PLG-BK-000334": {
+      "original_path": "originales/Medicina/Fundamentos de medicina_ enfoque del paciente en medicina intensiva - González A., Marco A.; Molina S., Francisco J.; Yepes, David; Gil V., Bladimir.jpg",
+      "sha256": "b36c9e3e9a875a26d5d6c970cbfa21e9ee30f1592010729f5e851bd9f005bd94"
+    },
+    "PLG-BK-000335": {
+      "original_path": "originales/Matemáticas/Las matemáticas del cosmos - Stewart, Ian.jpg",
+      "sha256": "5ebef49ca866ea556ca61d35c5ddf002df94c0918dc91e727cdbb609d6a65545"
+    },
+    "PLG-BK-000336": {
+      "original_path": "originales/Matemáticas/Fundamentos de análisis matemático - Cuartero Ruiz, Bienvenido.jpg",
+      "sha256": "9f8f201f57ff15a2e7b5089f67a7f0308aa45d9e20b50fb7f304abab4b01fd6d"
+    },
+    "PLG-BK-000337": {
+      "original_path": "originales/Filosofía/Qué es y para qué sirve la filosofía - Maldonado Ortega, Rubén.jpg",
+      "sha256": "2a91e3c82634feca9d0e380e0b110f227d2c465fad3325a614771d17cabc0f34"
+    },
+    "PLG-BK-000338": {
+      "original_path": "originales/Medicina/Fundamentos de medicina_ medicina psicosomática y psiquiatría de enlace - Vásquez Tirado, Juan David (ed.); Rincón-Hoyos, Hernán Gilberto (ed.).jpg",
+      "sha256": "b391fe04b05ce506e0bff4ba4ee04fea6d1a8c390b0903a2449944cd9b5ee23c"
+    },
+    "PLG-BK-000339": {
+      "original_path": "originales/Filosofía/Filosofia de la tecnologia - Bunge, Mario.jpg",
+      "sha256": "0c2e0acb188b938f48107acb5869733d885a21e3f5f4f0e67a0130c1d11c451d"
+    },
+    "PLG-BK-000340": {
+      "original_path": "originales/Matemáticas/Razonamiento y lenguaje matemático - Roldán Inguanzo, Rita Alejandra.jpg",
+      "sha256": "7b3879d5929301b9052f669fd0bd14bcf538d16f61099caff371c0835d731c2d"
+    },
+    "PLG-BK-000341": {
+      "original_path": "originales/Matemáticas/Matemáticas x matemáticas - Macho Stadler, Marta.jpg",
+      "sha256": "10c9b5568131348b527d7e02ac3e82bcb4af103972e709776d1cc3e3b38faccf"
+    },
+    "PLG-BK-000342": {
+      "original_path": "originales/Matemáticas/Matemática básica - González Pulido, José Weymar; Chacón Benavides, José Antonio; Fonseca Correa, Luís Ángel.jpg",
+      "sha256": "ff20e07fd118388f6ae319d133eb16458dfe0e5847017a19000876cd5ea67f8f"
+    },
+    "PLG-BK-000343": {
+      "original_path": "originales/Literatura/Literatura y comunicación - Nieto Nuño, Miguel (coord.).jpg",
+      "sha256": "e6047c8f185b28549bfc0629e63e07e555a80b83b426728169853786cc112e83"
+    },
+    "PLG-BK-000344": {
+      "original_path": "originales/Infantil y Juvenil/Los doce trabajos de Heracles - Plaza Morón, Sofía.jpg",
+      "sha256": "5e6d50e3680e49461d906d8df0897f05c65e7e48444ea17c8f6d7082855cc4f9"
+    },
+    "PLG-BK-000345": {
+      "original_path": "originales/Psicología/El marco teórico de la psicología social - Pons Diez, Xavier.jpg",
+      "sha256": "defcdfab2547eaec29092a88473a59e8a3e55b7e2ae3602d911e23ac9b5b97b6"
+    },
+    "PLG-BK-000346": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos completos, 2 - Grimm, Jacob; Grimm, Wilhelm.jpg",
+      "sha256": "e84f370d361b539a634c93d5a1d968f3d61cc7b6fe1b8af1a91030b0e90f2c8b"
+    },
+    "PLG-BK-000347": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos - Andersen, Hans Christian.jpg",
+      "sha256": "1e951f3f9f370e7256813dfaafee1f779cdb026733021a2d5814bb731a11139b"
+    },
+    "PLG-BK-000348": {
+      "original_path": "originales/Psicología/Psicología social y de las organizaciones_ comportamientos interpersonales - Alonso García, Catalina M.; Gallego Gil, Domingo J.; Ongallo Chanclon, Carlos.jpg",
+      "sha256": "1ddcb8acb960f589d70a7087e484868b204bdbfec4239b7f81ab26977fca9e55"
+    },
+    "PLG-BK-000349": {
+      "original_path": "originales/Literatura/Literatura y Derecho - Martínez Martínez, Faustino.jpg",
+      "sha256": "46a18dd15228ca3dd1c3447edc18327b2fa102e8f6f4a5f6efd6ac5f530569c7"
+    },
+    "PLG-BK-000350": {
+      "original_path": "originales/Literatura/Lenguaje y literatura - Castruita Morán, Julián.jpg",
+      "sha256": "4f4df9a463dc561eff583f2a6fbc138124fdbada95cae5bcda9cd4dc1849b015"
+    },
+    "PLG-BK-000351": {
+      "original_path": "originales/Filosofía/Filosofía de la imagen - García Varas, Ana (ed.).jpg",
+      "sha256": "f13df297b6c15e8d1ad6af54dc04d4dc0d397ae8fc635c169e6b11ebf593983f"
+    },
+    "PLG-BK-000352": {
+      "original_path": "originales/Infantil y Juvenil/La Reina de las Nieves y otros cuentos - Andersen, Hans Christian.jpg",
+      "sha256": "ffa1ddbf29b9ba3d6c7a5043bb556aac9a1cb633d5ac5099ab621b5dfa7932a9"
+    },
+    "PLG-BK-000353": {
+      "original_path": "originales/Literatura/Literatura general - Shimose, Pedro.jpg",
+      "sha256": "adc003e8a51488638c30cb249b39501d90cb10be4a14cf6182ee97c11b3ddc0a"
+    },
+    "PLG-BK-000354": {
+      "original_path": "originales/Medicina/Tratado de Medicina Cardiovascular - Topol, Eric J.jpg",
+      "sha256": "e6fc20f823ed84443c29f81fcc2a46b09eba072cbcc843fc0400863b159bc932"
+    },
+    "PLG-BK-000355": {
+      "original_path": "originales/Literatura/Escritos sobre literatura - Castelar, Emilio.jpg",
+      "sha256": "0a9cf7b9ea66874e5cb9709c49e114e13e194b4cefbf7fa3602badd49f01cd4c"
+    },
+    "PLG-BK-000356": {
+      "original_path": "originales/Matemáticas/Matemática superior - Morales Urbina, Esther María; Vargas Villegas, Elizabeth; Núñez, Luis Alfredo; Gutiérrez Tovar, Yael Emilio.jpg",
+      "sha256": "1f8bb0019483cff49630830c4c2fa34b01253fe6f2c877402633cec6d3be3613"
+    },
+    "PLG-BK-000357": {
+      "original_path": "originales/Filosofía/Filosofía del espíritu - Hegel, Georg Wilhelm Friedrich.jpg",
+      "sha256": "d3726f32633a06776acb067fb40addce69656379c910eb04ed9bba46abbf165f"
+    },
+    "PLG-BK-000358": {
+      "original_path": "originales/Literatura/Literatura 2 - Perez Bernardino, Olga.jpg",
+      "sha256": "fdb7921cdf108bd9fd1cf9523d74180a937d06194ec5c7473cc1fbf520633d40"
+    },
+    "PLG-BK-000359": {
+      "original_path": "originales/Matemáticas/Los Simpson y las matemáticas - Singh, Simon.jpg",
+      "sha256": "4e95fa00de5fbcaa554e8f464465c45394506122dbe9aa00a23832525270d0bf"
+    },
+    "PLG-BK-000360": {
+      "original_path": "originales/Matemáticas/Matemáticas con GeoGebra - Carrillo de Albornoz Torres, Agustín; Llamas Centeno, Inmaculada.jpg",
+      "sha256": "f4f34348b6dad917422474f794404cc34429efb3db16e22cef9c9af560cf1551"
+    },
+    "PLG-BK-000361": {
+      "original_path": "originales/Matemáticas/Locos por las matemáticas - Stewart, Ian.jpg",
+      "sha256": "4df57a2174a0635ef4c5cc1fb5a4d55fdee9ed976f368923490146bb1225acf6"
+    },
+    "PLG-BK-000362": {
+      "original_path": "originales/Psicología/Escuela y psicopatología - Miralles Muñoz, Fernando (ed.); Cima Muñoz, Amable Manuel (ed.).jpg",
+      "sha256": "3f85240b37b544eae8dd8e666e8e6a68d357539c5fffc458ebddf0e705221a35"
+    },
+    "PLG-BK-000363": {
+      "original_path": "originales/Psicología/Manual de psicopatología clínica (2a. ed.) - Jarne, Adolfo (comp.); Talarn Caparrós, Antoni (comp.).jpg",
+      "sha256": "af6511aa41d649595550d109985642902c51a2dd8dada465b7d6fc9341b3b647"
+    },
+    "PLG-BK-000364": {
+      "original_path": "originales/Matemáticas/Análisis matemático - Gómez López, Nelson.jpg",
+      "sha256": "d227b4233ee3f1fdf7ca390d2321d219202e77992042dad170d3046745ff40c4"
+    },
+    "PLG-BK-000365": {
+      "original_path": "originales/Literatura/Mujeres en la literatura_ escritoras - Von der Walde, Lillian (ed.); Reinoso, Mariel (ed.).jpg",
+      "sha256": "f86a89d151958e2990b56f025533d2f8c6f3e6cdd685806eca3286aeaef05d54"
+    },
+    "PLG-BK-000366": {
+      "original_path": "originales/Infantil y Juvenil/Mi nuevo amigo - Stuhlhofer, Donelle.jpg",
+      "sha256": "b26cae470fd75ea39293e65cf4d0b62f14618dd2f19a11e91c4ea8d81da52a6d"
+    },
+    "PLG-BK-000367": {
+      "original_path": "originales/Psicología/Psicología social de la comunicación_ aspectos teóricos y prácticos - Moral, Félix; Igartua, Juan José.jpg",
+      "sha256": "1412344f3e9e705a23c4e640602227ba79617fabf5969af36b90c9950ea2789b"
+    },
+    "PLG-BK-000368": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos de Andersen. Tomo I - Andersen, Hans Christian.jpg",
+      "sha256": "bbe6e4c48d057c87f6151a8d5d1f2583eb8c418cc40e5b8b055b624324045316"
+    },
+    "PLG-BK-000369": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos de Andersen. Tomo II - Andersen, Hans Christian.jpg",
+      "sha256": "a47a1d1ef773fd4b175cfcff5e5b542216caa92fed9a31b130d9ae420ecdda17"
+    },
+    "PLG-BK-000370": {
+      "original_path": "originales/Literatura/La literatura francesa. La Transición - Pardo Bazán, Emilia.jpg",
+      "sha256": "d98fd9e6c7b673eb5050df7462e4e52c341875763db8f83b405dced3a7483163"
+    },
+    "PLG-BK-000371": {
+      "original_path": "originales/Infantil y Juvenil/El cristal con que se mira - Molina, Alicia.jpg",
+      "sha256": "984e45697079ab6aa612eb999ddf959ddfb4e17b7dbb8706a1fa30589a05f5bf"
+    },
+    "PLG-BK-000372": {
+      "original_path": "originales/Matemáticas/Matemáticas de colores - Montejano, Amanda.jpg",
+      "sha256": "ae02122c640d14073a6953cad8f44379bdbf548829714a50943702f370a97877"
+    },
+    "PLG-BK-000373": {
+      "original_path": "originales/Literatura/Literatura y dinero - Zola, Émile.jpg",
+      "sha256": "08396519ada1d865b26d403a6d91203a3592fbbdf7915826999ab9206bb3c2c0"
+    },
+    "PLG-BK-000374": {
+      "original_path": "originales/Literatura/Sobre lectura, literatura y educación - Cerrillo Torremocha, Pedro César.jpg",
+      "sha256": "bba3776fb1627be665ff24d283d6ec26ba74d1068af329928e482bc3fddd88e7"
+    },
+    "PLG-BK-000375": {
+      "original_path": "originales/Psicología/Bienestar social y democracia_ psicología social - Uribe Patiño, Francisco Javier (coord.); Acosta Ávila, María Teresa (coord.).jpg",
+      "sha256": "fa8d0901676dce43cc12777ddb3f83fbcaf86f81e9372fad3c39ff5435b56d8b"
+    },
+    "PLG-BK-000376": {
+      "original_path": "originales/Matemáticas/Matemáticas 1 (2a. ed.) - Ortiz Campos, Francisco José.jpg",
+      "sha256": "b9246a07c83025450379b2ed5cb03171002af585a9e663c122f9b6108de494fa"
+    },
+    "PLG-BK-000377": {
+      "original_path": "originales/Psicología/Neuropsicología del desarrollo infantil - Rosselli, Mónica; Matute, Esmeralda; Ardila, Alfredo.jpg",
+      "sha256": "c16d1be43edbdbbb73f960e494fe56c417af0f522b2c41fac1b532570d497336"
+    },
+    "PLG-BK-000378": {
+      "original_path": "originales/Medicina/Medicina forense (3a. ed.) - Carriedo Rico, Carlos; Gómez García, María del Consuelo; Grandini González, Javier.jpg",
+      "sha256": "fd55b59eabc32265dd3d77da1cd33664050462efa57ace384c89954361be539b"
+    },
+    "PLG-BK-000379": {
+      "original_path": "originales/Psicología/De la psicología cognitiva a la neuropsicología - Trápaga Ortega, Cristobalina Miriam; Pelayo González, Héctor Juan; Sánchez Ortiz, Ileana; Bello Dávila, Zoe; Bautista Baños, Alfredo.jpg",
+      "sha256": "295723ad6eada93b4ea42bed2bf408921f709f8c4b88df86843b0e286afc048d"
+    },
+    "PLG-BK-000380": {
+      "original_path": "originales/Psicología/Neuropsicología del envejecimiento - Da Silva Rodrigues, Charles Ysaacc.jpg",
+      "sha256": "e937b0bbf0296ea84d51dd1fbfee089f4fbb21b7e05694ff7bd9f383d329ae5b"
+    },
+    "PLG-BK-000381": {
+      "original_path": "originales/Psicología/Neuropsicología y analfabetismo - Rivera, Diego; Morlett Paredes, Alejandra; Arango Lasprilla, Juan Carlos.jpg",
+      "sha256": "7deffb65f6dc6a4fe9469ddfb58632a2ffa4f28220da873c09c2c71ed491a98e"
+    },
+    "PLG-BK-000382": {
+      "original_path": "originales/Psicología/Neuropsicología clínica (2a. ed.) - Ardila, Alfredo; Rosselli, Mónica.jpg",
+      "sha256": "4f945914f0d3d7c7feaa9426f828b57b066bd919860e02f6476ea55071db3135"
+    },
+    "PLG-BK-000383": {
+      "original_path": "originales/Medicina/Temas selectos en medicina crítica - Carrillo Esper, Raúl; Athié Gutiérrez, César.jpg",
+      "sha256": "5b755f16e34c19e0f1af8f16d091fa9cd384ddcbad254cf164abc4bc1540a4c8"
+    },
+    "PLG-BK-000384": {
+      "original_path": "originales/Medicina/Tópicos de medicina intensiva para el anestesiólogo - Carrillo Esper, Raúl (ed.); Peña Pérez, Carlos Alberto (ed.).jpg",
+      "sha256": "72ac7f7044f181173bcc07b3e6a41538857e3c82e088a90c24b921a8eb11a8fe"
+    },
+    "PLG-BK-000385": {
+      "original_path": "originales/Medicina/Manual de medicina prehospitalaria de urgencia - Illescas Fernández, Gerardo José.jpg",
+      "sha256": "dad3ed971bfe6c77b047ae23501df6c05be9110590ce43a1829866d2ea1694f2"
+    },
+    "PLG-BK-000386": {
+      "original_path": "originales/Medicina/Medicina forense - Trujillo Mariel, Patricia Rosa Linda; Trujillo Nieto, Gil A.jpg",
+      "sha256": "4256b58ad3fd41b6307f1696e3c21d4c9bce0fa2ebdb666822509671a109e9d6"
+    },
+    "PLG-BK-000387": {
+      "original_path": "originales/Medicina/Manual de medicina interna hospitalaria - Andrade Castellanos, Carlos A.jpg",
+      "sha256": "9e008e9f2703885e3df3e9b3691fe0f8d0e0325581902ca4c559ec75222d7ba3"
+    },
+    "PLG-BK-000388": {
+      "original_path": "originales/Medicina/Medicina perioperatoria - Díaz Greene, Enrique Juan (ed.).jpg",
+      "sha256": "b0ed6fd8b37ec17d1144e4e6a7b05474c3775e9f605214b8bf0ac3c8709260e6"
+    },
+    "PLG-BK-000389": {
+      "original_path": "originales/Psicología/Funciones cerebrales y psicopatología - Uriarte Bonilla, Víctor R.jpg",
+      "sha256": "60f7360f424c3c38038745c3e76ae83cd27036b0572262405d48f3faa92b49ca"
+    },
+    "PLG-BK-000390": {
+      "original_path": "originales/Filosofía/Filosofía de la convivencia - Buatu Batubenge, Omer (coord.); Panduro Muñoz, Benjamín (coord.); Mancilla Margalli, Adriana Elizabeth (coord.).jpg",
+      "sha256": "4477304b56fb8f69e38311eee05d6f800934e5f61f260765bf0c590c905f9fac"
+    },
+    "PLG-BK-000391": {
+      "original_path": "originales/Literatura/Pensamiento y literatura en Guerrero - Álvarez Montalván, Olivia Elizabeth (coord.).jpg",
+      "sha256": "1b79f68ed20bfa16f7063cf02eb9eac6dc3282af3fb8d87d2df574b911044bca"
+    },
+    "PLG-BK-000392": {
+      "original_path": "originales/Matemáticas/Matemáticas financieras - Gutiérrez Banegas, Miguel Ángel.jpg",
+      "sha256": "7eec8f40131df815efab314d0fc1022a1a7080bf9c11effab84103c80b58df64"
+    },
+    "PLG-BK-000393": {
+      "original_path": "originales/Infantil y Juvenil/El Principito - Saint-Exupéry, Antoine de.jpg",
+      "sha256": "0f27b5fca5f454ea81549c54964e9b262dd55e39f98d0b3c9f9c7d25148c73d9"
+    },
+    "PLG-BK-000394": {
+      "original_path": "originales/Filosofía/Educación y filosofía - Degante Castañeda, Candelario (coord.); Maldonado Gómez, Humberto (coord.); Julián Pérez, María Antonieta (coord.).jpg",
+      "sha256": "8e894cf737d803d6ddedfc7fd7df1c33804cd41f77b4793cbb5fbe953ac7b962"
+    },
+    "PLG-BK-000395": {
+      "original_path": "originales/Literatura/Entrecruces_ cine y literatura - Bautista, Ester (coord.); Rodríguez, Araceli (coord.).jpg",
+      "sha256": "5d5925676caea54e542aa891f67d7003660aa3118115ce54066e1f680c7b366e"
+    },
+    "PLG-BK-000396": {
+      "original_path": "originales/Infantil y Juvenil/Alicia en el país de las maravillas - Carroll, Lewis.jpg",
+      "sha256": "4126990d1250f4ce5b87bd9fcf0eefbd80ef448e08401743a0f68f1c39aed6fa"
+    },
+    "PLG-BK-000397": {
+      "original_path": "originales/Infantil y Juvenil/Alicia a través del espejo y lo que encontró allí - Carroll, Lewis.jpg",
+      "sha256": "f0eb65528cc822a769ee5b1dbb29c90467c1396b32ca8123db2ec149f70759fa"
+    },
+    "PLG-BK-000398": {
+      "original_path": "originales/Medicina/Enfoques en Medicina Interna - Aguirre Henao, Hernán Darío.jpg",
+      "sha256": "58ad2c4a2ddc12e92ee612e586e73f58e90f98c3793fa784388c6a5f8adf0b6a"
+    },
+    "PLG-BK-000399": {
+      "original_path": "originales/Matemáticas/Fundamentos de la matemática - Uzcátegui Aylwin, Carlos Enrique.jpg",
+      "sha256": "4ccf6e41f2e0b3f124a0234b3fea31a416749dc809ef12cecf0ac0ef2a239562"
+    },
+    "PLG-BK-000400": {
+      "original_path": "originales/Matemáticas/Las matemáticas de la pandemia - Gómez Corral, Antonio; León, Manuel de.jpg",
+      "sha256": "7c634be54b5ba99f6c7c521baae33e388f11bee17163d81aa4cb5ca5696bab89"
+    },
+    "PLG-BK-000401": {
+      "original_path": "originales/Matemáticas/¿Para qué sirven las matemáticas_ - León, Manuel de; Timón GarcíaLongoria, Ágata.jpg",
+      "sha256": "dc6c885ccbe3cc48c6c42a01098a2cec01c22bdfc19fb7ef39e6c9ee0f3f2153"
+    },
+    "PLG-BK-000402": {
+      "original_path": "originales/Matemáticas/Matemáticas y literatura - Macho Stadler, Marta.jpg",
+      "sha256": "f6a58804f56e99f5e1609303ecb3b6902154b8cb9d666a528e6748deec69106c"
+    },
+    "PLG-BK-000403": {
+      "original_path": "originales/Matemáticas/Matemáticas competentes - Valdecantos Dema, Teresa.jpg",
+      "sha256": "46647a7e885b2ad3e22847a18d6f2cca72d8f266975d282b36228852b0f7813f"
+    },
+    "PLG-BK-000404": {
+      "original_path": "originales/Matemáticas/Matemáticas y deporte - González Ogando, Paulo.jpg",
+      "sha256": "015897207970ef8ef995e00c66113e369e15a524306b13284b878cae152b1dd4"
+    },
+    "PLG-BK-000405": {
+      "original_path": "originales/Filosofía/Filosofía_ ¿Por qué importa_ - Beebee, Helen; Rush, Michael.jpg",
+      "sha256": "85671753cbaa9b5f459801cd0983495b134cedf9d06fed2fe64c1c76bf984f60"
+    },
+    "PLG-BK-000406": {
+      "original_path": "originales/Psicología/Psicopatología del trabajo - Dejours, Christophe; Gernet, Isabelle.jpg",
+      "sha256": "e3d375912c622d879b8768fab2bd2c43dbe60b873cf903c497381571168efd42"
+    },
+    "PLG-BK-000407": {
+      "original_path": "originales/Medicina/Medicina del dolor de bolsillo - Vadivelu, Nalini; Urman, Richard D.jpg",
+      "sha256": "e00e4dd36adcd34a8bc965de84535bfb93e8ea1b1a1ee31183b709e1b62c0584"
+    },
+    "PLG-BK-000408": {
+      "original_path": "originales/Medicina/Pediatría para estudiantes de medicina (3a. ed.) - Bernstein, Daniel; Shelov, Steven P.jpg",
+      "sha256": "db88e244305ad72b8d773e8430022830a08817de07e556205efeadced441c812"
+    },
+    "PLG-BK-000409": {
+      "original_path": "originales/Medicina/Introducción a la medicina clínica (3a. ed.) - Agabegi, Steven S.; Agabegi, Elizabeth D.jpg",
+      "sha256": "a455bcddde9c5e71a82b4dec11ace93333cb0d23116f2e975f44cce99dc349c9"
+    },
+    "PLG-BK-000410": {
+      "original_path": "originales/Medicina/Manual de medicina cardiovascular (4a. ed.) - Griffin, Brian P. (ed.).jpg",
+      "sha256": "20644acd0a8b385a5729da2b961b722658decabb214be11bf8bcfd602d446ffb"
+    },
+    "PLG-BK-000411": {
+      "original_path": "originales/Medicina/Medicina de Urgencias de Bolsillo (3a. ed.) - Zane, Richard D.; Kosowsky, Joshua M.jpg",
+      "sha256": "af1045946429831a21157673a9d312984b70b3ea5c89a95b9db57903208a3188"
+    },
+    "PLG-BK-000412": {
+      "original_path": "originales/Literatura/Literatura en el laboratorio - Moretti, Franco (coord.).jpg",
+      "sha256": "c05c373619977a457f4adf228b4ffa83f86157967b9ae4f415e5539b0616a4c4"
+    },
+    "PLG-BK-000413": {
+      "original_path": "originales/Literatura/Elogio de la literatura - Bauman, Zygmunt; Mazzeo, Riccardo.jpg",
+      "sha256": "b93c581d05e635e295425d7a1e56eb389b5a2234832869096cb3eaf869ceca81"
+    },
+    "PLG-BK-000414": {
+      "original_path": "originales/Filosofía/La filosofía del engaño - Falcón, Lidia.jpg",
+      "sha256": "d934630668468e11a3ec1543971a3110680691de3d334bd6dbd0c3e0a17fc509"
+    },
+    "PLG-BK-000415": {
+      "original_path": "originales/Filosofía/La filosofía de la religión - Grondin, Jean.jpg",
+      "sha256": "524daf697d5db7b03f22132b667f87b17682709c7012cce613688bb8ee525516"
+    },
+    "PLG-BK-000416": {
+      "original_path": "originales/Psicología/Psicopatología de la vida amorosa - Muriana, Emanuela; Verbitz, Tiziana.jpg",
+      "sha256": "317c4ee3789af0f89be84d1af8ce1b4da270c31e3dba3a2c0a5268b8194a338e"
+    },
+    "PLG-BK-000417": {
+      "original_path": "originales/Filosofía/Otra filosofía cristiana - González Fernández, Enrique.jpg",
+      "sha256": "1d7e62b13b3453909e32f9523fc3a67ed512cd154ede5836d61a1b5f32b7f2e0"
+    },
+    "PLG-BK-000418": {
+      "original_path": "originales/Filosofía/Introducción a la filosofía (3a. ed.) - Polo Barrena, Leonardo.jpg",
+      "sha256": "77712e0adef4e54e559623db971f8b4759b4744d27b075fdec3349285e94a9b6"
+    },
+    "PLG-BK-000419": {
+      "original_path": "originales/Filosofía/Filosofía de la historia (3a. ed.) - Cruz Cruz, Juan.jpg",
+      "sha256": "8d55a12129127387cdd70a248e4d3ef9a406651dd490325538df5935de767d35"
+    },
+    "PLG-BK-000420": {
+      "original_path": "originales/Filosofía/Filosofía de la educación (3a. ed.) - Altarejos, Francisco; Naval, Concepción.jpg",
+      "sha256": "d27b97f077fab7096196acd313e5dbbfba909285e72636ef79681f79f1f12590"
+    },
+    "PLG-BK-000421": {
+      "original_path": "originales/Matemáticas/Retos matemáticos con soluciones - Flaquer, Juan; Puente, David.jpg",
+      "sha256": "5812662eef8262921b92444ca0fb4d2cf5aebd4a441efee5a8be35a410212abe"
+    },
+    "PLG-BK-000422": {
+      "original_path": "originales/Filosofía/Filosofía de la ciencia - Herce, Rubén.jpg",
+      "sha256": "f78797c6c94fcfb84ab78a6766059469786bfd373a3040983582009f0fc3ea57"
+    },
+    "PLG-BK-000423": {
+      "original_path": "originales/Psicología/Psicopatología - Sarráis Oteo, Fernando.jpg",
+      "sha256": "aa388fbc6dc7262d6a84d64d234880e2efbc91d127cd9904acfc9244823a5794"
+    },
+    "PLG-BK-000424": {
+      "original_path": "originales/Matemáticas/Matemáticas empresariales - Ivorra, Carlos; Juan, Carmen.jpg",
+      "sha256": "7f0b74a8e9bb1511f4687e0286247d5debf7b59991e3356a080d64ef3ef53e6d"
+    },
+    "PLG-BK-000425": {
+      "original_path": "originales/Literatura/La literatura griega y su tradición - Hualde Pascual, Pilar (ed.); Sanz Morales, Manuel (ed.).jpg",
+      "sha256": "84e8c311b7a6e968d4e09fed5198eaa903d308022fe0e15bf0791709c7908c66"
+    },
+    "PLG-BK-000426": {
+      "original_path": "originales/Infantil y Juvenil/Las aventuras de Pinocho - Collodi, Carlo.jpg",
+      "sha256": "8023c677ac0086b2fc5ee7a03516f9914eaa76641a751042d38d034769c3f088"
+    },
+    "PLG-BK-000427": {
+      "original_path": "originales/Literatura/Qué hacemos con la literatura - Becerra Mayor, David; Arias Careaga, Raquel; Rodríguez Puértolas, Julio; Sanz, Marta.jpg",
+      "sha256": "9a4c8daf681813952f2f30771dd10486a33d50ef2d6fa42f35996a929063cb39"
+    },
+    "PLG-BK-000428": {
+      "original_path": "originales/Medicina/Harrison_ manual de medicina (16a. ed.) - Kasper, Dennis L.jpg",
+      "sha256": "2a51a46edbb82e37bad339ec66d6a2a0632455215b7ed12bd625e632876dc3cf"
+    },
+    "PLG-BK-000429": {
+      "original_path": "originales/Psicología/Introducción a la neuropsicología - Portellano, José Antonio.jpg",
+      "sha256": "8bbc9834a69b56d8b786d436cfd97ed833a3afbc000121b8745873b49c3130b2"
+    },
+    "PLG-BK-000430": {
+      "original_path": "originales/Literatura/Estudios sobre literatura y suicidio - Zambrano Carballo, Pablo; Fernández Garrido, María Regla; Losada Friend, María; Navarro Domínguez, Eloy.jpg",
+      "sha256": "ea7bdf1b52f666810801d6d10d1bf069d2637f7c186f0d9a27340e694ab39af6"
+    },
+    "PLG-BK-000431": {
+      "original_path": "originales/Psicología/Psicopatología de la relación conyugal - Montoya Triviño, Baldomero.jpg",
+      "sha256": "562c888777497e6aa866eabb40d1ec83585e3b7f03df8cfee7bbf28ef3269cce"
+    },
+    "PLG-BK-000432": {
+      "original_path": "originales/Literatura/Surrealismo y literatura en España - Pont, Jaume (ed.).jpg",
+      "sha256": "c9b8ed9292f48224d9e778698df32aae16dc2e94ac2792a2d8961f96f8263c49"
+    },
+    "PLG-BK-000433": {
+      "original_path": "originales/Literatura/Surrealismo y literatura en Europa - Santa, Àngels (ed.); Giné, Marta (ed.).jpg",
+      "sha256": "9dace1f39bb718845a778a700cb3af295cd9cb83825822e7e3dc75128e36d343"
+    },
+    "PLG-BK-000434": {
+      "original_path": "originales/Literatura/Lengua y literatura de Borges - Echavarría, Arturo.jpg",
+      "sha256": "c04b64ea46a45014190ab7db11a0af42ddb07aefb1c1900381848ff701076754"
+    },
+    "PLG-BK-000435": {
+      "original_path": "originales/Literatura/Literatura de la Independencia, independencia de la literatura - Carrillo Zeiter, Katja (ed.); Wehrheim, Monika (ed.).jpg",
+      "sha256": "9815d2c796e38e37b73fb81e7280f1005e0dc4790e0a39c2308e4733c506c998"
+    },
+    "PLG-BK-000436": {
+      "original_path": "originales/Medicina/Medicina comunitaria - Donaldson, R. J.; Donaldson, L. J.jpg",
+      "sha256": "70e98201c7d73b8e34b190e2fec6055d4b2eb7a7a8840418e6cfa29e6a417e85"
+    },
+    "PLG-BK-000437": {
+      "original_path": "originales/Medicina/Fundamentos de medicina preventiva - Muir Gray, J.A.; Fowler, Godfrey.jpg",
+      "sha256": "f010518ddd2d523897b5cc93541ded6abcb056c029932ed9ec56fda49589d3d0"
+    },
+    "PLG-BK-000438": {
+      "original_path": "originales/Filosofía/Filosofía fundamental - Tomar Romero, Francisca.jpg",
+      "sha256": "9c2deb566b0df92984dce687b2fc5eefa8efcf3e7bbe4e25db104b13e9aae967"
+    },
+    "PLG-BK-000439": {
+      "original_path": "originales/Medicina/Ética y medicina - Ramiro Avilés, Miguel Ángel (ed.).jpg",
+      "sha256": "4914bc13d328e35b2144f1dec3541c328a733a74fd4753170b17851d8e242359"
+    },
+    "PLG-BK-000440": {
+      "original_path": "originales/Psicología/Psicología Social de Género_ proyecto docente - García Dauder, Silvia.jpg",
+      "sha256": "ec077093adaf7d9e1112de6179a602912d71374605673144568e4e266079883c"
+    },
+    "PLG-BK-000441": {
+      "original_path": "originales/Psicología/50 experimentos imprescindibles para entender la psicología social - Rodríguez, Armando (coord.); Morales Domínguez, José Francisco (coord.); Delgado Rodríguez, Naira (coord.); Betancort Rodríguez, Verónica (coord.).jpg",
+      "sha256": "ecfbb8933124bc7f21b01b7fc6157c3548046bcaadb1cd8091eb312f31a9db27"
+    },
+    "PLG-BK-000442": {
+      "original_path": "originales/Filosofía/Filosofía para princesas - Leibniz, G. W.jpg",
+      "sha256": "fbdab204a7898f8d8fa161b17bd96950d9a3b4dcb3305a2d0ce5661a62e8e607"
+    },
+    "PLG-BK-000443": {
+      "original_path": "originales/Filosofía/Filosofía de la redención - Mainländer, Philipp.jpg",
+      "sha256": "c1bb88cc69bcd0db6097be8159bd82cd05915f19fcf3fb98ac449fff4bb64d26"
+    },
+    "PLG-BK-000444": {
+      "original_path": "originales/Literatura/Literatura y turismo - Arias Argüelles-Meres, Luis; Herrero Montoto, Manuel; Magadán Díaz, Marta; Murias Ibias, Armando; Rivas García, Jesús; Valle Cobreros, Antonio.jpg",
+      "sha256": "80a54a0a7300733ed92ca7c1ce52338ba00434856c0117b043bfdd83362ed9cf"
+    },
+    "PLG-BK-000445": {
+      "original_path": "originales/Literatura/Economía y literatura - Perdices de Blas, Luis (coord.); Santos Redondo, Manuel (coord.).jpg",
+      "sha256": "6b7b1d2e87f6a802bb3b6752fdbca0118fe469aa9fc81ee79488e9f034d308c3"
+    },
+    "PLG-BK-000446": {
+      "original_path": "originales/Medicina/NMS Medicina Interna (6a. ed.) - Wolfsthal, Susan D.jpg",
+      "sha256": "34797e563af87c5a5c0128cf02de80c6b4ea4f240aa284b37f9f2627be285089"
+    },
+    "PLG-BK-000447": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos de la selva - Quiroga, Horacio.jpg",
+      "sha256": "7d06f2bd2f82542f8c135269060ce57812c4a1d874a7ffa9103fcad7f030f98c"
+    },
+    "PLG-BK-000448": {
+      "original_path": "originales/Filosofía/Filosofía para médicos - Bunge, Mario.jpg",
+      "sha256": "d7220d8b447c902dcf192823873273da3f12179fdb559b0d27d1d6c4b310542b"
+    },
+    "PLG-BK-000449": {
+      "original_path": "originales/Filosofía/Filosofía política - Norbert Bilbeny.jpg",
+      "sha256": "dd13e3c826cf5a059273264a7d4e8fa76cf4d81f156c6ef296949dff2031f1ca"
+    },
+    "PLG-BK-000450": {
+      "original_path": "originales/Literatura/El cuento en la literatura infantil - Gallardo Vázquez, Pedro; Joaquín León Donoso.jpg",
+      "sha256": "716bccd82b12c316efb7fb2bee6530273351c7ffc3cdcaa5b1ec12f0a8cede2c"
+    },
+    "PLG-BK-000451": {
+      "original_path": "originales/Matemáticas/Fundamentos matemáticos de la ingeniería - Kindelán, Ultano.jpg",
+      "sha256": "b33d28a50c3d1dfddf2b52f2f43c2547d8d8f1296d1e878b552304c3af5c469c"
+    },
+    "PLG-BK-000452": {
+      "original_path": "originales/Filosofía/Filosofía ciudadana - Quintanilla, Miguel Á.jpg",
+      "sha256": "f5bc17b657ece6674ef214f2220801ef18ded42892e148661c39ab00a0ec6386"
+    },
+    "PLG-BK-000453": {
+      "original_path": "originales/Psicología/Psicopatología y caos - Bornas, Xavier.jpg",
+      "sha256": "734717b9adb677bd10ddd6cf7e00c04ffa38e1222339e847d8d26bfc1078b6f5"
+    },
+    "PLG-BK-000454": {
+      "original_path": "originales/Psicología/Psicología social_ algunas claves para entender la conducta humana - Ovejero Bernal, Anastasio.jpg",
+      "sha256": "6333fedd482fba8c5df457457e5d5b68088140fdd437a2e6b302477dedfaae43"
+    },
+    "PLG-BK-000455": {
+      "original_path": "originales/Psicología/Psicología social crítica - Ovejero, Anastasio (coord.); Ramos, Júpiter (coord.).jpg",
+      "sha256": "029d31d5733012c3a5361f72f0fb716331c91c85e5a471d539aaa3520c148f69"
+    },
+    "PLG-BK-000456": {
+      "original_path": "originales/Infantil y Juvenil/Ratón Pérez - Coloma, Luis.jpg",
+      "sha256": "c3260648cb5eb1459f16c4d37c70dc7616fcb9b6c562971e21617014d318f16f"
+    },
+    "PLG-BK-000457": {
+      "original_path": "originales/Matemáticas/Matemáticas fundamentales - Villagrán Campos, Eduvina.jpg",
+      "sha256": "87467acf102da7629d150a08f719c9a6c5fea5d05604077a9b2347a08f8b977e"
+    },
+    "PLG-BK-000458": {
+      "original_path": "originales/Infantil y Juvenil/Un mundo de fantasía. Selección de cuentos infantiles clásicos - Ramírez Tangarife, Liliana (responsable según ficha).jpg",
+      "sha256": "b2a0c913a9c39432ded7a94131bb6cea22296efffa048986090ac787494f70a5"
+    },
+    "PLG-BK-000459": {
+      "original_path": "originales/Filosofía/¿...Enseñar filosofía_ - León Gómez, Adolfo.jpg",
+      "sha256": "7eab8d6349991bcf60fccbdc62435716c9326f878fdec12af1b0f3274a73d90c"
+    },
+    "PLG-BK-000460": {
+      "original_path": "originales/Filosofía/Misticismo y filosofía - Uribe Botero, Ángela (ed.); Gómez Rincón, Carlos Miguel (ed.).jpg",
+      "sha256": "3050a2ad15edf6037cc4391042d5d883e7d9b2d74f88dd7f3dc1a870e03c11e1"
+    },
+    "PLG-BK-000461": {
+      "original_path": "originales/Filosofía/El mito de la filosofía - Ferro Bayona, Jesús.jpg",
+      "sha256": "61f314955912c3e053286a77a6feb13103cc4e98bcae4c3d7b6d231130446a87"
+    },
+    "PLG-BK-000462": {
+      "original_path": "originales/Psicología/Lecciones de psicología social - Soto Ramírez, Juan (ed.); Huidobro Márquez, Juan Carlos (ed.); Carrasco Tapias, Nayib (ed.).jpg",
+      "sha256": "4bb8f2cb1ab9adfa93bef9f07cdfe2983fd575138825f5971eb56292f8de62a9"
+    },
+    "PLG-BK-000463": {
+      "original_path": "originales/Psicología/Psicología social y justicia - Ruiz Pérez, José Ignacio (ed.).jpg",
+      "sha256": "2e77279e62bd8232dea6213c799efdfcd1fd0bc016fc27f56fcea45d1e7c617c"
+    },
+    "PLG-BK-000464": {
+      "original_path": "originales/Matemáticas/Matemática fundamental para matemáticos - Robledo Potes, Jaime.jpg",
+      "sha256": "cd714d1239fc7d80c276be8ee7edcb66045a479d9c528fdb0ee29c99828cab5b"
+    },
+    "PLG-BK-000465": {
+      "original_path": "originales/Infantil y Juvenil/Cándida - Silvera Garcilazo, Elvia.jpg",
+      "sha256": "23b787b3ea1ab78688acb15a3a1d842f70fa690cdb0d25b2acbeaa9555a51606"
+    },
+    "PLG-BK-000466": {
+      "original_path": "originales/Matemáticas/Métodos matemáticos (2a. ed.) - Téllez Acosta, Gabriel.jpg",
+      "sha256": "bd4d726027763333c920e11db79b54b94c224d57e9f0e806877f4ac061fafc62"
+    },
+    "PLG-BK-000467": {
+      "original_path": "originales/Medicina/Fundamentos de medicina_ medicina vascular - Gómez Isaza, Luis Felipe.jpg",
+      "sha256": "d57eba174026b89d2511248da1cd1fb151a1e4cba47b48a442affd02c3aa70f7"
+    },
+    "PLG-BK-000468": {
+      "original_path": "originales/Medicina/Fundamentos de medicina_ reumatología (8a. ed.) - Molina R., José Fernando (ed.); Molina L., Javier (ed.); Gómez-Puerta, José Alfredo (coed.); González, Luis Alonso (coed.).jpg",
+      "sha256": "8fe846dfcae0d2522e2fe6d56a58132681b2938f18fdd35b0d91173779264664"
+    },
+    "PLG-BK-000469": {
+      "original_path": "originales/Psicología/Neuropsicología infantil - Arango Lasprilla, Juan Carlos (ed.); Rivera, Diego (ed.); Olabarrieta Landa, Laiene (ed.).jpg",
+      "sha256": "9fb4040575c7b2b1db8c376cddba224aef37c65c2abb436d105b21bbd1a5891c"
+    },
+    "PLG-BK-000470": {
+      "original_path": "originales/Psicología/Tres perspectivas en psicología social_ paradigmas latinoamericano, europeo y estadounidense - Bautista Cárdenas, Nelly Patricia.jpg",
+      "sha256": "41955ff231a02d22ceb505470abc5127d4a7e8da8e2cbb72e96801035e5c974c"
+    },
+    "PLG-BK-000471": {
+      "original_path": "originales/Psicología/Neuropsicología escolar - Arévalo Parra, Jéssica Marcela.jpg",
+      "sha256": "0ed5359b1538e7ef38328700c42aaff1ef9e1e57bbf730591f828e31a49b9746"
+    },
+    "PLG-BK-000472": {
+      "original_path": "originales/Medicina/Fundamentos de medicina_ cardiología (7a. ed.) - Montoya Toro, Mario (ed.).jpg",
+      "sha256": "634b07eff8c95f156e0c2e64cc4ee03bc2d2fc95a6e7376f0c6e60fefd4be2b1"
+    },
+    "PLG-BK-000473": {
+      "original_path": "originales/Medicina/Anestesiología y medicina perioperatoria (5a. ed.) - Aguilera Castro, Fernando (ed.).jpg",
+      "sha256": "fd152c8a4397849613a8b56de9d0f31c49faad9e986af633776fa32d715f232d"
+    },
+    "PLG-BK-000474": {
+      "original_path": "originales/Psicología/Psicología social de la salud_ promoción y prevención - Flórez Alarcón, Luis.jpg",
+      "sha256": "81f43a0de4f3104b3e1e323581fed026e4c659813ce695fb776c42ff8e967ad1"
+    },
+    "PLG-BK-000475": {
+      "original_path": "originales/Literatura/Historia de la literatura alemana - Modern, Rodolfo E.jpg",
+      "sha256": "f62be2eb55e1d84754400a18d2de64b72cff55420e7368cc9a9baafb6c0e02f7"
+    },
+    "PLG-BK-000476": {
+      "original_path": "originales/Literatura/Compendio de literatura universal - Eva Lydia Oseguera Mejía.jpg",
+      "sha256": "382b0b529b7ac7708ff9430529201023c9740553a4e1f72c24590a3b0abe8eb9"
+    },
+    "PLG-BK-000477": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos infantiles_ para los niños de jardín de infantes - Maestros del Jardín de Infancia Micael.jpg",
+      "sha256": "43c1db0d9b09fe27bf08c505c266cdc1ed332bbc7c47b8553c102dfdf01a969e"
+    },
+    "PLG-BK-000478": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos para chiquitines - Bieler, Heidi.jpg",
+      "sha256": "6d8747fb3c57b460f73fe4888ca6cc2726e4ddb6605ecee458e6b85305bc2271"
+    },
+    "PLG-BK-000479": {
+      "original_path": "originales/Medicina/Medicina ambulatoria (2a. ed.) - Parodi, Roberto; Greca, Alcides A.; Gallo, Roberto; Carlson, Damián.jpg",
+      "sha256": "0ab8d9bc2409dac97af5c17ea4a19bc9326ba66d94d2de6524f6c5477b907f42"
+    },
+    "PLG-BK-000480": {
+      "original_path": "originales/Medicina/Medicina vascular y clínica quirúrgica para estudiantes de medicina - Ameriso, José Luis.jpg",
+      "sha256": "8af54cd1d59980108d5c310e176cf696748cfa5934675e9e4f88efc1341ba1b5"
+    },
+    "PLG-BK-000481": {
+      "original_path": "originales/Literatura/Borges y la literatura policial - Beatriz Doallo.jpg",
+      "sha256": "6e8b0dd0eef6e7790241bf1971be20305fce7321b3d378c2f0bd2eb65a0b6a4a"
+    },
+    "PLG-BK-000482": {
+      "original_path": "originales/Filosofía/¿Qué es la filosofía_ (3a. ed.) - Feinmann, José Pablo.jpg",
+      "sha256": "0dacf646c82123446bd6cd792bb98dde59b0d2328177e03ed02577afffb2c88e"
+    },
+    "PLG-BK-000483": {
+      "original_path": "originales/Filosofía/¿Qué es la filosofía judía_ - Bensussan, Gérard.jpg",
+      "sha256": "2ed77d31c37fe3251493f530f1c6838ae954ab4e3f7339b2878c8dea2bb09d5e"
+    },
+    "PLG-BK-000484": {
+      "original_path": "originales/Filosofía/Filosofía de las artes - Weitz, Morris.jpg",
+      "sha256": "e4407085257de1ec0f7fcd361986edd2ce716094a411c98c62cf3c3046d748fb"
+    },
+    "PLG-BK-000485": {
+      "original_path": "originales/Filosofía/Fragmentos para una filosofía - Blanchot, Maurice.jpg",
+      "sha256": "21ed2dfebeebd82cec780cfc81c901f9a704f9fca6948f908d75f4e1c6cd482e"
+    },
+    "PLG-BK-000486": {
+      "original_path": "originales/Infantil y Juvenil/Robin Hood - Sutcliff, Rosemary.jpg",
+      "sha256": "a794d4fbaf9b52c10525ebe6fc1f8804d97cf5bf8337096d3cf0d485674fc8bd"
+    },
+    "PLG-BK-000487": {
+      "original_path": "originales/Infantil y Juvenil/La lomita mágica - Smith, Frank Thomas.jpg",
+      "sha256": "769e77cdb6d0bb8bbe707c858bfe43077971066be8af0ebe669a3fcbbb64c38d"
+    },
+    "PLG-BK-000488": {
+      "original_path": "originales/Literatura/El burgués_ entre la historia y la literatura - Moretti, Franco.jpg",
+      "sha256": "85cb429c74c7756d3752acd7d335048acaf3cc7d95a00ba10b511164c098b7cc"
+    },
+    "PLG-BK-000489": {
+      "original_path": "originales/Infantil y Juvenil/El hijo de las escobas - Bargas, Esteban.jpg",
+      "sha256": "28f3e10d41fd39fca3c93da49ba62809470fbdef83886ab2410ae93cf4c82da7"
+    },
+    "PLG-BK-000490": {
+      "original_path": "originales/Filosofía/Filosofía en diálogo - Cárcamo Aguad, Rodrigo.jpg",
+      "sha256": "8db9b43d9cf9be95392cf8fa10ceab9fe8d59410f9749ed9461dc48c921626e1"
+    },
+    "PLG-BK-000491": {
+      "original_path": "originales/Matemáticas/Matemática 4 - Covelo, Laura; Covelo, María Eugenia.jpg",
+      "sha256": "100fa2dc04b3d79d336a6cdec8c3edcfaff13c5e0727d7baa02a1b96ac65da7d"
+    },
+    "PLG-BK-000492": {
+      "original_path": "originales/Infantil y Juvenil/Cuentos infantiles para contar y jugar - Editorial Antroposófica.jpg",
+      "sha256": "9b7ea0ab5d4503c3705f028edd6ab7b11b4c05b5cfdf808f5a5fc9452d893d9e"
+    },
+    "PLG-BK-000493": {
+      "original_path": "originales/Filosofía/Filosofía - Costa, Ivana; Divenosa, Marisa.jpg",
+      "sha256": "3b59c6770768e1383a8d0a115922a69e069ea03a362b46aecc9f03eb6b86de75"
+    },
+    "PLG-BK-000494": {
+      "original_path": "originales/Matemáticas/Matemática hoy - Rafael Uribe, Leonidas.jpg",
+      "sha256": "3bf7a9c977cdc2bcad0abd38d3e3329f7997168fb7b032b3b270033586ab7842"
+    },
+    "PLG-BK-000495": {
+      "original_path": "originales/Medicina/Manual práctico de medicina (4a. ed.) - Alagappan, R.jpg",
+      "sha256": "f4012bca493042d0812ddd78e1fd62b3bd7cb2379923e1657ecc4d54e1622824"
+    }
+  },
+  "physical_manifest_sha256": {
+    "PLG-BK-000316": "6957c806a1eace289b07e3900203eee891657f1802a3a9715f66ea676c21e0f4",
+    "PLG-BK-000317": "aadcb6ba852ca68f9866a8cdc23c58a835433e57ae21838bc2efeb1a68746fcb",
+    "PLG-BK-000318": "7bf3bb73cfd296d27e3049d777585f2ae9f929efcfe41bc20a011fd31a275ba4",
+    "PLG-BK-000319": "b90f26115d85319be4972dc305be117d68739e693894ee90853a7495d4970290",
+    "PLG-BK-000320": "7dbe2ec5884ef96b138853360669fd30609fecb36717111cbfb8c2b0385b648e",
+    "PLG-BK-000321": "7aa0edfca0c4de0588ddff9be1ecae1e6dd35ab43fc4e4f7b308b6adb947c4a3",
+    "PLG-BK-000322": "b6e63cbbd35fb8da6fa9d3a868c2b2f530be1a032ee09b0bca65622cc7c0b5a5",
+    "PLG-BK-000323": "05b56d5a3bdeb12389f8c54963d659f19dbbc86ea61d184aae7040e04c10cc82",
+    "PLG-BK-000324": "76f6bc2d537ec0b630c3552c990825c1ffbbef193c85caf80f256458d35f6603",
+    "PLG-BK-000325": "f0a517bb0bd49545020fbd725e886f012d00960a71d02f90a869ecfc10d4c90e",
+    "PLG-BK-000326": "261a2fe56dcd8965b28a98331b2f50efeec8465677f9d3e476fbc181a4ed85c6",
+    "PLG-BK-000327": "8c094e1f4b7d6649c53aaebdbfe68f6b44b77bc4084fbe832d9b95d21cc1dbd8",
+    "PLG-BK-000328": "3c5cac622e744ae1a7464643c120e38ee3a0cd31ee8bd365607fbd4b2c461ac7",
+    "PLG-BK-000329": "388c535cbf0e2be9238339620f9594502f627a4a468291f1a72965d3457fc6a2",
+    "PLG-BK-000330": "af04722d2d7fcff5c8d304ef9f7610144c838f110dbc553f8aa5ca7bef88713d",
+    "PLG-BK-000331": "03b9684fd525a7d0a77107db30e8b098ccfac8d121667877a1a3c9fe1a6cbf35",
+    "PLG-BK-000332": "132f9017b8ca524cf3373623e5f8174fde0cf3f7c5e8e8b11b3c13a087321335",
+    "PLG-BK-000333": "d838b700ad9457785f4f94f7767e31f7845e98bff5a6e1ba48df7a6e1e64db6a",
+    "PLG-BK-000334": "5e55893cfe428f0caf1f11859d939c0a7d6333e40b065cd8bb58b45af2c0360b",
+    "PLG-BK-000335": "b0ab8490ef63f4e13bd634e9344969d037bcfee58a9c5ff087f0e92714ebbcc5",
+    "PLG-BK-000336": "db2f14f3408b2dae9fc17fe8b02c50f4f83a4c1ef67c29b8cb558c43f97497e1",
+    "PLG-BK-000337": "924fea227f7ce6fcbfdcfc3ff0059c5f7d8536583acb546a11360ed252abda3a",
+    "PLG-BK-000338": "71eac99745ab0be8cf880160b73ba2259d59964ea0cef0d04e8f927640c58c15",
+    "PLG-BK-000339": "d9411a9d7e4033f7173f2afb7a037919ec7f80d38e0cb74f8d4a23bcbe8bf606",
+    "PLG-BK-000340": "218bd99a9d02cc461ae8668449756f14901eb9cc92604f10c359635991e58b53",
+    "PLG-BK-000341": "a9fae675c72f61dc939cc891409ead240ae995fa9434b3627e5e634b26b56b33",
+    "PLG-BK-000342": "d436ba81daa47dd52554215f1bf59197577e0ae57902dc444ccbe76660406e7e",
+    "PLG-BK-000343": "bc2a8ad0c04be11fb12c17c4f5c3a94c97597a409f7db48ade7e49844ce6fe21",
+    "PLG-BK-000344": "95ab3f537318b5a1380cddd4efad16cf0fe0f168012d21eb4aafdc76125326db",
+    "PLG-BK-000345": "ba58d8a5cca2fbbd3671053d1c4d3dc343793fde4f6466bd211d7b4a08f016ff",
+    "PLG-BK-000346": "119d5d44760f996897ca70d7810b7c3a109088d5f9fcd47755657594156ce30f",
+    "PLG-BK-000347": "a78a9ceacc24380d33fd3a405b3dcd650145ddebe686035993046ee36073c122",
+    "PLG-BK-000348": "89af24ef77aa9f6fb20cfa46fd4d6f524956c4eea41fa1c28c3a6a75728eb0c5",
+    "PLG-BK-000349": "25276a71981c59b1c11282de5b665fbd4df15cf01348534c5c5a8bf671c7ca2a",
+    "PLG-BK-000350": "bab7fb5999e16360d212b6cd3f3e7d5bf30a8edbea9a7b4c0f3904b36d5dcd0a",
+    "PLG-BK-000351": "f0d3faa1539da57056cc714b254d7af8c3fec41efa47038a6c6e8b8f39248708",
+    "PLG-BK-000352": "34bb8d53c6a3c9cae08ea909c593a31e961736084642143ff2f2a7fe0108a04e",
+    "PLG-BK-000353": "b2c7a9dc19494ea59b13b2f8f51b1107b93f01422411e05f6038dcace0cc1b32",
+    "PLG-BK-000354": "705acb889f87d7ffc7afc06d773025815fdeaf8b4b3a1fa7bb8fdbbc3ffc38df",
+    "PLG-BK-000355": "4a2f0fa8db331103dc3a80d446d6864cebc5afbb446984ff3e3d7e35d77d6f52",
+    "PLG-BK-000356": "82afb6b3cea7c6e91b0b145b27f6b987f9331b43cf5df09527e854a766a797e5",
+    "PLG-BK-000357": "7701bb891750ec56a900453d771b9ee625f1b15262aadeb12dbfa718b1c358ba",
+    "PLG-BK-000358": "530bf3ee685e4c5b6775fc668d7df9701e03864f3ece37370d10117cda2f5e56",
+    "PLG-BK-000359": "31573e1089a934ecce776989a2ffae9c5fb8e43e607fdf7cb958a1ad4d67e49f",
+    "PLG-BK-000360": "b1c78f9a81bc0f1f43ec76124a8e20084f24a885e697490d0fd1048d20395dc5",
+    "PLG-BK-000361": "68a6fb83cf3f67ca727a398c9be770a0efeb55b3c31499e8431036c72d2c319e",
+    "PLG-BK-000362": "8cd509c57a2b6a065f5142e61117abb7a5e0534536f80029091d934f849d7c0a",
+    "PLG-BK-000363": "d43e932bc585ed1f5c33e053b0aa2091ff0cebb4d2df7ae21157b2e49d6c81d2",
+    "PLG-BK-000364": "405849c4b96c43d13f1bee3486eaf9af92c1010e39d05312fd4d54890778e311",
+    "PLG-BK-000365": "252bf238be43abf2fe97976c1966b88279fca8b79a0d6043b5c8c12a4afe8928",
+    "PLG-BK-000366": "058def863483411c40c7d60202818526e6e2182964d90762fdde3932dcde1c13",
+    "PLG-BK-000367": "6cd5e95fd576fca8c12e51ae485ae6717a17e67ba4584ad416c85b866cc493fb",
+    "PLG-BK-000368": "62dfafe980ba77aeb5690a2c743003b5221966bd54c984e89cdb42be12c86928",
+    "PLG-BK-000369": "182a72b80d7987ddbcdd6b59295aa35f8fc02e600ea4e2d2561a7410fe6569fd",
+    "PLG-BK-000370": "6c3e7279637eae5f9e32f0204b81b727b229dc662d21ac0e2d126a65782dab8f",
+    "PLG-BK-000371": "9cafb2bb801790b4814ff8de18f3455fe86857e133060bf2bc7643850888d450",
+    "PLG-BK-000372": "d1e026dbc517861e629972437ba93a8927769e5825f55ccb112502fc215cbfd1",
+    "PLG-BK-000373": "61d7f38fe378970406e4acdd82a2dfc18759626918b171b8880563281de657b7",
+    "PLG-BK-000374": "d52825326d969c7023136fef250c3c936fd0ff7ef659de09a125dab228e5d98e",
+    "PLG-BK-000375": "8c7145dbaa058ac54cc377212323b03e31000896de616206b0362f2678570557",
+    "PLG-BK-000376": "95cd85b88328149c78162183bb22149ccbf534a9a5802976f017ef56bf06c32c",
+    "PLG-BK-000377": "0b0bfae2af1476bee36965c91e8845cf0ee385d87cab9ab3c0ce78d90fdfb5fe",
+    "PLG-BK-000378": "e6f00aa01719b76e7feb83aec2b392e899f08681a1539e2196afeeaaf2ef56a4",
+    "PLG-BK-000379": "f4c878932fff49cff2c8d20cf5a72a9dfc464e4b296480ea316cac731a2df3a0",
+    "PLG-BK-000380": "0b4ad3b2a4a5259704f585d8750bb0bcb484d86b660680bfc1b3c06047d2ff7f",
+    "PLG-BK-000381": "a9f3b818cbf6fb0a376d6437eda8650a66ada1c00490c6b8e8605aefab8c0104",
+    "PLG-BK-000382": "e7bb8457a026b1914a2ddd9a5fa116a5d0c028f201791b92b03dd939b9c19464",
+    "PLG-BK-000383": "f3d32803ce8c9024d56ea099c1454c6ce21ada6ca9f8790b4519b3bd41e502d8",
+    "PLG-BK-000384": "936d3d9ef20cae6b4b3be21568c5d177a3652ce80be25d3d2258e618b2adf4e5",
+    "PLG-BK-000385": "4f32061e14125242d41995db79a71d4e1335887ad300d5b1efab5ac52be53481",
+    "PLG-BK-000386": "e668445d4cbd853d9bb39a2830b054db793530949327569609a3b2bb9ab91781",
+    "PLG-BK-000387": "5a919adeb1040b86b745282c16c0bf5d6420ddffb0170236888086b130776d3b",
+    "PLG-BK-000388": "ec0ebdc72e4fa42b0011b9435471b275c85beb7685ef47643a846278e68e4ed3",
+    "PLG-BK-000389": "a627bc046271c9bf2c0ddf94dbdc287dc4e6419dfb03e3ef10e85d7000f2a349",
+    "PLG-BK-000390": "611bb3087a2d08039bed1002966cad6dea8d6f724334f6c50d81ccf54e02878e",
+    "PLG-BK-000391": "4090b6199c6d5a65b3856e290ba94cbfb136bdd7164f05ebeefd28b6160edffb",
+    "PLG-BK-000392": "c5d4c6b003b62e7ccc1e9427c458119c6aae2510740bc7dce4fd19b5d63f6fb3",
+    "PLG-BK-000393": "b45047d15b2b838d6bf3d080b0dc7d523cdfb8078620a8c5a656409f47aadbfd",
+    "PLG-BK-000394": "9b37e2f81bab35cb863b04e9cb3ea34bcc1a6e3db213e10154f26a42412edc84",
+    "PLG-BK-000395": "a5827dff7d66b026caf7e1bce1fc1b12a8cf732cd4bfce7b41ad77f22c6ea22c",
+    "PLG-BK-000396": "e53085eacd3f25af9f26218522f82a4f6add2938a53509c246f1d453a8b5e2fb",
+    "PLG-BK-000397": "f56b662f7c4e54e2819fc44daf5c633c3373cb9e7232c96e2498704924bd7625",
+    "PLG-BK-000398": "19e936cc8917184e643c379054a4f975a073eb5387270b38dfcab1e359429a20",
+    "PLG-BK-000399": "1eebc8d97eb163cfc264f3b2febe483336be69ee634c77b34984a13b4d2e9940",
+    "PLG-BK-000400": "a08b90343602e8761453d0c08020bd99e646bb19366b03c23ee710eb2e39997f",
+    "PLG-BK-000401": "0174a551791f9f8d309efd0cdfe72ab0211f6e37dc2209410fb86942b819cd9f",
+    "PLG-BK-000402": "5d1a3ed450f95748e35c0f56f50802faeb73bc862846a7319082031fc0af57ad",
+    "PLG-BK-000403": "ee575d83142026b7dd1431851515887488c592f3a342f5e988d2d4fdaaf8f645",
+    "PLG-BK-000404": "e4f6e1757469f151346bf1586c91c99bf8798db6903a2d44f777b6e28a80317f",
+    "PLG-BK-000405": "b4c973f2cd051d4062b5d49388443dc6bb59cb2622d81691fba2019487e2ec18",
+    "PLG-BK-000406": "fc4c73b19d5bd664c1c902cc3db395af9f7786d67eaf4b9d2cdd90dced857e37",
+    "PLG-BK-000407": "e494d534b21cb7d0c3593b6fa1107fb6bf377149eff8db2220958fab93e1c23b",
+    "PLG-BK-000408": "973758e4d6e5ab7223e6f2e1a3b44cbcd246ec7c7aedcf1d05b7dac12053cffb",
+    "PLG-BK-000409": "4368582d6c2e4dd7320504419c8ceda839fcc253c698894990f84349847d9567",
+    "PLG-BK-000410": "61fb299019b0db1e32a907726ea0a21cfba3ef3861f77f77edec17d265c7acec",
+    "PLG-BK-000411": "2e4c50a932c997c64d17dff9bceb14be22fa95125620278db73cf789b697874b",
+    "PLG-BK-000412": "263f6369d83303efd9d8ace165e4005735e91ebd5e226b75ff3469570994c278",
+    "PLG-BK-000413": "0b4001ee9e20ae402c4fdea857454c29a495431f021ed12557d45ea293a4bde5",
+    "PLG-BK-000414": "bd9690fa772890f37d80f1705524a2b199dd491540296839237d643191b44800",
+    "PLG-BK-000415": "38d9b14dcb5e9d88b9b5f77f7f12b6d632fc6d6eae29a177e48b8dd5f73d9aed",
+    "PLG-BK-000416": "9e36f781cfb39aa12f0a4b193bd81323f54b8e266e1f973a1a9d161514dde247",
+    "PLG-BK-000417": "4316571219a3226f39b2f1a23a1a6d1de92f95b923cea8d48f57e5c1d0f6a44b",
+    "PLG-BK-000418": "bfaf944db954ab30fdc448d481aa0266b8ba3ed334b446ad693c54d2e1aa28ab",
+    "PLG-BK-000419": "afb4b6efbdebe239d7b5260cab6c2025dbf87231a8e3fa022c7f24022d3109ee",
+    "PLG-BK-000420": "f6a4ff9e19a65b29a158f48674e854e1f41205f2e42fc9b3a79cd2f9bb42ebde",
+    "PLG-BK-000421": "63b619b86f7d2a69d24402849ded0afc3089a281bb9852adf2c8c03762534415",
+    "PLG-BK-000422": "9911e649bdfdb41fa0ed5dd17ce4faa6cb21db895673e9d3aa6d6a10947661bb",
+    "PLG-BK-000423": "3187227f1ad33a0d22b5310c95a6bda729d806932e37043cd2db5fb6f04da9c3",
+    "PLG-BK-000424": "315d97df9002e7d528cd89fcb6e68e9699f8de03ee84d876c3794d29da9bed2b",
+    "PLG-BK-000425": "7c484019b5e214daf92239bcc830e68462642a582abc863b16ae8b60c7ad89da",
+    "PLG-BK-000426": "41a87807c58df5b14862fb886d6811361ea4b9f48a9de26380dfd293ea0e3d4f",
+    "PLG-BK-000427": "d245b012ab3202fa6a864aa2875782f95ed890935fd0aa38e50966bf3c9e8503",
+    "PLG-BK-000428": "a6b7e5754c1554d43cc4b4721c9f32c0495dffbe63e975cce94f76bfa282bb83",
+    "PLG-BK-000429": "6065b408154c1e4fc7b41c9596f6129432c11fd770661d12a39053afa24e701c",
+    "PLG-BK-000430": "a20cdd2f32f931376c59ce0791f055569a69fec6be5573f75b7e3220a7613a9d",
+    "PLG-BK-000431": "1774a6b83581e0a55ed15cde871749e7edc3803fd1e4942176a1de7e3e3597f0",
+    "PLG-BK-000432": "7304aeaed04257993f8277ef5b75826829866ea312a6f642ad0ef85e5a9f1f6f",
+    "PLG-BK-000433": "8465d9bc58aa34d45030117d99f7ad087cebea1655de31de19f72b7633b9940b",
+    "PLG-BK-000434": "615cbd24c1de21a166a13b204847a70f9c744114e501e42e7f9b8f550b9621fc",
+    "PLG-BK-000435": "8f5ae9928fae6a07b8c696996144bd29d621197134daf1cdce7e7b48abff35fe",
+    "PLG-BK-000436": "f5705d906e2272f6c7a47aec4a258c7cec13138ca6930be76fb7c400041f847a",
+    "PLG-BK-000437": "5f8323c32d8205abb2689caf8a5ff5e0eef23a1743c382f8a6f61117befd9fb9",
+    "PLG-BK-000438": "5b2251926c720c7692ce6d1232a856700895c7902d1f16cbd4546dd923fd8933",
+    "PLG-BK-000439": "2ad2f70388c6091c22da2d7288de91462709693e0ee0f7571f31ccecacd11308",
+    "PLG-BK-000440": "f71446911c28a863a35c5748c0f7f521d9cb16e95c65d84a66371dda52d9d1b0",
+    "PLG-BK-000441": "eb7c89eae085f3ddd42eb2d2aac51c6707a4a0986cf6c97ff4574cdc6097bdf7",
+    "PLG-BK-000442": "573f21faf3e9c58c7088cd0c3a9bf0a04421d546dfc6f8ab4ded3ecd87fcf6a3",
+    "PLG-BK-000443": "4abe46da415bc98828c8a836e392e6a8da9a3b57cf7e7c78132724bdc5beba6a",
+    "PLG-BK-000444": "cd9281d902b669b6ab19a03526b947c595b17e72e8d0b9ece714faade85636f7",
+    "PLG-BK-000445": "280e6ff5cf95394c9ea843dbaa6b1958929a9db2b3576e54cb49dd28c673adf5",
+    "PLG-BK-000446": "e7b1998f18ee8b5938500061aa18eb657cf747ef2f4bdc86aa84b1e2268837ca",
+    "PLG-BK-000447": "4acf07e1af7f7c3265ad62bed8ec7c6761c34b639ba6da6b15f50b844c11c7f7",
+    "PLG-BK-000448": "12e6f588c8cd1f421f5b2392d835de2fbbd2a5641739c88fdb804b54df5db7a8",
+    "PLG-BK-000449": "733b7cac85daf564f681dd5a5b9decaead0af27ea444fbc7db3a18b29e0a4d5c",
+    "PLG-BK-000450": "0bd10aab191c07d4b553742691f150724909ba50ef024d968866bcec6b9a4f11",
+    "PLG-BK-000451": "0a85cd017425c4d93a133dd16a1b31ea28ca7a75a8941036b61aeded2ba35aa9",
+    "PLG-BK-000452": "44ffff8a8093cf927e15cf84467f9d43706348ea10790eab75e143c2e92b7319",
+    "PLG-BK-000453": "648133e9f97c8764a9c06d26ea03848058b16da972fdf8b68b981c0c1e19a35d",
+    "PLG-BK-000454": "a5d2f696e876d82a09461e9710ea8a8859be855aeccb912537d0a9d3eeec34de",
+    "PLG-BK-000455": "b6668614ff23d140c1129930a33b983a9e90a7aa1ed1131b52aeb8dd8697b7f5",
+    "PLG-BK-000456": "66584255c5ad3c2742d743034957eef828674491062b15eb38338c006306f1bc",
+    "PLG-BK-000457": "bba49101d3876cd6122afbb99384232f2264af06ced02bd024055091695f417b",
+    "PLG-BK-000458": "0f1413e00fd59fc7c2db77d95890e90bcdfa902a15d9adb323cc79ab0fadabf2",
+    "PLG-BK-000459": "bca9848e01b77211c09d5fea449749af6f4500ecb87fefdea86cb4bdeb3b6437",
+    "PLG-BK-000460": "d87c00ceb2ce340a9c0c039d32ece981417efe01d73f9e5a15678a87ae5ca211",
+    "PLG-BK-000461": "fa579e6e60dbde41e24e95c7243a88e86f6936317023f4c2a77cf5a064a645c4",
+    "PLG-BK-000462": "6798e65238cd64f13ed5cf3f0a38f9054c117a21159b825f94fbed220ed9b31b",
+    "PLG-BK-000463": "721bde842bcea86aa95bc682286a5359916c77ad4d394b153ba90224af69ec02",
+    "PLG-BK-000464": "fb1e8706ab9af1215dfabf4d54116e99c490464fa08e6727592a9b9c2f6c4a4e",
+    "PLG-BK-000465": "a3e1c56fbcf824448d807fbbba7960d518c3bc50eb2cdc3ece9b749e9c1294e6",
+    "PLG-BK-000466": "2243a9403c5d856f7ece81d5573db7371e5ff71fcf15dec6f4cc0699299b1e22",
+    "PLG-BK-000467": "8e1eaea2f8dde2358d632645641116c642083f499e93b5f07e8dc77c60060358",
+    "PLG-BK-000468": "8beb847dd76274a9a02e015849e7c37daa82f6806e9f34bfeea616c337922120",
+    "PLG-BK-000469": "7d54d9b3ff8b61be274c105b47c961b1db9758d1dcb8ecae266a0e968d9c2973",
+    "PLG-BK-000470": "4c6d14753f636cda15207602e0a0ce400048cb9ac386f491372643d5875b30b6",
+    "PLG-BK-000471": "e3c6be84bb587e7ab0be6af90dfb05c0d66136bae3cf9fed507b6e7795713651",
+    "PLG-BK-000472": "7f01c67deaaf77edee3dd7f4f5cae5ea7cfe2b6e9df2e4bf067012c3a73ada73",
+    "PLG-BK-000473": "3e2e391072f86ec8c97e6b13c37b8a7dbf5599df8d9d475fb6f317925df4f506",
+    "PLG-BK-000474": "56017847916a4660e5539932032ff099f636624388b65bbeb25f367a98d67dac",
+    "PLG-BK-000475": "80a9e4377b316a62970d94cd11da7adc191c6f4b3b17417a206177d8986b960f",
+    "PLG-BK-000476": "162d218d66857a42668640e772fa419f954c227da08e484ac71724c9d6d167ac",
+    "PLG-BK-000477": "673ebca2f7e0fc484425a2ed27a9f6fa11dfec7cfd1d6ef90cb6cc32ea803ab1",
+    "PLG-BK-000478": "f130602040d4fa5d32b5756388d9a3fa8944784f161780968588439e8030f3a1",
+    "PLG-BK-000479": "8d7844c981bb6e2b480520c0909c70f6475f09b37925e973efa24905eafcf92f",
+    "PLG-BK-000480": "8e2c8bf4cd005a93b1b47f15b7826e135bceb53478c5d8a79c8933deb8b8a5fe",
+    "PLG-BK-000481": "5353f5250b30a03175be8808c44458438ca8f6bb3e188bd2b963e65102c804f6",
+    "PLG-BK-000482": "a7da72ff97cb3ed7c9bb65dcb5f41573b80c4a0cb66730a63fc3fee8b391e25f",
+    "PLG-BK-000483": "4d21cb843e68893c14ca285e62c63a3e05244699ee281f92f5dd11da6a1b7e5a",
+    "PLG-BK-000484": "83c4229f044e150bef168a5be5881fb285e39daf919baaddf72b579e9a553d71",
+    "PLG-BK-000485": "f4a0270ecb0f4ade8e93fc4ff2e52c9d056320237fcc5bf6fa00d06dbbd7f38d",
+    "PLG-BK-000486": "968f8742bfc0954767768528c22303395b1fadb623b796ffa24f1cbec8611441",
+    "PLG-BK-000487": "1e09b3888fa3bdb8f0943eb0a7b74116e1b4e09ec185f868e12671a4956fd411",
+    "PLG-BK-000488": "d170e1cb7774c325ba9a0974ff7d70f9d68c7058e19b2261093afe15bc938a25",
+    "PLG-BK-000489": "e090b0d764dd8f88fe61bcc574e631f0e2a2a605ee75e09f0c1304f36b63b511",
+    "PLG-BK-000490": "2ef9ab369757f79b14dbd35b613cf27aa4e02b8ab2c4ea8e13c3a1e5200e7c63",
+    "PLG-BK-000491": "c0ccc5c8a72f7da1472c640eb375e0fc6e6d3841064dfec56b838d5d2af9090d",
+    "PLG-BK-000492": "157aa0aa70a1b1e6b57885edadef44c0e620b60c3f867ad61aace6088ae0ecbb",
+    "PLG-BK-000493": "79572d30251dcf840994c080ae04abe0ff21f59268bff51b4470cbc7d733d2ca",
+    "PLG-BK-000494": "b5598192c7043306f72d8cd8248e829fbc9c27bed9721af25edfb4972dae1889",
+    "PLG-BK-000495": "85a3bc89a002f8fc5b41064eee522a52a19916325a6de9748d1e01858a780baa"
+  },
+  "retired_prepared_sha256": {
+    "PLG-BK-000359": "2c76d7abf8ea807f841999b9fad394b621e97a357e99b7bc3c3422c00e3f12d5",
+    "PLG-BK-000411": "8c739f294b6881e07e54de03b924b8a09c40ddf4fa58a9a3848d2503ef210aa7",
+    "PLG-BK-000442": "5b191689383aed32931e4538edc8506294742ef40cf20c97d1da506c98ce9c88",
+    "PLG-BK-000488": "0d70a677de98922bfdcd8f6fff9db576aa770cd734f7f3da6819caf57e4bca70"
+  }
+}

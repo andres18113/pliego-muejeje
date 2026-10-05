@@ -10,7 +10,11 @@ public final class CartModels {
     private CartModels() { }
 
     public record Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
-            com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow) {
+            com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow, boolean requiresPhysicalFulfillment, int physicalItemCount, int digitalItemCount) {
+        public Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
+                com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow) {
+            this(cartId,state,items,totalCurrent,amounts,deliveryWindow,false,0,0);
+        }
         public Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
                 com.pliego.foundation.money.MonetaryAmounts amounts) {
             this(cartId,state,items,totalCurrent,amounts,null);

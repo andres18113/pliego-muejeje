@@ -11,6 +11,7 @@ export function readCatalogCriteria(search: string): CatalogCriteria {
     maxPrice: params.get("maxPrice") || "",
     language: params.get("language") || "",
     format: params.get("format") as CatalogCriteria["format"],
+    productType: params.get("productType") as CatalogCriteria["productType"],
     sort: params.get("sort") as CatalogCriteria["sort"],
     page: parseInteger(params.get("page"), 0, 0, 2_147_483_647),
     pageSize: parseInteger(params.get("pageSize"), 20, 1, 50),
@@ -28,6 +29,7 @@ export function writeCatalogCriteria(criteria: CatalogCriteria) {
   if (normalized.maxPrice) params.set("maxPrice", normalized.maxPrice);
   if (normalized.language) params.set("language", normalized.language);
   if (normalized.format) params.set("format", normalized.format);
+  if (normalized.productType) params.set("productType", normalized.productType);
   if (normalized.sort !== "TITLE_ASC") params.set("sort", normalized.sort);
   if (normalized.page > 0) params.set("page", String(normalized.page));
   if (normalized.pageSize !== 20) params.set("pageSize", String(normalized.pageSize));
@@ -41,7 +43,7 @@ export function catalogHref(criteria: CatalogCriteria) {
 
 export function hasActiveFilters(criteria: CatalogCriteria) {
   return Boolean(
-    criteria.category ||
+    criteria.productType || criteria.category ||
       criteria.minPrice ||
       criteria.maxPrice ||
       criteria.language ||
@@ -106,7 +108,8 @@ function normalizeCatalogCriteria(criteria: CatalogCriteria): CatalogCriteria {
     maxPrice,
     language,
     format: criteria.format === "PAPERBACK" || criteria.format === "HARDCOVER" || criteria.format === "EBOOK" || criteria.format === "AUDIOBOOK" ? criteria.format : "",
-    sort: criteria.sort === "PRICE_ASC" || criteria.sort === "PRICE_DESC" ? criteria.sort : "TITLE_ASC",
+    ...(criteria.productType === "PHYSICAL" || criteria.productType === "EBOOK" || criteria.productType === "AUDIOBOOK" ? { productType: criteria.productType } : {}),
+    sort: criteria.sort === "PRICE_ASC" || criteria.sort === "PRICE_DESC" || criteria.sort === "BEST_SELLING" ? criteria.sort : "TITLE_ASC",
     page: Number.isInteger(criteria.page) && criteria.page >= 0 && criteria.page <= 2_147_483_647
       ? criteria.page
       : 0,

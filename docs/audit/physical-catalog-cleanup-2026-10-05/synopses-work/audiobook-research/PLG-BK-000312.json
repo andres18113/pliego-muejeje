@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000312",
+  "title": "Antropología de la sexualidad (2a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:35.427004+00:00",
+      "response_sha256": "abbd72d7f23a48dfbc452f2b9829389c15124f8dcd3d11d7b8c5ecd316ed5cb3",
+      "extraction_sha256": "aea8e976cb190032fc2e76b0607c608a86397fe33d7cddcab3db91a586ae475d",
+      "text": "Guardado en: Autor Principal: Choza, Jacinto. Formato: eBook Idioma: Spanish Publicado: Sevilla : Editorial Thémata, 2017. Edición: 2a. edicin̥. Materias: Sex customs. Comportamiento sexual. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/59981  ",
+      "observed_page_title": "Existencias: Antropología de la sexualidad /",
+      "title_check_response_sha256": "0efb4a14ea9036533139ead0de05dd28cd1f869b788fb8ba2973c2f7b65f7b95",
+      "title_checked_at_utc": "2026-10-05T19:39:55.237674+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:36.733461+00:00",
+      "response_sha256": "fbe27b3bb3f550d7e54af02b63da154344f288e0942acd5bd7289447d31e9ffb",
+      "extraction_sha256": "aea8e976cb190032fc2e76b0607c608a86397fe33d7cddcab3db91a586ae475d",
+      "text": "Guardado en: Autor Principal: Choza, Jacinto. Formato: eBook Idioma: Spanish Publicado: Sevilla : Editorial Thémata, 2017. Edición: 2a. edicin̥. Materias: Sex customs. Comportamiento sexual. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/59981  "
+    }
+  ]
+}

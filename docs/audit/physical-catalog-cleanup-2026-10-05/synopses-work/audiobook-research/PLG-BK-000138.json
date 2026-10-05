@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000138",
+  "title": "Valentín: novela histórica",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:08.883798+00:00",
+      "response_sha256": "8ee121cc80f311d5905671b2c2f13a168ad9ae55451285d830b5c63a81035086",
+      "extraction_sha256": "6deb4f2e53e392524308c3d9a7574f8933b6bb4b3937bcc953d7865741a90f83",
+      "text": "Guardado en: Autor Principal: Hernández Beltrán, Rosalío. Formato: eBook Idioma: Spanish Publicado: México, D.F. : Plaza y Valdés, 2014. Materias: Historical fiction, Mexican. Literatura latinoamericana. Novela histórica. México. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/39199  ",
+      "observed_page_title": "Existencias: Valentín :",
+      "title_check_response_sha256": "6b097ee99c059ba36cd9fdfa59c229f96299b73edd180484199a3df51338cd1d",
+      "title_checked_at_utc": "2026-10-05T19:39:59.811117+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.209778+00:00",
+      "response_sha256": "eadcb4c1104d11e381fc20c890b78d503c5b2c709a2cc22f3f2b811c2b8ddf52",
+      "extraction_sha256": "6deb4f2e53e392524308c3d9a7574f8933b6bb4b3937bcc953d7865741a90f83",
+      "text": "Guardado en: Autor Principal: Hernández Beltrán, Rosalío. Formato: eBook Idioma: Spanish Publicado: México, D.F. : Plaza y Valdés, 2014. Materias: Historical fiction, Mexican. Literatura latinoamericana. Novela histórica. México. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/39199  "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000158",
+  "title": "Colapso: cuando el clima lo cambia todo",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:11.931376+00:00",
+      "response_sha256": "51b39dad30a1e322ec1dd30c54905d2697a9efb77ac7b10ae45204635beff1dd",
+      "extraction_sha256": "e347e1c71e8d29e3fe12c9658e7610c7c5276ade1192e574da77614a0f5f5338",
+      "text": "Guardado en: Autor Principal: Baquedano, Manuel, (autor.) Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : Editorial Cuarto Propio, 2019. Series: Colección Ecosocial. Materias: Climatic changes. Cambios climáticos. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/190898  ",
+      "observed_page_title": "Existencias: Colapso :",
+      "title_check_response_sha256": "0de706bac85edac7dd682589fa38d98300e5eb341a1578fb3a2722c14a65dccf",
+      "title_checked_at_utc": "2026-10-05T19:39:56.706573+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:13.241904+00:00",
+      "response_sha256": "0039e0a1c901080badd90ed80fbd52ba9cf4170809b28af8c32a9a65a3d42802",
+      "extraction_sha256": "e347e1c71e8d29e3fe12c9658e7610c7c5276ade1192e574da77614a0f5f5338",
+      "text": "Guardado en: Autor Principal: Baquedano, Manuel, (autor.) Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : Editorial Cuarto Propio, 2019. Series: Colección Ecosocial. Materias: Climatic changes. Cambios climáticos. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/190898  "
+    }
+  ]
+}

@@ -103,12 +103,12 @@ def main():
     ok('/api/v1/admin/editions/' + ids['EBOOK'] + '/status', admin, 'PUT', {'state': 'INACTIVE'}, 204)
     cart = ok('/api/v1/cart', customer)
     assert not cart['items'][0]['available'] and cart['items'][0]['unavailabilityReason'] == 'P2042'
-    problem('/api/v1/checkout', customer, 'POST', {'addressId': address, 'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}, 'P2042', 409)
+    problem('/api/v1/checkout', customer, 'POST', {'fulfillmentMethod': 'DIGITAL_ONLY', 'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}, 'P2042', 409)
     ok('/api/v1/admin/editions/' + ids['EBOOK'] + '/status', admin, 'PUT', {'state': 'ACTIVE'}, 204)
     ok('/api/v1/cart/items', customer, 'POST', {'editionId': ids['AUDIOBOOK'], 'quantity': 1})
     cart = ok('/api/v1/cart', customer)
     assert {row['format'] for row in cart['items']} == {'EBOOK', 'AUDIOBOOK'} and all(row['available'] for row in cart['items'])
-    order = ok('/api/v1/checkout', customer, 'POST', {'addressId': address, 'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}, 201)
+    order = ok('/api/v1/checkout', customer, 'POST', {'fulfillmentMethod': 'DIGITAL_ONLY', 'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}, 201)
     bought = ok('/api/v1/orders/' + order['orderId'], customer)
     assert {row['format'] for row in bought['items']} == {'EBOOK', 'AUDIOBOOK'}
     assert query(f"SELECT count(*) FROM pliego.movimiento_inventario WHERE pedido_id={order['orderId']}") == '0'

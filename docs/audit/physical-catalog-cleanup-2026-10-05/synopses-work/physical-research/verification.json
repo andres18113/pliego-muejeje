@@ -1,0 +1,23 @@
+{
+  "total": 176,
+  "exact_sku_set": true,
+  "unique_synopses": true,
+  "word_range": [
+    51,
+    62
+  ],
+  "sentences_2_to_4": true,
+  "public_annotations_absent": true,
+  "basis_kind_counts": {
+    "SOURCE_SUMMARY_PARAPHRASE": 131,
+    "TITLE_SUBJECT_EDITORIAL_DESCRIPTION": 44,
+    "PRIMARY_TEXT_PARAPHRASE": 1
+  },
+  "new_public_source_entries": 41,
+  "completed_utc": "2026-10-05T19:44:41.946610+00:00",
+  "notes": [
+    "Crónica matemática: corregida descripción inicial como novela usando programa oficial de FILGUA; no se modifica metadato bibliográfico.",
+    "Las bases temáticas originales no se presentan como resumen editorial ni atribuyen capítulos, tramas o estudios no observados.",
+    "Medicina perioperatoria: se descarta fuente del libro homónimo de otros autores en 2022; se cita la edición de Díaz Greene."
+  ]
+}

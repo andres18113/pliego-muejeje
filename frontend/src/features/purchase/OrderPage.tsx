@@ -56,13 +56,13 @@ function OrderContent({ orderId, returnTo, purchased }: { orderId: string; retur
     mutationFn: () => cancelOrder(orderId),
     onSuccess: async () => {
       setConfirming(false);
-      setCancelMessage({ text: "Tu pedido fue cancelado. El pago fue reembolsado y se devolvieron las existencias del pedido.", error: false });
-      await Promise.all([orderQuery.refetch(), queryClient.invalidateQueries({ queryKey: ["customer-orders"] })]);
+      setCancelMessage({ text: "Tu pedido fue cancelado. El pago fue reembolsado; se actualizaron las existencias y la titularidad digital cuando corresponde.", error: false });
+      await Promise.all([orderQuery.refetch(), queryClient.invalidateQueries({ queryKey: ["customer-orders"] }), queryClient.invalidateQueries({ queryKey: ["customer-library"] })]);
     },
     onError: async (error) => {
       setConfirming(false);
       if (error instanceof ApiRequestError && error.status === 401) { clearSession("expired"); return; }
-      const [refreshed] = await Promise.all([orderQuery.refetch(), queryClient.invalidateQueries({ queryKey: ["customer-orders"] })]);
+      const [refreshed] = await Promise.all([orderQuery.refetch(), queryClient.invalidateQueries({ queryKey: ["customer-orders"] }), queryClient.invalidateQueries({ queryKey: ["customer-library"] })]);
       if (error instanceof CancellationOutcomeUnknown && refreshed.data?.orderState === "CANCELLED" && refreshed.data.payment?.state === "REFUNDED") {
         setCancelMessage({ text: "Confirmamos que el pedido se canceló y el pago quedó reembolsado.", error: false });
       } else if (refreshed.isError) {

@@ -8,7 +8,7 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
 import { SessionProvider, useSession } from "./session";
 
-const catalogCriteriaKeys = ["que", "category", "minPrice", "maxPrice", "language", "format", "sort", "page", "pageSize"];
+const catalogCriteriaKeys = ["que", "category", "minPrice", "maxPrice", "language", "format", "productType", "sort", "page", "pageSize"];
 
 const developmentRoutes = import.meta.env.DEV
   ? [{
@@ -46,6 +46,22 @@ export const router = createBrowserRouter([
           const { CatalogPage } = await import("@/features/catalog/CatalogPage");
           return { Component: CatalogPage };
         },
+      },
+      {
+        path: "ayuda",
+        lazy: async () => { const { HelpPage } = await import("@/features/help/HelpRoutes"); return { Component: HelpPage }; },
+      },
+      {
+        path: "ayuda/:slug",
+        lazy: async () => { const { HelpArticlePage } = await import("@/features/help/HelpRoutes"); return { Component: HelpArticlePage }; },
+      },
+      {
+        path: "biblioteca",
+        lazy: async () => { const { LibraryPage } = await import("@/features/library/LibraryRoutes"); return { Component: LibraryPage }; },
+      },
+      {
+        path: "biblioteca/:ownedItemId",
+        lazy: async () => { const { OwnedItemPage } = await import("@/features/library/LibraryRoutes"); return { Component: OwnedItemPage }; },
       },
       {
         path: "ofertas",

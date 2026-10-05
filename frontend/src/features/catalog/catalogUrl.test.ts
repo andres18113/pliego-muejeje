@@ -100,3 +100,9 @@ describe("catalog URL helpers", () => {
     expect(safeExternalHttpHref("https://%zz")).toBeNull();
   });
 });
+
+it("preserves backend media scope and real bestseller ordering in destinations", () => {
+  const criteria = readCatalogCriteria("?productType=PHYSICAL&sort=BEST_SELLING");
+  expect(criteria).toMatchObject({ productType: "PHYSICAL", sort: "BEST_SELLING" });
+  expect(catalogHref(criteria)).toBe("/catalog?productType=PHYSICAL&sort=BEST_SELLING");
+});

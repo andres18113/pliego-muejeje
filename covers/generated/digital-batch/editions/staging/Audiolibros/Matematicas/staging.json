@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Cálculo avanzado: introducción",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una entrada al cálculo avanzado vinculada con el análisis matemático y el análisis funcional no lineal. Su ámbito también se relaciona con espacios y álgebras de Banach y con la teoría de grupos. Una lectura para quienes desean orientarse en un marco matemático de mayor especialización y reconocer conexiones entre distintas áreas del análisis.",
         "autores": [
           {
             "nombre": "Caicedo Contreras, José Francisco",
@@ -192,7 +192,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "120",
-        "imported_book_id": "119"
+        "imported_book_id": "119",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000236.json; SHA-256 de respuesta HTTP: a6cefc72a0578830f55849cd0146bb0fa6d509c99423bc58efe6667cfe4afe47"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -200,7 +211,7 @@
       "libro": {
         "titulo": "Estadística aplicada básica (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La estadística aplicada se sitúa en el ámbito de los negocios y la economía. Su orientación básica invita a acercarse al análisis de información dentro de esos contextos y a reconocer las preguntas que pueden formularse con datos. Una lectura para quienes desean familiarizarse con el lenguaje estadístico y pensar su relación con problemas de carácter económico.",
         "autores": [
           {
             "nombre": "Moore, David S.",
@@ -385,7 +396,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "121",
-        "imported_book_id": "120"
+        "imported_book_id": "120",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000281.json; SHA-256 de respuesta HTTP: 2a08e2755914b503aecb781f8af921abce7963be6cbe23be1b6bdcfff794807a"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -393,7 +415,7 @@
       "libro": {
         "titulo": "Estadística Inferencial",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La estadística inferencial abre preguntas sobre cómo pasar de la información disponible a conclusiones que exceden lo observado directamente. La obra se sitúa en el campo de la estadística y ofrece un acercamiento a esa forma de razonamiento. Una lectura para quienes desean orientarse en la relación entre datos, incertidumbre y elaboración de conclusiones estadísticas.",
         "autores": [
           {
             "nombre": "Llinás Solano, Humberto",
@@ -578,7 +600,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "122",
-        "imported_book_id": "121"
+        "imported_book_id": "121",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000189.json; SHA-256 de respuesta HTTP: ec9aa088fea997d7324ae5ddb55d712a01d042d92942163b5ebce5f50bf66672"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -586,7 +619,7 @@
       "libro": {
         "titulo": "Estadística y muestreo (14a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La estadística matemática se relaciona con el muestreo como una manera de trabajar con información procedente de una parte de una población. El tema invita a pensar cómo se conectan los datos recogidos y su interpretación estadística. Una lectura para quienes desean orientarse en el estudio conjunto de estos dos campos y comprender el sentido de trabajar con muestras.",
         "autores": [
           {
             "nombre": "Martínez Bencardino, Ciro",
@@ -771,7 +804,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "123",
-        "imported_book_id": "122"
+        "imported_book_id": "122",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000232.json; SHA-256 de respuesta HTTP: 9fb95788ee2dd0b8a37d3e9dc4f8d231332b6ef1752c272ea7f344e9821ec4fa"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -779,7 +823,7 @@
       "libro": {
         "titulo": "Fundamentos de estadística",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una obra de Daniel Peña que ofrece una entrada a los fundamentos de la estadística. El énfasis en las bases invita a familiarizarse con una disciplina que convierte la información en objeto de análisis. Una lectura para quienes desean situar su lenguaje y sus preguntas antes de profundizar en métodos de trabajo estadístico más específicos.",
         "autores": [
           {
             "nombre": "Peña, Daniel",
@@ -962,7 +1006,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "124",
-        "imported_book_id": "123"
+        "imported_book_id": "123",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://dialnet.unirioja.es/servlet/libro?codigo=369575",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000275.json; SHA-256 de respuesta HTTP: d3751c52247be9ad4776b46c08c1e8b847d3e4a401ffa125f3b2806706eb87cb"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -970,7 +1025,7 @@
       "libro": {
         "titulo": "Geometría elemental",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La geometría se presenta desde una perspectiva elemental, como entrada al estudio de las formas y las relaciones espaciales. El carácter básico de la obra invita a familiarizarse con el lenguaje geométrico y con su manera de formular problemas. Una lectura para construir una primera orientación matemática antes de abordar desarrollos más especializados de esta disciplina.",
         "autores": [
           {
             "nombre": "Pogorélov, A. V.",
@@ -1155,7 +1210,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "125",
-        "imported_book_id": "124"
+        "imported_book_id": "124",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000098.json; SHA-256 de respuesta HTTP: 6387bcb9c1f8fd3aa2ca8ee98bf3129a85762ab0591ce34990e00a0b54ac3d08"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1163,7 +1229,7 @@
       "libro": {
         "titulo": "Geometría riemanniana",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una aproximación a la geometría riemanniana, rama especializada de la geometría, desde una perspectiva vinculada también con problemas y ejercicios. El tema invita a ampliar el estudio de las relaciones espaciales más allá de una introducción elemental. Es una lectura para quienes desean acercarse a este campo matemático y acompañar su comprensión conceptual con el trabajo sobre problemas geométricos.",
         "autores": [
           {
             "nombre": "Sánchez Morgado, Héctor",
@@ -1358,7 +1424,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "126",
-        "imported_book_id": "125"
+        "imported_book_id": "125",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000124.json; SHA-256 de respuesta HTTP: 16eae6c0151c5cc16e648a84ef231f26610373caaddecd048c5dfe2eedc2c0fb"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1366,7 +1443,7 @@
       "libro": {
         "titulo": "Inferencia estadística",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La inferencia estadística se sitúa en relación con la teoría de las probabilidades, la estadística matemática y los modelos matemáticos. La obra invita a pensar las bases teóricas del razonamiento estadístico. Una lectura para quienes desean acercarse al papel que desempeña la probabilidad cuando se formulan conclusiones a partir de datos y se trabaja con la incertidumbre.",
         "autores": [
           {
             "nombre": "Miguel Ángel Gómez Villegas",
@@ -1551,7 +1628,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "127",
-        "imported_book_id": "126"
+        "imported_book_id": "126",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000205.json; SHA-256 de respuesta HTTP: 00fa19c55b60bdca3e91f59334dd0f0104f6f6200e4c763558e23e931a7913ce"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1559,7 +1647,7 @@
       "libro": {
         "titulo": "La geometría de las ciudades",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La forma de las ciudades se convierte en una vía para pensar el desarrollo urbano y la ordenación del territorio. El cruce entre geometría y espacio habitado invita a mirar cómo se organiza una ciudad y qué preguntas plantea su configuración. Una lectura para acercarse al urbanismo desde la relación entre estructura espacial y crecimiento urbano.",
         "autores": [
           {
             "nombre": "Sorando Muzás, José María",
@@ -1744,7 +1832,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "128",
-        "imported_book_id": "127"
+        "imported_book_id": "127",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000070.json; SHA-256 de respuesta HTTP: ab9ac0794aad222ada460849208e6a50320f230512681c0c99de186b9ac6c6cb"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1752,7 +1851,7 @@
       "libro": {
         "titulo": "La geometría del universo",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia de la astronomía se cruza con la historia de la geometría en una obra dedicada al universo. El tema invita a pensar cómo las formas matemáticas y la observación del cielo han contribuido a nuestra manera de comprenderlo. Una lectura para quienes desean explorar el vínculo entre dos campos de conocimiento desde una perspectiva histórica.",
         "autores": [
           {
             "nombre": "Leon, Manuel de",
@@ -1936,7 +2035,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "129",
-        "imported_book_id": "128"
+        "imported_book_id": "128",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB239571",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000269.json; SHA-256 de respuesta HTTP: 4845fa70dc3625342db66ff8b0c423a4e3a93055696feaf773e3959031ee4fc4"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1944,7 +2054,7 @@
       "libro": {
         "titulo": "Una introducción a la geometría fractal",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La geometría fractal abre una entrada al estudio de los fractales dentro del campo de la geometría. Su carácter introductorio invita a acercarse a una perspectiva matemática dedicada a formas que requieren herramientas propias de descripción. Una lectura para quienes desean ampliar su manera de pensar la estructura de las figuras y comenzar a explorar este ámbito geométrico.",
         "autores": [
           {
             "nombre": "Sabogal, Sonia",
@@ -2139,7 +2249,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "130",
-        "imported_book_id": "129"
+        "imported_book_id": "129",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000202.json; SHA-256 de respuesta HTTP: 12562a270271474c996f4a63512fee8b3c818a7e40150becf07bd839c2b93115"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

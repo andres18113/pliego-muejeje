@@ -1,0 +1,516 @@
+{
+  "sku": "PLG-BK-000442",
+  "reason": "Retiro explícito solicitado por el usuario por presentación de portada",
+  "original_file": "Fisicos180/Filosofía/portadas/physical-elibrary-217195.webp",
+  "original_sha256": "6cd99ce56f428f21a9029cbda0e6f09102adcf5fd7a8e100d49fed69a0626598",
+  "source_records": [
+    {
+      "staging": "/home/andres18123/PLIEGO/covers/Fisicos180/Filosofía/staging.json",
+      "record": {
+        "portadaArchivo": "portadas/physical-elibrary-217195.webp",
+        "libro": {
+          "titulo": "Filosofía para princesas",
+          "subtitulo": null,
+          "sinopsis": "Selección de correspondencia filosófica de Leibniz con princesas, reunida por Javier Echeverría. [Precio DEMO en USD.]\n[Catálogo físico SIMULATED/DEMO: encuadernación, idioma, páginas y existencias académicas; disponibilidad física no verificada.]",
+          "autores": [
+            {
+              "nombre": "Leibniz, G. W.",
+              "orden": 1
+            }
+          ],
+          "categorias": [
+            "Filosofía"
+          ]
+        },
+        "edicion": {
+          "editorial": "Alianza Editorial",
+          "idioma": "es",
+          "formato": "PAPERBACK",
+          "isbn13": "9788491815211",
+          "paginas": 264,
+          "precio": "22.95",
+          "sku": "PLG-BK-000442",
+          "inventarioInicial": 10,
+          "fechaPublicacion": null,
+          "ebookFileFormat": null,
+          "audioDurationSeconds": null,
+          "narrators": [],
+          "portada": {
+            "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000442-fcfaad4bf35c.webp",
+            "licencia": null,
+            "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+            "atribucion": null
+          }
+        },
+        "preparacion": {
+          "schema": "pliego-physical-edition-preparation-v1",
+          "candidate_id": "physical-elibrary-217195",
+          "publication_status": "IMPORTED",
+          "work": {
+            "action": "CREATE_NEW_WORK",
+            "bookId": null,
+            "status": "PROPOSED_NOT_CREATED",
+            "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+            "evidence": {
+              "catalog_search_scope": "ALL_STATES",
+              "snapshot_book_count": 321,
+              "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+              "same_title_book_ids": []
+            },
+            "proposal_key": "work-5da1694cd2231b6c"
+          },
+          "author_bindings": [
+            {
+              "name": "Leibniz, G. W.",
+              "order": 1,
+              "authorId": null,
+              "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+            }
+          ],
+          "raw_authorship": "Leibniz, G. W.",
+          "field_provenance": {
+            "edicion.editorial": {
+              "kind": "REAL_SOURCE",
+              "source": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+              "observed_text": "Alianza Editorial",
+              "real_source_claim": true
+            },
+            "edicion.idioma": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Código académico es; idioma físico no verificado."
+            },
+            "edicion.formato": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "PAPERBACK académico; encuadernación física no verificada."
+            },
+            "edicion.paginas": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Páginas académicas deterministas; no paginación bibliográfica.",
+              "algorithm": "80 + first 8 SHA256 hex digits of UTF8(PLIEGO-DEMO-PHYSICAL-PAGES-v1,newline,candidate_id) mod 521"
+            },
+            "edicion.precio": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Precio DEMO del inventario; no cotización comercial.",
+              "currency": "USD",
+              "source_evidence": {
+                "value": 22.95,
+                "currency": "USD",
+                "status": "DEMO",
+                "market_price_verified": false,
+                "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                "category_demo_range_usd": [
+                  15.95,
+                  37.95
+                ]
+              }
+            },
+            "edicion.inventarioInicial": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "10 unidades académicas; existencia física no verificada.",
+              "physical_availability_verified": false
+            },
+            "edicion.isbn13": {
+              "kind": "REAL_SOURCE",
+              "source_evidence": {
+                "value": "9788491815211",
+                "status": "observed_print_isbn",
+                "observed_print_isbn": "9788491815211",
+                "observed_print_isbn_checksum_valid": true,
+                "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                "not_an_official_isbn": false
+              },
+              "real_source_claim": true
+            }
+          },
+          "demo_public_label_required": true,
+          "physical_catalog_type": "SIMULATED/DEMO",
+          "stock_action": "SIMULATED_INITIAL_STOCK_10",
+          "sku_status": "ASSIGNED_PERMANENT",
+          "source": {
+            "inventory_identifier": "9788491815211",
+            "original_path": "originales/Filosofía/Filosofía para princesas - Leibniz, G. W.jpg",
+            "provenance": {
+              "book_id": "217195",
+              "category": "Filosofía",
+              "relative_path": "Filosofía/Filosofía para princesas - Leibniz, G. W.jpg",
+              "source_catalog_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+              "image": {
+                "sha256": "fbdab204a7898f8d8fa161b17bd96950d9a3b4dcb3305a2d0ce5661a62e8e607",
+                "width": 220,
+                "height": 320,
+                "format": "JPEG",
+                "original_bytes_preserved": true,
+                "transformations": [],
+                "visually_reviewed": true,
+                "source": "Portada original visible en la ficha eLibro; no se descargó el libro"
+              },
+              "fields": {
+                "categoria": {
+                  "value": "Filosofía",
+                  "status": "classification",
+                  "basis": "Categoría de selección de este catálogo académico"
+                },
+                "titulo": {
+                  "value": "Filosofía para princesas",
+                  "status": "observed",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195"
+                },
+                "autor": {
+                  "value": "Leibniz, G. W.",
+                  "status": "observed_contributors_with_roles",
+                  "contributors": [
+                    {
+                      "name": "Leibniz, G. W.",
+                      "role": "autor"
+                    }
+                  ],
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "raw_collector_role": "autor",
+                  "raw_collector_contributors": null
+                },
+                "isbn": {
+                  "value": "9788491815211",
+                  "status": "observed_print_isbn",
+                  "observed_print_isbn": "9788491815211",
+                  "observed_print_isbn_checksum_valid": true,
+                  "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "not_an_official_isbn": false
+                },
+                "descripcion": {
+                  "value": "Selección de correspondencia filosófica de Leibniz con princesas, reunida por Javier Echeverría. [Precio DEMO en USD.]",
+                  "base_description": "Selección de correspondencia filosófica de Leibniz con princesas, reunida por Javier Echeverría.",
+                  "status": "source_summary_paraphrase",
+                  "basis": "Paráfrasis breve del resumen visible",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "demo_annotations_added": [
+                    "Precio DEMO en USD."
+                  ]
+                },
+                "precio": {
+                  "value": 22.95,
+                  "currency": "USD",
+                  "status": "DEMO",
+                  "market_price_verified": false,
+                  "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                  "category_demo_range_usd": [
+                    15.95,
+                    37.95
+                  ]
+                },
+                "nombre_archivo": {
+                  "value": "Filosofía para princesas - Leibniz, G. W.jpg",
+                  "status": "derived",
+                  "rule": "Título - responsables con rol.ext; únicamente caracteres no válidos en Windows sustituidos por guion bajo"
+                },
+                "fuente_portada": {
+                  "value": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "status": "observed_catalog_page",
+                  "note": "La página de origen puede requerir acceso institucional; no es un enlace permanente al archivo de imagen"
+                }
+              },
+              "digital_isbn": {
+                "observed": "9788491815389",
+                "checksum_valid": true,
+                "used_as_print_isbn": false
+              },
+              "physical_catalog": {
+                "status": "DEMO",
+                "physical_availability_verified": false,
+                "commercial_offer_verified": false
+              },
+              "observed_metadata": {
+                "catalog_title": "Filosofía para princesas",
+                "catalog_authors": [
+                  "Leibniz, G. W."
+                ],
+                "publisher": "Alianza Editorial",
+                "subject": "Filosofía / General",
+                "topics": "Filosofía alemana , Leibniz, Gottfried Wilhelm, -- 1646-1716 -- Correspondencia",
+                "author_verification": "Ficha bibliográfica y cotejo visual de la portada original",
+                "observed_at": "2026-10-05"
+              }
+            },
+            "cover_sha256": "6cd99ce56f428f21a9029cbda0e6f09102adcf5fd7a8e100d49fed69a0626598",
+            "original_sha256": "fbdab204a7898f8d8fa161b17bd96950d9a3b4dcb3305a2d0ce5661a62e8e607",
+            "transformations": [
+              {
+                "operation": "LOSSLESS_WEBP_ENCODING",
+                "decoded_pixels_preserved": true
+              }
+            ]
+          },
+          "import_receipt": {
+            "editionId": "383",
+            "bookId": "379"
+          }
+        }
+      }
+    },
+    {
+      "staging": "covers/generated/json/Fisicos180/Filosofía/staging.json",
+      "record": {
+        "portadaArchivo": "portadas/physical-elibrary-217195.webp",
+        "libro": {
+          "titulo": "Filosofía para princesas",
+          "subtitulo": null,
+          "sinopsis": "Selección de correspondencia filosófica de Leibniz con princesas, reunida por Javier Echeverría. [Precio DEMO en USD.]\n[Catálogo físico SIMULATED/DEMO: encuadernación, idioma, páginas y existencias académicas; disponibilidad física no verificada.]",
+          "autores": [
+            {
+              "nombre": "Leibniz, G. W.",
+              "orden": 1
+            }
+          ],
+          "categorias": [
+            "Filosofía"
+          ]
+        },
+        "edicion": {
+          "editorial": "Alianza Editorial",
+          "idioma": "es",
+          "formato": "PAPERBACK",
+          "isbn13": "9788491815211",
+          "paginas": 264,
+          "precio": "22.95",
+          "sku": "PLG-BK-000442",
+          "inventarioInicial": 10,
+          "fechaPublicacion": null,
+          "ebookFileFormat": null,
+          "audioDurationSeconds": null,
+          "narrators": [],
+          "portada": {
+            "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000442-fcfaad4bf35c.webp",
+            "licencia": null,
+            "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+            "atribucion": null
+          }
+        },
+        "preparacion": {
+          "schema": "pliego-physical-edition-preparation-v1",
+          "candidate_id": "physical-elibrary-217195",
+          "publication_status": "IMPORTED",
+          "work": {
+            "action": "CREATE_NEW_WORK",
+            "bookId": null,
+            "status": "PROPOSED_NOT_CREATED",
+            "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+            "evidence": {
+              "catalog_search_scope": "ALL_STATES",
+              "snapshot_book_count": 321,
+              "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+              "same_title_book_ids": []
+            },
+            "proposal_key": "work-5da1694cd2231b6c"
+          },
+          "author_bindings": [
+            {
+              "name": "Leibniz, G. W.",
+              "order": 1,
+              "authorId": null,
+              "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+            }
+          ],
+          "raw_authorship": "Leibniz, G. W.",
+          "field_provenance": {
+            "edicion.editorial": {
+              "kind": "REAL_SOURCE",
+              "source": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+              "observed_text": "Alianza Editorial",
+              "real_source_claim": true
+            },
+            "edicion.idioma": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Código académico es; idioma físico no verificado."
+            },
+            "edicion.formato": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "PAPERBACK académico; encuadernación física no verificada."
+            },
+            "edicion.paginas": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Páginas académicas deterministas; no paginación bibliográfica.",
+              "algorithm": "80 + first 8 SHA256 hex digits of UTF8(PLIEGO-DEMO-PHYSICAL-PAGES-v1,newline,candidate_id) mod 521"
+            },
+            "edicion.precio": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "Precio DEMO del inventario; no cotización comercial.",
+              "currency": "USD",
+              "source_evidence": {
+                "value": 22.95,
+                "currency": "USD",
+                "status": "DEMO",
+                "market_price_verified": false,
+                "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                "category_demo_range_usd": [
+                  15.95,
+                  37.95
+                ]
+              }
+            },
+            "edicion.inventarioInicial": {
+              "kind": "SIMULATED/DEMO",
+              "real_source_claim": false,
+              "source": "User-authorized academic physical catalog",
+              "basis": "10 unidades académicas; existencia física no verificada.",
+              "physical_availability_verified": false
+            },
+            "edicion.isbn13": {
+              "kind": "REAL_SOURCE",
+              "source_evidence": {
+                "value": "9788491815211",
+                "status": "observed_print_isbn",
+                "observed_print_isbn": "9788491815211",
+                "observed_print_isbn_checksum_valid": true,
+                "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                "not_an_official_isbn": false
+              },
+              "real_source_claim": true
+            }
+          },
+          "demo_public_label_required": true,
+          "physical_catalog_type": "SIMULATED/DEMO",
+          "stock_action": "SIMULATED_INITIAL_STOCK_10",
+          "sku_status": "ASSIGNED_PERMANENT",
+          "source": {
+            "inventory_identifier": "9788491815211",
+            "original_path": "originales/Filosofía/Filosofía para princesas - Leibniz, G. W.jpg",
+            "provenance": {
+              "book_id": "217195",
+              "category": "Filosofía",
+              "relative_path": "Filosofía/Filosofía para princesas - Leibniz, G. W.jpg",
+              "source_catalog_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+              "image": {
+                "sha256": "fbdab204a7898f8d8fa161b17bd96950d9a3b4dcb3305a2d0ce5661a62e8e607",
+                "width": 220,
+                "height": 320,
+                "format": "JPEG",
+                "original_bytes_preserved": true,
+                "transformations": [],
+                "visually_reviewed": true,
+                "source": "Portada original visible en la ficha eLibro; no se descargó el libro"
+              },
+              "fields": {
+                "categoria": {
+                  "value": "Filosofía",
+                  "status": "classification",
+                  "basis": "Categoría de selección de este catálogo académico"
+                },
+                "titulo": {
+                  "value": "Filosofía para princesas",
+                  "status": "observed",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195"
+                },
+                "autor": {
+                  "value": "Leibniz, G. W.",
+                  "status": "observed_contributors_with_roles",
+                  "contributors": [
+                    {
+                      "name": "Leibniz, G. W.",
+                      "role": "autor"
+                    }
+                  ],
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "raw_collector_role": "autor",
+                  "raw_collector_contributors": null
+                },
+                "isbn": {
+                  "value": "9788491815211",
+                  "status": "observed_print_isbn",
+                  "observed_print_isbn": "9788491815211",
+                  "observed_print_isbn_checksum_valid": true,
+                  "reason": "PRINT ISBN de la ficha con dígito de control válido",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "not_an_official_isbn": false
+                },
+                "descripcion": {
+                  "value": "Selección de correspondencia filosófica de Leibniz con princesas, reunida por Javier Echeverría. [Precio DEMO en USD.]",
+                  "base_description": "Selección de correspondencia filosófica de Leibniz con princesas, reunida por Javier Echeverría.",
+                  "status": "source_summary_paraphrase",
+                  "basis": "Paráfrasis breve del resumen visible",
+                  "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "demo_annotations_added": [
+                    "Precio DEMO en USD."
+                  ]
+                },
+                "precio": {
+                  "value": 22.95,
+                  "currency": "USD",
+                  "status": "DEMO",
+                  "market_price_verified": false,
+                  "method": "Precio académico simulado determinista por categoría e ID, con terminación .95; no es cotización comercial",
+                  "category_demo_range_usd": [
+                    15.95,
+                    37.95
+                  ]
+                },
+                "nombre_archivo": {
+                  "value": "Filosofía para princesas - Leibniz, G. W.jpg",
+                  "status": "derived",
+                  "rule": "Título - responsables con rol.ext; únicamente caracteres no válidos en Windows sustituidos por guion bajo"
+                },
+                "fuente_portada": {
+                  "value": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217195",
+                  "status": "observed_catalog_page",
+                  "note": "La página de origen puede requerir acceso institucional; no es un enlace permanente al archivo de imagen"
+                }
+              },
+              "digital_isbn": {
+                "observed": "9788491815389",
+                "checksum_valid": true,
+                "used_as_print_isbn": false
+              },
+              "physical_catalog": {
+                "status": "DEMO",
+                "physical_availability_verified": false,
+                "commercial_offer_verified": false
+              },
+              "observed_metadata": {
+                "catalog_title": "Filosofía para princesas",
+                "catalog_authors": [
+                  "Leibniz, G. W."
+                ],
+                "publisher": "Alianza Editorial",
+                "subject": "Filosofía / General",
+                "topics": "Filosofía alemana , Leibniz, Gottfried Wilhelm, -- 1646-1716 -- Correspondencia",
+                "author_verification": "Ficha bibliográfica y cotejo visual de la portada original",
+                "observed_at": "2026-10-05"
+              }
+            },
+            "cover_sha256": "6cd99ce56f428f21a9029cbda0e6f09102adcf5fd7a8e100d49fed69a0626598",
+            "original_sha256": "fbdab204a7898f8d8fa161b17bd96950d9a3b4dcb3305a2d0ce5661a62e8e607",
+            "transformations": [
+              {
+                "operation": "LOSSLESS_WEBP_ENCODING",
+                "decoded_pixels_preserved": true
+              }
+            ]
+          },
+          "import_receipt": {
+            "editionId": "383",
+            "bookId": "379"
+          }
+        }
+      }
+    }
+  ]
+}

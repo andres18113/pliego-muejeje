@@ -1,0 +1,1627 @@
+{
+  "previous_assignments_preserved": 315,
+  "reserved_excluded_sku": "PLG-BK-000042",
+  "new_assignments": [
+    {
+      "sku": "PLG-BK-000316",
+      "identity_keys": [
+        "fallback:001d5e4b2df8d8808451af1b76eeaf7b87e8704b6dca7c92ff819b994e0f1ed0"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-39575.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000317",
+      "identity_keys": [
+        "fallback:00912acea762bb187e0e1cf3f91def67325b90620aec4bac0efc7c3e66d47d29"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-294684.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000318",
+      "identity_keys": [
+        "fallback:0140b53406bf9cc9e1b8c255d1d64c0203baf788a3b58947135407a3f1e4ce2f"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-130675.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000319",
+      "identity_keys": [
+        "fallback:0adb8f380f6e5e2a7bc0a1d092ca165adaac3c1b1a3fd0fd3fd352ca1264b2b8"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-279263.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000320",
+      "identity_keys": [
+        "fallback:0e50b6adcb58969f01ab1347deec264b58418fa00d570fe4ebd6b4ab80510c6e"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-44690.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000321",
+      "identity_keys": [
+        "fallback:1d2dada869fbaa4f1242dd8a8bb0c097b4881019e012b412d21833090048f6e0"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-187476.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000322",
+      "identity_keys": [
+        "fallback:2ce54dd45f474059920d01c22dc31f06a522f42b10f53fd815f649292ba7fb43"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-293647.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000323",
+      "identity_keys": [
+        "fallback:354c012d8074ad2e537eca414094ff079684fb378e7203d24b3636b3356d974d"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-218594.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000324",
+      "identity_keys": [
+        "fallback:43920db9b1f0b9f59fd2e3ed3591a56a96f9bf3c4d4f8fedd0c62a46dc35443d"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-69322.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000325",
+      "identity_keys": [
+        "fallback:4edcc01632406bd0d243a0c0c67b9412e2f4df47de9421629f78f077caae309c"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-223473.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000326",
+      "identity_keys": [
+        "fallback:4f86de13f3c27ea0da8391d56300a3c97704b5f7e42093034e832915516af645"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-276322.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000327",
+      "identity_keys": [
+        "fallback:50935e141a0d3ae8267c9e6045ef11d345a7280ceb9926ed26cb002143f4591f"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-189720.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000328",
+      "identity_keys": [
+        "fallback:55a67f1d35f6aeda08c2d668d1f5e550b2e4fcebe47210f7de9be26dfc021c7d"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-224092.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000329",
+      "identity_keys": [
+        "fallback:5d2b7a361b557f7338cb0916dd0c41569cb8bd525a11afd3b5a6c31309cb1c8a"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-281230.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000330",
+      "identity_keys": [
+        "fallback:5f4d77d968316bd0933f142120169214352fee37e01938d8364938263f3af9b1"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-285322.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000331",
+      "identity_keys": [
+        "fallback:6017dffb3cb24871a79b23c8cdabcb1d754b40dbb51dc867f8923d5f62b4bf82"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-186712.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000332",
+      "identity_keys": [
+        "fallback:60d09758a192f116fe03fd53de0052873fdec999819ace125f9b2ffadab304dc"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-299429.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000333",
+      "identity_keys": [
+        "fallback:62f31b8ccefe4ce1fc9709dcb38d41d9806be15cf949e9087a1b05474e82b628"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-59630.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000334",
+      "identity_keys": [
+        "fallback:78d766d3d6b893c74595ca8893b07ae031dc5ddffa01fc9f1a6fb78dd1d81a9a"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-292418.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000335",
+      "identity_keys": [
+        "fallback:790de7af50427b390c85cb8819dff41c13cb7cbc928c711b036b69ef2911c033"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-293177.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000336",
+      "identity_keys": [
+        "fallback:7d0923b2b4105fac5ee9151bfab9412d819d2667e4c3225f1b34239114c7deb9"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-41939.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000337",
+      "identity_keys": [
+        "fallback:808eafcecc8a4489b508f50bfa32093746fb72511b8253ac9a6a853bee0eea7a"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-214575.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000338",
+      "identity_keys": [
+        "fallback:80eff6c8279592dc6b5a69d5290b8157b1a533c95372b7beaa91b417c39af1d6"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-186736.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000339",
+      "identity_keys": [
+        "fallback:81b9ff064a20c2e0b0afb9112c410def8f3ed91bbfeed58a89e9f11c297b8fde"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-213696.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000340",
+      "identity_keys": [
+        "fallback:899f1353861fd736f5ac84a634bcbf57bac06bfed787aa7f4c632d5cd3f5873a"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-36731.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000341",
+      "identity_keys": [
+        "fallback:8d99fa9e5417c0b39af3feb8fabbc2c003b96d448107c7cdb3a38acef1de54b6"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-284719.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000342",
+      "identity_keys": [
+        "fallback:945f395cb463a5b954a723c0ce7ccfb14ae18d5bf93985d032d84e18dc9c1cce"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-280647.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000343",
+      "identity_keys": [
+        "fallback:9660c966effd0f08bbbfa7e88d4a856ad9981059ec709c71c6a9bb9f35ad8287"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-60620.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000344",
+      "identity_keys": [
+        "fallback:97df571398092af213f71f086e83fe7548f86d408b99e5320b5439a65e62b9fd"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-250033.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000345",
+      "identity_keys": [
+        "fallback:9c11f2fb1f207f2c81177d13302d055c86e92a42de1c73c9a9078e7842d99c47"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-212765.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000346",
+      "identity_keys": [
+        "fallback:9fb9b8ed076ae5d5a063218a62ebce0c43f368653f9b5722c9177b7da76a3de3"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-299430.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000347",
+      "identity_keys": [
+        "fallback:a3fe8a8ce2b4e57b9a6b27ea4c8e114962204a142c2be7d344fab52d9a1591ac"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-305127.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000348",
+      "identity_keys": [
+        "fallback:a73c48f6c7f76e71edba3441a6462747a450f08a76259a41be8b1a0c359ab7ca"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-60836.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000349",
+      "identity_keys": [
+        "fallback:ac774d9c8c338c9aeb7815aa57d521c43177e50b2061e2182ae8519dbe0bd6dd"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-274254.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000350",
+      "identity_keys": [
+        "fallback:adc30b39dd83d3e7052f5839b163871baa2dfc53afb5fbbf4208435ab59907d7"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-74064.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000351",
+      "identity_keys": [
+        "fallback:b6cdf1fe19b217bcbd09f90be7a182b7221244ff31f27827125359bec938a4d7"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-113899.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000352",
+      "identity_keys": [
+        "fallback:bd35964b301c969aebd9f784323fb9dcbcc24b72f225d107321f20068e63928c"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-299436.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000353",
+      "identity_keys": [
+        "fallback:c2b9e6cb2707abedcc1eac313c17c8ae6490b8669c847309a15cb0d665aa91d9"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-36432.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000354",
+      "identity_keys": [
+        "fallback:c6b923af805f43eafe61f2db478da2cb330d87f80cf6dbb123406fe1eea3bbbc"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-125738.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000355",
+      "identity_keys": [
+        "fallback:cb8ab8d57ee69087486c586561b24668368624248673f31acb2b600916e2dee5"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-268787.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000356",
+      "identity_keys": [
+        "fallback:cd85c20e6b1e6c2ec5dcfa9a8bec1d75eec1e13c3c458a0172a55ff32b9a863c"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-176646.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000357",
+      "identity_keys": [
+        "fallback:d2971a55523e6e62332aa9d9a21849289e68657a7ef215d0f4880054c7e8fa60"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-190904.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000358",
+      "identity_keys": [
+        "fallback:d3f94ca118f4f97ba4d656eb1a15a9e33f5bf753d724380925df7d3952dc7024"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-234713.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000359",
+      "identity_keys": [
+        "fallback:d5e5b4d335260681dfc0667cb10dc566b430d339648116127b5c7bc145be4863"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-293542.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000360",
+      "identity_keys": [
+        "fallback:d892b43c4eb3eea6feec31db116e30d8a350c0886d2edc9eb6414b0349812d14"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-222652.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000361",
+      "identity_keys": [
+        "fallback:dfc1a640db7a2afbe544ee8523905ffc9f08e5d68e7d29511be9873ee36b1680"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-294202.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000362",
+      "identity_keys": [
+        "fallback:e65b718706f9b717e89a66301a2c5443a153a9bd4896b46d814065c8b7be32eb"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-59629.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000363",
+      "identity_keys": [
+        "fallback:e76237acf2c9776e8b9cef4ada29829ffa5b08c5f018c0a891887a6de94f6339"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-114406.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000364",
+      "identity_keys": [
+        "fallback:f3bf4728f76023dd0078e8cf56bc9b27f6ad1712a2c5451ce34b552ef0b722f2"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-175890.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000365",
+      "identity_keys": [
+        "fallback:f6877083b29fb9c7a3001c40dcdde3a4fbbb7e0552e3ecab9d75831b4e79bb10"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-41052.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000366",
+      "identity_keys": [
+        "fallback:fcb33722ef66a435619bc7fcb2634ec321c878b7fdc3db7acb495079629de8d8"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-205684.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000367",
+      "identity_keys": [
+        "fallback:fcba6159b8de822383043400bc3ee4569636103f55b2c0de01cf9253e9e05715"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-60488.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000368",
+      "identity_keys": [
+        "isbn13:9781413510683"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-35347.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000369",
+      "identity_keys": [
+        "isbn13:9781413576580"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-35382.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000370",
+      "identity_keys": [
+        "isbn13:9781413591989"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-35246.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000371",
+      "identity_keys": [
+        "isbn13:9786071606549"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-276629.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000372",
+      "identity_keys": [
+        "isbn13:9786071672780"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-216197.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000373",
+      "identity_keys": [
+        "isbn13:9786071682659"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-266569.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000374",
+      "identity_keys": [
+        "isbn13:9786074011982"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-38240.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000375",
+      "identity_keys": [
+        "isbn13:9786074014266"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-38444.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000376",
+      "identity_keys": [
+        "isbn13:9786074385434"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-39499.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000377",
+      "identity_keys": [
+        "isbn13:9786074480436"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-39599.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000378",
+      "identity_keys": [
+        "isbn13:9786074483819"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-39690.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000379",
+      "identity_keys": [
+        "isbn13:9786074486599"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-39774.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000380",
+      "identity_keys": [
+        "isbn13:9786074486896"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-39787.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000381",
+      "identity_keys": [
+        "isbn13:9786074487411"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-39810.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000382",
+      "identity_keys": [
+        "isbn13:9786074488074"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-242475.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000383",
+      "identity_keys": [
+        "isbn13:9786077411147"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-40315.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000384",
+      "identity_keys": [
+        "isbn13:9786077411208"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-40318.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000385",
+      "identity_keys": [
+        "isbn13:9786077411222"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-40319.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000386",
+      "identity_keys": [
+        "isbn13:9786077411321"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-40328.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000387",
+      "identity_keys": [
+        "isbn13:9786077411499"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-40334.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000388",
+      "identity_keys": [
+        "isbn13:9786077504047"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-40553.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000389",
+      "identity_keys": [
+        "isbn13:9786078283057"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-40832.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000390",
+      "identity_keys": [
+        "isbn13:9786078289646"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-40911.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000391",
+      "identity_keys": [
+        "isbn13:9786078289752"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-40916.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000392",
+      "identity_keys": [
+        "isbn13:9786078628711"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-130920.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000393",
+      "identity_keys": [
+        "isbn13:9786079106058"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-130433.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000394",
+      "identity_keys": [
+        "isbn13:9786079124793"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-41033.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000395",
+      "identity_keys": [
+        "isbn13:9786079124854"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-41039.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000396",
+      "identity_keys": [
+        "isbn13:9786079315764"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-130438.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000397",
+      "identity_keys": [
+        "isbn13:9786079443672"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-127201.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000398",
+      "identity_keys": [
+        "isbn13:9786287505247"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-291966.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000399",
+      "identity_keys": [
+        "isbn13:9786287768277"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-288457.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000400",
+      "identity_keys": [
+        "isbn13:9788400107055"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-170282.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000401",
+      "identity_keys": [
+        "isbn13:9788410675452"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-296085.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000402",
+      "identity_keys": [
+        "isbn13:9788413523019"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-233505.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000403",
+      "identity_keys": [
+        "isbn13:9788413523965"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-235663.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000404",
+      "identity_keys": [
+        "isbn13:9788413524290"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-235664.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000405",
+      "identity_keys": [
+        "isbn13:9788413620701"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-216032.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000406",
+      "identity_keys": [
+        "isbn13:9788415295570"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-42096.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000407",
+      "identity_keys": [
+        "isbn13:9788415419532"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-108252.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000408",
+      "identity_keys": [
+        "isbn13:9788415419587"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-125304.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000409",
+      "identity_keys": [
+        "isbn13:9788415684008"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-125312.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000410",
+      "identity_keys": [
+        "isbn13:9788415684107"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-108234.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000411",
+      "identity_keys": [
+        "isbn13:9788416004584"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-94662.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000412",
+      "identity_keys": [
+        "isbn13:9788416919833"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-118623.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000413",
+      "identity_keys": [
+        "isbn13:9788417690441"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-126732.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000414",
+      "identity_keys": [
+        "isbn13:9788418550768"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-209572.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000415",
+      "identity_keys": [
+        "isbn13:9788425426551"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-45767.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000416",
+      "identity_keys": [
+        "isbn13:9788425427282"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-45789.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000417",
+      "identity_keys": [
+        "isbn13:9788425443695"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-126189.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000418",
+      "identity_keys": [
+        "isbn13:9788431321802"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-46931.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000419",
+      "identity_keys": [
+        "isbn13:9788431325244"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-47023.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000420",
+      "identity_keys": [
+        "isbn13:9788431327552"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-47101.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000421",
+      "identity_keys": [
+        "isbn13:9788431328061"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-47112.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000422",
+      "identity_keys": [
+        "isbn13:9788431331085"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-47268.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000423",
+      "identity_keys": [
+        "isbn13:9788431331511"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-47310.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000424",
+      "identity_keys": [
+        "isbn13:9788437068480"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-293121.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000425",
+      "identity_keys": [
+        "isbn13:9788446026181"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-49551.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000426",
+      "identity_keys": [
+        "isbn13:9788446029328"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-116636.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000427",
+      "identity_keys": [
+        "isbn13:9788446038993"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-116153.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000428",
+      "identity_keys": [
+        "isbn13:9788448145637"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-50076.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000429",
+      "identity_keys": [
+        "isbn13:9788448198213"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-50292.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000430",
+      "identity_keys": [
+        "isbn13:9788478981038"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-52623.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000431",
+      "identity_keys": [
+        "isbn13:9788479784140"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-52971.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000432",
+      "identity_keys": [
+        "isbn13:9788484091141"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-54616.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000433",
+      "identity_keys": [
+        "isbn13:9788484091288"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-54617.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000434",
+      "identity_keys": [
+        "isbn13:9788484892465"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-37026.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000435",
+      "identity_keys": [
+        "isbn13:9788484897279"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-173423.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000436",
+      "identity_keys": [
+        "isbn13:9788487189104"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-55461.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000437",
+      "identity_keys": [
+        "isbn13:9788487189296"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-55467.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000438",
+      "identity_keys": [
+        "isbn13:9788490310304"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-56775.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000439",
+      "identity_keys": [
+        "isbn13:9788490850145"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-58034.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000440",
+      "identity_keys": [
+        "isbn13:9788490858097"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-58284.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000441",
+      "identity_keys": [
+        "isbn13:9788491044338"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-115677.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000442",
+      "identity_keys": [
+        "isbn13:9788491815211"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-217195.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000443",
+      "identity_keys": [
+        "isbn13:9788491819097"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-215557.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000444",
+      "identity_keys": [
+        "isbn13:9788492536627"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-42015.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000445",
+      "identity_keys": [
+        "isbn13:9788493480769"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-59660.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000446",
+      "identity_keys": [
+        "isbn13:9788496921351"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-125737.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000447",
+      "identity_keys": [
+        "isbn13:9788497429009"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-111845.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000448",
+      "identity_keys": [
+        "isbn13:9788497847391"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-61165.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000449",
+      "identity_keys": [
+        "isbn13:9788497884556"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-56653.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000450",
+      "identity_keys": [
+        "isbn13:9788498235623"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-33736.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000451",
+      "identity_keys": [
+        "isbn13:9788498491104"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-35676.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000452",
+      "identity_keys": [
+        "isbn13:9788498798098"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-126172.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000453",
+      "identity_keys": [
+        "isbn13:9788499163123"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-51252.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000454",
+      "identity_keys": [
+        "isbn13:9788499401553"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-112862.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000455",
+      "identity_keys": [
+        "isbn13:9788499402024"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-106697.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000456",
+      "identity_keys": [
+        "isbn13:9788499538785"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-165552.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000457",
+      "identity_keys": [
+        "isbn13:9789567052066"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-190600.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000458",
+      "identity_keys": [
+        "isbn13:9789585023734"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-302446.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000459",
+      "identity_keys": [
+        "isbn13:9789586704854"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-175382.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000460",
+      "identity_keys": [
+        "isbn13:9789587386554"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-69705.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000461",
+      "identity_keys": [
+        "isbn13:9789587416503"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-69977.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000462",
+      "identity_keys": [
+        "isbn13:9789587604214"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-235981.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000463",
+      "identity_keys": [
+        "isbn13:9789587619560"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-130020.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000464",
+      "identity_keys": [
+        "isbn13:9789587651065"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-175410.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000465",
+      "identity_keys": [
+        "isbn13:9789587896824"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-287118.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000466",
+      "identity_keys": [
+        "isbn13:9789587981827"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-218340.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000467",
+      "identity_keys": [
+        "isbn13:9789588843520"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-186709.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000468",
+      "identity_keys": [
+        "isbn13:9789588843728"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-186697.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000469",
+      "identity_keys": [
+        "isbn13:9789588993157"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-128416.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000470",
+      "identity_keys": [
+        "isbn13:9789588993270"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-128417.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000471",
+      "identity_keys": [
+        "isbn13:9789588993782"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-219483.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000472",
+      "identity_keys": [
+        "isbn13:9789589076460"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-186713.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000473",
+      "identity_keys": [
+        "isbn13:9789589327760"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-280793.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000474",
+      "identity_keys": [
+        "isbn13:9789589446188"
+      ],
+      "source_keys": [
+        "Fisicos180/Psicología/staging.json#portadas/physical-elibrary-71142.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000475",
+      "identity_keys": [
+        "isbn13:9789681601775"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-110465.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000476",
+      "identity_keys": [
+        "isbn13:9789708171106"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-40395.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000477",
+      "identity_keys": [
+        "isbn13:9789871368709"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-196982.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000478",
+      "identity_keys": [
+        "isbn13:9789871368716"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-196983.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000479",
+      "identity_keys": [
+        "isbn13:9789871860296"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-105481.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000480",
+      "identity_keys": [
+        "isbn13:9789871860852"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-299779.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000481",
+      "identity_keys": [
+        "isbn13:9789873313172"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-77251.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000482",
+      "identity_keys": [
+        "isbn13:9789875740884"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-187892.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000483",
+      "identity_keys": [
+        "isbn13:9789875746343"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-191389.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000484",
+      "identity_keys": [
+        "isbn13:9789875748842"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-191383.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000485",
+      "identity_keys": [
+        "isbn13:9789875749771"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-203010.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000486",
+      "identity_keys": [
+        "isbn13:9789876821117"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-199354.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000487",
+      "identity_keys": [
+        "isbn13:9789876821520"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-201530.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000488",
+      "identity_keys": [
+        "isbn13:9789877190601"
+      ],
+      "source_keys": [
+        "Fisicos180/Literatura/staging.json#portadas/physical-elibrary-110514.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000489",
+      "identity_keys": [
+        "isbn13:9789878321783"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-163183.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000490",
+      "identity_keys": [
+        "isbn13:9789878331508"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-188187.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000491",
+      "identity_keys": [
+        "isbn13:9789878461755"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-227602.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000492",
+      "identity_keys": [
+        "isbn13:9789879066959"
+      ],
+      "source_keys": [
+        "Fisicos180/Infantil y Juvenil/staging.json#portadas/physical-elibrary-201587.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000493",
+      "identity_keys": [
+        "isbn13:9789879493168"
+      ],
+      "source_keys": [
+        "Fisicos180/Filosofía/staging.json#portadas/physical-elibrary-78949.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000494",
+      "identity_keys": [
+        "isbn13:9789945870305"
+      ],
+      "source_keys": [
+        "Fisicos180/Matemáticas/staging.json#portadas/physical-elibrary-175802.webp"
+      ]
+    },
+    {
+      "sku": "PLG-BK-000495",
+      "identity_keys": [
+        "isbn13:9789962678649"
+      ],
+      "source_keys": [
+        "Fisicos180/Medicina/staging.json#portadas/physical-elibrary-166523.webp"
+      ]
+    }
+  ],
+  "next_sequence": 496
+}

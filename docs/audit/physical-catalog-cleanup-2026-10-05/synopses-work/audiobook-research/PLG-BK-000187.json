@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000187",
+  "title": "Historia mínima de Perú",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193634",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:17.650603+00:00",
+      "response_sha256": "c806e96bd64d5c9646353ab6c1746fe51a6c0f83f7ff0f92d79ebc19904881ed",
+      "extraction_sha256": "2e7981cb4f7410ebfd9a069b384cddbeee99d089da286934f31bd29ae869b929",
+      "text": "Guardado en: Autor Principal: Contreras Carranza, Carlos, (autor.) Otros Autores: Zuloaga Rada, Marina, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F : El Colegio de México : Turner, 2014. Edición: Primera edición. Series: Historia mínima. Materias: Peru > History. Perú > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193634  ",
+      "observed_page_title": "Existencias: Historia mínima del Perú /",
+      "title_check_response_sha256": "e5971d8d1a4c1b1aad9ce590fcf7e7358ce244a5cc4e4a4155910a967e4dd72e",
+      "title_checked_at_utc": "2026-10-05T19:39:56.725077+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193634/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:18.996181+00:00",
+      "response_sha256": "c136124e53699bced577fcc4eef7c33c47d1c4d0b7425f25ffb967d35dc72764",
+      "extraction_sha256": "2e7981cb4f7410ebfd9a069b384cddbeee99d089da286934f31bd29ae869b929",
+      "text": "Guardado en: Autor Principal: Contreras Carranza, Carlos, (autor.) Otros Autores: Zuloaga Rada, Marina, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F : El Colegio de México : Turner, 2014. Edición: Primera edición. Series: Historia mínima. Materias: Peru > History. Perú > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193634  "
+    }
+  ]
+}

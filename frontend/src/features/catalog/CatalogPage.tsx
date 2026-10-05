@@ -102,7 +102,7 @@ export function CatalogPage() {
     navigate(catalogHref(next), { replace });
   }
 
-  function removeCriterion(field: "query" | "category" | "minPrice" | "maxPrice" | "language" | "format") {
+  function removeCriterion(field: "query" | "category" | "minPrice" | "maxPrice" | "language" | "format" | "productType") {
     if (field === "query") {
       navigateToCriteria({ ...criteria, query: "", page: 0 });
     } else if (field === "minPrice" || field === "maxPrice") {
@@ -113,7 +113,7 @@ export function CatalogPage() {
   }
 
   function clearAll() {
-    navigateToCriteria({ ...criteria, query: "", category: "", minPrice: "", maxPrice: "", language: "", format: "", page: 0 });
+    navigateToCriteria({ ...criteria, query: "", category: "", minPrice: "", maxPrice: "", language: "", format: "", productType: "", page: 0 });
   }
 
   const unavailableCategory = resultError?.code === "P2022";

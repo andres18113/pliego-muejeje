@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000285",
+  "title": "Historia mínima de las izquierdas en México",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194932",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:30.759973+00:00",
+      "response_sha256": "6d4b9361285120966ac9a0ee0c111bee72ca0ea0290c099b3014e59b8c9277af",
+      "extraction_sha256": "3187b9cf79a58d2fe4fd5d13748f032b13b31467f1fe5880b0de0a1aaa3a494a",
+      "text": "Guardado en: Autor Principal: Rodríguez Kuri, Ariel, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, Centro de Estudios Históricos, 2021. Edición: Primera edición. Series: Colección Historias Mínimas ; 5. Materias: Derecha e izquierda (Ciencia política) Right and left (Political science) Revolutions and socialism > Mexico > History > 20th century. Revoluciones y socialismo > México > Historia > Siglo XX. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194932  ",
+      "observed_page_title": "Existencias: Historia mínima de las izquierdas en México /",
+      "title_check_response_sha256": "3e871068f93714ecfcfeef1ade81fdd55cb7c27b54373951bc1c55f1d2ffb5e1",
+      "title_checked_at_utc": "2026-10-05T19:39:55.226648+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194932/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:32.039788+00:00",
+      "response_sha256": "cf1a8802e9dd3374c529386c88a057e1ba14b34bf00bf9ba2f9bb7aa591b1230",
+      "extraction_sha256": "3187b9cf79a58d2fe4fd5d13748f032b13b31467f1fe5880b0de0a1aaa3a494a",
+      "text": "Guardado en: Autor Principal: Rodríguez Kuri, Ariel, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, Centro de Estudios Históricos, 2021. Edición: Primera edición. Series: Colección Historias Mínimas ; 5. Materias: Derecha e izquierda (Ciencia política) Right and left (Political science) Revolutions and socialism > Mexico > History > 20th century. Revoluciones y socialismo > México > Historia > Siglo XX. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194932  "
+    }
+  ]
+}

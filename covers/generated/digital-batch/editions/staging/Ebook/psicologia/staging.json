@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "El mundo de la psicología",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Rubén Ardila abre una mirada hacia el amplio campo de la psicología. El libro invita a acercarse a una disciplina dedicada al estudio de la experiencia y del comportamiento humanos. Una lectura para quienes desean explorar ese mundo de conocimiento y encontrar un punto de partida para pensar las preguntas que la psicología formula sobre las personas.",
         "autores": [
           {
             "nombre": "Ardila, Rubén",
@@ -182,7 +182,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "327",
-        "imported_book_id": "325"
+        "imported_book_id": "325",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Psychology. Psicología. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -190,7 +201,7 @@
       "libro": {
         "titulo": "Estadística en psicología",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La investigación psicológica requiere formas de trabajar con datos y medidas. Eduardo Bologna sitúa esta obra en el encuentro entre estadística, investigación en psicología y psicometría. Una entrada a la dimensión cuantitativa del estudio psicológico para quienes desean comprender mejor la relación entre observación, medición y conocimiento dentro de las preguntas de esta disciplina.",
         "autores": [
           {
             "nombre": "Bologna, Eduardo",
@@ -365,7 +376,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "328",
-        "imported_book_id": "326"
+        "imported_book_id": "326",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Estadística. Psicología > Investigación. Psychology > Research. Psychometrics. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -373,7 +395,7 @@
       "libro": {
         "titulo": "Homosexualidad y psicología (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Rubén Ardila aborda la homosexualidad desde sus dimensiones psicológicas y sociales. La obra invita a considerar el tema dentro de un campo de estudio que relaciona la experiencia de las personas con su entorno colectivo. Una lectura para quienes desean acercarse a estas preguntas desde la psicología y pensar su vínculo con las formas de vida social.",
         "autores": [
           {
             "nombre": "Ardila, Rubén",
@@ -548,7 +570,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "329",
-        "imported_book_id": "327"
+        "imported_book_id": "327",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Homosexuality > Psychological aspects. Homosexualidad > Aspectos psicológicos. Homosexuality > Social aspects. Homosexualidad > Aspectos sociales. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -556,7 +589,7 @@
       "libro": {
         "titulo": "La psicología y su pluralidad",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "María Elena Colombo propone mirar la psicología desde su pluralidad. El libro orienta el interés hacia la diversidad que puede reunir una disciplina dedicada a las personas y a su experiencia. Una lectura para quienes desean ampliar su relación con el conocimiento psicológico y pensar las preguntas que surgen ante sus distintas formas de aproximación al estudio humano.",
         "autores": [
           {
             "nombre": "Colombo, María Elena",
@@ -731,7 +764,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "330",
-        "imported_book_id": "328"
+        "imported_book_id": "328",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Psychology. Psicología. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -739,7 +783,7 @@
       "libro": {
         "titulo": "Psicología clínica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pedro Antonio Sánchez Escobedo dedica esta obra al campo de la psicología clínica. El libro permite orientar el interés hacia una de las áreas de aplicación de la disciplina. Una aproximación para quienes desean relacionar el conocimiento psicológico con preguntas sobre la experiencia de las personas y situar su estudio dentro del ámbito clínico.",
         "autores": [
           {
             "nombre": "Sánchez Escobedo, Pedro Antonio",
@@ -914,7 +958,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "331",
-        "imported_book_id": "329"
+        "imported_book_id": "329",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Clinical psychology. Psicología clínica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -922,7 +977,7 @@
       "libro": {
         "titulo": "Psicología de la competición",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Competir en el deporte también implica una experiencia psicológica. Esta obra centra la atención en esa dimensión de la práctica deportiva y en la competición como objeto de estudio de la psicología. La lectura propone acercarse a los vínculos entre actividad deportiva y vida mental, un ámbito relevante para quienes se interesan por comprender la experiencia de competir.",
         "autores": [
           {
             "nombre": "Martín-Albo Lucas, José",
@@ -1107,7 +1162,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "332",
-        "imported_book_id": "330"
+        "imported_book_id": "330",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Sports > Psychological aspects. Deportes > Aspectos psicológicos. Competition (Psychology) Competición (Psicología) Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1115,7 +1181,7 @@
       "libro": {
         "titulo": "Psicología de la personalidad",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La personalidad reúne preguntas sobre aquello que caracteriza la experiencia y el comportamiento de las personas. Esta obra colectiva dirige el estudio hacia ese campo de la psicología. Una aproximación para quienes desean conocer el ámbito de la psicología de la personalidad y pensar la relación entre la singularidad de cada individuo y las preguntas generales de la disciplina.",
         "autores": [
           {
             "nombre": "Bermúdez Moreno, José",
@@ -1330,7 +1396,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "333",
-        "imported_book_id": "331"
+        "imported_book_id": "331",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Psicología. Personalidad. Psychology. Personality. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1338,7 +1415,7 @@
       "libro": {
         "titulo": "Psicología de las masas (6a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Gustave Le Bon dirige la atención hacia las masas como objeto de estudio psicológico. La obra pertenece al ámbito de la psicología social y abre preguntas sobre la experiencia colectiva. Una lectura para quienes desean conocer este texto y situarlo dentro de su interés por las relaciones entre comportamiento, agrupaciones humanas y vida en sociedad.",
         "autores": [
           {
             "nombre": "Le Bon, Gustave",
@@ -1513,7 +1590,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "334",
-        "imported_book_id": "332"
+        "imported_book_id": "332",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Social psychology. Psicología social. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1521,7 +1609,7 @@
       "libro": {
         "titulo": "Psicología del niño (18a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Jean Piaget y Bärbel Inhelder dedican esta obra a la psicología infantil. El libro dirige la atención hacia el niño como objeto específico de estudio psicológico y hacia las preguntas que suscita su desarrollo. Una aproximación para quienes se interesan por comprender la infancia desde la psicología y acercarse a un texto vinculado a estos autores de la disciplina.",
         "autores": [
           {
             "nombre": "Piaget, Jean",
@@ -1706,7 +1794,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "335",
-        "imported_book_id": "333"
+        "imported_book_id": "333",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Child psychology. Psicología del niño. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1714,7 +1813,7 @@
       "libro": {
         "titulo": "Psicología diferencial",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La psicología diferencial orienta la mirada hacia las diferencias entre las personas. María del Pilar Matud Aznar, Rosario J. Marrero Quevedo y Mónica Carballeira Abella dedican esta obra a ese ámbito de estudio. Una lectura para quienes desean pensar la diversidad de la experiencia humana desde preguntas psicológicas y ampliar su comprensión del campo de la psicología.",
         "autores": [
           {
             "nombre": "Matud Aznar, María del Pilar",
@@ -1909,7 +2008,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "336",
-        "imported_book_id": "334"
+        "imported_book_id": "334",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Psychology. Psicología. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2283,7 +2393,7 @@
       "libro": {
         "titulo": "Psicología social",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Zoe Bello Dávila y Julio César Casales Fernández presentan una obra de psicología social. El libro orienta el estudio hacia las relaciones entre la experiencia de las personas y la vida colectiva. Una aproximación para quienes se interesan por comprender cómo las preguntas psicológicas pueden ponerse en diálogo con los vínculos y contextos que forman parte de la sociedad.",
         "autores": [
           {
             "nombre": "Bello Dávila, Zoe",
@@ -2468,7 +2578,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "339",
-        "imported_book_id": "337"
+        "imported_book_id": "337",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Psicología social. Social psychology. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2476,7 +2597,7 @@
       "libro": {
         "titulo": "Psicología. Lo inconsciente",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "José Töpf y Heberto A. Rojo dirigen la atención hacia lo inconsciente dentro del campo de la psicología. El título sitúa el interés en una pregunta que amplía la mirada sobre la experiencia humana. Una lectura para quienes desean explorar ese ámbito y pensar su relación con el estudio psicológico de las personas.",
         "autores": [
           {
             "nombre": "Töpf, José",
@@ -2661,7 +2782,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "340",
-        "imported_book_id": "338"
+        "imported_book_id": "338",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Psychology. Psicología. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2669,7 +2801,7 @@
       "libro": {
         "titulo": "Psicología: polimodal",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Marisa Divenosa e Ivana Costa presentan una obra de psicología destinada al horizonte de formación anunciado por su título. El libro dirige la atención hacia el estudio de la experiencia humana desde esta disciplina. Una lectura para quienes desean construir una primera relación con las preguntas psicológicas y ampliar su comprensión del comportamiento y de la vida mental.",
         "autores": [
           {
             "nombre": "Divenosa, Marisa",
@@ -2854,7 +2986,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "341",
-        "imported_book_id": "339"
+        "imported_book_id": "339",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Psicología. Psychology. Psicologia Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

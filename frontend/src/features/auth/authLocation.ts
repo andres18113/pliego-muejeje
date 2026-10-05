@@ -4,7 +4,7 @@ export function authLocation(pathname: string, from: string) {
   return { pathname, search: new URLSearchParams({ from }).toString() };
 }
 
-const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkout|orders(?:\/[1-9][0-9]{0,18})?)\/?$/;
+const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkout|(?:orders|biblioteca)(?:\/[1-9][0-9]{0,18})?)\/?$/;
 
 /**
  * Validates the post-sign-in destination: catalog routes plus the CUSTOMER purchase

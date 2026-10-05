@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000153",
+  "title": "Glosario botánico ilustrado",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:11.662280+00:00",
+      "response_sha256": "5f9decc430b34e97b1c61a3be68f5e5810fd8ed1761811f9fe9d7be81fa54375",
+      "extraction_sha256": "c20b3c433298ab29f785dcfebe023cd8fdcbabcc81618ebc6e8dcf4cf6bf9f90",
+      "text": "Guardado en: Autor Principal: Esteras Pérez, F. Javier, (ilustraciones.) Otros Autores: Sanchis Duato, Enrique, (autor.) Formato: eBook Idioma: Spanish Publicado: Valencia, España : Universitat Politècnica de València, 2022. Materias: Botánica > Glosario. Revistas electrónicas. Acceso en línea: https://elibro.net/ereader/unsbiblio/219257  ",
+      "observed_page_title": "Existencias: Glosario botánico ilustrado /",
+      "title_check_response_sha256": "9d22b98a00bf4731df01845862dc753a094e6e9cee47eec0566b24609d5bf69e",
+      "title_checked_at_utc": "2026-10-05T19:40:06.988344+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:13.195762+00:00",
+      "response_sha256": "8f8ad57708f8a2d02b8f181d8a0ae4388d4864297fda4c239f313d4e0a3a5388",
+      "extraction_sha256": "c20b3c433298ab29f785dcfebe023cd8fdcbabcc81618ebc6e8dcf4cf6bf9f90",
+      "text": "Guardado en: Autor Principal: Esteras Pérez, F. Javier, (ilustraciones.) Otros Autores: Sanchis Duato, Enrique, (autor.) Formato: eBook Idioma: Spanish Publicado: Valencia, España : Universitat Politècnica de València, 2022. Materias: Botánica > Glosario. Revistas electrónicas. Acceso en línea: https://elibro.net/ereader/unsbiblio/219257  "
+    }
+  ]
+}

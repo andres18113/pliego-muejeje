@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000149",
+  "title": "Discurso y conflicto en la novela",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:11.422804+00:00",
+      "response_sha256": "585246144eca94182b47118c87a85c79c6445ba996a425398da08d59dbbe8463",
+      "extraction_sha256": "26e6ad6e2d2c8a15f6febd3db58236cd7efba2f1d592f8afa7ee6e1fbcddae07",
+      "text": "Guardado en: Autor Principal: Parrilla Sotomayor, Eduardo E. Formato: eBook Idioma: Spanish Publicado: México D.F. : Plaza y Valdés, S.A. de C.V., 2012. Materias: Fiction. Novela. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/39117  ",
+      "observed_page_title": "Existencias: Discurso y conflicto en la novela /",
+      "title_check_response_sha256": "b9e0c37f92089fc28df0ce44170b9a690a99befa3f567fe946bc11f778be86dd",
+      "title_checked_at_utc": "2026-10-05T19:39:52.076732+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:14.210698+00:00",
+      "response_sha256": "edfe9c7a2f6efb5af38b41c8ff7e9474df230d17057bb0bd9304b550afa4df86",
+      "extraction_sha256": "26e6ad6e2d2c8a15f6febd3db58236cd7efba2f1d592f8afa7ee6e1fbcddae07",
+      "text": "Guardado en: Autor Principal: Parrilla Sotomayor, Eduardo E. Formato: eBook Idioma: Spanish Publicado: México D.F. : Plaza y Valdés, S.A. de C.V., 2012. Materias: Fiction. Novela. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/39117  "
+    }
+  ]
+}

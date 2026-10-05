@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000231",
+  "title": "Botánica aplicada",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:22.677995+00:00",
+      "response_sha256": "f5ea68cb4c70a68186659c3a14309e206d0428b1d702d501a71848bcbbb73dd8",
+      "extraction_sha256": "c5cafe5eb865afd09a72b0a6185d9fb8f9ccd5dfbd9ceecc78494c1800266043",
+      "text": "Guardado en: Autor Principal: Molina Abril, José Antonio. Formato: eBook Idioma: Spanish Publicado: Madrid : Dextra Editorial, 2019. Series: Colección Bio. Materias: Botany. Botánica. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/131465  ",
+      "observed_page_title": "Existencias: Botánica aplicada /",
+      "title_check_response_sha256": "8ae48bec8e5583c5d6a028a0c47ae9065438aebe1948a2b1df36dc073cddf611",
+      "title_checked_at_utc": "2026-10-05T19:40:06.312207+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:24.004375+00:00",
+      "response_sha256": "aa319ab9b93c35abb3d2692a6ff33f841a73b52b7777c1353c5a97fe971e931b",
+      "extraction_sha256": "c5cafe5eb865afd09a72b0a6185d9fb8f9ccd5dfbd9ceecc78494c1800266043",
+      "text": "Guardado en: Autor Principal: Molina Abril, José Antonio. Formato: eBook Idioma: Spanish Publicado: Madrid : Dextra Editorial, 2019. Series: Colección Bio. Materias: Botany. Botánica. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/131465  "
+    }
+  ]
+}

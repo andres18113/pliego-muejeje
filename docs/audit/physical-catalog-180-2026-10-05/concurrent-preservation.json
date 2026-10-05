@@ -1,0 +1,24 @@
+{
+  "initial_protected_files": 81,
+  "unchanged": 64,
+  "progressed_concurrently": [
+    "backend/src/test/postgres18/run_ci_gates.sh",
+    "frontend/src/features/catalog/CatalogControls.tsx",
+    "frontend/src/features/purchase/CheckoutPage.tsx",
+    "frontend/src/features/purchase/DigitalCheckout.test.tsx",
+    "frontend/src/features/purchase/OrderConfirmation.test.tsx",
+    "frontend/src/features/purchase/SuccessfulOrderConfirmation.tsx",
+    "frontend/src/shared/api/catalog.ts",
+    "backend/src/main/java/com/pliego/modules/help/api/HelpController.java",
+    "backend/src/main/java/com/pliego/modules/library/api/LibraryController.java",
+    "backend/src/main/java/com/pliego/modules/storefront/api/StorefrontController.java",
+    "backend/src/test/postgres18/digital_ownership_gate.sql",
+    "backend/src/test/postgres18/digital_ownership_upgrade_gate.py",
+    "backend/src/test/postgres18/library_checkout_http_gate.py",
+    "docs/adr/0026-storefront-help-and-digital-ownership.md",
+    "docs/superpowers/plans/2026-10-05-storefront-library.md",
+    "frontend/src/features/help/HelpRoutes.test.tsx",
+    "frontend/src/shared/api/library.ts"
+  ],
+  "root_edited_protected_files": []
+}

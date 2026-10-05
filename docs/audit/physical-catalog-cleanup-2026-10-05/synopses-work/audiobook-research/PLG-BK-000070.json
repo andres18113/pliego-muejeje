@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000070",
+  "title": "La geometría de las ciudades",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:58.101911+00:00",
+      "response_sha256": "ab9ac0794aad222ada460849208e6a50320f230512681c0c99de186b9ac6c6cb",
+      "extraction_sha256": "fe06fda0daf76181c637ae9b0e836ef57df5d9d4d2cab9068434f223321a9de2",
+      "text": "Guardado en: Autor Principal: Sorando Muzás, José María, (autor.) Formato: eBook Idioma: Spanish Publicado: Madrid : Los libros de la Catarata, 2020. Materias: Desarrollo urbano. Ordenación del territorio. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/233100  ",
+      "observed_page_title": "Existencias: La geometría de las ciudades /",
+      "title_check_response_sha256": "ba4568cb65abed0ec52282091b393d0284a39a03d0f2c2af141c94b56ceffeac",
+      "title_checked_at_utc": "2026-10-05T19:40:05.252451+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:59.665216+00:00",
+      "response_sha256": "9bc4bdfdb8f521b68f6bb9f3e642bf88edfa298a907aaaeea275e3ddcde84734",
+      "extraction_sha256": "fe06fda0daf76181c637ae9b0e836ef57df5d9d4d2cab9068434f223321a9de2",
+      "text": "Guardado en: Autor Principal: Sorando Muzás, José María, (autor.) Formato: eBook Idioma: Spanish Publicado: Madrid : Los libros de la Catarata, 2020. Materias: Desarrollo urbano. Ordenación del territorio. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/233100  "
+    }
+  ]
+}

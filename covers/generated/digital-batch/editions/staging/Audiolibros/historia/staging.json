@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Cleopatra: una vida",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La vida de Cleopatra constituye una entrada biográfica a la historia del antiguo Egipto. El foco en la reina invita a situar una trayectoria personal dentro de un contexto histórico más amplio y a reconocer el vínculo entre biografía y poder. Una lectura para acercarse a una figura del pasado egipcio desde la perspectiva de su vida.",
         "autores": [
           {
             "nombre": "Schiff, Stacy",
@@ -190,7 +190,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "149",
-        "imported_book_id": "148"
+        "imported_book_id": "148",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247386",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000109.json; SHA-256 de respuesta HTTP: 83be9b9baf54e8288b967beefe2fde914b501beabd27dffe9638cc35952c814d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -198,7 +209,7 @@
       "libro": {
         "titulo": "Historia mínima de Brasil",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Brasil se estudia desde su historia y su vida política, dos dimensiones que permiten situar la trayectoria del país. Esta aproximación breve invita a considerar el pasado brasileño como contexto para comprender sus formas de gobierno. Una entrada para quienes desean una orientación general antes de explorar acontecimientos, periodos o problemas particulares de la historia nacional.",
         "autores": [
           {
             "nombre": "Fausto, Boris",
@@ -381,7 +392,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "150",
-        "imported_book_id": "149"
+        "imported_book_id": "149",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB226347",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000101.json; SHA-256 de respuesta HTTP: 2652145f1f67508ad8cbf4efc891d51dc3fbd1f8059143cb2ee0fa98279ebf1a"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -389,7 +411,7 @@
       "libro": {
         "titulo": "Historia mínima de Centroamérica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Centroamérica es el marco de esta aproximación breve a la historia regional. El enfoque invita a considerar el pasado del istmo como un campo de estudio que reúne trayectorias nacionales dentro de un espacio compartido. Una entrada para lectores que desean orientarse en la historia centroamericana antes de profundizar en un país, un periodo o una cuestión particular.",
         "autores": [
           {
             "nombre": "Pastor, Rodolfo",
@@ -572,7 +594,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "151",
-        "imported_book_id": "150"
+        "imported_book_id": "150",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193611",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000141.json; SHA-256 de respuesta HTTP: e352e784630f85f7f8493403bc2ac8057e289c104b7c6e57b3fb6643aee15ab3"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -580,7 +613,7 @@
       "libro": {
         "titulo": "Historia mínima de Chile",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una aproximación breve a la historia de Chile que toma al país como marco de estudio. El enfoque invita a reconocer el pasado chileno como una trayectoria que puede examinarse a través del tiempo. Una entrada para quienes buscan orientación general y desean contar con un contexto antes de profundizar en acontecimientos o periodos particulares de su historia.",
         "autores": [
           {
             "nombre": "Sagredo Baeza, Rafael",
@@ -763,7 +796,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "152",
-        "imported_book_id": "151"
+        "imported_book_id": "151",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193635",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000184.json; SHA-256 de respuesta HTTP: 46d144366097d6cbea9cba2eb9d8f866d9b9567d61b45537d9f4acec3ec9628d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -771,7 +815,7 @@
       "libro": {
         "titulo": "Historia mínima de Cuba",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una entrada breve al pasado de Cuba que permite situar la isla como objeto de estudio histórico. Su alcance nacional ofrece un marco para pensar los cambios de la sociedad cubana y su trayectoria a través del tiempo. Resulta de interés para quien busca una primera orientación antes de abordar periodos o problemas concretos de su historia.",
         "autores": [
           {
             "nombre": "Zanetti Lecuona, Oscar",
@@ -954,7 +998,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "153",
-        "imported_book_id": "152"
+        "imported_book_id": "152",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193629",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000067.json; SHA-256 de respuesta HTTP: cb039ebf0d11600b2adbe9165453c77c9b2c5bcc4c4286c060b720831bb3f8f7"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -962,7 +1017,7 @@
       "libro": {
         "titulo": "Historia mínima de Filipinas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Filipinas ocupa el centro de esta aproximación breve a la historia de un archipiélago asiático. La obra invita a reconocer su trayectoria como un proceso propio y a situarla dentro de un marco histórico más amplio. Es una puerta de entrada para quienes desean conocer el pasado filipino antes de profundizar en estudios especializados.",
         "autores": [
           {
             "nombre": "Machuca Chávez, Paulina",
@@ -1145,7 +1200,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "154",
-        "imported_book_id": "153"
+        "imported_book_id": "153",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194884",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000059.json; SHA-256 de respuesta HTTP: b98355a592a2f133dc245a402a9da43fb87d75b6caba287bde34892685285f05"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1153,7 +1219,7 @@
       "libro": {
         "titulo": "Historia mínima de Israel",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una aproximación histórica a Israel que ofrece un punto de partida para conocer su trayectoria. El enfoque nacional invita a situar las preguntas sobre su pasado en una perspectiva temporal, útil para una primera lectura del tema. Es una entrada al estudio histórico para quienes desean construir contexto antes de profundizar en acontecimientos o debates específicos.",
         "autores": [
           {
             "nombre": "Sznajder, Mario",
@@ -1336,7 +1402,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "155",
-        "imported_book_id": "154"
+        "imported_book_id": "154",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214100",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000075.json; SHA-256 de respuesta HTTP: fd49445e7c8d5e8a2a284ec99c94f54d8934132c6922e6b4db6f48ad158c6601"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1344,7 +1421,7 @@
       "libro": {
         "titulo": "Historia mínima de la deuda externa de Latinoamérica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La deuda externa latinoamericana se presenta como un problema histórico relacionado con los siglos XIX y XX. El tema invita a pensar el endeudamiento dentro de la trayectoria de la región. Una aproximación breve para quienes buscan conocer ese pasado y situar las preguntas económicas en una perspectiva de cambios y continuidades históricas.",
         "autores": [
           {
             "nombre": "Marichal Salinas, Carlos",
@@ -1527,7 +1604,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "156",
-        "imported_book_id": "155"
+        "imported_book_id": "155",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193604",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000282.json; SHA-256 de respuesta HTTP: 69d5dfb1c577026be67d80c4a7585cd57da92acd175d789f5a7b3b53da3c33f4"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1535,7 +1623,7 @@
       "libro": {
         "titulo": "Historia mínima de la eugenesia en América Latina",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La eugenesia en América Latina aparece aquí como un problema histórico y social relacionado con la población, el control de la natalidad y las políticas migratorias. El tema invita a examinar cómo ciertas ideas sobre la constitución humana se vincularon con decisiones públicas. Un acercamiento a una historia en la que ciencia, poder y clasificación social se entrecruzan.",
         "autores": [
           {
             "nombre": "Reggiani, Andrés Horacio",
@@ -1718,7 +1806,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "157",
-        "imported_book_id": "156"
+        "imported_book_id": "156",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194927",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000066.json; SHA-256 de respuesta HTTP: 5bc485fb27908b59b351602152db97567809bec58d5ae9bf7ac92ff352bcb35f"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1726,7 +1825,7 @@
       "libro": {
         "titulo": "Historia mínima de la globalización temprana",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La globalización temprana se sitúa dentro de la historia universal y del estudio histórico de las civilizaciones. El tema invita a pensar las conexiones entre distintas partes del mundo desde una perspectiva temporal. Una aproximación breve para quienes desean conocer el lugar de esos vínculos en el pasado y acercarse a la globalización como proceso histórico.",
         "autores": [
           {
             "nombre": "Hausberger, Bernd",
@@ -1909,7 +2008,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "158",
-        "imported_book_id": "157"
+        "imported_book_id": "157",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194996",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000192.json; SHA-256 de respuesta HTTP: ced8737bd70da3a37f0b73f3093bc61d1947ea29b9fbc3f212951091ed0497c6"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1917,7 +2027,7 @@
       "libro": {
         "titulo": "Historia mínima de la Inquisición",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una aproximación breve a la Inquisición como objeto de estudio histórico. El tema permite abrir preguntas sobre una institución cuyo pasado requiere distinguir contextos, cambios y formas de actuación. Es una entrada para lectores que desean orientarse en su historia y disponer de un punto de partida antes de profundizar en investigaciones sobre periodos o lugares específicos.",
         "autores": [
           {
             "nombre": "Torres Puga, Gabriel",
@@ -2100,7 +2210,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "159",
-        "imported_book_id": "158"
+        "imported_book_id": "158",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194928",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000097.json; SHA-256 de respuesta HTTP: 9b0cbee8b5779e3f6097e5594e66b822b161a41dc4d082f2af4c80054e7a7099"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2108,7 +2229,7 @@
       "libro": {
         "titulo": "Historia mínima de la Revolución cubana",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La Revolución cubana se estudia en relación con la historia y la vida política de Cuba, con atención al periodo comprendido entre 1959 y 1990. Esta aproximación breve ofrece una entrada a ese periodo. Una lectura para quienes desean orientarse en la trayectoria revolucionaria y reconocer su vínculo con las formas de gobierno de la isla.",
         "autores": [
           {
             "nombre": "Rojas, Rafael",
@@ -2291,7 +2412,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "160",
-        "imported_book_id": "159"
+        "imported_book_id": "159",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193640",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000291.json; SHA-256 de respuesta HTTP: 0ce330040216f8f9454ba80f4da9b4a5145a7954b32e29d472c0339df6ac18ea"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2299,7 +2431,7 @@
       "libro": {
         "titulo": "Historia mínima de la transición democrática en México",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La transición democrática mexicana se estudia en relación con las elecciones, la democratización y la vida política de los siglos XX y XXI. El enfoque histórico invita a pensar la democracia como parte de una trayectoria de cambios. Una entrada para quienes desean orientarse en ese proceso y reconocer el vínculo entre transformación política y competencia electoral.",
         "autores": [
           {
             "nombre": "Woldenberg, José",
@@ -2482,7 +2614,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "161",
-        "imported_book_id": "160"
+        "imported_book_id": "160",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193613",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000263.json; SHA-256 de respuesta HTTP: 352dba4522d7f10b76b4780bbb6c6cb11e2054e17a3e8804be65d6ccbeacfe0d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2490,7 +2633,7 @@
       "libro": {
         "titulo": "Historia mínima de las constituciones en México",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia constitucional de México constituye el eje de esta aproximación breve. El libro invita a considerar las constituciones dentro de la trayectoria histórica del país y a plantear preguntas sobre los marcos que organizan su vida política. Una entrada para quienes desean conocer el pasado constitucional mexicano antes de abordar textos, periodos o debates específicos.",
         "autores": [
           {
             "nombre": "Serrano Migallón, Fernando",
@@ -2673,7 +2816,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "162",
-        "imported_book_id": "161"
+        "imported_book_id": "161",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193644",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000166.json; SHA-256 de respuesta HTTP: 7c5c44136e66f2c28df52370204cf04862285ad5005fe636c37b0b33e0351e48"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2681,7 +2835,7 @@
       "libro": {
         "titulo": "Historia mínima de las izquierdas en México",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Las izquierdas mexicanas se estudian en relación con el socialismo, las revoluciones y la distinción política entre derecha e izquierda. El marco histórico remite a las corrientes políticas del siglo XX. Una aproximación breve para quienes desean orientarse en el pasado de estas corrientes y reconocer su lugar dentro de la historia política de México.",
         "autores": [
           {
             "nombre": "Rodríguez Kuri, Ariel",
@@ -2864,7 +3018,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "163",
-        "imported_book_id": "162"
+        "imported_book_id": "162",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194932",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000285.json; SHA-256 de respuesta HTTP: 6d4b9361285120966ac9a0ee0c111bee72ca0ea0290c099b3014e59b8c9277af"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2872,7 +3037,7 @@
       "libro": {
         "titulo": "Historia mínima de los judíos en la antigüedad",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia de los judíos en la antigüedad se aborda con atención al periodo comprendido entre 168 antes de Cristo y 135 después de Cristo Esta aproximación breve ofrece una puerta de entrada a ese pasado. Es una lectura para orientarse en un periodo concreto antes de profundizar en investigaciones sobre sus acontecimientos y contextos.",
         "autores": [
           {
             "nombre": "Roitman, Adolfo D.",
@@ -3055,7 +3220,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "164",
-        "imported_book_id": "163"
+        "imported_book_id": "163",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194893",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000113.json; SHA-256 de respuesta HTTP: 48844527154153e7f771129a764f127b0f2a3b8d8d040c4adfb5e4c91d487f3f"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3063,7 +3239,7 @@
       "libro": {
         "titulo": "Historia mínima de Perú",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Perú es el centro de esta entrada breve al estudio de su historia. La obra invita a acercarse al pasado nacional con una perspectiva de conjunto que permita situar nuevas preguntas. Una lectura para quienes desean comenzar a conocer la trayectoria peruana y disponer de un marco antes de abordar investigaciones sobre etapas, regiones o problemas específicos.",
         "autores": [
           {
             "nombre": "Contreras, Carlos",
@@ -3256,7 +3432,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "165",
-        "imported_book_id": "164"
+        "imported_book_id": "164",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193634",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000187.json; SHA-256 de respuesta HTTP: c806e96bd64d5c9646353ab6c1746fe51a6c0f83f7ff0f92d79ebc19904881ed"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3264,7 +3451,7 @@
       "libro": {
         "titulo": "Historia mínima de Rusia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Rusia, la Unión Soviética y la Federación Rusa conforman el marco histórico de esta aproximación breve. El libro permite plantear la trayectoria rusa a través de denominaciones que remiten a contextos políticos distintos. Una entrada para quienes buscan orientarse en ese pasado y disponer de una perspectiva general antes de explorar periodos específicos con mayor detalle.",
         "autores": [
           {
             "nombre": "Matos Franco, Rainer María",
@@ -3447,7 +3634,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "166",
-        "imported_book_id": "165"
+        "imported_book_id": "165",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214112",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000120.json; SHA-256 de respuesta HTTP: 0c19fa2baae7eae6328da74ef66c9af25463f05252b8b4cfa4fc83eb283c2388"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3455,7 +3653,7 @@
       "libro": {
         "titulo": "Historia mínima de Uruguay",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia de Uruguay se relaciona aquí con el estudio de su política y sus formas de gobierno. La aproximación breve permite plantear el pasado nacional como contexto para la vida pública uruguaya. Una entrada para quienes buscan orientarse en esa trayectoria y desean reconocer la relación entre procesos históricos y organización política del país.",
         "autores": [
           {
             "nombre": "Caetano, Gerardo",
@@ -3638,7 +3836,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "167",
-        "imported_book_id": "166"
+        "imported_book_id": "166",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194885",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000188.json; SHA-256 de respuesta HTTP: ef45ae28416420916bbfac0fad6c2d964d65ead43e0d03f72d379d47439f6398"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3646,7 +3855,7 @@
       "libro": {
         "titulo": "Historia mínima del PRI",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia del Partido Revolucionario Institucional se sitúa en el ámbito de los partidos políticos y del gobierno de México. El libro ofrece una entrada al estudio de una organización central para comprender la vida política mexicana. Su enfoque histórico invita a relacionar la trayectoria partidaria con el contexto en el que se construyen y ejercen las formas de poder.",
         "autores": [
           {
             "nombre": "Hernández Rodríguez, Rogelio",
@@ -3829,7 +4038,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "168",
-        "imported_book_id": "167"
+        "imported_book_id": "167",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194981",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000084.json; SHA-256 de respuesta HTTP: 3931e97217096c17b29bcaaf897c3425da76a4a0730cfd7e95002f249db64315"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3837,7 +4057,7 @@
       "libro": {
         "titulo": "Historia mínima del Tequila",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "José M. Murià recorre la historia del tequila desde el agave y sus antecedentes hasta la industrialización y la expansión internacional de la bebida. Los relatos históricos se relacionan con datos sobre su producción y consumo. Una aproximación que sitúa al tequila dentro de la trayectoria de México y permite conocer el pasado de un producto asociado a su identidad.",
         "autores": [
           {
             "nombre": "Muria, José M.",
@@ -4015,7 +4235,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "169",
-        "imported_book_id": "168"
+        "imported_book_id": "168",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://libros.colmex.mx/tienda/historia-minima-del-tequila/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000294.json; SHA-256 de captura web extraída: 0600b828b652b9439ca42476e7aef05dbcf7661c2771307da9785cf500477f37"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -4023,7 +4254,7 @@
       "libro": {
         "titulo": "Los hombres del faraón: el ejército a finales del Reino Nuevo en el Antiguo Egipto",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El ejército egipcio a finales del Reino Nuevo es el centro de esta mirada histórica a los hombres del faraón. La obra se sitúa en el estudio de la organización militar del antiguo Egipto. Una lectura para quienes desean conocer ese aspecto de la civilización egipcia y pensar la relación entre poder faraónico y actividad militar en un periodo concreto.",
         "autores": [
           {
             "nombre": "Alonso García, José",
@@ -4206,7 +4437,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "170",
-        "imported_book_id": "169"
+        "imported_book_id": "169",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34085",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000161.json; SHA-256 de respuesta HTTP: d10374f892a7e95b52e9f3ffdfb4d53ff88d7cf4d26cc5d8c101b65ab9869e6f"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -4214,7 +4456,7 @@
       "libro": {
         "titulo": "Pirámides, templos y estrellas: astronomía y arqueología en el Egipto antiguo",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Juan Antonio Belmonte relaciona la astronomía con la arqueología del antiguo Egipto a través de monumentos, representaciones estelares y formas de medir el tiempo. La orientación de la Gran Pirámide, el techo astronómico de Senenmut y el zodiaco de Dandara ofrecen ejemplos de ese vínculo. Una mirada a cómo el cielo puede ayudar a interpretar las huellas materiales de una civilización.",
         "autores": [
           {
             "nombre": "Belmonte Avilés, Juan Antonio",
@@ -4392,7 +4634,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "171",
-        "imported_book_id": "170"
+        "imported_book_id": "170",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.planetadelibros.com/libro-piramides-templos-y-estrellas/67478",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000108.json; SHA-256 de respuesta HTTP: 7fd94bd16c4c7e36ea70328725b67f3c87b0a7727e361d392feeeffd152598a7"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

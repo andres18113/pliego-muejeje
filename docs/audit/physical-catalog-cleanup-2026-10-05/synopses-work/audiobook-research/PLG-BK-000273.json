@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000273",
+  "title": "Bases de datos avanzadas",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:28.170096+00:00",
+      "response_sha256": "42a5cc4a065fe6ceb876c6e9af2d9d00e7049a9f3e75a1895619088c583894f3",
+      "extraction_sha256": "9933b7863e530bef40766c328dcdc214f2b091e41885ca8a73840aece45bf671",
+      "text": "Guardado en: Autor Principal: Aramburu Cabo, María José. Otros Autores: Sanz Blasco, Ismael. Formato: eBook Idioma: Spanish Publicado: Castelló de la Plana : Universitat Jaume I. Servei de Comunicació i Publicacions, [2013] Series: Colección Sapientia. ; 73. Materias: Databases. Bases de datos. Computers. Informática. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/51741  ",
+      "observed_page_title": "Existencias: Bases de datos avanzadas /",
+      "title_check_response_sha256": "a37339599f0fdd68ac4783f4a633259a107341d78573a72244387a6e795f8256",
+      "title_checked_at_utc": "2026-10-05T19:39:52.218606+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:29.479170+00:00",
+      "response_sha256": "76cb893a70bd30ae65352398acfa4e7eb7d18a811a7740806d484a5b13fd94b2",
+      "extraction_sha256": "9933b7863e530bef40766c328dcdc214f2b091e41885ca8a73840aece45bf671",
+      "text": "Guardado en: Autor Principal: Aramburu Cabo, María José. Otros Autores: Sanz Blasco, Ismael. Formato: eBook Idioma: Spanish Publicado: Castelló de la Plana : Universitat Jaume I. Servei de Comunicació i Publicacions, [2013] Series: Colección Sapientia. ; 73. Materias: Databases. Bases de datos. Computers. Informática. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/51741  "
+    }
+  ]
+}

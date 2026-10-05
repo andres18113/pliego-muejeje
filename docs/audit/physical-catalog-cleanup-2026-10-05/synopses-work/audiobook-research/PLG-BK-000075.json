@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000075",
+  "title": "Historia mínima de Israel",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214100",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:57.927549+00:00",
+      "response_sha256": "fd49445e7c8d5e8a2a284ec99c94f54d8934132c6922e6b4db6f48ad158c6601",
+      "extraction_sha256": "7f3c69693f1146646f25345e3d76b13f387d8720b7a3b483919486b25772733a",
+      "text": "Guardado en: Autor Principal: Sznajder, Mario, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2018. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Israel > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/214100  ",
+      "observed_page_title": "Existencias: Historia mínima de Israel /",
+      "title_check_response_sha256": "45e09fe7f00ebe0271090a47aae81157a2acf953fb97588c334f567ccd49c32c",
+      "title_checked_at_utc": "2026-10-05T19:40:03.886393+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214100/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:59.307870+00:00",
+      "response_sha256": "f4ca08c326994cd38106ce0652ae57eaf18ef813fe9ecec1cc3e393d930c93f0",
+      "extraction_sha256": "7f3c69693f1146646f25345e3d76b13f387d8720b7a3b483919486b25772733a",
+      "text": "Guardado en: Autor Principal: Sznajder, Mario, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2018. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Israel > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/214100  "
+    }
+  ]
+}

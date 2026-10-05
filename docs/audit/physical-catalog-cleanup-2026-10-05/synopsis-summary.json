@@ -1,0 +1,10 @@
+{
+  "synopses_verified": 425,
+  "edition_metadata_preserved": 504,
+  "unrelated_books_preserved": 76,
+  "only_book_fields_changed": [
+    "synopsis",
+    "updatedAt"
+  ],
+  "public_demonstration_markers_removed": true
+}

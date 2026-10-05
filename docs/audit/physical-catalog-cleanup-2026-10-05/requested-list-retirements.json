@@ -1,0 +1,95 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000085",
+      "editionId": "233",
+      "title": "La literatura española",
+      "format": "EBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000100",
+      "editionId": "222",
+      "title": "Filosofía para Irene",
+      "format": "EBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000118",
+      "editionId": "106",
+      "title": "Ética y política",
+      "format": "AUDIOBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000144",
+      "editionId": "337",
+      "title": "Psicología general (3a. ed.)",
+      "format": "EBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000208",
+      "editionId": "235",
+      "title": "Literatura española",
+      "format": "EBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000220",
+      "editionId": "338",
+      "title": "Psicología médica",
+      "format": "EBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000225",
+      "editionId": "102",
+      "title": "Ética de las nanotecnologías",
+      "format": "AUDIOBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000244",
+      "editionId": "285",
+      "title": "Sociologías de la moda",
+      "format": "EBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000283",
+      "editionId": "231",
+      "title": "La literatura",
+      "format": "EBOOK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000359",
+      "editionId": "470",
+      "title": "Los Simpson y las matemáticas",
+      "format": "PAPERBACK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000411",
+      "editionId": "486",
+      "title": "Medicina de Urgencias de Bolsillo (3a. ed.)",
+      "format": "PAPERBACK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000442",
+      "editionId": "383",
+      "title": "Filosofía para princesas",
+      "format": "PAPERBACK",
+      "state": "INACTIVE"
+    },
+    {
+      "sku": "PLG-BK-000488",
+      "editionId": "433",
+      "title": "El burgués: entre la historia y la literatura",
+      "format": "PAPERBACK",
+      "state": "INACTIVE"
+    }
+  ]
+}

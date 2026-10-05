@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Aproximación a la sociología contemporánea",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Giuliano Tardivo ofrece una entrada al ámbito de la sociología contemporánea. El título orienta la lectura hacia el pensamiento sociológico y las preguntas con las que esta disciplina se acerca a la sociedad. Una propuesta para lectores interesados en ampliar su comprensión de la vida colectiva y situarse ante el estudio social desde una perspectiva actual.",
         "autores": [
           {
             "nombre": "Tardivo, Giuliano",
@@ -182,7 +182,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "270",
-        "imported_book_id": "268"
+        "imported_book_id": "268",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Sociology. Sociología. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -190,7 +201,7 @@
       "libro": {
         "titulo": "El rombo de las investigaciones de las ciencias sociales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pedro Manuel Zayas Agüero dedica esta obra a la investigación en ciencias sociales. El rombo anunciado en el título orienta una propuesta de reflexión sobre el trabajo de investigar dentro de ese campo. Una lectura para quienes desean pensar la organización de la investigación social y su relación con las preguntas que motivan la búsqueda de conocimiento.",
         "autores": [
           {
             "nombre": "Zayas Agüero, Pedro Manuel",
@@ -365,7 +376,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "271",
-        "imported_book_id": "269"
+        "imported_book_id": "269",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Ciencias sociales. Social sciences. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -373,7 +395,7 @@
       "libro": {
         "titulo": "El uso de la encuesta en las ciencias sociales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La encuesta ocupa un lugar específico dentro de la investigación en ciencias sociales. Aníbal Quispe Limaylla dedica esta obra a su utilización en ese campo. Una aproximación para quienes desean relacionar las preguntas sobre la sociedad con formas de obtener información y pensar el papel que desempeña esta herramienta en la construcción del conocimiento social.",
         "autores": [
           {
             "nombre": "Aníbal Quispe Limaylla",
@@ -548,7 +570,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "272",
-        "imported_book_id": "270"
+        "imported_book_id": "270",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Ciencias sociales > Investigación. Social sciences > Research. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -556,7 +589,7 @@
       "libro": {
         "titulo": "Fundamentos de las ciencias sociales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Otto Neurath dedica esta obra a los fundamentos de las ciencias sociales. Su ámbito bibliográfico incluye la terminología de estas disciplinas, vinculando el interés por sus bases con las palabras del conocimiento social. Una lectura para quienes desean pensar cómo se organiza ese campo de estudio y aproximarse a las preguntas que sostienen su elaboración conceptual.",
         "autores": [
           {
             "nombre": "Neurath, Otto",
@@ -731,7 +764,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "273",
-        "imported_book_id": "271"
+        "imported_book_id": "271",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Ciencias sociales > Terminología. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -739,7 +783,7 @@
       "libro": {
         "titulo": "Hackear la ciencia social: una invitación a la investigación social en entornos digitales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Los entornos digitales abren posibilidades de investigación para las ciencias sociales. Jordi Morales i Gras dedica esta obra al vínculo entre investigación social, procesamiento de datos e innovación tecnológica. Una invitación a pensar cómo las preguntas sobre la sociedad pueden encontrarse con recursos digitales y qué significa acercarse al conocimiento social mediante estas formas de trabajo.",
         "autores": [
           {
             "nombre": "Morales i Gras, Jordi",
@@ -914,7 +958,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "274",
-        "imported_book_id": "272"
+        "imported_book_id": "272",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Social sciences > Research > Data processing. Technological innovations. Ciencias sociales > Investigación > Procesamiento de datos. Innovaciones tecnológicas. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -922,7 +977,7 @@
       "libro": {
         "titulo": "Invitación a la sociología de la comunicación",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La comunicación se entrelaza con la opinión pública, la política y los estilos de vida. Jordi Busquet Duran y Alfons Medina Cambrón introducen una mirada sociológica sobre estas relaciones. Una invitación a pensar cómo las prácticas comunicativas forman parte de la organización social y cómo su estudio ayuda a comprender la vida colectiva y sus expresiones culturales.",
         "autores": [
           {
             "nombre": "Busquet Duran, Jordi",
@@ -1107,7 +1162,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "275",
-        "imported_book_id": "273"
+        "imported_book_id": "273",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Sociology. Communication. Communication in politics. Public opinion. Lifestyles. Sociología. Comunicación. Comunicación en política. Opinión pública. Estilos de vida. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1115,7 +1181,7 @@
       "libro": {
         "titulo": "La explicación del comportamiento social: más tuercas y tornillos para las ciencias sociales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Jon Elster centra su obra en la explicación del comportamiento social. El libro se vincula con las ciencias sociales y con el estudio de las interacciones entre personas. Una lectura para quienes desean pensar qué significa comprender las acciones dentro de la vida colectiva y acercarse a las preguntas que acompañan la construcción de explicaciones sociales.",
         "autores": [
           {
             "nombre": "Elster, Jon",
@@ -1290,7 +1356,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "276",
-        "imported_book_id": "274"
+        "imported_book_id": "274",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Social sciences. Social interaction. Ciencias sociales. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1298,7 +1375,7 @@
       "libro": {
         "titulo": "La sociología como vocación",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Inés Alberdi Alonso dirige la atención hacia la sociología como elección de estudio y de actividad. La obra se vincula con la enseñanza de esta disciplina y con la ética social. Una lectura para quienes desean pensar su relación con el conocimiento sociológico y considerar las preguntas que acompañan una dedicación al estudio de la sociedad.",
         "autores": [
           {
             "nombre": "Alberdi Alonso, Inés",
@@ -1473,7 +1550,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "277",
-        "imported_book_id": "275"
+        "imported_book_id": "275",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Sociology > Study and teaching. Social ethics. Sociología > Estudio y enseñanza. Ética social. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1481,7 +1569,7 @@
       "libro": {
         "titulo": "Las ciencias sociales en discusión",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Mario Bunge dirige la atención hacia las ciencias sociales como campo de discusión y de investigación. La obra se relaciona con la sociología y con las preguntas sobre el conocimiento de la sociedad. Una lectura para quienes desean examinar la actividad de investigar fenómenos sociales y pensar los fundamentos del trabajo que realizan estas disciplinas.",
         "autores": [
           {
             "nombre": "Bunge, Mario",
@@ -1656,7 +1744,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "278",
-        "imported_book_id": "276"
+        "imported_book_id": "276",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Sociología. Investigación en ciencias sociales. Sociology. Social sciences. Sociologia Investigacion Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1664,7 +1763,7 @@
       "libro": {
         "titulo": "Proyectos de investigación en ciencias sociales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Plantear una investigación social supone convertir un interés por la realidad en una propuesta de estudio. Marisa D’Aquino y Ethel Rodríguez dedican esta obra a los proyectos de investigación en ciencias sociales. Su tema invita a pensar la relación entre las preguntas de conocimiento y la organización del trabajo necesario para explorarlas de manera fundamentada.",
         "autores": [
           {
             "nombre": "Marisa D’Aquino",
@@ -1849,7 +1948,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "279",
-        "imported_book_id": "277"
+        "imported_book_id": "277",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Ciencias sociales. Social sciences. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1857,7 +1967,7 @@
       "libro": {
         "titulo": "Sociología de la religión",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Max Weber aborda la religión desde una perspectiva sociológica. La obra sitúa las creencias y la vida religiosa dentro del estudio de las sociedades, abriendo preguntas sobre sus relaciones con la experiencia colectiva. Una lectura para quienes desean aproximarse a la sociología de la religión y conocer ese ámbito de reflexión a través de uno de sus autores clásicos.",
         "autores": [
           {
             "nombre": "Weber, Max",
@@ -2032,7 +2142,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "280",
-        "imported_book_id": "278"
+        "imported_book_id": "278",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Religion and sociology. Sociología de la religión. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2040,7 +2161,7 @@
       "libro": {
         "titulo": "Sociología de las organizaciones complejas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Las organizaciones complejas constituyen un ámbito de preguntas para la sociología. José Ignacio Ruiz Olabuénaga dedica esta obra a su estudio, con una vinculación bibliográfica a la sociología industrial. Una lectura para quienes desean pensar cómo la vida colectiva se organiza y acercarse al conocimiento sociológico de las estructuras que reúnen actividades y personas.",
         "autores": [
           {
             "nombre": "Ruiz Olabuénaga, José Ignacio",
@@ -2215,7 +2336,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "281",
-        "imported_book_id": "279"
+        "imported_book_id": "279",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Sociología industrial. Industrial sociology. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2223,7 +2355,7 @@
       "libro": {
         "titulo": "Sociología del mal",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El mal puede pensarse también desde sus dimensiones sociales. Salvador Giner de San Julián dedica esta obra a una aproximación sociológica al tema, abriendo un espacio para reflexionar sobre su presencia en la vida colectiva. Una lectura para quienes se interesan por las preguntas que surgen al relacionar los juicios sobre el mal con la experiencia de las sociedades.",
         "autores": [
           {
             "nombre": "Giner de San Julián, Salvador",
@@ -2398,7 +2530,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "282",
-        "imported_book_id": "280"
+        "imported_book_id": "280",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mal. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2406,7 +2549,7 @@
       "libro": {
         "titulo": "Sociología del saber",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Max Scheler se acerca al saber desde su dimensión social y cultural. La obra se vincula con la reflexión filosófica sobre la cultura y la civilización. Una lectura para quienes desean pensar el conocimiento en relación con la vida colectiva y explorar las preguntas que plantea la sociología del saber a través de este autor.",
         "autores": [
           {
             "nombre": "Max Scheler",
@@ -2581,7 +2724,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "283",
-        "imported_book_id": "281"
+        "imported_book_id": "281",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Filosofia. Filosofia cultural. Civilization > Philosophy. Culture > Philosophy. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2589,7 +2743,7 @@
       "libro": {
         "titulo": "Sociología jurídica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El derecho también puede examinarse como parte de la vida social. Pedro Pablo Hernández sitúa su obra en la sociología jurídica, ámbito que relaciona las normas con las sociedades en las que actúan. La lectura invita a considerar la dimensión colectiva de los fenómenos jurídicos y las preguntas que surgen cuando se estudia su vínculo con la experiencia social.",
         "autores": [
           {
             "nombre": "Hernández, Pedro Pablo",
@@ -2764,7 +2918,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "284",
-        "imported_book_id": "282"
+        "imported_book_id": "282",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Sociological jurisprudence. Sociología jurídica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2955,7 +3120,7 @@
       "libro": {
         "titulo": "Tragedia y sociología",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Ramón Ramos Torre reúne tragedia y sociología en una reflexión vinculada a la cultura y a las ciencias sociales. La percepción del riesgo y la sociología histórica forman parte del ámbito bibliográfico de la obra. Una lectura para quienes desean pensar la experiencia social desde preguntas que conectan interpretación cultural, historia y reflexión filosófica.",
         "autores": [
           {
             "nombre": "Ramos Torre, Ramón",
@@ -3130,7 +3295,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "286",
-        "imported_book_id": "284"
+        "imported_book_id": "284",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Culture. Social sciences > Philosophy. Risk perception. Historical sociology. Sociología cultural. Enseñanza superior. Filosofía. Sociología histórica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

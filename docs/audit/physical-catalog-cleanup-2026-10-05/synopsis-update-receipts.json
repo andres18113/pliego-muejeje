@@ -1,0 +1,2979 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000316",
+      "bookId": "470",
+      "changed": false,
+      "synopsis_sha256": "5c9756cc3d5d7a841cd1e3fdad6a2e7dd7679c5a0df4b1354018135fb93af80a",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000317",
+      "bookId": "404",
+      "changed": false,
+      "synopsis_sha256": "aeb51f0e191561f2d1bd9420e46b091171df147de6e59b7a683d1e3ba95666e4",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000318",
+      "bookId": "433",
+      "changed": false,
+      "synopsis_sha256": "0851ebc024fb55313dc88728c65ebe0bb5f7cc46005130cfa7ca5e2c470cb10b",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000319",
+      "bookId": "402",
+      "changed": false,
+      "synopsis_sha256": "670f0ba3c6b0b7898a1a1f7f1a7cc75ba942ff10a5bbea1e8abd86737e9157ff",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000320",
+      "bookId": "444",
+      "changed": false,
+      "synopsis_sha256": "72786e518f3653f766403b3d0039649badf649c0dcd40bce178a1d7b5284e301",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000321",
+      "bookId": "389",
+      "changed": false,
+      "synopsis_sha256": "35cc2cb40434d308c86f91e5a6697ac6ad249eb09ec99f5ffd2aa35bf5716d27",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000322",
+      "bookId": "467",
+      "changed": false,
+      "synopsis_sha256": "f93efaa1eb9503df9c65800931c6158a48ecb81d2892c9fcaf913cad5a0dfc7a",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000323",
+      "bookId": "397",
+      "changed": false,
+      "synopsis_sha256": "e65b143e82cf33450c23d4030468a891f76f92baafb06eab718ed81a00b4fc79",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000324",
+      "bookId": "516",
+      "changed": false,
+      "synopsis_sha256": "f1010c3d3c52f295185417f067beb45421adbb8a3f8f4adf5308cbf78981ddb9",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000325",
+      "bookId": "398",
+      "changed": false,
+      "synopsis_sha256": "6747f8541f162e3eeebd7bdc00e74016e443ce6cead49fb940e9ae2353b54bbd",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000326",
+      "bookId": "400",
+      "changed": false,
+      "synopsis_sha256": "146c3f04886be49a2482049d4ad291a56cbee4fc02a6bd7a7dab32fe559d98b6",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000327",
+      "bookId": "390",
+      "changed": false,
+      "synopsis_sha256": "1906eea1c9af0010e3738ce12464494995087b55f6258719c2d9a4c62fc7da45",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000328",
+      "bookId": "435",
+      "changed": false,
+      "synopsis_sha256": "32997466a30d4914d55ecefb5486d314b8c2f986ac812dd905d841794908a852",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000329",
+      "bookId": "529",
+      "changed": false,
+      "synopsis_sha256": "ceba6eb289dd4faf0bce066acf37f4f1aaa8ecfc3322da7a72cc6be854577d33",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000330",
+      "bookId": "462",
+      "changed": false,
+      "synopsis_sha256": "d33b618799e0d83ac1418e786a8c2962acaf89854cc71d6f8744f082faaf3aaa",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000331",
+      "bookId": "493",
+      "changed": false,
+      "synopsis_sha256": "61e230e4838076cb4c332961e92bd483520142ca78467ff76992662b02707bba",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000332",
+      "bookId": "405",
+      "changed": false,
+      "synopsis_sha256": "9f3e82f6c10159d70ec65c66f8fed701153d4f2cb82fa8242c312e94b73b8ab3",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000333",
+      "bookId": "359",
+      "changed": false,
+      "synopsis_sha256": "1ec829f0da1e08e018144df810d19226579ea5312b1ccb9fc07ab343e4ac2723",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000334",
+      "bookId": "498",
+      "changed": false,
+      "synopsis_sha256": "3faaa852c1182ef6419c8b4e6cfe2cc51aded96e502cfb18134fca81f79f0754",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000335",
+      "bookId": "465",
+      "changed": false,
+      "synopsis_sha256": "95184c5477c2cc87c7a43c7e09a428fef83a97c812883058fa75d806f215e380",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000336",
+      "bookId": "443",
+      "changed": false,
+      "synopsis_sha256": "a9bc35e2efc1ef9a8e58a4fbe4c6f65fcdc7ff85d9773f576ed375a78b537c75",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000337",
+      "bookId": "376",
+      "changed": false,
+      "synopsis_sha256": "798033572292524dfd98cee5da0f67991e8fd2fac2a060dfcb927ce665408be0",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000338",
+      "bookId": "495",
+      "changed": false,
+      "synopsis_sha256": "4519db8c598a44566aebad697c96455d97e84b530893ce14035509e41eb9b21a",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000339",
+      "bookId": "375",
+      "changed": false,
+      "synopsis_sha256": "102b25c0d58dd89d901b0f40543bc420ede732535294783cef8fce2019f3c586",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000340",
+      "bookId": "441",
+      "changed": false,
+      "synopsis_sha256": "1df2738dd14dcc7bc3247663269421f9d532e6b7e1c8a7c1749ffd232e0ee616",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000341",
+      "bookId": "461",
+      "changed": false,
+      "synopsis_sha256": "bf88aa6603759be86de2fe3a4a0ad14c102f857cd68b339d5fa1bfc97f9ab0de",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000342",
+      "bookId": "460",
+      "changed": false,
+      "synopsis_sha256": "e4d2029ab971d8dfe7768342038bb53a678840a8e09458d1ecf609a301821037",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000343",
+      "bookId": "425",
+      "changed": false,
+      "synopsis_sha256": "2804517fb659b5c7c370ec7b1087d33e507a36600af747b4d641b7dd4b934a04",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000344",
+      "bookId": "399",
+      "changed": false,
+      "synopsis_sha256": "9b4cef76f8a3e44e7c2b828d6d8188d9357b845adecc4766aef4b17ad70afa92",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000345",
+      "bookId": "525",
+      "changed": false,
+      "synopsis_sha256": "5c539aaf7234b2918f862481359022d19e048063ae84c2114860b1af287e5d81",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000346",
+      "bookId": "406",
+      "changed": false,
+      "synopsis_sha256": "178962c5ba14502aa6beeed873e7bf5a3d3cb212b711f763b263e4a31383973c",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000347",
+      "bookId": "409",
+      "changed": false,
+      "synopsis_sha256": "f1cd101e6938e52ebda9b7a4af1666375cbf4219855f26ba6ff058565d7d2274",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000348",
+      "bookId": "515",
+      "changed": false,
+      "synopsis_sha256": "b22cbb754cf7837f5d0e0f1b62e5bd66d912a30a02224ea829a523f873fe1d51",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000349",
+      "bookId": "439",
+      "changed": false,
+      "synopsis_sha256": "db349fae39856d92eb21d9f92a3b4598dbfc31edb5f8025bb29c520b82a36427",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000350",
+      "bookId": "426",
+      "changed": false,
+      "synopsis_sha256": "29176087190028f58e31f1593d2b9ebcb5b5ff62e9a41ba0338951040034bd9a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000351",
+      "bookId": "364",
+      "changed": false,
+      "synopsis_sha256": "88fcbf15d096ee17fc10bc6acaae277348910c297c4593be061ec4cead9aae3e",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000352",
+      "bookId": "407",
+      "changed": false,
+      "synopsis_sha256": "6fef084e108b8d7edd55d6a10b038ac10427fcc282d0238d31c5c618cd357383",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000353",
+      "bookId": "412",
+      "changed": false,
+      "synopsis_sha256": "4f18ce88d0a4fc6713ed84bdba79ef5d3b5abbdeba19a060bcfbca7e4f0f268b",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000354",
+      "bookId": "489",
+      "changed": false,
+      "synopsis_sha256": "c841c5eaf0f855c3d97556bc358d0d984a1454557d870d6f5abf721fe3bc9062",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000355",
+      "bookId": "438",
+      "changed": false,
+      "synopsis_sha256": "ba5f4a93dfc3baead39cc095643d9cb5a40de1bfd41edd5b4e5932b635ae6c9d",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000356",
+      "bookId": "451",
+      "changed": false,
+      "synopsis_sha256": "92a9ca52a4d4e58046ec9e92cb3300cba1f01151dcdb680ec2f3c8ac6305b280",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000357",
+      "bookId": "370",
+      "changed": false,
+      "synopsis_sha256": "044c6d13c3121a968b2be2138c5649f0cb400d08eb00f6466d0491665a4960da",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000358",
+      "bookId": "436",
+      "changed": false,
+      "synopsis_sha256": "cc332a0eb9e84d4202c5f1831e1cd240d53d0e67b69ff45459f8778a7c98cf21",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000360",
+      "bookId": "455",
+      "changed": false,
+      "synopsis_sha256": "0e37178fb9fa1d04657b07dabd675beeb50516463f7b5b0f0e497f0ba207bcee",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000361",
+      "bookId": "468",
+      "changed": false,
+      "synopsis_sha256": "e87186f4ce92e189ec894e03842cb571fac49d5cfd6d421f880f5492be204886",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000362",
+      "bookId": "513",
+      "changed": false,
+      "synopsis_sha256": "9756e52e50f8adbf1a0aa6380307d5477d00573b89b97021ff10899bef445dc6",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000363",
+      "bookId": "520",
+      "changed": false,
+      "synopsis_sha256": "c25e279bc3f6aeceb88af3ad2936b520ee915acfca28e1c0ddae5a521426b992",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000364",
+      "bookId": "450",
+      "changed": false,
+      "synopsis_sha256": "91c514d3f62bb32a0a90a515043dc77cef3dd43a6d6dffe690f33ea718c88212",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000365",
+      "bookId": "418",
+      "changed": false,
+      "synopsis_sha256": "cfe7b1a8a312ba5dbcc331472647527e699c74160a27ece20b4a4cf755034337",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000366",
+      "bookId": "396",
+      "changed": false,
+      "synopsis_sha256": "b162240ee9bcdcb0bf606ff318ec83e47cd101f6ca72a257d9263a1829eec6a5",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000367",
+      "bookId": "514",
+      "changed": false,
+      "synopsis_sha256": "5addb4ae8b2475cb8a529202594a979d5e55cd19ea86034298ed599729f3c5bc",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000368",
+      "bookId": "380",
+      "changed": false,
+      "synopsis_sha256": "41c98caabdec1b684d12666b08f4a0d303721644cd2a068ba1829a9b6db0845f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000369",
+      "bookId": "381",
+      "changed": false,
+      "synopsis_sha256": "f50f5448b4d4875f11fe2461d73b1b728c23e3fa78d139ce8cfc507e9e20d469",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000370",
+      "bookId": "411",
+      "changed": false,
+      "synopsis_sha256": "b0d50a8ac79354283b8fab5de2c68c932a45c90f02e18b5b0b46759e295df199",
+      "basis_kind": "PRIMARY_TEXT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000371",
+      "bookId": "401",
+      "changed": false,
+      "synopsis_sha256": "c53afeb217681f66188ace02755ce4b2b831d8ea1b92323401b4da49d4e22e2e",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000372",
+      "bookId": "453",
+      "changed": false,
+      "synopsis_sha256": "cbb7d76ee625ead8e7072edc7cbcf33583bea92bd47af9ea3d65e6c70caf69ee",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000373",
+      "bookId": "437",
+      "changed": false,
+      "synopsis_sha256": "890b37263a2c4a6125b3020bfc1e39a76617c66da5453b7da4673f245cf2b228",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000374",
+      "bookId": "414",
+      "changed": false,
+      "synopsis_sha256": "134d6d43626d2ff2523449c6a7a22d445e9536c39fb6ccf6a8888f27bb1499c2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000375",
+      "bookId": "500",
+      "changed": false,
+      "synopsis_sha256": "2cfcf080e73268afc61a9873a0af034b1a147da6dc0a8cf7ee386e144ab1c2cc",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000376",
+      "bookId": "442",
+      "changed": false,
+      "synopsis_sha256": "38a921db5ef1a7a7ed1588b49ba4bd136cf6e8a241ec6e16b849828d70540d30",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000377",
+      "bookId": "501",
+      "changed": false,
+      "synopsis_sha256": "e1938fcd87697c86345ea53a12931622cab447fd18d9ff2ccb3472b331db927f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000378",
+      "bookId": "471",
+      "changed": false,
+      "synopsis_sha256": "7187ba64b236d2141a5282a5cc093d6aa49c45518a36b4231af1057418afd6fc",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000379",
+      "bookId": "502",
+      "changed": false,
+      "synopsis_sha256": "fca37f11866ea329e2d9265ecc25c6f00155318c7873671ecaf9e83d79c3a438",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000380",
+      "bookId": "503",
+      "changed": false,
+      "synopsis_sha256": "bcbe8636a128aad84c1be3db5f3dc1065a7c40c5cd3539f6a1fc48b7a08624d0",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000381",
+      "bookId": "504",
+      "changed": false,
+      "synopsis_sha256": "7124a98264f8950e1a390cfa050c65f5c16c00e2a57a3e23c25c434ed5b86933",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000382",
+      "bookId": "528",
+      "changed": false,
+      "synopsis_sha256": "e50f54ab61d7b02dff3e06aa9a3d559e217c09ff56a8f6430257f2ed418e1499",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000383",
+      "bookId": "472",
+      "changed": false,
+      "synopsis_sha256": "cfb6b0757dbb4cdec5ff0412d842ddedccf7b220b9902b2ac31649ce4a0260e7",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000384",
+      "bookId": "473",
+      "changed": false,
+      "synopsis_sha256": "7b2c84925fcc83fc6eb3e31baf61f213c91ac4d31c91f287a877ee13fa66bdc0",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000385",
+      "bookId": "474",
+      "changed": false,
+      "synopsis_sha256": "bf2e386b725e65350e2238480c238ace08cdba9991f3ebfb5bc13a6947c04cfe",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000386",
+      "bookId": "475",
+      "changed": false,
+      "synopsis_sha256": "c06b3bac88426b04b1d0c840130020d0f761fa8261bce567ebd1c0600d454b8e",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000387",
+      "bookId": "476",
+      "changed": false,
+      "synopsis_sha256": "3ea903950e84cf24896f55cdec3474a880cc419355fb98d140392651ca1892d2",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000388",
+      "bookId": "477",
+      "changed": false,
+      "synopsis_sha256": "f61e514305e3d18b09e3ae5781e43e26d8fd6b6d62ebf371b35735d17db40160",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000389",
+      "bookId": "505",
+      "changed": false,
+      "synopsis_sha256": "8c67d1bef91f15b0359f7e8dd599224d709f5a568224d368afcd7b068b8f1e40",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000390",
+      "bookId": "350",
+      "changed": false,
+      "synopsis_sha256": "ea4acf0625af7a242f7e10741998b043ad216d2ea9d6fcc6aacb4e84eff9c272",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000391",
+      "bookId": "416",
+      "changed": false,
+      "synopsis_sha256": "46a69b9c75fb02313c5ce792644f1cbb866aa1538183d1bd1d5655f1a4784c8f",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000392",
+      "bookId": "446",
+      "changed": false,
+      "synopsis_sha256": "a22e4f500b296a5fb17c138e0ab4fb0614975138a44e5b4bb2b06e5eaef05e39",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000393",
+      "bookId": "385",
+      "changed": false,
+      "synopsis_sha256": "3fbf0a3f3229595638354f0078f93dd99aa95c6243b26aeb879d0c2a8b6242d2",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000394",
+      "bookId": "351",
+      "changed": false,
+      "synopsis_sha256": "255e08ee114b6b3ec29d6084aa3f4f5f698a6944dc9fb433980d5710cdfaa315",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000395",
+      "bookId": "417",
+      "changed": false,
+      "synopsis_sha256": "6f890b554eca167525920e049ab8a3898a55c6bcd39e8be0c12da45c22ac7d15",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000396",
+      "bookId": "386",
+      "changed": false,
+      "synopsis_sha256": "8f11ef8b33286c131db08c1d090980d907c4482052864825a5f0b73505d58962",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000397",
+      "bookId": "384",
+      "changed": false,
+      "synopsis_sha256": "e241b5f251e32e25344fe7478e439b857f3cd13ff22bf0e239de1ff08368c6fc",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000398",
+      "bookId": "497",
+      "changed": false,
+      "synopsis_sha256": "bfbd0f82c773487a5a56e9ab366234512cc2e3246141f13f3a9961c174467e51",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000399",
+      "bookId": "463",
+      "changed": false,
+      "synopsis_sha256": "33b7543167c7b494302995b9737d70a3f84af7c71fc82e2a83c31df4c8d04ecf",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000400",
+      "bookId": "447",
+      "changed": false,
+      "synopsis_sha256": "c7d06c85091036e4d7aa21bad6474a711d3aed5a8c3272d3e8934f155b69afbb",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000401",
+      "bookId": "469",
+      "changed": false,
+      "synopsis_sha256": "c36f7741ef92c6e79f14dc88edd8b37e5a4b6df3fb94c4996cb72dc7fa9d47ab",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000402",
+      "bookId": "457",
+      "changed": false,
+      "synopsis_sha256": "f671aaa16bbe523171e822a9ccf633fb91d7e2b54b37a269ea11e7b65bef5ce6",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000403",
+      "bookId": "458",
+      "changed": false,
+      "synopsis_sha256": "d3964d00e539f027f0dd99238f82534dadc8b9f1159191c24a879fd3d3a6e787",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000404",
+      "bookId": "459",
+      "changed": false,
+      "synopsis_sha256": "fe98f34be0a2b7179a200f92730dc8b268d2f1cad61cfcb1fa116d68a901e3f6",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000405",
+      "bookId": "378",
+      "changed": false,
+      "synopsis_sha256": "08a5ca9221c2769aedb97eb8574d0089e85687ca37b9020fb82923bb6e542e19",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000406",
+      "bookId": "506",
+      "changed": false,
+      "synopsis_sha256": "091ad34e4555b4f8d2d62cf1772a24d9cb4babfc0013ebe95ded63d163ea9427",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000407",
+      "bookId": "485",
+      "changed": false,
+      "synopsis_sha256": "d1c5f3f03c1d25a9e8a2f985480ac8bc00b4139a7e2d37cb6a644da2f4b9aa25",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000408",
+      "bookId": "486",
+      "changed": false,
+      "synopsis_sha256": "32a7defc6fe5d84dd7ddebb3443ac98c0ea3b0a7cdc446d472448a8752c2cefd",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000409",
+      "bookId": "487",
+      "changed": false,
+      "synopsis_sha256": "2847b8d757f865ef689b20cecee39373546925b30aabd663bfca18cfd5e36ca0",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000410",
+      "bookId": "484",
+      "changed": false,
+      "synopsis_sha256": "5e298456e6dd99fb23ee9609a3c2f0a9008a49042c16f8b346ab16f833dc4f6a",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000412",
+      "bookId": "431",
+      "changed": false,
+      "synopsis_sha256": "7f69f4bc0913ac735de33290b0ec50578c4ccbc13eca1c288d65c8fe91e220ea",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000413",
+      "bookId": "432",
+      "changed": false,
+      "synopsis_sha256": "2894a36219ee5c9a4e759f7e69caef885017852b3e73b79540ae909acd055d84",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000414",
+      "bookId": "374",
+      "changed": false,
+      "synopsis_sha256": "b8ce89a852b2fc3a6885feee600b5f2bf1fff2ead320f2c6f9ac78e43dc49dd5",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000415",
+      "bookId": "352",
+      "changed": false,
+      "synopsis_sha256": "10fd29227c41bb74eb7e36366f789660cf78b5764ed5cc468e1ce570ec5c38f2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000416",
+      "bookId": "507",
+      "changed": false,
+      "synopsis_sha256": "23ff319498cd97f6b6dd264f57c67e7ca10c57637063906d20a91373c18cb7d2",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000417",
+      "bookId": "366",
+      "changed": false,
+      "synopsis_sha256": "c4865c387d51e47625966475b114f71101de983a79d67fc5d816d65f17c37f7d",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000418",
+      "bookId": "353",
+      "changed": false,
+      "synopsis_sha256": "2fb3abaf56d5c899036985a83d741af771ed8cd97204585ecfb620f4299db448",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000419",
+      "bookId": "354",
+      "changed": false,
+      "synopsis_sha256": "7021807374f3390ac6bbe4d7b015202b33318c41584a6ae9ae80bdcefae6bd66",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000420",
+      "bookId": "355",
+      "changed": false,
+      "synopsis_sha256": "a10eec52623dd6f25caef6e32c9ee8097b4bc6aec7d8c45084d0400756fb0f92",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000421",
+      "bookId": "445",
+      "changed": false,
+      "synopsis_sha256": "07a5bc7ceac21bd7a6d17a4cd2e9ceea39ff6af3c5e5671087de4ee71d6cda30",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000422",
+      "bookId": "356",
+      "changed": false,
+      "synopsis_sha256": "b8f400ad6a9cbb724030aea0fd11b04a145f833d8c375588daf064395e1a40ee",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000423",
+      "bookId": "508",
+      "changed": false,
+      "synopsis_sha256": "b2b2b6a02849d1460849c4e302391098b814315145deb992f83e39d761b7a0ee",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000424",
+      "bookId": "464",
+      "changed": false,
+      "synopsis_sha256": "aa6d1fa18bb7827415d60491b4f6e93419b7193da9e3d84dea0ddf942a550acf",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000425",
+      "bookId": "420",
+      "changed": false,
+      "synopsis_sha256": "1978eab14c8edd95f783d9ca8eaa87f55ab131ec65f1bfe3c20443fd8ef7ac24",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000426",
+      "bookId": "383",
+      "changed": false,
+      "synopsis_sha256": "227a802a2ca1a753a1bef5cc99d692c95b7c20beff646929ed0bbef49ddf7611",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000427",
+      "bookId": "430",
+      "changed": false,
+      "synopsis_sha256": "141b7b2b83ee2ecd7b15030b6c2fdab4e28d44815918b96c2cb4c1d127e1a02e",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000428",
+      "bookId": "478",
+      "changed": false,
+      "synopsis_sha256": "2836f70f871f08d74c5180734fb0a05925979fd21e0a0dff677b765b2e75ae79",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000429",
+      "bookId": "509",
+      "changed": false,
+      "synopsis_sha256": "fa0887fe4332a766d9960eaba327520317ce928537d7515646691e79e05c5dd7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000430",
+      "bookId": "421",
+      "changed": false,
+      "synopsis_sha256": "fdf2c505f3213a1d4be3694e948ebc8a94b4660a3bc07ce9a2ccc59bd5553989",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000431",
+      "bookId": "511",
+      "changed": false,
+      "synopsis_sha256": "970628188a4551487701e3231ec73e7c42970fd86c2133aef452847e605c8254",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000432",
+      "bookId": "422",
+      "changed": false,
+      "synopsis_sha256": "8fe6b1426dc16737c901241aaee15c8129b5c8758be0a2e4fa4d6702a1fb2c87",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000433",
+      "bookId": "423",
+      "changed": false,
+      "synopsis_sha256": "4fe959039f64f3b211573cb31fbb552b7979ad3d1c4f3f414ae0163a1a6e5121",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000434",
+      "bookId": "413",
+      "changed": false,
+      "synopsis_sha256": "0c062a2c0488f72e06c99998acfb0ee22a970418c2810adb6e439fbd0a015da2",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000435",
+      "bookId": "434",
+      "changed": false,
+      "synopsis_sha256": "0e1bcdc2aa84af9a6e3e1324139e944a6ea47b4fcf74c6d1a8bc0e2f103ddfec",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000436",
+      "bookId": "479",
+      "changed": false,
+      "synopsis_sha256": "4f891f2fe32f34a8f5c45494c3c9e20e8546b599e9dd02e7c60d2367f1f99855",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000437",
+      "bookId": "480",
+      "changed": false,
+      "synopsis_sha256": "2c742ba1f97d786b54b13c91647ae998ab772a4dcf6c08833f2a58f19b887dc0",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000438",
+      "bookId": "358",
+      "changed": false,
+      "synopsis_sha256": "91117c4a215aa6abbc9b5974aaecc7c6f4c346e59ffcd8abcbd2736ca8b9bca7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000439",
+      "bookId": "481",
+      "changed": false,
+      "synopsis_sha256": "02907f05071473a40fc830f1f9640f3a540a824915f00e3737a9e6dbd1c5078e",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000440",
+      "bookId": "512",
+      "changed": false,
+      "synopsis_sha256": "64dfdcb267fe578925729990adc8db41e1921478f30182b7e3b4678c60bc1209",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000441",
+      "bookId": "521",
+      "changed": false,
+      "synopsis_sha256": "9152a20e9b6048da6a73c85681e2bdfbd9158de4b83f40df0261fdadcb6d0491",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000443",
+      "bookId": "377",
+      "changed": false,
+      "synopsis_sha256": "efe52cdf02caf77850680a5e338a58eb5f179454eb5e45b9c9d1bd42d46f532b",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000444",
+      "bookId": "419",
+      "changed": false,
+      "synopsis_sha256": "8e033c98a3404d4cb0f181698cf4b918ddfbdade179736a2b14cf5075ab6dc15",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000445",
+      "bookId": "424",
+      "changed": false,
+      "synopsis_sha256": "05fe7fc575bea18eb49511ac30c57c04377d050429eccd30dae2d3024685cc0f",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000446",
+      "bookId": "488",
+      "changed": false,
+      "synopsis_sha256": "9e98c8be1d2144a292ebfabb341b734a9f1bcfb1b952b3ce8ae7d87ed18b2cf1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000447",
+      "bookId": "382",
+      "changed": false,
+      "synopsis_sha256": "6cd962cc9bb157951acaf15372a63ffe769895ff3d229051e248f22f0406bacc",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000448",
+      "bookId": "360",
+      "changed": false,
+      "synopsis_sha256": "2eaacd1dd54007b74faeca13ac204e733449007e1b25cb1102d2778ba352da91",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000449",
+      "bookId": "357",
+      "changed": false,
+      "synopsis_sha256": "19e3a83d46af1a6b3a6252f7e9f74191c925760cb2ced4d7232842573b1a5441",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000450",
+      "bookId": "410",
+      "changed": false,
+      "synopsis_sha256": "cc3eadd6dd5ce8deb1225e8136bb8ec2c049072ec48c68eb8a47888c34da81de",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000451",
+      "bookId": "440",
+      "changed": false,
+      "synopsis_sha256": "53b589c10d10ee62609f1e954fd0afedaf23a706bf1c834761d25eac08c4e9b1",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000452",
+      "bookId": "365",
+      "changed": false,
+      "synopsis_sha256": "2f256dd110660bb0f796ad28086e16be2b5abed25f0a4326c64c519208b6ce20",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000453",
+      "bookId": "510",
+      "changed": false,
+      "synopsis_sha256": "323951e228479659a5d8398bf7195b744d6de25fb1ca579908b41ddc85d03c96",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000454",
+      "bookId": "519",
+      "changed": false,
+      "synopsis_sha256": "ed8a15be1d53a81adb3f9bf41e3a75e0c67adf3ac38b0bbf00dd9226b6ddaf83",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000455",
+      "bookId": "518",
+      "changed": false,
+      "synopsis_sha256": "d4a02f8c3f0af11e733a72d96fe76c80367e0bccd457075bac2e87d757f2f998",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000456",
+      "bookId": "388",
+      "changed": false,
+      "synopsis_sha256": "1a32166c96f6d63375285403ddfc4d87d5bbd239004e3a4574aced3c4a334a99",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000457",
+      "bookId": "452",
+      "changed": false,
+      "synopsis_sha256": "ba2c12cd856828a14468c6173fe23aebc1e3a654e8ef3fdc32275dfdc11e168a",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000458",
+      "bookId": "408",
+      "changed": false,
+      "synopsis_sha256": "cffa8be6b01e2f8d60437d07e99b78996c01d085bcee1141bc36916ad6c40ed1",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000459",
+      "bookId": "367",
+      "changed": false,
+      "synopsis_sha256": "336327c0892e6991bafb4edbf53c02b1b5749ffae15ffe35232641c9906fcc71",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000460",
+      "bookId": "361",
+      "changed": false,
+      "synopsis_sha256": "da433fa5305b2465531ecf7a420cd862a897952131075abc7c696ad67b877787",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000461",
+      "bookId": "362",
+      "changed": false,
+      "synopsis_sha256": "b5d1ff9d9002202cdf444d2798616b1562695e01507db1c549d2f2c00988dc68",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000462",
+      "bookId": "527",
+      "changed": false,
+      "synopsis_sha256": "fe8dc157a103bc00e344997998e0deb0b1e2e2c63ecd67db5e7fe4f963718596",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000463",
+      "bookId": "524",
+      "changed": false,
+      "synopsis_sha256": "005e52196b6a8ca6a5c07e23a20ecaa3a2208523da1f5f833cf019e5be5efb4e",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000464",
+      "bookId": "448",
+      "changed": false,
+      "synopsis_sha256": "19d7448392c667e611d050ce1a625ee1bbcd3f512025ddbf7cbc23302a3caa0a",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000465",
+      "bookId": "403",
+      "changed": false,
+      "synopsis_sha256": "9c77a5822b2076296fe1be546f990cc8a6495728ca4cc4467bd061c7c17b3bca",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000466",
+      "bookId": "454",
+      "changed": false,
+      "synopsis_sha256": "a34f51cc5eb59f0afb9a4a1551063303ae6cfb67d87bd3333dde82c6760579be",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000467",
+      "bookId": "492",
+      "changed": false,
+      "synopsis_sha256": "b65a5b17da16d3520ca2aefb1cb13383ee2fe17c69a1ee790165d1f3bf8ed834",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000468",
+      "bookId": "491",
+      "changed": false,
+      "synopsis_sha256": "e681ff1bdf531beee48c1bde6691a965f7ea3cfbf41494f0aa76a595f308ab07",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000469",
+      "bookId": "522",
+      "changed": false,
+      "synopsis_sha256": "fb50a111a52bde33f82cf3fc97c089afcea3453d5e6183134e7bb0bfd54fbff5",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000470",
+      "bookId": "523",
+      "changed": false,
+      "synopsis_sha256": "78c0158ac7cffc7d1109d4fd827c62e58d55c95ccd62d8ddeb2ed5c6e64932db",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000471",
+      "bookId": "526",
+      "changed": false,
+      "synopsis_sha256": "88849e1f3ed4b633130c402583a05b59d94fc165ae3d56ca59e85d46caebeb0d",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000472",
+      "bookId": "494",
+      "changed": false,
+      "synopsis_sha256": "0d7c877feeee7d552615dd5116cd9774882098ede025fec0a3c11197e3e7bbf2",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000473",
+      "bookId": "496",
+      "changed": false,
+      "synopsis_sha256": "a8b2d7255d8ac87cb07fb053a037f18974e85862c7c47be952d339f969b99059",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000474",
+      "bookId": "517",
+      "changed": false,
+      "synopsis_sha256": "4620f86c9933659095380ed28970d94c1b8d6e63c87d4e1ffa045bcbf2a66271",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000475",
+      "bookId": "428",
+      "changed": false,
+      "synopsis_sha256": "84a08a27b0fcb67e197634f715094bf1e5dd3bb6f73c8eb110e07488b518174f",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000476",
+      "bookId": "415",
+      "changed": false,
+      "synopsis_sha256": "f0c76bb4322be48d324b99aa809fbc105478710908836a9e518b30d0d66fdbf6",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000477",
+      "bookId": "391",
+      "changed": false,
+      "synopsis_sha256": "8a94b214382659a5c757ff26f6088159aac882499d1d79b8f560360a5466fcb8",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000478",
+      "bookId": "392",
+      "changed": false,
+      "synopsis_sha256": "2633a71ef1ddd8bc4e27b0cfda50678637c9f628191659a75ef9f98111ae101d",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000479",
+      "bookId": "483",
+      "changed": false,
+      "synopsis_sha256": "a31a32b24fa1fc4b6ef11513076b6f73a6e8bc1e8b14198782d7f42ee3faaf1e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000480",
+      "bookId": "499",
+      "changed": false,
+      "synopsis_sha256": "c781a5e57aad521b49ee4964ed69272e7363efbd63b5488019816bd07d11f6df",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000481",
+      "bookId": "427",
+      "changed": false,
+      "synopsis_sha256": "57481c2b8dd65138222865f3b1ea79f4bacc9f4b9fe450547ca6c86993316c1a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000482",
+      "bookId": "368",
+      "changed": false,
+      "synopsis_sha256": "27170d080fadfe316c3bce91836ca87565fb6df210d75b22cb42104094c16de6",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000483",
+      "bookId": "372",
+      "changed": false,
+      "synopsis_sha256": "be3c33ca3cd3198e0a9c86237b365a6a09e42fb9c81462cdd591d174969e2038",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000484",
+      "bookId": "371",
+      "changed": false,
+      "synopsis_sha256": "474bef2785c5a32e9b24029929b472edcc35a7625c6ee07cc3db69eeb4787951",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000485",
+      "bookId": "373",
+      "changed": false,
+      "synopsis_sha256": "181d7717c832863f2c3e1e4eebbec15f025a94009c9ffc1817f74d047daa3708",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000486",
+      "bookId": "393",
+      "changed": false,
+      "synopsis_sha256": "fbf9ced954793c6d23a05501d1687e570534ead7620b384d45ba0546f3be2ec3",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000487",
+      "bookId": "394",
+      "changed": false,
+      "synopsis_sha256": "d90ed9ba32dab700c4577a87a482bd4dd44d1ac4d037cfa7b1db4f7e5358d9bc",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000489",
+      "bookId": "387",
+      "changed": false,
+      "synopsis_sha256": "d2921835e5e096a2c532086b69738910ffae7735c41d1d42a7b5371727a3d60f",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000490",
+      "bookId": "369",
+      "changed": false,
+      "synopsis_sha256": "793dab28504399158d5382736a3d8fbc8209d4de8399da6e6a2cc92ec074916d",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000491",
+      "bookId": "456",
+      "changed": false,
+      "synopsis_sha256": "61a5cff95a1507c5b4e8fbb9e61ebed5242b49f177f2ece3e51964368bcc9e42",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000492",
+      "bookId": "395",
+      "changed": false,
+      "synopsis_sha256": "16eab17fbfe8eb2442c1e529a6f46f6b7268076596c20a619abda362b364a86d",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000493",
+      "bookId": "363",
+      "changed": false,
+      "synopsis_sha256": "66361f8903f81b0c72d0e1660470ea6a00d046bc86b9093bc342577a120ef93b",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000494",
+      "bookId": "449",
+      "changed": false,
+      "synopsis_sha256": "02a5a867d330adf2607bd8432c5c6e28890cf2aa3ae905cd8422432c4ab8956f",
+      "basis_kind": "SOURCE_SUMMARY_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000495",
+      "bookId": "490",
+      "changed": false,
+      "synopsis_sha256": "6241bee12a5873d2ce43c266dbb08259adef61477cce1e0b0eccd55009c36522",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000057",
+      "bookId": "214",
+      "changed": false,
+      "synopsis_sha256": "4977e599f2a7e211cac556d6219d145e63a750676fbcf4760249396ca6101c21",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000061",
+      "bookId": "322",
+      "changed": false,
+      "synopsis_sha256": "72692dc1d4ee5691ab701c259f0f05022b0a71e153bf1323373894ed2ded4fe4",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000062",
+      "bookId": "225",
+      "changed": false,
+      "synopsis_sha256": "d43e1a1c44503040dd053b975d921abb758e65e0f336ac091d3757689b012f4c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "bookId": "72",
+      "changed": false,
+      "synopsis_sha256": "0cd1e05c2045f65a9bd5efda7658eb12901315d0338fc8c8a2b57cb8195365f7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000064",
+      "bookId": "244",
+      "changed": false,
+      "synopsis_sha256": "1adad16c534c705b1639e7af6c8464527d3ececfcdb3f3064bfc509ae9bff886",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000065",
+      "bookId": "304",
+      "changed": false,
+      "synopsis_sha256": "b3bc309182241c8dbb3e133c5230a339b46f56560e8dfdec72cd8c5d980862b1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000068",
+      "bookId": "299",
+      "changed": false,
+      "synopsis_sha256": "a5021ab3d3f54ff064a9487930ce37db22c9410eaf759901d5eb0597ef833668",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000069",
+      "bookId": "282",
+      "changed": false,
+      "synopsis_sha256": "b7495a4bff2e05645469e99052a125c188d8ba8cf0b93172853433b450a3065c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000071",
+      "bookId": "273",
+      "changed": false,
+      "synopsis_sha256": "c0b0f4a6e7d6f7095d2922ee67e675ced6b41bf215b33da8fa4505d1ac301f2e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000072",
+      "bookId": "330",
+      "changed": false,
+      "synopsis_sha256": "4c7116dc19e4a3e128900fd7a687eee249c35078e5e7769594a114666ce21b14",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000073",
+      "bookId": "314",
+      "changed": false,
+      "synopsis_sha256": "c8c32b9608a5ccca61c0403694bf26efc3909eab8d3f4f3a2ee00985b2b28fc5",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000078",
+      "bookId": "266",
+      "changed": false,
+      "synopsis_sha256": "4aa7f455353cde846cacf3e76241dfa0546637748019151bce2682a314a9604f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000079",
+      "bookId": "238",
+      "changed": false,
+      "synopsis_sha256": "53680b51b549f4b7edbec4611b2c5753dcbc245a5b9a9403d32184f67a26e4ac",
+      "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000081",
+      "bookId": "285",
+      "changed": false,
+      "synopsis_sha256": "59018f4ebaae34d44defa2dbfd2625a1fe46e64a687a9ef81b48157d62151f58",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000082",
+      "bookId": "290",
+      "changed": false,
+      "synopsis_sha256": "e270c53c333701d7c333a22cee3ef5f3be700cf1cb8306701aed8fd56f386246",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000083",
+      "bookId": "308",
+      "changed": false,
+      "synopsis_sha256": "5a5c4314d749a3967603e2fb43e00713f4b8b2442e052f07d64589460387315d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000089",
+      "bookId": "236",
+      "changed": false,
+      "synopsis_sha256": "4f9a374c7c4eb7fd0e682bc17b1a0ed225be10540e9f0608a4c78c6a62d4b80d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000090",
+      "bookId": "212",
+      "changed": false,
+      "synopsis_sha256": "a8e6422a0717731c65f3d8656226f6431c17df13a4649f19360210cfb8e14b89",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000091",
+      "bookId": "311",
+      "changed": false,
+      "synopsis_sha256": "ee55b0cf50bd7159a96dffc717d6e8fbffa8488bd187d2fbf90b604b7b7dfa05",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000092",
+      "bookId": "246",
+      "changed": false,
+      "synopsis_sha256": "eed4566de871383d93c6353ce9e3843c3a2f50f269dea763015ff6a5be9a2b7a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000093",
+      "bookId": "301",
+      "changed": false,
+      "synopsis_sha256": "80012d23814ed75428b847bed9ccbe8cc1c22f992516ecc80ea523a1203477e3",
+      "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000094",
+      "bookId": "306",
+      "changed": false,
+      "synopsis_sha256": "edd1e5885e58d16f9c12cb43f9e033469f91c504943e41356dcaa01b5cf24c0b",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000095",
+      "bookId": "240",
+      "changed": false,
+      "synopsis_sha256": "46583e46ed3bfb69104d2b5943fc2ca5b32f9a73638f984fc0511e786c2e0399",
+      "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000099",
+      "bookId": "343",
+      "changed": false,
+      "synopsis_sha256": "51bcf58a60e9331bfe047df8b6d80651d986a36c10af11689381963c0635777d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000102",
+      "bookId": "277",
+      "changed": false,
+      "synopsis_sha256": "a361097ad3890c870a9105198c1342540140d7d964695381a19a017e76e755bb",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000103",
+      "bookId": "280",
+      "changed": false,
+      "synopsis_sha256": "0a56713b3902290015aaee153ec1c867a1c0f47c0ee7d70ce7d385d4bbc59761",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000104",
+      "bookId": "256",
+      "changed": false,
+      "synopsis_sha256": "2615cc7ffaa499f85bc7ff42d1c01edb54b854abce4d528e9e50ec7c6e38f529",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000105",
+      "bookId": "251",
+      "changed": false,
+      "synopsis_sha256": "629598599a9bfa434e228ef0ef4371c960f5e4e7bf31cab8dddbef78516dcb7c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000106",
+      "bookId": "211",
+      "changed": false,
+      "synopsis_sha256": "1a25ecf852f6b88fac78735b84f26854bfe269bfdcbeaca87255baad3a62e398",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000107",
+      "bookId": "223",
+      "changed": false,
+      "synopsis_sha256": "9e2c50dbe71a190a8407e88c371bf067644c6d455a4baa2633fd9a5345cb2f5e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000112",
+      "bookId": "278",
+      "changed": false,
+      "synopsis_sha256": "c51f713acbd930a0fb5f8aa445f1ffde000ba656afe5f287b6f0ead500637821",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000114",
+      "bookId": "289",
+      "changed": false,
+      "synopsis_sha256": "e184a760959c5ef4582ee4923ea98029e760fd2bd08900a9354bd7408fe1b85f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000115",
+      "bookId": "268",
+      "changed": false,
+      "synopsis_sha256": "1b7b5bec1940785183ede0adc3391a49a30f125778b102f98110cbded06b3200",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000116",
+      "bookId": "258",
+      "changed": false,
+      "synopsis_sha256": "758392416f3b7dbd313445e2a2dbdaa43f6fce43efdf9c97f65816e23eebf22e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000119",
+      "bookId": "320",
+      "changed": false,
+      "synopsis_sha256": "d3d80e7d033736239f7490fe0a9bd74f10f07b9781221a9a351c7ad48d59ddba",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000121",
+      "bookId": "317",
+      "changed": false,
+      "synopsis_sha256": "9875c9b998287b26fa3d6b2b9149765da550675b41bdffda93587f4003b9d41e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000122",
+      "bookId": "233",
+      "changed": false,
+      "synopsis_sha256": "b51e2e74cfddb955c063150dcd3b8563e9696257ffff994fb0099eb09feaa0dd",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000123",
+      "bookId": "216",
+      "changed": false,
+      "synopsis_sha256": "18852a0f8a8e1a6c5f5225ac457e2297246f9283078ebab2f5ea50d70b78f26f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000128",
+      "bookId": "250",
+      "changed": false,
+      "synopsis_sha256": "88e60a5f96ebc4fc0dbd92078e7c705c0ef789ee36fc5ccc77d522591114b756",
+      "basis_kind": "PRIMARY_PUBLISHER_PREVIEW_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000129",
+      "bookId": "325",
+      "changed": false,
+      "synopsis_sha256": "1a89753f93e1996ed2fe55c260c56cd16358db5d7a05e39fb2ebfe22167aa1b7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000131",
+      "bookId": "247",
+      "changed": false,
+      "synopsis_sha256": "c5d91f8e6a3265622f2d5900274b8c87d3357019d4889d0c4235f5fc82f2c934",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000133",
+      "bookId": "272",
+      "changed": false,
+      "synopsis_sha256": "31a9f4c6d25ba8b9c8128221299c012c98e29ef5943609569c2671bab2119286",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000134",
+      "bookId": "215",
+      "changed": false,
+      "synopsis_sha256": "f64acdf6d1582971705590c9a917b37b773338fafbabcca138b9d828d008349f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000136",
+      "bookId": "333",
+      "changed": false,
+      "synopsis_sha256": "47d4b1167b5dc4cd71673f579060c4664c124a8f9ec1876ae9700b29cdef76d8",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000140",
+      "bookId": "323",
+      "changed": false,
+      "synopsis_sha256": "7fce4fcd0d3a8932d7eaa7e0908514147261e3c79724795f700844ca71d666e3",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000145",
+      "bookId": "326",
+      "changed": false,
+      "synopsis_sha256": "63b2187dde40c6abdafd50f687893cc46b349b0bbbbf047402d2995cfbdcfd93",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000148",
+      "bookId": "327",
+      "changed": false,
+      "synopsis_sha256": "255b7a0691e9005fdaa857c20e613ccf39409e7ec02f8428740d108f82513014",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000150",
+      "bookId": "307",
+      "changed": false,
+      "synopsis_sha256": "f82178a2873b790d94adc8ab2941b5dfa81d12b74a19a0f78d7c27ccee3c8b53",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000152",
+      "bookId": "252",
+      "changed": false,
+      "synopsis_sha256": "09321c3b229a80d71ac792959bb03739a6e1d88c87da7d2710ee2d478656586c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000154",
+      "bookId": "319",
+      "changed": false,
+      "synopsis_sha256": "e327ad61abd0546dccb60f6f4ca83f9d7c72d3a864a4c79d1c876b95d5237add",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000155",
+      "bookId": "269",
+      "changed": false,
+      "synopsis_sha256": "54b36ca56a4f5ac37590c9aa63aedbb59517b80ee90c1297400607f250d50a11",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000156",
+      "bookId": "342",
+      "changed": false,
+      "synopsis_sha256": "ce3f61ff46f14028d02e73d6369ff8bed8298dfe40aef990bcbd219fe8e92dbf",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000159",
+      "bookId": "237",
+      "changed": false,
+      "synopsis_sha256": "d0f3dbd7016eb4e231591e4feff5caac60534ef46cad71ee172c303ed1cef982",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000160",
+      "bookId": "235",
+      "changed": false,
+      "synopsis_sha256": "2cc1bad85b22c22ede058616e478f6af41ee9f1398405c3d8aa489ef9fff6c7f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000163",
+      "bookId": "239",
+      "changed": false,
+      "synopsis_sha256": "f7f84d44d79ab441ae8115ffe1c01ddbf7219d0cbdc375a0bf048fcfa30316a1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000165",
+      "bookId": "332",
+      "changed": false,
+      "synopsis_sha256": "55a924eebc7913ae352323b835c7f4873cc6bd016d388b6bec11f330f5504cab",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000167",
+      "bookId": "293",
+      "changed": false,
+      "synopsis_sha256": "07d25e7f2cf211d9f171166a85fe8300b28a78a8318bdac9c4075ce4b47dd69a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000168",
+      "bookId": "217",
+      "changed": false,
+      "synopsis_sha256": "cd3eeafa177e78ef5c12eeba474c72ba3abeceefff9ffb679009907fad0d533c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000169",
+      "bookId": "316",
+      "changed": false,
+      "synopsis_sha256": "24d09aec52fce0dbe1d2df4b2be805d98e219f33f6dd8f8ffaa6d4e2ad7a2287",
+      "basis_kind": "PRIMARY_DISTRIBUTOR_CONTENTS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000170",
+      "bookId": "294",
+      "changed": false,
+      "synopsis_sha256": "fe4a252dadab5850557864d2b9716406bc4ef57a41e74878e56f67df89bbe62a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000171",
+      "bookId": "241",
+      "changed": false,
+      "synopsis_sha256": "b3365a64ea3e5325441343171c10855b235475a0f97be6b7b917f1fd611db49b",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000173",
+      "bookId": "287",
+      "changed": false,
+      "synopsis_sha256": "ed73a41c1f4986b7e136f4d93e92609f217dee4742bf01a9070859a1201dddc2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000176",
+      "bookId": "249",
+      "changed": false,
+      "synopsis_sha256": "a315188866c1fd32c5b16d23fae42c079e86faff02515ca8856c5ea7e4848d49",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000178",
+      "bookId": "228",
+      "changed": false,
+      "synopsis_sha256": "a324821302e9521537ba519f40ae18db2d7a497a04d1ebcc15f567a46273d5ec",
+      "basis_kind": "PUBLISHER_DISTRIBUTED_ABSTRACT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000179",
+      "bookId": "257",
+      "changed": false,
+      "synopsis_sha256": "f0f4f5389f4c150a254f727a365ac41a90b4afde06ed4a1050a70e509ecb6273",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000182",
+      "bookId": "284",
+      "changed": false,
+      "synopsis_sha256": "fff7bcfa12b0260265ddc2a89a1b84df72f2e37d7d9b0a5b52beb98181a1c269",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000183",
+      "bookId": "340",
+      "changed": false,
+      "synopsis_sha256": "5f0af63b9cbd377e9ee6bf14c2e1bdb003921d28cfbcae00ad67e9b8f82996c9",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000185",
+      "bookId": "229",
+      "changed": false,
+      "synopsis_sha256": "16220995ba7e3aed81394a5edc55b45291323dc20083f4d0908bb514ac32d151",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000191",
+      "bookId": "347",
+      "changed": false,
+      "synopsis_sha256": "1ff48f5647f5c3a7a2abf48b194147215b053c5dee62309a53b5e513f7efbb19",
+      "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000193",
+      "bookId": "209",
+      "changed": false,
+      "synopsis_sha256": "8bcca5738744decb6cdfa67528b6dea54c7d50e5c84a3d962fb92238955ac36f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000194",
+      "bookId": "298",
+      "changed": false,
+      "synopsis_sha256": "2760d530b8afd35ea7c5c2bb61dad5645b53c3e9a3352d7a6172ae93acc06c19",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000198",
+      "bookId": "264",
+      "changed": false,
+      "synopsis_sha256": "221534d202709c3e25d528d0c474ce672c165e51ae41ed5cb8ba350cfbe6bef3",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000199",
+      "bookId": "334",
+      "changed": false,
+      "synopsis_sha256": "00e22092e6c4c3ae467fe9985f7a0dc7f9237666654694e015ce38ef593e245c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000200",
+      "bookId": "242",
+      "changed": false,
+      "synopsis_sha256": "eeacd1b8fcaaec9b83cb60bd55bd8be0e620ab0d3f7098799d3daa40073153ec",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000201",
+      "bookId": "297",
+      "changed": false,
+      "synopsis_sha256": "88616503c5503663bd9aa9ccefbff5c90a9b4f522819313bd14f69f7b849a5b6",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000204",
+      "bookId": "337",
+      "changed": false,
+      "synopsis_sha256": "c1a9187423bff35d0620a35842a9b5ba32af7a28a8948c23782d66e1412b99b3",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000206",
+      "bookId": "260",
+      "changed": false,
+      "synopsis_sha256": "e7418fc46fb0f561e7d72532863c32641128e999add032958da69f01aebba97b",
+      "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000210",
+      "bookId": "324",
+      "changed": false,
+      "synopsis_sha256": "588add6510f3877aa3d666e84f4b545e2c5a453aaf550369dced53d000d1e8fd",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000211",
+      "bookId": "296",
+      "changed": false,
+      "synopsis_sha256": "e8f8291a96017c5889cc38fac3d7e3724b1953b2944a0ea5fa5989904c3cd44d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000212",
+      "bookId": "310",
+      "changed": false,
+      "synopsis_sha256": "022a4ad0ce6b9db6569bd881fc70c7121632bbc77e6d2ec7cdc08fa5c8f041d6",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000214",
+      "bookId": "213",
+      "changed": false,
+      "synopsis_sha256": "e72d9c64e1f98a7c6b75c2964e58b4d53c1480f89c61aa6307c6f54874f110c2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000215",
+      "bookId": "318",
+      "changed": false,
+      "synopsis_sha256": "714caacfaad5f6b020a18034627a46fd634c8fff18effb1c085daf08d056c5ad",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000216",
+      "bookId": "270",
+      "changed": false,
+      "synopsis_sha256": "a9f66dca45207308a0b01ea202cc90551faa4a11440889b8e7092bf13356c25d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000217",
+      "bookId": "312",
+      "changed": false,
+      "synopsis_sha256": "0a6b58aaf47663d31f8aede8196e9b1d694a39f9cc8f1ea48452a11901ec1791",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000218",
+      "bookId": "331",
+      "changed": false,
+      "synopsis_sha256": "b079d3ecc662c86cb029f8f7e684b0c97ff7f5dc531fec8fa414aceb544ed07c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000219",
+      "bookId": "265",
+      "changed": false,
+      "synopsis_sha256": "10cf4c27aa8b8db219c6b46b69dd89bebbc17c10c2e8f995f5c5bd22756b0ffb",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000221",
+      "bookId": "226",
+      "changed": false,
+      "synopsis_sha256": "534708f79234bc7c0bca7b221a01b95e22961538eebbe376dbe08c388019a578",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000222",
+      "bookId": "261",
+      "changed": false,
+      "synopsis_sha256": "fbc3f059039467ddea39ad5a6855c9f4a47af21cedf743cd05295befe51ddd71",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000223",
+      "bookId": "305",
+      "changed": false,
+      "synopsis_sha256": "8f5e19bc513f0412835ce290e778839a654406aabdff8f7b697f0604231ad2f7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000226",
+      "bookId": "276",
+      "changed": false,
+      "synopsis_sha256": "782cf960d1617baad27d0099a65d695f0d658d81f94636f65918b45deb8e8753",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000228",
+      "bookId": "208",
+      "changed": false,
+      "synopsis_sha256": "e4cbbd950f25679eec014aedd12b1d490d422def2e06e586460b045e57c83920",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000229",
+      "bookId": "231",
+      "changed": false,
+      "synopsis_sha256": "2a67284adb13edd1bd4a9d9fac99adc2bdaf0e75b5e068610627ce7955c3c8e2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000233",
+      "bookId": "346",
+      "changed": false,
+      "synopsis_sha256": "65203178fa64d924b38ce9b12a241dbbcfb248f76fbdcc0b36bd3bee30c2948c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000237",
+      "bookId": "309",
+      "changed": false,
+      "synopsis_sha256": "06493a9dce7f1cdb8249cfd25f71ab19ac3ee4735f6a1d583c52152b45d379d5",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000238",
+      "bookId": "303",
+      "changed": false,
+      "synopsis_sha256": "7ebe339eb8b4047de6f32e2b824b29df537a101b61f1dfbdd870b6a50683cb43",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000239",
+      "bookId": "224",
+      "changed": false,
+      "synopsis_sha256": "5633282deae2c7ec7bd0750a8223beea4d4c133cfdcfa30642f11cb7cee076d6",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000240",
+      "bookId": "253",
+      "changed": false,
+      "synopsis_sha256": "602997e4c0488f553de62e1fb591731bba907366ec0d1cc82bfdee24d789426f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000241",
+      "bookId": "288",
+      "changed": false,
+      "synopsis_sha256": "e51934e0136708daf52618697c1e0ebb0ee47bb3708b707f5c4e40119e368814",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000246",
+      "bookId": "302",
+      "changed": false,
+      "synopsis_sha256": "1936618f5335c959842efbab86c28e7e633b2fe47bc0ae8430d284e7b0cf2458",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000247",
+      "bookId": "218",
+      "changed": false,
+      "synopsis_sha256": "7ed92a7d0f8b73fc0111f2460dcbdbeefb49bf3df8b1731c992e0883551712c9",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000249",
+      "bookId": "329",
+      "changed": false,
+      "synopsis_sha256": "a6858e62e0a3f2fb54d59f57de6d3403274941fa6dc35e35006ee381003b5c04",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000250",
+      "bookId": "295",
+      "changed": false,
+      "synopsis_sha256": "d6bd8ef745b196b02fbbedf9d40fe8e8704927b99009f1b97042da267bc77a36",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000252",
+      "bookId": "281",
+      "changed": false,
+      "synopsis_sha256": "bad52a910cea0259539d794f61df7eef9a7d756e9d08c934b36ce250f24749ef",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000254",
+      "bookId": "315",
+      "changed": false,
+      "synopsis_sha256": "036359d78efd031225c9d4a87a92ea025d1a4cdc6fdcf0bd547d3830a15b3639",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000255",
+      "bookId": "292",
+      "changed": false,
+      "synopsis_sha256": "6ff37062aa9883df590e4d7b50bfc5d51e015c7b25e78cdd745662815bb83b66",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000256",
+      "bookId": "300",
+      "changed": false,
+      "synopsis_sha256": "651074e6099c037bf9bd694342b03bfb47bc9a5c90d94bd0449d69bef137494a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000257",
+      "bookId": "279",
+      "changed": false,
+      "synopsis_sha256": "9958ab61a2ef88cf8e4fa6f91cf54d833a074b94d84c0da39c5cc6b636cebdc1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000258",
+      "bookId": "262",
+      "changed": false,
+      "synopsis_sha256": "f66d56b539b2d94a677e2951100176382b4c86cbe3c371b5a4979485ebcf2a02",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000259",
+      "bookId": "286",
+      "changed": false,
+      "synopsis_sha256": "26376adf54f1a2a92246c6ea290f1a335aabfb6e9191e5d351ef1f35e48466bc",
+      "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "bookId": "348",
+      "changed": false,
+      "synopsis_sha256": "e799720c83761002ab9c6a6f4d965f277112988ad330e7d3858c750ee3887fca",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000265",
+      "bookId": "313",
+      "changed": false,
+      "synopsis_sha256": "70017451c08d85d6688790a5623d6386dbac938e0b77d56a93aa0883e7616e4b",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000267",
+      "bookId": "275",
+      "changed": false,
+      "synopsis_sha256": "9fa9d9d74b7233cc467640aa1cebc7257135e82748361bb0524a04d8802d142f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000268",
+      "bookId": "245",
+      "changed": false,
+      "synopsis_sha256": "25bb0477144064bfa2736a9d979f98780438c51bda2b3bb4da572a2d8c41a358",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000270",
+      "bookId": "222",
+      "changed": false,
+      "synopsis_sha256": "9b3514b0d2101360c8a7538c688212285def5fb44747a8746a3c4a320653c098",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000271",
+      "bookId": "328",
+      "changed": false,
+      "synopsis_sha256": "7a8da72224c7ffd06dec371b1ae28b65745485eba0489a5d5ca25e40a01c0f1b",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000272",
+      "bookId": "344",
+      "changed": false,
+      "synopsis_sha256": "f25dc340ffcd66f814b90fa61bb88780a63b70da5d4b49ec815143def1b121ce",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000274",
+      "bookId": "271",
+      "changed": false,
+      "synopsis_sha256": "594349e45ef78dc5c1fcbe77e8f49e7667157304a9a8e84efa611ac729a183a7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000277",
+      "bookId": "210",
+      "changed": false,
+      "synopsis_sha256": "5511d35db978dc68941d8f2e653bd225c9b6ea224f8794d94c36c2813f9ef5ba",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000278",
+      "bookId": "259",
+      "changed": false,
+      "synopsis_sha256": "824f68a9b7ae256c423a29f2e1ceea4915aad24c63b30f38e41380f41d5935f2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000280",
+      "bookId": "274",
+      "changed": false,
+      "synopsis_sha256": "bd1a3b6e9579e9d1f91d6a2a91cd5ee1944f5dba9d46abb0ebe6dfa7f1114590",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000286",
+      "bookId": "243",
+      "changed": false,
+      "synopsis_sha256": "e23e1f14f71f18eccbcd60bc679092189e6a6b62183d8e7f402ae3018248b7cd",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000289",
+      "bookId": "254",
+      "changed": false,
+      "synopsis_sha256": "41c35e7199a4cb666f2013e8e9b759491abcb0daba4599517910c687ffc96a3a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000290",
+      "bookId": "338",
+      "changed": false,
+      "synopsis_sha256": "eb2d109a4bf9923c1d13f68a24fcd3c2f6e2eb57f7024b5f355bf6888503d00b",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000295",
+      "bookId": "263",
+      "changed": false,
+      "synopsis_sha256": "f6cef149937b3acd33fa919a7bad62b6f1a4497d1c668adf0b09e62ec568bb9e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000296",
+      "bookId": "220",
+      "changed": false,
+      "synopsis_sha256": "bac4190ca4870530579b631f712a61bf70a825f68ddf639a717f522cd66e4c85",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000298",
+      "bookId": "321",
+      "changed": false,
+      "synopsis_sha256": "392bb4c27b8202d269276a93bcecd07220383a52fe7ed12bf84b927beeb758b1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000299",
+      "bookId": "345",
+      "changed": false,
+      "synopsis_sha256": "c0719e494cc9922b28ca892609252399a7a0a02c05dcda9abb637d8880d37b8d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000300",
+      "bookId": "267",
+      "changed": false,
+      "synopsis_sha256": "6b91ad4fcb60b5da0b74a9bce1da9a56666572f9972c12147335343e4cc64b23",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000302",
+      "bookId": "291",
+      "changed": false,
+      "synopsis_sha256": "10b5151c6fe12f4f038194a5cbb254acf7795afe780e5850459e45d545c508b4",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000303",
+      "bookId": "339",
+      "changed": false,
+      "synopsis_sha256": "6167b803038362fd9379e684b1c408d9918525740bbebb4ccc6a8d9ac9b40512",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000304",
+      "bookId": "219",
+      "changed": false,
+      "synopsis_sha256": "58052557d21deae8a77fa10f33cb72385902eaab1fae5d79d024cefd28fca8a6",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000308",
+      "bookId": "255",
+      "changed": false,
+      "synopsis_sha256": "2388b5855d9bd621172a3ab2ad19538cb61446de12e4c77aa8d78bbe50d4b121",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000309",
+      "bookId": "341",
+      "changed": false,
+      "synopsis_sha256": "5de4a1c06e558ec6ce98b173524e25e4a2aea737af2081b7a3f2cec5985e8908",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000313",
+      "bookId": "248",
+      "changed": false,
+      "synopsis_sha256": "6ec7c554dc7041d326a331774de3014fa3b9afaf85d78aa73602536d5d27de4b",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000315",
+      "bookId": "227",
+      "changed": false,
+      "synopsis_sha256": "a19e4e301fc9f66d7f4ac461b0f0821c54eb69c2dc2329769c453240ec905756",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000058",
+      "bookId": "143",
+      "changed": false,
+      "synopsis_sha256": "0164518b138e67cc118813adc0f91460d336c1fafb42eee79bf2abfba1286471",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000059",
+      "bookId": "153",
+      "changed": false,
+      "synopsis_sha256": "d3f06d2778d4bd7df1091425df0bcdb296a8c7eb1134b811e003ba7b881513a8",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000060",
+      "bookId": "98",
+      "changed": false,
+      "synopsis_sha256": "2cb08be48ce6eddc84b0b897d472b3b277e541e125565b29e04c193fd5ff5dc8",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000066",
+      "bookId": "156",
+      "changed": false,
+      "synopsis_sha256": "e093c3d9f1a1932c0022a9c173a64cbd1ea572fedc06b039fca969930f75471f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000067",
+      "bookId": "152",
+      "changed": false,
+      "synopsis_sha256": "e2af0f1aeea0e65b1b32dbad3b6117eccdb0bcbe2da34208376ba0ffa01ae125",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000070",
+      "bookId": "127",
+      "changed": false,
+      "synopsis_sha256": "6fa1409c8c16c354d52dcd4cff8aaab2c0d70114d1e378529b6990d0f4e22e86",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000074",
+      "bookId": "112",
+      "changed": false,
+      "synopsis_sha256": "c3b6a048e7c1608bc42b69e0298a398edd39790e90de76d26b24aa251903b4bb",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000075",
+      "bookId": "154",
+      "changed": false,
+      "synopsis_sha256": "c9ba3674771e4ec8feac368bf21f3ee8e80dcc734326bdf6d830f7992f35d827",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000076",
+      "bookId": "100",
+      "changed": false,
+      "synopsis_sha256": "3125488cb12f6cc9edbb447d3e5a6b0820fdda4ccbfcf7cbdd0285a65c84d8fa",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000077",
+      "bookId": "102",
+      "changed": false,
+      "synopsis_sha256": "348ea67100507d0e5f70b6e07a4355254147d75fb89d63cda4cfabe77a353da9",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000080",
+      "bookId": "131",
+      "changed": false,
+      "synopsis_sha256": "ae21bd308ca3bdd6c13ef7cb81e2957e4522c4ccd7d0c045863682495fce22c7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000084",
+      "bookId": "167",
+      "changed": false,
+      "synopsis_sha256": "38ec82ddd53d676eaa431871aa88b02c69bdde58ec0f526316d5228377dcaa38",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000086",
+      "bookId": "171",
+      "changed": false,
+      "synopsis_sha256": "d8c4bdebedd38040cc46e9047e252b9d5565784f73410487f00760d757b53520",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000087",
+      "bookId": "174",
+      "changed": false,
+      "synopsis_sha256": "fde4f1218592d7a47a15aebc72a135f4c37b4c06b23d57ee6845076e564192c1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000088",
+      "bookId": "178",
+      "changed": false,
+      "synopsis_sha256": "50d4dbe62bdd931596c583ba9200542cbd12d95a8e8b13c7c6d329e48415d3fa",
+      "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000096",
+      "bookId": "189",
+      "changed": false,
+      "synopsis_sha256": "08825898396c33e615b8591faa46fcaa214ccfa4b7465842c22aae46ebbfbb22",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000097",
+      "bookId": "158",
+      "changed": false,
+      "synopsis_sha256": "75b3044a0df7e5452839286ad1963b7018d1d57041ad10aaac020d14040b3788",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000098",
+      "bookId": "124",
+      "changed": false,
+      "synopsis_sha256": "232550a6eb636a01fa1892800685bf74adf2f7eeed7af384cce4fe86313febd9",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000101",
+      "bookId": "149",
+      "changed": false,
+      "synopsis_sha256": "0a118591c789d58c542ad0e1d4a974201ac4bdc2ff2eca0496b02402e4c3917c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000108",
+      "bookId": "170",
+      "changed": false,
+      "synopsis_sha256": "a1b6ae20d3a8e9096638b27f34bf34582b7ff9243998610a8b8d0c8be026f763",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000109",
+      "bookId": "148",
+      "changed": false,
+      "synopsis_sha256": "970fb3703a61b42b0efb70cf2808531fe267efcb8146aaf9176c25339d440eee",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000110",
+      "bookId": "91",
+      "changed": false,
+      "synopsis_sha256": "718c952d9ce35449aeb97ce10b32b3277b790cafdbbc609bf73806f7cb0d43cc",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000111",
+      "bookId": "117",
+      "changed": false,
+      "synopsis_sha256": "a3d6167e2272b69c3d8bc7168297304054209100a13e1dd72a92f7f02f2e4309",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000113",
+      "bookId": "163",
+      "changed": false,
+      "synopsis_sha256": "00ab22904bdc83c71206f06c24a2a674022850d7582b6947ab33dfc65041391f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000117",
+      "bookId": "187",
+      "changed": false,
+      "synopsis_sha256": "a115478f341d0e185816103950841940af7fbf7c29a84772fb2361ed56047591",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000120",
+      "bookId": "165",
+      "changed": false,
+      "synopsis_sha256": "3a07bacbe8a25bc4f10953c95d696285e1f27964af78a5ff53574b31555344df",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000124",
+      "bookId": "125",
+      "changed": false,
+      "synopsis_sha256": "ef390e835e6f3d87e33d1351ee9526a44091a4eb99d7aa52bfa378eed190d4aa",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000125",
+      "bookId": "104",
+      "changed": false,
+      "synopsis_sha256": "686159be3b7546ab6d144092ae88e9b9ea2cc860c829dd2fde207729e81784b2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000126",
+      "bookId": "103",
+      "changed": false,
+      "synopsis_sha256": "ff81fa9875e8ec280c75d0508a58220532718bdec95122684c655b4feb2cf2f7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000127",
+      "bookId": "201",
+      "changed": false,
+      "synopsis_sha256": "8d7c793fb4f82b4a690ba0abcba7de4ed088e1f77c62aca7de4b4d51511b1232",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000130",
+      "bookId": "116",
+      "changed": false,
+      "synopsis_sha256": "8b3ea8ecedb6ab75f1388abec3d1473849513878b4c7c9cf1e24f737ec2d80aa",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000132",
+      "bookId": "173",
+      "changed": false,
+      "synopsis_sha256": "160d0fedaaecc85631d04f371499a82ac5bc61679924581e67180ee44547a987",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000135",
+      "bookId": "146",
+      "changed": false,
+      "synopsis_sha256": "85d51b56225fa6505be9ddcf55a632e18b1cc931866973c8f7b90dd761722569",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000137",
+      "bookId": "182",
+      "changed": false,
+      "synopsis_sha256": "e10f5f2e2d990cafe541f843b3e25dbc84604d75323404fc4d3f5ecea47a3862",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000138",
+      "bookId": "118",
+      "changed": false,
+      "synopsis_sha256": "83fffabd248a55885a353e7cca2e55b35a5e48948127a69061d0227332b9369f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000139",
+      "bookId": "195",
+      "changed": false,
+      "synopsis_sha256": "63f4b9eb23fec2f91b9e466d2fa5e6a382f8d8a5080999b80e4106c89b5c47f1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000141",
+      "bookId": "150",
+      "changed": false,
+      "synopsis_sha256": "bff868b799f9daf5c49b25a0e8e6d5f9d610dc56e79c0f9fd79e2b2353021614",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000142",
+      "bookId": "93",
+      "changed": false,
+      "synopsis_sha256": "051cba5c066ed73cba7a8cef3c83fb9071906010b86d8d56309525df05192dac",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000143",
+      "bookId": "130",
+      "changed": false,
+      "synopsis_sha256": "f336f070cf88ae009d7e6f1aef1ee6e1c016b601ba0122d899459b97886d02a3",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000146",
+      "bookId": "138",
+      "changed": false,
+      "synopsis_sha256": "00db781d44aa1dc3ce7f6dcfdfecc90508d0dd1df76dfa264ea34c2ab81f579a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000147",
+      "bookId": "115",
+      "changed": false,
+      "synopsis_sha256": "404f5db5611c0c8d99d8ee3af1a8588445aed01be8d745ca3e403c79946769ea",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000149",
+      "bookId": "109",
+      "changed": false,
+      "synopsis_sha256": "8a2bedd2af9f07af9f59712669e02135b797d89ed3aa964fde12a8925e806af0",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000151",
+      "bookId": "136",
+      "changed": false,
+      "synopsis_sha256": "1d821f512d9783269ec2f028458b5366bbe02eadfd3789e76a091eb1ecebe25c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000153",
+      "bookId": "135",
+      "changed": false,
+      "synopsis_sha256": "0e8e30356137282c692e204d780faac8ba564ef6a041580bc9b503162f0b3cb6",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000157",
+      "bookId": "106",
+      "changed": false,
+      "synopsis_sha256": "531cd36be078867fc2c451ab3a4b06fc382a417efbd9ed29d4b6ca73ee7d6849",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000158",
+      "bookId": "133",
+      "changed": false,
+      "synopsis_sha256": "23e1e5d589f7ede9e71b22e481b6570ebe325fd802a627bc87901849f788d609",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000161",
+      "bookId": "169",
+      "changed": false,
+      "synopsis_sha256": "e77aadd8125229a339d7a55e761c1eda73e0e0c6d2964f3ffad75a2b4323f5b4",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000162",
+      "bookId": "206",
+      "changed": false,
+      "synopsis_sha256": "136bccc582db286ec55af4bbf78265e8874ce4d408e72380aa7c7ae307f12765",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000164",
+      "bookId": "179",
+      "changed": false,
+      "synopsis_sha256": "fbe12c6f248370cc2f17a70d6019644a4fc66cfdbb62ed5d45293bce0532dbb9",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000166",
+      "bookId": "161",
+      "changed": false,
+      "synopsis_sha256": "2a6858bd5b5236ad4005e1d2eb0a8e1a0b53fb2cf77601559c920b53ad70edf1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000172",
+      "bookId": "186",
+      "changed": false,
+      "synopsis_sha256": "d773d2dc0a3bc8b072740c9418fd2f3034813e62c214b2639ccf8922e0899ba7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000174",
+      "bookId": "114",
+      "changed": false,
+      "synopsis_sha256": "bbf6665cb08fef798615c5ffd0a329c2b0c6b1cc1cb9903b05fdc5323bb6a612",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000175",
+      "bookId": "177",
+      "changed": false,
+      "synopsis_sha256": "1ad24113910eb8e9a560230e0c5f979f687a10ec76e7e241e3d2c11a6e5e6f4a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000177",
+      "bookId": "140",
+      "changed": false,
+      "synopsis_sha256": "1d6f5ab865abd3b27c2eb8c227c684e9ee77d74249bb7bf657c3ee3fda622211",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000180",
+      "bookId": "191",
+      "changed": false,
+      "synopsis_sha256": "7d0c0f08f6742beafe0319eff0cfd42830e384ec5f5e991ab13acd7e0feed827",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000181",
+      "bookId": "197",
+      "changed": false,
+      "synopsis_sha256": "6cb7cd438b53b56eb6d3f793dfa735696ce996b287b381aa8f7923e68fc3131c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000184",
+      "bookId": "151",
+      "changed": false,
+      "synopsis_sha256": "f70afc1ad65dcea1a3189bb195aaa8d00cf85a463d930f0b8b7cb95978aa894a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000186",
+      "bookId": "199",
+      "changed": false,
+      "synopsis_sha256": "fce926c7e91f0a67244099ebda87d47fef5faca98295fdcb725251abe4fef8ee",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000187",
+      "bookId": "164",
+      "changed": false,
+      "synopsis_sha256": "f15d95974fc677560ffbe3fff06fae91aaf628106992530b7901700f571d77e7",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000188",
+      "bookId": "166",
+      "changed": false,
+      "synopsis_sha256": "7b1b1d1132046cffcfe5ecbe53720d43c79137c76766b5fc5d480f3873f80537",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000189",
+      "bookId": "121",
+      "changed": false,
+      "synopsis_sha256": "7dd74c0a999353d4d469987ea8e60164452117a32997c83564a2892f845ef438",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000190",
+      "bookId": "144",
+      "changed": false,
+      "synopsis_sha256": "0c8cf14994bb1c6d8a9189d85ff3de31f5467812080112a217de7a9361f4f825",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000192",
+      "bookId": "157",
+      "changed": false,
+      "synopsis_sha256": "50f53d6ce6680feb77d3bf3c6d5aa8d2ee5c7a1e81dbea22e0e538883873f48e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000195",
+      "bookId": "180",
+      "changed": false,
+      "synopsis_sha256": "e94ea8c056681d242dea4130254b5f268f1c156e45726d6c84f54543ef43141f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000197",
+      "bookId": "183",
+      "changed": false,
+      "synopsis_sha256": "22540862c3644f59fbdfba801b5874d394dd6e731930800e421bfda8fd0c5679",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000202",
+      "bookId": "129",
+      "changed": false,
+      "synopsis_sha256": "324cb530139976e5af9f29507bd3ced000f199c1e1b2f56cdb60be9e6319ba8c",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000203",
+      "bookId": "96",
+      "changed": false,
+      "synopsis_sha256": "dce1e0cf23dff7c0040e4b875a1c06b3f6b29190879b25f0d742c421b5df423a",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000205",
+      "bookId": "126",
+      "changed": false,
+      "synopsis_sha256": "30480c94379802539a36ea75dfab16d639ece3383468aca2a87b276e07ed3ed5",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000207",
+      "bookId": "205",
+      "changed": false,
+      "synopsis_sha256": "c7c656cc8761f663f939d17b49b605a1d14ef729c4d330ecebc716627a399517",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000209",
+      "bookId": "113",
+      "changed": false,
+      "synopsis_sha256": "c5c89e12750430d6a4721630e798f39d1bbc973523610be498c74ead7f796b10",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000213",
+      "bookId": "108",
+      "changed": false,
+      "synopsis_sha256": "63ef23016ac35c3d62e97f34966bd8de8a9e5e883e01567f0804c31fe238a637",
+      "basis_kind": "PRIMARY_TEXT_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000224",
+      "bookId": "142",
+      "changed": false,
+      "synopsis_sha256": "361b8ed75d2468fc61b787ec1f931b8b0f08286470c9fd1796a9fcdaf91ce056",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000227",
+      "bookId": "188",
+      "changed": false,
+      "synopsis_sha256": "e4c661f1013085681f67f5b84462c5a862bc7c65e37340c13befa2954ebc438b",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000230",
+      "bookId": "139",
+      "changed": false,
+      "synopsis_sha256": "018fb6eb971545954dc7ec331f734cbd4249a492829fe2774660c7812c839456",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000231",
+      "bookId": "132",
+      "changed": false,
+      "synopsis_sha256": "ca748298f070a468bcd72636d23675cf62c8d464a706980961fa928378e15c47",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000232",
+      "bookId": "122",
+      "changed": false,
+      "synopsis_sha256": "aa959dc22933f53681c4a98277b8ab7f9ab12bdcb089bbad74befce0f8574ba1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000234",
+      "bookId": "203",
+      "changed": false,
+      "synopsis_sha256": "9f6fa168f3062ca73c8466ca8ed29806e0285e6a2ccabb4ae37276bd3c0a5656",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000235",
+      "bookId": "99",
+      "changed": false,
+      "synopsis_sha256": "25eced99ac02bf05df69ee3507e5a71737161d474824cb193983c9d146f35863",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000236",
+      "bookId": "119",
+      "changed": false,
+      "synopsis_sha256": "7d120f12c6eb00d093b49b62dd0bf75f73faaff2dea181610f1678b29bc3a6af",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000242",
+      "bookId": "185",
+      "changed": false,
+      "synopsis_sha256": "482dfd820dc3326737b47c9a3c167567134ce4ec3dc6cf65bf89a7e4e75f691e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000243",
+      "bookId": "181",
+      "changed": false,
+      "synopsis_sha256": "011eaac9afe819da085cbfc19ae8e0291f8d1e8cfa49a8db03ef8a322c943482",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000245",
+      "bookId": "97",
+      "changed": false,
+      "synopsis_sha256": "354eb4d5a0f2cf132d12b0eb7e19d66f68abcab79748afe206c4cbfd373f6144",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000248",
+      "bookId": "193",
+      "changed": false,
+      "synopsis_sha256": "6e269086a1717f65d69f26c0d85373ef9ed642afab50f6e67236e63f044f7dae",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000251",
+      "bookId": "202",
+      "changed": false,
+      "synopsis_sha256": "778c2339a65bdd968c6535d34b21b19901a8a110da5f91c865d75fa28a78c7bb",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000253",
+      "bookId": "190",
+      "changed": false,
+      "synopsis_sha256": "820364dbeb70742d7fdbb8522d557ea18ba673b56567e44f4121ff9e014a7231",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000260",
+      "bookId": "172",
+      "changed": false,
+      "synopsis_sha256": "51bb1b9a9a4d7e3465b17e4b2848fb60e685fc9809c3ac88c341f8d94b875d46",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000261",
+      "bookId": "111",
+      "changed": false,
+      "synopsis_sha256": "00eb5fea51c8a5525f43dfbc9bb8e67101efe088e7a595e5c71d6cacf4b52265",
+      "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000263",
+      "bookId": "160",
+      "changed": false,
+      "synopsis_sha256": "b928fdda24efead8548d1ada0cc8cbcd67a54d51786764b41b348cf19dd62ded",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000264",
+      "bookId": "95",
+      "changed": false,
+      "synopsis_sha256": "6556b91f3f7b1cae558f57f68b8481fd32ead5e23839c4297abc9c4f3cc6038f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000266",
+      "bookId": "147",
+      "changed": false,
+      "synopsis_sha256": "89cfddfcd5f9699f8095080651133dd35b93f92845ed900029d8ed8151540d92",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000269",
+      "bookId": "128",
+      "changed": false,
+      "synopsis_sha256": "d88751ad12a87ebeb09154bc05c43604fc39418fae3771423bff8285d66c0545",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000273",
+      "bookId": "200",
+      "changed": false,
+      "synopsis_sha256": "cc0d883f49d4e6472feb5c01dfe36199e485c964c81aa3609c62421065aad967",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000275",
+      "bookId": "123",
+      "changed": false,
+      "synopsis_sha256": "e780cd58e6c7917a8a2fc86ff18e382c2ed0205f30a593721edae21763a4cabb",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000276",
+      "bookId": "92",
+      "changed": false,
+      "synopsis_sha256": "bccd592082dbae3ecf6056890098dede379b98869387ed3b0d016fc565045440",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000279",
+      "bookId": "107",
+      "changed": false,
+      "synopsis_sha256": "34b52fead634e85c75a36561cc6dcc40afa739bee81711c3113cd5055057b7cd",
+      "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000281",
+      "bookId": "120",
+      "changed": false,
+      "synopsis_sha256": "ccaf9ed53763f7ea434749f43f85f698954fbfa212b7d5d7e5e17db77ade110e",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000282",
+      "bookId": "155",
+      "changed": false,
+      "synopsis_sha256": "484afc6648c76e9eca81523419c31f5cc8162f7131802f32c6b6de285415b5c2",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000284",
+      "bookId": "176",
+      "changed": false,
+      "synopsis_sha256": "3679a2d6663e5d72432adb67657c36e5e4ff84b24efc90177f046c1363580eb8",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000285",
+      "bookId": "162",
+      "changed": false,
+      "synopsis_sha256": "81baa852290ee26d89d3830bbc8968802b628b7e3fae838814833390530c378f",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000287",
+      "bookId": "175",
+      "changed": false,
+      "synopsis_sha256": "49832ddfde2c848412aa312bd3f79798793001446888fb862d4a470df432df28",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000288",
+      "bookId": "194",
+      "changed": false,
+      "synopsis_sha256": "b5a4cc67209f787965976e9fb8188e09796674d56ee99109230a4d7dfa145c34",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000291",
+      "bookId": "159",
+      "changed": false,
+      "synopsis_sha256": "dcc0ad092c7a5ec8fe74ab044c822b3d29107a3bab9f522da39a24cffd8c722d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000292",
+      "bookId": "137",
+      "changed": false,
+      "synopsis_sha256": "9faf9121d5748613c326d7775018dd0ca3fd7cea4db4ae8ca5025946840424a1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000293",
+      "bookId": "110",
+      "changed": false,
+      "synopsis_sha256": "944d6b0e2721a4f1fe4bf1b587e15f19b26e704a3e16096e6a6eb6e72c6b2e99",
+      "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000294",
+      "bookId": "168",
+      "changed": false,
+      "synopsis_sha256": "c8cd84ad1a365c7fe309477910d8d1c4a97b3f7055921b6cd6dce182b92039ab",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000297",
+      "bookId": "94",
+      "changed": false,
+      "synopsis_sha256": "793c7afc33a67f0c032e2b00a9033733619c27dac858d9e0a8d685dad68968ea",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000301",
+      "bookId": "198",
+      "changed": false,
+      "synopsis_sha256": "9c77f0063169c04145df3d420a574b0768c7c844ada9f591d54007132e777015",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000305",
+      "bookId": "204",
+      "changed": false,
+      "synopsis_sha256": "6fcc7db43be1d849df72587b8a66e9e8ea1eb8df4183e70799bbefe112e62ed1",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000306",
+      "bookId": "196",
+      "changed": false,
+      "synopsis_sha256": "100126872e74add8259efa33c56a58ef6b450ac01089e6eb463dfb4d316339a3",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000307",
+      "bookId": "192",
+      "changed": false,
+      "synopsis_sha256": "4f4f061dd046392e670d1d8c42183b78946bf60b4a1594c1d3414b7b8575b228",
+      "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000310",
+      "bookId": "134",
+      "changed": false,
+      "synopsis_sha256": "6fcba7a4c600a72472f38d695275eeb165fd4f21d9a5b74db36b391fae2fca14",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000311",
+      "bookId": "207",
+      "changed": false,
+      "synopsis_sha256": "c3129a275558259cda5f966d0d048f6c64379ac56b0a1cfab63984a17797d6ff",
+      "basis_kind": "INSTITUTIONAL_SYNOPSIS_PARAPHRASE"
+    },
+    {
+      "sku": "PLG-BK-000312",
+      "bookId": "141",
+      "changed": false,
+      "synopsis_sha256": "cd5b752d8280c3a6dc511e4d2d77a17a3bc316149694c3bc977f3f306b95daa5",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    },
+    {
+      "sku": "PLG-BK-000314",
+      "bookId": "145",
+      "changed": false,
+      "synopsis_sha256": "78dcfd2d39440b245863cae0a504f7fca75c4bbbabde1f23aa8bd8767330087d",
+      "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION"
+    }
+  ]
+}

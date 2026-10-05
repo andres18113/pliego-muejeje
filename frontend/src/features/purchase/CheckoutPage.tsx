@@ -118,6 +118,7 @@ function CheckoutContent() {
   const addressesQuery = useQuery({
     queryKey: addressesQueryKey,
     queryFn: ({ signal }) => listAddresses(signal),
+    enabled: cartQuery.data?.requiresPhysicalFulfillment === true,
     meta: { authRequired: true },
     retry: (count, error) => !(error instanceof ApiRequestError && error.status < 500) && count < 1,
   });
@@ -175,10 +176,10 @@ function CheckoutContent() {
   const addresses = addressesQuery.data;
   const fulfillmentMethod = watch("fulfillmentMethod");
   // Presentation follows the current cart; checkout still enforces eligibility in PostgreSQL.
-  const digitalOnly = Boolean(cartQuery.data?.items.length)
-    && cartQuery.data!.items.every(item => isDigitalFormat(item.format));
+  const digitalOnly = cartQuery.data?.requiresPhysicalFulfillment === false;
   useEffect(() => {
-    if (digitalOnly && fulfillmentMethod === "STORE_PICKUP") setValue("fulfillmentMethod", "HOME_DELIVERY");
+    if (digitalOnly && fulfillmentMethod !== "DIGITAL_ONLY") setValue("fulfillmentMethod", "DIGITAL_ONLY");
+    else if (!digitalOnly && fulfillmentMethod === "DIGITAL_ONLY") setValue("fulfillmentMethod", "HOME_DELIVERY");
   }, [digitalOnly, fulfillmentMethod, setValue]);
   const pickupLocationId = watch("pickupLocationId");
   const pickupQuery = useQuery({
@@ -239,6 +240,7 @@ function CheckoutContent() {
       pendingKey.current = null;
       if (result.state === "CREATED") {
         await queryClient.invalidateQueries({ queryKey: cartQueryKey });
+        await queryClient.invalidateQueries({ queryKey: ["customer-library"] });
         navigate(`/orders/${result.order.orderId}`, { replace: true, state: { purchased: true } });
         return;
       }
@@ -329,7 +331,7 @@ function CheckoutContent() {
   }
 
   const submit = handleSubmit(async (values) => {
-    const destinationUnavailable = values.fulfillmentMethod === "HOME_DELIVERY"
+    const destinationUnavailable = values.fulfillmentMethod === "DIGITAL_ONLY" ? false : values.fulfillmentMethod === "HOME_DELIVERY"
       ? addressesQuery.isPending || addressesQuery.isError || addressesQuery.isFetching
       : pickupQuery.isPending || pickupQuery.isError || pickupQuery.isFetching || !selectedPickup;
     if (recovery.error || submitLock.current || phase !== "idle" || destinationUnavailable || !paymentReady || (values.paymentMethod === "TRANSFER" && !transferDetails.data)) return;
@@ -397,7 +399,9 @@ function CheckoutContent() {
       let result: CheckoutResult;
       try {
         result = await submitCheckout({
-          ...(values.fulfillmentMethod === "STORE_PICKUP"
+          ...(values.fulfillmentMethod === "DIGITAL_ONLY"
+            ? { fulfillmentMethod: "DIGITAL_ONLY" } as const
+            : values.fulfillmentMethod === "STORE_PICKUP"
             ? { fulfillmentMethod: "STORE_PICKUP", pickupLocationId: values.pickupLocationId } as const
             : { addressId: values.addressId }),
           expectedCartId: fresh.cartId!,
@@ -415,6 +419,7 @@ function CheckoutContent() {
       catch { setPhase("unknown"); return; }
       pendingKey.current = null;
       await queryClient.invalidateQueries({ queryKey: cartQueryKey });
+        await queryClient.invalidateQueries({ queryKey: ["customer-library"] });
       navigate(`/orders/${result.orderId}`, { replace: true, state: { purchased: true } });
     } finally {
       // Never keep the card number after an attempt, whatever the outcome.
@@ -528,12 +533,14 @@ function CheckoutContent() {
   }
 
   const unavailable = cart.items.some((item) => !resolveStockStatus(item).canAddToCart);
-  const selectedAddress = addresses?.find((address) => address.addressId === addressId);
+  // Match the primary selection effect during its first render, avoiding a transient chooser.
+  const selectedAddress = addresses?.find((address) => address.addressId === addressId)
+    ?? addresses?.find(address => address.primary) ?? addresses?.[0];
   // The customer must settle payment first; submitting still validates the destination and current data.
   const submitBlocked = Boolean(recovery.error) || busy || phase === "unknown" || phase === "reconciling" || unavailable
     || !paymentReady
     || cart.items.length === 0
-    || (fulfillmentMethod === "HOME_DELIVERY"
+    || (fulfillmentMethod === "DIGITAL_ONLY" ? false : fulfillmentMethod === "HOME_DELIVERY"
       ? addressesQuery.isPending || addressesQuery.isError || addressesQuery.isFetching
       : pickupQuery.isPending || pickupQuery.isError || pickupQuery.isFetching || pickupQuery.data?.length === 0)
     || (paymentMethod === "TRANSFER" && !transferDetails.data);
@@ -623,17 +630,17 @@ function CheckoutContent() {
           </Button>
         </PurchaseSummary>
       }>
+          {!digitalOnly && <>
           <FulfillmentTabs pickupAvailable={!digitalOnly} value={fulfillmentMethod} disabled={phase !== "idle" || Boolean(recovery.error)} onChange={(method: CheckoutFulfillmentMethod) => {
             setValue("fulfillmentMethod", method);
             clearErrors(["addressId", "pickupLocationId", "fulfillmentMethod"]);
           }} />
-          {digitalOnly && <p role="note">Esta compra digital simulada requiere una dirección. El retiro en tienda se ofrece cuando el carrito incluye libros físicos.</p>}
           <section id="checkout-destination" role="tabpanel" tabIndex={0} className={`${classes.panel} ${classes.fieldError} ${classes.checkoutDestination} ${pickupClasses.destination}`} aria-labelledby={`fulfillment-tab-${fulfillmentMethod}`} data-fulfillment={fulfillmentMethod}>
             {fulfillmentMethod === "STORE_PICKUP" ? <>
               <PickupLocationPicker query={pickupQuery} value={pickupLocationId} disabled={phase !== "idle"} error={errors.pickupLocationId?.message}
                 onChange={id => { setValue("pickupLocationId", id, { shouldValidate: true }); }}>
               <ul className={classes.shipmentItems} aria-label="Libros para retirar">
-                {cart.items.map(item => <li key={item.cartItemId}>
+                {cart.items.filter(item => !isDigitalFormat(item.format)).map(item => <li key={item.cartItemId}>
                   <span className={classes.shipmentCover}><BookCover url={item.coverUrl} license={null} attribution={null} title={item.title} size="compact" decorative /></span>
                   <strong>{item.title}</strong>
                 </li>)}
@@ -707,7 +714,7 @@ function CheckoutContent() {
                     <p className={classes.panelRule}>{fulfillmentMethodLabel(fulfillmentMethod)}</p>
                     {deliveryWindow && <p className={classes.shipmentWindow}>Entrega {deliveryWindow}</p>}
                     <ul className={classes.shipmentItems} aria-label="Libros de esta entrega">
-                      {cart.items.map((item) => (
+                      {cart.items.filter(item => !isDigitalFormat(item.format)).map((item) => (
                         <li key={item.cartItemId}>
                           <span className={classes.shipmentCover}><BookCover url={item.coverUrl} license={null} attribution={null} title={item.title} size="compact" decorative /></span>
                           <strong>{item.title}</strong>
@@ -720,6 +727,8 @@ function CheckoutContent() {
             )}
             </>}
           </section>
+          </>}
+          {digitalOnly && <p role="note">Esta compra digital no requiere entrega ni retiro. La titularidad se confirma en Mi biblioteca después del pago aprobado.</p>}
 
           <form id="checkout-form" className={`${classes.panel} ${classes.fieldError} ${classes.checkoutPayment}`} onSubmit={submit} noValidate aria-labelledby="checkout-payment-heading">
             <div className={classes.panelHead}>
@@ -1064,6 +1073,7 @@ function AddressChoice({ address, disabled, onSelect, ...field }: {
 function cartSignature(cart: CartDetail) {
   return JSON.stringify([
     cart.totalCurrent,
-    cart.items.map((item) => [item.cartItemId, item.quantity, item.currentPrice, item.available]),
+    cart.requiresPhysicalFulfillment,
+    cart.items.map((item) => [item.cartItemId, item.quantity, item.currentPrice, item.available, item.format]),
   ]);
 }

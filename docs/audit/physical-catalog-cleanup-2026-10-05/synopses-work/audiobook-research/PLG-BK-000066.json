@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000066",
+  "title": "Historia mínima de la eugenesia en América Latina",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194927",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:58.062281+00:00",
+      "response_sha256": "5bc485fb27908b59b351602152db97567809bec58d5ae9bf7ac92ff352bcb35f",
+      "extraction_sha256": "64e463613e36a939f62d4a9884cf90951cfbdd79a88361a701c77bbf0048e734",
+      "text": "Guardado en: Autor Principal: Reggiani, Andrés Horacio, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México : El Colegio de México, 2021. Edición: Primera edición. Series: Colección Historias mínimas. Materias: Eugenesia > Aspectos sociales > América Latina. Eugenics > Latin America > History. Control de la natalidad > Aspectos sociales > América Latina. Contracepción > Aspectos sociales > América Latina. Política demográfica > América Latina. Control migratorio > America Latina. Seres humanos > Constitución. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194927  ",
+      "observed_page_title": "Existencias: Historia mínima de la eugenesia en América Latina /",
+      "title_check_response_sha256": "bae2806e2ad7ad076301ff3e60a9e4dde9b62001795cb8e431632d0a03fcee27",
+      "title_checked_at_utc": "2026-10-05T19:39:58.166186+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194927/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:59.579575+00:00",
+      "response_sha256": "4a1c5874b1e1bd73971f50a973b79829262f6ef310a2d87001a49790592c607f",
+      "extraction_sha256": "64e463613e36a939f62d4a9884cf90951cfbdd79a88361a701c77bbf0048e734",
+      "text": "Guardado en: Autor Principal: Reggiani, Andrés Horacio, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México : El Colegio de México, 2021. Edición: Primera edición. Series: Colección Historias mínimas. Materias: Eugenesia > Aspectos sociales > América Latina. Eugenics > Latin America > History. Control de la natalidad > Aspectos sociales > América Latina. Contracepción > Aspectos sociales > América Latina. Política demográfica > América Latina. Control migratorio > America Latina. Seres humanos > Constitución. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194927  "
+    }
+  ]
+}

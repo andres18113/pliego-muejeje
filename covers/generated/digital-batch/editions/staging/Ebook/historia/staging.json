@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Historia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia universal permite situar experiencias de distintas sociedades dentro de un horizonte común de estudio. Javier Gálvez S. presenta una obra inscrita en ese ámbito, destinada a acercar al lector al conocimiento del pasado. Su lectura invita a pensar los vínculos entre acontecimientos, sociedades y tiempo histórico, y a ampliar la mirada más allá de una sola historia local.",
         "autores": [
           {
             "nombre": "Javier Gálvez S.",
@@ -182,7 +182,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "287",
-        "imported_book_id": "285"
+        "imported_book_id": "285",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: World history. Historia universal. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -190,7 +201,7 @@
       "libro": {
         "titulo": "Historia de América",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Carlos Malamud recorre la historia americana desde el poblamiento inicial hasta la época contemporánea. La obra considera la etapa colonial y la participación de distintos imperios europeos, y presta especial atención a América Latina en los siglos posteriores. Una síntesis que busca comprender la diversidad del continente y ofrecer claves de interpretación de su trayectoria histórica.",
         "autores": [
           {
             "nombre": "Malamud, Carlos",
@@ -360,7 +371,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "288",
-        "imported_book_id": "286"
+        "imported_book_id": "286",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.alianzaeditorial.es/libro/manuales/historia-de-america-carlos-malamud-9788420669359/",
+              "basis": "La sinopsis de Alianza confirma el alcance desde el poblamiento a la época contemporánea, los imperios coloniales y el énfasis latinoamericano posterior."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -368,7 +390,7 @@
       "libro": {
         "titulo": "Historia de Cádiz",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Agustín de Horozco dirige su obra hacia la historia de Cádiz. El texto se vincula con el pasado de la ciudad y con la expedición de 1596. Una lectura para quienes desean acercarse a la memoria histórica gaditana y explorar una escritura relacionada con ese lugar y con un episodio específico de su trayectoria.",
         "autores": [
           {
             "nombre": "Horozco, Agustín de",
@@ -543,7 +565,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "289",
-        "imported_book_id": "287"
+        "imported_book_id": "287",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Cadiz Expedition, 1596. Cádiz (España) > Historia. Libros electronicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -551,7 +584,7 @@
       "libro": {
         "titulo": "Historia de Córdoba",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Enrique Aguilar Gavilán dedica esta obra a la historia de Córdoba, en España. El libro permite acercarse a la trayectoria de la ciudad y situar ese interés dentro del estudio histórico español. Una lectura para quienes desean conocer el pasado cordobés y orientar sus preguntas hacia la experiencia de un lugar específico a lo largo del tiempo.",
         "autores": [
           {
             "nombre": "Aguilar Gavilán, Enrique",
@@ -726,7 +759,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "290",
-        "imported_book_id": "288"
+        "imported_book_id": "288",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Spain > History. España > Historia. Córdoba (Spain) > History. Córdoba > España > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -734,7 +778,7 @@
       "libro": {
         "titulo": "Historia de Francia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia de Francia se convierte aquí en un objeto de estudio y de interpretación. Roger Price dedica su obra al pasado francés, con una perspectiva vinculada tanto a la historia como a la historiografía. Una aproximación para quienes desean conocer la trayectoria de este país y pensar cómo se construye el conocimiento sobre su experiencia histórica.",
         "autores": [
           {
             "nombre": "Price, Roger",
@@ -909,7 +953,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "291",
-        "imported_book_id": "289"
+        "imported_book_id": "289",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: France > History. Francia > Historia. France > Historiography. Francia > Historiografía. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -917,7 +972,7 @@
       "libro": {
         "titulo": "Historia de Irlanda (3a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El pasado de Irlanda es el centro de esta obra de John O’Beirne Ranelagh. El libro se inscribe en la historia del país y permite acercarse a una trayectoria que forma parte de la experiencia europea. Una lectura para quienes desean conocer Irlanda a través de su dimensión histórica y situar ese interés dentro del estudio de las sociedades.",
         "autores": [
           {
             "nombre": "O’Beirne Ranelagh, John",
@@ -1092,7 +1147,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "292",
-        "imported_book_id": "290"
+        "imported_book_id": "290",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Ireland > History. Irlanda > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1100,7 +1166,7 @@
       "libro": {
         "titulo": "Historia de Italia (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Christopher Duggan dedica esta obra al pasado de Italia. El libro permite acercarse a la trayectoria histórica del país y situar ese interés dentro del estudio de Europa. Una lectura para quienes desean ampliar sus conocimientos de historia italiana y explorar la experiencia de una sociedad a través de las preguntas sobre su pasado.",
         "autores": [
           {
             "nombre": "Duggan, Christopher",
@@ -1275,7 +1341,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "293",
-        "imported_book_id": "291"
+        "imported_book_id": "291",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Italy > History. Italia > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1283,7 +1360,7 @@
       "libro": {
         "titulo": "Historia de la cultura en la América hispánica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Pedro Henríquez Ureña dedica esta obra a la historia cultural de la América hispánica. El libro permite acercarse a ese ámbito desde una mirada interesada en la cultura y en su relación con el pasado. Una lectura para quienes desean explorar la experiencia cultural hispanoamericana y situarla dentro de un horizonte de estudio histórico.",
         "autores": [
           {
             "nombre": "Henríquez Ureña, Pedro",
@@ -1458,7 +1535,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "294",
-        "imported_book_id": "292"
+        "imported_book_id": "292",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Culture. Cultura. New Spain > History. Nueva España > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1466,7 +1554,7 @@
       "libro": {
         "titulo": "Historia de la India (3a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Barbara Metcalf y Thomas Metcalf dedican esta obra al pasado de la India. El libro ofrece una aproximación al campo de la historia de este país y a su trayectoria como objeto de estudio. Una lectura para quienes desean ampliar sus conocimientos históricos y acercarse a una experiencia que ocupa un lugar propio en la historia asiática.",
         "autores": [
           {
             "nombre": "Metcalf, Barbara D. - Metcalf, Thomas R.",
@@ -1641,7 +1729,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "295",
-        "imported_book_id": "293"
+        "imported_book_id": "293",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: India > History. India > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1649,7 +1748,7 @@
       "libro": {
         "titulo": "Historia de los Estados Unidos de América",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Susan-Mary Grant dedica esta obra a la historia de los Estados Unidos de América. El libro permite dirigir la mirada hacia el pasado de este país dentro del horizonte norteamericano. Una lectura para quienes desean conocer esa trayectoria histórica y ampliar su comprensión de una sociedad cuyo estudio forma parte de las preguntas sobre la historia de América del Norte.",
         "autores": [
           {
             "nombre": "Grant, Susan-Mary",
@@ -1824,7 +1923,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "296",
-        "imported_book_id": "294"
+        "imported_book_id": "294",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: United States > History. Estados Unidos > Historia. North America > History. América del Norte > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1832,7 +1942,7 @@
       "libro": {
         "titulo": "Historia de México",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Andrés Cavo dirige su obra hacia el pasado de México. El texto se vincula con la escritura de un autor jesuita y con el estudio de la historia mexicana. Una lectura para quienes desean acercarse a esa trayectoria desde una fuente específica y explorar la relación entre autor, escritura y conocimiento histórico.",
         "autores": [
           {
             "nombre": "Cavo, Andrés",
@@ -2007,7 +2117,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "297",
-        "imported_book_id": "295"
+        "imported_book_id": "295",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Jesuits > Works by. Jesuitas > Obras de. Mexico > History. México > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2015,7 +2136,7 @@
       "libro": {
         "titulo": "Historia de Rusia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Paul Bushkovitch dedica esta obra a la historia de Rusia. El ámbito bibliográfico del libro relaciona ese pasado con el comunismo y con las antiguas repúblicas soviéticas. Una lectura para quienes desean explorar la trayectoria rusa y situar su interés histórico ante una experiencia que también se conecta con el espacio de la antigua Unión Soviética.",
         "autores": [
           {
             "nombre": "Bushkovitch, Paul",
@@ -2190,7 +2311,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "298",
-        "imported_book_id": "296"
+        "imported_book_id": "296",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Communism > Russia. Comunismo > Rusia. Russia > History. Rusia > Historia. Former Soviet Republics. Ex Repúblicas Soviéticas. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2198,7 +2330,7 @@
       "libro": {
         "titulo": "Historia de Tlaxcala",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Diego Muñoz y Camargo dirige la atención hacia la historia de Tlaxcala. La obra forma parte de un campo de lectura dedicado al pasado mexicano y permite acercarse a la trayectoria de este territorio. Un texto para quienes desean ampliar su conocimiento de la historia local y relacionarlo con el estudio histórico de México.",
         "autores": [
           {
             "nombre": "Muñoz y Camargo, Diego",
@@ -2373,7 +2505,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "299",
-        "imported_book_id": "297"
+        "imported_book_id": "297",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Tlaxcala, Mexico (State) > History. México > Historia. Mexico Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2381,7 +2524,7 @@
       "libro": {
         "titulo": "Historia de Yucatán",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Diego López de Cogolludo dedica esta obra a la historia de Yucatán. El texto permite acercarse al pasado de ese territorio mexicano desde una escritura centrada en su trayectoria. Una lectura para quienes desean ampliar su conocimiento histórico de Yucatán y explorar una fuente vinculada a la memoria de un lugar con identidad propia dentro de México.",
         "autores": [
           {
             "nombre": "Cogolludo, Diego López de",
@@ -2556,7 +2699,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "300",
-        "imported_book_id": "298"
+        "imported_book_id": "298",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Yucatán (Mexico : State) > History. Yucatán (México) > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2564,7 +2718,7 @@
       "libro": {
         "titulo": "Historia económica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia económica permite observar el pasado desde las actividades y relaciones que sostienen la vida material de las sociedades. Este libro se inscribe en ese campo y acerca al lector a una manera de pensar los cambios históricos mediante su dimensión económica. Una lectura para quienes desean conectar el estudio del tiempo con la organización de la economía.",
         "autores": [
           {
             "nombre": "José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho",
@@ -2739,7 +2893,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "301",
-        "imported_book_id": "299"
+        "imported_book_id": "299",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Economic history. Historia económica. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2747,7 +2912,7 @@
       "libro": {
         "titulo": "Historia mínima de Estados Unidos de América",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Erika Pani propone una aproximación sintética a la historia de los Estados Unidos de América. La obra dirige el interés hacia el pasado de ese país y ofrece una entrada a su estudio histórico. Una lectura para quienes desean conocer esa trayectoria y orientar sus preguntas hacia la experiencia de una sociedad dentro del continente americano.",
         "autores": [
           {
             "nombre": "Pani, Erika",
@@ -2922,7 +3087,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "302",
-        "imported_book_id": "300"
+        "imported_book_id": "300",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: United States > History. Estados Unidos > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2930,7 +3106,7 @@
       "libro": {
         "titulo": "Historia mínima de los feminismos en América Latina",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Dora Barrancos recorre la trayectoria de las luchas feministas latinoamericanas, desde sus primeras formulaciones hasta las movilizaciones multitudinarias recientes. La obra relaciona propuestas y acciones de diversos colectivos de mujeres y muestra cómo sus demandas han cambiado. Una síntesis que acerca al público general a la historia regional de la búsqueda de derechos y de la acción contra el patriarcado.",
         "autores": [
           {
             "nombre": "Barrancos, Dora",
@@ -3100,7 +3276,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "303",
-        "imported_book_id": "301"
+        "imported_book_id": "301",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://libros.colmex.mx/tienda/historia-minima-de-los-feminismos-en-america-latina/",
+              "basis": "La sinopsis de El Colegio de México confirma el recorrido histórico de los colectivos feministas latinoamericanos y los cambios entre demandas iniciales y movilizaciones recientes."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3108,7 +3295,7 @@
       "libro": {
         "titulo": "Historia mínima del constitucionalismo en América Latina",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "José M. Portillo Valdés se acerca a la historia del constitucionalismo latinoamericano. El ámbito temático de la obra reúne historia constitucional, liberalismo y cambio social en América Latina. Una lectura para quienes desean relacionar el estudio de las constituciones con la experiencia histórica de la región y con las transformaciones de su vida política y social.",
         "autores": [
           {
             "nombre": "Portillo Valdés, José M.",
@@ -3283,7 +3470,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "304",
-        "imported_book_id": "302"
+        "imported_book_id": "302",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Constitutional history > Latin America. Social change > Latin America. Liberalism > Latin America. Historia constitucional > América Latina. Cambio social > América Latina > Historia. Liberalismo > América Latina > Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3291,7 +3489,7 @@
       "libro": {
         "titulo": "Historia mínima del indigenismo en América Latina",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Andrés A. Fábregas Puig dirige su mirada hacia la historia del indigenismo en América Latina. La obra se vincula con el pasado de los pueblos indígenas de México, Centroamérica y Sudamérica y con sus relaciones gubernamentales. Una lectura para quienes desean acercarse a ese ámbito histórico y pensar los vínculos entre poblaciones indígenas y acción de los gobiernos.",
         "autores": [
           {
             "nombre": "Fábregas Puig, Andrés A.",
@@ -3466,7 +3664,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "305",
-        "imported_book_id": "303"
+        "imported_book_id": "303",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Indios de Centroamérica > Historia. Indios de América del Sur > Historia. Indios de México > Historia. Indios de Centroamérica > Relaciones gubernamentales. Indios de América del Sur > Relaciones gubernamentales. Indios de México > Relaciones gubernamentales. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3474,7 +3683,7 @@
       "libro": {
         "titulo": "La mujer en la historia",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La presencia de las mujeres en la historia abre preguntas sobre su participación en la vida social y sobre las formas de recordarla. María Antonia Bel Bravo dedica esta obra a ese campo de estudio. Su lectura ofrece una aproximación a la relación entre mujeres e historia y al interés por reconocer experiencias que forman parte del pasado colectivo.",
         "autores": [
           {
             "nombre": "Bel Bravo, María Antonia",
@@ -3649,7 +3858,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "306",
-        "imported_book_id": "304"
+        "imported_book_id": "304",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Women's studies. Women > History. Mujer. Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -3657,7 +3877,7 @@
       "libro": {
         "titulo": "Otra historia de Córdoba",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Roger Galisteo dirige su obra hacia el pasado de Córdoba, en España. El título anuncia una aproximación propia a la historia de la ciudad y sitúa ese interés dentro del ámbito histórico europeo. Una lectura para quienes desean explorar la memoria cordobesa y acercarse a un lugar a través de las preguntas que plantea su experiencia histórica.",
         "autores": [
           {
             "nombre": "Galisteo, Roger",
@@ -3832,7 +4052,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "307",
-        "imported_book_id": "305"
+        "imported_book_id": "305",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Historia europea. Spain > History. Córdoba (Spain) > History. España. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

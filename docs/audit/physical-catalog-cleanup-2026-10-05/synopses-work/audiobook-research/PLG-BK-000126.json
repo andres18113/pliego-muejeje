@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000126",
+  "title": "Ética y cultura",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:06.478277+00:00",
+      "response_sha256": "770cb244debfce710580a74960c79d6a61d1af0c78e2d07babed74f82da6d4aa",
+      "extraction_sha256": "43ad6b5e64a3cbce4d937e65b6badeb087a98ad00a984d263ce85323afe54076",
+      "text": "Guardado en: Autor Principal: Ricoeur, Paul. Formato: eBook Idioma: Spanish Publicado: Buenos Aires : Prometeo Libros, 2017. Materias: Hermeneutics. Ethics. Hermenéutica. Ética. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/191960  ",
+      "observed_page_title": "Existencias: Ética y cultura /",
+      "title_check_response_sha256": "6b43c6d514edebbd625306a141b74df6493f13ca44b4df2af51aa99784364578",
+      "title_checked_at_utc": "2026-10-05T19:39:59.639736+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:07.780685+00:00",
+      "response_sha256": "8a96084fd1be30769a23563a9b413c288e230cd469da1849fbe09bc2bc3a5364",
+      "extraction_sha256": "43ad6b5e64a3cbce4d937e65b6badeb087a98ad00a984d263ce85323afe54076",
+      "text": "Guardado en: Autor Principal: Ricoeur, Paul. Formato: eBook Idioma: Spanish Publicado: Buenos Aires : Prometeo Libros, 2017. Materias: Hermeneutics. Ethics. Hermenéutica. Ética. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/191960  "
+    }
+  ]
+}

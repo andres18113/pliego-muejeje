@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Apuntes de ecología microbiana",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La ecología microbiana sitúa a los microorganismos dentro de una perspectiva ecológica y vincula su estudio con la microbiología. Estos apuntes ofrecen una entrada a un campo que invita a pensar la vida microscópica en relación con su entorno. Una lectura para quienes desean orientarse en ese cruce de disciplinas y comprender el sentido ecológico del estudio de los microbios.",
         "autores": [
           {
             "nombre": "Gutiérrez Castrejón, Teodoro",
@@ -192,7 +192,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "131",
-        "imported_book_id": "130"
+        "imported_book_id": "130",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000143.json; SHA-256 de respuesta HTTP: 9e73abb712373cca91e588e928e521b878d02521e0aaa9a0f10d74cd167e1a3b"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -200,7 +211,7 @@
       "libro": {
         "titulo": "Astronomía: de la tierra al cosmos",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Desde la Tierra como punto de observación hasta el cosmos como horizonte, esta obra propone un acercamiento al campo de la astronomía. Su tema invita a relacionar nuestra experiencia del cielo con el estudio del universo. Una lectura para quienes desean ampliar su perspectiva sobre los cuerpos celestes y comenzar a familiarizarse con las preguntas astronómicas.",
         "autores": [
           {
             "nombre": "Zandanel, Armando Eugenio",
@@ -385,7 +396,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "132",
-        "imported_book_id": "131"
+        "imported_book_id": "131",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000080.json; SHA-256 de respuesta HTTP: 248bb1477bd947ea207c772edf6a3497f52c40f40255ac0744acc33d48c40b5b"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -393,7 +415,7 @@
       "libro": {
         "titulo": "Botánica aplicada",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La botánica se presenta desde una orientación aplicada, que invita a relacionar el conocimiento del mundo vegetal con sus usos en otros ámbitos. El tema abre una perspectiva sobre el estudio de las plantas desde preguntas prácticas. Una lectura para quienes desean acercarse a este campo y pensar el vínculo entre comprensión botánica y aplicación del conocimiento.",
         "autores": [
           {
             "nombre": "Molina Abril, José Antonio",
@@ -578,7 +600,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "133",
-        "imported_book_id": "132"
+        "imported_book_id": "132",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000231.json; SHA-256 de respuesta HTTP: f5ea68cb4c70a68186659c3a14309e206d0428b1d702d501a71848bcbbb73dd8"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -586,7 +619,7 @@
       "libro": {
         "titulo": "Colapso: cuando el clima lo cambia todo",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El cambio climático se presenta bajo la pregunta por su capacidad de transformar profundamente las condiciones de vida. El título invita a considerar el colapso como una forma de pensar la relación entre clima y cambios de gran alcance. Una lectura para quienes buscan acercarse a esta problemática y reflexionar sobre la importancia del clima en la continuidad de las sociedades.",
         "autores": [
           {
             "nombre": "Baquedano, Manuel",
@@ -771,7 +804,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "134",
-        "imported_book_id": "133"
+        "imported_book_id": "133",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000158.json; SHA-256 de respuesta HTTP: 51b39dad30a1e322ec1dd30c54905d2697a9efb77ac7b10ae45204635beff1dd"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -779,7 +823,7 @@
       "libro": {
         "titulo": "Ecología del Paisaje",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La ecología del paisaje relaciona el estudio ecológico con una perspectiva que toma el paisaje como marco. El tema invita a pensar los espacios desde las relaciones que constituyen su dimensión ecológica. Una lectura para quienes desean acercarse a este campo y explorar cómo la mirada sobre el paisaje puede conectarse con la comprensión del entorno.",
         "autores": [
           {
             "nombre": "Farina, Almo",
@@ -964,7 +1008,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "135",
-        "imported_book_id": "134"
+        "imported_book_id": "134",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000310.json; SHA-256 de respuesta HTTP: c3fd57827e9f70370a616eff4524351dc77196041775348923693f9d62466ab0"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -972,7 +1027,7 @@
       "libro": {
         "titulo": "Glosario botánico ilustrado",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El vocabulario de la botánica constituye la materia de este glosario ilustrado. Su carácter de obra de consulta invita a acercarse a las palabras con las que se describe y estudia el mundo vegetal. Una lectura para quienes desean orientarse en la terminología botánica y relacionar los términos de la disciplina con referencias visuales.",
         "autores": [
           {
             "nombre": "Esteras Pérez, Francisco Javier",
@@ -1167,7 +1222,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "136",
-        "imported_book_id": "135"
+        "imported_book_id": "135",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000153.json; SHA-256 de respuesta HTTP: 5f9decc430b34e97b1c61a3be68f5e5810fd8ed1761811f9fe9d7be81fa54375"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1175,7 +1241,7 @@
       "libro": {
         "titulo": "Introducción a la geología (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una entrada al campo de la geología que pone a la Tierra en el centro del estudio. Su orientación introductoria invita a familiarizarse con una disciplina dedicada a comprender el planeta desde una perspectiva científica. Una lectura para quienes buscan un primer marco de referencia antes de profundizar en temas o ramas específicas del conocimiento geológico.",
         "autores": [
           {
             "nombre": "Iriondo, Martín Horacio",
@@ -1360,7 +1426,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "137",
-        "imported_book_id": "136"
+        "imported_book_id": "136",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000151.json; SHA-256 de respuesta HTTP: 5bc74cfb0f1e9b97456e85cdfc3141e92f1f141c79a1f9d3b2d632f7c62649f2"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1368,7 +1445,7 @@
       "libro": {
         "titulo": "La astronomía es fácil",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La astronomía se presenta desde un título que invita a acercarse a ella con confianza. El tema abre una entrada al estudio del cielo y a las preguntas que suscita el universo. Una lectura para quienes desean iniciar su relación con el conocimiento astronómico y comenzar a situar su lenguaje antes de explorar cuestiones más específicas.",
         "autores": [
           {
             "nombre": "Lopesino, Jordi",
@@ -1553,7 +1630,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "138",
-        "imported_book_id": "137"
+        "imported_book_id": "137",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000292.json; SHA-256 de respuesta HTTP: 854ed5c1a097f26a2631521f3a9566b744244ee4f6351e4520eb2d34ca023855"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1561,7 +1649,7 @@
       "libro": {
         "titulo": "Magnetismo en Geología y la prospección magnética terrestre",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El geomagnetismo y los métodos geofísicos de prospección constituyen el eje de esta obra. El tema invita a relacionar las propiedades magnéticas terrestres con la investigación geológica y la búsqueda de información sobre el terreno. Una lectura para quienes desean acercarse a la conexión entre magnetismo, geología y técnicas de exploración de la Tierra.",
         "autores": [
           {
             "nombre": "Lasfargues, Pierre",
@@ -1746,7 +1834,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "139",
-        "imported_book_id": "138"
+        "imported_book_id": "138",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000146.json; SHA-256 de respuesta HTTP: c3b27862587696e0c3e3f11f151a2996a78a8b3b12e7b3c6b198890fcec9899d"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1754,7 +1853,7 @@
       "libro": {
         "titulo": "Manual de zoología",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La diversidad animal se explica desde su dimensión evolutiva y adaptativa, con atención a la organización de los animales y a las formas de clasificarlos. El manual relaciona anatomía comparada, biología funcional y diversidad, e introduce aspectos del comportamiento. Una aproximación al estudio zoológico que también considera grupos de interés para las ciencias aplicadas.",
         "autores": [
           {
             "nombre": "Muñoz del Viejo, Antonio",
@@ -1959,7 +2058,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "140",
-        "imported_book_id": "139"
+        "imported_book_id": "139",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://publicauex.unex.es/libro/manual-de-zoologia_135809/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000230.json; SHA-256 de respuesta HTTP: 6302e2d1c80c7a26c64ece136727926276538ce327cb67a6b307773f2082dd4f"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

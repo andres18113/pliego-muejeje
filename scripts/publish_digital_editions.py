@@ -13,7 +13,8 @@ import sys
 from concurrent.futures import ThreadPoolExecutor
 import urllib.request
 
-from cover_catalog import category_slug, cover_evidence, metadata_errors, read_manifest, write_json
+from cover_catalog import (EXCLUDED_SKUS, category_slug, cover_evidence, metadata_errors,
+                           publication_existing_keys, read_manifest, retired_records, write_json)
 from prepare_digital_editions import canonical, readiness_errors
 
 
@@ -105,20 +106,35 @@ def load_batch(repo):
     batch = repo / 'covers/generated/digital-batch/editions'
     covers = read_manifest(batch / 'manifest-cover-proposed.json')
     by_sku = {r['permanent_sku']: r for r in covers['records']}
+    retired = {r['permanent_sku']: r for r in retired_records(repo / 'covers')}
+    seen = set()
     items = []
     for path in sorted((batch / 'staging').rglob('staging.json')):
         for index, record in enumerate(json.loads(path.read_text())['libros']):
             if metadata_errors(record) or readiness_errors(record):
                 raise ValueError('Hay metadatos pendientes en el lote.')
-            cover = by_sku[record['edicion']['sku']]
+            sku = record['edicion']['sku']
+            if sku not in by_sku or sku in seen or sku in EXCLUDED_SKUS:
+                raise ValueError('El lote contiene un SKU desconocido, duplicado o excluido.')
+            seen.add(sku)
+            cover = by_sku[sku]
+            if cover['title'] != record['libro']['titulo'] or cover.get('isbn13') != record['edicion'].get('isbn13'):
+                raise ValueError('La identidad del staging no coincide con el manifiesto propuesto.')
             image = (path.parent / record['portadaArchivo']).resolve()
             digest = hashlib.sha256(image.read_bytes()).hexdigest()
             if digest != record['preparacion']['source']['cover_sha256'] or not cover['r2_object_key'].endswith('-' + digest[:12] + '.webp'):
                 raise ValueError('La imagen no coincide con el staging/manifiesto.')
+            if sku in retired:
+                archived = retired[sku]
+                if (cover['r2_object_key'] != archived['r2_object_key'] or cover['title'] != archived['title']
+                        or cover.get('isbn13') != archived.get('isbn13')
+                        or record['edicion']['formato'] != archived.get('format')):
+                    raise ValueError('La identidad del lote no coincide con la edición retirada.')
+                continue
             items.append({'record': record, 'cover': cover, 'image': image, 'staging': path, 'index': index,
                           'seed': make_seed(record, cover), 'digest': digest})
-    if len(items) != 259 or len(by_sku) != 259 or len({i['seed'].sku for i in items}) != 259:
-        raise ValueError('El lote requiere 259 ediciones únicas.')
+    if seen != set(by_sku):
+        raise ValueError('El lote requiere una edición de staging por cada identidad del manifiesto propuesto.')
     return items
 
 
@@ -138,8 +154,40 @@ def verify_public_images(items):
         return list(pool.map(check, items))
 
 
+def merge_registry(current, proposed):
+    """Resume an older batch without losing assignments made by subsequent batches."""
+    result = copy.deepcopy(current)
+    by_sku = {row['sku']: row for row in result['assignments']}
+    identities = {key: row['sku'] for row in result['assignments'] for key in row['identity_keys']}
+    sources = {key: row['sku'] for row in result['assignments'] for key in row['source_keys']}
+    for row in proposed['assignments']:
+        sku = row['sku']
+        if (any(identities.get(key, sku) != sku for key in row['identity_keys'])
+                or any(sources.get(key, sku) != sku for key in row['source_keys'])):
+            raise ValueError('El registro propuesto intenta reasignar una identidad o fuente existente.')
+        if sku in by_sku:
+            existing = by_sku[sku]
+            if not set(row['identity_keys']).issubset(existing['identity_keys']):
+                raise ValueError('El registro propuesto intenta cambiar la identidad de un SKU existente.')
+        else:
+            existing = copy.deepcopy(row)
+            result['assignments'].append(existing)
+            by_sku[sku] = existing
+        for key in row['identity_keys']:
+            identities[key] = sku
+        for key in row['source_keys']:
+            sources[key] = sku
+    result['assignments'].sort(key=lambda row: row['sku'])
+    result['next_sequence'] = max(current['next_sequence'], proposed['next_sequence'],
+                                  max((int(row['sku'].rsplit('-', 1)[1]) for row in result['assignments']), default=0) + 1)
+    return result
+
+
 def execute(repo, admin_config, r2_config, audit):
     items = load_batch(repo)
+    proposed = json.loads((repo / 'covers/generated/digital-batch/editions/sku-registry-proposed.json').read_text())
+    current = json.loads((repo / 'covers/sku-registry.json').read_text())
+    registry = merge_registry(current, proposed)
     api = flow.PliegoApi(admin_config.get('PLIEGO_API_BASE_URL', flow.API_BASE))
     api.login(admin_config['PLIEGO_ADMIN_EMAIL'], admin_config['PLIEGO_ADMIN_PASSWORD'])
     before = api.all_pages('/api/v1/admin/editions')
@@ -147,16 +195,16 @@ def execute(repo, admin_config, r2_config, audit):
     historic = read_manifest(repo / 'covers/generated/manifest-normalized.json')
     own_skus = {item['seed'].sku for item in items}
     original_rows = [r for r in historic['records'] if r['permanent_sku'] not in own_skus]
-    if len(original_rows) != 55 or any(r['permanent_sku'] == 'PLG-BK-000042' for r in historic['records']):
-        raise ValueError('El manifiesto histórico no cumple su baseline de 55 registros.')
+    if any(r['permanent_sku'] in EXCLUDED_SKUS for r in historic['records']):
+        raise ValueError('El manifiesto activo contiene un SKU excluido.')
     configuration = upload.required_configuration(r2_config)
     client = upload.create_s3_client(configuration)
-    historic_keys = {r['r2_object_key'] for r in original_rows}
+    historic_keys = publication_existing_keys(repo / 'covers', historic['records'], own_skus)
     heads = {key: client.head_object(Bucket=configuration['bucket'], Key=key) for key in historic_keys}
     assets = [upload.UploadAsset(i['cover']['r2_object_key'], i['image'], i['image'].stat().st_size, i['digest']) for i in items]
     result = upload.sync_assets(client, configuration['bucket'], assets, 'covers/editions/v2/', allowed_existing_keys=historic_keys)
     write_json(audit / 'r2-upload.json', result)
-    if result['errors'] or result['verified_count'] != 259:
+    if result['errors'] or result['verified_count'] != len(items):
         raise ValueError('La sincronización R2 no pasó su gate: ' + '; '.join(result['errors']))
     for key, head in heads.items():
         current = client.head_object(Bucket=configuration['bucket'], Key=key)
@@ -164,7 +212,7 @@ def execute(repo, admin_config, r2_config, audit):
             raise ValueError('Se alteró un objeto histórico: ' + key)
     public = verify_public_images(items)
     write_json(audit / 'cdn-verification.json', {'records': public, 'verified': len(public)})
-    print('R2 y CDN verificados: 259 imágenes; históricos preservados.', flush=True)
+    print(f'R2 y CDN verificados: {len(items)} imágenes; históricos preservados.', flush=True)
     api.login(admin_config['PLIEGO_ADMIN_EMAIL'], admin_config['PLIEGO_ADMIN_PASSWORD'])
     definitions = {i['seed'].category: flow.CategorySeed(i['seed'].category, i['seed'].category_name) for i in items}
     category_ids = flow.ensure_categories(api, tuple(definitions.values()))
@@ -226,8 +274,7 @@ def execute(repo, admin_config, r2_config, audit):
                     provenance='docs/audit/digital-publication-2026-10-04/import-receipts.json') for i in items]
     merged = {'schema': historic['schema'], 'records': sorted(original_rows + new_rows, key=lambda r:r['permanent_sku'])}
     write_json(repo / 'covers/generated/manifest-normalized.json', merged)
-    proposed = json.loads((repo / 'covers/generated/digital-batch/editions/sku-registry-proposed.json').read_text())
-    write_json(repo / 'covers/sku-registry.json', proposed)
+    write_json(repo / 'covers/sku-registry.json', registry)
     materialized = repo / 'covers/generated/r2-normalized'
     for item in items:
         target = materialized / item['cover']['r2_object_key']
@@ -235,9 +282,11 @@ def execute(repo, admin_config, r2_config, audit):
         if not target.exists():
             target.write_bytes(item['image'].read_bytes())
     read_manifest(repo / 'covers/generated/manifest-normalized.json')
-    write_json(audit / 'import-result.json', {'imported':259,'EBOOK':142,'AUDIOBOOK':117,'manifest_total':314,
-        'sku_assignments':315,'historical_preserved':55,'excluded_sku':'PLG-BK-000042','stock_created':0,'application_deployed':False})
-    print('Importación API verificada: 142 EBOOK + 117 AUDIOBOOK; manifiesto 314.', flush=True)
+    counts = {fmt: sum(item['seed'].format == fmt for item in items) for fmt in ('EBOOK', 'AUDIOBOOK')}
+    write_json(audit / 'import-result.json', {'imported':len(items), **counts, 'manifest_total':len(merged['records']),
+        'sku_assignments':len(registry['assignments']), 'historical_preserved':len(original_rows),
+        'excluded_sku':'PLG-BK-000042','stock_created':0,'application_deployed':False})
+    print(f"Importación API verificada: {counts}; manifiesto {len(merged['records'])}.", flush=True)
 
 
 def main():

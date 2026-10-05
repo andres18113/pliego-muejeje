@@ -159,9 +159,9 @@ BEGIN
     CALL pliego.sp_edition_create(a,book,pub,'POST-PURCHASE-DIGITAL',NULL,
         'es','EBOOK',NULL,NULL,10.00,NULL,NULL,NULL,NULL,NULL,NULL,ARRAY[]::TEXT[],digital);
     CALL pliego.sp_cart_add_item(u,digital,1,cart,item,qty);
-    CALL pliego.sp_checkout(u,address_id,'CARD','APPROVED',digital_order,state,pay,total,ref);
+    CALL pliego.sp_checkout(u,NULL,'CARD','APPROVED','DIGITAL_ONLY',NULL,digital_order,state,pay,total,ref);
     SELECT * INTO d FROM pliego.fn_customer_order_detail(u,digital_order);
-    IF d.fulfillment IS NOT NULL OR d.shipment IS NOT NULL THEN
+    IF d.address IS NOT NULL OR d.fulfillment IS NOT NULL OR d.shipment IS NOT NULL THEN
         RAISE EXCEPTION 'digital-only purchase acquired a fake physical shipment';
     END IF;
 END;

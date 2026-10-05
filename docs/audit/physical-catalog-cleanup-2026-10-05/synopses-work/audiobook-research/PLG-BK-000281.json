@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000281",
+  "title": "Estadística aplicada básica (2a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:29.173964+00:00",
+      "response_sha256": "2a08e2755914b503aecb781f8af921abce7963be6cbe23be1b6bdcfff794807a",
+      "extraction_sha256": "03434fd5c33a8a3c6df09c32bd57cd09a449bcc07d8f5ed4345fff0119b6a364",
+      "text": "Guardado en: Autor Principal: Moore, David S. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Madrid : Antoni Bosch editor, 2005. Materias: Business and Economics. > Statistics. Negocios y economía. > Estadísticas. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/60046  ",
+      "observed_page_title": "Existencias: Estadística aplicada básica",
+      "title_check_response_sha256": "4fcb32be8be6ca33d98f8ca6e569a17e2595814ad5b13def7ea371111489f0d0",
+      "title_checked_at_utc": "2026-10-05T19:39:58.037411+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:30.506842+00:00",
+      "response_sha256": "817b35726097e8d15e4ed608594864e84900ddcf42b96135560e8cd50b1101cf",
+      "extraction_sha256": "03434fd5c33a8a3c6df09c32bd57cd09a449bcc07d8f5ed4345fff0119b6a364",
+      "text": "Guardado en: Autor Principal: Moore, David S. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Madrid : Antoni Bosch editor, 2005. Materias: Business and Economics. > Statistics. Negocios y economía. > Estadísticas. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/60046  "
+    }
+  ]
+}

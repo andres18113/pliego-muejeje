@@ -1,0 +1,285 @@
+Vista bibliotecarios: La Era victoriana en literatura /
+Saltar al contenido
+BIBLIOTECAS
+Idioma
+Español
+English
+Português (Brasil)
+Deutsch
+Français
+Italiano
+日本語
+Nederlands
+Português
+中文(简体)
+中文（繁體）
+Türkçe
+עברית
+Gaeilge
+Cymraeg
+Ελληνικά
+Català
+Euskara
+Русский
+čeština
+Suomi
+Svenska
+polski
+Dansk
+slovenščina
+اللغة العربية
+বাংলা
+Galego
+Entrar
+Salir
+Su cuenta
+Todos los Campos
+Título
+Autor
+Materia
+Número de Clasificación
+ISBN/ISSN
+Buscar
+Avanzado
+La Era victoriana en literatur...
+Vista bibliotecarios
+Citar
+Enviar este por Correo electrónico
+Exportar Registro
+Exportar a  RefWorks
+Exportar a  EndNoteWeb
+Exportar a  EndNote
+Exportar a  MARC
+Exportar a  MARCXML
+Agregar a favoritos
+La Era victoriana en literatura /
+Guardado en:
+Autor Principal:
+Chesterton, G. K. 1874-1936,
+(autor.)
+Otros Autores:
+Piro, Guillermo,
+(prologuista.)
+,
+Vilar, Ramiro H.,
+(traductor.)
+Formato:
+eBook
+Idioma:
+Spanish
+English
+Publicado:
+Buenos Aires :
+Prometeo Libros,
+2012.
+Series:
+Colección arte&estética
+Materias:
+English literature
+>
+19th century
+>
+History and criticism.
+Literatura inglesa
+>
+Siglo XIX
+>
+Historia y crítica.
+Libros electrónicos.
+Acceso en línea:
+https://elibro.net/ereader/unsbiblio/191119
+Etiquetas:
+Agregar Etiqueta
+Sin Etiquetas, Sea el primero en etiquetar este registro!
+Existencias
+Descripción
+Comentarios
+Ejemplares similares
+Vista bibliotecarios
+LEADER
+01719nam a2200397 i 4500
+001
+elibro.ELB191119
+003
+FINmELB
+005
+20220601121057.0
+006
+m     o  u
+007
+cr cn|||||||||
+008
+220601s2012    ag      o     000 0 spa c
+020
+|z
+9789875745698
+035
+|a
+(OCoLC)1332518481
+040
+|a
+FINmELB
+|b
+spa
+|e
+rda
+|c
+FINmELB
+041
+1
+|a
+spa
+|h
+eng
+050
+4
+|a
+PN1995
+|b
+.C447 2012
+082
+0
+4
+|a
+791.43015
+|2
+23
+100
+1
+|a
+Chesterton, G. K.
+|q
+(Gilbert Keith),
+|d
+1874-1936,
+|e
+autor.
+240
+1
+4
+|a
+The Victorian Age in literature.
+|l
+Español
+245
+1
+3
+|a
+La Era victoriana en literatura /
+|c
+G. K. Chesterton ; prólogo: Guillermo Piro ; traducción y notas: Ramiro H. Vilar.
+264
+1
+|a
+Buenos Aires :
+|b
+Prometeo Libros,
+|c
+2012.
+300
+|a
+1 recurso en línea (142 páginas)
+336
+|a
+texto
+|b
+txt
+|2
+rdacontent/spa
+337
+|a
+computadora
+|b
+c
+|2
+rdamedia/spa
+338
+|a
+recurso en línea
+|b
+cr
+|2
+rdacarrier/spa
+490
+1
+|a
+Colección arte&estética
+500
+|a
+Traducción de: The Victorian Age in literature (1913) de l'edició de Oxford University Press del 1966.
+588
+|a
+Descripción basada en metadatos suministrados por el editor y otras fuentes.
+590
+|a
+Recurso electrónico. Santa Fe, Arg.: elibro, 2022. Disponible vía World Wide Web. El acceso puede estar limitado para las bibliotecas afiliadas a elibro.
+650
+0
+|a
+English literature
+|y
+19th century
+|x
+History and criticism.
+650
+4
+|a
+Literatura inglesa
+|y
+Siglo XIX
+|x
+Historia y crítica.
+655
+4
+|a
+Libros electrónicos.
+700
+1
+|a
+Piro, Guillermo,
+|e
+prologuista.
+700
+1
+|a
+Vilar, Ramiro H.,
+|e
+traductor.
+797
+2
+|a
+elibro, Corp.
+856
+4
+0
+|u
+https://elibro.net/ereader/unsbiblio/191119
+Ejemplares similares
+El sabueso de los Baskerville
+por: Doyle, Arthur Conan, 1859-1930.
+Publicado: (2003)
+La Casa B... en Camden-Hill
+por: Crowe, Catherine.
+Publicado: (2003)
+El crimen invisible
+por: Crowe, Catherine, 1800-1876.
+Publicado: (2003)
+La corona de Berilos
+por: Conan Doyle, Arthur.
+Publicado: (2004)
+La isla del tesoro
+por: Stevenson, Robert Louis.
+Publicado: (2009)
+Opciones de búsqueda
+Historial de Búsqueda
+Búsqueda Avanzada
+Buscar Más
+Revisar el Catálogo
+Explorar canales
+¿Necesita Ayuda?
+Consejos de búsqueda
+Preguntas Frecuentes
+Contacto
+Bibliotecas
+×
+Cargando...

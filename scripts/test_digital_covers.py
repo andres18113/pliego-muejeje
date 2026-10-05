@@ -18,6 +18,7 @@ from PIL import Image, ImageCms, ImageDraw
 from cover_catalog import discover_staging, metadata_errors, read_manifest
 from cover_images import CoverRejected, encode_webp, initial_report, normalize_file, normalize_image
 from prepare_covers_loader import module as prepare
+from fixtures.catalog_helpers import physical_catalog
 
 
 def load(name, filename):
@@ -43,7 +44,7 @@ def poster(width=220, height=320):
 
 
 def row(filename, **values):
-    return {"Categoria":"Filosofía","Titulo":"Obra sintética","Autor":"Autora de prueba",
+    return {"Categoria":"Categoría Sintética","Titulo":"Obra sintética","Autor":"Autora de prueba",
             "Archivo":filename,"Fuente":"archivo_local","editorial":"Editorial de prueba","idioma":"es",**values}
 
 
@@ -58,10 +59,16 @@ def inventory(root, family, rows):
 
 
 def raw(root, family, filename="cover.jpg"):
-    path = root / family / "Filosofia/originales" / filename
+    path = root / family / "categoria-sintetica/originales" / filename
     path.parent.mkdir(parents=True,exist_ok=True)
     poster().save(path,quality=95)
-    return "Filosofia/originales/" + filename
+    return "categoria-sintetica/originales/" + filename
+
+
+def synthetic_staging(root):
+    """Select only this test's fixtures, even when a real catalog was copied."""
+    return tuple(path for family in ("Ebook", "Audiolibros")
+                 if (path := root / family / "categoria-sintetica/staging.json").is_file())
 
 
 class ImageTests(unittest.TestCase):
@@ -251,7 +258,7 @@ class BatchTests(unittest.TestCase):
         source=raw(self.root,"Ebook")
         inv=inventory(self.root,"Ebook",[row(source)])
         batch.process_batch(self.root,[inv])
-        targets=[self.root / "sku-registry.json",self.root / "generated/manifest-normalized.json",self.root / "Ebook/Filosofia/staging.json",
+        targets=[self.root / "sku-registry.json",self.root / "generated/manifest-normalized.json",self.root / "Ebook/categoria-sintetica/staging.json",
                  self.root / "generated/digital-batch/reports/normalization-report.json"]
         before={p:p.read_bytes() for p in targets}
         inventory(self.root,"Ebook",[row(source),row(raw(self.root,"Ebook","second.jpg"),Titulo="Otra obra")])
@@ -271,7 +278,7 @@ class BatchTests(unittest.TestCase):
         source=raw(self.root,"Ebook")
         inv=inventory(self.root,"Ebook",[row(source)])
         batch.process_batch(self.root,[inv])
-        targets=[self.root / "sku-registry.json",self.root / "generated/manifest-normalized.json",self.root / "Ebook/Filosofia/staging.json"]
+        targets=[self.root / "sku-registry.json",self.root / "generated/manifest-normalized.json",self.root / "Ebook/categoria-sintetica/staging.json"]
         before={p:p.read_bytes() for p in targets}
         inventory(self.root,"Ebook",[row(source),row(raw(self.root,"Ebook","second.jpg"),Titulo="Otra obra")])
         writer=batch.write_bytes
@@ -290,7 +297,7 @@ class BatchTests(unittest.TestCase):
         source=raw(self.root,"Ebook")
         inv=inventory(self.root,"Ebook",[row(source)])
         batch.process_batch(self.root,[inv])
-        path=self.root / "Ebook/Filosofia/staging.json"
+        path=self.root / "Ebook/categoria-sintetica/staging.json"
         doc=json.loads(path.read_text())
         doc["libros"][0]["edicion"]["editorial"]=None
         path.write_text(json.dumps(doc))
@@ -308,24 +315,24 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(read_manifest(self.root / "generated/manifest-normalized.json")["records"],[])
 
     def test_digital_staging_cannot_overwrite_a_physical_cover(self):
-        physical=self.root / "Filosofia/physical.webp"; physical.parent.mkdir()
+        physical=self.root / "categoria-sintetica/physical.webp"; physical.parent.mkdir()
         poster(240,360).save(physical,format="WEBP")
         original=physical.read_bytes()
-        path=self.root / "Ebook/Filosofia/staging.json"; path.parent.mkdir(parents=True)
-        doc={"schema":"test","libros":[{"portadaArchivo":"../../Filosofia/physical.webp","libro":{"titulo":"Digital","sinopsis":None,
-            "autores":[{"nombre":"Autora","orden":1}],"categorias":["Filosofía"]},"edicion":{"formato":"EBOOK","editorial":"Editorial","idioma":"es","isbn13":None,"narrators":[]}}]}
+        path=self.root / "Ebook/categoria-sintetica/staging.json"; path.parent.mkdir(parents=True)
+        doc={"schema":"test","libros":[{"portadaArchivo":"../../categoria-sintetica/physical.webp","libro":{"titulo":"Digital","sinopsis":None,
+            "autores":[{"nombre":"Autora","orden":1}],"categorias":["Categoría Sintética"]},"edicion":{"formato":"EBOOK","editorial":"Editorial","idioma":"es","isbn13":None,"narrators":[]}}]}
         path.write_text(json.dumps(doc))
         report=batch.process_batch(self.root,[],[path])
         self.assertEqual(report["summary"]["accepted"],1)
         self.assertEqual(physical.read_bytes(),original)
-        self.assertTrue(report["records"][0]["staging_file"].startswith("Ebook/Filosofia/portadas/"))
+        self.assertTrue(report["records"][0]["staging_file"].startswith("Ebook/categoria-sintetica/portadas/"))
 
     def test_seed_digital_main_never_calls_inventory(self):
         source=raw(self.root,"Ebook")
         inv=inventory(self.root,"Ebook",[row(source)])
         batch.process_batch(self.root,[inv])
         covers=seed.load_cover_manifest(self.root / "generated/manifest-normalized.json")
-        seeds=seed.load_catalog_seeds(covers,self.root / "sku-registry.json",tuple(discover_staging(self.root)))
+        seeds=seed.load_catalog_seeds(covers,self.root / "sku-registry.json",synthetic_staging(self.root))
         class Api:
             def __init__(self):self.rows=[]
             def login(self,*args):pass
@@ -336,9 +343,9 @@ class BatchTests(unittest.TestCase):
                 return {"editionId":"7"}
         api=Api()
         with patch.object(seed,"PliegoApi",return_value=api),patch.object(seed,"ADMIN_PASSWORD","fixture-only"), \
-             patch.object(seed,"ensure_categories",return_value={"filosofia":"3"}),patch.object(seed,"ensure_book",return_value="1"), \
+             patch.object(seed,"ensure_categories",return_value={"categoria-sintetica":"3"}),patch.object(seed,"ensure_book",return_value="1"), \
              patch.object(seed,"ensure_publisher",return_value="2"),patch.object(seed,"ensure_minimum_stock",side_effect=AssertionError("Digital stock requested")), \
-             patch.object(sys,"argv",["seed", "--cover-manifest",str(self.root / "generated/manifest-normalized.json"),"--sku-registry",str(self.root / "sku-registry.json"),"--sku",seeds[0].sku]):
+             patch.object(sys,"argv",["seed", "--cover-manifest",str(self.root / "generated/manifest-normalized.json"),"--sku-registry",str(self.root / "sku-registry.json"),"--staging-file",str(synthetic_staging(self.root)[0]),"--sku",seeds[0].sku]):
             self.assertEqual(seed.main(),0)
 
     def test_cli_executes_only_local_batch_and_returns_pending_status(self):
@@ -354,9 +361,9 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(json.loads(result.stdout)["pending"],1)
 
     def test_raw_pending_staging_is_archived_without_losing_metadata(self):
-        source=self.root / "Audiolibros/Filosofia/originales/test.jpg"; source.parent.mkdir(parents=True)
+        source=self.root / "Audiolibros/categoria-sintetica/originales/test.jpg"; source.parent.mkdir(parents=True)
         poster().save(source)
-        doc={"schema":"test","libros":[{"portadaArchivo":"originales/test.jpg","libro":{"titulo":"Audio pendiente","autores":[{"nombre":"Autora","orden":1}],"categorias":["Filosofía"],"sinopsis":None},
+        doc={"schema":"test","libros":[{"portadaArchivo":"originales/test.jpg","libro":{"titulo":"Audio pendiente","autores":[{"nombre":"Autora","orden":1}],"categorias":["Categoría Sintética"],"sinopsis":None},
               "edicion":{"formato":"AUDIOBOOK","editorial":"Editorial","idioma":"es","isbn13":None,"narrators":[]}}]}
         path=source.parent.parent / "staging.json"; original=json.dumps(doc).encode(); path.write_bytes(original)
         report=batch.process_batch(self.root,[],[path])
@@ -367,13 +374,15 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(json.loads(path.read_text())["libros"],[])
         self.assertTrue(source.exists())
 
-    def test_legacy_normalizer_retains_existing_55_and_emits_versioned_json(self):
-        repo=Path(__file__).resolve().parent.parent
-        shutil.copytree(repo / "covers",self.root,dirs_exist_ok=True)
+    def test_normalizer_preserves_mixed_synthetic_manifest_and_emits_versioned_json(self):
+        physical_catalog(self.root, include_digital=True)
         prior=read_manifest(self.root / "generated/manifest-normalized.json")
         report=normalizer.normalize_manifest(self.root,self.root / "generated/manifest.json",self.root / "generated/r2-normalized",self.root / "generated/manifest-normalized.json",self.root / "generated/test-report.json")
         self.assertEqual(read_manifest(self.root / "generated/manifest-normalized.json"),prior)
-        self.assertEqual(report["summary"]["accepted"],55)
+        historical = json.loads((self.root / "generated/manifest.json").read_text())["records"]
+        eligible = {r["permanent_sku"] for r in historical} - seed.EXCLUDED_CATALOG_SKUS
+        self.assertEqual({r["sku"] for r in report["records"]}, eligible)
+        self.assertEqual(report["summary"]["accepted"],len(eligible))
         self.assertTrue(all(r["preserved"] and r["bytes"] and r["sha256"] for r in report["records"]))
         self.assertEqual(report["excluded"][0]["sku"],"PLG-BK-000042")
         by_sku={r["permanent_sku"]:r["cover_url"] for r in prior["records"]}
@@ -397,7 +406,7 @@ class BatchTests(unittest.TestCase):
         for r in rows:
             data = (self.root / "generated/r2-normalized" / r["r2_object_key"]).read_bytes()
             self.assertEqual(hashlib.sha256(data).hexdigest()[:12],r["r2_object_key"].rsplit('-',1)[1][:-5])
-        sources = discover_staging(self.root)
+        sources = synthetic_staging(self.root)
         loaded = seed.load_catalog_seeds(seed.load_cover_manifest(self.root / "generated/manifest-normalized.json"),self.root / "sku-registry.json",tuple(sources))
         self.assertEqual({s.format for s in loaded},{"EBOOK","AUDIOBOOK"})
         self.assertTrue(all(s.synopsis is None and s.stock == 0 for s in loaded))
@@ -424,7 +433,7 @@ class BatchTests(unittest.TestCase):
         source = raw(self.root,"Ebook")
         inv = inventory(self.root,"Ebook",[row(source,coverLicense="CC_BY",coverSourceUrl="https://publisher.example/cover",coverAttribution="Editorial")])
         batch.process_batch(self.root,[inv])
-        seeds = seed.load_catalog_seeds(seed.load_cover_manifest(self.root / "generated/manifest-normalized.json"),self.root / "sku-registry.json",tuple(discover_staging(self.root)))
+        seeds = seed.load_catalog_seeds(seed.load_cover_manifest(self.root / "generated/manifest-normalized.json"),self.root / "sku-registry.json",synthetic_staging(self.root))
         class Api:
             def __init__(self): self.existing=None; self.sent=[]
             def page(self,*args,**kwargs): return [] if self.existing is None else [self.existing]
@@ -464,11 +473,11 @@ class BatchTests(unittest.TestCase):
         with self.assertRaises(prepare.PreparationError): batch.process_batch(self.root,[first])
         for path,data in before.items(): self.assertEqual(path.read_bytes(),data)
 
-    def test_preserves_real_55_physical_records_and_exclusion_without_normalizing_them(self):
+    def test_preserves_all_existing_records_assignments_and_exclusion_without_normalizing_them(self):
         repo = Path(__file__).resolve().parent.parent
         shutil.copytree(repo / "covers",self.root,dirs_exist_ok=True)
         old_manifest=read_manifest(self.root / "generated/manifest-normalized.json")
-        self.assertEqual(len(old_manifest["records"]),55)
+        old_skus = {r["permanent_sku"] for r in old_manifest["records"]}
         old_registry=json.loads((self.root / "sku-registry.json").read_text())
         protected=[self.root / r["original_file"] for r in old_manifest["records"]]
         protected += [self.root / "generated/r2-normalized" / r["r2_object_key"] for r in old_manifest["records"]]
@@ -480,16 +489,22 @@ class BatchTests(unittest.TestCase):
         self.assertEqual(process.call_count,1)
         after=read_manifest(self.root / "generated/manifest-normalized.json")
         rows={r["permanent_sku"]:r for r in after["records"]}
-        self.assertEqual(len(rows),56)
+        new_sku = report["records"][0]["sku"]
+        self.assertEqual(set(rows),old_skus | {new_sku})
+        self.assertNotIn(new_sku,old_skus)
         self.assertNotIn("PLG-BK-000042",rows)
         for r in old_manifest["records"]: self.assertEqual(r,rows[r["permanent_sku"]])
         for path,digest in hashes.items(): self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(),digest)
         registry=json.loads((self.root / "sku-registry.json").read_text())
         for old in old_registry["assignments"]: self.assertIn(old,registry["assignments"])
-        self.assertEqual(report["summary"]["preserved"],55)
-        seeds=seed.load_catalog_seeds(seed.load_cover_manifest(self.root / "generated/manifest-normalized.json"),self.root / "sku-registry.json",tuple(discover_staging(self.root)))
-        self.assertEqual(len(seeds),56)
-        self.assertEqual(sum(s.format in {"PAPERBACK","HARDCOVER"} for s in seeds),55)
+        self.assertEqual(report["summary"]["preserved"],len(old_skus))
+        self.assertNotIn(new_sku, {assignment["sku"] for assignment in old_registry["assignments"]})
+        retired = read_manifest(self.root / "retired-manifest.json")["records"]
+        self.assertTrue({record["permanent_sku"] for record in retired}.isdisjoint(rows))
+        seeds=seed.load_catalog_seeds(seed.load_cover_manifest(self.root / "generated/manifest-normalized.json"),
+                                     self.root / "sku-registry.json", synthetic_staging(self.root))
+        self.assertEqual({s.sku for s in seeds}, {new_sku})
+        self.assertEqual({s.format for s in seeds}, {"EBOOK"})
 
     def test_additional_thematic_category_and_staged_jpg_input(self):
         source=self.root / "Ebook/Ciencia/originales/test.jpg"; source.parent.mkdir(parents=True)
@@ -500,7 +515,7 @@ class BatchTests(unittest.TestCase):
         path=source.parent.parent / "staging.json"; path.write_text(json.dumps(doc))
         report=batch.process_batch(self.root,[],[path])
         self.assertEqual(report["summary"]["accepted"],1)
-        seeds=seed.load_catalog_seeds(seed.load_cover_manifest(self.root / "generated/manifest-normalized.json"),self.root / "sku-registry.json",tuple(discover_staging(self.root)))
+        seeds=seed.load_catalog_seeds(seed.load_cover_manifest(self.root / "generated/manifest-normalized.json"),self.root / "sku-registry.json",(path,))
         self.assertEqual(seeds[0].category,"ciencia")
 
 

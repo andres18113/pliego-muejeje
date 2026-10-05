@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000209",
+  "title": "La novela rosa",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:20.730237+00:00",
+      "response_sha256": "318d74d17efab37b260311d6b635036ba0cf710b617cc45d2862d2be602f1ded",
+      "extraction_sha256": "35d13a77839769b959df8351d84ddfd7da2ed00dd647b67c10fdb27354bda8f0",
+      "text": "Guardado en: Autor Principal: González Lejárraga, Antonio, (Autor) Formato: eBook Idioma: Spanish Publicado: Madrid : Consejo Superior de Investigaciones Científicas, 2011. Materias: Literature > History and criticism. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/41629  ",
+      "observed_page_title": "Existencias: La novela rosa /",
+      "title_check_response_sha256": "56f4ccd109ea24e9f095aac6f56fcf8b3e0afae0bd9f8ccc7dc58f1badb7b714",
+      "title_checked_at_utc": "2026-10-05T19:39:53.733348+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:22.033933+00:00",
+      "response_sha256": "1245755d5e623e02a1f5c0f15909e9243440aff831be3e8ed581f8b6b7f18102",
+      "extraction_sha256": "35d13a77839769b959df8351d84ddfd7da2ed00dd647b67c10fdb27354bda8f0",
+      "text": "Guardado en: Autor Principal: González Lejárraga, Antonio, (Autor) Formato: eBook Idioma: Spanish Publicado: Madrid : Consejo Superior de Investigaciones Científicas, 2011. Materias: Literature > History and criticism. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/41629  "
+    }
+  ]
+}

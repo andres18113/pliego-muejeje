@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000188",
+  "title": "Historia mínima de Uruguay",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194885",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:17.658694+00:00",
+      "response_sha256": "ef45ae28416420916bbfac0fad6c2d964d65ead43e0d03f72d379d47439f6398",
+      "extraction_sha256": "e509c7fec0e5cec122e1bfb1a7717c0f5b4738f0efbf4b6d8417c3924cd6563e",
+      "text": "Guardado en: Autor Principal: Caetano, Gerardo, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México : El Colegio de México, 2020. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Uruguay > History. Uruguay > Política y gobierno. Uruguay > Historia. Uruguay > Politics and government. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194885  ",
+      "observed_page_title": "Existencias: Historia mínima de Uruguay /",
+      "title_check_response_sha256": "27b01f65c7a1c17b974303800e7f0c3be00a7479cfd8ff912e6665ab148e6e2d",
+      "title_checked_at_utc": "2026-10-05T19:40:05.958230+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194885/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:18.950945+00:00",
+      "response_sha256": "c7ede3daf6c49da7478edacd9aa3a24604e8cbbf47b0a2f894fdf31014e89ea0",
+      "extraction_sha256": "e509c7fec0e5cec122e1bfb1a7717c0f5b4738f0efbf4b6d8417c3924cd6563e",
+      "text": "Guardado en: Autor Principal: Caetano, Gerardo, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México : El Colegio de México, 2020. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Uruguay > History. Uruguay > Política y gobierno. Uruguay > Historia. Uruguay > Politics and government. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194885  "
+    }
+  ]
+}

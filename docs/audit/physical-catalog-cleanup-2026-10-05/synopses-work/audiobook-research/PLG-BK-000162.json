@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000162",
+  "title": "Redes locales",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:12.004147+00:00",
+      "response_sha256": "86957ac6f92e579b579be179a8141458727c1d11b8cd57245e024fdaac6aa22d",
+      "extraction_sha256": "4b9f4b2188fa0ab30684959519e2255e7a903701df78d404d99c138db688d744",
+      "text": "Guardado en: Autor Principal: Molina Robles, Franciso José. Formato: eBook Idioma: Spanish Publicado: Madrid : RA-MA Editorial, [2014] Series: Ciclos formativos. Grado medio. Materias: Computer networks. Redes informáticas. Local area networks (Computer networks) Redes locales (Redes informáticas) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/62450  ",
+      "observed_page_title": "Existencias: Redes locales /",
+      "title_check_response_sha256": "bda16fdf649e829e74c52d6f85ea518b95b5ba7712adbc463301d8876f53ca58",
+      "title_checked_at_utc": "2026-10-05T19:39:52.277703+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:13.581409+00:00",
+      "response_sha256": "6bbccec320985437d6089d65229e33832e14f8e542f4307a2c7495e986e72c7d",
+      "extraction_sha256": "4b9f4b2188fa0ab30684959519e2255e7a903701df78d404d99c138db688d744",
+      "text": "Guardado en: Autor Principal: Molina Robles, Franciso José. Formato: eBook Idioma: Spanish Publicado: Madrid : RA-MA Editorial, [2014] Series: Ciclos formativos. Grado medio. Materias: Computer networks. Redes informáticas. Local area networks (Computer networks) Redes locales (Redes informáticas) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/62450  "
+    }
+  ]
+}

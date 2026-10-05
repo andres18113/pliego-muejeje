@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000076",
+  "title": "Ética de la sexualidad",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47807",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:00.604081+00:00",
+      "response_sha256": "7f47b4bf3cc73934f9696c4d5516a24cbc15737c175cc84bd8886ed59aa74d5d",
+      "extraction_sha256": "95f0c1b382d3a413a79cb086a914dcd214af69224c35384d695b5bc00fb49656",
+      "text": "Guardado en: Autor Principal: Bonete, Enrique. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Desclée de Bruwer, 2007. Edición: 1a ed. Series: Los cuatro vientos ; 26 Materias: Sexualidad > Aspectos religiosos. Educación sexual. Sexual ethics. Sex > Religious aspects. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47807  ",
+      "observed_page_title": "Existencias: Ética de la sexualidad",
+      "title_check_response_sha256": "d60325fdbf1d5716e96980be53fd305fa4ef2be8c4947c4600fad21ec2e87791",
+      "title_checked_at_utc": "2026-10-05T19:40:07.721745+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47807/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:01.895790+00:00",
+      "response_sha256": "17ac13372109801f130172605d12f718af2a981d64fbfebad9e91e380880a045",
+      "extraction_sha256": "95f0c1b382d3a413a79cb086a914dcd214af69224c35384d695b5bc00fb49656",
+      "text": "Guardado en: Autor Principal: Bonete, Enrique. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Desclée de Bruwer, 2007. Edición: 1a ed. Series: Los cuatro vientos ; 26 Materias: Sexualidad > Aspectos religiosos. Educación sexual. Sexual ethics. Sex > Religious aspects. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47807  "
+    }
+  ]
+}

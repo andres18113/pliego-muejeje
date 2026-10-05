@@ -1,0 +1,142 @@
+ .github/workflows/ci.yml                           |   13 +
+ backend/README.md                                  |    2 +
+ .../pliego/foundation/database/DatabaseError.java  |    1 +
+ .../foundation/security/SecurityConfiguration.java |    1 +
+ .../pliego/foundation/web/ApiExceptionHandler.java |    9 +
+ .../pliego/modules/cart/api/CartController.java    |    3 +-
+ .../com/pliego/modules/cart/api/CartResponses.java |    2 +-
+ .../modules/cart/application/CartModels.java       |    6 +-
+ .../modules/cart/gateway/JdbcCartGateway.java      |    9 +-
+ .../modules/catalog/api/CatalogController.java     |    7 +-
+ .../catalog/gateway/JdbcCatalogGateway.java        |    6 +-
+ .../modules/sales/api/AdminOrderResponses.java     |    4 +-
+ .../pliego/modules/sales/api/CheckoutRequest.java  |    9 +-
+ .../modules/sales/api/CustomerOrderResponses.java  |    4 +-
+ .../sales/gateway/JdbcAdminOrderGateway.java       |    4 +-
+ .../sales/gateway/JdbcCustomerOrderGateway.java    |    4 +-
+ .../database/DatabaseExceptionTranslatorTest.java  |    7 +
+ .../catalog/api/CatalogApiIntegrationTest.java     |   14 +
+ .../modules/catalog/api/OpenApiCoverageTest.java   |   10 +-
+ .../sales/api/CheckoutApiIntegrationTest.java      |   18 +
+ .../src/test/postgres18/digital_editions_gate.sql  |    4 +-
+ .../test/postgres18/digital_editions_http_gate.py  |    4 +-
+ backend/src/test/postgres18/offers_gate.sql        |    2 +-
+ backend/src/test/postgres18/offers_http_gate.py    |    2 +-
+ backend/src/test/postgres18/post_purchase_gate.sql |    4 +-
+ backend/src/test/postgres18/run_ci_gates.sh        |    8 +-
+ .../portadas/audiobook-7af4d1003a034ea7.webp       |  Bin 16916 -> 0 bytes
+ .../portadas/audiobook-e13bdd919ce475f6.webp       |  Bin 47944 -> 0 bytes
+ covers/Audiolibros/Filosofia/staging.json          |  386 --
+ .../portadas/audiobook-55c9e35ac75d34cf.webp       |  Bin 21846 -> 0 bytes
+ covers/Audiolibros/psicologia/staging.json         |  191 -
+ .../Filosofia/portadas/ebook-6866fe06c580051a.webp |  Bin 17130 -> 0 bytes
+ covers/Ebook/Filosofia/staging.json                |  185 -
+ .../portadas/ebook-404c350b49f8d484.webp           |  Bin 115538 -> 0 bytes
+ .../portadas/ebook-5c51985965164200.webp           |  Bin 13380 -> 0 bytes
+ .../portadas/ebook-b6e98eacfdbf3d38.webp           |  Bin 42500 -> 0 bytes
+ covers/Ebook/Literatura/staging.json               |  555 --
+ .../portadas/ebook-a028e089a115927a.webp           |  Bin 24164 -> 0 bytes
+ covers/Ebook/ciencias-sociales/staging.json        |  183 -
+ .../portadas/ebook-555c90c48e9c9991.webp           |  Bin 43244 -> 0 bytes
+ .../portadas/ebook-67511892222078e9.webp           |  Bin 24412 -> 0 bytes
+ covers/Ebook/psicologia/staging.json               |  366 --
+ covers/Filosofia/apologia-de-socrates.webp         |  Bin 38262 -> 0 bytes
+ covers/Filosofia/asi-hablo-zaratustra.webp         |  Bin 26950 -> 0 bytes
+ covers/Filosofia/critica-de-la-razon-practica.webp |  Bin 36514 -> 0 bytes
+ covers/Filosofia/critica-de-la-razon-pura.webp     |  Bin 19074 -> 0 bytes
+ covers/Filosofia/discurso-del-metodo.webp          |  Bin 55040 -> 0 bytes
+ covers/Filosofia/el-principe.webp                  |  Bin 19664 -> 0 bytes
+ covers/Filosofia/etica-a-nicomaco.webp             |  Bin 24644 -> 0 bytes
+ covers/Filosofia/genealogia-de-la-moral.webp       |  Bin 62798 -> 0 bytes
+ covers/Filosofia/la-republica.webp                 |  Bin 65156 -> 0 bytes
+ covers/Filosofia/mas-alla-del-bien-y-del-mal.webp  |  Bin 25432 -> 0 bytes
+ covers/Filosofia/meditaciones-metafisicas.webp     |  Bin 25210 -> 0 bytes
+ covers/Filosofia/meditaciones.webp                 |  Bin 68418 -> 0 bytes
+ covers/Filosofia/pliego_filosofia_limpio.json      |  533 --
+ covers/Filosofia/sobre-la-libertad.webp            |  Bin 13264 -> 0 bytes
+ .../Filosofia/tractatus-logico-philosophicus.webp  |  Bin 31026 -> 0 bytes
+ covers/Literatura/anna-karenina.webp               |  Bin 79106 -> 0 bytes
+ covers/Literatura/cien-anos-de-soledad.webp        |  Bin 50756 -> 0 bytes
+ covers/Literatura/crimen-y-castigo.webp            |  Bin 19590 -> 0 bytes
+ .../cronica-de-una-muerte-anunciada.webp           |  Bin 51558 -> 0 bytes
+ covers/Literatura/don-quijote.webp                 |  Bin 23232 -> 0 bytes
+ .../Literatura/el-amor-en-tiempos-de-colera.webp   |  Bin 38706 -> 0 bytes
+ covers/Literatura/el-extranjero.webp               |  Bin 43226 -> 0 bytes
+ covers/Literatura/el-gran-gatsby.webp              |  Bin 23318 -> 0 bytes
+ covers/Literatura/el-mito-de-sisifo.webp           |  Bin 17868 -> 0 bytes
+ covers/Literatura/el-retrato-de-dorian-gray.webp   |  Bin 47178 -> 0 bytes
+ covers/Literatura/ficciones.webp                   |  Bin 32708 -> 0 bytes
+ covers/Literatura/la-casa-de-los-espiritus.webp    |  Bin 47502 -> 0 bytes
+ covers/Literatura/la-ciudad-y-los-perros.webp      |  Bin 31446 -> 0 bytes
+ covers/Literatura/la-iliada.webp                   |  Bin 24084 -> 0 bytes
+ covers/Literatura/los-miserables.webp              |  Bin 117226 -> 0 bytes
+ covers/Literatura/madame-bovary.webp               |  Bin 31054 -> 0 bytes
+ covers/Literatura/moby-dick.webp                   |  Bin 37000 -> 0 bytes
+ covers/Literatura/orgullo-y-prejuicio.webp         |  Bin 29400 -> 0 bytes
+ covers/Literatura/pedro-paramo.webp                |  Bin 8096 -> 0 bytes
+ covers/Literatura/pliego_literatura_limpio.json    |  784 ---
+ covers/Literatura/rayuela.webp                     |  Bin 13574 -> 0 bytes
+ covers/Literatura/romeo-y-julieta.webp             |  Bin 70660 -> 0 bytes
+ covers/Literatura/soldados-de-salamina.webp        |  Bin 37070 -> 0 bytes
+ .../ANALISIS-MATEMATICO-IV-Calculo-Vectorial.webp" |  Bin 45360 -> 0 bytes
+ .../C\303\241lculo-analisis-vectorial.webp"        |  Bin 162064 -> 0 bytes
+ .../Introducci\303\263n-al-algebra-lineal.webp"    |  Bin 16568 -> 0 bytes
+ .../Matematica-Estructural.webp"                   |  Bin 40424 -> 0 bytes
+ .../Matem\303\241ticas/alegebra-de-baldor.webp"    |  Bin 236438 -> 0 bytes
+ .../algebra-lineal-serie-schaum.webp"              |  Bin 46224 -> 0 bytes
+ ...lineal-una-introduccion-moderna-4-edicion.webp" |  Bin 18516 -> 0 bytes
+ .../algebra-lineal-y-su-aplicacion.webp"           |  Bin 39272 -> 0 bytes
+ .../analisis-matematico-apostol.webp"              |  Bin 15318 -> 0 bytes
+ ...calculo-diferencial-moises-lazaro-carrion.webp" |  Bin 59172 -> 0 bytes
+ .../analisis-matematico-ii.webp"                   |  Bin 44650 -> 0 bytes
+ ...umerico-richard-l-burden-j-douglas-faires.webp" |  Bin 17500 -> 0 bytes
+ ...rontera-william-e-boyce-richard-c-diprima.webp" |  Bin 39970 -> 0 bytes
+ ...es-y-problemas-con-valores-en-la-frontera.webp" |  Bin 10054 -> 0 bytes
+ .../ecuaciones-diferenciales.webp"                 |  Bin 28478 -> 0 bytes
+ .../geometria-trigonemetria-baldor.webp"           |  Bin 73146 -> 0 bytes
+ .../Matem\303\241ticas/inferencia-bayesana.webp"   |  Bin 15850 -> 0 bytes
+ ...eves-hurtado-federico-c-dominguez-sanchez.webp" |  Bin 82090 -> 0 bytes
+ .../metodos-numericos-para-ingenieros.webp"        |  Bin 9584 -> 0 bytes
+ .../pliego_matematicas_limpio.json"                |  810 ---
+ .../problemas-resueltps-de-al.webp"                |  Bin 172144 -> 0 bytes
+ .../json/Filosofia/pliego_filosofia_limpio.json    |  533 --
+ .../json/Literatura/pliego_literatura_limpio.json  |  784 ---
+ .../pliego_matematicas_limpio.json"                |  810 ---
+ covers/generated/manifest-normalized.json          | 2229 +++++---
+ covers/generated/manifest.json                     | 5817 ++++++++++++++++++--
+ covers/normalization-overrides.json                |  840 +++
+ covers/sku-registry.json                           | 1622 +++++-
+ docs/adr/README.md                                 |    1 +
+ frontend/openapi/openapi.json                      |  790 ++-
+ frontend/src/app/App.tsx                           |   18 +-
+ frontend/src/app/navigation/HeaderAccount.tsx      |    1 +
+ frontend/src/features/auth/authLocation.test.ts    |    6 +
+ frontend/src/features/auth/authLocation.ts         |    2 +-
+ frontend/src/features/catalog/CatalogControls.tsx  |    8 +-
+ frontend/src/features/catalog/CatalogPage.test.tsx |   15 +
+ frontend/src/features/catalog/CatalogPage.tsx      |    4 +-
+ frontend/src/features/catalog/catalogUrl.test.ts   |    6 +
+ frontend/src/features/catalog/catalogUrl.ts        |    7 +-
+ frontend/src/features/purchase/CheckoutPage.tsx    |   32 +-
+ .../src/features/purchase/DigitalCheckout.test.tsx |   24 +-
+ .../features/purchase/OrderConfirmation.test.tsx   |   15 +
+ frontend/src/features/purchase/OrderPage.tsx       |    6 +-
+ .../purchase/SuccessfulOrderConfirmation.tsx       |   16 +-
+ frontend/src/features/purchase/fulfillment.ts      |    2 +-
+ frontend/src/features/purchase/orderViewModel.ts   |    2 +-
+ frontend/src/shared/api/cart.test.ts               |    1 +
+ frontend/src/shared/api/cart.ts                    |    3 +
+ frontend/src/shared/api/catalog.ts                 |    8 +-
+ frontend/src/shared/api/generated.ts               |  395 +-
+ frontend/src/shared/api/orders.ts                  |    5 +-
+ frontend/src/test/purchase.tsx                     |    3 +
+ frontend/tests/e2e/purchase.spec.ts                |    3 +
+ frontend/tests/e2e/store-pickup.spec.ts            |    2 +-
+ scripts/cover_catalog.py                           |   22 +
+ scripts/normalize-covers.py                        |    9 +-
+ scripts/prepare-covers.py                          |   15 +-
+ scripts/publish_digital_editions.py                |   77 +-
+ scripts/test_digital_covers.py                     |   75 +-
+ scripts/test_seed_cover_sync.py                    |  146 +-
+ scripts/upload-r2-covers.py                        |   15 +-
+ 141 files changed, 11074 insertions(+), 7445 deletions(-)

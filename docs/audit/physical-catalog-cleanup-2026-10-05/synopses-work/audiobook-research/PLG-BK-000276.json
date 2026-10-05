@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000276",
+  "title": "La responsividad ética",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:28.784643+00:00",
+      "response_sha256": "58c490ca5889dd071125184ec040939b6fc86f64fa3ac10a25abf0b67cdf9d21",
+      "extraction_sha256": "7be81459742c886a7d33105004047887b6c81be4ba0c2f60d6fe009d30206e79",
+      "text": "Guardado en: Autor Principal: Patiño González, Susana Magdalena. Formato: eBook Idioma: Spanish Publicado: Madrid : Plaza y Valdés, S.L., 2010. Materias: Responsibility. Ethics. Etica. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/59505  ",
+      "observed_page_title": "Existencias: La responsividad ética /",
+      "title_check_response_sha256": "90aeda6ec7f6135955d1744e7aaf85d42da55e3829b628e6b9966bba2a17d8e8",
+      "title_checked_at_utc": "2026-10-05T19:40:03.892416+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:30.063531+00:00",
+      "response_sha256": "85c109e34ee44cf8756f1fc5e12fcf354a80f85ec8eca7d80bf9d36594a60a08",
+      "extraction_sha256": "7be81459742c886a7d33105004047887b6c81be4ba0c2f60d6fe009d30206e79",
+      "text": "Guardado en: Autor Principal: Patiño González, Susana Magdalena. Formato: eBook Idioma: Spanish Publicado: Madrid : Plaza y Valdés, S.L., 2010. Materias: Responsibility. Ethics. Etica. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/59505  "
+    }
+  ]
+}

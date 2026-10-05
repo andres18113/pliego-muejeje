@@ -15,9 +15,9 @@ public final class AdminOrderResponses {
     @Schema(name="AdminOrderDetail")
     public record Detail(String orderId, String customerId, String customerEmail, String customerName,
             String orderState, String subtotal, String total, String createdAt, String updatedAt,
-            List<Item> items, Address address, Payment payment, List<History> stateHistory,
+            List<Item> items, @Schema(nullable=true) Address address, Payment payment, List<History> stateHistory,
             List<InventoryMovement> inventoryMovements, String purchaseState,
-            PostPurchaseModels.Fulfillment fulfillment, PostPurchaseModels.Shipment shipment,
+            @Schema(nullable=true) PostPurchaseModels.Fulfillment fulfillment, @Schema(nullable=true) PostPurchaseModels.Shipment shipment,
             PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
             PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount) {
         public Detail {

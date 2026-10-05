@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000192",
+  "title": "Historia mínima de la globalización temprana",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194996",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:18.581095+00:00",
+      "response_sha256": "ced8737bd70da3a37f0b73f3093bc61d1947ea29b9fbc3f212951091ed0497c6",
+      "extraction_sha256": "39469752bedcc8b29fb082cb4d0015adfde284fdf20111191873077c4a5a0aaf",
+      "text": "Guardado en: Autor Principal: Hausberger, Bernd, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, Centro de Estudios Históricos, 2018. Edición: Primera edición. Series: Colección Historias mínimas. Materias: Historia universal. History, Modern. Globalization > History. Civilización > Historia. Globalización. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194996  ",
+      "observed_page_title": "Existencias: Historia mínima de la globalización temprana /",
+      "title_check_response_sha256": "b0216cbacd91c3faf83f1aab5257b02deaca3cebb5862a308b7d1bcb7468005d",
+      "title_checked_at_utc": "2026-10-05T19:40:08.974941+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194996/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:19.888373+00:00",
+      "response_sha256": "b9c577e3e52b3f129fabc8b9d79ba339b317fcdc35b834e880edea97d67eaf53",
+      "extraction_sha256": "39469752bedcc8b29fb082cb4d0015adfde284fdf20111191873077c4a5a0aaf",
+      "text": "Guardado en: Autor Principal: Hausberger, Bernd, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, Centro de Estudios Históricos, 2018. Edición: Primera edición. Series: Colección Historias mínimas. Materias: Historia universal. History, Modern. Globalization > History. Civilización > Historia. Globalización. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194996  "
+    }
+  ]
+}

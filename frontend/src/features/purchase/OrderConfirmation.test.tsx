@@ -88,3 +88,18 @@ describe("successful order confirmation", () => {
     expect(screen.queryByRole("heading", { name: "Es momento de celebrar" })).not.toBeInTheDocument();
   });
 });
+
+it("confirms digital ownership without presenting any physical destination", async () => {
+  renderConfirmation({ ...homeOrder, fulfillment: null, address: null, shipment: null, items: [{ ...homeOrder.items[0], format: "EBOOK" }] });
+  await screen.findByRole("heading", { name: "Es momento de celebrar" });
+  expect(screen.queryByRole("region", { name: "Destino confirmado" })).not.toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Ver Mi biblioteca" })).toHaveAttribute("href", "/biblioteca");
+});
+
+it("limits a mixed purchase's delivery section to physical snapshots", async () => {
+  renderConfirmation({ ...homeOrder, items: [{ ...homeOrder.items[0], format: "PAPERBACK" }, { ...homeOrder.items[0], orderItemId: "2", editionId: "43", title: "Libro digital", format: "EBOOK" }] });
+  const delivery = within(await screen.findByRole("region", { name: "Entrega" }));
+  expect(delivery.getByText("Cien años de soledad")).toBeInTheDocument();
+  expect(delivery.queryByText("Libro digital")).not.toBeInTheDocument();
+  expect(screen.getByRole("region", { name: "Compras digitales" })).toHaveTextContent("Libro digital");
+});

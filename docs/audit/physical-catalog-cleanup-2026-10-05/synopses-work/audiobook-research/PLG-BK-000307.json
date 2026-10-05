@@ -1,0 +1,30 @@
+{
+  "sku": "PLG-BK-000307",
+  "title": "Psicología de la música",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216569",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:34.251580+00:00",
+      "response_sha256": "e98dbe261e35390fab31ad860d8aaf244978def191e926b5f9b0038c6d249d13",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216569/Details",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:35.569289+00:00",
+      "response_sha256": "c275ec22a4ae744e8461927086e8d5c8f44c952c6fa88b8e29622a74e7df40d6",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://www.alianzaeditorial.es/libro/ciencias-sociales/psicologia-de-la-musica-daniele-schon-9788491817178/",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:59.182399+00:00",
+      "response_sha256": "ad11e5a754e44b7ae923f579c2e0bb00d687b7c983d06cff6d93e6d049918170",
+      "extraction_sha256": "bed19be33ec9dd945d2b297915f1e5755b58f40c2a26c0f7d9f9652259be2e06",
+      "text": "Sinopsis ¿Qué sucede en nuestro cerebro cuando escuchamos nuestra canción favorita? ¿Favorece el desarrollo del niño tocar un instrumento? ¿Qué es la musicoterapia? El desarrollo de las neurociencias (el estudio de la forma en que nuestro cerebro realiza una tarea cognitiva o reacciona a un estímulo externo) ha dado un gran impulso a la psicología de la música y ha contribuido claramente a su progreso, aun siendo un área cuya investigación se hace especialmente difícil al requerir el trabajo conjunto de gente que tenga no sólo una gran cualificación en psicología, sino también una sólida base musical. En este libro, Daniele Schön y Tomaso Vecchi, neurocientíficos, y Lilach Akiva-Kabiri, psicóloga y música, ponen a contribución sus conocimientos con el fin de aportar un instrumento ágil, sintético y divulgativo que presenta las diversas teorías sobre la psicología de la música y sus desarrollos más recientes en el ámbito de las neurociencias cognitivas. "
+    }
+  ]
+}

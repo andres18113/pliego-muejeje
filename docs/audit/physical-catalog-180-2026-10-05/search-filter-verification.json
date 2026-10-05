@@ -1,0 +1,36 @@
+{
+  "category_filters": [],
+  "title_searches_verified": 0,
+  "existing_integration_failures": [
+    {
+      "gate": "category_filter_and_search",
+      "category": "filosofia",
+      "error": "GET /api/v1/catalog/editions?page=0&pageSize=50&category=filosofia&format=PAPERBACK: HTTP 500 INTERNAL_SERVER_ERROR: Ocurrió un error interno. Intenta nuevamente."
+    },
+    {
+      "gate": "category_filter_and_search",
+      "category": "infantil-y-juvenil",
+      "error": "GET /api/v1/catalog/editions?page=0&pageSize=50&category=infantil-y-juvenil&format=PAPERBACK: HTTP 500 INTERNAL_SERVER_ERROR: Ocurrió un error interno. Intenta nuevamente."
+    },
+    {
+      "gate": "category_filter_and_search",
+      "category": "literatura",
+      "error": "GET /api/v1/catalog/editions?page=0&pageSize=50&category=literatura&format=PAPERBACK: HTTP 500 INTERNAL_SERVER_ERROR: Ocurrió un error interno. Intenta nuevamente."
+    },
+    {
+      "gate": "category_filter_and_search",
+      "category": "matematicas",
+      "error": "GET /api/v1/catalog/editions?page=0&pageSize=50&category=matematicas&format=PAPERBACK: HTTP 500 INTERNAL_SERVER_ERROR: Ocurrió un error interno. Intenta nuevamente."
+    },
+    {
+      "gate": "category_filter_and_search",
+      "category": "medicina",
+      "error": "GET /api/v1/catalog/editions?page=0&pageSize=50&category=medicina&format=PAPERBACK: HTTP 500 INTERNAL_SERVER_ERROR: Ocurrió un error interno. Intenta nuevamente."
+    },
+    {
+      "gate": "category_filter_and_search",
+      "category": "psicologia",
+      "error": "GET /api/v1/catalog/editions?page=0&pageSize=50&category=psicologia&format=PAPERBACK: HTTP 500 INTERNAL_SERVER_ERROR: Ocurrió un error interno. Intenta nuevamente."
+    }
+  ]
+}

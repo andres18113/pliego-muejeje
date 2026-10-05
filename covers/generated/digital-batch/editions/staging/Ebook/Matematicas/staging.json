@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Análisis matemático",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Alicia Roca Martínez, David Jornet y Vicente Montesinos Santalucia presentan una obra dedicada al análisis matemático. El libro orienta el estudio hacia uno de los campos centrales de las matemáticas. Una lectura para quienes desean profundizar en ese ámbito y relacionar el desarrollo de su razonamiento con el conocimiento de los objetos y problemas propios del análisis.",
         "autores": [
           {
             "nombre": "Roca Martínez, Alicia",
@@ -233,7 +233,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "242",
-        "imported_book_id": "241"
+        "imported_book_id": "241",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Matemáticas. Análisis matemático. Mathematics. Mathematical analysis. Matematicas Analisis matematico Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -241,7 +252,7 @@
       "libro": {
         "titulo": "Análisis matemático",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Yu Takeuchi presenta una obra centrada en el análisis matemático, con una vinculación bibliográfica al análisis numérico. El libro sitúa el interés en un ámbito especializado de las matemáticas. Una lectura para quienes desean profundizar en su formación y explorar la relación entre las preguntas del análisis y las formas de trabajo que acompañan su estudio.",
         "autores": [
           {
             "nombre": "Takeuchi, Yu",
@@ -447,7 +458,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "243",
-        "imported_book_id": "242"
+        "imported_book_id": "242",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematical analysis. Numerical analysis. Análisis matemático. Análisis numérico. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -455,7 +477,7 @@
       "libro": {
         "titulo": "Estadística matemática",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Edilberto Cepeda Cuervo presenta una obra de estadística matemática. El ámbito temático del libro reúne probabilidades, variables aleatorias y teoría de la estimación. Una lectura para quienes desean profundizar en la base matemática del trabajo estadístico y relacionar el estudio de la incertidumbre con las preguntas que surgen al formular estimaciones a partir de información.",
         "autores": [
           {
             "nombre": "Cepeda Cuervo, Edilberto",
@@ -632,7 +654,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "244",
-        "imported_book_id": "243"
+        "imported_book_id": "243",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematical statistics. Probabilities. Random variables. Estimation theory. Estadística matemática. Probabilidades. Variables aleatorias. Teoría de la estimación. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -640,7 +673,7 @@
       "libro": {
         "titulo": "Fundamentos de matemáticas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Los fundamentos matemáticos plantean preguntas acerca de los objetos, relaciones y principios sobre los que se construye la disciplina. Fernando Zalamea Traba aborda este ámbito, relacionado con la teoría de números y la teoría de conjuntos. La obra permite aproximarse a un nivel de reflexión que acompaña y sostiene el trabajo matemático.",
         "autores": [
           {
             "nombre": "Zalamea Traba, Fernando",
@@ -817,7 +850,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "245",
-        "imported_book_id": "244"
+        "imported_book_id": "244",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics. Number theory. Set theory. Matemáticas > Fundamentos. Teoría de los números. Teoría de conjuntos. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -825,7 +869,7 @@
       "libro": {
         "titulo": "Iniciación a las matemáticas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Juan Manuel García Dozagarat y Fernando Alonso Molina presentan una obra dedicada a la iniciación matemática. El libro se sitúa en el ámbito de la enseñanza elemental y de la educación infantil. Una aproximación para quienes se interesan por los primeros aprendizajes de las matemáticas y desean pensar cómo comienza la relación de los niños con esta disciplina.",
         "autores": [
           {
             "nombre": "Juan Manuel García Dozagarat",
@@ -1012,7 +1056,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "246",
-        "imported_book_id": "245"
+        "imported_book_id": "245",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics > Study and teaching (Elementary) Matemáticas > Educación infantil. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1020,7 +1075,7 @@
       "libro": {
         "titulo": "Introducción a las matemáticas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una entrada al estudio de las matemáticas dentro del ámbito de la enseñanza superior. La obra relaciona su propósito introductorio con el trabajo sobre problemas y ejercicios, acercando al lector a la práctica del razonamiento matemático. Su tema resulta especialmente pertinente para quienes buscan afianzar una base desde la que continuar su aprendizaje de la disciplina.",
         "autores": [
           {
             "nombre": "Arévalo Ovalle, Diego",
@@ -1217,7 +1272,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "247",
-        "imported_book_id": "246"
+        "imported_book_id": "246",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics > Problems, exercises, etc. Education, Higher. Matemáticas. Enseñanza superior. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1225,7 +1291,7 @@
       "libro": {
         "titulo": "Las matemáticas de la luz",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La luz ofrece un punto de encuentro entre ciencia y matemáticas. Ágata Timón y Manuel de León presentan una obra de divulgación que dirige la atención hacia esa relación. Una lectura para quienes disfrutan de descubrir conexiones entre disciplinas y desean pensar los fenómenos luminosos desde la curiosidad por las ideas y las formas de razonamiento matemáticas.",
         "autores": [
           {
             "nombre": "Timón, Ágata",
@@ -1412,7 +1478,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "248",
-        "imported_book_id": "247"
+        "imported_book_id": "247",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics > Popular works. Sciences > Popular works. Matemática. Ciencia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1420,7 +1497,7 @@
       "libro": {
         "titulo": "Las matemáticas de los cristales",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Manuel de León y Ágata Timón se acercan a los cristales desde las matemáticas. La obra se vincula con la cristalografía matemática y con el estudio de estas formas de la materia. Una lectura para quienes desean explorar el encuentro entre estructura cristalina y pensamiento matemático, y ampliar su curiosidad por las conexiones entre disciplinas científicas.",
         "autores": [
           {
             "nombre": "León, Manuel de",
@@ -1607,7 +1684,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "249",
-        "imported_book_id": "248"
+        "imported_book_id": "248",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Crystallography, Mathematical. Cristalografía matemática. Crystals. Cristales. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1615,7 +1703,7 @@
       "libro": {
         "titulo": "Las matemáticas de nuestra vida",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Las matemáticas pueden mirarse desde su cercanía con la vida cotidiana. Juan Matías Sepulcre Martínez, Lorena Segura Abad y Julio Mulero González reúnen una obra situada en ese horizonte de curiosidad. Una invitación a ampliar la relación con la disciplina y a pensar su presencia en nuestra experiencia más allá de los momentos dedicados expresamente al estudio.",
         "autores": [
           {
             "nombre": "Sepulcre Martínez, Juan Matías",
@@ -1812,7 +1900,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "250",
-        "imported_book_id": "249"
+        "imported_book_id": "249",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics > Miscellanea. Matemáticas. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1820,7 +1919,7 @@
       "libro": {
         "titulo": "Las matemáticas ocultas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Robin Jamet encuentra matemáticas en situaciones y objetos cotidianos, con una propuesta que invita a mirar el entorno con curiosidad. La obra enlaza temas como teselaciones, juegos, números y geometría con experiencias cercanas. Una lectura para descubrir que observar formas y procedimientos puede convertirse en una manera de explorar ideas matemáticas fuera del aula.",
         "autores": [
           {
             "nombre": "Jamet, Robin",
@@ -1989,7 +2088,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "251",
-        "imported_book_id": "250"
+        "imported_book_id": "250",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_PUBLISHER_PREVIEW_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.alianzaeditorial.es/primer_capitulo/las-matematicas-ocultas.pdf",
+              "basis": "El adelanto público de Alianza verifica autor, título e índice de temas matemáticos cotidianos: teselaciones, juegos, números y geometría."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1997,7 +2107,7 @@
       "libro": {
         "titulo": "Lo imposible en matemáticas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La historia de las matemáticas también puede leerse desde las preguntas acerca de lo que resulta imposible. Carlos Prieto de Castro dirige su obra hacia ese encuentro entre pensamiento matemático e historia. Una invitación a considerar los límites como parte del conocimiento de la disciplina y a mirar sus problemas desde una perspectiva que trasciende el cálculo inmediato.",
         "autores": [
           {
             "nombre": "Prieto de Castro, Carlos",
@@ -2174,7 +2284,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "252",
-        "imported_book_id": "251"
+        "imported_book_id": "251",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics > History. Matemáticas. Historia. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2182,7 +2303,7 @@
       "libro": {
         "titulo": "Matemática en espiral",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Aldo Falconí Asanza y Franco Manuel Hernández Crespo presentan una obra centrada en el estudio de las matemáticas. La imagen de una espiral orienta el interés hacia una forma de acercarse a la disciplina. Su lectura ofrece una ocasión para continuar explorando ideas matemáticas y fortalecer el vínculo entre aprendizaje, razonamiento y comprensión de sus conceptos.",
         "autores": [
           {
             "nombre": "Falconí Asanza, Aldo",
@@ -2369,7 +2490,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "253",
-        "imported_book_id": "252"
+        "imported_book_id": "252",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Matemáticas. Mathematic. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2377,7 +2509,7 @@
       "libro": {
         "titulo": "Matemática estructural",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La matemática puede estudiarse atendiendo a las estructuras que organizan sus conceptos y relaciones. Andrés Forero Cuervo propone una entrada a ese horizonte de pensamiento, donde comprender cómo se vinculan las ideas resulta esencial. Una lectura orientada al razonamiento matemático y al interés por los fundamentos que dan unidad a problemas y objetos de estudio diferentes.",
         "autores": [
           {
             "nombre": "Andrés Forero Cuervo",
@@ -2559,7 +2691,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "254",
-        "imported_book_id": "72"
+        "imported_book_id": "72",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Game theory. Matemática. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2567,7 +2710,7 @@
       "libro": {
         "titulo": "Matemáticas básicas (4a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Rafael Escudero Trujillo presenta una obra orientada a las bases de las matemáticas. El libro permite situar el aprendizaje en un nivel inicial de aproximación a la disciplina. Una lectura para quienes desean fortalecer su relación con el razonamiento matemático y construir un punto de partida para continuar estudiando sus conceptos con mayor claridad.",
         "autores": [
           {
             "nombre": "Escudero Trujillo, Rafael",
@@ -2744,7 +2887,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "255",
-        "imported_book_id": "253"
+        "imported_book_id": "253",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics. Matemáticas. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2752,7 +2906,7 @@
       "libro": {
         "titulo": "Pensar en la matemática",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Javier de Lorenzo Martínez plantea las matemáticas como objeto de reflexión filosófica. La obra invita a pensar la disciplina y a abrir preguntas acerca de su actividad intelectual. Una lectura para quienes desean relacionar su interés por el conocimiento matemático con una búsqueda de comprensión de sus ideas y del sentido de pensar matemáticamente.",
         "autores": [
           {
             "nombre": "Lorenzo Martínez, Javier de",
@@ -2929,7 +3083,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "256",
-        "imported_book_id": "254"
+        "imported_book_id": "254",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Mathematics > Philosophy. Matemáticas > Filosofía. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

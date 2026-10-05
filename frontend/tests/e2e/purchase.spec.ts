@@ -67,6 +67,9 @@ class FakePliego {
     }));
     return {
       cartId: items.length ? "40" : null,
+      requiresPhysicalFulfillment: items.length > 0,
+      physicalItemCount: items.length,
+      digitalItemCount: 0,
       state: items.length ? "ACTIVE" : null,
       items,
       totalCurrent: items.reduce((sum, item) => sum + Number(item.currentSubtotal), 0).toFixed(2),

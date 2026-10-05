@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000291",
+  "title": "Historia mínima de la Revolución cubana",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193640",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:31.700572+00:00",
+      "response_sha256": "0ce330040216f8f9454ba80f4da9b4a5145a7954b32e29d472c0339df6ac18ea",
+      "extraction_sha256": "5f60f94b1f6b4b89d7bb7410abb062e2570187f20a5fbddd04b43011679301fa",
+      "text": "Guardado en: Autor Principal: Rojas, Rafael, 1965- (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2015. Edición: Primera edición. Series: Colección Historias mínimas. Materias: Cuba > History > 1959-1990. Cuba > History > Revolution, 1959. Cuba > Politics and government > 1959-1990. Cuba > Historia > 1959-1990. Cuba > Historia > Revolución, 1959. Cuba > Política y gobierno > 1959-1990. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193640  ",
+      "observed_page_title": "Existencias: Historia mínima de la Revolución cubana /",
+      "title_check_response_sha256": "461a30a77a9a4ca6f99473a7b10b39c3da1163c519b42f9a0f146ee058613a2c",
+      "title_checked_at_utc": "2026-10-05T19:39:53.583315+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193640/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:32.996235+00:00",
+      "response_sha256": "a4974068790d3e2340b5b01ae5a416745f13e49433b659ddc9b4aa7c97ada46e",
+      "extraction_sha256": "5f60f94b1f6b4b89d7bb7410abb062e2570187f20a5fbddd04b43011679301fa",
+      "text": "Guardado en: Autor Principal: Rojas, Rafael, 1965- (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2015. Edición: Primera edición. Series: Colección Historias mínimas. Materias: Cuba > History > 1959-1990. Cuba > History > Revolution, 1959. Cuba > Politics and government > 1959-1990. Cuba > Historia > 1959-1990. Cuba > Historia > Revolución, 1959. Cuba > Política y gobierno > 1959-1990. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193640  "
+    }
+  ]
+}

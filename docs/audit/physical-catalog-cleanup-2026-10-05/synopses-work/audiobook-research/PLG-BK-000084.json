@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000084",
+  "title": "Historia mínima del PRI",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194981",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:00.993597+00:00",
+      "response_sha256": "3931e97217096c17b29bcaaf897c3425da76a4a0730cfd7e95002f249db64315",
+      "extraction_sha256": "c2a9a5f69c747b6c47dc774cf07bc585561f1a1e695936f56fa0afa4d1bd7115",
+      "text": "Guardado en: Autor Principal: Hernández Rodríguez, Rogelio. Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2016. Series: Colección Historias mínimas. Materias: Partido Revolucionario Institucional. Political parties > Mexico > History. Partidos políticos > México > Historia. Mexico > Politics and government. México > Política y gobierno. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194981  ",
+      "observed_page_title": "Existencias: Historia mínima del Partido Revolucionario /",
+      "title_check_response_sha256": "fe2f059b0f63bbce599140a87930aee20a68844c512637981a387622ab684962",
+      "title_checked_at_utc": "2026-10-05T19:40:01.205751+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194981/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:02.466523+00:00",
+      "response_sha256": "b46b2521dca9fc1ad50f907279f68d62181b260ab4c9a83aad47d210c693111b",
+      "extraction_sha256": "c2a9a5f69c747b6c47dc774cf07bc585561f1a1e695936f56fa0afa4d1bd7115",
+      "text": "Guardado en: Autor Principal: Hernández Rodríguez, Rogelio. Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2016. Series: Colección Historias mínimas. Materias: Partido Revolucionario Institucional. Political parties > Mexico > History. Partidos políticos > México > Historia. Mexico > Politics and government. México > Política y gobierno. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194981  "
+    }
+  ]
+}

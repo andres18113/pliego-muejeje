@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000301",
+  "title": "Teoría y técnica de la psicoterapia psicoanalítica",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:33.377317+00:00",
+      "response_sha256": "dcc94d28bf0167f57d802b643d460a885a445e5ea610a278c5ce0a024e84e952",
+      "extraction_sha256": "2442bce41b2ab2a496d6f5f518e38b73df73221fd8599c1d6bae842cdc702f40",
+      "text": "Guardado en: Autor Principal: González Núñez, José de Jesús. Otros Autores: Rodríguez Cortés, María del Pilar, (autora.) Formato: eBook Idioma: Spanish Publicado: México D.F. : Plaza y Valdés, S.A. de C.V., 2008. Edición: Primera edición, segunda reimpresión. Materias: Psychotherapy > Philosophy. Psychoanalytic Therapy. Psicoterapia > Filosofía. Terapia Psicoanalítica. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/75485  ",
+      "observed_page_title": "Existencias: Teoría y técnica de la psicoterapia psicoanalítica /",
+      "title_check_response_sha256": "ddf27facaffe09a7ac8223ddb762022bc185a0485f911411d96d06e5c9299901",
+      "title_checked_at_utc": "2026-10-05T19:39:56.557280+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:34.678724+00:00",
+      "response_sha256": "5f2198c280de2a9c88b1423498747bc60bf98f47458f5ad3b87cd4465b0b49c8",
+      "extraction_sha256": "2442bce41b2ab2a496d6f5f518e38b73df73221fd8599c1d6bae842cdc702f40",
+      "text": "Guardado en: Autor Principal: González Núñez, José de Jesús. Otros Autores: Rodríguez Cortés, María del Pilar, (autora.) Formato: eBook Idioma: Spanish Publicado: México D.F. : Plaza y Valdés, S.A. de C.V., 2008. Edición: Primera edición, segunda reimpresión. Materias: Psychotherapy > Philosophy. Psychoanalytic Therapy. Psicoterapia > Filosofía. Terapia Psicoanalítica. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/75485  "
+    }
+  ]
+}

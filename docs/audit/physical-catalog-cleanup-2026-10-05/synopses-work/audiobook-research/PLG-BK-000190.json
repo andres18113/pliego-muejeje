@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000190",
+  "title": "Manual de Sociología de la Familia",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:18.100146+00:00",
+      "response_sha256": "6e6c5a84f93f5dc465d3f9598a605b3ab431decc32f49b7666f92204b845f813",
+      "extraction_sha256": "c10fd79134d6970d9bcc12df919dccc56120a9c4d8424187cc4e3c54e6d497e3",
+      "text": "Guardado en: Autor Principal: Donati, Pierpaolo. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Pamplona : EUNSA, Ediciones Universidad de Navarra, c2003. Materias: Sociology. Families. Familia. Sociología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47451  ",
+      "observed_page_title": "Existencias: Manual de sociología de la familia",
+      "title_check_response_sha256": "30059697557150ccbacc3c639b63f4c84bc71a24575d6398b3a464b22a1e2921",
+      "title_checked_at_utc": "2026-10-05T19:39:55.036910+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:19.432625+00:00",
+      "response_sha256": "b86fdc2ec2aac53a73ebd87ea64a18c0b7b3183935e05e304b259945c364e46a",
+      "extraction_sha256": "c10fd79134d6970d9bcc12df919dccc56120a9c4d8424187cc4e3c54e6d497e3",
+      "text": "Guardado en: Autor Principal: Donati, Pierpaolo. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Pamplona : EUNSA, Ediciones Universidad de Navarra, c2003. Materias: Sociology. Families. Familia. Sociología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47451  "
+    }
+  ]
+}

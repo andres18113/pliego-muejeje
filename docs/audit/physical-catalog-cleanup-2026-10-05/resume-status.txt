@@ -1,0 +1,362 @@
+ M .github/workflows/ci.yml
+ M backend/README.md
+ M backend/src/main/java/com/pliego/foundation/database/DatabaseError.java
+ M backend/src/main/java/com/pliego/foundation/security/SecurityConfiguration.java
+ M backend/src/main/java/com/pliego/foundation/web/ApiExceptionHandler.java
+ M backend/src/main/java/com/pliego/modules/cart/api/CartController.java
+ M backend/src/main/java/com/pliego/modules/cart/api/CartResponses.java
+ M backend/src/main/java/com/pliego/modules/cart/application/CartModels.java
+ M backend/src/main/java/com/pliego/modules/cart/gateway/JdbcCartGateway.java
+ M backend/src/main/java/com/pliego/modules/catalog/api/CatalogController.java
+ M backend/src/main/java/com/pliego/modules/catalog/gateway/JdbcCatalogGateway.java
+ M backend/src/main/java/com/pliego/modules/sales/api/AdminOrderResponses.java
+ M backend/src/main/java/com/pliego/modules/sales/api/CheckoutRequest.java
+ M backend/src/main/java/com/pliego/modules/sales/api/CustomerOrderResponses.java
+ M backend/src/main/java/com/pliego/modules/sales/gateway/JdbcAdminOrderGateway.java
+ M backend/src/main/java/com/pliego/modules/sales/gateway/JdbcCustomerOrderGateway.java
+ M backend/src/test/java/com/pliego/foundation/database/DatabaseExceptionTranslatorTest.java
+ M backend/src/test/java/com/pliego/modules/catalog/api/CatalogApiIntegrationTest.java
+ M backend/src/test/java/com/pliego/modules/catalog/api/OpenApiCoverageTest.java
+ M backend/src/test/java/com/pliego/modules/sales/api/CheckoutApiIntegrationTest.java
+ M backend/src/test/postgres18/digital_editions_gate.sql
+ M backend/src/test/postgres18/digital_editions_http_gate.py
+ M backend/src/test/postgres18/offers_gate.sql
+ M backend/src/test/postgres18/offers_http_gate.py
+ M backend/src/test/postgres18/post_purchase_gate.sql
+ M backend/src/test/postgres18/run_ci_gates.sh
+ D covers/Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp
+ D covers/Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp
+ M covers/Audiolibros/Filosofia/staging.json
+ D covers/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp
+ M covers/Audiolibros/psicologia/staging.json
+ D covers/Ebook/Filosofia/portadas/ebook-6866fe06c580051a.webp
+ M covers/Ebook/Filosofia/staging.json
+ D covers/Ebook/Literatura/portadas/ebook-404c350b49f8d484.webp
+ D covers/Ebook/Literatura/portadas/ebook-5c51985965164200.webp
+ D covers/Ebook/Literatura/portadas/ebook-b6e98eacfdbf3d38.webp
+ M covers/Ebook/Literatura/staging.json
+ D covers/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp
+ M covers/Ebook/ciencias-sociales/staging.json
+ D covers/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp
+ D covers/Ebook/psicologia/portadas/ebook-67511892222078e9.webp
+ M covers/Ebook/psicologia/staging.json
+ D covers/Filosofia/apologia-de-socrates.webp
+ D covers/Filosofia/asi-hablo-zaratustra.webp
+ D covers/Filosofia/critica-de-la-razon-practica.webp
+ D covers/Filosofia/critica-de-la-razon-pura.webp
+ D covers/Filosofia/discurso-del-metodo.webp
+ D covers/Filosofia/el-principe.webp
+ D covers/Filosofia/etica-a-nicomaco.webp
+ D covers/Filosofia/genealogia-de-la-moral.webp
+ D covers/Filosofia/la-republica.webp
+ D covers/Filosofia/mas-alla-del-bien-y-del-mal.webp
+ D covers/Filosofia/meditaciones-metafisicas.webp
+ D covers/Filosofia/meditaciones.webp
+ D covers/Filosofia/pliego_filosofia_limpio.json
+ D covers/Filosofia/sobre-la-libertad.webp
+ D covers/Filosofia/tractatus-logico-philosophicus.webp
+ D covers/Literatura/anna-karenina.webp
+ D covers/Literatura/cien-anos-de-soledad.webp
+ D covers/Literatura/crimen-y-castigo.webp
+ D covers/Literatura/cronica-de-una-muerte-anunciada.webp
+ D covers/Literatura/don-quijote.webp
+ D covers/Literatura/el-amor-en-tiempos-de-colera.webp
+ D covers/Literatura/el-extranjero.webp
+ D covers/Literatura/el-gran-gatsby.webp
+ D covers/Literatura/el-mito-de-sisifo.webp
+ D covers/Literatura/el-retrato-de-dorian-gray.webp
+ D covers/Literatura/ficciones.webp
+ D covers/Literatura/la-casa-de-los-espiritus.webp
+ D covers/Literatura/la-ciudad-y-los-perros.webp
+ D covers/Literatura/la-iliada.webp
+ D covers/Literatura/los-miserables.webp
+ D covers/Literatura/madame-bovary.webp
+ D covers/Literatura/moby-dick.webp
+ D covers/Literatura/orgullo-y-prejuicio.webp
+ D covers/Literatura/pedro-paramo.webp
+ D covers/Literatura/pliego_literatura_limpio.json
+ D covers/Literatura/rayuela.webp
+ D covers/Literatura/romeo-y-julieta.webp
+ D covers/Literatura/soldados-de-salamina.webp
+ D "covers/Matem\303\241ticas/ANALISIS-MATEMATICO-IV-Calculo-Vectorial.webp"
+ D "covers/Matem\303\241ticas/C\303\241lculo-analisis-vectorial.webp"
+ D "covers/Matem\303\241ticas/Introducci\303\263n-al-algebra-lineal.webp"
+ D "covers/Matem\303\241ticas/Matematica-Estructural.webp"
+ D "covers/Matem\303\241ticas/alegebra-de-baldor.webp"
+ D "covers/Matem\303\241ticas/algebra-lineal-serie-schaum.webp"
+ D "covers/Matem\303\241ticas/algebra-lineal-una-introduccion-moderna-4-edicion.webp"
+ D "covers/Matem\303\241ticas/algebra-lineal-y-su-aplicacion.webp"
+ D "covers/Matem\303\241ticas/analisis-matematico-apostol.webp"
+ D "covers/Matem\303\241ticas/analisis-matematico-i-calculo-diferencial-moises-lazaro-carrion.webp"
+ D "covers/Matem\303\241ticas/analisis-matematico-ii.webp"
+ D "covers/Matem\303\241ticas/analisis-numerico-richard-l-burden-j-douglas-faires.webp"
+ D "covers/Matem\303\241ticas/ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera-william-e-boyce-richard-c-diprima.webp"
+ D "covers/Matem\303\241ticas/ecuaciones-diferenciales-y-problemas-con-valores-en-la-frontera.webp"
+ D "covers/Matem\303\241ticas/ecuaciones-diferenciales.webp"
+ D "covers/Matem\303\241ticas/geometria-trigonemetria-baldor.webp"
+ D "covers/Matem\303\241ticas/inferencia-bayesana.webp"
+ D "covers/Matem\303\241ticas/metodos-numericos-aplicados-a-la-ingenieria-antonio-nieves-hurtado-federico-c-dominguez-sanchez.webp"
+ D "covers/Matem\303\241ticas/metodos-numericos-para-ingenieros.webp"
+ D "covers/Matem\303\241ticas/pliego_matematicas_limpio.json"
+ D "covers/Matem\303\241ticas/problemas-resueltps-de-al.webp"
+ D covers/generated/json/Filosofia/pliego_filosofia_limpio.json
+ D covers/generated/json/Literatura/pliego_literatura_limpio.json
+ D "covers/generated/json/Matem\303\241ticas/pliego_matematicas_limpio.json"
+ M covers/generated/manifest-normalized.json
+ M covers/generated/manifest.json
+ M covers/normalization-overrides.json
+ M covers/sku-registry.json
+ M docs/adr/README.md
+ M frontend/openapi/openapi.json
+ M frontend/src/app/App.tsx
+ M frontend/src/app/navigation/HeaderAccount.tsx
+ M frontend/src/features/auth/authLocation.test.ts
+ M frontend/src/features/auth/authLocation.ts
+ M frontend/src/features/catalog/CatalogControls.tsx
+ M frontend/src/features/catalog/CatalogPage.test.tsx
+ M frontend/src/features/catalog/CatalogPage.tsx
+ M frontend/src/features/catalog/catalogUrl.test.ts
+ M frontend/src/features/catalog/catalogUrl.ts
+ M frontend/src/features/purchase/CheckoutPage.tsx
+ M frontend/src/features/purchase/DigitalCheckout.test.tsx
+ M frontend/src/features/purchase/OrderConfirmation.test.tsx
+ M frontend/src/features/purchase/OrderPage.tsx
+ M frontend/src/features/purchase/SuccessfulOrderConfirmation.tsx
+ M frontend/src/features/purchase/fulfillment.ts
+ M frontend/src/features/purchase/orderViewModel.ts
+ M frontend/src/shared/api/cart.test.ts
+ M frontend/src/shared/api/cart.ts
+ M frontend/src/shared/api/catalog.ts
+ M frontend/src/shared/api/generated.ts
+ M frontend/src/shared/api/orders.ts
+ M frontend/src/test/purchase.tsx
+ M frontend/tests/e2e/purchase.spec.ts
+ M frontend/tests/e2e/store-pickup.spec.ts
+ M scripts/cover_catalog.py
+ M scripts/normalize-covers.py
+ M scripts/prepare-covers.py
+ M scripts/publish_digital_editions.py
+ M scripts/test_digital_covers.py
+ M scripts/test_seed_cover_sync.py
+ M scripts/upload-r2-covers.py
+?? backend/src/main/java/com/pliego/modules/help/
+?? backend/src/main/java/com/pliego/modules/library/
+?? backend/src/main/java/com/pliego/modules/storefront/
+?? backend/src/main/resources/db/migration/V045__digital_ownership_and_checkout.sql
+?? backend/src/main/resources/db/migration/V046__storefront_navigation_and_help.sql
+?? backend/src/main/resources/db/migration/V047__digital_ownership_integrity.sql
+?? backend/src/main/resources/db/migration/V048__digital_orders_commercial_lifecycle.sql
+?? backend/src/test/java/com/pliego/modules/catalog/api/StorefrontHelpApiIntegrationTest.java
+?? backend/src/test/postgres18/catalog_contract_gate.sql
+?? backend/src/test/postgres18/digital_ownership_gate.sql
+?? backend/src/test/postgres18/digital_ownership_upgrade_gate.py
+?? backend/src/test/postgres18/library_checkout_http_gate.py
+?? backend/src/test/postgres18/storefront_help_gate.sql
+?? backend/src/test/postgres18/storefront_help_http_gate.py
+?? covers/Fisicos180/
+?? covers/generated/json/Fisicos180/
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000316-5814e110f94a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000317-b569eaa7c6e7.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000318-d3973ec97236.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000319-f2975e413c59.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000320-1773d8ed60d9.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000321-b1cce2adb804.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000322-4136256898ff.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000323-cd78d6159753.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000324-3627cef212b0.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000325-da46a63d3d79.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000326-4bf7ddabe9aa.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000327-ccd772a0ea7e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000328-508cd4289cdd.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000329-1fe568f4a35f.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000330-69f9861de557.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000331-0bb8a7f5aea1.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000332-ad802eff1747.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000333-499377aff250.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000334-083d4f4224c9.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000335-8d21a22097ce.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000336-99b1888c768c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000337-84ee31c24b99.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000338-026abd937c59.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000339-f1f426469fe1.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000340-d0bc9c4220a8.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000341-56881281e619.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000342-2105d4b850c1.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000343-348e138ad03d.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000344-5575a50f7443.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000345-51c807975f40.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000346-257e66aedf9b.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000347-da8df7e17052.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000348-1cf533176b17.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000349-8f070b13c71f.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000350-50aaa5b2303e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000351-741adc4bbab6.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000352-5085261f0b63.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000353-7ba08b78b790.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000354-f40a6f38ca87.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000355-48000e7054ba.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000356-9c474a0e302b.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000357-407a9fe4e093.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000358-8705569a1817.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000359-030fc65874b5.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000360-033ad5638659.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000361-f5a476dc050d.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000362-9c5792b939d7.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000363-ba0e48dcd7b6.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000364-347de2e90f36.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000365-957e8953eb2b.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000366-66d02838f311.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000367-24ecf6e429d8.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000368-da8832e4035a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000369-416940dcbf28.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000370-3075de2d964a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000371-f70757afe24e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000372-065bba22574e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000373-8c67930b1393.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000374-a228a352469c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000375-5cbe95e6d72e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000376-d06d0517233b.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000377-8ce841df3892.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000378-081908ef6d3e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000379-4ae004fc8ecc.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000380-74fb1f928477.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000381-a97b06c18e31.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000382-4648bef67fbb.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000383-64e983aeb2d7.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000384-f48fa99739f6.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000385-d3ce02e9e1bc.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000386-c13dfa0704b0.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000387-27addce591e9.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000388-ef5fdd9298d4.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000389-725968de7e0c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000390-d2c065f3dcad.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000391-e7d4da6aa0c1.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000392-5b238c0cd7dc.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000393-f681243b42c3.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000394-f213c275e813.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000395-20666df65daf.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000396-bb6730d4fede.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000397-79ff964b5d4e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000398-7adfac551558.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000399-95f07dfa0af0.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000400-61b37b1c4ace.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000401-1e736e681b12.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000402-c8ddffce11f4.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000403-148144c41dd3.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000404-c9f491176d96.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000405-18b635bf97ae.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000406-e4ad64834ccd.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000407-f3230944208d.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000408-44bb079fa6e8.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000409-477188b4e6d4.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000410-06ee0bd6d473.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000411-7db40528bbdc.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000412-2bb50718fe90.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000413-2dbed11e127a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000414-0c57b32d8ea8.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000415-64e8d6c5db8c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000416-e1d75dceef05.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000417-3dd52dcc04ad.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000418-155f6b011371.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000419-fc5bc08db68e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000420-b0b58c4d3e1c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000421-635a2c55be6e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000422-5e757cf00b49.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000423-b9fcde5354d0.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000424-960539af1e2a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000425-16cf625f5871.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000426-3a42830687cb.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000427-a8c7ce31018d.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000428-63defc371a47.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000429-b4c214204262.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000430-a398b3f5b36f.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000431-b36fc2e223d7.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000432-829bb755fb49.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000433-b39a482b39a5.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000434-5c4db67e82b7.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000435-4b4fffc7411c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000436-bb5f359beab2.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000437-464b5a233928.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000438-404dc1c75937.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000439-51aee3bcf579.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000440-697c27b9da08.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000441-83b9f60f16ba.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000442-fcfaad4bf35c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000443-2962aee99215.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000444-e353dd5173a2.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000445-f5f42613870a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000446-3b7b67b9216d.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000447-535040bba4b2.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000448-1667560357b8.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000449-258f073a57e4.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000450-2391588342df.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000451-2407e2605059.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000452-dfd19427fb2e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000453-9b9ca14536c6.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000454-d3687b3d3baf.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000455-2190462ff6be.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000456-e6c9a5e5dd2f.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000457-f5a21b3a91f7.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000458-460eb0dae947.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000459-769f92cc07c6.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000460-97ff1a8afbe8.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000461-01d1dd88f7a0.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000462-740dfa22029d.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000463-e5622718f527.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000464-e499114542f7.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000465-8d7a3c972603.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000466-7574f1bdb1ba.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000467-4d917fffa9cb.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000468-72241337882a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000469-286db709fd2e.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000470-eda89c788a11.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000471-08fc085f428a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000472-a1cb1ed1eecd.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000473-c545f362d820.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000474-7f8e600c5885.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000475-6d7c28d2577c.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000476-372ed26f0fbc.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000477-79b749e57b20.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000478-7e1b91979da0.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000479-5a676af30244.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000480-b9c31c3cb3c8.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000481-10cb0e7a0bcb.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000482-b05103b13a74.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000483-17125952edb6.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000484-71f140dd38b6.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000485-99eff09c669a.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000486-36b8a8f6d055.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000487-57798c2236e4.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000488-202aca7173b5.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000489-0338d6040bb9.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000490-0980cc68c5a9.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000491-492b450469ec.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000492-a1a057861401.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000493-0a3afaa4e098.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000494-58cdd1f5b024.webp
+?? covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000495-8afe9ae9b446.webp
+?? covers/generated/retired/
+?? covers/retired-manifest.json
+?? docs/adr/0026-storefront-help-and-digital-ownership.md
+?? docs/audit/physical-catalog-180-2026-10-05/
+?? docs/audit/physical-catalog-cleanup-2026-10-05/
+?? docs/frontend/claude-storefront-library-handoff-2026-10-05.md
+?? docs/superpowers/plans/2026-10-05-physical-catalog-and-python-ci.md
+?? docs/superpowers/plans/2026-10-05-storefront-library.md
+?? frontend/src/features/help/
+?? frontend/src/features/library/
+?? frontend/src/features/storefront/
+?? frontend/src/shared/api/help.ts
+?? frontend/src/shared/api/library.ts
+?? frontend/src/shared/api/readViewState.ts
+?? frontend/src/shared/api/storefront.ts
+?? frontend/src/shared/api/storefrontArchitecture.test.ts
+?? frontend/tests/e2e/library-storefront.live.spec.ts
+?? frontend/tests/e2e/storefront-library.spec.ts
+?? scripts/fixtures/
+?? scripts/prepare_physical_editions.py
+?? scripts/publish_physical_editions.py
+?? scripts/test_physical_catalog_batch.py
+?? scripts/test_prepare_physical_editions.py
+?? scripts/test_publish_physical_editions.py
+?? scripts/test_retired_covers.py

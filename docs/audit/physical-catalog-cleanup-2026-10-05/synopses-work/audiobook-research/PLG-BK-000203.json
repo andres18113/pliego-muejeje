@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000203",
+  "title": "¿Hay que desconstruir la metafísica?",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:20.261684+00:00",
+      "response_sha256": "1104438516df97e0e52401377b77012b3677a8ffb0d97bc3bfaa9c8231ddab4d",
+      "extraction_sha256": "d33b82922f6ff63b234c3191af34684b32683a42feb3cef9c75b2063a5b1610f",
+      "text": "Guardado en: Autor Principal: Aubenque, Pierre. Autor Corporativo: e-libro, Corp. Otros Autores: Ayuso Díez, Jesús María, (trad.) Formato: eBook Idioma: Spanish Publicado: Madrid : Encuentro, D.L.2012. Materias: Metafísica. Metaphysics. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/61805  ",
+      "observed_page_title": "Existencias: A Hay que desconstruir la metafísica?",
+      "title_check_response_sha256": "090620d5d91297b9b16315da0002a067f2ff5a1a00b1bede9684824ed76a1b50",
+      "title_checked_at_utc": "2026-10-05T19:39:50.739010+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:21.562797+00:00",
+      "response_sha256": "14d6bc69e35fa405fcdedc93d460b2ad584f2f9d8fcae5db6b010f8d27ba5c98",
+      "extraction_sha256": "d33b82922f6ff63b234c3191af34684b32683a42feb3cef9c75b2063a5b1610f",
+      "text": "Guardado en: Autor Principal: Aubenque, Pierre. Autor Corporativo: e-libro, Corp. Otros Autores: Ayuso Díez, Jesús María, (trad.) Formato: eBook Idioma: Spanish Publicado: Madrid : Encuentro, D.L.2012. Materias: Metafísica. Metaphysics. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/61805  "
+    }
+  ]
+}

@@ -58,7 +58,8 @@ public class CartController {
                 money(cart.totalCurrent()),money(cart.amounts().subtotal()),money(cart.amounts().taxRate()),money(cart.amounts().taxAmount()),
                 money(cart.amounts().shippingAmount()),money(cart.amounts().total()),
                 cart.deliveryWindow() == null ? null : cart.deliveryWindow().from().toString(),
-                cart.deliveryWindow() == null ? null : cart.deliveryWindow().to().toString());
+                cart.deliveryWindow() == null ? null : cart.deliveryWindow().to().toString(),
+                cart.requiresPhysicalFulfillment(),cart.physicalItemCount(),cart.digitalItemCount());
     }
 
     @PostMapping(path = "/items", consumes = MediaType.APPLICATION_JSON_VALUE)

@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Cómo comportarse en la multitud: una novela",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Isidore Mazal comienza la adolescencia como el menor de seis hermanos en un pueblo francés. Rodeado de jóvenes intelectualmente brillantes, observa detalles que los demás pasan por alto y, cuando la familia sufre una tragedia, percibe sus distintas formas de afrontar el dolor. Camille Bordas combina humor y desconcierto en una historia sobre crecer y buscar un lugar entre los demás.",
         "autores": [
           {
             "nombre": "Bordas, Camille",
@@ -192,7 +192,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "108",
-        "imported_book_id": "107"
+        "imported_book_id": "107",
+        "synopsis_provenance": {
+          "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://play.google.com/store/books/details/Camille_Bordas_C%C3%B3mo_comportarse_en_la_multitud?id=JG85DwAAQBAJ",
+              "basis": "Paráfrasis original de la descripción pública de distribución. Evidencia: audiobook-research/PLG-BK-000279.json; SHA-256 de respuesta HTTP: 83ea8f419d56ac70a252744baa57eb3242979e78f2cb8a1bf8f36ed1f9bdad32"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -200,7 +211,7 @@
       "libro": {
         "titulo": "Cómo se hace una novela",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Miguel de Unamuno vincula la escritura de una novela con la experiencia de construir y contar la propia vida. El texto recuerda su soledad en París y vuelve sobre ella desde Hendaya, mientras reflexiona sobre la relación entre autor, obra y lector. Una lectura en la que creación literaria y experiencia personal se interrogan mutuamente.",
         "autores": [
           {
             "nombre": "Unamuno, Miguel de",
@@ -385,7 +396,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "109",
-        "imported_book_id": "108"
+        "imported_book_id": "108",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_TEXT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.letrasmexicanas.mx/obra-visor/como-se-hace-una-novela-785438/html/3afaf268-9b02-4b00-b225-221b10a99140_2.html",
+              "basis": "Descripción original conservadora a partir del texto primario publicado. Evidencia: audiobook-research/PLG-BK-000213.json; SHA-256 de respuesta HTTP: a966ef28fab94d61c0e6519b2ef026f07f81dd1921808ba51423d5f26c8733a3"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -393,7 +415,7 @@
       "libro": {
         "titulo": "Discurso y conflicto en la novela",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El discurso y el conflicto se reúnen aquí como claves para aproximarse a la novela. El tema invita a pensar la relación entre lo que se dice y las tensiones que dan forma a una obra narrativa. Una lectura para quienes desean mirar la ficción desde sus recursos de expresión y explorar cómo el lenguaje participa en la construcción del conflicto literario.",
         "autores": [
           {
             "nombre": "Parrilla Sotomayor, Eduardo Enrique",
@@ -578,7 +600,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "110",
-        "imported_book_id": "109"
+        "imported_book_id": "109",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000149.json; SHA-256 de respuesta HTTP: 585246144eca94182b47118c87a85c79c6445ba996a425398da08d59dbbe8463"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -586,7 +619,7 @@
       "libro": {
         "titulo": "El retorno de los desplazados: novela",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La pérdida y la necesidad de encontrar vínculos atraviesan esta novela de Beatriz Gordillo Barahona. En un entorno de violencia y opresión política, los recuerdos y emociones de sus personajes se relacionan con preguntas sobre la identidad y la pertenencia. La historia acerca al lector al dolor del desarraigo y a la búsqueda de conexión en condiciones adversas.",
         "autores": [
           {
             "nombre": "Gordillo Barahona, Beatriz",
@@ -770,7 +803,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "111",
-        "imported_book_id": "110"
+        "imported_book_id": "110",
+        "synopsis_provenance": {
+          "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.storytel.com/ar/books/el-retorno-de-los-desplazados-12320520",
+              "basis": "Paráfrasis original de la descripción pública de distribución. Evidencia: audiobook-research/PLG-BK-000293.json; SHA-256 de respuesta HTTP: 7864ac74f95dc2858a11f2a1d240572188db049ecb2b99422e145c7093cf639b"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -778,7 +822,7 @@
       "libro": {
         "titulo": "Está temblando. Novela",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La vida chilena y, en especial, sus sectores dirigentes se sitúan bajo una mirada crítica en esta novela de Hermógenes Pérez de Arce. Los cambios políticos asociados a desenlaces electorales y militares se relacionan con transformaciones en las formas de vivir. Una lectura de ficción que invita a considerar el vínculo entre poder político y experiencia social en Chile.",
         "autores": [
           {
             "nombre": "Pérez de Arce, Hermógenes",
@@ -963,7 +1007,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "112",
-        "imported_book_id": "111"
+        "imported_book_id": "111",
+        "synopsis_provenance": {
+          "basis_kind": "DISTRIBUTOR_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://books.apple.com/br/book/est%C3%A1-temblando/id1001193816",
+              "basis": "Paráfrasis original de la descripción pública de distribución. Evidencia: audiobook-research/PLG-BK-000261.json; SHA-256 de respuesta HTTP: 17d86b7f7318c2f95b25494d19627f601068293c159f7beef2e52cd6659e9e04"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -971,7 +1026,7 @@
       "libro": {
         "titulo": "La confesión: novela",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Tras el asesinato de un psiquiatra en Seúl, un profesor de filosofía es detenido y debe explicar su relación con el crimen. Su confesión reconstruye una vida marcada por pérdidas y conflictos, mientras las contradicciones vuelven incierta la frontera entre lo ocurrido y lo imaginado. Hailji plantea una historia de fragilidad humana en la que la confianza del lector se pone a prueba.",
         "autores": [
           {
             "nombre": "Hailji",
@@ -1156,7 +1211,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "113",
-        "imported_book_id": "112"
+        "imported_book_id": "112",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://editorialverbum.es/libro/la-confesion/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000074.json; SHA-256 de respuesta HTTP: ad88f217e5517c8046bc3a56a5d214b028019cbe287d577edda6a6ee34ee8f12"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1164,7 +1230,7 @@
       "libro": {
         "titulo": "La novela rosa",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La novela rosa se convierte en objeto de estudio dentro de la historia y la crítica literarias. La obra invita a mirar este género desde preguntas sobre su lugar en la literatura y las formas de acercarse a él. Una lectura para quienes desean explorar la ficción amorosa como campo de análisis, más allá de la lectura de una historia particular.",
         "autores": [
           {
             "nombre": "González Lejárraga, Antonio",
@@ -1349,7 +1415,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "114",
-        "imported_book_id": "113"
+        "imported_book_id": "113",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000209.json; SHA-256 de respuesta HTTP: 318d74d17efab37b260311d6b635036ba0cf710b617cc45d2862d2be602f1ded"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1357,7 +1434,7 @@
       "libro": {
         "titulo": "Lady Susan y otras novelas",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Jane Austen reúne en este volumen historias que muestran distintas facetas de su mirada sobre las relaciones y los sentimientos. Lady Susan presenta una protagonista poco convencional; Los Watson aborda la dependencia femenina, y Amor y amistad parodia la ficción galante. Sanditon completa el conjunto con una obra que quedó interrumpida por la enfermedad de la autora.",
         "autores": [
           {
             "nombre": "Jane Austen",
@@ -1540,7 +1617,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "115",
-        "imported_book_id": "114"
+        "imported_book_id": "114",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://alianzaeditorial.es/libro/bibliotecas-de-autor/lady-susan-y-otras-novelas-jane-austen-9788413621302/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000174.json; SHA-256 de respuesta HTTP: 2dca9fd6209dda3bd8224640169baae6c083d8f6a9ef8c1cef9ebe6b066f6614"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1548,7 +1636,7 @@
       "libro": {
         "titulo": "Las novelas de Torquemada",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El prestamista Torquemada atraviesa una crisis ante la enfermedad de su hijo y después protagoniza un ascenso social ligado al matrimonio y a la fortuna. Las cuatro novelas reunidas por Galdós comparten el escenario de la España de la Restauración. El ciclo permite seguir cómo la ambición económica convive con las conmociones personales de su protagonista.",
         "autores": [
           {
             "nombre": "Pérez Galdós, Benito",
@@ -1731,7 +1819,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "116",
-        "imported_book_id": "115"
+        "imported_book_id": "115",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.alianzaeditorial.es/libro/bibliotecas-de-autor/las-novelas-de-torquemada-benito-perez-galdos-9788420689586/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000147.json; SHA-256 de respuesta HTTP: c9ac454e7433cffd88b871b3e619def05d6838c4a37db9bc299f548ce1dcd77b"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1739,7 +1838,7 @@
       "libro": {
         "titulo": "Novela negra con argentinos",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Un escritor argentino, Agustín Palant, sale de un departamento de Nueva York después de haber matado a una mujer. Luisa Valenzuela desplaza la intriga desde la identidad del culpable hacia las razones del crimen. La novela cruza violencia y escritura, mientras elementos históricos, sexuales y biográficos vuelven inestable la relación entre los hechos y la ficción.",
         "autores": [
           {
             "nombre": "Valenzuela, Luisa",
@@ -1924,7 +2023,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "117",
-        "imported_book_id": "116"
+        "imported_book_id": "116",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://fce.com.ar/tienda/literatura/novela-negra-con-argentinos/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000130.json; SHA-256 de respuesta HTTP: b93e4f54739ed288467ca8f9777baf03a865d2a219060055a8e53807075f8bde"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1932,7 +2042,7 @@
       "libro": {
         "titulo": "Novelas amorosas y ejemplares",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "María de Zayas enlaza historias amorosas independientes mediante un relato que les da un marco compartido. Los disfraces y los cambios de papeles sociales y sexuales introducen ambigüedad en situaciones que también invitan al aprendizaje. La colección acerca al lector a los valores y tensiones de su época desde una voz femenina de la literatura española.",
         "autores": [
           {
             "nombre": "Zayas y Sotomayor, María de",
@@ -2117,7 +2227,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "118",
-        "imported_book_id": "117"
+        "imported_book_id": "117",
+        "synopsis_provenance": {
+          "basis_kind": "PUBLISHER_SYNOPSIS_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://editorialverbum.es/libro/novelas-amorosas-y-ejemplares/",
+              "basis": "Paráfrasis original de la sinopsis editorial pública. Evidencia: audiobook-research/PLG-BK-000111.json; SHA-256 de respuesta HTTP: be3386c721f4ee74762d51c4d588b77b05e035754baeecc9b96e4b4649ce665e"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -2125,7 +2246,7 @@
       "libro": {
         "titulo": "Valentín: novela histórica",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una novela histórica mexicana de Rosalío Hernández Beltrán que ofrece un encuentro entre creación literaria y pasado nacional. Su pertenencia a la narrativa latinoamericana permite acercarse a una forma de mirar la historia desde la ficción. Es una lectura para quienes buscan explorar el vínculo entre experiencia humana e historia a través de la novela histórica de México.",
         "autores": [
           {
             "nombre": "Hernández Beltrán, Rosalío",
@@ -2310,7 +2431,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "119",
-        "imported_book_id": "118"
+        "imported_book_id": "118",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+              "basis": "Descripción original conservadora a partir del título y de las materias bibliográficas verificadas; no es una sinopsis proporcionada por el editor. Evidencia: audiobook-research/PLG-BK-000138.json; SHA-256 de respuesta HTTP: 8ee121cc80f311d5905671b2c2f13a168ad9ae55451285d830b5c63a81035086"
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

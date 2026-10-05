@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000113",
+  "title": "Historia mínima de los judíos en la antigüedad",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194893",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:03.778239+00:00",
+      "response_sha256": "48844527154153e7f771129a764f127b0f2a3b8d8d040c4adfb5e4c91d487f3f",
+      "extraction_sha256": "32d3b024cba5c894e310128917b3664e089a222d52fbc245d6c7bc1df29c8177",
+      "text": "Guardado en: Autor Principal: Roitman, Adolfo Daniel, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2020. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Jews > History > 168 B.C.-135 A.D. Judíos > Historia > 168 a.C.-135 d.C. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194893  ",
+      "observed_page_title": "Existencias: Historia mínima de los judios en la antigüedad /",
+      "title_check_response_sha256": "29f25db5f26cedeca5b375a8b3d65cbaf4d24e0a18e98e80de5c1e71c60586c0",
+      "title_checked_at_utc": "2026-10-05T19:40:07.996640+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194893/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:05.293334+00:00",
+      "response_sha256": "e1a339390ba10c19c30e893a222d89d794407ecc47398b16a504f279032b77b3",
+      "extraction_sha256": "32d3b024cba5c894e310128917b3664e089a222d52fbc245d6c7bc1df29c8177",
+      "text": "Guardado en: Autor Principal: Roitman, Adolfo Daniel, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2020. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Jews > History > 168 B.C.-135 A.D. Judíos > Historia > 168 a.C.-135 d.C. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194893  "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000177",
+  "title": "Antropología de la religión",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:14.898780+00:00",
+      "response_sha256": "0e90c00b7edbc4d8d9c9238072f52d8a2f256948044e08d5ab16eded8bca7b27",
+      "extraction_sha256": "4a9ffa8a9f6893f1bd47759b4616f539a16bfd640c96209aaaf8435784b2157e",
+      "text": "Guardado en: Autor Principal: Duch, Lluís. Formato: eBook Idioma: Spanish Publicado: Barcelona : Herder Editorial, [2001] Materias: Anthropology of religion. Antropología de la religión. Religion > History. Religión > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/45819  ",
+      "observed_page_title": "Existencias: Antropología de la religión /",
+      "title_check_response_sha256": "c5538b0d5f87c062dd467468b5bea9efbb704e0b505bae566fb83ebd21aa5851",
+      "title_checked_at_utc": "2026-10-05T19:39:56.667626+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:16.780829+00:00",
+      "response_sha256": "7a6eacaffacc052a15b27b8d1a2ee4391fa62d2defae8f32edf9fc22179e0111",
+      "extraction_sha256": "4a9ffa8a9f6893f1bd47759b4616f539a16bfd640c96209aaaf8435784b2157e",
+      "text": "Guardado en: Autor Principal: Duch, Lluís. Formato: eBook Idioma: Spanish Publicado: Barcelona : Herder Editorial, [2001] Materias: Anthropology of religion. Antropología de la religión. Religion > History. Religión > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/45819  "
+    }
+  ]
+}

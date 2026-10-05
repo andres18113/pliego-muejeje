@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000243",
+  "title": "Proceso de valoración semiológica de Chávez para el cuidado de enfermería",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:23.826695+00:00",
+      "response_sha256": "fd28e41af7293257ae2e466d7b5bfb2e9b7c9104eb1fccb9c3951a04acfcd8b7",
+      "extraction_sha256": "8af2001e8ea3af440d62bd98be963adf995ccdc1d7832eef7574288a225fe6a0",
+      "text": "Guardado en: Autor Principal: Barragán Becerra, Julián Andrés, (autor.) Otros Autores: Moreno Mojica, Claudia María, (autor.) , Hernández Bernal, Nubia Esperanza, (autor.) Formato: eBook Idioma: Spanish Publicado: Tunja : Editorial UPTC, 2021. Series: Colección académica. Materias: Condición clínica - humana. Cuidado de enfermería. Examen - cuidado. Proceso de valoración. Semiología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/219236  ",
+      "observed_page_title": "Existencias: Proceso de valoración semiológica de Chávez para el cuidado de enfermería /",
+      "title_check_response_sha256": "c81a140413fc5aa4e8a829c375124a3426bcc1ca7ac936dd578ab1ee4ef75b66",
+      "title_checked_at_utc": "2026-10-05T19:40:05.226027+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:25.334043+00:00",
+      "response_sha256": "a43011c2cd16f1ccd8e84561d3f6e1c3642c2d3695669ad4fb072b9cd26daded",
+      "extraction_sha256": "8af2001e8ea3af440d62bd98be963adf995ccdc1d7832eef7574288a225fe6a0",
+      "text": "Guardado en: Autor Principal: Barragán Becerra, Julián Andrés, (autor.) Otros Autores: Moreno Mojica, Claudia María, (autor.) , Hernández Bernal, Nubia Esperanza, (autor.) Formato: eBook Idioma: Spanish Publicado: Tunja : Editorial UPTC, 2021. Series: Colección académica. Materias: Condición clínica - humana. Cuidado de enfermería. Examen - cuidado. Proceso de valoración. Semiología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/219236  "
+    }
+  ]
+}

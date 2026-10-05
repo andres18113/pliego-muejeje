@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000058",
+  "title": "Diccionario básico de antropología",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:58.180578+00:00",
+      "response_sha256": "c108dd56c463415b6a1308274af0ab10a76761dfbca175c4dde2ecb331aeb830",
+      "extraction_sha256": "3946d5810278af3c3f2b2a640824727dccbf3354be9197e529d5f2503b9d9579",
+      "text": "Guardado en: Autor Principal: Campo A, A. Lorena. Formato: eBook Idioma: Spanish Publicado: Quito : Ediciones Abya-Yala, 2008. Materias: Anthropology > Dictionaries. Antropología. Diccionario. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/79954  ",
+      "observed_page_title": "Existencias: Diccionario básico de antropología /",
+      "title_check_response_sha256": "1223955430415ecf51690cc99512632b373e08ad8d5a638742d50912e4694bdc",
+      "title_checked_at_utc": "2026-10-05T19:39:52.156585+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:59.680112+00:00",
+      "response_sha256": "9df93ef624a12f7ac00f8c92f91e9e447e74e930c8950a07d71015b14ece1a3e",
+      "extraction_sha256": "3946d5810278af3c3f2b2a640824727dccbf3354be9197e529d5f2503b9d9579",
+      "text": "Guardado en: Autor Principal: Campo A, A. Lorena. Formato: eBook Idioma: Spanish Publicado: Quito : Ediciones Abya-Yala, 2008. Materias: Anthropology > Dictionaries. Antropología. Diccionario. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/79954  "
+    }
+  ]
+}

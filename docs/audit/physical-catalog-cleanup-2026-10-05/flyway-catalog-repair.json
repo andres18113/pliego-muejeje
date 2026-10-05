@@ -1,0 +1,37 @@
+{
+  "current_version": 46,
+  "applied_catalog_dependencies": [
+    {
+      "version": "045",
+      "description": "digital ownership and checkout",
+      "checksum": 1912101786,
+      "installed_on": "2026-10-05T12:32:49.441507",
+      "success": true
+    },
+    {
+      "version": "046",
+      "description": "storefront navigation and help",
+      "checksum": -790434777,
+      "installed_on": "2026-10-05T12:32:49.571615",
+      "success": true
+    }
+  ],
+  "routine_signatures": [
+    {
+      "proname": "fn_catalog_search",
+      "arguments": "p_title_query character varying, p_author_query character varying, p_isbn13 character varying, p_category_slug character varying, p_price_min numeric, p_price_max numeric, p_language character varying, p_format character varying, p_sort character varying, p_page integer, p_page_size integer"
+    },
+    {
+      "proname": "fn_catalog_search",
+      "arguments": "p_title_query character varying, p_author_query character varying, p_isbn13 character varying, p_category_slug character varying, p_price_min numeric, p_price_max numeric, p_language character varying, p_format character varying, p_sort character varying, p_page integer, p_page_size integer, p_product_type character varying"
+    },
+    {
+      "proname": "fn_catalog_search_global",
+      "arguments": "p_query character varying, p_category_slug character varying, p_price_min numeric, p_price_max numeric, p_language character varying, p_format character varying, p_sort character varying, p_page integer, p_page_size integer"
+    },
+    {
+      "proname": "fn_catalog_search_global",
+      "arguments": "p_query character varying, p_category_slug character varying, p_price_min numeric, p_price_max numeric, p_language character varying, p_format character varying, p_sort character varying, p_page integer, p_page_size integer, p_product_type character varying"
+    }
+  ]
+}

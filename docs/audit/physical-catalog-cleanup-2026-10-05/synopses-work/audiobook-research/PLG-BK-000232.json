@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000232",
+  "title": "Estadística y muestreo (14a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:22.877149+00:00",
+      "response_sha256": "9fb95788ee2dd0b8a37d3e9dc4f8d231332b6ef1752c272ea7f344e9821ec4fa",
+      "extraction_sha256": "c575e5ca97c636648696e5ee0ebf073b9ff9daf6a6fdcb5c6349549cb61017d3",
+      "text": "Guardado en: Autor Principal: Martínez Bencardino, Ciro. Formato: eBook Idioma: Spanish Publicado: Bogotá : Ecoe Ediciones, 2019. Edición: 14a. edición. Series: Ciencias básicas. Estadística. Materias: Mathematical statistics. Sampling (Statistics) Estadística matemática. Muestreo (Estadística) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/125946  ",
+      "observed_page_title": "Existencias: Estadística y muestreo /",
+      "title_check_response_sha256": "68498b5936cc9104a8c3ba90e4fc3d448c8ca1455b62413f36476dc4653889b6",
+      "title_checked_at_utc": "2026-10-05T19:40:02.479990+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:24.199870+00:00",
+      "response_sha256": "c16ce288d06c211f237908b1d36e4ff085c45898fbefae82cb0e87900269f4f2",
+      "extraction_sha256": "c575e5ca97c636648696e5ee0ebf073b9ff9daf6a6fdcb5c6349549cb61017d3",
+      "text": "Guardado en: Autor Principal: Martínez Bencardino, Ciro. Formato: eBook Idioma: Spanish Publicado: Bogotá : Ecoe Ediciones, 2019. Edición: 14a. edición. Series: Ciencias básicas. Estadística. Materias: Mathematical statistics. Sampling (Statistics) Estadística matemática. Muestreo (Estadística) Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/125946  "
+    }
+  ]
+}

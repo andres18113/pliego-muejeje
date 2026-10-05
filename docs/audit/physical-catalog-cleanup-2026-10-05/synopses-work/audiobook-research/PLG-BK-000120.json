@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000120",
+  "title": "Historia mínima de Rusia",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214112",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:06.191012+00:00",
+      "response_sha256": "0c19fa2baae7eae6328da74ef66c9af25463f05252b8b4cfa4fc83eb283c2388",
+      "extraction_sha256": "9b9baf61b1011773b1f460502ab622877c1b094a05f62430855f803e14284e36",
+      "text": "Guardado en: Autor Principal: Matos Franco, Rainer María, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2018. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Rusia > Historia. Unión Soviética > Historia. Rusia (Federación) > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/214112  ",
+      "observed_page_title": "Existencias: Historia mínima de Rusia /",
+      "title_check_response_sha256": "11e4f0dec0e6bc9918678c9281e2e513cca3f15ef6274bdb660a4a422fc8d558",
+      "title_checked_at_utc": "2026-10-05T19:40:00.848142+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB214112/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:07.492817+00:00",
+      "response_sha256": "11d37cdc1341c5a960ef9bbc8b1cc6a26fa28395693a523225ae02de96c36245",
+      "extraction_sha256": "9b9baf61b1011773b1f460502ab622877c1b094a05f62430855f803e14284e36",
+      "text": "Guardado en: Autor Principal: Matos Franco, Rainer María, (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2018. Edición: Primera edición electrónica. Series: Historia mínima (Mexico City, Mexico) Materias: Rusia > Historia. Unión Soviética > Historia. Rusia (Federación) > Historia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/214112  "
+    }
+  ]
+}

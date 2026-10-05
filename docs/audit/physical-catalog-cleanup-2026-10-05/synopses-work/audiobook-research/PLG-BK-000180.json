@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000180",
+  "title": "Principios de una psicoterapia de la psicosis",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:15.213608+00:00",
+      "response_sha256": "0504cf1f1123e2c7256d48d44ae5cbe5cbcdf1ab0e0827318603ec9877105079",
+      "extraction_sha256": "448cc477ca7b441769c6157a9295de99c26aafe7adf231f9c86006516a3a5892",
+      "text": "Guardado en: Autor Principal: Álvarez Martínez, José María, 1960- (autor.) Formato: eBook Idioma: Spanish Publicado: [Barcelona] : Xoroi Edicions, [2020] Series: La otra psiquiatría. Materias: Psychotherapy. Mental Disorders. Psicoterapia. Enfermedades mentales. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/128573  ",
+      "observed_page_title": "Existencias: Principios de una psicoterapia de la psicosis /",
+      "title_check_response_sha256": "b7a2f1b7b7efca716b421e04be9ba767cb8e0942c489968890824003715d76f8",
+      "title_checked_at_utc": "2026-10-05T19:39:55.190378+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:17.262844+00:00",
+      "response_sha256": "32c08b46fc7608110c06d7a96305188dee6681c7bfb0f6e8c51981e690e12621",
+      "extraction_sha256": "448cc477ca7b441769c6157a9295de99c26aafe7adf231f9c86006516a3a5892",
+      "text": "Guardado en: Autor Principal: Álvarez Martínez, José María, 1960- (autor.) Formato: eBook Idioma: Spanish Publicado: [Barcelona] : Xoroi Edicions, [2020] Series: La otra psiquiatría. Materias: Psychotherapy. Mental Disorders. Psicoterapia. Enfermedades mentales. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/128573  "
+    }
+  ]
+}

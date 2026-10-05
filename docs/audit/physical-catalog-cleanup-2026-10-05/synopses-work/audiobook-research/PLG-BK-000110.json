@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000110",
+  "title": "Escritos sobre ética",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:03.747671+00:00",
+      "response_sha256": "2e03f659d493e0c9b688af0898d8e86b9989b3e8d26fb53b3464685bfc8e7f6e",
+      "extraction_sha256": "6543d5f441575b253b8d643c3bd331058f1532cca8b8d18d9b146cfc725e25a7",
+      "text": "Guardado en: Autor Principal: García, Camilo. Formato: eBook Idioma: Spanish Publicado: Medellín : La Carreta Editores, 2011. Series: La carreta filosófica. Materias: Ethics. Ética. Libros electronicos. Acceso en línea: Click to View  ",
+      "observed_page_title": "Existencias: Escritos sobre ética /",
+      "title_check_response_sha256": "88eddb4c3647f26c83895075ecd0bf17ac398a453b20322ba0c20514a50cb85e",
+      "title_checked_at_utc": "2026-10-05T19:40:04.664932+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:05.150626+00:00",
+      "response_sha256": "3672228f7fae387adff35604c1bd403660e4afcf70af1e72ab0e31aac1624a75",
+      "extraction_sha256": "6543d5f441575b253b8d643c3bd331058f1532cca8b8d18d9b146cfc725e25a7",
+      "text": "Guardado en: Autor Principal: García, Camilo. Formato: eBook Idioma: Spanish Publicado: Medellín : La Carreta Editores, 2011. Series: La carreta filosófica. Materias: Ethics. Ética. Libros electronicos. Acceso en línea: Click to View  "
+    }
+  ]
+}

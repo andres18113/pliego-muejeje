@@ -148,6 +148,13 @@ public final class ApiExceptionHandler {
                 HttpStatus.BAD_REQUEST, "El número de tarjeta no es válido.");
     }
 
+    @ExceptionHandler(com.pliego.modules.help.application.HelpArticleNotFoundException.class)
+    public ResponseEntity<ProblemDetail> helpArticleNotFound(
+            com.pliego.modules.help.application.HelpArticleNotFoundException exception, HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "HELP_ARTICLE_NOT_FOUND", "Artículo no encontrado",
+                HttpStatus.NOT_FOUND, "El artículo solicitado no está disponible.");
+    }
+
     @ExceptionHandler(DatabaseException.class)
     public ResponseEntity<ProblemDetail> database(DatabaseException exception, HttpServletRequest request) {
         var error = exception.error();
@@ -274,6 +281,7 @@ public final class ApiExceptionHandler {
             case CART_QUANTITY_INVALID -> "Cantidad del carrito inválida";
             case ORDER_NOT_FOUND -> "Pedido no encontrado";
             case ORDER_INVALID_TRANSITION -> "Cambio de estado del pedido inválido";
+            case LIBRARY_ITEM_NOT_FOUND -> "Título de biblioteca no disponible";
             case ORDER_NOT_CANCELLABLE -> "Pedido no cancelable";
             case CHECKOUT_ADDRESS_INVALID -> "Dirección no disponible";
             case PICKUP_LOCATION_NOT_FOUND -> "Punto de retiro no encontrado";
@@ -383,6 +391,7 @@ public final class ApiExceptionHandler {
             case EMAIL_ALREADY_EXISTS -> "Ya existe una cuenta con ese correo electrónico.";
             case CUSTOMER_NOT_FOUND -> "El perfil solicitado no está disponible.";
             case ADDRESS_NOT_FOUND -> "La dirección solicitada no existe o no está disponible para tu cuenta.";
+            case LIBRARY_ITEM_NOT_FOUND -> "El título solicitado no existe o no pertenece a tu biblioteca.";
             case PICKUP_LOCATION_NOT_FOUND -> "El punto de retiro seleccionado no existe.";
             case PICKUP_LOCATION_INACTIVE -> "El punto de retiro está inactivo. Selecciona otro.";
             case PICKUP_NOT_APPLICABLE -> "El retiro en tienda requiere al menos un producto físico.";

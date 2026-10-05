@@ -1,0 +1,3091 @@
+{
+  "search_filter_sort_pagination_checks": [
+    {
+      "parameters": {},
+      "returned": 425,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "PHYSICAL",
+        "sort": "TITLE_ASC",
+        "pageSize": "17"
+      },
+      "returned": 176,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "PHYSICAL",
+        "sort": "PRICE_ASC",
+        "pageSize": "17"
+      },
+      "returned": 176,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "PHYSICAL",
+        "sort": "PRICE_DESC",
+        "pageSize": "17"
+      },
+      "returned": 176,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "PHYSICAL",
+        "sort": "BEST_SELLING",
+        "pageSize": "17"
+      },
+      "returned": 176,
+      "status": 200
+    },
+    {
+      "gate": "pagination",
+      "productType": "PHYSICAL",
+      "totalCount": 176,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "que": "Psicología Social: la importancia de los otros y de los grupos",
+        "productType": "PHYSICAL"
+      },
+      "returned": 1,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "EBOOK",
+        "sort": "TITLE_ASC",
+        "pageSize": "17"
+      },
+      "returned": 135,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "EBOOK",
+        "sort": "PRICE_ASC",
+        "pageSize": "17"
+      },
+      "returned": 135,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "EBOOK",
+        "sort": "PRICE_DESC",
+        "pageSize": "17"
+      },
+      "returned": 135,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "EBOOK",
+        "sort": "BEST_SELLING",
+        "pageSize": "17"
+      },
+      "returned": 135,
+      "status": 200
+    },
+    {
+      "gate": "pagination",
+      "productType": "EBOOK",
+      "totalCount": 135,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "que": "Técnicas de la auditoría informática",
+        "productType": "EBOOK"
+      },
+      "returned": 1,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "AUDIOBOOK",
+        "sort": "TITLE_ASC",
+        "pageSize": "17"
+      },
+      "returned": 114,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "AUDIOBOOK",
+        "sort": "PRICE_ASC",
+        "pageSize": "17"
+      },
+      "returned": 114,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "AUDIOBOOK",
+        "sort": "PRICE_DESC",
+        "pageSize": "17"
+      },
+      "returned": 114,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "AUDIOBOOK",
+        "sort": "BEST_SELLING",
+        "pageSize": "17"
+      },
+      "returned": 114,
+      "status": 200
+    },
+    {
+      "gate": "pagination",
+      "productType": "AUDIOBOOK",
+      "totalCount": 114,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "que": "Revolución artificial: aplicaciones basadas en inteligencia artificial",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 1,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "format": "PAPERBACK"
+      },
+      "returned": 176,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "format": "HARDCOVER"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "format": "EBOOK"
+      },
+      "returned": 135,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "format": "AUDIOBOOK"
+      },
+      "returned": 114,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "productType": "PHYSICAL",
+        "format": "EBOOK"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "que": "PliegoSinCoincidencia8ab27164c"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "psicologia"
+      },
+      "returned": 57,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "psicologia",
+        "productType": "PHYSICAL"
+      },
+      "returned": 30,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "psicologia",
+        "productType": "EBOOK"
+      },
+      "returned": 13,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "psicologia",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 14,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "medicina"
+      },
+      "returned": 61,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "medicina",
+        "productType": "PHYSICAL"
+      },
+      "returned": 29,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "medicina",
+        "productType": "EBOOK"
+      },
+      "returned": 19,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "medicina",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 13,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "matematicas"
+      },
+      "returned": 55,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "matematicas",
+        "productType": "PHYSICAL"
+      },
+      "returned": 29,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "matematicas",
+        "productType": "EBOOK"
+      },
+      "returned": 15,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "matematicas",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 11,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "literatura"
+      },
+      "returned": 51,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "literatura",
+        "productType": "PHYSICAL"
+      },
+      "returned": 29,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "literatura",
+        "productType": "EBOOK"
+      },
+      "returned": 10,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "literatura",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 12,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "infantil-y-juvenil"
+      },
+      "returned": 30,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "infantil-y-juvenil",
+        "productType": "PHYSICAL"
+      },
+      "returned": 30,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "infantil-y-juvenil",
+        "productType": "EBOOK"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "infantil-y-juvenil",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "filosofia"
+      },
+      "returned": 62,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "filosofia",
+        "productType": "PHYSICAL"
+      },
+      "returned": 29,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "filosofia",
+        "productType": "EBOOK"
+      },
+      "returned": 19,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "filosofia",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 14,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "tecnologia-e-informatica"
+      },
+      "returned": 18,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "tecnologia-e-informatica",
+        "productType": "PHYSICAL"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "tecnologia-e-informatica",
+        "productType": "EBOOK"
+      },
+      "returned": 9,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "tecnologia-e-informatica",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 9,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "historia"
+      },
+      "returned": 44,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "historia",
+        "productType": "PHYSICAL"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "historia",
+        "productType": "EBOOK"
+      },
+      "returned": 21,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "historia",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 23,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias-sociales"
+      },
+      "returned": 24,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias-sociales",
+        "productType": "PHYSICAL"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias-sociales",
+        "productType": "EBOOK"
+      },
+      "returned": 16,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias-sociales",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 8,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias"
+      },
+      "returned": 23,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias",
+        "productType": "PHYSICAL"
+      },
+      "returned": 0,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias",
+        "productType": "EBOOK"
+      },
+      "returned": 13,
+      "status": 200
+    },
+    {
+      "parameters": {
+        "category": "ciencias",
+        "productType": "AUDIOBOOK"
+      },
+      "returned": 10,
+      "status": 200
+    }
+  ],
+  "details": [
+    {
+      "sku": "PLG-BK-000329",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000382",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000462",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000471",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000345",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000463",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000470",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000469",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000441",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000363",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000454",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000455",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000474",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000324",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000348",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000367",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000362",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000440",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000431",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000453",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000429",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000423",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000416",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000406",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000389",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000381",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000380",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000379",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000377",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000375",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000480",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000334",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000398",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000473",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000338",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000472",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000331",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000467",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000468",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000495",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000354",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000446",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000409",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000408",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000407",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000410",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000479",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000439",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000437",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000436",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000428",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000388",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000387",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000386",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000385",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000384",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000383",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000378",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000316",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000401",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000361",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000322",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000335",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000424",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000399",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000330",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000341",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000342",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000404",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000403",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000402",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000491",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000360",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000466",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000372",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000457",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000356",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000364",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000494",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000464",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000400",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000392",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000421",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000320",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000336",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000376",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000340",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000451",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000349",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000355",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000373",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000358",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000328",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000435",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000318",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000413",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000412",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000427",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000475",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000481",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000350",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000343",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000445",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000433",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000432",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000430",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000425",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000444",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000365",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000395",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000391",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000476",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000374",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000434",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000353",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000370",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000450",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000347",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000458",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000352",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000346",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000332",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000317",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000465",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000319",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000371",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000326",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000344",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000325",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000323",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000366",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000492",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000487",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000486",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000478",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000477",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000327",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000321",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000456",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000489",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000396",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000393",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000397",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000426",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000447",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000369",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000368",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000405",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000443",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000337",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000339",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000414",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000485",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000483",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000484",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000357",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000490",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000482",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000459",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000417",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000452",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000351",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000493",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000461",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000460",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000448",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000333",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000438",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000449",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000422",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000420",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000419",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000418",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000415",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000394",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000390",
+      "format": "PAPERBACK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000191",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000233",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000299",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000272",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000099",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000156",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000309",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000183",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000303",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000290",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000204",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000199",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000136",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000165",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000218",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000072",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000249",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000271",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000148",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000145",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000129",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000210",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000140",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000061",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000298",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000119",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000154",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000215",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000121",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000169",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000254",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000073",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000265",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000217",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000091",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000212",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000237",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000083",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000150",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000094",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000223",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000065",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000238",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000246",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000093",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000256",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000068",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000194",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000201",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000211",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000250",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000170",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000167",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000255",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000302",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000082",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000114",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000241",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000173",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000259",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000081",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000182",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000069",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000252",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000103",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000257",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000112",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000102",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000226",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000267",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000280",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000071",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000133",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000274",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000216",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000155",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000115",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000300",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000078",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000219",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000198",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000295",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000258",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000222",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000206",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000278",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000116",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000179",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000104",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000308",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000289",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000240",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000152",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000105",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000128",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000176",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000313",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000131",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000092",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000268",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000064",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000286",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000200",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000171",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000095",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000163",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000079",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000159",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000089",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000160",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000122",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000229",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000185",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000178",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000315",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000221",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000062",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000239",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000107",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000270",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000296",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000304",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000247",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000168",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000123",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000134",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000057",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000214",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000090",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000106",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000277",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000193",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000228",
+      "format": "EBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000311",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000162",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000207",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000305",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000234",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000251",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000127",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000273",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000186",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000301",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000181",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000306",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000139",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000288",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000248",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000307",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000180",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000253",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000096",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000227",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000117",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000172",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000242",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000197",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000137",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000243",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000195",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000164",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000088",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000175",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000284",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000287",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000087",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000132",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000260",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000086",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000108",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000161",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000294",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000084",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000188",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000120",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000187",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000113",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000285",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000166",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000263",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000291",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000097",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000192",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000066",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000282",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000075",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000059",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000067",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000184",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000141",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000101",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000109",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000266",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000135",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000314",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000190",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000058",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000224",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000312",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000177",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000230",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000146",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000292",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000151",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000153",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000310",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000158",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000231",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000080",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000143",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000202",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000269",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000070",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000205",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000124",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000098",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000275",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000232",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000189",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000281",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000236",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000138",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000111",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000130",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000147",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000174",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000209",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000074",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000261",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000293",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000149",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000213",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000279",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000157",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000125",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000126",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000077",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000076",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000235",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000060",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000245",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000203",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000264",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000297",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000142",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000276",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    },
+    {
+      "sku": "PLG-BK-000110",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "synopsis_verified": true
+    }
+  ],
+  "cart": [
+    {
+      "sku": "PLG-BK-000329",
+      "format": "PAPERBACK",
+      "available": true,
+      "quantity": 2
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "format": "EBOOK",
+      "available": true,
+      "quantity": 1
+    },
+    {
+      "sku": "PLG-BK-000311",
+      "format": "AUDIOBOOK",
+      "available": true,
+      "quantity": 1
+    }
+  ],
+  "retired_details_rejected": 69,
+  "previous_cart_restored": true,
+  "active_format_counts": {
+    "PAPERBACK": 176,
+    "EBOOK": 135,
+    "AUDIOBOOK": 114
+  }
+}

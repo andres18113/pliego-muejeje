@@ -1,0 +1,30 @@
+{
+  "sku": "PLG-BK-000108",
+  "title": "Pirámides, templos y estrellas: astronomía y arqueología en el Egipto antiguo",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB293627",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:03.643051+00:00",
+      "response_sha256": "76506f30d05b7928108b53749b505a8dc24572f742ae42c24fd7b9975659e361",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB293627/Details",
+      "http_status": 404,
+      "retrieved_at_utc": "2026-10-05T19:35:05.097631+00:00",
+      "response_sha256": "9a9139f64931cf65866bd12638b6b304446357a3995daa733b6c92f0509fcb55",
+      "extraction_sha256": "5e08af8f3504324cf30ea1fb1ce2995ea7c78ff05b263bba75861fa5a1cb127e",
+      "text": "Ha ocurrido un error Saltar al contenido BIBLIOTECAS Idioma Español English Português (Brasil) Deutsch Français Italiano 日本語 Nederlands Português 中文(简体) 中文（繁體） Türkçe עברית Gaeilge Cymraeg Ελληνικά Català Euskara Русский čeština Suomi Svenska polski Dansk slovenščina اللغة العربية বাংলা Galego Entrar Salir isLoggedIn())?$account->isLoggedIn()->lastname.\", \".$account->isLoggedIn()->firstname:'' ?--> Su cuenta Todos los Campos Título Autor Materia Número de Clasificación ISBN/ISSN Buscar Avanzado Error Ha ocurrido un error Un error ha ocurrido durante la ejecución; por favor intente más tarde Por favor contacte al Referencista para asistencia bc@uns.edu.ar Opciones de búsqueda Historial de Búsqueda Búsqueda Avanzada Buscar Más Revisar el Catálogo Lista Alfabética --> Explorar canales Reservas de Curso --> Nuevos ejemplares --> ¿Necesita Ayuda? Consejos de búsqueda Consulte a un Bibliotecario --> Preguntas Frecuentes Contacto Bibliotecas × Cargando... $(document).ready(function(){ $('[data-toggle=\"popover\"]').popover(); }); "
+    },
+    {
+      "url": "https://www.planetadelibros.com/libro-piramides-templos-y-estrellas/67478",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:55.252281+00:00",
+      "response_sha256": "7fd94bd16c4c7e36ea70328725b67f3c87b0a7727e361d392feeeffd152598a7",
+      "extraction_sha256": "4b391b1fe0d69efb28983c4dcc6eec1131ddabcf6c44e1f69a514c98f8864b41",
+      "text": "Sinopsis de Pirámides, templos y estrellas Las diferentes constelaciones presentes en el zodiaco de Dandara; las estrellas que adornan el techo astronómico de Senenmut; lo poco que se desvía del norte verdadero la Gran Pirámide de Guiza; el origen del calendario de 365 días utilizado desde siempre por los egipcios; el uso de los solsticios y equinoccios, así como de las estrellas como referentes para determinar la... Leer más Añadir reseña "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000263",
+  "title": "Historia mínima de la transición democrática en México",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193613",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:26.502916+00:00",
+      "response_sha256": "352dba4522d7f10b76b4780bbb6c6cb11e2054e17a3e8804be65d6ccbeacfe0d",
+      "extraction_sha256": "735c054307cad484879afd907b912d6dfe9e3882d21d19c275c3cca52caaed12",
+      "text": "Guardado en: Autor Principal: Woldenberg, José, 1952- (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2012. Edición: Primera edición. Materias: Democratization > Mexico > History. Democracia > México > Historia > Siglo XX. Democracia > México > Historia > Siglo XXI. Elecciones > México > Historia > Siglo XX. Elecciones > México > Historia > Siglo XXI. Mexico > Politics and government. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193613  ",
+      "observed_page_title": "Existencias: Historia mínima de la transición democrática en México /",
+      "title_check_response_sha256": "3f70666fd647e85658e0d9eee2bf47f91b4629f0eb4ba3e09918840439688f82",
+      "title_checked_at_utc": "2026-10-05T19:40:03.349785+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193613/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:27.829706+00:00",
+      "response_sha256": "0534f057cc8d30b624f5935d4182e37e734f427cbae1b9ac07e9330195eb5cec",
+      "extraction_sha256": "735c054307cad484879afd907b912d6dfe9e3882d21d19c275c3cca52caaed12",
+      "text": "Guardado en: Autor Principal: Woldenberg, José, 1952- (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2012. Edición: Primera edición. Materias: Democratization > Mexico > History. Democracia > México > Historia > Siglo XX. Democracia > México > Historia > Siglo XXI. Elecciones > México > Historia > Siglo XX. Elecciones > México > Historia > Siglo XXI. Mexico > Politics and government. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193613  "
+    }
+  ]
+}

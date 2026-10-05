@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000086",
+  "title": "Anatomía y fisiología básicas en el niño",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:01.007953+00:00",
+      "response_sha256": "6ed35a53ee085fc033a002379e1768f00dab31c61018bfd2e90a54bbf465a876",
+      "extraction_sha256": "2e3467f511a363ff4585aaed7ba35e84832fd08e45c692e343afb347fc305f90",
+      "text": "Guardado en: Autor Principal: Cañizares Márquez, José María. Otros Autores: Carbonero Celis, Carmen, (autora.) Formato: eBook Idioma: Spanish Publicado: Sevilla : Wanceulen Editorial, 2017. Series: Colección manuales para padres sobre actividad física, salud, y educación en los niñ@s. Materias: Physical education and training. Educación física. Children > Physiology. Niños > Fisiología. Anatomy. Anatomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/63446  ",
+      "observed_page_title": "Existencias: Anatomía y fisiología básicas en el niño /",
+      "title_check_response_sha256": "733a968d6afa0fbb1192d149ae8101eb3f56f41a3337e0e910b78bad2b66d0a6",
+      "title_checked_at_utc": "2026-10-05T19:39:59.879622+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:02.388330+00:00",
+      "response_sha256": "944dc68a3b47ea2ba957227df38668ec698b89c67b15eb6b8d01aff27527a2be",
+      "extraction_sha256": "2e3467f511a363ff4585aaed7ba35e84832fd08e45c692e343afb347fc305f90",
+      "text": "Guardado en: Autor Principal: Cañizares Márquez, José María. Otros Autores: Carbonero Celis, Carmen, (autora.) Formato: eBook Idioma: Spanish Publicado: Sevilla : Wanceulen Editorial, 2017. Series: Colección manuales para padres sobre actividad física, salud, y educación en los niñ@s. Materias: Physical education and training. Educación física. Children > Physiology. Niños > Fisiología. Anatomy. Anatomía. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/63446  "
+    }
+  ]
+}

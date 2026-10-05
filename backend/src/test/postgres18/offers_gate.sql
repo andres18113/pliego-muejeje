@@ -66,7 +66,7 @@ BEGIN
  SELECT * INTO quote FROM pliego.fn_cart_quote(u);
  IF quote.subtotal<>9.00 OR quote.tax_amount<>1.35 OR quote.total<>10.35 THEN RAISE EXCEPTION 'digital offer ignored'; END IF;
  CALL pliego.sp_address_create(u,'Casa','Ana Pérez','Calle Ofertas',NULL,'Quito','Pichincha','EC',NULL,NULL,'+59325550134',TRUE,address);
- CALL pliego.sp_checkout_idempotent(u,uuidv4(),address,'TRANSFER','APPROVED',cart,'HOME_DELIVERY',NULL,o,state,pay,total,ref);
+ CALL pliego.sp_checkout_idempotent(u,uuidv4(),NULL,'TRANSFER','APPROVED',cart,'DIGITAL_ONLY',NULL,o,state,pay,total,ref);
  IF total<>10.35 THEN RAISE EXCEPTION 'digital checkout ignored offer'; END IF;
  CALL pliego.sp_category_create(a,'Padre de ofertas','offers-facet-parent',NULL,NULL,facet_parent);
  CALL pliego.sp_category_create(a,'Hija de ofertas','offers-facet-child',NULL,facet_parent,facet_child);

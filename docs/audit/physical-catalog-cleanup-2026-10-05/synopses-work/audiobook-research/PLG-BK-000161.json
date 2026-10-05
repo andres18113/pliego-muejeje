@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000161",
+  "title": "Los hombres del faraón: el ejército a finales del Reino Nuevo en el Antiguo Egipto",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34085",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:12.018450+00:00",
+      "response_sha256": "d10374f892a7e95b52e9f3ffdfb4d53ff88d7cf4d26cc5d8c101b65ab9869e6f",
+      "extraction_sha256": "c659802d873032ae50f4925a7b5a9232ad669286faf8f4c8a2fb5249dc6bd066",
+      "text": "Guardado en: Autor Principal: Alonso García, José F. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Universidad de Deusto, 2009. Series: Letras ; 46. Materias: Ejército > Egipto > Edad Antigua. Military art and science > Egypt > History. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/34085  ",
+      "observed_page_title": "Existencias: Los hombres del faraón",
+      "title_check_response_sha256": "3a35c7c2c95078e649627b5c19c4330cc57f5a87e999a491611652940844cd87",
+      "title_checked_at_utc": "2026-10-05T19:39:56.605429+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34085/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:13.720016+00:00",
+      "response_sha256": "aeb3c1d48aaa702f0600b9bf3574fedc01ea168611ede0686ce745cbc0b43bdf",
+      "extraction_sha256": "c659802d873032ae50f4925a7b5a9232ad669286faf8f4c8a2fb5249dc6bd066",
+      "text": "Guardado en: Autor Principal: Alonso García, José F. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Universidad de Deusto, 2009. Series: Letras ; 46. Materias: Ejército > Egipto > Edad Antigua. Military art and science > Egypt > History. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/34085  "
+    }
+  ]
+}

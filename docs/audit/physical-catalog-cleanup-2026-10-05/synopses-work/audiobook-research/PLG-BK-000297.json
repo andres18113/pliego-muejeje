@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000297",
+  "title": "La ética explorada",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:32.061924+00:00",
+      "response_sha256": "148ac3052e7563b6636ba00e5dbdca73a12ee04aeae4c2d5a6efd6c31ce65257",
+      "extraction_sha256": "161e2adfe70f88db269b5f215e68f4a79448d412512a5686cfc827ea3635c765",
+      "text": "Guardado en: Autor Principal: González, Ana Marta. Formato: eBook Idioma: Spanish Publicado: Barañáin : EUNSA, 2016. Series: Colección filosófica ; 210. Materias: Ethics. Ética. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47307  ",
+      "observed_page_title": "Existencias: La ética explorada /",
+      "title_check_response_sha256": "a335fd7073f2ae76fb51961e31295ab0671e41a62107f8e2fd65410020abe17e",
+      "title_checked_at_utc": "2026-10-05T19:39:55.195631+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:33.368118+00:00",
+      "response_sha256": "231cfbd243018833e498967dcb1e8cf0e6ef615354ef6cb98b4bb68b8945baf5",
+      "extraction_sha256": "161e2adfe70f88db269b5f215e68f4a79448d412512a5686cfc827ea3635c765",
+      "text": "Guardado en: Autor Principal: González, Ana Marta. Formato: eBook Idioma: Spanish Publicado: Barañáin : EUNSA, 2016. Series: Colección filosófica ; 210. Materias: Ethics. Ética. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47307  "
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000202",
+  "title": "Una introducción a la geometría fractal",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:18.928042+00:00",
+      "response_sha256": "12562a270271474c996f4a63512fee8b3c818a7e40150becf07bd839c2b93115",
+      "extraction_sha256": "436520c59c956599019b4cf15e7efa19540f5e7a667db913584614df8f6cbee2",
+      "text": "Guardado en: Autor Principal: Sabogal Pedraza, Sonia Marleni. Otros Autores: Arenas Díaz, Gilberto, (autor.) Formato: eBook Idioma: Spanish Publicado: Bucaramanga : Ediciones UIS, 2011. Materias: Geometry. Fractals. Geometría. Fractales. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/117594  ",
+      "observed_page_title": "Existencias: Una introducción a la geometría fractal /",
+      "title_check_response_sha256": "dc2b332ec8f23bf7bdd3cc01e9cb07250d5965077ad1b6b52bdc64f7d94419c5",
+      "title_checked_at_utc": "2026-10-05T19:40:04.839895+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:20.254626+00:00",
+      "response_sha256": "c7a456dcead4269dcb6283df0ee7407b0bf67542560fadc802589120712fbe28",
+      "extraction_sha256": "436520c59c956599019b4cf15e7efa19540f5e7a667db913584614df8f6cbee2",
+      "text": "Guardado en: Autor Principal: Sabogal Pedraza, Sonia Marleni. Otros Autores: Arenas Díaz, Gilberto, (autor.) Formato: eBook Idioma: Spanish Publicado: Bucaramanga : Ediciones UIS, 2011. Materias: Geometry. Fractals. Geometría. Fractales. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/117594  "
+    }
+  ]
+}

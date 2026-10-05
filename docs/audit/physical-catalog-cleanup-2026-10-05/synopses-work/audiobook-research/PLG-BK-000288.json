@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000288",
+  "title": "Psicología del delincuente",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:31.426769+00:00",
+      "response_sha256": "04dc288eef48b0efed1f79a24e5fc2342b9bc1c5e60a3006bfaf1d110b531d13",
+      "extraction_sha256": "d713af3d965a773875eaa4d11c3bfa79f85fd0047e46049f3fee22291648380c",
+      "text": "Guardado en: Autor Principal: Pollitz, Paul, (autor.) Otros Autores: Agurto Gonzáles, Carlos Antonio, (ditor.) , Quequejana Mamani, Sonia Lidia, (ditor.) , Choque Cuenca, Benigno, (ditor.) Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : Ediciones Olejnik, 2019. Series: Biblioteca de criminología. Materias: Psicología criminal. Conducta criminal. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/240116  ",
+      "observed_page_title": "Existencias: Psicología del delincuente /",
+      "title_check_response_sha256": "982231e25a0f7b25296b4d8345acb3641e4c473e274c3cbf5572875a195eceba",
+      "title_checked_at_utc": "2026-10-05T19:40:07.127589+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:32.697151+00:00",
+      "response_sha256": "2ad69aadaf69d01ebd7be8923715aa2915f4e8c281d2de6dfbeeec52bdaa866f",
+      "extraction_sha256": "d713af3d965a773875eaa4d11c3bfa79f85fd0047e46049f3fee22291648380c",
+      "text": "Guardado en: Autor Principal: Pollitz, Paul, (autor.) Otros Autores: Agurto Gonzáles, Carlos Antonio, (ditor.) , Quequejana Mamani, Sonia Lidia, (ditor.) , Choque Cuenca, Benigno, (ditor.) Formato: eBook Idioma: Spanish Publicado: Santiago de Chile : Ediciones Olejnik, 2019. Series: Biblioteca de criminología. Materias: Psicología criminal. Conducta criminal. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/240116  "
+    }
+  ]
+}

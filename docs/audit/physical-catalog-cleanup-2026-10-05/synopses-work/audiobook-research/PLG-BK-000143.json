@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000143",
+  "title": "Apuntes de ecología microbiana",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:09.255696+00:00",
+      "response_sha256": "9e73abb712373cca91e588e928e521b878d02521e0aaa9a0f10d74cd167e1a3b",
+      "extraction_sha256": "d2c11f66375a54e012ef79d0c69b40df4472d0ec3535715e39587baf51941a9e",
+      "text": "Guardado en: Autor Principal: Gutiérrez Castrejón, Teodoro. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: México : Instituto Politécnico Nacional, 1996. Materias: Ecología microbiana. Microbiología. Microbial ecology. Microbiologia Ecologia Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/72775  ",
+      "observed_page_title": "Existencias: Apuntes de ecología microbiana",
+      "title_check_response_sha256": "4b7c56ea7f8868e5df8a71982fa0f8dc5760b256475bdc9edef63db18f7651d6",
+      "title_checked_at_utc": "2026-10-05T19:40:00.928867+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:10.649948+00:00",
+      "response_sha256": "7c70f4e8006860dfbdbf619ec36267abe9d32e81f090c40211994641c7b34fb2",
+      "extraction_sha256": "d2c11f66375a54e012ef79d0c69b40df4472d0ec3535715e39587baf51941a9e",
+      "text": "Guardado en: Autor Principal: Gutiérrez Castrejón, Teodoro. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: México : Instituto Politécnico Nacional, 1996. Materias: Ecología microbiana. Microbiología. Microbial ecology. Microbiologia Ecologia Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/72775  "
+    }
+  ]
+}

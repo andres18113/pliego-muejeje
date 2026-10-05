@@ -254,19 +254,26 @@ def sync_assets(client: Any, bucket: str, assets: list[UploadAsset], prefix: str
 def main(argv: list[str] | None = None) -> int:
     repository_root = Path(__file__).resolve().parent.parent
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--manifest", type=Path, default=repository_root / "covers/generated/manifest.json")
-    parser.add_argument("--assets-dir", type=Path, default=repository_root / "covers/generated/r2")
+    parser.add_argument("--manifest", type=Path, default=repository_root / "covers/generated/manifest-normalized.json")
+    parser.add_argument("--assets-dir", type=Path, default=repository_root / "covers/generated/r2-normalized")
+    parser.add_argument("--retired-manifest", type=Path, help="Retirement ledger whose immutable objects are preserved.")
     args = parser.parse_args(argv)
 
     try:
+        from cover_catalog import read_manifest, reject_retired_records
+        retired_path = args.retired_manifest or args.manifest.parent.parent / "retired-manifest.json"
+        retired = read_manifest(retired_path)["records"]
+        active = json.loads(args.manifest.read_text(encoding="utf-8"))["records"]
+        reject_retired_records(active, retired)
+        allowed_existing = {row["r2_object_key"] for row in retired}
         assets, prefix = load_upload_plan(args.manifest, args.assets_dir)
         configuration = required_configuration()
         client = create_s3_client(configuration)
-    except UploadError as error:
+    except (UploadError, ValueError, OSError, KeyError) as error:
         print(f"R2 cover sync failed: {error}", file=sys.stderr)
         return 1
 
-    result = sync_assets(client, configuration["bucket"], assets, prefix)
+    result = sync_assets(client, configuration["bucket"], assets, prefix, allowed_existing_keys=allowed_existing)
     print(
         f"Local assets: {result['local_count']}; uploaded: {result['uploaded']}; "
         f"skipped: {result['skipped']}; verified R2 objects: {result['verified_count']}"

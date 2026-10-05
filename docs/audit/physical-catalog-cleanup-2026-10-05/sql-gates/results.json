@@ -1,0 +1,86 @@
+[
+  {
+    "gate": "checkout_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "customer_orders_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "admin_orders_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "catalog_public_categories_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "catalog_public_filter_options_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "catalog_cover_delivery_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "cart_unavailability_codes_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "catalog_global_search_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "catalog_contract_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "catalog_filter_facets_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "digital_editions_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "post_purchase_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "customer_email_change_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "numeric_validation_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "transactional_email_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "store_pickup_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "monetary_projection_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "delivery_window_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "offers_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "digital_ownership_gate.sql",
+    "exit_code": 0
+  },
+  {
+    "gate": "storefront_help_gate.sql",
+    "exit_code": 0
+  }
+]

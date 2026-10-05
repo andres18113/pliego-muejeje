@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000097",
+  "title": "Historia mínima de la Inquisición",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194928",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:03.348581+00:00",
+      "response_sha256": "9b0cbee8b5779e3f6097e5594e66b822b161a41dc4d082f2af4c80054e7a7099",
+      "extraction_sha256": "911d92758e11077e005b7e7166f045217a9b71003db2498bde7ec5b6daf086ff",
+      "text": "Guardado en: Autor Principal: Torres Puga, Gabriel, 1976- (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2021. Series: Colección Historias mínimas. Materias: Inquisición > Historia. Inquisition > History. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194928  ",
+      "observed_page_title": "Existencias: Historia mínima de la inquisición /",
+      "title_check_response_sha256": "8e6ade8c532180ae91d4386b03e72cd4bad4cd492da097cfc9a53e5a51f1e5b5",
+      "title_checked_at_utc": "2026-10-05T19:40:02.539843+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194928/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:04.657539+00:00",
+      "response_sha256": "61684ebdf998e71162962db2c8c74b8d63b0581d21f76ff030bb7a5cda4ef3ba",
+      "extraction_sha256": "911d92758e11077e005b7e7166f045217a9b71003db2498bde7ec5b6daf086ff",
+      "text": "Guardado en: Autor Principal: Torres Puga, Gabriel, 1976- (autor.) Formato: eBook Idioma: Spanish Publicado: Ciudad de México, México : El Colegio de México, 2021. Series: Colección Historias mínimas. Materias: Inquisición > Historia. Inquisition > History. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/194928  "
+    }
+  ]
+}

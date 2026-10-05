@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000195",
+  "title": "Oxígeno: fisiología, terapéutica, toxicidad",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:18.596600+00:00",
+      "response_sha256": "b81b07446b63a803de44a95b0f45ef3f332622c693240cbe2bdd66c394f030b2",
+      "extraction_sha256": "06f0102043bb05f4f4fdd04f14ea023b9fcf7f01aa772c46facc52714dcf9d0b",
+      "text": "Guardado en: Autor Principal: Cristancho Gómez, William. Formato: eBook Idioma: Spanish Publicado: Bogotá : Editorial El Manual Moderno, 2019. Materias: Oxygen therapy. Oxygen > Physiological effect. Oxigenoterapia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/128358  ",
+      "observed_page_title": "Existencias: Oxígeno :",
+      "title_check_response_sha256": "ea82ec13ff0cdaa7461dbd9e1d47582d40a5c32af55e91ff9b72c746d9a62b30",
+      "title_checked_at_utc": "2026-10-05T19:39:50.681665+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:19.899787+00:00",
+      "response_sha256": "775e9f81bd701b49648ef25c99a52ef9e75f936d4b465a0fc7ac7d1d7a49237f",
+      "extraction_sha256": "06f0102043bb05f4f4fdd04f14ea023b9fcf7f01aa772c46facc52714dcf9d0b",
+      "text": "Guardado en: Autor Principal: Cristancho Gómez, William. Formato: eBook Idioma: Spanish Publicado: Bogotá : Editorial El Manual Moderno, 2019. Materias: Oxygen therapy. Oxygen > Physiological effect. Oxigenoterapia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/128358  "
+    }
+  ]
+}

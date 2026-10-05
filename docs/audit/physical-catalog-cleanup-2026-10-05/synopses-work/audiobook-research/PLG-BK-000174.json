@@ -1,0 +1,18 @@
+{
+  "sku": "PLG-BK-000174",
+  "title": "Lady Susan y otras novelas",
+  "sources": [
+    {
+      "url": "https://alianzaeditorial.es/primer_capitulo/lady-susan-y-otras-novelas.pdf",
+      "error": "[Errno 2] No such file or directory: 'pdftotext'"
+    },
+    {
+      "url": "https://alianzaeditorial.es/libro/bibliotecas-de-autor/lady-susan-y-otras-novelas-jane-austen-9788413621302/",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:57.563464+00:00",
+      "response_sha256": "2dca9fd6209dda3bd8224640169baae6c083d8f6a9ef8c1cef9ebe6b066f6614",
+      "extraction_sha256": "fbd5fff47f69474f7c189a3a39949cd77d7ef0573ef091e91bfd0ccf402ab5b4",
+      "text": "Sinopsis Además de sus seis grandes novelas, todas ellas publicadas en Alianza Editorial, Jane Austen escribió también historias de menor extensión en las que no resultan menos reconocibles ni brillantes las cualidades que hacen de ella una de las favoritas del público, como son el análisis de los sentimientos, un fino sentido del humor y la hábil caracterización de los personajes. El presente volumen reúne las mejores de estas obras menores en tamaño, aunque no en calidad: «Lady Susan», novela cuya desinhibida protagonista se aparta de los tipos más comunes en las obras de Austen; «Los Watson», en la que explora la situación de dependencia de las mujeres; «Amor y amistad», divertida parodia de las novelas galantes, y «Sanditon», prometedora novela que truncó la enfermedad que llevó a la muerte a la autora. Traducción de Miguel Ángel Pérez Pérez "
+    }
+  ]
+}

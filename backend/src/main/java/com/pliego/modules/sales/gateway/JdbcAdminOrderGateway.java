@@ -142,8 +142,8 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
             JsonNode history = parseJson(rs.getString("state_history"), "state history");
             JsonNode movements = parseJson(rs.getString("inventory_movements"), "inventory movements");
             var extras=postPurchase.detail(rs);
-            boolean pickup=extras.fulfillment()!=null && "STORE_PICKUP".equals(extras.fulfillment().method());
-            if (!items.isArray() || (address==null ? !pickup : !address.isObject()) || !payment.isObject()
+            boolean requiresDeliveryAddress=extras.fulfillment()!=null && "HOME_DELIVERY".equals(extras.fulfillment().method());
+            if (!items.isArray() || (address==null ? requiresDeliveryAddress : !address.isObject()) || !payment.isObject()
                     || !history.isArray() || !movements.isArray()) {
                 throw new SQLException("Admin order detail Function returned incomplete JSON", "XX000");
             }

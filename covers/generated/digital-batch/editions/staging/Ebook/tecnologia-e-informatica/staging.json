@@ -7,7 +7,7 @@
       "libro": {
         "titulo": "Administración de proyectos de informática",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "La administración de proyectos informáticos vincula la organización del trabajo con el desarrollo de iniciativas tecnológicas. Francisco J. Toro López dedica este libro a ese campo de gestión. Una aproximación para quienes desean situar la informática dentro de la planificación y el seguimiento de proyectos, y comprender la relación entre el conocimiento técnico y su realización organizada.",
         "autores": [
           {
             "nombre": "Toro López, Francisco J.",
@@ -184,7 +184,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "342",
-        "imported_book_id": "340"
+        "imported_book_id": "340",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Project management. Computer science. Administración de proyectos. Informática. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -192,7 +203,7 @@
       "libro": {
         "titulo": "Cómo y cuándo aplicar un robot industrial",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Daniel Audí Piera dedica esta obra a las preguntas sobre cómo y cuándo aplicar un robot industrial. Su ámbito bibliográfico relaciona los robots industriales con la industria robótica y la inteligencia artificial. Una lectura para quienes desean situar su interés por la automatización ante la decisión de incorporar estas tecnologías a un contexto de trabajo industrial.",
         "autores": [
           {
             "nombre": "Daniel Audí Piera",
@@ -369,7 +380,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "343",
-        "imported_book_id": "341"
+        "imported_book_id": "341",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Inteligencia artificial. Robot industry. Robots, Industrial. Robots industriales Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -377,7 +399,7 @@
       "libro": {
         "titulo": "Desarrollo de microservicios con Python",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "El desarrollo de microservicios se encuentra aquí con el lenguaje de programación Python. José Manuel Ortega Candel dedica esta obra a ese ámbito de la construcción de software. Una aproximación para quienes desean estudiar la relación entre una forma de organizar servicios informáticos y las posibilidades de un lenguaje utilizado para crear programas y aplicaciones.",
         "autores": [
           {
             "nombre": "Ortega Candel, José Manuel",
@@ -554,7 +576,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "344",
-        "imported_book_id": "342"
+        "imported_book_id": "342",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Lenguajes de programación. Microservicios. Ordenadores. Python (Lenguaje de programación para computadoras) Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -562,7 +595,7 @@
       "libro": {
         "titulo": "Fundamentos de informática",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Una aproximación a las bases de la informática y al campo de conocimiento que estudia los sistemas de computación. Juan Weber sitúa esta obra en una perspectiva de fundamentos. La lectura ofrece un punto de entrada para quienes desean comprender la disciplina y construir un marco desde el que abordar con mayor claridad su estudio y sus aplicaciones.",
         "autores": [
           {
             "nombre": "Weber, Juan",
@@ -739,7 +772,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "345",
-        "imported_book_id": "343"
+        "imported_book_id": "343",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Computer science. Informática. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -747,7 +791,7 @@
       "libro": {
         "titulo": "Fundamentos de robótica (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Antonio Barrientos presenta una obra dedicada a los fundamentos de la robótica. El libro permite orientar la formación hacia el campo de conocimiento que reúne el estudio y el desarrollo de robots. Una lectura para quienes desean construir una base en esta disciplina y situar su interés por estas tecnologías dentro de un marco de comprensión técnica.",
         "autores": [
           {
             "nombre": "Antonio Barrientos",
@@ -924,7 +968,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "346",
-        "imported_book_id": "344"
+        "imported_book_id": "344",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Robótica. Robotics. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -932,7 +987,7 @@
       "libro": {
         "titulo": "Informática forense",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Luis Ortiz dedica esta obra a la informática forense. El título orienta el interés hacia un campo en el que el conocimiento informático se relaciona con la investigación y el examen de información digital. Una aproximación para quienes desean situar sus preguntas sobre tecnología dentro de ese ámbito y acercarse al estudio de la evidencia informática.",
         "autores": [
           {
             "nombre": "Ortiz, Luis",
@@ -1101,7 +1156,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "347",
-        "imported_book_id": "345"
+        "imported_book_id": "345",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://www.marcombo.com/archivo/author_book/ortiz/",
+              "basis": "El catálogo editorial de Marcombo verifica el libro Informática forense y su autor Ortiz; la descripción es una presentación temática conservadora derivada del título."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1109,7 +1175,7 @@
       "libro": {
         "titulo": "Mantenimiento de equipos informáticos",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Claudio Morán Flores dedica esta obra al mantenimiento de equipos informáticos. Su ámbito bibliográfico incluye las redes y las cuestiones de conservación y reparación relacionadas con ellas. Una aproximación para quienes desean orientar su interés hacia el cuidado de los sistemas informáticos y comprender el lugar que ocupa el mantenimiento dentro del trabajo técnico.",
         "autores": [
           {
             "nombre": "Morán Flores, Claudio",
@@ -1286,7 +1352,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "348",
-        "imported_book_id": "346"
+        "imported_book_id": "346",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Computer networks. Computer networks > Maintenance and repair. Redes informáticas. Redes informáticas > Mantenimiento. Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1294,7 +1371,7 @@
       "libro": {
         "titulo": "Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.)",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Tomás Domínguez Mínguez muestra cómo transformar programas Python en aplicaciones con interfaz gráfica mediante Tkinter. La obra aborda controles, distribución de elementos, cuadros de diálogo y respuesta a eventos, con explicaciones acompañadas de ejemplos. Incluye el trabajo con ttk y calendarios, y está orientada a lectores con conocimientos básicos de Python que desean desarrollar interfaces de escritorio.",
         "autores": [
           {
             "nombre": "Domínguez Mínguez, Tomás",
@@ -1463,7 +1540,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "349",
-        "imported_book_id": "347"
+        "imported_book_id": "347",
+        "synopsis_provenance": {
+          "basis_kind": "PRIMARY_PUBLISHER_ABSTRACT_PARAPHRASE",
+          "sources": [
+            {
+              "url": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/programacion-e-inteligencia-artificial-informatica/tkinter-desarrollo-de-interfaces-graficas-con-python-2-o-edicion/",
+              "basis": "La descripción editorial de la segunda edición confirma controles, eventos, cuadros de diálogo, distribución visual, ttk, calendarios, ejemplos y nivel básico previo de Python."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     },
     {
@@ -1471,7 +1559,7 @@
       "libro": {
         "titulo": "Técnicas de la auditoría informática",
         "subtitulo": null,
-        "sinopsis": null,
+        "sinopsis": "Yann Derrien dedica esta obra a las técnicas de auditoría informática. El libro sitúa el interés en la revisión de los sistemas de procesamiento de información y en su relación con la actividad auditora. Una aproximación para quienes desean conocer ese campo y pensar cómo el trabajo de auditoría se vincula con los procesos informáticos de una organización.",
         "autores": [
           {
             "nombre": "Derrien, Yann",
@@ -1648,7 +1736,18 @@
         "readiness_errors": [],
         "ready_for_future_publication": true,
         "imported_edition_id": "350",
-        "imported_book_id": "348"
+        "imported_book_id": "348",
+        "synopsis_provenance": {
+          "basis_kind": "TITLE_SUBJECT_EDITORIAL_DESCRIPTION",
+          "sources": [
+            {
+              "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+              "basis": "Título, autor y materias de la ficha bibliográfica verificada. Materias: Auditoría. Electronic data processing > Auditing. Automatización Libros electrónicos."
+            }
+          ],
+          "original_editorial_text": true,
+          "public_administrative_markers": false
+        }
       }
     }
   ]

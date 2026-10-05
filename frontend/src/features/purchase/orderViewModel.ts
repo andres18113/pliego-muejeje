@@ -32,7 +32,7 @@ export function toMisPedidosOrder(summary: OrderSummary, detail?: OrderDetail): 
     units: detail ? detail.items.reduce((sum,item) => sum + item.quantity,0) : summary.unitCount,
     pricing: { subtotal: detail?.subtotal ?? summary.subtotal ?? null, tax: detail?.taxAmount ?? summary.taxAmount ?? null,
       shipping: detail?.shippingAmount ?? summary.shippingAmount ?? null, total: detail?.total ?? summary.total },
-    fulfillmentType: method === "HOME_DELIVERY" || method === "STORE_PICKUP" ? method : null,
+    fulfillmentType: method === "HOME_DELIVERY" || method === "STORE_PICKUP" || method === "DIGITAL_ONLY" ? method : null,
     availableActions: { ...(detail?.availableActions ?? summary.availableActions ?? { cancel: false, changeShippingAddress: false }) },
   };
 }

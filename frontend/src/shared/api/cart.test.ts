@@ -53,6 +53,7 @@ describe("cart API", () => {
       expect(request.headers.get("Authorization")).toBe("Bearer customer-token");
       return new Response(JSON.stringify({
         cartId: "7",
+        requiresPhysicalFulfillment: true,
         state: "ACTIVE",
         items: [{ editionId: "42", quantity: 2 }],
         totalCurrent: "37.00",

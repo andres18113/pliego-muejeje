@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000175",
+  "title": "Manual de fisiología articular",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:14.699231+00:00",
+      "response_sha256": "a60a03380980ec4e21a107262713d7d62f0d4c22cfe18f131e46a04592e7db3a",
+      "extraction_sha256": "2052d1e79f032e87c45fc693a309290129339dd600019c3b931a421fe93f6cec",
+      "text": "Guardado en: Autor Principal: Guzmán Velasco, Adriana. Formato: eBook Idioma: Spanish Publicado: Bogotá : Manual Moderno, 2007. Materias: Physiology. Fisiología. Human mechanics. Mecánica humana. Joints. Articulaciones. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/71151  ",
+      "observed_page_title": "Existencias: Manual de fisiología articular /",
+      "title_check_response_sha256": "8562f6adcac859f80922a78c244875d018c8e3c89b20355f34727984e08a564d",
+      "title_checked_at_utc": "2026-10-05T19:40:03.977942+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:16.595205+00:00",
+      "response_sha256": "cd911f3cee09b8aa280b3e449c4dc1371cdad2b1eeb66c341c33af90205423e5",
+      "extraction_sha256": "2052d1e79f032e87c45fc693a309290129339dd600019c3b931a421fe93f6cec",
+      "text": "Guardado en: Autor Principal: Guzmán Velasco, Adriana. Formato: eBook Idioma: Spanish Publicado: Bogotá : Manual Moderno, 2007. Materias: Physiology. Fisiología. Human mechanics. Mecánica humana. Joints. Articulaciones. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/71151  "
+    }
+  ]
+}

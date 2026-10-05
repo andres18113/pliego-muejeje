@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000266",
+  "title": "Sociología del Renacimiento",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:26.700441+00:00",
+      "response_sha256": "02dbdbc9a55ba541936a4dcedd5904d55ce8154b6500307bc57826e63bdf4762",
+      "extraction_sha256": "1a2c4eef1fc1ffd8fc027fac19842a10b1b32d23287a94f8eeb71e293b3d52b7",
+      "text": "Guardado en: Autor Principal: Martin, Alfred Wilhelm Otto von, 1882-1979, (autor.) Otros Autores: Pedroso, Manuel, (traductor.) , Martin, Alfred Wilhelm Otto von, 1882-1979. Formato: eBook Idioma: Spanish Publicado: México : Fondo de Cultura Económica, 1946. Series: Sección de obras de sociología. Materias: Renaissance. Social history > Medieval, 500-1500. Renacimiento. Historia social > Edad Media, 500-1500. Italy > Social conditions. Italia > Condiciones sociales. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/110396  ",
+      "observed_page_title": "Existencias: Sociología del Renacimiento /",
+      "title_check_response_sha256": "7fd20f80b8e0ef21a3d23ee0b5de7eb5eb8c13328d79e649adfaea04ee8f6743",
+      "title_checked_at_utc": "2026-10-05T19:39:56.728908+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:28.040357+00:00",
+      "response_sha256": "2a0bcac8ef854b2698f326079fa7e8c0675f233fc99addbf684e2b33d1be3b11",
+      "extraction_sha256": "1a2c4eef1fc1ffd8fc027fac19842a10b1b32d23287a94f8eeb71e293b3d52b7",
+      "text": "Guardado en: Autor Principal: Martin, Alfred Wilhelm Otto von, 1882-1979, (autor.) Otros Autores: Pedroso, Manuel, (traductor.) , Martin, Alfred Wilhelm Otto von, 1882-1979. Formato: eBook Idioma: Spanish Publicado: México : Fondo de Cultura Económica, 1946. Series: Sección de obras de sociología. Materias: Renaissance. Social history > Medieval, 500-1500. Renacimiento. Historia social > Edad Media, 500-1500. Italy > Social conditions. Italia > Condiciones sociales. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/110396  "
+    }
+  ]
+}

@@ -1,0 +1,202 @@
+{
+  "sku": "PLG-BK-000196",
+  "reason": "Retiro explícito solicitado por el usuario por presentación de portada",
+  "original_file": "Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+  "original_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+  "source_records": [
+    {
+      "staging": "covers/Audiolibros/psicologia/staging.json",
+      "record": {
+        "portadaArchivo": "portadas/audiobook-55c9e35ac75d34cf.webp",
+        "libro": {
+          "titulo": "24 ideas para una psicoterapia breve (2a. ed.)",
+          "subtitulo": null,
+          "sinopsis": null,
+          "autores": [
+            {
+              "nombre": "Mark Beyebach",
+              "orden": 1
+            }
+          ],
+          "categorias": [
+            "Psicología"
+          ]
+        },
+        "edicion": {
+          "editorial": "Herder Editorial",
+          "isbn13": null,
+          "idioma": "es",
+          "formato": "AUDIOBOOK",
+          "paginas": null,
+          "anioPublicacion": null,
+          "fechaPublicacion": null,
+          "precio": "32.99",
+          "sku": "PLG-BK-000196",
+          "inventarioInicial": null,
+          "ebookFileFormat": null,
+          "audioDurationSeconds": 1044,
+          "narrators": [
+            "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+          ],
+          "portada": {
+            "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000196-6611a0c58763.webp",
+            "licencia": null,
+            "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+            "atribucion": null
+          }
+        },
+        "observacionesStaging": [],
+        "preparacion": {
+          "schema": "pliego-digital-edition-preparation-v1",
+          "candidate_id": "audiobook-55c9e35ac75d34cf",
+          "publication_status": "PUBLISHED",
+          "work": {
+            "action": "CREATE_NEW_WORK",
+            "bookId": "184",
+            "status": "CREATED_VERIFIED",
+            "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+            "evidence": {
+              "catalog_search_scope": "ALL_STATES",
+              "snapshot_book_count": 63,
+              "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+              "same_title_book_ids": []
+            },
+            "proposal_key": "work-ac491f96948333df"
+          },
+          "author_bindings": [
+            {
+              "name": "Mark Beyebach",
+              "order": 1,
+              "authorId": null,
+              "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+            }
+          ],
+          "raw_authorship": "Mark Beyebach",
+          "field_provenance": {
+            "edicion.editorial": {
+              "kind": "REAL_SOURCE",
+              "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+              "observed_text": "Barcelona : Herder Editorial, [2008]",
+              "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+              "capture_sha256": "ddd76b347935cfa7cbcb35ba4b791938924902c5de1abf7c81f63b78a735c556",
+              "capture_path": "/tmp/pliego-digital-completion/social/uns/45760.html",
+              "capture_format": "SOURCE_RESPONSE",
+              "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+              "real_source_claim": true
+            },
+            "edicion.idioma": {
+              "kind": "VERIFIED",
+              "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+              "observed_text": "Idioma: Spanish",
+              "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+              "capture_sha256": "ddd76b347935cfa7cbcb35ba4b791938924902c5de1abf7c81f63b78a735c556",
+              "capture_path": "/tmp/pliego-digital-completion/social/uns/45760.html",
+              "capture_format": "SOURCE_RESPONSE",
+              "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+              "real_source_claim": true
+            },
+            "edicion.precio": {
+              "kind": "SIMULATED/DEMO",
+              "source": "User-authorized academic demonstration pricing",
+              "currency": "USD",
+              "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+              "real_source_claim": false,
+              "commercial_price_claim": false,
+              "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+            },
+            "edicion.isbn13": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.ebookFileFormat": {
+              "kind": "MISSING",
+              "source": null
+            },
+            "edicion.audioDurationSeconds": {
+              "kind": "SIMULATED/DEMO",
+              "source": "Academic demonstration explicitly authorized by user",
+              "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+              "real_source_claim": false,
+              "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+            },
+            "edicion.narrators": {
+              "kind": "SIMULATED/DEMO",
+              "source": "Academic demonstration explicitly authorized by user",
+              "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+              "real_source_claim": false,
+              "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+            },
+            "libro.titulo": {
+              "kind": "REAL_FROM_INVENTORY",
+              "inventory": "covers/Audiolibros/inventario.csv",
+              "row": 52,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+              "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+              "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+            },
+            "libro.autores": {
+              "kind": "REAL_FROM_INVENTORY",
+              "raw_value": "Mark Beyebach",
+              "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+              "inventory": "covers/Audiolibros/inventario.csv",
+              "row": 52,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+              "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+              "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+            },
+            "libro.categorias": {
+              "kind": "REAL_FROM_INVENTORY",
+              "inventory": "covers/Audiolibros/inventario.csv",
+              "row": 52,
+              "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+              "source_access": "AUTH_REQUIRED",
+              "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+              "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+              "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+              "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+            },
+            "edicion.formato": {
+              "kind": "BATCH_CLASSIFICATION",
+              "source": "covers/Audiolibros/inventario.csv"
+            }
+          },
+          "stock_action": "NONE_DIGITAL",
+          "sku_status": "PROPOSED_NOT_RESERVED",
+          "audio_metadata_type": "SIMULATED/DEMO",
+          "demo_public_label_required": true,
+          "demo_price_authorized": true,
+          "price_metadata_type": "SIMULATED/DEMO",
+          "metadata_blockers": [],
+          "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+          "source": {
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 52,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+            "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "category_binding": {
+            "name": "Psicología",
+            "categoryId": null,
+            "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+          },
+          "planned_staging": "Audiolibros/psicologia/staging.json",
+          "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+          "readiness_errors": [],
+          "ready_for_future_publication": true,
+          "imported_edition_id": "185",
+          "imported_book_id": "184"
+        }
+      }
+    }
+  ]
+}

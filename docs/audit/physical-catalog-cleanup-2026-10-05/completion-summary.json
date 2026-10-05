@@ -1,0 +1,20 @@
+{
+  "legacy_physical_deactivated": 55,
+  "additional_requested_deactivated": 14,
+  "active_format_counts": {
+    "PAPERBACK": 176,
+    "EBOOK": 135,
+    "AUDIOBOOK": 114
+  },
+  "active_manifest_records": 425,
+  "retired_manifest_records": 69,
+  "registry_entries_preserved": 495,
+  "reserved_excluded_sku": "PLG-BK-000042",
+  "synopses_verified": 425,
+  "api_search_filter_sort_pagination_checks": 65,
+  "active_details_verified": 425,
+  "cart_formats_verified": 3,
+  "retired_details_rejected": 69,
+  "application_deployed": false,
+  "commit_or_push": false
+}

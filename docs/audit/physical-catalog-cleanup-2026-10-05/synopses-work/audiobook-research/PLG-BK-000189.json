@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000189",
+  "title": "Estadística Inferencial",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:17.879860+00:00",
+      "response_sha256": "ec9aa088fea997d7324ae5ddb55d712a01d042d92942163b5ebce5f50bf66672",
+      "extraction_sha256": "89100dc1ec39bb5e8f417e751a300a319f6642e0c111b838872c42fce3e0a8c9",
+      "text": "Guardado en: Autor Principal: Llinás Solano, Humberto. Formato: eBook Idioma: Spanish Publicado: Barranquilla : Universidad del Norte, 2017. Materias: Statistics. Estadísticas. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/70060  ",
+      "observed_page_title": "Existencias: Estadística inferencial /",
+      "title_check_response_sha256": "6aeec351321861f5e1fa8c07c52f8c129b042767485c2eec6988273f0abc9f5d",
+      "title_checked_at_utc": "2026-10-05T19:39:52.278876+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:19.194743+00:00",
+      "response_sha256": "40da12f150f0b3438864010a62af5bc9657421a558f29a4c65a5c606a891adc6",
+      "extraction_sha256": "89100dc1ec39bb5e8f417e751a300a319f6642e0c111b838872c42fce3e0a8c9",
+      "text": "Guardado en: Autor Principal: Llinás Solano, Humberto. Formato: eBook Idioma: Spanish Publicado: Barranquilla : Universidad del Norte, 2017. Materias: Statistics. Estadísticas. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/70060  "
+    }
+  ]
+}

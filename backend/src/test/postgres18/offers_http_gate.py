@@ -60,7 +60,7 @@ def main():
     ok('/api/v1/cart/items', customer, 'POST', {'editionId': edition, 'quantity': 1})
     cart = ok('/api/v1/cart', customer)
     assert cart['items'][0]['currentPrice'] == '15.00' and cart['subtotal'] == '15.00' and cart['taxAmount'] == '2.25' and cart['total'] == '17.25', cart
-    order = ok('/api/v1/checkout', customer, 'POST', {'addressId': address, 'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}, 201)
+    order = ok('/api/v1/checkout', customer, 'POST', {'fulfillmentMethod': 'DIGITAL_ONLY', 'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}, 201)
     assert order['subtotal'] == '15.00' and order['taxAmount'] == '2.25' and order['total'] == '17.25', order
     bought = ok('/api/v1/orders/'+order['orderId'], customer)
     assert bought['items'][0]['unitPrice'] == '15.00' and bought['items'][0]['format'] == 'EBOOK'

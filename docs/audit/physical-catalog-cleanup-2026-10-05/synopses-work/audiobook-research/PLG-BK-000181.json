@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000181",
+  "title": "Temas de psicología práctica",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:15.311115+00:00",
+      "response_sha256": "0c00f8e68b8bf53a4561dd1954fc4772f3119016f6431ad73cc6af236c583656",
+      "extraction_sha256": "223d7202cc489858bc6190fbde26a9aba5b25fe47030ab765445c8e75fea2f9e",
+      "text": "Guardado en: Autor Principal: Sarráis Oteo, Fernando. Formato: eBook Idioma: Spanish Publicado: Pamplona : EUNSA, 2012. Series: Astrolabio. Salud. Materias: Psychology. Psicología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47120  ",
+      "observed_page_title": "Existencias: Temas de psicología práctica /",
+      "title_check_response_sha256": "93170597ff9638d57c296c23e351523075f164289edecf1f43458ef413f49825",
+      "title_checked_at_utc": "2026-10-05T19:40:06.584126+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:17.301660+00:00",
+      "response_sha256": "0eed0653a960e03380fc4fb3f43a2cacfc9b1c10fe7803c3537dc924242475cc",
+      "extraction_sha256": "223d7202cc489858bc6190fbde26a9aba5b25fe47030ab765445c8e75fea2f9e",
+      "text": "Guardado en: Autor Principal: Sarráis Oteo, Fernando. Formato: eBook Idioma: Spanish Publicado: Pamplona : EUNSA, 2012. Series: Astrolabio. Salud. Materias: Psychology. Psicología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/47120  "
+    }
+  ]
+}

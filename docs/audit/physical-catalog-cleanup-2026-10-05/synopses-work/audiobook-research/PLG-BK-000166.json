@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000166",
+  "title": "Historia mínima de las constituciones en México",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193644",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:14.288698+00:00",
+      "response_sha256": "7c5c44136e66f2c28df52370204cf04862285ad5005fe636c37b0b33e0351e48",
+      "extraction_sha256": "cccb46417f42e858742e711828b1af1503c85e2f27183b9b56dc71fd00049a2d",
+      "text": "Guardado en: Autor Principal: Serrano Migallón, Fernando, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2013. Materias: Historia constitucional > México. Constitutional history > Mexico. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193644  ",
+      "observed_page_title": "Existencias: Historia mínima de las constituciones en México /",
+      "title_check_response_sha256": "111ad65f190d0e51ff43f00fbd2f31ee305326f0f39ac67aa6473acd1eafb137",
+      "title_checked_at_utc": "2026-10-05T19:40:01.204361+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB193644/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:16.251699+00:00",
+      "response_sha256": "5a76c3d56310782234849db229cf9a7e7c0be615d695818fff9bda1c4d432f0c",
+      "extraction_sha256": "cccb46417f42e858742e711828b1af1503c85e2f27183b9b56dc71fd00049a2d",
+      "text": "Guardado en: Autor Principal: Serrano Migallón, Fernando, (autor.) Formato: eBook Idioma: Spanish Publicado: México, D.F. : El Colegio de México, 2013. Materias: Historia constitucional > México. Constitutional history > Mexico. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/193644  "
+    }
+  ]
+}

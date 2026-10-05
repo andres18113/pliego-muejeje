@@ -9,7 +9,8 @@ import re
 from PIL import Image
 from pathlib import Path
 
-from cover_catalog import EXCLUDED_SKUS, pipeline_lock, read_manifest, sync_generated_json, write_bytes, write_json
+from cover_catalog import (EXCLUDED_SKUS, pipeline_lock, read_manifest, retired_records,
+                           reject_retired_records, sync_generated_json, write_bytes, write_json)
 from cover_images import (CoverRejected, MAX_BYTES, QUALITIES, TARGET_H, TARGET_W,
                           encode_webp, initial_report, normalize_file, normalize_image)
 
@@ -43,8 +44,12 @@ def normalize_manifest(covers_root: Path, manifest_path: Path, output_root: Path
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest.get("schema") != "pliego-cover-manifest-v1" or not isinstance(manifest.get("records"), list):
         raise ValueError("El manifiesto de entrada no es válido.")
+    retired = retired_records(root)
+    reject_retired_records(manifest["records"], retired)
+    retired_skus = {row["permanent_sku"] for row in retired}
     previous = read_manifest(output_manifest)
-    published = {r["permanent_sku"]: r for r in previous["records"] if r["permanent_sku"] not in EXCLUDED_SKUS}
+    published = {r["permanent_sku"]: r for r in previous["records"]
+                 if r["permanent_sku"] not in EXCLUDED_SKUS | retired_skus}
     reports, excluded, seen = [], [], set()
     for record in manifest["records"]:
         if (not isinstance(record, dict) or not isinstance(record.get("permanent_sku"), str)

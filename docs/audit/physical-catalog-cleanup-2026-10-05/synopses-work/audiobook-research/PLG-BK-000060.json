@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000060",
+  "title": "Ética básica (3a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:58.124752+00:00",
+      "response_sha256": "af3190320e1164ebcd79da17876d85722d2988d0cb64a9dcd9d3f67ab6523d1d",
+      "extraction_sha256": "f9f81d35709baee94cd53cfffb02135a9ca812d2bd106f4b48649ad008c4944b",
+      "text": "Guardado en: Autor Principal: Etxeberría, Xabier. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Universidad de Deusto, 1998. Edición: 3a. ed. Series: Serie Etica ; 3 Materias: Ética > Fundamentos. Ethics. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/34160  ",
+      "observed_page_title": "Existencias: Etica básica",
+      "title_check_response_sha256": "be57c6167a728d880717e46164834c2d0825c90a74b47e1848ecd1125e090e8d",
+      "title_checked_at_utc": "2026-10-05T19:39:59.781066+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:34:59.432363+00:00",
+      "response_sha256": "30ffe19c88eb5534f291c93392b682ba9f068300526d84cf7553ba3a63211bc4",
+      "extraction_sha256": "f9f81d35709baee94cd53cfffb02135a9ca812d2bd106f4b48649ad008c4944b",
+      "text": "Guardado en: Autor Principal: Etxeberría, Xabier. Autor Corporativo: e-libro, Corp. Formato: eBook Idioma: Spanish Publicado: Bilbao : Universidad de Deusto, 1998. Edición: 3a. ed. Series: Serie Etica ; 3 Materias: Ética > Fundamentos. Ethics. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/34160  "
+    }
+  ]
+}

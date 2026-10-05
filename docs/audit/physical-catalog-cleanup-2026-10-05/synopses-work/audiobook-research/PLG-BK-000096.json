@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000096",
+  "title": "Historia de la psicología en Colombia",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:01.073096+00:00",
+      "response_sha256": "b2fbbafa20ddf8e07857b41589a5dfa6ad21bf7286dd196de2e47898f1012186",
+      "extraction_sha256": "637307e9c4a0c5ba886ceb39827bbf1496d10371ebcf2d3a42c69c4c8d76bd6d",
+      "text": "Guardado en: Autor Principal: Ardila, Rubén. Formato: eBook Idioma: Spanish Publicado: Bogotá : Manual Moderno, 2013. Materias: Psicología > Colombia > Historia. Psychology > Colombia > History. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/71159  ",
+      "observed_page_title": "Existencias: Historia de la psicología en Colombia /",
+      "title_check_response_sha256": "722024b1d71ef3f952a275d2a57342c4d2ffe76cbab750aa189db14214e8f89e",
+      "title_checked_at_utc": "2026-10-05T19:39:56.690972+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:02.460254+00:00",
+      "response_sha256": "02b699aaafae7cbee3b1d7240ab6735545701d421be54b9f3eaa196e4d94e8ce",
+      "extraction_sha256": "637307e9c4a0c5ba886ceb39827bbf1496d10371ebcf2d3a42c69c4c8d76bd6d",
+      "text": "Guardado en: Autor Principal: Ardila, Rubén. Formato: eBook Idioma: Spanish Publicado: Bogotá : Manual Moderno, 2013. Materias: Psicología > Colombia > Historia. Psychology > Colombia > History. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/71159  "
+    }
+  ]
+}

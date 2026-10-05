@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000306",
+  "title": "Psicoterapia, asesoramiento y consejería (2a. ed.)",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:34.019788+00:00",
+      "response_sha256": "2a4d5c587c4413ee695153f3da56a300adbe5559b15b6bd95f8572253f3f4f69",
+      "extraction_sha256": "8467c440104918c131f1b4f47c3af991499fabb497f8c38468fa419eb8c7bddd",
+      "text": "Guardado en: Autor Principal: Balarezo Chiriboga, Lucio. Formato: eBook Idioma: Spanish Publicado: Quito : Editorial de la Pontificia Universidad Católica del Ecuador, 2017. Edición: Segunda edición. Series: Biblioteca de Psicologia. Materias: Psychotherapy. Psicoterapia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/80166  ",
+      "observed_page_title": "Existencias: Psicoterapia, asesoramiento y consejería /",
+      "title_check_response_sha256": "162ebe9ce927f906a133950ab6e29f260b3d8a331fae8febc73a7cd095c3396d",
+      "title_checked_at_utc": "2026-10-05T19:39:58.143183+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:35.323504+00:00",
+      "response_sha256": "088b43fd8f7219be71a709b92c85445d8008f3df0fae2398cbd698b276bf987e",
+      "extraction_sha256": "8467c440104918c131f1b4f47c3af991499fabb497f8c38468fa419eb8c7bddd",
+      "text": "Guardado en: Autor Principal: Balarezo Chiriboga, Lucio. Formato: eBook Idioma: Spanish Publicado: Quito : Editorial de la Pontificia Universidad Católica del Ecuador, 2017. Edición: Segunda edición. Series: Biblioteca de Psicologia. Materias: Psychotherapy. Psicoterapia. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/80166  "
+    }
+  ]
+}

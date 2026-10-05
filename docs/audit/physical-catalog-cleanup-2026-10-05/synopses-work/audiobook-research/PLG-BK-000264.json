@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000264",
+  "title": "Metafísica de la web",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:26.701393+00:00",
+      "response_sha256": "aaadb2a309ab1084195235a83421ad39e3f643918a137d3ec7721e21becce5e7",
+      "extraction_sha256": "0a8b8841059a9378d2dad7dda12194a6cf9ab07a6d3f6a14a8ad32fb9c7d3f8d",
+      "text": "Guardado en: Autor Principal: Ferraris, Maurizio. Otros Autores: Hernández Marcelo, Jimmy, (Editor ) , Vicente Moraleja, Paloma, (Editor ) Formato: eBook Idioma: Spanish Publicado: Madrid : Dykinson, 2020. Materias: Information technology > Philosophy. Web sites. Tecnologías de la información > Filosofía. Sitios Web. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/159993  ",
+      "observed_page_title": "Existencias: Metafísica de la web /",
+      "title_check_response_sha256": "7541ca983f030edf87695cd7247a0b37fbdd2bc2a9c2165ddc06b36cdb3d7d4a",
+      "title_checked_at_utc": "2026-10-05T19:40:02.605666+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:27.998917+00:00",
+      "response_sha256": "0a25efdae4390bf6251dd54eccd51454f18ef435965333b531c375e3578ddb22",
+      "extraction_sha256": "0a8b8841059a9378d2dad7dda12194a6cf9ab07a6d3f6a14a8ad32fb9c7d3f8d",
+      "text": "Guardado en: Autor Principal: Ferraris, Maurizio. Otros Autores: Hernández Marcelo, Jimmy, (Editor ) , Vicente Moraleja, Paloma, (Editor ) Formato: eBook Idioma: Spanish Publicado: Madrid : Dykinson, 2020. Materias: Information technology > Philosophy. Web sites. Tecnologías de la información > Filosofía. Sitios Web. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/159993  "
+    }
+  ]
+}

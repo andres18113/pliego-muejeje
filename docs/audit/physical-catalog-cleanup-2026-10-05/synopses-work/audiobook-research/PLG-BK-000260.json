@@ -1,0 +1,25 @@
+{
+  "sku": "PLG-BK-000260",
+  "title": "Anatomía y fisiología del sistema nervioso central",
+  "sources": [
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:26.157000+00:00",
+      "response_sha256": "565400ff25fcffae5c7a266aa343f320b085e28b411715b86301e81bc1213a35",
+      "extraction_sha256": "46707947e881fd8354c35a3bf879dbc0843ef79179365e76510ae636f4c1aaae",
+      "text": "Guardado en: Autor Principal: Velayos, José Luis. Otros Autores: Diéguez, Godofredo, (autor.) Formato: eBook Idioma: Spanish Publicado: Madrid : CEU Ediciones, 2015. Series: Textos docentes. Materias: Central nervous system > Anatomy. Central nervous system > Physiology. Sistema nervioso central > Anatomía. Sistema nervioso central > Fisiología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/43244  ",
+      "observed_page_title": "Existencias: Anatomía y fisiología del sistema nervioso central /",
+      "title_check_response_sha256": "8ae10442d10fa7669ec44f058198f40257e5fe364b615439eccecd2bd6dca17c",
+      "title_checked_at_utc": "2026-10-05T19:39:50.820424+00:00"
+    },
+    {
+      "url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244/Details",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:27.470773+00:00",
+      "response_sha256": "f9fa7fba9625aca480f03f32f5104459d944197165e050577c8fcbc217d4625a",
+      "extraction_sha256": "46707947e881fd8354c35a3bf879dbc0843ef79179365e76510ae636f4c1aaae",
+      "text": "Guardado en: Autor Principal: Velayos, José Luis. Otros Autores: Diéguez, Godofredo, (autor.) Formato: eBook Idioma: Spanish Publicado: Madrid : CEU Ediciones, 2015. Series: Textos docentes. Materias: Central nervous system > Anatomy. Central nervous system > Physiology. Sistema nervioso central > Anatomía. Sistema nervioso central > Fisiología. Libros electrónicos. Acceso en línea: https://elibro.net/ereader/unsbiblio/43244  "
+    }
+  ]
+}

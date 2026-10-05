@@ -1,0 +1,18 @@
+{
+  "sku": "PLG-BK-000147",
+  "title": "Las novelas de Torquemada",
+  "sources": [
+    {
+      "url": "https://www.alianzaeditorial.es/primer_capitulo/las-novelas-de-torquemada.pdf",
+      "error": "[Errno 2] No such file or directory: 'pdftotext'"
+    },
+    {
+      "url": "https://www.alianzaeditorial.es/libro/bibliotecas-de-autor/las-novelas-de-torquemada-benito-perez-galdos-9788420689586/",
+      "http_status": 200,
+      "retrieved_at_utc": "2026-10-05T19:35:56.664889+00:00",
+      "response_sha256": "c9ac454e7433cffd88b871b3e619def05d6838c4a37db9bc299f548ce1dcd77b",
+      "extraction_sha256": "ab4ed8b3739389da74c3ee69c42ee54d24767e3a94ed85a9c7a8ef944c235d48",
+      "text": "Sinopsis Las cuatro obras de Benito Pérez Galdós (1843-1920) agrupadas en este volumen bajo el título de \"Las novelas de Torquemada\" tienen en común la figura de su protagonista y el marco histórico de la España de la Restauración. El núcleo dramático de \"Torquemada\" en la hoguera es la conmoción espiritual que la grave enfermedad de su hijo produce en el prestamista; \"Torquemada en la cruz\", \"Torquemada en el Purgatorio\" y \"Torquemada y San Pedro\" narran el vertiginoso ascenso social del antiguo usurero, que se convierte en marqués por su enlace matrimonial con una aristócrata arruinada, es nombrado senador del Reino y acumula una enorme fortuna mediante especulaciones financieras. "
+    }
+  ]
+}
