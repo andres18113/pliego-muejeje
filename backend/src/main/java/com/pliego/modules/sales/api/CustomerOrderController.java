@@ -79,7 +79,7 @@ public class CustomerOrderController {
                 order.items().stream().map(item -> new Item(item.orderItemId(), item.editionId(), item.sku(),
                         item.isbn(), item.title(), item.authors(), item.publisher(), item.format(),
                         item.language(), money(item.unitPrice()), item.quantity(), money(item.subtotal()))).toList(),
-                new Address(address.recipient(), address.line1(), address.line2(), address.city(),
+                address==null ? null : new Address(address.recipient(), address.line1(), address.line2(), address.city(),
                         address.province(), address.countryCode(), address.postalCode(), address.reference(),
                         address.phone()),
                 new Payment(payment.paymentId(), payment.method(), payment.state(), money(payment.amount()),
@@ -87,7 +87,8 @@ public class CustomerOrderController {
                 order.stateHistory().stream().map(history -> new History(history.historyId(),
                         history.actorUserId(), history.origin(), history.previousState(), history.newState(),
                         history.at())).toList(),post.purchaseState(),post.fulfillment(),post.shipment(),
-                PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions());
+                PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions(),
+                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()));
     }
 
     @PostMapping("/{orderId}/cancel")

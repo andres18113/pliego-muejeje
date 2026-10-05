@@ -1,0 +1,50 @@
+{
+  "schema": "pliego-pending-digital-batch-v1",
+  "batch": "PLIEGO-Digital-Covers-Processed",
+  "publication_status": "PENDING_ONLY",
+  "source_archive": {
+    "filename": "PLIEGO-Digital-Covers-Processed.zip",
+    "bytes": 27117484,
+    "sha256": "b66027e6aabcb73ee387c84b34265786a7800da4f3c8e063ea79906a85567493",
+    "parts_sha256": [
+      "b18a85be324f46b08dfe3e759daef62bd2b85d2d98d8c1d32486310015d78f31",
+      "04373e810c1c7c3ba2afc7d34e31f6bfa9727f91951958eacd6265e5f0e7e081",
+      "f9674717d8de51930c4a22845ce5f15234fab7c08cf3aeadaf5a72ca6140d047"
+    ],
+    "binary_concatenation_order": [
+      "part001",
+      "part002",
+      "part003"
+    ],
+    "parts_and_final_zip_crc": "PASS",
+    "delivery_files_verified": 864,
+    "zip_entries": 865
+  },
+  "report": "covers/generated/digital-batch/reports/normalization-report.json",
+  "report_sha256": "a6e6e8892f22593ac2ec46566bd8384763d119c4d78d53e246c0d537c577acbf",
+  "delivery_manifest": "docs/audit/digital-covers-processed-2026-10-04/evidence/DELIVERY-MANIFEST.json",
+  "audit_directory": "docs/audit/digital-covers-processed-2026-10-04",
+  "image_root": "covers/generated/digital-batch/pending-images",
+  "counts": {
+    "originals": 450,
+    "pending_webps": 259,
+    "EBOOK": 142,
+    "AUDIOBOOK": 117,
+    "reviewed_overrides": 19,
+    "framing_review": 191,
+    "historical_records_preserved": 55,
+    "new_skus": 0,
+    "accepted_digital_records": 0,
+    "published_digital_records": 259
+  },
+  "active_manifest": "covers/generated/manifest-normalized.json",
+  "active_manifest_changed": true,
+  "sku_registry_changed": true,
+  "edition_preparation": {
+    "manifest": "covers/generated/digital-batch/editions/manifest-pending.json",
+    "status": "PUBLISHED",
+    "active_registry_unchanged": true,
+    "new_sku_proposals_only": false,
+    "import_receipts": "docs/audit/digital-publication-2026-10-04/import-receipts.json"
+  }
+}

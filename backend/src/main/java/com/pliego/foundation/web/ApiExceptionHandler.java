@@ -7,6 +7,7 @@ import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
@@ -15,6 +16,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import com.pliego.foundation.database.DatabaseException;
+import com.pliego.foundation.security.CurrentPasswordMismatchException;
 import com.pliego.foundation.security.InvalidCredentialsException;
 import com.pliego.modules.catalog.application.EditionNotFoundException;
 import com.pliego.modules.sales.application.InvalidCardNumberException;
@@ -36,6 +38,12 @@ public final class ApiExceptionHandler {
 
     private final ProblemDetailFactory problems;
 
+    @ExceptionHandler(MissingRequestHeaderException.class)
+    public ResponseEntity<ProblemDetail> missingHeader(HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "VALIDATION_ERROR", VALIDATION_TITLE,
+                HttpStatus.BAD_REQUEST, "Falta el identificador del intento. Actualiza la página antes de continuar.");
+    }
+
     public ApiExceptionHandler(ProblemDetailFactory problems) {
         this.problems = problems;
     }
@@ -55,6 +63,11 @@ public final class ApiExceptionHandler {
     @ExceptionHandler(HandlerMethodValidationException.class)
     public ResponseEntity<ProblemDetail> methodValidation(HandlerMethodValidationException exception,
             HttpServletRequest request) {
+        List<ProblemDetailSupport.Violation> pagination=exception.getParameterValidationResults().stream()
+                .map(result -> result.getMethodParameter().getParameterName()).distinct()
+                .filter(field -> paginationMessage(field)!=null)
+                .map(field -> new ProblemDetailSupport.Violation(field,paginationMessage(field))).toList();
+        if(!pagination.isEmpty()) return paginationValidation(pagination,request);
         return ProblemDetailSupport.response(problems, request, "VALIDATION_ERROR", VALIDATION_TITLE,
                 HttpStatus.BAD_REQUEST, validationDetail(request));
     }
@@ -62,6 +75,11 @@ public final class ApiExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<ProblemDetail> constraintValidation(ConstraintViolationException exception,
             HttpServletRequest request) {
+        List<ProblemDetailSupport.Violation> pagination=exception.getConstraintViolations().stream()
+                .map(violation -> violation.getPropertyPath().toString()).map(path -> path.substring(path.lastIndexOf('.')+1))
+                .distinct().filter(field -> paginationMessage(field)!=null)
+                .map(field -> new ProblemDetailSupport.Violation(field,paginationMessage(field))).toList();
+        if(!pagination.isEmpty()) return paginationValidation(pagination,request);
         return ProblemDetailSupport.response(problems, request, "VALIDATION_ERROR", VALIDATION_TITLE,
                 HttpStatus.BAD_REQUEST, validationDetail(request));
     }
@@ -69,6 +87,8 @@ public final class ApiExceptionHandler {
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ProblemDetail> argumentTypeMismatch(MethodArgumentTypeMismatchException exception,
             HttpServletRequest request) {
+        if(paginationMessage(exception.getName())!=null) return paginationValidation(
+                List.of(new ProblemDetailSupport.Violation(exception.getName(),paginationMessage(exception.getName()))),request);
         return ProblemDetailSupport.response(problems, request, "VALIDATION_ERROR", VALIDATION_TITLE,
                 HttpStatus.BAD_REQUEST, validationDetail(request));
     }
@@ -98,6 +118,27 @@ public final class ApiExceptionHandler {
             HttpServletRequest request) {
         return ProblemDetailSupport.response(problems, request, "AUTH_INVALID_CREDENTIALS", "Credenciales inválidas",
                 HttpStatus.UNAUTHORIZED, "El correo o la contraseña son incorrectos.");
+    }
+
+    @ExceptionHandler(CurrentPasswordMismatchException.class)
+    public ResponseEntity<ProblemDetail> currentPasswordMismatch(CurrentPasswordMismatchException exception,
+            HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "CURRENT_PASSWORD_INVALID", "Contraseña incorrecta",
+                HttpStatus.BAD_REQUEST, "La contraseña actual no es correcta. Escríbela otra vez para confirmar el cambio.");
+    }
+
+    @ExceptionHandler(com.pliego.foundation.security.EmailNotVerifiedException.class)
+    public ResponseEntity<ProblemDetail> emailNotVerified(com.pliego.foundation.security.EmailNotVerifiedException exception,
+            HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "EMAIL_NOT_VERIFIED", "Verifica tu correo",
+                HttpStatus.FORBIDDEN, "Confirma tu correo para acceder a tu cuenta. Puedes solicitar otro enlace de verificación.");
+    }
+
+    @ExceptionHandler(com.pliego.modules.identity.api.InvalidEmailActionException.class)
+    public ResponseEntity<ProblemDetail> invalidEmailAction(com.pliego.modules.identity.api.InvalidEmailActionException exception,
+            HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "EMAIL_ACTION_INVALID", "Enlace inválido",
+                HttpStatus.BAD_REQUEST, "El enlace venció, ya fue utilizado o no es válido. Solicita uno nuevo.");
     }
 
     @ExceptionHandler(InvalidCardNumberException.class)
@@ -131,6 +172,18 @@ public final class ApiExceptionHandler {
         String message = error.getDefaultMessage();
         if (message == null || message.isBlank()) message = "El valor no es válido.";
         return new ProblemDetailSupport.Violation(error.getField(), message);
+    }
+
+    private static String paginationMessage(String field) {
+        if("page".equals(field)) return "La página debe ser un número entero entre 0 y 2147483647.";
+        if("pageSize".equals(field)) return "El tamaño de página debe ser un número entero entre 1 y 50.";
+        return null;
+    }
+    private ResponseEntity<ProblemDetail> paginationValidation(List<ProblemDetailSupport.Violation> violations,HttpServletRequest request) {
+        String detail=violations.stream().map(ProblemDetailSupport.Violation::message).collect(java.util.stream.Collectors.joining(" "));
+        ProblemDetail problem=problems.create("VALIDATION_ERROR",VALIDATION_TITLE,HttpStatus.BAD_REQUEST,detail,request);
+        ProblemDetailSupport.violations(problem,violations);
+        return ResponseEntity.badRequest().body(problem);
     }
 
     private static String databaseTitle(com.pliego.foundation.database.DatabaseError error,
@@ -179,6 +232,10 @@ public final class ApiExceptionHandler {
     private static String databaseTitle(com.pliego.foundation.database.DatabaseError error) {
         return switch (error) {
             case INVALID_ARGUMENT -> VALIDATION_TITLE;
+            case PAGINATION_OUT_OF_RANGE -> "Página fuera de rango";
+            case IDEMPOTENCY_CONFLICT -> "Intento con datos diferentes";
+            case ATTEMPT_NOT_CREATED -> "Intento resuelto sin cambios";
+            case PROFILE_VERSION_CONFLICT -> "Tu perfil cambió";
             case ACTOR_NOT_FOUND -> "Sesión inválida";
             case ACTOR_INACTIVE -> "Cuenta bloqueada";
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "Acceso denegado";
@@ -219,6 +276,10 @@ public final class ApiExceptionHandler {
             case ORDER_INVALID_TRANSITION -> "Cambio de estado del pedido inválido";
             case ORDER_NOT_CANCELLABLE -> "Pedido no cancelable";
             case CHECKOUT_ADDRESS_INVALID -> "Dirección no disponible";
+            case PICKUP_LOCATION_NOT_FOUND -> "Punto de retiro no encontrado";
+            case PICKUP_LOCATION_INACTIVE -> "Punto de retiro no disponible";
+            case PICKUP_NOT_APPLICABLE -> "Retiro no disponible para este carrito";
+            case PICKUP_CODE_INVALID -> "Código de retiro incorrecto";
             case PAYMENT_OUTCOME_INVALID -> "Resultado de pago inválido";
             case PAYMENT_STATE_INVALID -> "Estado de pago inválido";
             case PAYMENT_REFERENCE_CONFLICT -> "Referencia de pago en conflicto";
@@ -313,11 +374,19 @@ public final class ApiExceptionHandler {
     private static String databaseDetail(com.pliego.foundation.database.DatabaseError error) {
         return switch (error) {
             case ACTOR_NOT_FOUND -> "La sesión no es válida. Inicia sesión nuevamente.";
+            case PAGINATION_OUT_OF_RANGE -> "La página solicitada es demasiado lejana. Vuelve a la primera página o reduce el tamaño de página.";
+            case IDEMPOTENCY_CONFLICT -> "Este intento ya se usó con otros datos. Consulta su resultado antes de continuar.";
+            case ATTEMPT_NOT_CREATED -> "Confirmamos que este intento no creó ningún registro. Puedes iniciar uno nuevo.";
+            case PROFILE_VERSION_CONFLICT -> "Tus datos cambiaron desde que empezaste a editar. Revisa el perfil actual antes de guardar de nuevo.";
             case ACTOR_INACTIVE -> "Tu cuenta está bloqueada y no puede realizar esta operación.";
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "No tienes permiso para realizar esta operación.";
             case EMAIL_ALREADY_EXISTS -> "Ya existe una cuenta con ese correo electrónico.";
             case CUSTOMER_NOT_FOUND -> "El perfil solicitado no está disponible.";
             case ADDRESS_NOT_FOUND -> "La dirección solicitada no existe o no está disponible para tu cuenta.";
+            case PICKUP_LOCATION_NOT_FOUND -> "El punto de retiro seleccionado no existe.";
+            case PICKUP_LOCATION_INACTIVE -> "El punto de retiro está inactivo. Selecciona otro.";
+            case PICKUP_NOT_APPLICABLE -> "El retiro en tienda requiere al menos un producto físico.";
+            case PICKUP_CODE_INVALID -> "El código de retiro no corresponde al pedido.";
             case AUTHOR_NOT_FOUND -> "El autor solicitado no está disponible.";
             case AUTHOR_INACTIVE -> "El autor no está disponible para esta operación.";
             case PUBLISHER_NOT_FOUND -> "La editorial solicitada no está disponible.";

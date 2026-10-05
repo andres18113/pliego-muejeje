@@ -4,8 +4,8 @@
 .heading { margin: 0; font: 650 clamp(2.5rem, 3.8vw, 4rem)/1.02 var(--store-display); letter-spacing: -.045em; overflow-wrap: anywhere; }
 .link { display: inline-flex; align-items: center; min-height: 44px; color: var(--store-link); font-size: 1rem; font-weight: 600; text-underline-offset: 5px; overflow-wrap: anywhere; }
 .link:hover { color: var(--store-link); text-decoration-thickness: 2px; }
-.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; margin: 28px 0 20px; }
-.topics { display: flex; flex-wrap: wrap; gap: 8px; }
+.bar { display: grid; justify-items: center; gap: 12px; margin: 28px 0 20px; }
+.topics { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
 .topic.topic { display: inline-flex; align-items: center; min-height: 48px; padding: 0 22px; border: 1.5px solid var(--pliego-control-border); border-radius: 999px; color: var(--pliego-text); font-size: 1rem; font-weight: 600; transition: background-color 150ms cubic-bezier(.32, .94, .6, 1), color 150ms cubic-bezier(.32, .94, .6, 1); }
 .topic:hover:not([aria-pressed="true"]) { background: var(--home-quiet); }
 .topic[aria-pressed="true"] { gap: 10px; padding-left: 16px; border-color: var(--store-blue); background: var(--store-blue); color: white; }
@@ -134,3 +134,5 @@
 @media (forced-colors: active) { .topic[aria-pressed="true"] { border-width: 3px; } .dot[aria-current="true"] > span { background: Highlight; } .scene { border: 2px solid CanvasText; } }
 /* On stacked layouts the preview is a cue only: text fragments of the next book stay hidden. */
 @media (max-width: 1023px) { .scene[inert] .info { visibility: hidden; } }
+
+.cart[aria-disabled="true"]:not(:disabled) { cursor: progress; }

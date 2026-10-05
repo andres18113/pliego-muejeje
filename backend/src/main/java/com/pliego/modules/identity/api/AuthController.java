@@ -42,7 +42,7 @@ public class AuthController {
     }
 
     @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Registrar una cuenta CUSTOMER", description = "Aplica BCrypt a la contraseña antes de llamar al procedimiento aprobado de PostgreSQL.")
+    @Operation(summary = "Registrar una cuenta CUSTOMER", description = "Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Confirma el enlace antes de iniciar sesión.")
     @ApiResponse(responseCode = "201", description = "Cuenta de cliente creada", content = @Content(schema = @Schema(implementation = RegisterResponse.class)))
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "409", description = "Correo ya registrado", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
@@ -62,6 +62,7 @@ public class AuthController {
             content = @Content(schema = @Schema(implementation = LoginResponse.class)))
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "401", description = "Credenciales inválidas", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "403", description = "Correo pendiente de verificación (EMAIL_NOT_VERIFIED)", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         LoginResult result = authService.login(request.email(), request.password());

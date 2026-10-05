@@ -36,7 +36,7 @@ def main():
     status, page = request("/api/v1/orders?page=0&pageSize=1", actor)
     assert status == 200 and page["totalCount"] == "1" and len(page["items"]) == 1, (status, page)
     assert page["items"][0]["orderId"] == str(order)
-    assert page["items"][0]["total"] == "18.65"
+    assert page["items"][0]["total"] == "21.45"
     assert page["items"][0]["orderState"] == "CONFIRMED"
     status, beyond = request("/api/v1/orders?page=99&pageSize=1", actor)
     assert status == 200 and beyond["items"] == [] and beyond["totalCount"] == "1", (status, beyond)
@@ -47,7 +47,7 @@ def main():
     status, detail = request(path, actor)
     assert status == 200, (status, detail)
     assert detail["orderId"] == str(order) and detail["subtotal"] == "18.65"
-    assert detail["total"] == "18.65" and len(detail["items"]) == 2
+    assert detail["total"] == "21.45" and len(detail["items"]) == 2
     assert {item["unitPrice"] for item in detail["items"]} == {"7.25", "11.40"}
     assert all(isinstance(item["orderItemId"], str) and isinstance(item["editionId"], str)
                for item in detail["items"])
@@ -56,7 +56,7 @@ def main():
     assert detail["address"]["recipient"] == "Cliente Conc"
     assert detail["address"]["line1"] == "Calle Conc"
     assert isinstance(detail["payment"]["paymentId"], str)
-    assert detail["payment"]["state"] == "APPROVED" and detail["payment"]["amount"] == "18.65"
+    assert detail["payment"]["state"] == "APPROVED" and detail["payment"]["amount"] == "21.45"
     assert len(detail["stateHistory"]) == 2
     assert all(isinstance(row["historyId"], str) for row in detail["stateHistory"])
     snapshots = (detail["items"], detail["address"])

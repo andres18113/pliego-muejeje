@@ -1,0 +1,1655 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-b421ab6f24f50249.webp",
+      "libro": {
+        "titulo": "Administración de proyectos de informática",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Toro López, Francisco J.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ecoe Ediciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "17.99",
+        "sku": "PLG-BK-000183",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000183-f4d194dabae6.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131877",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-b421ab6f24f50249",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "340",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-cab0bd097d2c0364"
+        },
+        "author_bindings": [
+          {
+            "name": "Toro López, Francisco J.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Toro López, Francisco J.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+            "sha256": "298395ffb962e6d38985893d8b359bc4cf643f0916491d8318c833b5f434666d",
+            "observed_text": "Bogotá : Ecoe Ediciones, 2012.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "298395ffb962e6d38985893d8b359bc4cf643f0916491d8318c833b5f434666d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b421ab6f24f50249.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+            "sha256": "298395ffb962e6d38985893d8b359bc4cf643f0916491d8318c833b5f434666d",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "298395ffb962e6d38985893d8b359bc4cf643f0916491d8318c833b5f434666d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b421ab6f24f50249.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131877",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 152,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131877",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Administración de proyectos de informática - Toro López, Francisco J..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-b421ab6f24f50249.webp",
+            "cover_sha256": "f4d194dabae6db2d92dbe7bb908ab7f5d7ef430ac925659ced7378f632d467f5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Toro López, Francisco J.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 152,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131877",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Administración de proyectos de informática - Toro López, Francisco J..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-b421ab6f24f50249.webp",
+            "cover_sha256": "f4d194dabae6db2d92dbe7bb908ab7f5d7ef430ac925659ced7378f632d467f5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 152,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131877",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Administración de proyectos de informática - Toro López, Francisco J..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-b421ab6f24f50249.webp",
+            "cover_sha256": "f4d194dabae6db2d92dbe7bb908ab7f5d7ef430ac925659ced7378f632d467f5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 152,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131877",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Administración de proyectos de informática - Toro López, Francisco J..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-b421ab6f24f50249.webp",
+          "cover_sha256": "f4d194dabae6db2d92dbe7bb908ab7f5d7ef430ac925659ced7378f632d467f5",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "342",
+        "imported_book_id": "340"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-0657617b175f64ec.webp",
+      "libro": {
+        "titulo": "Cómo y cuándo aplicar un robot industrial",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Daniel Audí Piera",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Marcombo",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "7.99",
+        "sku": "PLG-BK-000309",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000309-9f8667bcf95e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45841",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0657617b175f64ec",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "341",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-3dd92806a4d96b02"
+        },
+        "author_bindings": [
+          {
+            "name": "Daniel Audí Piera",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Daniel Audí Piera",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+            "sha256": "1931dc48f958f1fae073c9dd29b1b728401abd5db48524da10c7d4e425e44a5e",
+            "observed_text": "Barcelona : Marcombo, 1988.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "1931dc48f958f1fae073c9dd29b1b728401abd5db48524da10c7d4e425e44a5e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0657617b175f64ec.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+            "sha256": "1931dc48f958f1fae073c9dd29b1b728401abd5db48524da10c7d4e425e44a5e",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "1931dc48f958f1fae073c9dd29b1b728401abd5db48524da10c7d4e425e44a5e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0657617b175f64ec.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45841",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 158,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Cómo y cuándo aplicar un robot industrial - Daniel Audí Piera.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-0657617b175f64ec.webp",
+            "cover_sha256": "9f8667bcf95e65c55a6008c7438042340ed2801f6b7862419d19f15f21cd752c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Daniel Audí Piera",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 158,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Cómo y cuándo aplicar un robot industrial - Daniel Audí Piera.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-0657617b175f64ec.webp",
+            "cover_sha256": "9f8667bcf95e65c55a6008c7438042340ed2801f6b7862419d19f15f21cd752c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 158,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Cómo y cuándo aplicar un robot industrial - Daniel Audí Piera.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-0657617b175f64ec.webp",
+            "cover_sha256": "9f8667bcf95e65c55a6008c7438042340ed2801f6b7862419d19f15f21cd752c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 158,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45841",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Cómo y cuándo aplicar un robot industrial - Daniel Audí Piera.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-0657617b175f64ec.webp",
+          "cover_sha256": "9f8667bcf95e65c55a6008c7438042340ed2801f6b7862419d19f15f21cd752c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "343",
+        "imported_book_id": "341"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-df981df71d5c210c.webp",
+      "libro": {
+        "titulo": "Desarrollo de microservicios con Python",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ortega Candel, José Manuel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Marcombo",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000156",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000156-e1d5bedd237a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281693",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-df981df71d5c210c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "342",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-9bd2b41ccad7f6b2"
+        },
+        "author_bindings": [
+          {
+            "name": "Ortega Candel, José Manuel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ortega Candel, José Manuel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+            "sha256": "c37a7196ca7d14076f22aee8a04f92d988a7641c79874588e5a3a10430fd8bd8",
+            "observed_text": "Barcelona (España) : Marcombo, 2024.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "c37a7196ca7d14076f22aee8a04f92d988a7641c79874588e5a3a10430fd8bd8",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-df981df71d5c210c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+            "sha256": "c37a7196ca7d14076f22aee8a04f92d988a7641c79874588e5a3a10430fd8bd8",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "c37a7196ca7d14076f22aee8a04f92d988a7641c79874588e5a3a10430fd8bd8",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-df981df71d5c210c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281693",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 159,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281693",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Desarrollo de microservicios con Python - Ortega Candel, José Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-df981df71d5c210c.webp",
+            "cover_sha256": "e1d5bedd237abe679bc338e8760cdcf928ac10bf55e33809ee3b374809561471",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ortega Candel, José Manuel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 159,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281693",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Desarrollo de microservicios con Python - Ortega Candel, José Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-df981df71d5c210c.webp",
+            "cover_sha256": "e1d5bedd237abe679bc338e8760cdcf928ac10bf55e33809ee3b374809561471",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 159,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281693",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Desarrollo de microservicios con Python - Ortega Candel, José Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-df981df71d5c210c.webp",
+            "cover_sha256": "e1d5bedd237abe679bc338e8760cdcf928ac10bf55e33809ee3b374809561471",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 159,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281693",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Desarrollo de microservicios con Python - Ortega Candel, José Manuel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-df981df71d5c210c.webp",
+          "cover_sha256": "e1d5bedd237abe679bc338e8760cdcf928ac10bf55e33809ee3b374809561471",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "344",
+        "imported_book_id": "342"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-9a7f987260e27217.webp",
+      "libro": {
+        "titulo": "Fundamentos de informática",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Weber, Juan",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Jorge Sarmiento Editor - Universitas",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000099",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000099-35be0191f4c1.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175150",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-9a7f987260e27217",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "343",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-191351b82f9a8bfa"
+        },
+        "author_bindings": [
+          {
+            "name": "Weber, Juan",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Weber, Juan",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+            "sha256": "a84f702ecb543c53572bec117102be11d2f3fe2fcc778732bad03c92c190291c",
+            "observed_text": "Córdoba : Jorge Sarmiento Editor - Universitas, 2021.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "a84f702ecb543c53572bec117102be11d2f3fe2fcc778732bad03c92c190291c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9a7f987260e27217.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+            "sha256": "a84f702ecb543c53572bec117102be11d2f3fe2fcc778732bad03c92c190291c",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "a84f702ecb543c53572bec117102be11d2f3fe2fcc778732bad03c92c190291c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9a7f987260e27217.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175150",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 161,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175150",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Fundamentos de informática - Weber, Juan.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-9a7f987260e27217.webp",
+            "cover_sha256": "35be0191f4c1839c985be9d77fe59821b17e497bf444864286851dce7f773d81",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Weber, Juan",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 161,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175150",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Fundamentos de informática - Weber, Juan.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-9a7f987260e27217.webp",
+            "cover_sha256": "35be0191f4c1839c985be9d77fe59821b17e497bf444864286851dce7f773d81",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 161,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175150",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Fundamentos de informática - Weber, Juan.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-9a7f987260e27217.webp",
+            "cover_sha256": "35be0191f4c1839c985be9d77fe59821b17e497bf444864286851dce7f773d81",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 161,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175150",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Fundamentos de informática - Weber, Juan.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-9a7f987260e27217.webp",
+          "cover_sha256": "35be0191f4c1839c985be9d77fe59821b17e497bf444864286851dce7f773d81",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "345",
+        "imported_book_id": "343"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-f21784d4bc1ea6cb.webp",
+      "libro": {
+        "titulo": "Fundamentos de robótica (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Antonio Barrientos",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "McGraw-Hill, Interamericana de España",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000272",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000272-9378ba8d9f88.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/50193",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-f21784d4bc1ea6cb",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "344",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7671e04ffe6cb41a"
+        },
+        "author_bindings": [
+          {
+            "name": "Antonio Barrientos",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Antonio Barrientos",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+            "sha256": "c3e3b74bcdec5ff24fdb8312ad7b2c09df93629eacaa0339df56d850ca9440ee",
+            "observed_text": "Madrid : McGraw-Hill, Interamericana de España, [2007]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "c3e3b74bcdec5ff24fdb8312ad7b2c09df93629eacaa0339df56d850ca9440ee",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f21784d4bc1ea6cb.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+            "sha256": "c3e3b74bcdec5ff24fdb8312ad7b2c09df93629eacaa0339df56d850ca9440ee",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "c3e3b74bcdec5ff24fdb8312ad7b2c09df93629eacaa0339df56d850ca9440ee",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f21784d4bc1ea6cb.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB50193",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 162,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/50193",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Fundamentos de robótica (2a. ed.) - Antonio Barrientos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-f21784d4bc1ea6cb.webp",
+            "cover_sha256": "9378ba8d9f88d5d74f49347735d73323ceaa6c99b54532f2f14816ed3b144ec2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Antonio Barrientos",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 162,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/50193",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Fundamentos de robótica (2a. ed.) - Antonio Barrientos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-f21784d4bc1ea6cb.webp",
+            "cover_sha256": "9378ba8d9f88d5d74f49347735d73323ceaa6c99b54532f2f14816ed3b144ec2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 162,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/50193",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Fundamentos de robótica (2a. ed.) - Antonio Barrientos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-f21784d4bc1ea6cb.webp",
+            "cover_sha256": "9378ba8d9f88d5d74f49347735d73323ceaa6c99b54532f2f14816ed3b144ec2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 162,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/50193",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Fundamentos de robótica (2a. ed.) - Antonio Barrientos.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-f21784d4bc1ea6cb.webp",
+          "cover_sha256": "9378ba8d9f88d5d74f49347735d73323ceaa6c99b54532f2f14816ed3b144ec2",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "346",
+        "imported_book_id": "344"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-97a48b16ae9ae001.webp",
+      "libro": {
+        "titulo": "Informática forense",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ortiz, Luis",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Marcombo",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000299",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000299-2a036cbc00f9.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286803",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-97a48b16ae9ae001",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "345",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-05d96161f8f124ea"
+        },
+        "author_bindings": [
+          {
+            "name": "Ortiz, Luis",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ortiz, Luis",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/analitica-de-datos-e-internet-informatica/informatica-forense/",
+            "observed_text": "Marcombo",
+            "basis": "Ficha bibliográfica primaria del editor de la obra con título y autoría concordantes; cotejada con portada original.",
+            "source": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/analitica-de-datos-e-internet-informatica/informatica-forense/",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/analitica-de-datos-e-internet-informatica/informatica-forense/",
+            "observed_text": "Idioma: Español",
+            "basis": "Campo de idioma explícito de ficha bibliográfica primaria.",
+            "source": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/analitica-de-datos-e-internet-informatica/informatica-forense/",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 165,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286803",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Informática forense - Ortiz, Luis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-97a48b16ae9ae001.webp",
+            "cover_sha256": "2a036cbc00f9276b25ea84ac35dddfb83ad09f8ae14ba410cc3dadeef8aa7b34",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ortiz, Luis",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 165,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286803",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Informática forense - Ortiz, Luis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-97a48b16ae9ae001.webp",
+            "cover_sha256": "2a036cbc00f9276b25ea84ac35dddfb83ad09f8ae14ba410cc3dadeef8aa7b34",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 165,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286803",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Informática forense - Ortiz, Luis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-97a48b16ae9ae001.webp",
+            "cover_sha256": "2a036cbc00f9276b25ea84ac35dddfb83ad09f8ae14ba410cc3dadeef8aa7b34",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 165,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286803",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Informática forense - Ortiz, Luis.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-97a48b16ae9ae001.webp",
+          "cover_sha256": "2a036cbc00f9276b25ea84ac35dddfb83ad09f8ae14ba410cc3dadeef8aa7b34",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "347",
+        "imported_book_id": "345"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-ad439734605ce67e.webp",
+      "libro": {
+        "titulo": "Mantenimiento de equipos informáticos",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Morán Flores, Claudio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ministerio de Educación y Formación Profesional de España",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000233",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000233-04d5f3c2e0af.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127225",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-ad439734605ce67e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "346",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-b222e1e6ddbc6816"
+        },
+        "author_bindings": [
+          {
+            "name": "Morán Flores, Claudio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Morán Flores, Claudio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+            "sha256": "a0d91b2c2d5be08dc4e348dfd50b1d1eae060b47524030ccf9adde5e7dab5a1e",
+            "observed_text": "Madrid, España : Ministerio de Educación y Formación Profesional de España, 2019.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "a0d91b2c2d5be08dc4e348dfd50b1d1eae060b47524030ccf9adde5e7dab5a1e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ad439734605ce67e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+            "sha256": "a0d91b2c2d5be08dc4e348dfd50b1d1eae060b47524030ccf9adde5e7dab5a1e",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "a0d91b2c2d5be08dc4e348dfd50b1d1eae060b47524030ccf9adde5e7dab5a1e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ad439734605ce67e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127225",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 168,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127225",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Mantenimiento de equipos informáticos - Morán Flores, Claudio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-ad439734605ce67e.webp",
+            "cover_sha256": "04d5f3c2e0afe8cdc42cfe5806bb6b4c7d173182270f473dbe70109812a4f495",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Morán Flores, Claudio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 168,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127225",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Mantenimiento de equipos informáticos - Morán Flores, Claudio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-ad439734605ce67e.webp",
+            "cover_sha256": "04d5f3c2e0afe8cdc42cfe5806bb6b4c7d173182270f473dbe70109812a4f495",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 168,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127225",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Mantenimiento de equipos informáticos - Morán Flores, Claudio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-ad439734605ce67e.webp",
+            "cover_sha256": "04d5f3c2e0afe8cdc42cfe5806bb6b4c7d173182270f473dbe70109812a4f495",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 168,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127225",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Mantenimiento de equipos informáticos - Morán Flores, Claudio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-ad439734605ce67e.webp",
+          "cover_sha256": "04d5f3c2e0afe8cdc42cfe5806bb6b4c7d173182270f473dbe70109812a4f495",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "348",
+        "imported_book_id": "346"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-61d7de82ee40a320.webp",
+      "libro": {
+        "titulo": "Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Domínguez Mínguez, Tomás",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Marcombo",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000191",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000191-142199180447.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286814",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-61d7de82ee40a320",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "347",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-6a1efd5c893185d2"
+        },
+        "author_bindings": [
+          {
+            "name": "Domínguez Mínguez, Tomás",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Domínguez Mínguez, Tomás",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/programacion-e-inteligencia-artificial-informatica/tkinter-desarrollo-de-interfaces-graficas-con-python-2-o-edicion/",
+            "observed_text": "Marcombo",
+            "basis": "Catálogo oficial del editor; título y autoría cotejados con portada original.",
+            "source": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/programacion-e-inteligencia-artificial-informatica/tkinter-desarrollo-de-interfaces-graficas-con-python-2-o-edicion/",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/programacion-e-inteligencia-artificial-informatica/tkinter-desarrollo-de-interfaces-graficas-con-python-2-o-edicion/",
+            "observed_text": "Idioma: Español",
+            "basis": "Idioma bibliográfico explícito en fuente primaria.",
+            "source": "https://www.marcombo.com/libro/libros-tecnicos-de-arte-y-cientificos/informatica-libros-tecnicos-y-cientificos/programacion-e-inteligencia-artificial-informatica/tkinter-desarrollo-de-interfaces-graficas-con-python-2-o-edicion/",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 173,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286814",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.) - Domínguez Mínguez, Tomás.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-61d7de82ee40a320.webp",
+            "cover_sha256": "1421991804470861811210e1950b17599e8bfa463c4601c4c0a16a57d32d85a2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Domínguez Mínguez, Tomás",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 173,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286814",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.) - Domínguez Mínguez, Tomás.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-61d7de82ee40a320.webp",
+            "cover_sha256": "1421991804470861811210e1950b17599e8bfa463c4601c4c0a16a57d32d85a2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 173,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286814",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.) - Domínguez Mínguez, Tomás.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-61d7de82ee40a320.webp",
+            "cover_sha256": "1421991804470861811210e1950b17599e8bfa463c4601c4c0a16a57d32d85a2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 173,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286814",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.) - Domínguez Mínguez, Tomás.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-61d7de82ee40a320.webp",
+          "cover_sha256": "1421991804470861811210e1950b17599e8bfa463c4601c4c0a16a57d32d85a2",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "349",
+        "imported_book_id": "347"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-72ebb91eb6d24946.webp",
+      "libro": {
+        "titulo": "Técnicas de la auditoría informática",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Derrien, Yann",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Marcombo",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000262",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000262-6feefd6a527d.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45891",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-72ebb91eb6d24946",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "348",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-a2fc195bfacc9c7b"
+        },
+        "author_bindings": [
+          {
+            "name": "Derrien, Yann",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Derrien, Yann",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+            "sha256": "d5ca34c88bc4e77d8b67753b5ad015074c140110dc24d8368d8b936bf35a4b8e",
+            "observed_text": "Barcelona : Marcombo, 1994.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "d5ca34c88bc4e77d8b67753b5ad015074c140110dc24d8368d8b936bf35a4b8e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-72ebb91eb6d24946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+            "sha256": "d5ca34c88bc4e77d8b67753b5ad015074c140110dc24d8368d8b936bf35a4b8e",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "d5ca34c88bc4e77d8b67753b5ad015074c140110dc24d8368d8b936bf35a4b8e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-72ebb91eb6d24946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45891",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 174,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45891",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Técnicas de la auditoría informática - Derrien, Yann.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-72ebb91eb6d24946.webp",
+            "cover_sha256": "6feefd6a527d63dd769ca5fdceacaaf1a6693bb64374cb788dec10c07e1209c3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Derrien, Yann",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 174,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45891",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Técnicas de la auditoría informática - Derrien, Yann.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-72ebb91eb6d24946.webp",
+            "cover_sha256": "6feefd6a527d63dd769ca5fdceacaaf1a6693bb64374cb788dec10c07e1209c3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 174,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45891",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Técnicas de la auditoría informática - Derrien, Yann.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-72ebb91eb6d24946.webp",
+            "cover_sha256": "6feefd6a527d63dd769ca5fdceacaaf1a6693bb64374cb788dec10c07e1209c3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 174,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45891",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Técnicas de la auditoría informática - Derrien, Yann.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-72ebb91eb6d24946.webp",
+          "cover_sha256": "6feefd6a527d63dd769ca5fdceacaaf1a6693bb64374cb788dec10c07e1209c3",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "350",
+        "imported_book_id": "348"
+      }
+    }
+  ]
+}

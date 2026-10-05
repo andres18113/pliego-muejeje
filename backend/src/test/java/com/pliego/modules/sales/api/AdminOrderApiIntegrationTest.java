@@ -46,6 +46,7 @@ import com.pliego.modules.sales.application.AdminOrderModels.Summary;
 import com.pliego.modules.sales.application.AdminOrderModels.Transition;
 import com.pliego.modules.sales.gateway.AdminOrderGateway;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i10_test",
         "spring.datasource.username=pliego_test",
@@ -386,7 +387,8 @@ class AdminOrderApiIntegrationTest {
                     List.of(new InventoryMovement("1200", "250", "700", null, "SALE", 2, 11, 9,
                             null, "2026-09-23T19:30:00Z")),
                     new com.pliego.modules.sales.application.PostPurchaseModels.Extras("CONFIRMED",null,null,null,
-                            List.of(),new com.pliego.modules.sales.application.PostPurchaseModels.Actions(true,false)));
+                            List.of(),new com.pliego.modules.sales.application.PostPurchaseModels.Actions(true,false),
+                            new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("39.80"),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,new BigDecimal("39.80"))));
         }
     }
 }

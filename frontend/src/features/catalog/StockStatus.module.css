@@ -34,3 +34,15 @@
 .root[data-variant="badge"][data-tone="danger"] .primary { background: var(--mantine-color-red-0); }
 :global([data-mantine-color-scheme="dark"]) .root[data-variant="badge"][data-tone="success"] .primary { background: color-mix(in srgb, var(--mantine-color-green-9) 20%, var(--pliego-surface)); }
 :global([data-mantine-color-scheme="dark"]) .root[data-variant="badge"][data-tone="danger"] .primary { background: color-mix(in srgb, var(--mantine-color-red-9) 20%, var(--pliego-surface)); }
+
+/* Approved storefront treatment: shape and words share the same authoritative state. */
+.root[data-variant="quiet"][data-tone] { color: var(--stock-text-color, var(--pliego-text-muted)); }
+.root[data-variant="quiet"] .primary { align-items: center; gap: 7px; }
+.root[data-variant="quiet"] .label { font-weight: 500; }
+.root[data-variant="quiet"] .explanation { padding-inline-start: 14px; }
+.mark { flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--stock-mark-color, var(--store-blue, #283da8)); }
+.root[data-state="unavailable"] .mark { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
+@media (forced-colors: active) {
+  .mark { background: CanvasText; }
+  .root[data-state="unavailable"] .mark { background: transparent; border: 1.5px solid CanvasText; }
+}

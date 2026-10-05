@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pliego.modules.sales.gateway.CheckoutGateway;
+import java.util.UUID;
 
 /** One Spring transaction and one approved business Procedure per checkout. */
 @Service
@@ -16,7 +17,14 @@ public class CheckoutService {
     }
 
     @Transactional
-    public CheckoutResult checkout(long actorUserId, long addressId, String paymentMethod, String paymentOutcome) {
-        return gateway.checkout(actorUserId, addressId, paymentMethod, paymentOutcome);
+    public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
+            Long cartId, String fulfillmentMethod, Long pickupLocationId) {
+        return gateway.checkout(actorUserId, key, addressId, paymentMethod, paymentOutcome, cartId, fulfillmentMethod, pickupLocationId);
+    }
+
+    // Resolution writes a terminal fence if execution never reached PostgreSQL.
+    @Transactional
+    public CheckoutAttempt resolve(long actorUserId, UUID key) {
+        return gateway.resolve(actorUserId, key);
     }
 }

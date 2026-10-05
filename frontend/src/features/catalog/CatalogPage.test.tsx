@@ -123,10 +123,10 @@ describe("CatalogPage", () => {
     const user = userEvent.setup();
     renderCatalog();
     expect(screen.queryByRole("combobox", { name: "Buscar por" })).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Buscar en el catálogo" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Buscar libros en el catálogo" })).toBeInTheDocument();
 
     for (const value of ["Cien años", "Cervantes", "978-0-306-40615-7"]) {
-      await user.click(screen.getByRole("button", { name: "Buscar en el catálogo" }));
+      await user.click(screen.getByRole("button", { name: "Buscar libros en el catálogo" }));
       const searchbox = await screen.findByRole("searchbox", { name: "Buscar en el catálogo" });
       await user.clear(searchbox);
       await user.type(searchbox, value);
@@ -214,7 +214,7 @@ describe("CatalogPage", () => {
     await user.click(within(results).getByRole("button", { name: "Quitar categoría" }));
 
     await waitFor(() => expect(screen.getByRole("heading", { name: "No encontramos ediciones con estos criterios." })).toBeInTheDocument());
-    await user.click(screen.getByRole("button", { name: "Buscar en el catálogo" }));
+    await user.click(screen.getByRole("button", { name: "Buscar libros en el catálogo" }));
     expect(await screen.findByRole("searchbox", { name: "Buscar en el catálogo" })).toHaveValue("Julio");
     expect(requestedCategories).toEqual(["inactiva", null]);
   });

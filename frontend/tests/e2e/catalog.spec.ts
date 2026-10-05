@@ -88,7 +88,7 @@ async function mockCatalogApi(
 }
 
 async function openCatalogSearch(page: import("@playwright/test").Page) {
-  await page.getByRole("button", { name: "Buscar en el catálogo" }).click();
+  await page.getByRole("button", { name: "Buscar libros en el catálogo" }).click();
   return page.getByRole("searchbox", { name: "Buscar en el catálogo" });
 }
 
@@ -336,7 +336,7 @@ test("paginates to the results and restores catalog context after an edition det
   await mockPaginatedCatalogApi(page);
   await page.goto("/");
 
-  await page.getByTestId("site-header").getByRole("link", { name: "Catálogo", exact: true }).click();
+  await page.getByTestId("site-header").getByRole("link", { name: "Libros", exact: true }).click();
   await expect(page).toHaveURL("/catalog");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 1 de");
   await expect(page.getByRole("heading", { name: /Abre un libro.*Mira más allá/ })).toHaveCount(0);
@@ -391,7 +391,7 @@ test("keeps the editorial Home and Bricolage heading hierarchy at all target wid
     await page.setViewportSize({ width, height: 900 });
     const title = page.getByRole("heading", { level: 1 });
     await expect(title).toBeVisible();
-    await expect(page.getByTestId("site-header").getByRole(width >= 1280 ? "link" : "button", { name: width >= 1280 ? "Catálogo" : "Abrir navegación", exact: true })).toBeVisible();
+    await expect(page.getByTestId("site-header").getByRole(width >= 960 ? "link" : "button", { name: width >= 960 ? "Libros" : "Abrir navegación", exact: true })).toBeVisible();
     expect(await title.evaluate((node) => getComputedStyle(node).fontFamily)).toContain("Bricolage Grotesque");
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }
@@ -424,7 +424,7 @@ test("preserves search, sort, and price criteria from edition category links", a
   await page.goto("/catalog?que=Julio&minPrice=12.00&sort=PRICE_DESC&page=2");
   await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Cien años de soledad", exact: true }) }).click();
 
-  await page.locator(".detail-categories").getByRole("link", { name: "Narrativa" }).click();
+  await page.locator("main").getByRole("link", { name: "Narrativa" }).click();
   await expect(page).toHaveURL(/que=Julio/);
   const url = new URL(page.url());
   expect(url.searchParams.get("category")).toBe("narrativa");
@@ -656,7 +656,7 @@ test("keeps catalog search usable at the minimum 320px viewport", async ({ page 
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto("/");
 
-  const searchTrigger = page.getByRole("button", { name: "Buscar en el catálogo" });
+  const searchTrigger = page.getByRole("button", { name: "Buscar libros en el catálogo" });
   const searchButtonBounds = await searchTrigger.boundingBox();
   const searchbox = await openCatalogSearch(page);
   const queryBounds = await searchbox.boundingBox();
@@ -699,7 +699,7 @@ test("keeps the global search in browser history and shared filters usable", asy
 
   await page.setViewportSize({ width: 320, height: 740 });
   await page.goto("/");
-  const compactButton = page.getByRole("button", { name: "Buscar en el catálogo" });
+  const compactButton = page.getByRole("button", { name: "Buscar libros en el catálogo" });
   expect((await compactButton.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   const compactSearch = await openCatalogSearch(page);
   await compactSearch.fill("978-0-306-40615-7");

@@ -1,7 +1,8 @@
 import { useEffect, useRef, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { authLocation } from "@/features/auth/authLocation";
+import { useLocation } from "react-router-dom";
+import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 
 
@@ -34,6 +35,9 @@ export function CustomerOnly({
   task: string;
   children: ReactNode;
 }) {
+  const location = useLocation();
+  const requestedHref = safeAuthReturnHref(`${location.pathname}${location.search}${location.hash}`);
+  const returnHref = requestedHref === "/catalog" ? intent : requestedHref;
   const { session, expired } = useSession();
   const gateRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
@@ -52,8 +56,8 @@ export function CustomerOnly({
             : "Usa tu cuenta de cliente. Después de iniciar sesión volverás a esta página."}
         </p>
         <div className="purchase-actions">
-          <ButtonLink variant="primary" to={authLocation("/sign-in", intent)}>Iniciar sesión</ButtonLink>
-          {!expired && <ButtonLink variant="text" to={authLocation("/register", intent)}>Crear cuenta</ButtonLink>}
+          <ButtonLink variant="primary" to={authLocation("/sign-in", returnHref)}>Iniciar sesión</ButtonLink>
+          {!expired && <ButtonLink variant="text" to={authLocation("/register", returnHref)}>Crear cuenta</ButtonLink>}
         </div>
       </section>
     );

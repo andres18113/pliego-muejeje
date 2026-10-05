@@ -30,8 +30,8 @@ BEGIN
         'es','PAPERBACK',100,NULL,19.90,NULL,NULL,NULL,NULL,v_edition);
     CALL pliego.sp_inventory_entry(v_admin,v_edition,10,'fixture I10',v_movement,v_before,v_after);
     CALL pliego.sp_customer_register('i10-gate-customer@pliego.local','fixture-hash',
-        'Cliente','I10',NULL,v_user,v_customer,v_user_state);
-    CALL pliego.sp_address_create(v_user,'Casa','Cliente I10','Calle snapshot I10',NULL,
+        'Cliente','Prueba',NULL,v_user,v_customer,v_user_state);
+    CALL pliego.sp_address_create(v_user,'Casa','Cliente Prueba','Calle snapshot I10',NULL,
         'Quito','Pichincha','EC',NULL,'Referencia I10','+59325550134',TRUE,v_address);
 
     IF EXISTS (SELECT 1 FROM pliego.fn_admin_orders(v_admin,NULL,NULL,NULL,9223372036854775807,0,20)) THEN
@@ -46,8 +46,8 @@ BEGIN
     SELECT * INTO v_page FROM pliego.fn_admin_orders(v_admin,'CONFIRMED',
         v_created,v_created,v_customer,0,20);
     IF v_page.order_id IS DISTINCT FROM v_logistics_order OR v_page.customer_id IS DISTINCT FROM v_customer
-       OR v_page.customer_name <> 'Cliente I10' OR v_page.order_state <> 'CONFIRMED'
-       OR v_page.payment_state <> 'APPROVED' OR v_page.total <> 39.80 OR v_page.total_count <> 1 THEN
+       OR v_page.customer_name <> 'Cliente Prueba' OR v_page.order_state <> 'CONFIRMED'
+       OR v_page.payment_state <> 'APPROVED' OR v_page.total <> 45.77 OR v_page.total_count <> 1 THEN
         RAISE EXCEPTION 'admin filtered search result mismatch';
     END IF;
     IF EXISTS (SELECT 1 FROM pliego.fn_admin_orders(v_admin,'SHIPPED',NULL,NULL,v_customer,0,20))
@@ -59,18 +59,18 @@ BEGIN
 
     SELECT * INTO v_detail FROM pliego.fn_admin_order_detail(v_admin,v_logistics_order);
     IF v_detail.customer_id IS DISTINCT FROM v_customer OR v_detail.customer_email <> 'i10-gate-customer@pliego.local'
-       OR v_detail.customer_name <> 'Cliente I10' OR v_detail.order_state <> 'CONFIRMED'
-       OR v_detail.subtotal <> 39.80 OR v_detail.total <> 39.80
+       OR v_detail.customer_name <> 'Cliente Prueba' OR v_detail.order_state <> 'CONFIRMED'
+       OR v_detail.subtotal <> 39.80 OR v_detail.total <> 45.77
        OR jsonb_array_length(v_detail.items) <> 1
        OR v_detail.items->0->>'sku_snapshot' <> 'I10-GATE-1'
        OR v_detail.items->0->>'titulo_snapshot' <> 'Libro I10'
        OR v_detail.items->0->>'autores_snapshot' <> 'Autor I10'
        OR v_detail.items->0->>'editorial_snapshot' <> 'Editorial I10'
        OR (v_detail.items->0->>'precio_unitario')::NUMERIC <> 19.90
-       OR v_detail.address->>'destinatario' <> 'Cliente I10'
+       OR v_detail.address->>'destinatario' <> 'Cliente Prueba'
        OR v_detail.address->>'direccion_linea1' <> 'Calle snapshot I10'
        OR v_detail.payment->>'estado' <> 'APPROVED'
-       OR (v_detail.payment->>'monto')::NUMERIC <> 39.80
+       OR (v_detail.payment->>'monto')::NUMERIC <> 45.77
        OR jsonb_array_length(v_detail.state_history) <> 2
        OR jsonb_array_length(v_detail.inventory_movements) <> 1
        OR v_detail.inventory_movements->0->>'tipo' <> 'SALE' THEN
@@ -88,50 +88,40 @@ BEGIN
         RAISE EXCEPTION 'invalid transition changed the order';
     END IF;
 
+    -- Matching shipment requests are idempotent; commercial state stays CONFIRMED.
     CALL pliego.sp_order_change_status(v_admin,v_logistics_order,'PREPARING',
         v_transition_order,v_previous,v_transition_state);
-    IF v_previous <> 'CONFIRMED' OR v_transition_state <> 'PREPARING' THEN
-        RAISE EXCEPTION 'CONFIRMED to PREPARING response mismatch';
+    CALL pliego.sp_order_change_status(v_admin,v_logistics_order,'PREPARING',
+        v_transition_order,v_previous,v_transition_state);
+    IF v_previous <> 'CONFIRMED' OR v_transition_state <> 'CONFIRMED' THEN
+        RAISE EXCEPTION 'shipment command changed commercial order state';
     END IF;
-    BEGIN
-        CALL pliego.sp_order_change_status(v_admin,v_logistics_order,'PREPARING',
-            v_transition_order,v_previous,v_transition_state);
-        RAISE EXCEPTION 'same-state transition succeeded';
-    EXCEPTION WHEN SQLSTATE 'P5002' THEN NULL;
-    END;
-    IF (SELECT estado FROM pliego.pedido WHERE pedido_id=v_logistics_order) <> 'PREPARING'
-       OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=v_logistics_order) <> 3 THEN
-        RAISE EXCEPTION 'same-state transition changed the order';
-    END IF;
+    UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '3 minutes',
+        transito_desde=transito_desde-INTERVAL '3 minutes',reparto_desde=reparto_desde-INTERVAL '3 minutes',
+        entrega_desde=entrega_desde-INTERVAL '3 minutes' WHERE pedido_id=v_logistics_order;
     CALL pliego.sp_order_change_status(v_admin,v_logistics_order,'SHIPPED',
         v_transition_order,v_previous,v_transition_state);
     BEGIN
         CALL pliego.sp_order_change_status(v_admin,v_logistics_order,'PREPARING',
             v_transition_order,v_previous,v_transition_state);
         RAISE EXCEPTION 'backwards logistics transition succeeded';
-    EXCEPTION WHEN SQLSTATE 'P5002' THEN NULL;
-    END;
+    EXCEPTION WHEN SQLSTATE 'P5002' THEN NULL; END;
+    UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '4 minutes',
+        transito_desde=transito_desde-INTERVAL '4 minutes',reparto_desde=reparto_desde-INTERVAL '4 minutes',
+        entrega_desde=entrega_desde-INTERVAL '4 minutes' WHERE pedido_id=v_logistics_order;
     CALL pliego.sp_order_change_status(v_admin,v_logistics_order,'DELIVERED',
         v_transition_order,v_previous,v_transition_state);
     BEGIN
         CALL pliego.sp_order_change_status(v_admin,v_logistics_order,'CANCELLED',
             v_transition_order,v_previous,v_transition_state);
         RAISE EXCEPTION 'logistics endpoint accepted CANCELLED';
-    EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL;
-    END;
-    IF (SELECT estado FROM pliego.pedido WHERE pedido_id=v_logistics_order) <> 'DELIVERED'
-       OR (SELECT count(*) FROM pliego.pedido_estado_historial
-           WHERE pedido_id=v_logistics_order AND origen='USER' AND usuario_actor_id=v_admin
-             AND (estado_anterior,estado_nuevo) IN
-                 (('CONFIRMED','PREPARING'),('PREPARING','SHIPPED'),('SHIPPED','DELIVERED'))) <> 3
-       OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=v_logistics_order
-           AND usuario_actor_id=v_admin AND estado_anterior='CONFIRMED' AND estado_nuevo='PREPARING') <> 1
-       OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=v_logistics_order
-           AND usuario_actor_id=v_admin AND estado_anterior='PREPARING' AND estado_nuevo='SHIPPED') <> 1
-       OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=v_logistics_order
-           AND usuario_actor_id=v_admin AND estado_anterior='SHIPPED' AND estado_nuevo='DELIVERED') <> 1
-       OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=v_logistics_order) <> 5 THEN
-        RAISE EXCEPTION 'logistics history was not recorded exactly once per successful transition';
+    EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
+    IF (SELECT estado FROM pliego.pedido WHERE pedido_id=v_logistics_order) <> 'CONFIRMED'
+       OR (SELECT estado FROM pliego.envio WHERE pedido_id=v_logistics_order) <> 'DELIVERED'
+       OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=v_logistics_order) <> 2
+       OR (SELECT count(*) FROM pliego.envio_historial h JOIN pliego.envio e USING(envio_id)
+           WHERE e.pedido_id=v_logistics_order AND h.tipo='STATUS') <> 4 THEN
+        RAISE EXCEPTION 'commercial/shipment separation or unique lifecycle history lost';
     END IF;
     BEGIN
         CALL pliego.sp_order_cancel(v_admin,v_logistics_order,v_cancelled_order,v_cancel_previous,
@@ -175,6 +165,9 @@ BEGIN
         v_shipped_order,v_order_state,v_payment_state,v_total,v_reference);
     CALL pliego.sp_order_change_status(v_admin,v_shipped_order,'PREPARING',
         v_transition_order,v_previous,v_transition_state);
+    UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '3 minutes',
+        transito_desde=transito_desde-INTERVAL '3 minutes',reparto_desde=reparto_desde-INTERVAL '3 minutes',
+        entrega_desde=entrega_desde-INTERVAL '3 minutes' WHERE pedido_id=v_shipped_order;
     CALL pliego.sp_order_change_status(v_admin,v_shipped_order,'SHIPPED',
         v_transition_order,v_previous,v_transition_state);
     BEGIN
@@ -184,7 +177,8 @@ BEGIN
     EXCEPTION WHEN SQLSTATE 'P5003' THEN NULL;
     END;
     SELECT stock_actual INTO v_stock FROM pliego.inventario WHERE edicion_id=v_edition;
-    IF (SELECT estado FROM pliego.pedido WHERE pedido_id=v_shipped_order) <> 'SHIPPED'
+    IF (SELECT estado FROM pliego.pedido WHERE pedido_id=v_shipped_order) <> 'CONFIRMED'
+       OR (SELECT estado FROM pliego.envio WHERE pedido_id=v_shipped_order) <> 'IN_TRANSIT'
        OR v_stock <> 7
        OR (SELECT count(*) FROM pliego.movimiento_inventario
            WHERE pedido_id=v_shipped_order AND tipo='CANCELLATION') <> 0 THEN

@@ -1,0 +1,118 @@
+/* PLIEGO country choice. The trigger is a form field (same height, edge and radius as its neighbours);
+   the panel is paper with one quiet search field and a list whose hover/keyboard row is a lavender tint
+   and whose chosen row reads ultramar with a check. Focus is always ultramar — never the legacy green. */
+.label { display: block; margin-bottom: 5px; color: var(--secondary-ink, var(--pliego-text-muted)); font-size: .8125rem; font-weight: 600; }
+
+.trigger {
+  --cp-blue: var(--store-blue, #283da8);
+  display: flex; align-items: center; gap: 10px; width: 100%; min-width: 0; min-height: var(--control-min-height, 44px);
+  padding: 6px 10px 6px 12px; border: 1px solid var(--control-border, #8e8aa8); border-radius: var(--control-radius, 8px);
+  background: var(--control-surface, #fff); color: var(--pliego-text, #252740); font: inherit; font-size: 1rem; text-align: left; cursor: pointer;
+  transition: border-color 130ms ease, box-shadow 130ms ease;
+}
+.trigger:hover:not(:disabled) { border-color: color-mix(in srgb, var(--cp-blue) 55%, var(--control-border, #8e8aa8)); }
+.trigger:focus-visible { outline: none; border-color: var(--cp-blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cp-blue) 20%, transparent); }
+.trigger[data-open] { border-color: var(--cp-blue); }
+.trigger[aria-invalid="true"] { border-color: var(--error, #9b2c2c); }
+.trigger:disabled { cursor: not-allowed; opacity: .62; }
+.value { display: flex; flex: 1; align-items: center; gap: 10px; min-width: 0; }
+.valueText { min-width: 0; overflow-wrap: anywhere; }
+.placeholder { color: var(--pliego-text-muted, #595a6e); }
+.chevron { flex: none; margin-left: auto; color: var(--pliego-text-muted, #595a6e); transition: transform 160ms cubic-bezier(.32, .94, .6, 1); }
+.trigger[data-open] .chevron { color: var(--cp-blue); transform: rotate(180deg); }
+.flag { flex: none; width: 24px; height: 16px; border-radius: 3px; box-shadow: 0 0 0 1px rgb(37 39 64 / 12%); object-fit: cover; }
+
+/* Desktop: a compact panel anchored under the trigger — never narrower than a readable list, never a wall. */
+.panel.panel {
+  min-width: min(320px, calc(100vw - 24px)); max-width: min(420px, calc(100vw - 24px)); padding: 8px; border: 0; border-radius: 16px;
+  background: var(--pliego-surface, #f6f5f0); color: var(--pliego-text, #252740);
+  box-shadow: 0 1px 0 var(--pliego-border, #dcdad2), 0 18px 40px -18px rgb(20 23 55 / 38%);
+}
+.body { --cp-blue: var(--store-blue, #283da8); --cp-tint: color-mix(in srgb, var(--store-lavender, #e4def4) 62%, var(--pliego-surface, #f6f5f0)); display: grid; gap: 6px; min-width: 0; }
+:global([data-mantine-color-scheme="dark"]) .body, :global([data-mantine-color-scheme="dark"]) .trigger { --cp-blue: var(--store-link, #c5bcff); }
+/* Portalled outside the page's token scope: dark mode names PLIEGO's dark sheet and lavender directly. */
+:global([data-mantine-color-scheme="dark"]) .body { --cp-tint: #3a3660; }
+:global([data-mantine-color-scheme="dark"]) .panel.panel, :global([data-mantine-color-scheme="dark"]) .sheet.sheet { background: #26283f; color: #f1eff9; box-shadow: 0 0 0 1px #3d3964, 0 18px 40px -18px rgb(0 0 0 / 60%); }
+:global([data-mantine-color-scheme="dark"]) .body .searchInput::placeholder, :global([data-mantine-color-scheme="dark"]) .body .searchIcon, :global([data-mantine-color-scheme="dark"]) .body .optionDetail, :global([data-mantine-color-scheme="dark"]) .body .empty { color: #b9b6d3; }
+
+.search { position: relative; min-width: 0; }
+.searchIcon { position: absolute; top: 50%; left: 12px; color: var(--pliego-text-muted, #595a6e); transform: translateY(-50%); pointer-events: none; }
+.searchInput {
+  width: 100%; min-width: 0; min-height: 44px; padding: 8px 12px 8px 42px; border: 0; border-radius: 12px;
+  background: var(--cp-tint); color: inherit; font: inherit; font-size: 1rem;
+}
+.searchInput::placeholder { color: var(--pliego-text-muted, #595a6e); opacity: 1; }
+.searchInput:focus { outline: none; }
+.searchInput:focus-visible { box-shadow: inset 0 0 0 2px var(--cp-blue); }
+
+.list { position: relative; display: block; max-height: min(264px, 42vh); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.option {
+  display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 6px 10px 6px 12px; border-radius: 10px;
+  color: inherit; font-size: .9375rem; line-height: 1.3; cursor: pointer; scroll-margin-block: 6px;
+}
+.option[data-active] { background: var(--cp-tint); }
+.option[aria-selected="true"] { color: var(--cp-blue); font-weight: 600; }
+.optionName { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+.optionDetail { flex: none; color: var(--pliego-text-muted, #595a6e); font-weight: 500; font-variant-numeric: tabular-nums; }
+.option[aria-selected="true"] .optionDetail { color: inherit; }
+.check { flex: none; visibility: hidden; color: var(--cp-blue); }
+.option[aria-selected="true"] .check { visibility: visible; }
+.empty { margin: 0; padding: 10px 12px 12px; color: var(--pliego-text-muted, #595a6e); font-size: .9375rem; line-height: 1.45; }
+
+/* Phones: a bottom sheet — the list gets the room and taller rows; the page stays put behind it. */
+.sheet.sheet { border-radius: 20px 20px 0 0; background: var(--pliego-surface, #f6f5f0); color: var(--pliego-text, #252740); }
+.sheetHeader.sheetHeader { padding: 16px 16px 8px; background: inherit; }
+.sheetTitle.sheetTitle { font-size: 1.0625rem; font-weight: 600; }
+.sheetClose.sheetClose { width: 44px; height: 44px; border-radius: 999px; }
+.sheetBody.sheetBody { padding: 0 12px 16px; }
+/* The sheet has one fixed height, so typing a search never resizes it; the list takes what the title and search leave. */
+.sheetFrame { display: flex; flex-direction: column; height: 100%; min-height: 0; }
+.sheetBody.sheetBody { flex: 1; min-height: 0; }
+.body[data-sheet] { height: 100%; grid-template-rows: auto minmax(0, 1fr); align-content: start; }
+.body[data-sheet] .list { max-height: none; min-height: 0; }
+.body[data-sheet] .option { min-height: 48px; font-size: 1rem; }
+
+/* The phone field: prefix and number are one control — one edge, one focus ring, a hairline between them. */
+.phoneField {
+  --cp-blue: var(--store-blue, #283da8);
+  /* One typographic voice for the whole control: the prefix and the number inherit it (a page may set it here). */
+  font-size: 1rem;
+  display: flex; align-items: stretch; min-width: 0; min-height: var(--control-min-height, 44px);
+  border: 1px solid var(--control-border, #8e8aa8); border-radius: var(--control-radius, 8px); background: var(--control-surface, #fff);
+  transition: border-color 130ms ease, box-shadow 130ms ease;
+}
+:global([data-mantine-color-scheme="dark"]) .phoneField { --cp-blue: var(--store-link, #c5bcff); }
+.phoneField:hover { border-color: color-mix(in srgb, var(--cp-blue) 55%, var(--control-border, #8e8aa8)); }
+.phoneField:focus-within { border-color: var(--cp-blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--cp-blue) 20%, transparent); }
+.phoneField[data-invalid] { border-color: var(--error, #9b2c2c); }
+.phoneField .trigger.trigger {
+  flex: none; width: auto; gap: 8px; padding-inline: 12px 8px; border: 0; border-right: 1px solid color-mix(in srgb, var(--control-border, #8e8aa8) 55%, transparent);
+  border-radius: 0; background: transparent; box-shadow: none; font: inherit; font-variant-numeric: tabular-nums;
+}
+.phoneField .trigger.trigger:focus-visible, .phoneField .trigger.trigger[data-open] { background: color-mix(in srgb, var(--store-lavender, #e4def4) 55%, transparent); }
+.phoneField .value { flex: none; gap: 8px; }
+/* The control sizes to its column, never to its content; when that column is very narrow (large text, tight
+   inline layouts) the prefix takes its own line above the number instead of overflowing its neighbours. */
+.phoneField { container-type: inline-size; flex-wrap: wrap; }
+@container (max-width: 14rem) {
+  .phoneField .trigger.trigger { flex: 1 0 100%; border-right: 0; border-bottom: 1px solid color-mix(in srgb, var(--control-border, #8e8aa8) 55%, transparent); }
+  .phoneField .phoneInput.phoneInput { flex-basis: 100%; min-height: 44px; }
+}
+.phoneInput {
+  flex: 1; width: 100%; min-width: 0; padding: 8px 12px; border: 0; border-radius: 0 var(--control-radius, 8px) var(--control-radius, 8px) 0;
+  background: transparent; color: inherit; font: inherit; font-variant-numeric: tabular-nums;
+}
+.phoneInput:focus { outline: none; }
+/* Inside a legacy .form-field the global input rules would redraw an inner box and a second focus ring. */
+.phoneField .phoneInput.phoneInput, .phoneField .phoneInput.phoneInput:hover, .phoneField .phoneInput.phoneInput:focus-visible {
+  font: inherit; font-variant-numeric: tabular-nums; min-height: 0; border: 0; background: transparent; box-shadow: none; outline: none;
+}
+.phoneInput::placeholder { color: var(--pliego-text-muted, #595a6e); opacity: 1; }
+.phoneInput:disabled { cursor: not-allowed; }
+
+@media (prefers-reduced-motion: reduce) { .trigger, .chevron, .phoneField { transition: none; } }
+@media (forced-colors: active) {
+  .trigger, .phoneField, .panel.panel { border: 1px solid CanvasText; }
+  .option[data-active] { outline: 2px solid Highlight; outline-offset: -2px; }
+  .trigger:focus-visible, .phoneField:focus-within, .searchInput:focus-visible { outline: 2px solid Highlight; }
+}

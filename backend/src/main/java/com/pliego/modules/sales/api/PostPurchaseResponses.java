@@ -15,13 +15,14 @@ public final class PostPurchaseResponses {
             String identityType, String identityNumber, String buyerEmail, String currency,
             String subtotal, String taxTotal, String total, String issuedAt,
             PostPurchaseModels.BillingAddress billingAddress, List<InvoiceItem> items,
-            PostPurchaseModels.ElectronicIssuance electronicIssuance, boolean pdfAvailable, boolean xmlAvailable) { }
+            PostPurchaseModels.ElectronicIssuance electronicIssuance, boolean pdfAvailable, boolean xmlAvailable,
+            String taxRate,String shippingAmount) { }
     @Schema(name="OrderInvoiceItem")
     public record InvoiceItem(String invoiceItemId, String orderItemId, String description, int quantity,
             String unitPrice, String subtotal, String taxTreatment, String taxRate, String taxAmount, String total) { }
     @Schema(name="OrderCreditNote")
     public record CreditNote(String creditNoteId, String invoiceId, String documentNumber, String state,
-            String reason, String subtotal, String taxTotal, String total, String issuedAt) { }
+            String reason, String subtotal, String taxTotal, String total, String issuedAt,String taxRate,String shippingAmount) { }
     public record ShipmentResult(String orderId, PostPurchaseModels.Shipment shipment) { }
     public record IssuedInvoice(String orderId, String invoiceId) { }
     public record IssuedCreditNote(String orderId, String creditNoteId) { }
@@ -33,11 +34,12 @@ public final class PostPurchaseResponses {
                 money(value.subtotal()),money(value.taxTotal()),money(value.total()),value.issuedAt(),value.billingAddress(),
                 value.items().stream().map(i->new InvoiceItem(i.invoiceItemId(),i.orderItemId(),i.description(),i.quantity(),
                     money(i.unitPrice()),money(i.subtotal()),i.taxTreatment(),i.taxRate()==null?null:i.taxRate().toPlainString(),
-                    money(i.taxAmount()),money(i.total()))).toList(),value.electronicIssuance(),value.pdfAvailable(),value.xmlAvailable());
+                    money(i.taxAmount()),money(i.total()))).toList(),value.electronicIssuance(),value.pdfAvailable(),value.xmlAvailable(),
+                money(value.taxRate()),money(value.shippingAmount()));
     }
     static List<CreditNote> creditNotes(List<PostPurchaseModels.CreditNote> values) {
         return values.stream().map(n->new CreditNote(n.creditNoteId(),n.invoiceId(),n.documentNumber(),n.state(),
-                n.reason(),money(n.subtotal()),money(n.taxTotal()),money(n.total()),n.issuedAt())).toList();
+                n.reason(),money(n.subtotal()),money(n.taxTotal()),money(n.total()),n.issuedAt(),money(n.taxRate()),money(n.shippingAmount()))).toList();
     }
     private static String money(BigDecimal value) { return value.setScale(2,RoundingMode.UNNECESSARY).toPlainString(); }
 }

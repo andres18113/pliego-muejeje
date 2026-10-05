@@ -139,9 +139,17 @@ test("BookCard: unavailable, unconfirmed favorites, pending, rejection and recov
   for (const scenario of ["Invitado · requiere sesión", "Administrador · acceso restringido", "Favoritos sin confirmar", "Comando pendiente", "Comando rechazado", "Carrito · resultado incierto"]) {
     await choose(page, "Escenario de acciones", scenario);
     const first = page.locator("[data-bookcard]").first();
+    if (scenario === "Comando pendiente") await expect(first.locator("[data-bookcard-cart]")).toHaveAttribute("aria-busy", "true");
     if (scenario.startsWith("Administrador") || scenario === "Comando pendiente") {
       await expect(first.locator("[data-bookcard-cart]")).toBeDisabled(); await expect(first.locator("[data-bookcard-favorite]")).toBeDisabled();
-      if (scenario === "Comando pendiente") await expect(first.locator("[data-bookcard-cart]")).toHaveAttribute("aria-busy", "true");
+      if (scenario === "Comando pendiente") {
+        const cart = first.locator("[data-bookcard-cart]");
+        // Playwright's disabled matcher includes aria-disabled; pending keeps native focusability.
+        expect(await cart.evaluate((element: HTMLButtonElement) => element.disabled)).toBe(false);
+        await cart.focus(); await expect(cart).toBeFocused();
+        await page.keyboard.press("Enter");
+        await expect(first.locator("[data-bookcard-feedback]")).toHaveCount(0);
+      }
     } else if (scenario === "Favoritos sin confirmar") {
       await expect(first.locator("[data-bookcard-favorite]")).toBeDisabled();
       await expect(first.locator("[data-bookcard-favorite]")).not.toHaveAttribute("aria-pressed");

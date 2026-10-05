@@ -1,0 +1,3629 @@
+{
+  "schema": "pliego-published-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "portadas/ebook-36d210b116c5c9e4.webp",
+      "libro": {
+        "titulo": "Anatomía general",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Gutiérrez, Francisco",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000094",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000094-9e3687e0be51.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36379",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-36d210b116c5c9e4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "306",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c38534cccdfe5fb6"
+        },
+        "author_bindings": [
+          {
+            "name": "Gutiérrez, Francisco",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Gutiérrez, Francisco",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36379",
+            "sha256": "31ef2c44021f2412479d56fbb15a1d36a42b0c65f24e6edeafbb27b3c28327f2",
+            "observed_text": "[Miami, FL] : [Firmas Press], [2010?]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "31ef2c44021f2412479d56fbb15a1d36a42b0c65f24e6edeafbb27b3c28327f2",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-36d210b116c5c9e4.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36379",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36379",
+            "sha256": "31ef2c44021f2412479d56fbb15a1d36a42b0c65f24e6edeafbb27b3c28327f2",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "31ef2c44021f2412479d56fbb15a1d36a42b0c65f24e6edeafbb27b3c28327f2",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-36d210b116c5c9e4.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36379",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 202,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36379",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía general - Gutiérrez, Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-36d210b116c5c9e4.webp",
+            "cover_sha256": "9e3687e0be51ce9e3972acd55a5643e1afff3344469d5a5ceab134c5eb61584b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Gutiérrez, Francisco",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 202,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36379",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía general - Gutiérrez, Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-36d210b116c5c9e4.webp",
+            "cover_sha256": "9e3687e0be51ce9e3972acd55a5643e1afff3344469d5a5ceab134c5eb61584b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 202,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36379",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía general - Gutiérrez, Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-36d210b116c5c9e4.webp",
+            "cover_sha256": "9e3687e0be51ce9e3972acd55a5643e1afff3344469d5a5ceab134c5eb61584b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 202,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36379",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Anatomía general - Gutiérrez, Francisco.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-36d210b116c5c9e4.webp",
+          "cover_sha256": "9e3687e0be51ce9e3972acd55a5643e1afff3344469d5a5ceab134c5eb61584b",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "308",
+        "imported_book_id": "306"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-8bacb70c2a10b291.webp",
+      "libro": {
+        "titulo": "Bioquímica para Medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Araque Marín, Pedronel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo Editorial EIA",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "4.99",
+        "sku": "PLG-BK-000150",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000150-37d3bf68f548.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/223081",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-8bacb70c2a10b291",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "307",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2181302b1d15d0c7"
+        },
+        "author_bindings": [
+          {
+            "name": "Araque Marín, Pedronel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Araque Marín, Pedronel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB223081",
+            "sha256": "e0fa7860ae81dce3bb47b745a88228475347dd3e460fa575d73845e99e69f4d9",
+            "observed_text": "Envigado : Fondo Editorial EIA, 2021.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "e0fa7860ae81dce3bb47b745a88228475347dd3e460fa575d73845e99e69f4d9",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8bacb70c2a10b291.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB223081",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB223081",
+            "sha256": "e0fa7860ae81dce3bb47b745a88228475347dd3e460fa575d73845e99e69f4d9",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "e0fa7860ae81dce3bb47b745a88228475347dd3e460fa575d73845e99e69f4d9",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8bacb70c2a10b291.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB223081",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 205,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/223081",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Bioquímica para Medicina - Araque Marín, Pedronel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8bacb70c2a10b291.webp",
+            "cover_sha256": "37d3bf68f548251c0206fad7b927a3ddf72d5697e1ca494c4b989fb8c396e90f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Araque Marín, Pedronel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 205,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/223081",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Bioquímica para Medicina - Araque Marín, Pedronel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8bacb70c2a10b291.webp",
+            "cover_sha256": "37d3bf68f548251c0206fad7b927a3ddf72d5697e1ca494c4b989fb8c396e90f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 205,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/223081",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Bioquímica para Medicina - Araque Marín, Pedronel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8bacb70c2a10b291.webp",
+            "cover_sha256": "37d3bf68f548251c0206fad7b927a3ddf72d5697e1ca494c4b989fb8c396e90f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 205,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/223081",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Bioquímica para Medicina - Araque Marín, Pedronel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8bacb70c2a10b291.webp",
+          "cover_sha256": "37d3bf68f548251c0206fad7b927a3ddf72d5697e1ca494c4b989fb8c396e90f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "309",
+        "imported_book_id": "307"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-1013c1955d12bfac.webp",
+      "libro": {
+        "titulo": "Biotecnología aplicada a la medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Tresguerres, Jesús Ángel",
+            "orden": 1
+          },
+          {
+            "nombre": "Martínez Fernández, Vicente",
+            "orden": 2
+          },
+          {
+            "nombre": "Navas Serrano, Víctor",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Díaz de Santos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000083",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000083-0fbeab76ed9d.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53028",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-1013c1955d12bfac",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "308",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-9ad3696ae91a6c16"
+        },
+        "author_bindings": [
+          {
+            "name": "Tresguerres, Jesús Ángel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Martínez Fernández, Vicente",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Navas Serrano, Víctor",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Tresguerres, Jesús Ángel; Martínez Fernández, Vicente; Navas Serrano, Víctor",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53028",
+            "sha256": "633341cc2007243a484898021f27c35054211383fc89f6b852be720550541db6",
+            "observed_text": "Madrid : Ediciones Díaz de Santos, 2003.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "633341cc2007243a484898021f27c35054211383fc89f6b852be720550541db6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-1013c1955d12bfac.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53028",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53028",
+            "sha256": "633341cc2007243a484898021f27c35054211383fc89f6b852be720550541db6",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "633341cc2007243a484898021f27c35054211383fc89f6b852be720550541db6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-1013c1955d12bfac.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53028",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 206,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53028",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Biotecnología aplicada a la medicina - Tresguerres, Jesús Ángel; Martínez Fernández, Vicente; Navas Serrano, Víctor.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-1013c1955d12bfac.webp",
+            "cover_sha256": "0fbeab76ed9dbfcc7073b10821059f68587b0bfb63ee346de8083197f5027cf3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Tresguerres, Jesús Ángel; Martínez Fernández, Vicente; Navas Serrano, Víctor",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 206,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53028",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Biotecnología aplicada a la medicina - Tresguerres, Jesús Ángel; Martínez Fernández, Vicente; Navas Serrano, Víctor.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-1013c1955d12bfac.webp",
+            "cover_sha256": "0fbeab76ed9dbfcc7073b10821059f68587b0bfb63ee346de8083197f5027cf3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 206,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53028",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Biotecnología aplicada a la medicina - Tresguerres, Jesús Ángel; Martínez Fernández, Vicente; Navas Serrano, Víctor.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-1013c1955d12bfac.webp",
+            "cover_sha256": "0fbeab76ed9dbfcc7073b10821059f68587b0bfb63ee346de8083197f5027cf3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 206,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53028",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Biotecnología aplicada a la medicina - Tresguerres, Jesús Ángel; Martínez Fernández, Vicente; Navas Serrano, Víctor.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-1013c1955d12bfac.webp",
+          "cover_sha256": "0fbeab76ed9dbfcc7073b10821059f68587b0bfb63ee346de8083197f5027cf3",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "310",
+        "imported_book_id": "308"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-732305bbd6f1cb11.webp",
+      "libro": {
+        "titulo": "Diccionario etimológico de medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Segura Munguía, Santiago",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Deusto",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000237",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000237-92bef533d43e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/42785",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-732305bbd6f1cb11",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "309",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-fb8d6b647f5c57a6"
+        },
+        "author_bindings": [
+          {
+            "name": "Segura Munguía, Santiago",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Segura Munguía, Santiago",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB42785",
+            "sha256": "d7662749a0e48ea5545b7a67567d91b1a0b30d9a16111d359288602374510451",
+            "observed_text": "Bilbao : Universidad de Deusto, 2004.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "d7662749a0e48ea5545b7a67567d91b1a0b30d9a16111d359288602374510451",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-732305bbd6f1cb11.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB42785",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB42785",
+            "sha256": "d7662749a0e48ea5545b7a67567d91b1a0b30d9a16111d359288602374510451",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "d7662749a0e48ea5545b7a67567d91b1a0b30d9a16111d359288602374510451",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-732305bbd6f1cb11.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB42785",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 208,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/42785",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Diccionario etimológico de medicina - Segura Munguía, Santiago.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-732305bbd6f1cb11.webp",
+            "cover_sha256": "92bef533d43eb388375fddd1cf9f62d73790a6a868f0266248d6b51c478e0028",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Segura Munguía, Santiago",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 208,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/42785",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Diccionario etimológico de medicina - Segura Munguía, Santiago.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-732305bbd6f1cb11.webp",
+            "cover_sha256": "92bef533d43eb388375fddd1cf9f62d73790a6a868f0266248d6b51c478e0028",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 208,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/42785",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Diccionario etimológico de medicina - Segura Munguía, Santiago.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-732305bbd6f1cb11.webp",
+            "cover_sha256": "92bef533d43eb388375fddd1cf9f62d73790a6a868f0266248d6b51c478e0028",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 208,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/42785",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Diccionario etimológico de medicina - Segura Munguía, Santiago.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-732305bbd6f1cb11.webp",
+          "cover_sha256": "92bef533d43eb388375fddd1cf9f62d73790a6a868f0266248d6b51c478e0028",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "311",
+        "imported_book_id": "309"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-3adc3af0416192dc.webp",
+      "libro": {
+        "titulo": "El ABC de la medicina interna",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Moreno Sánchez, Francisco",
+            "orden": 1
+          },
+          {
+            "nombre": "Jáuregui Camargo, Laura",
+            "orden": 2
+          },
+          {
+            "nombre": "Halabe Cherem, José",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Alfil",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000212",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000212-4a54fe4ac78f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72757",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-3adc3af0416192dc",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "310",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-805b82d6e92f7ae6"
+        },
+        "author_bindings": [
+          {
+            "name": "Moreno Sánchez, Francisco",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Jáuregui Camargo, Laura",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Halabe Cherem, José",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Moreno Sánchez, Francisco; Jáuregui Camargo, Laura; Halabe Cherem, José",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72757",
+            "sha256": "1648eea642f1b3adcc4d09bdb0f92248c3e7a549b9ca1f750c8b5bce1fa42f92",
+            "observed_text": "México D.F. : Editorial Alfil, 2008.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "1648eea642f1b3adcc4d09bdb0f92248c3e7a549b9ca1f750c8b5bce1fa42f92",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-3adc3af0416192dc.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72757",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72757",
+            "sha256": "1648eea642f1b3adcc4d09bdb0f92248c3e7a549b9ca1f750c8b5bce1fa42f92",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "1648eea642f1b3adcc4d09bdb0f92248c3e7a549b9ca1f750c8b5bce1fa42f92",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-3adc3af0416192dc.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72757",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 209,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72757",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El ABC de la medicina interna - Moreno Sánchez, Francisco; Jáuregui Camargo, Laura; Halabe Cherem, José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-3adc3af0416192dc.webp",
+            "cover_sha256": "4a54fe4ac78f0bafcd6242d0abe47afcd318d9f5960cd988bb30d6d7a3324373",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Moreno Sánchez, Francisco; Jáuregui Camargo, Laura; Halabe Cherem, José",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 209,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72757",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El ABC de la medicina interna - Moreno Sánchez, Francisco; Jáuregui Camargo, Laura; Halabe Cherem, José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-3adc3af0416192dc.webp",
+            "cover_sha256": "4a54fe4ac78f0bafcd6242d0abe47afcd318d9f5960cd988bb30d6d7a3324373",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 209,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72757",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El ABC de la medicina interna - Moreno Sánchez, Francisco; Jáuregui Camargo, Laura; Halabe Cherem, José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-3adc3af0416192dc.webp",
+            "cover_sha256": "4a54fe4ac78f0bafcd6242d0abe47afcd318d9f5960cd988bb30d6d7a3324373",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 209,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72757",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/El ABC de la medicina interna - Moreno Sánchez, Francisco; Jáuregui Camargo, Laura; Halabe Cherem, José.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-3adc3af0416192dc.webp",
+          "cover_sha256": "4a54fe4ac78f0bafcd6242d0abe47afcd318d9f5960cd988bb30d6d7a3324373",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "312",
+        "imported_book_id": "310"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-02ab3e1a2d1bf720.webp",
+      "libro": {
+        "titulo": "El lenguaje de la medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sarmiento González, Ramón",
+            "orden": 1
+          },
+          {
+            "nombre": "Vilches Vivancos, Fernando",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Dykinson",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000091",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000091-9a62dd0758d8.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58272",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-02ab3e1a2d1bf720",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "311",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-17341b1e1a39834c"
+        },
+        "author_bindings": [
+          {
+            "name": "Sarmiento González, Ramón",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Vilches Vivancos, Fernando",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sarmiento González, Ramón; Vilches Vivancos, Fernando",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58272",
+            "sha256": "f5f11983842e445c2fefeb354afd9fb7927edca91cfdcf71b6eb5f742f0e1b4c",
+            "observed_text": "Madrid : Dykinson, [2016]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "f5f11983842e445c2fefeb354afd9fb7927edca91cfdcf71b6eb5f742f0e1b4c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-02ab3e1a2d1bf720.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58272",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58272",
+            "sha256": "f5f11983842e445c2fefeb354afd9fb7927edca91cfdcf71b6eb5f742f0e1b4c",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "f5f11983842e445c2fefeb354afd9fb7927edca91cfdcf71b6eb5f742f0e1b4c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-02ab3e1a2d1bf720.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58272",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 210,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58272",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El lenguaje de la medicina - Sarmiento González, Ramón; Vilches Vivancos, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-02ab3e1a2d1bf720.webp",
+            "cover_sha256": "9a62dd0758d882aa7b62af635d16b5b66189068317834dd36bbd19f33101852b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sarmiento González, Ramón; Vilches Vivancos, Fernando",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 210,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58272",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El lenguaje de la medicina - Sarmiento González, Ramón; Vilches Vivancos, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-02ab3e1a2d1bf720.webp",
+            "cover_sha256": "9a62dd0758d882aa7b62af635d16b5b66189068317834dd36bbd19f33101852b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 210,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58272",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El lenguaje de la medicina - Sarmiento González, Ramón; Vilches Vivancos, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-02ab3e1a2d1bf720.webp",
+            "cover_sha256": "9a62dd0758d882aa7b62af635d16b5b66189068317834dd36bbd19f33101852b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 210,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58272",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/El lenguaje de la medicina - Sarmiento González, Ramón; Vilches Vivancos, Fernando.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-02ab3e1a2d1bf720.webp",
+          "cover_sha256": "9a62dd0758d882aa7b62af635d16b5b66189068317834dd36bbd19f33101852b",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "313",
+        "imported_book_id": "311"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a9d3e8cac852073e.webp",
+      "libro": {
+        "titulo": "Electrocardiografía en medicina prehospitalaria",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Illescas Fernández, Gerardo José",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Alfil",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "24.99",
+        "sku": "PLG-BK-000217",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000217-9c429e51343b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73456",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a9d3e8cac852073e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "312",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7a3adca1223e743c"
+        },
+        "author_bindings": [
+          {
+            "name": "Illescas Fernández, Gerardo José",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Illescas Fernández, Gerardo José",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73456",
+            "sha256": "4fff2cfc078743621f9433f814485f2991eed5ad80e5658cc45fd9932529de26",
+            "observed_text": "México D.F. : Editorial Alfil, 2008.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "4fff2cfc078743621f9433f814485f2991eed5ad80e5658cc45fd9932529de26",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9d3e8cac852073e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73456",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73456",
+            "sha256": "4fff2cfc078743621f9433f814485f2991eed5ad80e5658cc45fd9932529de26",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "4fff2cfc078743621f9433f814485f2991eed5ad80e5658cc45fd9932529de26",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9d3e8cac852073e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73456",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 211,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73456",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Electrocardiografía en medicina prehospitalaria - Illescas Fernández, Gerardo José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a9d3e8cac852073e.webp",
+            "cover_sha256": "9c429e51343b4261dc89222c80f9d6451db99df25a268c95218f4dd26fd47125",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Illescas Fernández, Gerardo José",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 211,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73456",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Electrocardiografía en medicina prehospitalaria - Illescas Fernández, Gerardo José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a9d3e8cac852073e.webp",
+            "cover_sha256": "9c429e51343b4261dc89222c80f9d6451db99df25a268c95218f4dd26fd47125",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 211,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73456",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Electrocardiografía en medicina prehospitalaria - Illescas Fernández, Gerardo José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a9d3e8cac852073e.webp",
+            "cover_sha256": "9c429e51343b4261dc89222c80f9d6451db99df25a268c95218f4dd26fd47125",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 211,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73456",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Electrocardiografía en medicina prehospitalaria - Illescas Fernández, Gerardo José.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a9d3e8cac852073e.webp",
+          "cover_sha256": "9c429e51343b4261dc89222c80f9d6451db99df25a268c95218f4dd26fd47125",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "314",
+        "imported_book_id": "312"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-83015172611403ff.webp",
+      "libro": {
+        "titulo": "Fundamentos de la medicina forense",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pérez Pérez, Rosa M.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000265",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000265-293ad579ad84.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58579",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-83015172611403ff",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "313",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-06613989a2cd939c"
+        },
+        "author_bindings": [
+          {
+            "name": "Pérez Pérez, Rosa M.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pérez Pérez, Rosa M.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58579",
+            "sha256": "3132ab46330b5433875b690c3d26576285f4a6f6b581d07bd9b54ff6018ca3e1",
+            "observed_text": "Barcelona : Editorial UOC, 2016.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "3132ab46330b5433875b690c3d26576285f4a6f6b581d07bd9b54ff6018ca3e1",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-83015172611403ff.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58579",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58579",
+            "sha256": "3132ab46330b5433875b690c3d26576285f4a6f6b581d07bd9b54ff6018ca3e1",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "3132ab46330b5433875b690c3d26576285f4a6f6b581d07bd9b54ff6018ca3e1",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-83015172611403ff.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58579",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 212,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58579",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fundamentos de la medicina forense - Pérez Pérez, Rosa M..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-83015172611403ff.webp",
+            "cover_sha256": "293ad579ad84f5a71ffeb025e134e9d3e2f65f6b2b4d36760081eb3b26466cb4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pérez Pérez, Rosa M.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 212,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58579",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fundamentos de la medicina forense - Pérez Pérez, Rosa M..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-83015172611403ff.webp",
+            "cover_sha256": "293ad579ad84f5a71ffeb025e134e9d3e2f65f6b2b4d36760081eb3b26466cb4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 212,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58579",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fundamentos de la medicina forense - Pérez Pérez, Rosa M..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-83015172611403ff.webp",
+            "cover_sha256": "293ad579ad84f5a71ffeb025e134e9d3e2f65f6b2b4d36760081eb3b26466cb4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 212,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58579",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Fundamentos de la medicina forense - Pérez Pérez, Rosa M..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-83015172611403ff.webp",
+          "cover_sha256": "293ad579ad84f5a71ffeb025e134e9d3e2f65f6b2b4d36760081eb3b26466cb4",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "315",
+        "imported_book_id": "313"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-c62fc0afaeebeef1.webp",
+      "libro": {
+        "titulo": "Hacia la medicina del futuro",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Alcazar Montenegro, Heberto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Instituto Politécnico Nacional",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "24.99",
+        "sku": "PLG-BK-000073",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000073-b44e6508e334.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72621",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-c62fc0afaeebeef1",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "314",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-b2b54257881b668f"
+        },
+        "author_bindings": [
+          {
+            "name": "Alcazar Montenegro, Heberto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Alcazar Montenegro, Heberto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72621",
+            "sha256": "92bfcf7fab52c2b49d0ef5dc1ff2c3cfe58ec8fd8bcafdfd703aa5c9fbe7a51d",
+            "observed_text": "México : Instituto Politécnico Nacional, 1996.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "92bfcf7fab52c2b49d0ef5dc1ff2c3cfe58ec8fd8bcafdfd703aa5c9fbe7a51d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c62fc0afaeebeef1.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72621",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72621",
+            "sha256": "92bfcf7fab52c2b49d0ef5dc1ff2c3cfe58ec8fd8bcafdfd703aa5c9fbe7a51d",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "92bfcf7fab52c2b49d0ef5dc1ff2c3cfe58ec8fd8bcafdfd703aa5c9fbe7a51d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c62fc0afaeebeef1.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72621",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 213,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72621",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Hacia la medicina del futuro - Alcazar Montenegro, Heberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c62fc0afaeebeef1.webp",
+            "cover_sha256": "b44e6508e3340edfc5a9f4616fd1ee9ab262527b87a392e8d854a702491a492f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Alcazar Montenegro, Heberto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 213,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72621",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Hacia la medicina del futuro - Alcazar Montenegro, Heberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c62fc0afaeebeef1.webp",
+            "cover_sha256": "b44e6508e3340edfc5a9f4616fd1ee9ab262527b87a392e8d854a702491a492f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 213,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72621",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Hacia la medicina del futuro - Alcazar Montenegro, Heberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c62fc0afaeebeef1.webp",
+            "cover_sha256": "b44e6508e3340edfc5a9f4616fd1ee9ab262527b87a392e8d854a702491a492f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 213,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72621",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Hacia la medicina del futuro - Alcazar Montenegro, Heberto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c62fc0afaeebeef1.webp",
+          "cover_sha256": "b44e6508e3340edfc5a9f4616fd1ee9ab262527b87a392e8d854a702491a492f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "316",
+        "imported_book_id": "314"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-8538d91358940113.webp",
+      "libro": {
+        "titulo": "Historia y filosofía de la medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "León Hernández, Saúl",
+            "orden": 1
+          },
+          {
+            "nombre": "Lara Padilla, Eleazar",
+            "orden": 2
+          },
+          {
+            "nombre": "Camarena Olmedo, Javier",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Instituto Politécnico Nacional",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000254",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000254-f9472c6d9b88.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73999",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-8538d91358940113",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "315",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-f96f21ec024d2fcd"
+        },
+        "author_bindings": [
+          {
+            "name": "León Hernández, Saúl",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Lara Padilla, Eleazar",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Camarena Olmedo, Javier",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "León Hernández, Saúl; Lara Padilla, Eleazar; Camarena Olmedo, Javier",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73999",
+            "sha256": "acf1c3879ca805ab03d18a2b5ed948e9a43ea50358a62f12276b98f22f68f510",
+            "observed_text": "México D.F. : Instituto Politécnico Nacional, 2000.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "acf1c3879ca805ab03d18a2b5ed948e9a43ea50358a62f12276b98f22f68f510",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8538d91358940113.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73999",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73999",
+            "sha256": "acf1c3879ca805ab03d18a2b5ed948e9a43ea50358a62f12276b98f22f68f510",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "acf1c3879ca805ab03d18a2b5ed948e9a43ea50358a62f12276b98f22f68f510",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8538d91358940113.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB73999",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 214,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73999",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Historia y filosofía de la medicina - León Hernández, Saúl; Lara Padilla, Eleazar; Camarena Olmedo, Javier.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8538d91358940113.webp",
+            "cover_sha256": "f9472c6d9b883c33bfb1399027ef01c07401e10c41f3157387f8f66ee104f359",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "León Hernández, Saúl; Lara Padilla, Eleazar; Camarena Olmedo, Javier",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 214,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73999",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Historia y filosofía de la medicina - León Hernández, Saúl; Lara Padilla, Eleazar; Camarena Olmedo, Javier.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8538d91358940113.webp",
+            "cover_sha256": "f9472c6d9b883c33bfb1399027ef01c07401e10c41f3157387f8f66ee104f359",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 214,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73999",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Historia y filosofía de la medicina - León Hernández, Saúl; Lara Padilla, Eleazar; Camarena Olmedo, Javier.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8538d91358940113.webp",
+            "cover_sha256": "f9472c6d9b883c33bfb1399027ef01c07401e10c41f3157387f8f66ee104f359",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 214,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73999",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Historia y filosofía de la medicina - León Hernández, Saúl; Lara Padilla, Eleazar; Camarena Olmedo, Javier.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8538d91358940113.webp",
+          "cover_sha256": "f9472c6d9b883c33bfb1399027ef01c07401e10c41f3157387f8f66ee104f359",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "317",
+        "imported_book_id": "315"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-8cc0d0f6ab2cc224.webp",
+      "libro": {
+        "titulo": "Introducción a la Medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Barona, Josep Lluís",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universitat de València",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000169",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000169-09f84dc38bd6.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293446",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-8cc0d0f6ab2cc224",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "316",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-f13933cb8fed5035"
+        },
+        "author_bindings": [
+          {
+            "name": "Barona, Josep Lluís",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Barona, Josep Lluís",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "sha256": "1908278a2778cdac160306fa5533568ae621a45ea71ad4f443ff11a63c90c27d",
+            "observed_text": "Universitat de València",
+            "basis": "Sello editorial legible en la portada original suministrada; título y autoría concordantes.",
+            "source_path": "covers/Ebook/Medicina/originales/Introducción a la Medicina - Barona, Josep Lluís.jpg",
+            "capture_sha256": "1908278a2778cdac160306fa5533568ae621a45ea71ad4f443ff11a63c90c27d",
+            "source": "covers/Ebook/Medicina/originales/Introducción a la Medicina - Barona, Josep Lluís.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://www.digitaliapublishing.com/a/37227/introduccion-a-la-medicina",
+            "source_sha256": "cf0fb010feeb1808fb899d9c1b7f0e2f40aa9be4199511c9770dc057f22a58c0",
+            "observed_text": "Language: Spanish",
+            "basis": "Campo bibliográfico explícito de la edición electrónica Digitalia; título, autor Barona Vilar y editor Universitat de València cotejados con la portada original. No se incorpora ISBN de otra presentación.",
+            "capture_sha256": "cf0fb010feeb1808fb899d9c1b7f0e2f40aa9be4199511c9770dc057f22a58c0",
+            "capture_path": "/tmp/pliego-digital-completion/root-sources/digitalia-medicine.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://www.digitaliapublishing.com/a/37227/introduccion-a-la-medicina",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 215,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Introducción a la Medicina - Barona, Josep Lluís.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8cc0d0f6ab2cc224.webp",
+            "cover_sha256": "09f84dc38bd6390ff4e54197cd4faf6b346add3cd1e3c820f8a1797ca9016aa7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Barona, Josep Lluís",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 215,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Introducción a la Medicina - Barona, Josep Lluís.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8cc0d0f6ab2cc224.webp",
+            "cover_sha256": "09f84dc38bd6390ff4e54197cd4faf6b346add3cd1e3c820f8a1797ca9016aa7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 215,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Introducción a la Medicina - Barona, Josep Lluís.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8cc0d0f6ab2cc224.webp",
+            "cover_sha256": "09f84dc38bd6390ff4e54197cd4faf6b346add3cd1e3c820f8a1797ca9016aa7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 215,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293446",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Introducción a la Medicina - Barona, Josep Lluís.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8cc0d0f6ab2cc224.webp",
+          "cover_sha256": "09f84dc38bd6390ff4e54197cd4faf6b346add3cd1e3c820f8a1797ca9016aa7",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "318",
+        "imported_book_id": "316"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-fd0821640112f205.webp",
+      "libro": {
+        "titulo": "La física en la medicina (3a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Piña Barba, María Cristina",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "FCE : SEP : CONACy",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000121",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000121-9bf6533fec2a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71950",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-fd0821640112f205",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "317",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-cd58444c9e5a7cd5"
+        },
+        "author_bindings": [
+          {
+            "name": "Piña Barba, María Cristina",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Piña Barba, María Cristina",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71950",
+            "sha256": "3cdf1b69d309b207810ce8a882fa150c8cabba8768a07166f8ec5b812a814e90",
+            "observed_text": "México D. F. : FCE : SEP : CONACy, 2002.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "3cdf1b69d309b207810ce8a882fa150c8cabba8768a07166f8ec5b812a814e90",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fd0821640112f205.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71950",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71950",
+            "sha256": "3cdf1b69d309b207810ce8a882fa150c8cabba8768a07166f8ec5b812a814e90",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "3cdf1b69d309b207810ce8a882fa150c8cabba8768a07166f8ec5b812a814e90",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fd0821640112f205.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71950",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 216,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71950",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/La física en la medicina (3a. ed.) - Piña Barba, María Cristina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fd0821640112f205.webp",
+            "cover_sha256": "9bf6533fec2a4f607b0a9da4c7d36463e53ec6d9b36d4b987b4503f016e0216f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Piña Barba, María Cristina",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 216,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71950",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/La física en la medicina (3a. ed.) - Piña Barba, María Cristina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fd0821640112f205.webp",
+            "cover_sha256": "9bf6533fec2a4f607b0a9da4c7d36463e53ec6d9b36d4b987b4503f016e0216f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 216,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71950",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/La física en la medicina (3a. ed.) - Piña Barba, María Cristina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fd0821640112f205.webp",
+            "cover_sha256": "9bf6533fec2a4f607b0a9da4c7d36463e53ec6d9b36d4b987b4503f016e0216f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 216,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71950",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/La física en la medicina (3a. ed.) - Piña Barba, María Cristina.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fd0821640112f205.webp",
+          "cover_sha256": "9bf6533fec2a4f607b0a9da4c7d36463e53ec6d9b36d4b987b4503f016e0216f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "319",
+        "imported_book_id": "317"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-35f5ee7cd1dbd914.webp",
+      "libro": {
+        "titulo": "La mujer en el ejercicio de la medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Carrillo Esper, Raúl",
+            "orden": 1
+          },
+          {
+            "nombre": "Dubón Peniche, María del Carmen",
+            "orden": 2
+          },
+          {
+            "nombre": "Elizondo Argueta, Sandra",
+            "orden": 3
+          },
+          {
+            "nombre": "Carrillo Córdova, Dulce María",
+            "orden": 4
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Alfil, S. A. de C. V",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000215",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000215-638adbd97519.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40870",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-35f5ee7cd1dbd914",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "318",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ed5f164b479708f0"
+        },
+        "author_bindings": [
+          {
+            "name": "Carrillo Esper, Raúl",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Dubón Peniche, María del Carmen",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Elizondo Argueta, Sandra",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Carrillo Córdova, Dulce María",
+            "order": 4,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Carrillo Esper, Raúl; Dubón Peniche, María del Carmen; Elizondo Argueta, Sandra; Carrillo Córdova, Dulce María",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40870",
+            "sha256": "4f4b1f3f209945a1c127544de8190155423692c9bb5e97ebead07d1010d433a9",
+            "observed_text": "México D.F. : Editorial Alfil, S. A. de C. V., 2013.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "4f4b1f3f209945a1c127544de8190155423692c9bb5e97ebead07d1010d433a9",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-35f5ee7cd1dbd914.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40870",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40870",
+            "sha256": "4f4b1f3f209945a1c127544de8190155423692c9bb5e97ebead07d1010d433a9",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "4f4b1f3f209945a1c127544de8190155423692c9bb5e97ebead07d1010d433a9",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-35f5ee7cd1dbd914.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40870",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 217,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40870",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/La mujer en el ejercicio de la medicina - Carrillo Esper, Raúl; Dubón Peniche, María del Carmen; Elizondo Argueta, Sandra; Carrillo Córdova, Dulce María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-35f5ee7cd1dbd914.webp",
+            "cover_sha256": "638adbd975199d569b1aa8fd300caef428601aeeac6be6e87e32d6db2a531fa7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Carrillo Esper, Raúl; Dubón Peniche, María del Carmen; Elizondo Argueta, Sandra; Carrillo Córdova, Dulce María",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 217,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40870",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/La mujer en el ejercicio de la medicina - Carrillo Esper, Raúl; Dubón Peniche, María del Carmen; Elizondo Argueta, Sandra; Carrillo Córdova, Dulce María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-35f5ee7cd1dbd914.webp",
+            "cover_sha256": "638adbd975199d569b1aa8fd300caef428601aeeac6be6e87e32d6db2a531fa7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 217,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40870",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/La mujer en el ejercicio de la medicina - Carrillo Esper, Raúl; Dubón Peniche, María del Carmen; Elizondo Argueta, Sandra; Carrillo Córdova, Dulce María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-35f5ee7cd1dbd914.webp",
+            "cover_sha256": "638adbd975199d569b1aa8fd300caef428601aeeac6be6e87e32d6db2a531fa7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 217,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40870",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/La mujer en el ejercicio de la medicina - Carrillo Esper, Raúl; Dubón Peniche, María del Carmen; Elizondo Argueta, Sandra; Carrillo Córdova, Dulce María.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-35f5ee7cd1dbd914.webp",
+          "cover_sha256": "638adbd975199d569b1aa8fd300caef428601aeeac6be6e87e32d6db2a531fa7",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "320",
+        "imported_book_id": "318"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-c2dfe127dab4c883.webp",
+      "libro": {
+        "titulo": "Láser en medicina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Martí López, Luis",
+            "orden": 1
+          },
+          {
+            "nombre": "Altamirano Aguilar, Jorge H.",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Instituto Politécnico Nacional",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000154",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000154-40eeed0d457a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72229",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-c2dfe127dab4c883",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "319",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-3f24f476913fe274"
+        },
+        "author_bindings": [
+          {
+            "name": "Martí López, Luis",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Altamirano Aguilar, Jorge H.",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Martí López, Luis; Altamirano Aguilar, Jorge H.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72229",
+            "sha256": "aedfa3e3b95dcd928dce15e23b1b3573ea70533cd91ae63361c4bd6d2e485984",
+            "observed_text": "México, D.F. : Instituto Politécnico Nacional, 1997.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "aedfa3e3b95dcd928dce15e23b1b3573ea70533cd91ae63361c4bd6d2e485984",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2dfe127dab4c883.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72229",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72229",
+            "sha256": "aedfa3e3b95dcd928dce15e23b1b3573ea70533cd91ae63361c4bd6d2e485984",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "aedfa3e3b95dcd928dce15e23b1b3573ea70533cd91ae63361c4bd6d2e485984",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2dfe127dab4c883.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72229",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 218,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72229",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Láser en medicina - Martí López, Luis; Altamirano Aguilar, Jorge H..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c2dfe127dab4c883.webp",
+            "cover_sha256": "40eeed0d457ac47b4585476bd5bfa98dca4110fcc9f6c5d5e9bb14a8b5cc861e",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Martí López, Luis; Altamirano Aguilar, Jorge H.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 218,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72229",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Láser en medicina - Martí López, Luis; Altamirano Aguilar, Jorge H..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c2dfe127dab4c883.webp",
+            "cover_sha256": "40eeed0d457ac47b4585476bd5bfa98dca4110fcc9f6c5d5e9bb14a8b5cc861e",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 218,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72229",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Láser en medicina - Martí López, Luis; Altamirano Aguilar, Jorge H..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c2dfe127dab4c883.webp",
+            "cover_sha256": "40eeed0d457ac47b4585476bd5bfa98dca4110fcc9f6c5d5e9bb14a8b5cc861e",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 218,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72229",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Láser en medicina - Martí López, Luis; Altamirano Aguilar, Jorge H..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c2dfe127dab4c883.webp",
+          "cover_sha256": "40eeed0d457ac47b4585476bd5bfa98dca4110fcc9f6c5d5e9bb14a8b5cc861e",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "321",
+        "imported_book_id": "319"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a53be3387773971a.webp",
+      "libro": {
+        "titulo": "Medicina de bolsillo (5a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sabatine, Marc S.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Wolters Kluwer Health",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "16.99",
+        "sku": "PLG-BK-000119",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000119-4ab919a3a5c5.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125329",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a53be3387773971a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "320",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-9e914a431c6d7b1e"
+        },
+        "author_bindings": [
+          {
+            "name": "Sabatine, Marc S.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sabatine, Marc S.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125329",
+            "sha256": "43c277b7fd9b4ae58410f185892a0ba8595ef743938a0d733425e24eff737c79",
+            "observed_text": "Barcelona : Wolters Kluwer Health, 2014.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "43c277b7fd9b4ae58410f185892a0ba8595ef743938a0d733425e24eff737c79",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a53be3387773971a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125329",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125329",
+            "sha256": "43c277b7fd9b4ae58410f185892a0ba8595ef743938a0d733425e24eff737c79",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "43c277b7fd9b4ae58410f185892a0ba8595ef743938a0d733425e24eff737c79",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a53be3387773971a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125329",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 220,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125329",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina de bolsillo (5a. ed.) - Sabatine, Marc S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a53be3387773971a.webp",
+            "cover_sha256": "4ab919a3a5c55a0f2f1673c024cadcec0c1b361a5c50a07421c2f9efcec9c821",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sabatine, Marc S.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 220,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125329",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina de bolsillo (5a. ed.) - Sabatine, Marc S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a53be3387773971a.webp",
+            "cover_sha256": "4ab919a3a5c55a0f2f1673c024cadcec0c1b361a5c50a07421c2f9efcec9c821",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 220,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125329",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina de bolsillo (5a. ed.) - Sabatine, Marc S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a53be3387773971a.webp",
+            "cover_sha256": "4ab919a3a5c55a0f2f1673c024cadcec0c1b361a5c50a07421c2f9efcec9c821",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 220,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125329",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Medicina de bolsillo (5a. ed.) - Sabatine, Marc S..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a53be3387773971a.webp",
+          "cover_sha256": "4ab919a3a5c55a0f2f1673c024cadcec0c1b361a5c50a07421c2f9efcec9c821",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "322",
+        "imported_book_id": "320"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-26949727c7f52ee9.webp",
+      "libro": {
+        "titulo": "Medicina humanitaria",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Estébanez Estébanez, Pilar",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Díaz de Santos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "7.99",
+        "sku": "PLG-BK-000298",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000298-fe522c3f4340.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53098",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-26949727c7f52ee9",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "321",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-86810f587f57a4aa"
+        },
+        "author_bindings": [
+          {
+            "name": "Estébanez Estébanez, Pilar",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Estébanez Estébanez, Pilar",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53098",
+            "sha256": "baf9731fc3ba64462c94b431a973bca8e1c64b71cfa664cb3ad28ea67f1f27e9",
+            "observed_text": "Madrid : Ediciones Díaz de Santos, 2005.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "baf9731fc3ba64462c94b431a973bca8e1c64b71cfa664cb3ad28ea67f1f27e9",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-26949727c7f52ee9.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53098",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53098",
+            "sha256": "baf9731fc3ba64462c94b431a973bca8e1c64b71cfa664cb3ad28ea67f1f27e9",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "baf9731fc3ba64462c94b431a973bca8e1c64b71cfa664cb3ad28ea67f1f27e9",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-26949727c7f52ee9.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53098",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 222,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53098",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina humanitaria - Estébanez Estébanez, Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-26949727c7f52ee9.webp",
+            "cover_sha256": "fe522c3f43409494867e6b30fd6d71477a3a910e3a01404dfe8b7bf575fbadff",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Estébanez Estébanez, Pilar",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 222,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53098",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina humanitaria - Estébanez Estébanez, Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-26949727c7f52ee9.webp",
+            "cover_sha256": "fe522c3f43409494867e6b30fd6d71477a3a910e3a01404dfe8b7bf575fbadff",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 222,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53098",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina humanitaria - Estébanez Estébanez, Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-26949727c7f52ee9.webp",
+            "cover_sha256": "fe522c3f43409494867e6b30fd6d71477a3a910e3a01404dfe8b7bf575fbadff",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 222,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53098",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Medicina humanitaria - Estébanez Estébanez, Pilar.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-26949727c7f52ee9.webp",
+          "cover_sha256": "fe522c3f43409494867e6b30fd6d71477a3a910e3a01404dfe8b7bf575fbadff",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "323",
+        "imported_book_id": "321"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-7eb366f26ec5faeb.webp",
+      "libro": {
+        "titulo": "Medicina intensiva",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Lovesio, Carlos",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Corpus Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000061",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000061-f57236bb6f98.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67148",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-7eb366f26ec5faeb",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "322",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-a1234d6f7cc06f74"
+        },
+        "author_bindings": [
+          {
+            "name": "Lovesio, Carlos",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Lovesio, Carlos",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67148",
+            "sha256": "7a5f2b6462ed0e56ed611619a605f814649045755eb97b7060705ddcab0b2d1b",
+            "observed_text": "Rosario : Corpus Editorial, 2008.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "7a5f2b6462ed0e56ed611619a605f814649045755eb97b7060705ddcab0b2d1b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-7eb366f26ec5faeb.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67148",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67148",
+            "sha256": "7a5f2b6462ed0e56ed611619a605f814649045755eb97b7060705ddcab0b2d1b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "7a5f2b6462ed0e56ed611619a605f814649045755eb97b7060705ddcab0b2d1b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-7eb366f26ec5faeb.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67148",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 223,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67148",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina intensiva - Lovesio, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-7eb366f26ec5faeb.webp",
+            "cover_sha256": "f57236bb6f98e2c255ffd70ba9d209eb7f5a7e74f71b1763bee62020d79584d7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Lovesio, Carlos",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 223,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67148",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina intensiva - Lovesio, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-7eb366f26ec5faeb.webp",
+            "cover_sha256": "f57236bb6f98e2c255ffd70ba9d209eb7f5a7e74f71b1763bee62020d79584d7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 223,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67148",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina intensiva - Lovesio, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-7eb366f26ec5faeb.webp",
+            "cover_sha256": "f57236bb6f98e2c255ffd70ba9d209eb7f5a7e74f71b1763bee62020d79584d7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 223,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67148",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Medicina intensiva - Lovesio, Carlos.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-7eb366f26ec5faeb.webp",
+          "cover_sha256": "f57236bb6f98e2c255ffd70ba9d209eb7f5a7e74f71b1763bee62020d79584d7",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "324",
+        "imported_book_id": "322"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-fb9ab4ccfe851ce8.webp",
+      "libro": {
+        "titulo": "Medicina Legal (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Carrillo Olmedo, Pedro Manuel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Corporación de Estudios y Publicaciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000140",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000140-ab0b39e4a661.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/118658",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-fb9ab4ccfe851ce8",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "323",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-00ff0b8b83f90818"
+        },
+        "author_bindings": [
+          {
+            "name": "Carrillo Olmedo, Pedro Manuel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Carrillo Olmedo, Pedro Manuel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB118658",
+            "sha256": "f4b5cd0a73f7113682e80de9a557812f3e244292e378f91e7b3ceedaf0fd39f4",
+            "observed_text": "Quito : Corporación de Estudios y Publicaciones, 2017.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "f4b5cd0a73f7113682e80de9a557812f3e244292e378f91e7b3ceedaf0fd39f4",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fb9ab4ccfe851ce8.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB118658",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB118658",
+            "sha256": "f4b5cd0a73f7113682e80de9a557812f3e244292e378f91e7b3ceedaf0fd39f4",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "f4b5cd0a73f7113682e80de9a557812f3e244292e378f91e7b3ceedaf0fd39f4",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-fb9ab4ccfe851ce8.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB118658",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 224,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/118658",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina Legal (2a. ed.) - Carrillo Olmedo, Pedro Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fb9ab4ccfe851ce8.webp",
+            "cover_sha256": "ab0b39e4a6614d92b3e0de166f59e4005928b1e31c1ff0f930690b0d5fcfe19f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Carrillo Olmedo, Pedro Manuel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 224,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/118658",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina Legal (2a. ed.) - Carrillo Olmedo, Pedro Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fb9ab4ccfe851ce8.webp",
+            "cover_sha256": "ab0b39e4a6614d92b3e0de166f59e4005928b1e31c1ff0f930690b0d5fcfe19f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 224,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/118658",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Medicina Legal (2a. ed.) - Carrillo Olmedo, Pedro Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fb9ab4ccfe851ce8.webp",
+            "cover_sha256": "ab0b39e4a6614d92b3e0de166f59e4005928b1e31c1ff0f930690b0d5fcfe19f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 224,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/118658",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Medicina Legal (2a. ed.) - Carrillo Olmedo, Pedro Manuel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fb9ab4ccfe851ce8.webp",
+          "cover_sha256": "ab0b39e4a6614d92b3e0de166f59e4005928b1e31c1ff0f930690b0d5fcfe19f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "325",
+        "imported_book_id": "323"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-24ff9f953ed9a282.webp",
+      "libro": {
+        "titulo": "Síndromes en medicina interna",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sanguinetti, Carlos A.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Corpus Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000210",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000210-4dc172de7701.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67143",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-24ff9f953ed9a282",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "324",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-bd1bc7cc10524453"
+        },
+        "author_bindings": [
+          {
+            "name": "Sanguinetti, Carlos A.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sanguinetti, Carlos A.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67143",
+            "sha256": "8a9677bd6acafc451ee618e17e6d45e2b1a31f54f1dc6b5393e86a5224c7d48c",
+            "observed_text": "Rosario : Corpus Editorial, 2007.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "8a9677bd6acafc451ee618e17e6d45e2b1a31f54f1dc6b5393e86a5224c7d48c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-24ff9f953ed9a282.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67143",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67143",
+            "sha256": "8a9677bd6acafc451ee618e17e6d45e2b1a31f54f1dc6b5393e86a5224c7d48c",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "8a9677bd6acafc451ee618e17e6d45e2b1a31f54f1dc6b5393e86a5224c7d48c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-24ff9f953ed9a282.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB67143",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 226,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67143",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Síndromes en medicina interna - Sanguinetti, Carlos A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-24ff9f953ed9a282.webp",
+            "cover_sha256": "4dc172de7701f0a77091202651d8f6d9bd5b12961d7d58a495e60c0e489a45e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sanguinetti, Carlos A.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 226,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67143",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Síndromes en medicina interna - Sanguinetti, Carlos A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-24ff9f953ed9a282.webp",
+            "cover_sha256": "4dc172de7701f0a77091202651d8f6d9bd5b12961d7d58a495e60c0e489a45e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 226,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67143",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Síndromes en medicina interna - Sanguinetti, Carlos A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-24ff9f953ed9a282.webp",
+            "cover_sha256": "4dc172de7701f0a77091202651d8f6d9bd5b12961d7d58a495e60c0e489a45e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 226,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67143",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Síndromes en medicina interna - Sanguinetti, Carlos A..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-24ff9f953ed9a282.webp",
+          "cover_sha256": "4dc172de7701f0a77091202651d8f6d9bd5b12961d7d58a495e60c0e489a45e6",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "326",
+        "imported_book_id": "324"
+      }
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+/* The PLIEGO form system for pages still built on the legacy purchase styles (Account, Checkout): the legacy
+   tokens those rules read — buttons, fields, choices, notices, focus — re-pointed from the old green to
+   PLIEGO's ultramar / lavender / ink. Compose or apply `.surface` on a page root; nothing outside it changes. */
+.surface {
+  --pine: var(--store-blue, #283da8);
+  --forest: #1d2c86;
+  --sage: var(--store-lavender, #e4def4);
+  --ink: var(--pliego-text, #252740);
+  --secondary-ink: var(--pliego-text-muted, #595a6e);
+  --divider: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
+  --focus: var(--store-blue, #283da8);
+  --control-border: color-mix(in srgb, var(--store-ink, #252740) 40%, var(--store-lavender, #e4def4));
+  --control-border-hover: var(--store-blue, #283da8);
+  --control-surface: #fbfaf7;
+  --control-open-surface: color-mix(in srgb, var(--store-lavender, #e4def4) 40%, #fbfaf7);
+  --control-open-shadow: 0 0 0 3px color-mix(in srgb, var(--store-blue, #283da8) 16%, transparent);
+  --control-focus-ring: 0 0 0 1px var(--store-blue, #283da8);
+}
+:global([data-mantine-color-scheme="dark"]) .surface {
+  --pine: var(--store-link, #c5bcff);
+  --forest: #d8d1ff;
+  --sage: #3a3660;
+  --divider: #3d3964;
+  --focus: var(--store-link, #c5bcff);
+  --control-border: #8e8aa8;
+  --control-border-hover: var(--store-link, #c5bcff);
+  --control-surface: #1f2136;
+  --control-open-surface: #2e2b4d;
+  --control-open-shadow: 0 0 0 3px color-mix(in srgb, var(--store-link, #c5bcff) 22%, transparent);
+  --control-focus-ring: 0 0 0 1px var(--store-link, #c5bcff);
+}

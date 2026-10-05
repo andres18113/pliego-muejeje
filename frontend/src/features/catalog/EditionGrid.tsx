@@ -12,9 +12,10 @@ import layout from "./catalogLayout.module.css";
 interface EditionGridProps {
   editions: EditionSummary[];
   criteria: CatalogCriteria;
+  detailReturnHref?: string;
 }
 
-export function EditionGrid({ editions, criteria }: EditionGridProps) {
+export function EditionGrid({ editions, criteria, detailReturnHref }: EditionGridProps) {
   const location = useLocation();
   const { session, clear } = useSession();
   const customerId = session?.user.role === "CUSTOMER" ? session.user.userId : null;
@@ -30,7 +31,7 @@ export function EditionGrid({ editions, criteria }: EditionGridProps) {
       {editions.map((edition) => (
         <li className={`edition-item ${layout.item}`} key={edition.editionId}><CatalogBookCard
           edition={edition}
-          detailHref={`/catalog/editions/${encodeURIComponent(edition.editionId)}?from=${encodeURIComponent(catalogHref(criteria))}`}
+          detailHref={`/catalog/editions/${encodeURIComponent(edition.editionId)}?from=${encodeURIComponent(detailReturnHref ?? catalogHref(criteria))}`}
           returnHref={sourceHref}
           isFavorite={favoritesQuery.statusByEdition.get(edition.editionId) ?? false}
           favoriteReady={!customerId || Boolean(favoritesQuery.data)}

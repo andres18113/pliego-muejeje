@@ -1,0 +1,82 @@
+/* Favoritos: the saved collection is one bounded lavender scene; inside it, a reading list of
+   paper rows (cover, identity, today's price and stock, then cart and favorite). Not a catalog
+   grid: rows are for scanning and acting on books already chosen. */
+.collection { display: grid; gap: 18px; min-width: 0; padding: clamp(18px, 2.6vw, 30px); border-radius: 24px; background: var(--acc-lavender); }
+:global([data-mantine-color-scheme="dark"]) .collection { background: var(--acc-mist); }
+.summary { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; padding-inline: 6px; }
+.summary h2 { margin: 0; color: var(--acc-blue); font: 650 clamp(1.375rem, 1.15rem + .8vw, 1.75rem)/1.1 var(--acc-display); letter-spacing: -.035em; }
+.summary p { margin: 0; color: var(--acc-muted); }
+.list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.list > li { display: flex; min-width: 0; }
+
+.row {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "identity commerce" "identity actions" "feedback feedback";
+  align-items: start; gap: 10px 18px; width: 100%; min-width: 0; padding: 14px 16px 14px 14px; border-radius: 18px; background: var(--acc-sheet);
+  transition: opacity 200ms var(--acc-ease);
+}
+.row[data-removed] .identityLink, .row[data-removed] .commerce { opacity: .55; }
+
+.identityLink { grid-area: identity; display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 16px; align-items: start; min-width: 0; border-radius: 10px; color: inherit; text-decoration: none; }
+.identityLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 4px; }
+.cover { display: block; width: 76px; }
+.cover :global(.book-cover) { width: 100%; filter: drop-shadow(3px 6px 8px rgb(37 39 64 / 20%)); }
+.cover :global(.cover-frame) { width: 100%; aspect-ratio: 2 / 3; }
+.identity { display: grid; gap: 4px; min-width: 0; padding-top: 2px; }
+.title { margin: 0; color: var(--acc-ink); font: 650 1.1875rem/1.15 var(--acc-display); letter-spacing: -.03em; overflow-wrap: anywhere; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.authors { color: var(--acc-muted); font-size: .9375rem; line-height: 1.35; overflow-wrap: anywhere; }
+.edition { color: var(--acc-muted); font-size: .8125rem; line-height: 1.35; overflow-wrap: anywhere; }
+@media (hover: hover) { .identityLink:hover .title { text-decoration-line: underline; } }
+.identityLink:focus-visible .title { text-decoration-line: underline; }
+
+.commerce { grid-area: commerce; display: grid; justify-items: end; gap: 2px; min-width: 0; text-align: right; }
+.price { margin: 0; color: var(--acc-ink); font: 650 1.375rem/1.2 var(--acc-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stock { margin: 0; font-size: .8125rem; }
+.stock { --stock-text-color: var(--acc-muted); --stock-mark-color: var(--acc-blue); }
+
+.actions { grid-area: actions; align-self: end; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; min-width: 0; }
+.cart, .favorite {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; min-width: 44px;
+  border: 0; border-radius: 8px; font: inherit; font-size: .875rem; font-weight: 600; cursor: pointer;
+  transition: background-color 140ms var(--acc-ease), color 140ms var(--acc-ease);
+}
+.cart { padding: 8px 14px 8px 11px; background: var(--acc-blue); color: var(--acc-on-blue); }
+.cart:hover:not(:disabled) { background: var(--acc-blue-hover); }
+.cart:disabled { background: transparent; color: var(--acc-muted); outline: 1.5px dashed currentColor; outline-offset: -1.5px; cursor: not-allowed; }
+/* Everything here is saved, so the toggle's job is removal: quiet outline, ultramar heart. After removal it offers saving again. */
+.favorite { padding: 8px 14px 8px 11px; background: transparent; color: var(--acc-blue); box-shadow: inset 0 0 0 1.5px var(--acc-line); }
+.favorite:hover:not(:disabled) { box-shadow: inset 0 0 0 1.5px var(--acc-blue); }
+.favorite[aria-pressed="false"] { background: var(--acc-yellow); color: var(--store-blue, #283da8); box-shadow: none; }
+.favorite:disabled { opacity: .55; cursor: default; }
+.cart:focus-visible, .favorite:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
+
+.feedback { grid-area: feedback; display: grid; gap: 4px; min-width: 0; }
+.feedback p { margin: 0; color: var(--acc-muted); font-size: .8125rem; overflow-wrap: anywhere; }
+.feedback a { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-ink); }
+
+.pagination { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
+
+.empty { justify-items: start; gap: 12px; padding: clamp(28px, 4vw, 48px); }
+.empty h2 { margin: 0; color: var(--acc-blue); font: 650 clamp(1.5rem, 1.2rem + 1vw, 2rem)/1.1 var(--acc-display); letter-spacing: -.04em; }
+.empty p { max-width: 52ch; margin: 0; color: var(--acc-ink); }
+.emptyMark { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--acc-paper); color: var(--acc-blue); }
+
+/* Narrow rows: the cover and identity lead; price, stock and actions follow under the text. */
+@media (max-width: 599px) {
+  .row { grid-template-columns: 64px minmax(0, 1fr); grid-template-areas: "identity identity" ". commerce" ". actions" "feedback feedback"; gap: 8px 14px; padding: 12px; }
+  .identityLink { grid-template-columns: 64px minmax(0, 1fr); gap: 14px; }
+  .cover { width: 64px; }
+  .commerce { justify-items: start; text-align: left; margin-top: -4px; }
+  .actions { justify-content: flex-start; }
+  .cart { flex: 1 1 auto; }
+  .favoriteText { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .collection { padding: 12px; border-radius: 20px; margin-inline: calc(-1 * min(8px, var(--page-inset, 16px))); }
+  .summary { padding: 6px 6px 0; }
+}
+@media (prefers-reduced-motion: reduce) { .row, .cart, .favorite { transition: none; } }
+@media (forced-colors: active) {
+  .row { border: 1px solid CanvasText; }
+  .cart, .favorite { border: 1px solid ButtonText; }
+  .favorite[aria-pressed="true"] { border: 2px solid Highlight; }
+}
+
+.cart[aria-disabled="true"]:not(:disabled) { cursor: progress; }

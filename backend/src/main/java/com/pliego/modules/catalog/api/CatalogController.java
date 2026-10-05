@@ -81,6 +81,34 @@ public class CatalogController {
         return new PageResponse<>(items, page, pageSize, Long.toString(result.totalCount()));
     }
 
+    @GetMapping("/offers")
+    @Operation(operationId = "offers", summary = "Buscar ofertas vigentes",
+            description = "Pagina únicamente ediciones publicables con una oferta vigente; los precios y descuentos los calcula PostgreSQL.")
+    @ApiResponse(responseCode = "200", description = "Página de ofertas",
+            content = @Content(schema = @Schema(implementation = CatalogEditionSearchResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Filtros inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public PageResponse<CatalogEditionSummaryResponse> offers(
+            @RequestParam(required = false) @Pattern(regexp = "PAPERBACK|HARDCOVER|EBOOK|AUDIOBOOK",
+                    message = "El formato debe ser PAPERBACK, HARDCOVER, EBOOK o AUDIOBOOK.") String format,
+            @RequestParam(required = false) @Pattern(regexp = "PHYSICAL|EBOOK|AUDIOBOOK", message = "El tipo de producto debe ser PHYSICAL, EBOOK o AUDIOBOOK.") String productType,
+            @RequestParam(required = false) @Size(max = 140) @Pattern(regexp = CATEGORY_SLUG) String category,
+            @RequestParam(defaultValue = "RELEVANCE") @Pattern(regexp = "RELEVANCE|ENDING_SOON|PRICE_ASC|PRICE_DESC") String sort,
+            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "20") @Min(1) @jakarta.validation.constraints.Max(50) int pageSize) {
+        CatalogSearchPage result = catalogService.search(new CatalogQuery(null, null, null, null, category,
+                null, null, null, format, sort, page, pageSize, true, productType));
+        return new PageResponse<>(result.items().stream().map(CatalogController::toSummaryResponse).toList(),
+                page, pageSize, Long.toString(result.totalCount()));
+    }
+
+    @GetMapping("/offers/filter-options")
+    @Operation(operationId = "offersFilterOptions", summary = "Consultar filtros aplicables a ofertas vigentes",
+            description = "Tipos de producto, categorías, recuentos, ordenaciones y configuración temporal definidos por PostgreSQL.")
+    @ApiResponse(responseCode = "200", description = "Filtros y configuración temporal de ofertas")
+    public com.pliego.modules.catalog.application.OffersFilterOptions offersFilterOptions() {
+        return catalogService.getOffersFilterOptions();
+    }
+
     @GetMapping("/editions/{editionId}")
     @Operation(summary = "Consultar una edición publicable")
     @ApiResponse(responseCode = "200", description = "Detalle de la edición", content = @Content(schema = @Schema(implementation = CatalogEditionDetailResponse.class)))
@@ -117,7 +145,7 @@ public class CatalogController {
         return new CatalogEditionSummaryResponse(edition.editionId(), edition.bookId(), edition.title(),
                 edition.authors(), edition.publisher(), edition.isbn13(), money(edition.price()),
                 edition.coverUrl(), edition.coverLicense(), edition.coverAttribution(), edition.format(),
-                edition.language(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators());
+                edition.language(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators(), toOfferResponse(edition.offer()));
     }
 
     private static CatalogEditionDetailResponse toDetailResponse(CatalogEditionDetail edition) {
@@ -134,7 +162,14 @@ public class CatalogController {
                 edition.isbn13(), edition.sku(), edition.language(), edition.format(), edition.pageCount(),
                 edition.publicationDate() == null ? null : CONTRACT_DATE.format(edition.publicationDate()),
                 money(edition.price()), edition.coverUrl(), edition.coverLicense(), edition.coverSourceUrl(),
-                edition.coverAttribution(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators());
+                edition.coverAttribution(), edition.available(), edition.ebookFileFormat(), edition.audioDurationSeconds(), edition.narrators(), toOfferResponse(edition.offer()));
+    }
+
+    private static CatalogOfferResponse toOfferResponse(com.pliego.modules.catalog.application.CatalogOffer offer) {
+        return offer == null ? null : new CatalogOfferResponse(offer.offerId(), money(offer.originalPrice()),
+                money(offer.discountAmount()), DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(offer.startsAt().atZone(java.time.ZoneId.of("America/Guayaquil"))),
+                DateTimeFormatter.ISO_OFFSET_DATE_TIME.format(offer.endsAt().atZone(java.time.ZoneId.of("America/Guayaquil"))),
+                offer.daysRemaining(), offer.endingSoon(), offer.offerCopy(), offer.terms(), money(offer.effectivePrice()), money(offer.discountAmount()), money(offer.savingsPercent()));
     }
 
     private static String money(BigDecimal amount) {

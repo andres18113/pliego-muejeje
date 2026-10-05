@@ -40,6 +40,7 @@ import com.pliego.foundation.security.JwtTokenIssuer;
 import static com.pliego.modules.catalog.application.AdminCatalogModels.*;
 import com.pliego.modules.catalog.gateway.AdminCatalogGateway;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i5_test",
         "spring.datasource.username=pliego_test",
@@ -229,7 +230,9 @@ class AdminCatalogApiIntegrationTest {
                     .andExpect(status().isBadRequest()).andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
                     .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
                     .andExpect(jsonPath("$.title").value("Datos inválidos"))
-                    .andExpect(jsonPath("$.detail").value("Revisa los filtros enviados e intenta nuevamente."));
+                    .andExpect(jsonPath("$.detail").value("page".equals(pair[0]) ? "La página debe ser un número entero entre 0 y 2147483647."
+                            : "pageSize".equals(pair[0]) ? "El tamaño de página debe ser un número entero entre 1 y 50."
+                            : "Revisa los filtros enviados e intenta nuevamente."));
         }
     }
 

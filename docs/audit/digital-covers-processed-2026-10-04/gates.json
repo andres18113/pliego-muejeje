@@ -1,0 +1,74 @@
+{
+  "package_suite": {
+    "tests": 69,
+    "exit": 0
+  },
+  "repository_suite": {
+    "tests": 69,
+    "exit": 0
+  },
+  "reviewed_crop_red_against_previous_scripts": {
+    "tests": 20,
+    "expected_failure": true
+  },
+  "integration_integrity": {
+    "exit": 0,
+    "installed_covers_verified": 837,
+    "pending_webp_decodes": 259,
+    "exact_override_reproductions": 19,
+    "report_csv_rows_verified": 1091
+  },
+  "full_processor_replay": {
+    "exit": 2,
+    "expected_pending_exit": true,
+    "summary": {
+      "input": 450,
+      "accepted": 0,
+      "pending": 450,
+      "preserved": 55
+    },
+    "all_259_image_hashes_identical": true,
+    "all_191_holds_preserved": true,
+    "original_and_historical_files_preserved": true
+  },
+  "preservation": {
+    "previous_files_hashed": 226,
+    "unchanged": 224,
+    "authorized_script_updates": [
+      "scripts/process-digital-covers.py",
+      "scripts/cover_images.py"
+    ],
+    "preexisting_git_changes_preserved": 286,
+    "baseline_root_files_preserved": true,
+    "active_manifests_and_sku_registry_unchanged": true
+  },
+  "diff_whitespace_check": {
+    "exit": 0
+  },
+  "operations": {
+    "publish": false,
+    "r2_upload": false,
+    "seed_cli": false,
+    "commit": false,
+    "push": false,
+    "deploy": false
+  },
+  "independent_review": {
+    "status": "PASS",
+    "critical": 0,
+    "important": 0,
+    "minor_documentation_clarified": "SHA-256 uses exact original file bytes; crop coordinates use EXIF-oriented image",
+    "limits": [
+      "No new human visual review",
+      "No database existence verification",
+      "No pricing or license verification",
+      "Pending integration only"
+    ]
+  },
+  "final_artifacts": {
+    "original_evidence_identical": true,
+    "supplied_patch_and_tests_identical": true,
+    "report_links_valid": true,
+    "pending_batch_manifest_valid": true
+  }
+}

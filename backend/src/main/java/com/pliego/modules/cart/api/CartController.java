@@ -55,7 +55,10 @@ public class CartController {
     public Cart get(@AuthenticationPrincipal Jwt jwt) {
         var cart = service.get(actorId(jwt));
         return new Cart(cart.cartId(), cart.state(), cart.items().stream().map(CartController::item).toList(),
-                money(cart.totalCurrent()));
+                money(cart.totalCurrent()),money(cart.amounts().subtotal()),money(cart.amounts().taxRate()),money(cart.amounts().taxAmount()),
+                money(cart.amounts().shippingAmount()),money(cart.amounts().total()),
+                cart.deliveryWindow() == null ? null : cart.deliveryWindow().from().toString(),
+                cart.deliveryWindow() == null ? null : cart.deliveryWindow().to().toString());
     }
 
     @PostMapping(path = "/items", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -63,7 +66,7 @@ public class CartController {
     @ApiResponse(responseCode = "200", description = "Carrito y artículo actualizados")
     @ApiResponse(responseCode = "400", description = "Solicitud inválida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public ItemMutation addItem(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody AddItem request) {
-        CartItemResult result = service.addItem(actorId(jwt), Long.parseLong(request.editionId()), request.quantity());
+        CartItemResult result = service.addItem(actorId(jwt), Long.parseLong(request.editionId()), request.quantity().intValueExact());
         return mutation(result);
     }
 
@@ -73,7 +76,7 @@ public class CartController {
     @ApiResponse(responseCode = "400", description = "Solicitud inválida", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public ItemMutation updateItem(@AuthenticationPrincipal Jwt jwt,
             @PathVariable @Positive long cartItemId, @Valid @RequestBody Quantity request) {
-        return mutation(service.updateItem(actorId(jwt), cartItemId, request.quantity()));
+        return mutation(service.updateItem(actorId(jwt), cartItemId, request.quantity().intValueExact()));
     }
 
     @DeleteMapping("/items/{cartItemId}")

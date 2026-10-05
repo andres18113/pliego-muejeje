@@ -28,7 +28,7 @@ BEGIN
     CALL pliego.sp_checkout(u,address_id,'CARD','APPROVED',o,state,pay,total,ref);
     SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
     IF to_jsonb(d)->>'purchase_state' IS DISTINCT FROM 'CONFIRMED'
-        OR to_jsonb(d)->'shipment'->>'state' IS DISTINCT FROM 'PENDING' THEN
+        OR to_jsonb(d)->'shipment'->>'state' IS DISTINCT FROM 'PREPARING' THEN
         RAISE EXCEPTION 'RED: checkout must project independent purchase and shipment states';
     END IF;
     BEGIN
@@ -58,10 +58,10 @@ BEGIN
     invoice_before := d.invoice;
     IF d.invoice->>'state' <> 'ISSUED' OR d.invoice->>'buyerName' <> 'Comprador facturado'
        OR d.invoice->'billingAddress'->>'line1' <> 'Dirección fiscal'
-       OR (d.invoice->>'total')::NUMERIC <> 25.00
+       OR (d.invoice->>'total')::NUMERIC <> 28.75
        OR d.invoice->'items'->0->>'description' <> 'Libro histórico'
        OR (d.invoice->'items'->0->>'unitPrice')::NUMERIC <> 12.50
-       OR (d.invoice->>'taxTotal')::NUMERIC <> 0 THEN
+       OR (d.invoice->>'taxTotal')::NUMERIC <> 3.75 THEN
         RAISE EXCEPTION 'invoice did not preserve explicit issuance identity and purchased lines';
     END IF;
     CALL pliego.sp_customer_update(u,'Comprador','Después de emisión','+59325550111');
@@ -112,7 +112,7 @@ BEGIN
     SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
     IF d.invoice IS DISTINCT FROM invoice_before OR jsonb_array_length(d.credit_notes) <> 1
        OR d.credit_notes->0->>'state' <> 'ISSUED'
-       OR (d.credit_notes->0->>'total')::NUMERIC <> 25.00 THEN
+       OR (d.credit_notes->0->>'total')::NUMERIC <> 28.75 THEN
         RAISE EXCEPTION 'credit note rewrote invoice or lost refunded total';
     END IF;
     BEGIN
@@ -131,16 +131,16 @@ BEGIN
     CALL pliego.sp_checkout(u,address_id,'TRANSFER','APPROVED',delivered,state,pay,total,ref);
     CALL pliego.sp_shipment_update_tracking(a,delivered,'Carrier fixture','TRACK-1','https://example.invalid/track/1',
         CURRENT_TIMESTAMP + INTERVAL '1 day',CURRENT_TIMESTAMP + INTERVAL '3 days');
-    CALL pliego.sp_shipment_transition(a,delivered,'PREPARING');
-    CALL pliego.sp_shipment_transition(a,delivered,'SHIPPED');
-    CALL pliego.sp_shipment_transition(a,delivered,'OUT_FOR_DELIVERY');
-    CALL pliego.sp_shipment_transition(a,delivered,'DELIVERED');
+    UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '7 minutes',
+        transito_desde=transito_desde-INTERVAL '7 minutes',reparto_desde=reparto_desde-INTERVAL '7 minutes',
+        entrega_desde=entrega_desde-INTERVAL '7 minutes' WHERE pedido_id=delivered;
+    CALL pliego.sp_home_delivery_reconcile(delivered);
     SELECT * INTO d FROM pliego.fn_customer_order_detail(u,delivered);
-    IF d.purchase_state <> 'CONFIRMED' OR d.order_state <> 'DELIVERED'
+    IF d.purchase_state <> 'CONFIRMED' OR d.order_state <> 'CONFIRMED'
        OR d.shipment->>'state' <> 'DELIVERED' OR d.payment->>'state' <> 'APPROVED'
        OR d.shipment->>'trackingCode' <> 'TRACK-1'
        OR d.shipment->>'shippedAt' IS NULL OR d.shipment->>'outForDeliveryAt' IS NULL
-       OR d.shipment->>'deliveredAt' IS NULL OR jsonb_array_length(d.shipment->'history') <> 6
+       OR d.shipment->>'deliveredAt' IS NULL OR jsonb_array_length(d.shipment->'history') <> 5
        OR d.available_actions->>'cancel' <> 'false' THEN
         RAISE EXCEPTION 'delivered shipment lifecycle mismatch';
     END IF;

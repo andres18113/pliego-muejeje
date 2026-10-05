@@ -1,0 +1,15 @@
+{
+  "date": "2026-10-04",
+  "scope": "259 digital edition candidates with valid covers",
+  "user_authorization": "Tienes autorización para usar precios simulados de demostración; no necesitamos precios comerciales reales.",
+  "kind": "SIMULATED/DEMO",
+  "currency": "USD",
+  "algorithm_version": "PLIEGO-DEMO-PRICE-v1",
+  "seed": "UTF-8 of version, newline, edition format, newline, stable candidate_id",
+  "bucket": "First eight SHA-256 hex digits interpreted as an integer, modulo 21 for EBOOK or 28 for AUDIOBOOK",
+  "ebook_price": "4.99 + bucket USD, two decimal places",
+  "audiobook_price": "7.99 + bucket USD, two decimal places",
+  "commercial_price_claim": false,
+  "public_demo_label_required": true,
+  "publication_status": "PENDING"
+}

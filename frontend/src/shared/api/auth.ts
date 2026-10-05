@@ -48,7 +48,7 @@ export async function register(body: RegisterRequest) {
   if (error) {
     throw toApiRequestError(response.status, error, "No pudimos crear tu cuenta", "Revisa tus datos e inténtalo otra vez.");
   }
-  if (!data?.customerId || data.state !== "ACTIVE") {
+  if (!data?.customerId || data.state !== "PENDING_VERIFICATION") {
     throw toApiRequestError(502, {}, "No pudimos crear tu cuenta", "La respuesta del servidor está incompleta. Inténtalo otra vez.");
   }
   return data;

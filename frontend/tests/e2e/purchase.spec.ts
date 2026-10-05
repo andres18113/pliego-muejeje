@@ -1,5 +1,11 @@
 import { expect, test, type Page, type Route } from "@playwright/test";
 
+/** Account pages are reached from the header's account menu. */
+async function openAccountSection(page: import("@playwright/test").Page, name: "Perfil" | "Direcciones" | "Favoritos" | "Pedidos") {
+  await page.getByRole("button", { name: "Menú de cuenta" }).click();
+  await page.getByRole("menuitem", { name, exact: true }).click();
+}
+
 const edition = {
   editionId: "42",
   bookId: "17",
@@ -35,6 +41,7 @@ class FakePliego {
   lines: Line[] = [];
   addresses: Record<string, unknown>[] = [];
   orders: Order[] = [];
+  checkoutAttempts = new Map<string, Order>();
   addPosts = 0;
   checkoutPosts = 0;
   loseNextCheckoutResponse = false;
@@ -79,11 +86,15 @@ class FakePliego {
       body: JSON.stringify({ type: `urn:pliego:problem:${code}`, title, status, detail, code, traceId: "e2e" }),
     });
 
+    if (/^\/checkout\/attempts\/[^/]+\/resolve$/.test(path) && method === "POST") {
+      const order = this.checkoutAttempts.get(path.split("/")[3]);
+      return ok(order ? { state: "CREATED", order: { orderId: order.orderId, orderState: order.orderState, paymentState: order.paymentState, total: order.total, paymentReference: order.reference } } : { state: "NOT_CREATED", order: null });
+    }
     if (path === "/auth/refresh") return route.fulfill({ status: 204 });
     if (path === "/auth/login") {
       return ok({ accessToken: "e2e-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" } });
     }
-    if (path === "/me" && method === "GET") return ok({ customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE" });
+    if (path === "/me" && method === "GET") return ok({ customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (path === "/reference/countries") return ok([{ code: "EC", name: "Ecuador" }, { code: "CO", name: "Colombia" }]);
     if (path === "/reference/transfer-details") return ok({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
     if (path === "/catalog/categories") return ok({ items: [{ slug: "narrativa", name: "Narrativa", parentSlug: null }] });
@@ -145,6 +156,7 @@ class FakePliego {
         quantity,
       };
       this.orders.unshift(order);
+      this.checkoutAttempts.set(request.headers()["idempotency-key"], order);
       if (approved) {
         this.stock -= quantity;
         this.lines = [];
@@ -156,7 +168,13 @@ class FakePliego {
       return ok({ orderId: order.orderId, orderState: order.orderState, paymentState: order.paymentState, total: order.total, paymentReference: order.reference }, 201);
     }
     if (path === "/orders") {
-      return ok({ items: this.orders.map((order) => ({ orderId: order.orderId, orderState: order.orderState, total: order.total, paymentState: order.paymentState })), page: 0, pageSize: 5, totalCount: String(this.orders.length) });
+      return ok({ items: this.orders.map((order) => ({
+        orderId: order.orderId, createdAt: "2026-09-27T21:50:06Z", orderState: order.orderState, total: order.total, paymentState: order.paymentState,
+        purchaseState: order.orderState === "CANCELLED" ? "CANCELLED" : "CONFIRMED", fulfillmentMethod: "HOME_DELIVERY",
+        shipmentState: order.orderState === "CANCELLED" ? "CANCELLED" : "PENDING", estimatedDeliveryFrom: null, estimatedDeliveryTo: null,
+        itemCount: 1, unitCount: order.quantity, itemSummary: [{ orderItemId: "1", title: edition.title, format: "PAPERBACK", quantity: order.quantity }],
+        invoiceState: null, invoicePdfAvailable: false, invoiceXmlAvailable: false,
+      })), page: 0, pageSize: 5, totalCount: String(this.orders.length) });
     }
     const orderMatch = /^\/orders\/(\d+)$/.exec(path);
     if (orderMatch) {
@@ -171,6 +189,17 @@ class FakePliego {
         address: { recipient: "Ana Pérez", line1: "Av. Amazonas 100", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567" },
         payment: { method: order.method, state: order.paymentState, amount: order.total, reference: order.reference },
         stateHistory: [],
+        // API v1.0.8 projections; the server, not the client, decides cancellation.
+        purchaseState: order.orderState === "CANCELLED" ? "CANCELLED" : "CONFIRMED",
+        fulfillment: { method: "HOME_DELIVERY" },
+        shipment: {
+          shipmentId: order.orderId, state: order.orderState === "CANCELLED" ? "CANCELLED" : "PENDING", carrier: null, trackingCode: null, trackingUrl: null,
+          estimatedDeliveryFrom: null, estimatedDeliveryTo: null, createdAt: "2026-09-27T21:50:06Z", preparingAt: null, shippedAt: null,
+          outForDeliveryAt: null, deliveredAt: null, canceledAt: null, history: [],
+        },
+        invoice: null,
+        creditNotes: [],
+        availableActions: { cancel: order.orderState === "CONFIRMED", changeShippingAddress: false },
       });
     }
     return fail(404, "NOT_FOUND", "Recurso no encontrado", path);
@@ -184,7 +213,7 @@ async function signInAndAdd(page: Page, api: FakePliego, screenshots?: { pending
   await page.getByLabel("Contraseña").fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/catalog\/editions\/42$/);
-  const addButton = page.locator(".detail-purchase .button-primary");
+  const addButton = page.locator("main.detail-route .button-primary");
   const pageBox = () => addButton.evaluate((button) => {
     const rect = button.getBoundingClientRect();
     return { x: rect.left + window.scrollX, y: rect.top + window.scrollY, width: rect.width, height: rect.height };
@@ -218,12 +247,14 @@ async function signInAndAdd(page: Page, api: FakePliego, screenshots?: { pending
 }
 
 async function saveFirstAddress(page: Page) {
+  await page.getByRole("button", { name: "Añadir dirección" }).click();
+  await expect(page.getByRole("dialog", { name: "Nueva dirección" })).toBeVisible();
   await page.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
   await page.getByLabel("Ciudad").fill("Quito");
   await page.getByLabel("Provincia").fill("Pichincha");
   await page.getByLabel("Teléfono de contacto").fill("0991234567");
   await page.getByRole("button", { name: "Guardar dirección" }).click();
-  await expect(page.locator(".checkout-selected-address")).toContainText("Casa");
+  await expect(page.locator('[data-purchase="selected-address"]')).toContainText("Av. Amazonas 100");
 }
 
 async function expectNoHorizontalOverflow(page: Page) {
@@ -242,16 +273,17 @@ for (const viewport of [{ name: "desktop", width: 1280, height: 900 }, { name: "
       added: testInfo.outputPath("edition-added.png"),
       cart: testInfo.outputPath("cart-open.png"),
     });
-    await page.getByRole("button", { name: "Agregar una unidad de Cien años de soledad" }).click();
+    await page.getByRole("combobox", { name: "Cantidad de Cien años de soledad" }).click();
+    await page.getByRole("option", { name: "2" }).click();
     await expect(page.getByText("Cantidad actualizada: 2 unidades.")).toBeVisible();
-    await expect(page.locator(".purchase-total dd")).toHaveText(/37,00/);
+    await expect(page.locator('[data-purchase="total"] dd')).toHaveText(/37,00/);
     await expectNoHorizontalOverflow(page);
 
     await page.getByRole("link", { name: "Continuar con la compra" }).click();
     await expect(page.getByRole("heading", { level: 1, name: "Finalizar compra" })).toBeVisible();
     await saveFirstAddress(page);
-    await page.locator(".payment-method-option").filter({ hasText: "Tarjeta" }).click();
-    await expect(page.getByText("Proceso de compra seguro")).toBeVisible();
+    await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Tarjeta" }).click();
+    await expect(page.getByRole("dialog", { name: "Tarjeta de crédito o débito" })).toBeVisible();
     for (const brand of ["Visa", "Mastercard", "American Express", "Diners Club"]) {
       await expect(page.getByRole("img", { name: brand })).toBeVisible();
     }
@@ -259,18 +291,30 @@ for (const viewport of [{ name: "desktop", width: 1280, height: 900 }, { name: "
     await page.screenshot({ path: testInfo.outputPath("card-ready.png"), fullPage: true });
     await page.getByLabel("Número de tarjeta").fill("4111 1111 1111 1111");
     await page.getByLabel("Caducidad (MM/AA)").fill("12/30");
-    await page.getByLabel("Código de seguridad").fill("123");
+    await page.getByLabel("Código de seguridad", { exact: true }).fill("123");
     await page.getByLabel("Nombre en la tarjeta").fill("Ana Pérez");
+    await page.getByRole("button", { name: "Usar esta tarjeta" }).click();
+    await expect(page.locator('[data-purchase="chosen-payment"]')).toContainText("Visa-1111");
+    await expect(page.getByRole("button", { name: "Cambiar método de pago" })).toBeFocused();
     await expectNoHorizontalOverflow(page);
-    await page.getByRole("button", { name: /Pagar/ }).click();
+    await page.screenshot({ path: testInfo.outputPath("card-chosen.png"), fullPage: true });
+    await page.getByRole("button", { name: "Hacer pedido" }).click();
 
-    await expect(page.locator(".checkout-submit [role='status']")).toContainText("Procesando tu pago");
+    await expect(page.locator('[data-purchase="summary"] [role="status"]')).toContainText("Creando tu pedido simulado");
     await expect(page).toHaveURL(/\/orders\/700$/);
-    await expect(page.getByRole("heading", { level: 1, name: "Pedido N.° 700 confirmado" })).toBeFocused();
-    await page.getByText("Pago", { exact: true }).click();
-    await expect(page.getByText("SIM-e2e-0")).toBeVisible();
+    // Confirmation separates the immediate destination/action from the commercial information below.
+    await expect(page.getByRole("heading", { level: 1, name: "Es momento de celebrar" })).toBeFocused();
+    await expect(page.locator('[data-confirmation="details"]')).not.toContainText("SIM-e2e-0");
+    await expect(page.locator('[data-confirmation="fulfillment"]')).toContainText(edition.title);
+    await expect(page.locator('[data-purchase="total"] dd')).toHaveText(/37,00/);
+    await expectNoHorizontalOverflow(page);
+    await page.screenshot({ path: testInfo.outputPath("confirmation.png"), fullPage: true });
+    await page.getByRole("complementary", { name: "Tu pedido" }).getByRole("link", { name: "Ver pedido completo" }).click();
+    await expect(page.getByRole("heading", { level: 2, name: "Pedido confirmado" })).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Detalle del pedido" })).toBeVisible();
+    await expect(page.getByText("SIM-e2e-0")).toHaveCount(0);
     await expect(page.getByText("4111")).toHaveCount(0);
-    await expect(page.getByRole("link", { name: /^Carrito/ })).toContainText("0");
+    await expect(page.getByRole("banner").getByRole("link", { name: /^Carrito/ })).toContainText("0");
     await expectNoHorizontalOverflow(page);
     expect(api.checkoutPosts).toBe(1);
     expect(api.stock).toBe(3);
@@ -283,11 +327,11 @@ test("advances valid card details as they are typed without moving focus for inv
   await signInAndAdd(page, api);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
-  await page.locator(".payment-method-option").filter({ hasText: "Tarjeta" }).click();
+  await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Tarjeta" }).click();
 
   const number = page.getByLabel("Número de tarjeta");
   const expiry = page.getByLabel("Caducidad (MM/AA)");
-  const cvv = page.getByLabel("Código de seguridad");
+  const cvv = page.getByLabel("Código de seguridad", { exact: true });
   await number.pressSequentially("4111111111111110");
   await expect(number).toBeFocused();
   await number.fill("");
@@ -315,7 +359,7 @@ test("keeps transactional feedback available with reduced motion enabled", async
   await expect(page.getByRole("heading", { level: 1, name: "Tu carrito" })).toBeFocused();
 });
 
-test("keeps account, address book, and orders on the same type system at all target widths", async ({ page }) => {
+test("keeps purchase steps and the Account family on their type systems at all target widths", async ({ page }) => {
   const api = new FakePliego();
   await api.install(page);
   await signInAndAdd(page, api);
@@ -326,7 +370,8 @@ test("keeps account, address book, and orders on the same type system at all tar
     { width: 390, height: 844 },
     { width: 320, height: 720 },
   ];
-  const verifySurface = async (heading: string) => {
+  // Purchase steps and the Account family both title pages in the functional face (Account at 600).
+  const verifySurface = async (heading: string, weight = "700") => {
     const title = page.getByRole("heading", { level: 1, name: heading });
     for (const viewport of viewports) {
       await page.setViewportSize(viewport);
@@ -336,19 +381,18 @@ test("keeps account, address book, and orders on the same type system at all tar
         return { family: style.fontFamily, weight: style.fontWeight };
       });
       expect(typography.family).toContain("Roboto Flex");
-      expect(typography.weight).toBe("700");
+      expect(typography.weight).toBe(weight);
       await expectNoHorizontalOverflow(page);
     }
   };
 
   await verifySurface("Tu carrito");
-  await page.getByRole("button", { name: "Menú de cuenta" }).click();
-  await page.getByRole("menuitem", { name: /Mi cuenta/ }).click();
-  await verifySurface("Mi cuenta");
-  await page.getByRole("link", { name: "Direcciones" }).click();
-  await verifySurface("Mis direcciones");
-  await page.getByRole("link", { name: "Mis pedidos" }).click();
-  await verifySurface("Mis pedidos");
+  await openAccountSection(page, "Perfil");
+  await verifySurface("Mi perfil", "600");
+  await openAccountSection(page, "Direcciones");
+  await verifySurface("Direcciones", "600");
+  await openAccountSection(page, "Pedidos");
+  await verifySurface("Mis pedidos", "600");
 });
 
 test("a rejected simulated payment leaves the cart active for a deliberate new attempt", async ({ page }) => {
@@ -359,11 +403,11 @@ test("a rejected simulated payment leaves the cart active for a deliberate new a
   await signInAndAdd(page, api);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
-  await page.locator(".payment-method-option").filter({ hasText: "Transferencia" }).click();
-  await page.getByRole("button", { name: /Pagar/ }).click();
+  await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
+  await page.getByRole("button", { name: "Hacer pedido" }).click();
 
-  await expect(page.getByRole("heading", { level: 1, name: "No pudimos completar el pago" })).toBeVisible();
-  await expect(page.getByText("Referencia de pago")).toHaveCount(0);
+  await expect(page.getByRole("heading", { level: 1, name: "El pago no se completó" })).toBeVisible();
+  await expect(page.getByText("Referencia", { exact: true })).toHaveCount(0);
   await page.getByRole("link", { name: "Revisar el carrito" }).click();
   await expect(page.getByRole("link", { name: "Cien años de soledad" })).toBeVisible();
   expect(api.stock).toBe(5);
@@ -378,17 +422,17 @@ test("a lost checkout response is reconciled through orders without replaying th
   await signInAndAdd(page, api);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
-  await page.locator(".payment-method-option").filter({ hasText: "Transferencia" }).click();
-  await page.getByRole("button", { name: /Pagar/ }).click();
+  await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
+  await page.getByRole("button", { name: "Hacer pedido" }).click();
 
   const unknown = page.getByRole("heading", { name: "No pudimos confirmar si se creó tu pedido." });
   await expect(unknown).toBeVisible();
-  await page.getByRole("button", { name: /Pagar/ }).click({ force: true });
+  await page.getByRole("button", { name: "Hacer pedido" }).click({ force: true });
   expect(api.checkoutPosts).toBe(1);
 
-  await page.getByRole("button", { name: "Consultar mis pedidos" }).click();
+  await page.getByRole("button", { name: "Consultar resultado" }).click();
   await expect(page).toHaveURL(/\/orders\/700$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Pedido N.° 700 confirmado" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Es momento de celebrar" })).toBeVisible();
   expect(api.checkoutPosts).toBe(1);
 });
 
@@ -399,9 +443,9 @@ test("a stock change at checkout refreshes the cart and names the affected item"
   await signInAndAdd(page, api);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
-  await page.locator(".payment-method-option").filter({ hasText: "Transferencia" }).click();
+  await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
   api.stock = 0;
-  await page.getByRole("button", { name: /Pagar/ }).click();
+  await page.getByRole("button", { name: "Hacer pedido" }).click();
 
   // The pre-submit read sees availability change, so nothing is sent.
   await expect(page.getByRole("heading", { name: "Tu carrito cambió." })).toBeVisible();

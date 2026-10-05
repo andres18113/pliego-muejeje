@@ -1,0 +1,120 @@
+/* Mi perfil: identity first, compact enough that the identity and every field with its action fit
+   the first desktop viewport. The reader (a small member of PLIEGO's character family) and the name
+   lead on a bounded mist scene; the data reads as calm text on one paper sheet. Editing is inline:
+   the value becomes a rounded field in the same place and size, Guardar/Cancelar take Editar's
+   slot, and nothing else on the page changes. */
+.profile { display: grid; justify-items: center; gap: 14px; width: 100%; min-width: 0; }
+
+.identity {
+  display: grid; justify-items: center; gap: 8px; width: min(100%, 760px); min-width: 0;
+  padding: 18px clamp(20px, 4vw, 40px) 20px; border-radius: 28px; background: var(--acc-mist); text-align: center;
+}
+.identityCopy { display: grid; gap: 4px; min-width: 0; }
+.name { max-width: 20ch; margin: 0; color: var(--acc-ink); font: 700 clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem)/1.04 var(--acc-display); letter-spacing: -.05em; overflow-wrap: anywhere; text-wrap: balance; }
+.tagline { margin: 0; color: var(--acc-muted); font-size: 1rem; line-height: 1.45; text-wrap: balance; }
+
+/* The reader: Home's character family at profile scale, lowered eyes on an open book. */
+.avatar { display: block; width: clamp(88px, 8vw, 104px); height: auto; overflow: visible; }
+.avatarStop { fill: var(--store-yellow, #f3df83); }
+.avatarFigure { transform-box: view-box; transform-origin: 160px 560px; transform: rotate(-4deg); }
+.avatarBody { fill: var(--store-blue, #283da8); }
+.avatarFold { fill: var(--store-yellow, #f3df83); }
+.avatarMark { fill: none; stroke: #fbfaf6; stroke-width: 9; stroke-linecap: round; }
+.avatarPage { fill: #fbfaf6; stroke: #1d2c86; stroke-width: 5; stroke-linejoin: round; }
+.avatarLines { fill: none; stroke: color-mix(in srgb, #283da8 32%, #fbfaf6); stroke-width: 5; stroke-linecap: round; }
+@media (prefers-reduced-motion: no-preference) {
+  /* One settling lean when the profile opens; never loops (as on the Home). */
+  .avatarFigure { animation: profile-reader-lean 900ms cubic-bezier(.32, .94, .6, 1) 150ms both; }
+}
+@keyframes profile-reader-lean { from { transform: rotate(0deg); } to { transform: rotate(-4deg); } }
+
+/* Read-only facts: one paper sheet; on desktop each field is one line — label, value, action. */
+.facts { display: grid; width: min(100%, 760px); min-width: 0; margin: 0; padding: 4px clamp(16px, 3vw, 28px); border-radius: 24px; background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line); list-style: none; }
+.fact {
+  display: grid; grid-template-columns: minmax(8.5rem, 10rem) minmax(0, 1fr) auto; grid-template-areas: "label value action" ". feedback feedback";
+  align-items: center; column-gap: 20px; min-width: 0; min-height: 60px; padding: 8px 0;
+}
+.fact + .fact { border-top: 1.5px solid color-mix(in srgb, var(--acc-line) 70%, transparent); }
+.factLabel { grid-area: label; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
+.factValue { grid-area: value; margin: 0; min-width: 0; color: var(--acc-ink); font-size: 1.0625rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.factValue[data-empty] { color: var(--acc-muted); font-weight: 400; }
+
+.edit.edit {
+  grid-area: action; display: inline-flex; align-items: center; gap: 6px; justify-self: end; min-height: 44px; margin-right: -10px; padding: 0 12px 0 10px;
+  border: 0; border-radius: 999px; background: transparent; color: var(--acc-blue); font-weight: 600; text-decoration: none;
+  transition: background-color 140ms var(--acc-ease);
+}
+.edit.edit:hover:not(:disabled) { background: var(--acc-mist); color: var(--acc-blue); }
+.edit.edit:focus-visible, .save:focus-visible, .cancel:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
+.edit.edit:disabled { color: var(--acc-muted); opacity: .45; cursor: not-allowed; }
+
+/* Inline edit: the form occupies the value and action cells of the same row. */
+.inline { grid-column: value / action; grid-row: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; column-gap: 20px; min-width: 0; }
+.fact[data-editing] { align-items: start; }
+.fact[data-editing] .factLabel { padding-top: 11px; color: var(--acc-blue); }
+.inlineFields { display: grid; gap: 6px; min-width: 0; max-width: 26rem; }
+.inlineActions { display: flex; align-items: center; gap: 4px; margin-right: -10px; min-height: 44px; }
+
+/* The value becomes a rounded field in the same place: the PLIEGO pill (as the header's search field),
+   paper surface and hairline edge; its text starts exactly where the read-only value stood. */
+.input {
+  width: calc(100% + 14px); min-width: 0; min-height: 44px; margin-left: -14px; padding: 8px 14px; border: 1.5px solid var(--acc-line); border-radius: 999px;
+  background: var(--acc-paper); color: var(--acc-ink); font: inherit; font-size: 1.0625rem; font-weight: 500; font-variant-numeric: tabular-nums;
+  transition: border-color 140ms var(--acc-ease), box-shadow 140ms var(--acc-ease);
+}
+.input::placeholder { color: var(--acc-muted); font-weight: 400; opacity: 1; }
+.input:hover { border-color: color-mix(in srgb, var(--acc-blue) 45%, var(--acc-line)); }
+.input:focus { outline: none; }
+.input:focus-visible { border-color: var(--acc-blue); box-shadow: 0 0 0 3px color-mix(in srgb, var(--acc-blue) 18%, transparent); }
+.input[aria-invalid="true"] { border-color: var(--error, #9b2c2c); }
+/* A second field's label speaks like the row labels; every helper line (note, help, error, draft) like one helper. */
+.subLabel { margin-top: 6px; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
+.inlineNote { margin: 2px 0 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+.inlineFields :global(.field-error), .inlineFields :global(.field-help) { font-size: .8125rem; line-height: 1.4; }
+.inlineFields :global(.field-error) { color: var(--error, #9b2c2c); font-weight: 600; }
+.inlineFields :global(.field-help) { color: var(--acc-muted); }
+
+/* The phone keeps its country picker inside the same rounded field. */
+.phone :global(.international-phone) {
+  width: calc(100% + 14px); margin-left: -14px; overflow: hidden; border: 1.5px solid var(--acc-line); border-radius: 999px;
+  background: var(--acc-paper); box-shadow: none; transition: border-color 140ms var(--acc-ease), box-shadow 140ms var(--acc-ease);
+  /* The value's typography, set once on the control: prefix and number inherit it. */
+  font-size: 1.0625rem; font-weight: 500;
+}
+.phone :global(.international-phone:hover) { border-color: color-mix(in srgb, var(--acc-blue) 45%, var(--acc-line)); }
+.phone :global(.international-phone:focus-within) { border-color: var(--acc-blue); outline: none; box-shadow: 0 0 0 3px color-mix(in srgb, var(--acc-blue) 18%, transparent); }
+/* The shared phone control keeps its own prefix and focus; here it only follows the pill and the value size. */
+
+.save, .cancel { display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; border: 0; border-radius: 999px; font: inherit; font-size: .9375rem; font-weight: 600; cursor: pointer; transition: background-color 140ms var(--acc-ease); }
+.save { background: var(--acc-blue); color: var(--acc-on-blue); }
+.save:hover { background: var(--acc-blue-hover); }
+.cancel { background: transparent; color: var(--acc-ink); }
+.cancel:hover { background: var(--acc-mist); }
+.save[aria-disabled="true"], .cancel[aria-disabled="true"] { cursor: progress; }
+
+.feedback { grid-area: feedback; display: flex; align-items: center; gap: 6px; margin: 2px 0 0; color: var(--acc-ink); font-size: .875rem; line-height: 1.4; overflow-wrap: anywhere; }
+.inlineFields > .feedback { grid-area: auto; font-size: .8125rem; }
+.draftNotice { grid-area: auto; grid-column: 1 / -1; max-width: 45ch; color: var(--acc-muted); font-size: .8125rem; }
+.feedback :global(.material-symbol) { flex: none; color: var(--acc-blue); }
+.feedbackError { color: var(--error, #9b2c2c); }
+.feedbackError :global(.material-symbol) { color: currentColor; }
+
+/* Phones: label over value; the action stays on the label line. Editing keeps the same rhythm. */
+@media (max-width: 639px) {
+  .identity { border-radius: 22px; padding-block: 18px 20px; }
+  .facts { border-radius: 20px; padding-inline: 16px; }
+  .fact { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label action" "value value" "feedback feedback"; row-gap: 2px; min-height: 0; padding: 12px 0; }
+  .inline { grid-column: 1 / -1; grid-row: 2; grid-template-columns: minmax(0, 1fr); row-gap: 8px; }
+  .inlineFields { max-width: none; }
+  .input, .phone :global(.international-phone) { width: 100%; margin-left: 0; }
+  .inlineActions { justify-content: flex-start; margin: 0 0 0 -8px; }
+  .fact[data-editing] .factLabel { padding-top: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .edit.edit, .input, .save, .cancel { transition: none; } }
+@media (forced-colors: active) {
+  .identity, .facts { border: 1px solid CanvasText; }
+  .avatarBody, .avatarStop, .avatarFold { fill: CanvasText; }
+  .avatarMark { stroke: Canvas; }
+  .input, .phone :global(.international-phone) { border-color: CanvasText; }
+  .save, .cancel { border: 1px solid ButtonText; }
+}

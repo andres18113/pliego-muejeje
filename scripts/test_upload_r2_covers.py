@@ -46,6 +46,21 @@ class FakeS3:
 
 
 class UploadR2CoversTests(unittest.TestCase):
+    def test_batch_sync_preserves_explicit_historical_objects_without_uploading_them(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            manifest, directory = self.make_fixture(Path(temporary))
+            assets, prefix = upload_module.load_upload_plan(manifest, directory)
+            client = FakeS3()
+            old_key = 'covers/editions/historical.webp'
+            client.objects[old_key] = {'Body': b'history', 'ContentLength': 7, 'ContentType': 'image/webp',
+                                      'CacheControl': upload_module.CACHE_CONTROL, 'Metadata': {'sha256': 'old'}}
+            original = dict(client.objects[old_key])
+            result = upload_module.sync_assets(client, 'bucket', assets, prefix, allowed_existing_keys={old_key})
+            self.assertEqual(result['errors'], [])
+            self.assertEqual(result['uploaded'], 2)
+            self.assertEqual(client.put_count, 2)
+            self.assertEqual(client.objects[old_key], original)
+
     def make_fixture(self, root: Path) -> tuple[Path, Path]:
         assets_dir = root / "r2"
         object_dir = assets_dir / "covers/editions"

@@ -1,0 +1,37 @@
+...E........E..EE.
+======================================================================
+ERROR: test_demo_price_is_opt_in_deterministic_and_not_a_commercial_claim (test_prepare_digital_editions.DigitalPreparationTests.test_demo_price_is_opt_in_deterministic_and_not_a_commercial_claim)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 97, in test_demo_price_is_opt_in_deterministic_and_not_a_commercial_claim
+    first = prepare_record(raw, "candidate-42", snapshot(), False, allow_demo_price=True)
+TypeError: prepare_record() got an unexpected keyword argument 'allow_demo_price'
+
+======================================================================
+ERROR: test_primary_proof_of_distinct_authorship_resolves_same_title_without_merge (test_prepare_digital_editions.DigitalPreparationTests.test_primary_proof_of_distinct_authorship_resolves_same_title_without_merge)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 129, in test_primary_proof_of_distinct_authorship_resolves_same_title_without_merge
+    result = prepare_record(raw, "candidate-42", snapshot([existing]), False, verified_metadata=evidence)
+TypeError: prepare_record() got an unexpected keyword argument 'verified_metadata'
+
+======================================================================
+ERROR: test_unproven_publisher_language_or_conflict_never_become_metadata (test_prepare_digital_editions.DigitalPreparationTests.test_unproven_publisher_language_or_conflict_never_become_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 118, in test_unproven_publisher_language_or_conflict_never_become_metadata
+    result = prepare_record(record(), "candidate-42", snapshot(), False, verified_metadata=evidence)
+TypeError: prepare_record() got an unexpected keyword argument 'verified_metadata'
+
+======================================================================
+ERROR: test_verified_metadata_and_authorized_demo_price_remove_only_real_blockers (test_prepare_digital_editions.DigitalPreparationTests.test_verified_metadata_and_authorized_demo_price_remove_only_real_blockers)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 110, in test_verified_metadata_and_authorized_demo_price_remove_only_real_blockers
+    result = prepare_record(record(), "candidate-42", snapshot(), False, allow_demo_price=True, verified_metadata=evidence)
+TypeError: prepare_record() got an unexpected keyword argument 'allow_demo_price'
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.059s
+
+FAILED (errors=4)

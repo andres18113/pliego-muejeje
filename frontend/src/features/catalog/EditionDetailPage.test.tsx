@@ -59,12 +59,43 @@ function editionResponse(available = true, overrides: Record<string, unknown> = 
 
 function expectSharedChrome() {
   expect(screen.getByRole("link", { name: "PLIEGO, ir al inicio" })).toBeInTheDocument();
-  expect(screen.getByText("Catálogo público")).toBeInTheDocument();
+  expect(screen.getByRole("navigation", { name: "Navegación del pie de página" })).toBeInTheDocument();
 }
 
 afterEach(() => vi.unstubAllGlobals());
 
 describe("EditionDetailPage", () => {
+  it.each(["PAPERBACK", "EBOOK"])("shows the server offer and effective price for %s without recalculating it", async format => {
+    vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
+      const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+      return Promise.resolve(url.pathname.endsWith("/categories")
+        ? new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } })
+        : editionResponse(true, { format, price: "13.50", offer: { offerId: "4", originalPrice: "18.50", discountAmount: "5.00", effectivePrice: "13.50", savingsAmount: "5.00", savingsPercent: "27.03", daysRemaining: 2, endingSoon: true, startsAt: "2026-01-01T00:00:00Z", endsAt: "2027-01-01T00:00:00Z" } }));
+    }));
+    renderDetail();
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    expect(screen.getByText(/Precio anterior/)).toHaveTextContent("18,50");
+    expect(screen.getByText(/Descuento/)).toHaveTextContent("5,00");
+    expect(screen.getByText(/13,50/)).toBeInTheDocument();
+  });
+
+  it.each([
+    { format: "EBOOK", ebookFileFormat: "EPUB", audioDurationSeconds: null, narrators: [], expected: ["EPUB"] },
+    { format: "AUDIOBOOK", ebookFileFormat: null, audioDurationSeconds: 3661, narrators: ["Ana Voz", "Luis Voz"], expected: ["1 h 1 min 1 s", "Ana Voz, Luis Voz"] },
+  ])("shows only supplied $format technical metadata without unsupported access actions", async ({ expected, ...metadata }) => {
+    vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
+      const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+      return Promise.resolve(url.pathname.endsWith("/categories")
+        ? new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } })
+        : editionResponse(true, { ...metadata, isbn13: null, pageCount: null }));
+    }));
+    renderDetail();
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    expected.forEach(value => expect(screen.getByText(value)).toBeInTheDocument());
+    expect(screen.queryByRole("button", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
+  });
+
   it("keeps the shared header and footer while loading and after success", async () => {
     let releaseRequest: ((response: Response) => void) | undefined;
     const pendingResponse = new Promise<Response>((resolve) => { releaseRequest = resolve; });

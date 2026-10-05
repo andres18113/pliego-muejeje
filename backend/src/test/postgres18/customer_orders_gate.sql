@@ -50,7 +50,7 @@ BEGIN
 
     SELECT * INTO v_page FROM pliego.fn_customer_orders(v_a,0,1);
     IF v_page.order_id IS DISTINCT FROM v_order OR v_page.total_count <> 1
-       OR v_page.total <> 43.35 OR v_page.payment_state <> 'APPROVED' THEN
+       OR v_page.total <> 49.85 OR v_page.payment_state <> 'APPROVED' THEN
         RAISE EXCEPTION 'own-order summary mismatch';
     END IF;
     IF EXISTS (SELECT 1 FROM pliego.fn_customer_orders(v_b,0,20)) THEN
@@ -60,7 +60,7 @@ BEGIN
     SELECT * INTO v_detail FROM pliego.fn_customer_order_detail(v_a,v_order);
     v_items := v_detail.items;
     v_address_snapshot := v_detail.address;
-    IF v_detail.order_id IS DISTINCT FROM v_order OR v_detail.total <> 43.35
+    IF v_detail.order_id IS DISTINCT FROM v_order OR v_detail.total <> 49.85
        OR jsonb_array_length(v_items) <> 2
        OR v_items->0->>'title' <> 'Libro I9'
        OR v_items->0->>'authors' <> 'Autor I9'
@@ -73,7 +73,7 @@ BEGIN
        OR v_address_snapshot->>'destinatario' <> 'Cliente A'
        OR v_address_snapshot->>'direccion_linea1' <> 'Calle original'
        OR v_detail.payment->>'state' <> 'APPROVED'
-       OR (v_detail.payment->>'amount')::NUMERIC <> 43.35
+       OR (v_detail.payment->>'amount')::NUMERIC <> 49.85
        OR jsonb_array_length(v_detail.state_history) <> 2 THEN
         RAISE EXCEPTION 'own-order detail snapshot mismatch';
     END IF;
@@ -141,7 +141,7 @@ BEGIN
         v_transition_order,v_previous,v_transition_state);
     CALL pliego.sp_order_cancel(v_a,v_preparing_order,v_cancel_order,v_previous,
         v_cancel_state,v_refund_state,v_restored);
-    IF v_previous <> 'PREPARING' OR v_cancel_state <> 'CANCELLED'
+    IF v_previous <> 'CONFIRMED' OR v_cancel_state <> 'CANCELLED'
        OR v_refund_state <> 'REFUNDED' OR v_restored <> 1
        OR (SELECT stock_actual FROM pliego.inventario WHERE edicion_id=v_ed1) <> 5 THEN
         RAISE EXCEPTION 'PREPARING cancellation effects mismatch';
@@ -168,10 +168,10 @@ BEGIN
     -- Rejected checkout kept its cart ACTIVE; a new approved attempt checks it out.
     CALL pliego.sp_checkout(v_a,v_address,'TRANSFER','APPROVED',
         v_shipped_order,v_order_state,v_payment_state,v_total,v_ref);
-    CALL pliego.sp_order_change_status(v_admin,v_shipped_order,'PREPARING',
-        v_transition_order,v_previous,v_transition_state);
-    CALL pliego.sp_order_change_status(v_admin,v_shipped_order,'SHIPPED',
-        v_transition_order,v_previous,v_transition_state);
+    UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '3 minutes',
+        transito_desde=transito_desde-INTERVAL '3 minutes',reparto_desde=reparto_desde-INTERVAL '3 minutes',
+        entrega_desde=entrega_desde-INTERVAL '3 minutes' WHERE pedido_id=v_shipped_order;
+    CALL pliego.sp_home_delivery_reconcile(v_shipped_order);
     BEGIN
         CALL pliego.sp_order_cancel(v_a,v_shipped_order,v_cancel_order,v_previous,
             v_cancel_state,v_refund_state,v_restored);
@@ -182,12 +182,10 @@ BEGIN
     CALL pliego.sp_cart_add_item(v_a,v_ed1,1,v_cart,v_item,v_qty);
     CALL pliego.sp_checkout(v_a,v_address,'TRANSFER','APPROVED',
         v_delivered_order,v_order_state,v_payment_state,v_total,v_ref);
-    CALL pliego.sp_order_change_status(v_admin,v_delivered_order,'PREPARING',
-        v_transition_order,v_previous,v_transition_state);
-    CALL pliego.sp_order_change_status(v_admin,v_delivered_order,'SHIPPED',
-        v_transition_order,v_previous,v_transition_state);
-    CALL pliego.sp_order_change_status(v_admin,v_delivered_order,'DELIVERED',
-        v_transition_order,v_previous,v_transition_state);
+    UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '7 minutes',
+        transito_desde=transito_desde-INTERVAL '7 minutes',reparto_desde=reparto_desde-INTERVAL '7 minutes',
+        entrega_desde=entrega_desde-INTERVAL '7 minutes' WHERE pedido_id=v_delivered_order;
+    CALL pliego.sp_home_delivery_reconcile(v_delivered_order);
     BEGIN
         CALL pliego.sp_order_cancel(v_a,v_delivered_order,v_cancel_order,v_previous,
             v_cancel_state,v_refund_state,v_restored);

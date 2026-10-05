@@ -1,0 +1,80 @@
+{
+  "status": "PASS",
+  "preflight": {
+    "local_images_staging_skus_manifest": "PASS",
+    "R2_historical_objects_present": 55,
+    "new_R2_existing_before": 0,
+    "proposed_sku_collisions_before": 0,
+    "excluded42_reserved_and_absent_from_DB": true
+  },
+  "R2": {
+    "new_objects": 259,
+    "total_active_objects": 314,
+    "hash_metadata_content_type_cache_control_verified": 259,
+    "public_get_hash_headers_verified": 259,
+    "historical_objects_unchanged": 55,
+    "retry_objects_skipped": 259
+  },
+  "import": {
+    "imported": 259,
+    "EBOOK": 142,
+    "AUDIOBOOK": 117,
+    "manifest_total": 314,
+    "sku_assignments": 315,
+    "historical_preserved": 55,
+    "excluded_sku": "PLG-BK-000042",
+    "stock_created": 0,
+    "application_deployed": false
+  },
+  "API": {
+    "EBOOK": 142,
+    "AUDIOBOOK": 117,
+    "public_total": 314,
+    "details_checked": 259,
+    "searches_checked": 259,
+    "availability_checked": 259,
+    "format_filter_counts_exact": true,
+    "CDN_urls_checked": 259,
+    "cart_add_get_remove_checked": 259,
+    "quantity_two_rejected_both_formats": true,
+    "test_cart_empty": true
+  },
+  "database": {
+    "digital_count": 259,
+    "ebook_count": 142,
+    "audio_count": 117,
+    "digital_inventory_rows": 0,
+    "reserved42_rows": 0
+  },
+  "pipeline": {
+    "active_staging_files": 21,
+    "source_records_including_reserved42": 315,
+    "public_manifest_records": 314,
+    "no_orphans_or_conflicts": true,
+    "original_cover_evidence_files_preserved_except_promoted_manifest_registry": 835,
+    "old_55_manifest_records_exact": true,
+    "old_56_registry_assignments_exact": true,
+    "held_191_untouched": true
+  },
+  "DEMO": {
+    "prices_preserved": 259,
+    "audio_duration_narrators_preserved": 117,
+    "provenance_retained_by_SKU": true
+  },
+  "tests": {
+    "passed": 93,
+    "failed": 0
+  },
+  "autofix": {
+    "cause": "Cloudflare1010 for default Python User-Agent, reproduced on historical assets too",
+    "fix": "Browser HTTP verification headers only; no Cloudflare/app changes",
+    "RED_GREEN": true
+  },
+  "operations": {
+    "frontend_modified": false,
+    "commit": false,
+    "push": false,
+    "application_deploy": false
+  },
+  "remaining_blockers": []
+}

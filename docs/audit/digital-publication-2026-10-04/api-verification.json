@@ -1,0 +1,4680 @@
+{
+  "public_total": 314,
+  "details_search_availability_checked": 259,
+  "EBOOK": 142,
+  "AUDIOBOOK": 117,
+  "records": [
+    {
+      "sku": "PLG-BK-000110",
+      "editionId": "92",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000110-ac9f914c84ec.webp"
+    },
+    {
+      "sku": "PLG-BK-000276",
+      "editionId": "93",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000276-e9bdb93ec6a2.webp"
+    },
+    {
+      "sku": "PLG-BK-000142",
+      "editionId": "94",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000142-935a58d015ec.webp"
+    },
+    {
+      "sku": "PLG-BK-000297",
+      "editionId": "95",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000297-d53a94099b73.webp"
+    },
+    {
+      "sku": "PLG-BK-000264",
+      "editionId": "96",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000264-433fd5eb0390.webp"
+    },
+    {
+      "sku": "PLG-BK-000203",
+      "editionId": "97",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000203-25cff4a036eb.webp"
+    },
+    {
+      "sku": "PLG-BK-000245",
+      "editionId": "98",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000245-92907d30e20f.webp"
+    },
+    {
+      "sku": "PLG-BK-000060",
+      "editionId": "99",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000060-16d2c0d9c6d8.webp"
+    },
+    {
+      "sku": "PLG-BK-000235",
+      "editionId": "100",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000235-2a2079e80066.webp"
+    },
+    {
+      "sku": "PLG-BK-000076",
+      "editionId": "101",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000076-64cdab670767.webp"
+    },
+    {
+      "sku": "PLG-BK-000225",
+      "editionId": "102",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000225-dffd36793130.webp"
+    },
+    {
+      "sku": "PLG-BK-000077",
+      "editionId": "103",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000077-bcbed14ca4b3.webp"
+    },
+    {
+      "sku": "PLG-BK-000126",
+      "editionId": "104",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000126-bd4320bb20ca.webp"
+    },
+    {
+      "sku": "PLG-BK-000125",
+      "editionId": "105",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000125-f32d987659b8.webp"
+    },
+    {
+      "sku": "PLG-BK-000118",
+      "editionId": "106",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000118-a04a3956529a.webp"
+    },
+    {
+      "sku": "PLG-BK-000157",
+      "editionId": "107",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000157-22d3b5098413.webp"
+    },
+    {
+      "sku": "PLG-BK-000279",
+      "editionId": "108",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000279-b796105c841a.webp"
+    },
+    {
+      "sku": "PLG-BK-000213",
+      "editionId": "109",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000213-853ef54ef269.webp"
+    },
+    {
+      "sku": "PLG-BK-000149",
+      "editionId": "110",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000149-0ed92a8415bd.webp"
+    },
+    {
+      "sku": "PLG-BK-000293",
+      "editionId": "111",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000293-f71e1ed0b221.webp"
+    },
+    {
+      "sku": "PLG-BK-000261",
+      "editionId": "112",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000261-69f79ed9bb60.webp"
+    },
+    {
+      "sku": "PLG-BK-000074",
+      "editionId": "113",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000074-ee028ef97b6f.webp"
+    },
+    {
+      "sku": "PLG-BK-000209",
+      "editionId": "114",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000209-b8d36d2f4bac.webp"
+    },
+    {
+      "sku": "PLG-BK-000174",
+      "editionId": "115",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000174-b1c667819ae2.webp"
+    },
+    {
+      "sku": "PLG-BK-000147",
+      "editionId": "116",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000147-30f48d3d61d3.webp"
+    },
+    {
+      "sku": "PLG-BK-000130",
+      "editionId": "117",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000130-2c8e064eb148.webp"
+    },
+    {
+      "sku": "PLG-BK-000111",
+      "editionId": "118",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000111-870e7e1508c4.webp"
+    },
+    {
+      "sku": "PLG-BK-000138",
+      "editionId": "119",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000138-3fff7a27405c.webp"
+    },
+    {
+      "sku": "PLG-BK-000236",
+      "editionId": "120",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000236-18ee9ca1bac5.webp"
+    },
+    {
+      "sku": "PLG-BK-000281",
+      "editionId": "121",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000281-f0010914a82a.webp"
+    },
+    {
+      "sku": "PLG-BK-000189",
+      "editionId": "122",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000189-6c3078d525c8.webp"
+    },
+    {
+      "sku": "PLG-BK-000232",
+      "editionId": "123",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000232-12ee27948af1.webp"
+    },
+    {
+      "sku": "PLG-BK-000275",
+      "editionId": "124",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000275-5fab167f30ea.webp"
+    },
+    {
+      "sku": "PLG-BK-000098",
+      "editionId": "125",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000098-21037a93cc95.webp"
+    },
+    {
+      "sku": "PLG-BK-000124",
+      "editionId": "126",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000124-e833b5aaa786.webp"
+    },
+    {
+      "sku": "PLG-BK-000205",
+      "editionId": "127",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000205-24ac0fa65c3e.webp"
+    },
+    {
+      "sku": "PLG-BK-000070",
+      "editionId": "128",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000070-2a66cdd32506.webp"
+    },
+    {
+      "sku": "PLG-BK-000269",
+      "editionId": "129",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000269-249cbac036bc.webp"
+    },
+    {
+      "sku": "PLG-BK-000202",
+      "editionId": "130",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000202-890d7fda61bc.webp"
+    },
+    {
+      "sku": "PLG-BK-000143",
+      "editionId": "131",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000143-bd1bcd21e34f.webp"
+    },
+    {
+      "sku": "PLG-BK-000080",
+      "editionId": "132",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000080-9b4680698e44.webp"
+    },
+    {
+      "sku": "PLG-BK-000231",
+      "editionId": "133",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000231-f6b7c7b69ea9.webp"
+    },
+    {
+      "sku": "PLG-BK-000158",
+      "editionId": "134",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000158-81a4e74c8cc7.webp"
+    },
+    {
+      "sku": "PLG-BK-000310",
+      "editionId": "135",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000310-14670e5cb004.webp"
+    },
+    {
+      "sku": "PLG-BK-000153",
+      "editionId": "136",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000153-79bf819e2014.webp"
+    },
+    {
+      "sku": "PLG-BK-000151",
+      "editionId": "137",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000151-7f1bd2431a36.webp"
+    },
+    {
+      "sku": "PLG-BK-000292",
+      "editionId": "138",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000292-948278f0422d.webp"
+    },
+    {
+      "sku": "PLG-BK-000146",
+      "editionId": "139",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000146-59ffc760b61c.webp"
+    },
+    {
+      "sku": "PLG-BK-000230",
+      "editionId": "140",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000230-141504459915.webp"
+    },
+    {
+      "sku": "PLG-BK-000177",
+      "editionId": "141",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000177-681c86f70122.webp"
+    },
+    {
+      "sku": "PLG-BK-000312",
+      "editionId": "142",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000312-d2eccebff072.webp"
+    },
+    {
+      "sku": "PLG-BK-000224",
+      "editionId": "143",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000224-6426eb226d4c.webp"
+    },
+    {
+      "sku": "PLG-BK-000058",
+      "editionId": "144",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000058-7c38a4a76226.webp"
+    },
+    {
+      "sku": "PLG-BK-000190",
+      "editionId": "145",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000190-b801a08072fc.webp"
+    },
+    {
+      "sku": "PLG-BK-000314",
+      "editionId": "146",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000314-6a218fbec916.webp"
+    },
+    {
+      "sku": "PLG-BK-000135",
+      "editionId": "147",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000135-0fde21aafefb.webp"
+    },
+    {
+      "sku": "PLG-BK-000266",
+      "editionId": "148",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000266-79c8593fef38.webp"
+    },
+    {
+      "sku": "PLG-BK-000109",
+      "editionId": "149",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000109-353e0c91e77e.webp"
+    },
+    {
+      "sku": "PLG-BK-000101",
+      "editionId": "150",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000101-a4799f49d644.webp"
+    },
+    {
+      "sku": "PLG-BK-000141",
+      "editionId": "151",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000141-e9e58003fe2e.webp"
+    },
+    {
+      "sku": "PLG-BK-000184",
+      "editionId": "152",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000184-1d927443fb51.webp"
+    },
+    {
+      "sku": "PLG-BK-000067",
+      "editionId": "153",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000067-32b4139c5145.webp"
+    },
+    {
+      "sku": "PLG-BK-000059",
+      "editionId": "154",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000059-b983d1e8997c.webp"
+    },
+    {
+      "sku": "PLG-BK-000075",
+      "editionId": "155",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000075-af92c3c98a60.webp"
+    },
+    {
+      "sku": "PLG-BK-000282",
+      "editionId": "156",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000282-54fbe7390903.webp"
+    },
+    {
+      "sku": "PLG-BK-000066",
+      "editionId": "157",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000066-7f29f1be1dba.webp"
+    },
+    {
+      "sku": "PLG-BK-000192",
+      "editionId": "158",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000192-9b1865917a87.webp"
+    },
+    {
+      "sku": "PLG-BK-000097",
+      "editionId": "159",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000097-252735602ded.webp"
+    },
+    {
+      "sku": "PLG-BK-000291",
+      "editionId": "160",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000291-6198efed4b8a.webp"
+    },
+    {
+      "sku": "PLG-BK-000263",
+      "editionId": "161",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000263-07bf4e5269f8.webp"
+    },
+    {
+      "sku": "PLG-BK-000166",
+      "editionId": "162",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000166-67ab06f44893.webp"
+    },
+    {
+      "sku": "PLG-BK-000285",
+      "editionId": "163",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000285-da4d8fcb7da8.webp"
+    },
+    {
+      "sku": "PLG-BK-000113",
+      "editionId": "164",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000113-21854e1958e2.webp"
+    },
+    {
+      "sku": "PLG-BK-000187",
+      "editionId": "165",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000187-b8c006b332ef.webp"
+    },
+    {
+      "sku": "PLG-BK-000120",
+      "editionId": "166",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000120-c48bb14e87e9.webp"
+    },
+    {
+      "sku": "PLG-BK-000188",
+      "editionId": "167",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000188-b87a9677da54.webp"
+    },
+    {
+      "sku": "PLG-BK-000084",
+      "editionId": "168",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000084-97fdee242717.webp"
+    },
+    {
+      "sku": "PLG-BK-000294",
+      "editionId": "169",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000294-acc75ef16ee0.webp"
+    },
+    {
+      "sku": "PLG-BK-000161",
+      "editionId": "170",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000161-488c35a2b7c5.webp"
+    },
+    {
+      "sku": "PLG-BK-000108",
+      "editionId": "171",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000108-00a4ab0116ed.webp"
+    },
+    {
+      "sku": "PLG-BK-000086",
+      "editionId": "172",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000086-5edf32cd1df2.webp"
+    },
+    {
+      "sku": "PLG-BK-000260",
+      "editionId": "173",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000260-5281d2d3194f.webp"
+    },
+    {
+      "sku": "PLG-BK-000132",
+      "editionId": "174",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000132-5683a3d9c137.webp"
+    },
+    {
+      "sku": "PLG-BK-000087",
+      "editionId": "175",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000087-63870356e278.webp"
+    },
+    {
+      "sku": "PLG-BK-000287",
+      "editionId": "176",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000287-722365f7ef94.webp"
+    },
+    {
+      "sku": "PLG-BK-000284",
+      "editionId": "177",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000284-eda150b61f88.webp"
+    },
+    {
+      "sku": "PLG-BK-000175",
+      "editionId": "178",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000175-6c0130a2bcbb.webp"
+    },
+    {
+      "sku": "PLG-BK-000088",
+      "editionId": "179",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000088-2b7be887c7c8.webp"
+    },
+    {
+      "sku": "PLG-BK-000164",
+      "editionId": "180",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000164-ade7eef81da3.webp"
+    },
+    {
+      "sku": "PLG-BK-000195",
+      "editionId": "181",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000195-218bfe19d268.webp"
+    },
+    {
+      "sku": "PLG-BK-000243",
+      "editionId": "182",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000243-096bd96eb56b.webp"
+    },
+    {
+      "sku": "PLG-BK-000137",
+      "editionId": "183",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000137-9dc4cc95d9ed.webp"
+    },
+    {
+      "sku": "PLG-BK-000197",
+      "editionId": "184",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000197-433f0fa20eba.webp"
+    },
+    {
+      "sku": "PLG-BK-000196",
+      "editionId": "185",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000196-6611a0c58763.webp"
+    },
+    {
+      "sku": "PLG-BK-000242",
+      "editionId": "186",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000242-00cff5b9af71.webp"
+    },
+    {
+      "sku": "PLG-BK-000172",
+      "editionId": "187",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000172-2748cac3f392.webp"
+    },
+    {
+      "sku": "PLG-BK-000117",
+      "editionId": "188",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000117-ebd90f80a420.webp"
+    },
+    {
+      "sku": "PLG-BK-000227",
+      "editionId": "189",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000227-2d968ef9c5ce.webp"
+    },
+    {
+      "sku": "PLG-BK-000096",
+      "editionId": "190",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000096-0514e5a68d10.webp"
+    },
+    {
+      "sku": "PLG-BK-000253",
+      "editionId": "191",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000253-0efaea019901.webp"
+    },
+    {
+      "sku": "PLG-BK-000180",
+      "editionId": "192",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000180-ea23342e2f9f.webp"
+    },
+    {
+      "sku": "PLG-BK-000307",
+      "editionId": "193",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000307-31d3bd8f7f5e.webp"
+    },
+    {
+      "sku": "PLG-BK-000248",
+      "editionId": "194",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000248-d2c57fec7558.webp"
+    },
+    {
+      "sku": "PLG-BK-000288",
+      "editionId": "195",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000288-7ef8d42c7ece.webp"
+    },
+    {
+      "sku": "PLG-BK-000139",
+      "editionId": "196",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000139-0577aa4a63da.webp"
+    },
+    {
+      "sku": "PLG-BK-000306",
+      "editionId": "197",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000306-1de08b400baa.webp"
+    },
+    {
+      "sku": "PLG-BK-000181",
+      "editionId": "198",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000181-dc3388e7233f.webp"
+    },
+    {
+      "sku": "PLG-BK-000301",
+      "editionId": "199",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000301-b4d903c8565a.webp"
+    },
+    {
+      "sku": "PLG-BK-000186",
+      "editionId": "200",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000186-9739b5421e24.webp"
+    },
+    {
+      "sku": "PLG-BK-000273",
+      "editionId": "201",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000273-497e835cc887.webp"
+    },
+    {
+      "sku": "PLG-BK-000127",
+      "editionId": "202",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000127-ffa793621bb8.webp"
+    },
+    {
+      "sku": "PLG-BK-000251",
+      "editionId": "203",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000251-7f01ee48ea8d.webp"
+    },
+    {
+      "sku": "PLG-BK-000234",
+      "editionId": "204",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000234-62323918bca1.webp"
+    },
+    {
+      "sku": "PLG-BK-000305",
+      "editionId": "205",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000305-2a2f8a7c99a5.webp"
+    },
+    {
+      "sku": "PLG-BK-000207",
+      "editionId": "206",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000207-63a1f77b776f.webp"
+    },
+    {
+      "sku": "PLG-BK-000162",
+      "editionId": "207",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000162-872499629629.webp"
+    },
+    {
+      "sku": "PLG-BK-000311",
+      "editionId": "208",
+      "format": "AUDIOBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000311-85ebfef37037.webp"
+    },
+    {
+      "sku": "PLG-BK-000228",
+      "editionId": "209",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000228-8507b04ffd87.webp"
+    },
+    {
+      "sku": "PLG-BK-000193",
+      "editionId": "210",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000193-e2f0422878b8.webp"
+    },
+    {
+      "sku": "PLG-BK-000277",
+      "editionId": "211",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000277-b15a169548a7.webp"
+    },
+    {
+      "sku": "PLG-BK-000106",
+      "editionId": "212",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000106-9ecfb3b6390c.webp"
+    },
+    {
+      "sku": "PLG-BK-000090",
+      "editionId": "213",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000090-c55041c65552.webp"
+    },
+    {
+      "sku": "PLG-BK-000214",
+      "editionId": "214",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000214-78187b088c4d.webp"
+    },
+    {
+      "sku": "PLG-BK-000057",
+      "editionId": "215",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000057-be83a24f55ad.webp"
+    },
+    {
+      "sku": "PLG-BK-000134",
+      "editionId": "216",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000134-9268b1a4c117.webp"
+    },
+    {
+      "sku": "PLG-BK-000123",
+      "editionId": "217",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000123-c33004170d08.webp"
+    },
+    {
+      "sku": "PLG-BK-000168",
+      "editionId": "218",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000168-25a3be237af1.webp"
+    },
+    {
+      "sku": "PLG-BK-000247",
+      "editionId": "219",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000247-1a7dfbc68d41.webp"
+    },
+    {
+      "sku": "PLG-BK-000304",
+      "editionId": "220",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000304-c03b700f5169.webp"
+    },
+    {
+      "sku": "PLG-BK-000296",
+      "editionId": "221",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000296-af243b6bf32e.webp"
+    },
+    {
+      "sku": "PLG-BK-000100",
+      "editionId": "222",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000100-6784c3d88265.webp"
+    },
+    {
+      "sku": "PLG-BK-000270",
+      "editionId": "223",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000270-57ef6068224d.webp"
+    },
+    {
+      "sku": "PLG-BK-000107",
+      "editionId": "224",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000107-c2d4399eb827.webp"
+    },
+    {
+      "sku": "PLG-BK-000239",
+      "editionId": "225",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000239-2b125333d4e2.webp"
+    },
+    {
+      "sku": "PLG-BK-000062",
+      "editionId": "226",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000062-e88a08f37c2b.webp"
+    },
+    {
+      "sku": "PLG-BK-000221",
+      "editionId": "227",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000221-05fdbc3220b2.webp"
+    },
+    {
+      "sku": "PLG-BK-000315",
+      "editionId": "228",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000315-f3e62e45c613.webp"
+    },
+    {
+      "sku": "PLG-BK-000178",
+      "editionId": "229",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000178-787489c9d123.webp"
+    },
+    {
+      "sku": "PLG-BK-000185",
+      "editionId": "230",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000185-48d1658c6ccd.webp"
+    },
+    {
+      "sku": "PLG-BK-000283",
+      "editionId": "231",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000283-b557443a890a.webp"
+    },
+    {
+      "sku": "PLG-BK-000229",
+      "editionId": "232",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000229-72508ec17e22.webp"
+    },
+    {
+      "sku": "PLG-BK-000085",
+      "editionId": "233",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000085-468d68de2243.webp"
+    },
+    {
+      "sku": "PLG-BK-000122",
+      "editionId": "234",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000122-71eb30d75bb6.webp"
+    },
+    {
+      "sku": "PLG-BK-000208",
+      "editionId": "235",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000208-4d567317e96b.webp"
+    },
+    {
+      "sku": "PLG-BK-000160",
+      "editionId": "236",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000160-6ad93478f274.webp"
+    },
+    {
+      "sku": "PLG-BK-000089",
+      "editionId": "237",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000089-32dd5cb64b3f.webp"
+    },
+    {
+      "sku": "PLG-BK-000159",
+      "editionId": "238",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000159-58e37f41bc49.webp"
+    },
+    {
+      "sku": "PLG-BK-000079",
+      "editionId": "239",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000079-816d46cebf7b.webp"
+    },
+    {
+      "sku": "PLG-BK-000163",
+      "editionId": "240",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000163-71dccfe55039.webp"
+    },
+    {
+      "sku": "PLG-BK-000095",
+      "editionId": "241",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000095-c1fc97a5fb10.webp"
+    },
+    {
+      "sku": "PLG-BK-000171",
+      "editionId": "242",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000171-58dd5140a39b.webp"
+    },
+    {
+      "sku": "PLG-BK-000200",
+      "editionId": "243",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000200-a635647e9da1.webp"
+    },
+    {
+      "sku": "PLG-BK-000286",
+      "editionId": "244",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000286-dd71e85f0e2b.webp"
+    },
+    {
+      "sku": "PLG-BK-000064",
+      "editionId": "245",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000064-2dda50c069e4.webp"
+    },
+    {
+      "sku": "PLG-BK-000268",
+      "editionId": "246",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000268-ec90efc8b0dc.webp"
+    },
+    {
+      "sku": "PLG-BK-000092",
+      "editionId": "247",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000092-b990f4163170.webp"
+    },
+    {
+      "sku": "PLG-BK-000131",
+      "editionId": "248",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000131-12169133b04c.webp"
+    },
+    {
+      "sku": "PLG-BK-000313",
+      "editionId": "249",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000313-89dfe0bb7b00.webp"
+    },
+    {
+      "sku": "PLG-BK-000176",
+      "editionId": "250",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000176-43612a5f46cc.webp"
+    },
+    {
+      "sku": "PLG-BK-000128",
+      "editionId": "251",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000128-ce33116a7386.webp"
+    },
+    {
+      "sku": "PLG-BK-000105",
+      "editionId": "252",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000105-fdb50b221f87.webp"
+    },
+    {
+      "sku": "PLG-BK-000152",
+      "editionId": "253",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000152-602d19f2051a.webp"
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "editionId": "254",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000063-e67d4964b228.webp"
+    },
+    {
+      "sku": "PLG-BK-000240",
+      "editionId": "255",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000240-b171e32573ef.webp"
+    },
+    {
+      "sku": "PLG-BK-000289",
+      "editionId": "256",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000289-5b39c0f5ef04.webp"
+    },
+    {
+      "sku": "PLG-BK-000308",
+      "editionId": "257",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000308-2377abf961da.webp"
+    },
+    {
+      "sku": "PLG-BK-000104",
+      "editionId": "258",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000104-0483d9221173.webp"
+    },
+    {
+      "sku": "PLG-BK-000179",
+      "editionId": "259",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000179-1f00d4d34440.webp"
+    },
+    {
+      "sku": "PLG-BK-000116",
+      "editionId": "260",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000116-c88b07e0857a.webp"
+    },
+    {
+      "sku": "PLG-BK-000278",
+      "editionId": "261",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000278-6f4e1379b685.webp"
+    },
+    {
+      "sku": "PLG-BK-000206",
+      "editionId": "262",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000206-7966b219bf65.webp"
+    },
+    {
+      "sku": "PLG-BK-000222",
+      "editionId": "263",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000222-45d8513c57dc.webp"
+    },
+    {
+      "sku": "PLG-BK-000258",
+      "editionId": "264",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000258-beda915bf876.webp"
+    },
+    {
+      "sku": "PLG-BK-000295",
+      "editionId": "265",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000295-618a75c8351b.webp"
+    },
+    {
+      "sku": "PLG-BK-000198",
+      "editionId": "266",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000198-ef3829174e0c.webp"
+    },
+    {
+      "sku": "PLG-BK-000219",
+      "editionId": "267",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000219-956214e1f8b4.webp"
+    },
+    {
+      "sku": "PLG-BK-000078",
+      "editionId": "268",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000078-80788f22e0b2.webp"
+    },
+    {
+      "sku": "PLG-BK-000300",
+      "editionId": "269",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000300-d64be50e7abe.webp"
+    },
+    {
+      "sku": "PLG-BK-000115",
+      "editionId": "270",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000115-57f2d1b6ea0b.webp"
+    },
+    {
+      "sku": "PLG-BK-000155",
+      "editionId": "271",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000155-8384029381f6.webp"
+    },
+    {
+      "sku": "PLG-BK-000216",
+      "editionId": "272",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000216-65b4347a7cee.webp"
+    },
+    {
+      "sku": "PLG-BK-000274",
+      "editionId": "273",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000274-c0445dc61963.webp"
+    },
+    {
+      "sku": "PLG-BK-000133",
+      "editionId": "274",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000133-6a01a754c671.webp"
+    },
+    {
+      "sku": "PLG-BK-000071",
+      "editionId": "275",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000071-ed7c865479a4.webp"
+    },
+    {
+      "sku": "PLG-BK-000280",
+      "editionId": "276",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000280-14035be61c6a.webp"
+    },
+    {
+      "sku": "PLG-BK-000267",
+      "editionId": "277",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000267-c12642555b78.webp"
+    },
+    {
+      "sku": "PLG-BK-000226",
+      "editionId": "278",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000226-ae97df848a1b.webp"
+    },
+    {
+      "sku": "PLG-BK-000102",
+      "editionId": "279",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000102-53ec33644484.webp"
+    },
+    {
+      "sku": "PLG-BK-000112",
+      "editionId": "280",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000112-5eb032eac09e.webp"
+    },
+    {
+      "sku": "PLG-BK-000257",
+      "editionId": "281",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000257-a5497ba8f5f5.webp"
+    },
+    {
+      "sku": "PLG-BK-000103",
+      "editionId": "282",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000103-079083fdb362.webp"
+    },
+    {
+      "sku": "PLG-BK-000252",
+      "editionId": "283",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000252-70351687a006.webp"
+    },
+    {
+      "sku": "PLG-BK-000069",
+      "editionId": "284",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000069-3977629513e6.webp"
+    },
+    {
+      "sku": "PLG-BK-000244",
+      "editionId": "285",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp"
+    },
+    {
+      "sku": "PLG-BK-000182",
+      "editionId": "286",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000182-e20f67a9a1e0.webp"
+    },
+    {
+      "sku": "PLG-BK-000081",
+      "editionId": "287",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000081-241155985f6b.webp"
+    },
+    {
+      "sku": "PLG-BK-000259",
+      "editionId": "288",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000259-613a6d7ef62e.webp"
+    },
+    {
+      "sku": "PLG-BK-000173",
+      "editionId": "289",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000173-538c62787067.webp"
+    },
+    {
+      "sku": "PLG-BK-000241",
+      "editionId": "290",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000241-36ef6cfb95a2.webp"
+    },
+    {
+      "sku": "PLG-BK-000114",
+      "editionId": "291",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000114-fcd19dc85651.webp"
+    },
+    {
+      "sku": "PLG-BK-000082",
+      "editionId": "292",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000082-6653afc2da7a.webp"
+    },
+    {
+      "sku": "PLG-BK-000302",
+      "editionId": "293",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000302-18b9dbb8d3c3.webp"
+    },
+    {
+      "sku": "PLG-BK-000255",
+      "editionId": "294",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000255-b0c1e98ca45e.webp"
+    },
+    {
+      "sku": "PLG-BK-000167",
+      "editionId": "295",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000167-d70e0f473f32.webp"
+    },
+    {
+      "sku": "PLG-BK-000170",
+      "editionId": "296",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000170-7a3e08eac676.webp"
+    },
+    {
+      "sku": "PLG-BK-000250",
+      "editionId": "297",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000250-732a7fe04b7d.webp"
+    },
+    {
+      "sku": "PLG-BK-000211",
+      "editionId": "298",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000211-d31b45eeb5ec.webp"
+    },
+    {
+      "sku": "PLG-BK-000201",
+      "editionId": "299",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000201-3e670b0ab789.webp"
+    },
+    {
+      "sku": "PLG-BK-000194",
+      "editionId": "300",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000194-7d7e478237e7.webp"
+    },
+    {
+      "sku": "PLG-BK-000068",
+      "editionId": "301",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000068-0bae1dbd2d29.webp"
+    },
+    {
+      "sku": "PLG-BK-000256",
+      "editionId": "302",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000256-eb340eda0916.webp"
+    },
+    {
+      "sku": "PLG-BK-000093",
+      "editionId": "303",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000093-81deaded1284.webp"
+    },
+    {
+      "sku": "PLG-BK-000246",
+      "editionId": "304",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000246-1cf6d7c511c0.webp"
+    },
+    {
+      "sku": "PLG-BK-000238",
+      "editionId": "305",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000238-a32e3471545b.webp"
+    },
+    {
+      "sku": "PLG-BK-000065",
+      "editionId": "306",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000065-83b6d2fb5000.webp"
+    },
+    {
+      "sku": "PLG-BK-000223",
+      "editionId": "307",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000223-b97d0b7a925e.webp"
+    },
+    {
+      "sku": "PLG-BK-000094",
+      "editionId": "308",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000094-9e3687e0be51.webp"
+    },
+    {
+      "sku": "PLG-BK-000150",
+      "editionId": "309",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000150-37d3bf68f548.webp"
+    },
+    {
+      "sku": "PLG-BK-000083",
+      "editionId": "310",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000083-0fbeab76ed9d.webp"
+    },
+    {
+      "sku": "PLG-BK-000237",
+      "editionId": "311",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000237-92bef533d43e.webp"
+    },
+    {
+      "sku": "PLG-BK-000212",
+      "editionId": "312",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000212-4a54fe4ac78f.webp"
+    },
+    {
+      "sku": "PLG-BK-000091",
+      "editionId": "313",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000091-9a62dd0758d8.webp"
+    },
+    {
+      "sku": "PLG-BK-000217",
+      "editionId": "314",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000217-9c429e51343b.webp"
+    },
+    {
+      "sku": "PLG-BK-000265",
+      "editionId": "315",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000265-293ad579ad84.webp"
+    },
+    {
+      "sku": "PLG-BK-000073",
+      "editionId": "316",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000073-b44e6508e334.webp"
+    },
+    {
+      "sku": "PLG-BK-000254",
+      "editionId": "317",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000254-f9472c6d9b88.webp"
+    },
+    {
+      "sku": "PLG-BK-000169",
+      "editionId": "318",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000169-09f84dc38bd6.webp"
+    },
+    {
+      "sku": "PLG-BK-000121",
+      "editionId": "319",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000121-9bf6533fec2a.webp"
+    },
+    {
+      "sku": "PLG-BK-000215",
+      "editionId": "320",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000215-638adbd97519.webp"
+    },
+    {
+      "sku": "PLG-BK-000154",
+      "editionId": "321",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000154-40eeed0d457a.webp"
+    },
+    {
+      "sku": "PLG-BK-000119",
+      "editionId": "322",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000119-4ab919a3a5c5.webp"
+    },
+    {
+      "sku": "PLG-BK-000298",
+      "editionId": "323",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000298-fe522c3f4340.webp"
+    },
+    {
+      "sku": "PLG-BK-000061",
+      "editionId": "324",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000061-f57236bb6f98.webp"
+    },
+    {
+      "sku": "PLG-BK-000140",
+      "editionId": "325",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000140-ab0b39e4a661.webp"
+    },
+    {
+      "sku": "PLG-BK-000210",
+      "editionId": "326",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000210-4dc172de7701.webp"
+    },
+    {
+      "sku": "PLG-BK-000129",
+      "editionId": "327",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000129-89e8e2be2475.webp"
+    },
+    {
+      "sku": "PLG-BK-000145",
+      "editionId": "328",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000145-776fbe3ab216.webp"
+    },
+    {
+      "sku": "PLG-BK-000148",
+      "editionId": "329",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000148-6a53d3493ec1.webp"
+    },
+    {
+      "sku": "PLG-BK-000271",
+      "editionId": "330",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000271-033a945e5bac.webp"
+    },
+    {
+      "sku": "PLG-BK-000249",
+      "editionId": "331",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000249-a4b0aae242ac.webp"
+    },
+    {
+      "sku": "PLG-BK-000072",
+      "editionId": "332",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000072-65f7f9daff19.webp"
+    },
+    {
+      "sku": "PLG-BK-000218",
+      "editionId": "333",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000218-a18f342c9986.webp"
+    },
+    {
+      "sku": "PLG-BK-000165",
+      "editionId": "334",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000165-0ed89dde2b9c.webp"
+    },
+    {
+      "sku": "PLG-BK-000136",
+      "editionId": "335",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000136-f138f4adccd1.webp"
+    },
+    {
+      "sku": "PLG-BK-000199",
+      "editionId": "336",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000199-1b9a67187d35.webp"
+    },
+    {
+      "sku": "PLG-BK-000144",
+      "editionId": "337",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000144-ce836530b65f.webp"
+    },
+    {
+      "sku": "PLG-BK-000220",
+      "editionId": "338",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000220-47a264509afa.webp"
+    },
+    {
+      "sku": "PLG-BK-000204",
+      "editionId": "339",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000204-fc3b28c3f665.webp"
+    },
+    {
+      "sku": "PLG-BK-000290",
+      "editionId": "340",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000290-19da60012154.webp"
+    },
+    {
+      "sku": "PLG-BK-000303",
+      "editionId": "341",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000303-37c9e031cb0e.webp"
+    },
+    {
+      "sku": "PLG-BK-000183",
+      "editionId": "342",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000183-f4d194dabae6.webp"
+    },
+    {
+      "sku": "PLG-BK-000309",
+      "editionId": "343",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000309-9f8667bcf95e.webp"
+    },
+    {
+      "sku": "PLG-BK-000156",
+      "editionId": "344",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000156-e1d5bedd237a.webp"
+    },
+    {
+      "sku": "PLG-BK-000099",
+      "editionId": "345",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000099-35be0191f4c1.webp"
+    },
+    {
+      "sku": "PLG-BK-000272",
+      "editionId": "346",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000272-9378ba8d9f88.webp"
+    },
+    {
+      "sku": "PLG-BK-000299",
+      "editionId": "347",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000299-2a036cbc00f9.webp"
+    },
+    {
+      "sku": "PLG-BK-000233",
+      "editionId": "348",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000233-04d5f3c2e0af.webp"
+    },
+    {
+      "sku": "PLG-BK-000191",
+      "editionId": "349",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000191-142199180447.webp"
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "editionId": "350",
+      "format": "EBOOK",
+      "detail": true,
+      "search": true,
+      "available": true,
+      "stockActual": null,
+      "CDN_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000262-6feefd6a527d.webp"
+    }
+  ],
+  "cart_checks": [
+    {
+      "sku": "PLG-BK-000110",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000276",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000142",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000297",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000264",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000203",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000245",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000060",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000235",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000076",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000225",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000077",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000126",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000125",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000118",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000157",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000279",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000213",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000149",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000293",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000261",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000074",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000209",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000174",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000147",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000130",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000111",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000138",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000236",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000281",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000189",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000232",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000275",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000098",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000124",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000205",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000070",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000269",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000202",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000143",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000080",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000231",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000158",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000310",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000153",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000151",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000292",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000146",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000230",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000177",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000312",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000224",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000058",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000190",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000314",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000135",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000266",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000109",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000101",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000141",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000184",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000067",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000059",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000075",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000282",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000066",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000192",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000097",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000291",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000263",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000166",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000285",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000113",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000187",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000120",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000188",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000084",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000294",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000161",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000108",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000086",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000260",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000132",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000087",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000287",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000284",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000175",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000088",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000164",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000195",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000243",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000137",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000197",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000196",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000242",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000172",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000117",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000227",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000096",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000253",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000180",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000307",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000248",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000288",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000139",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000306",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000181",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000301",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000186",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000273",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000127",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000251",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000234",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000305",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000207",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000162",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000311",
+      "format": "AUDIOBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000228",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000193",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000277",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000106",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000090",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000214",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000057",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000134",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000123",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000168",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000247",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000304",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000296",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000100",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000270",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000107",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000239",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000062",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000221",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000315",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000178",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000185",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000283",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000229",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000085",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000122",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000208",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000160",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000089",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000159",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000079",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000163",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000095",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000171",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000200",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000286",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000064",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000268",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000092",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000131",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000313",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000176",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000128",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000105",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000152",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000240",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000289",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000308",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000104",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000179",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000116",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000278",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000206",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000222",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000258",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000295",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000198",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000219",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000078",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000300",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000115",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000155",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000216",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000274",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000133",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000071",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000280",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000267",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000226",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000102",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000112",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000257",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000103",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000252",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000069",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000244",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000182",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000081",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000259",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000173",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000241",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000114",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000082",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000302",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000255",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000167",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000170",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000250",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000211",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000201",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000194",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000068",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000256",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000093",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000246",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000238",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000065",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000223",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000094",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000150",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000083",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000237",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000212",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000091",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000217",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000265",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000073",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000254",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000169",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000121",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000215",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000154",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000119",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000298",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000061",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000140",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000210",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000129",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000145",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000148",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000271",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000249",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000072",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000218",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000165",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000136",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000199",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000144",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000220",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000204",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000290",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000303",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000183",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000309",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000156",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000099",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000272",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000299",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000233",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000191",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "format": "EBOOK",
+      "add_quantity1": true,
+      "available": true,
+      "price_exact": true,
+      "removed": true
+    }
+  ],
+  "cart_final_empty": true,
+  "database_readonly": {
+    "digital_count": 259,
+    "ebook_count": 142,
+    "audio_count": 117,
+    "digital_inventory_rows": 0,
+    "reserved42_rows": 0
+  }
+}

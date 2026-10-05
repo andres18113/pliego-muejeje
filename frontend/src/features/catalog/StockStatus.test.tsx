@@ -47,3 +47,13 @@ describe("StockStatus", () => {
     expect(screen.queryByText("Esta edición ya no está a la venta.")).not.toBeInTheDocument();
   });
 });
+
+it.each([true, false])("uses the approved quiet mark without altering accessible status (%s)", available => {
+  const { container, rerender } = render(<MantineProvider><StockStatus available={available} variant="quiet" /></MantineProvider>);
+  expect(screen.getByText(available ? "Disponible" : "No disponible")).toBeVisible();
+  expect(container.querySelector('[data-stockstatus-mark]')).toHaveAttribute("aria-hidden", "true");
+  expect(container.querySelector('.material-symbol')).toBeNull();
+  rerender(<MantineProvider><StockStatus available={!available} variant="quiet" /></MantineProvider>);
+  expect(screen.getByText(available ? "No disponible" : "Disponible")).toBeVisible();
+  expect(container.querySelector('[data-stockstatus]')).toHaveAttribute("data-state", available ? "unavailable" : "available");
+});

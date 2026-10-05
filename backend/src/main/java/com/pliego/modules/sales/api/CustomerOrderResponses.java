@@ -22,7 +22,7 @@ public final class CustomerOrderResponses {
             Payment payment, List<History> stateHistory, String purchaseState,
             PostPurchaseModels.Fulfillment fulfillment, PostPurchaseModels.Shipment shipment,
             PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
-            PostPurchaseModels.Actions availableActions) { }
+            PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount) { }
 
     public record Item(String orderItemId, String editionId, String sku, String isbn,
             String title, String authors, String publisher, String format, String language,

@@ -1,0 +1,2861 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-0fe3847a7ff875c7.webp",
+      "libro": {
+        "titulo": "El mundo de la psicología",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ardila, Rubén",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Manual Moderno",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000129",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000129-89e8e2be2475.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71138",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0fe3847a7ff875c7",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "325",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-767be6feb51aab02"
+        },
+        "author_bindings": [
+          {
+            "name": "Ardila, Rubén",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ardila, Rubén",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+            "observed_text": "Bogotá : El Manual Moderno, 2011.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "2cc2b8b6e2cb2af2bd2990f40fde78f0c7205246020238147bce4861ec34763c",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71138.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "2cc2b8b6e2cb2af2bd2990f40fde78f0c7205246020238147bce4861ec34763c",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71138.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71138",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 54,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71138",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/El mundo de la psicología - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-0fe3847a7ff875c7.webp",
+            "cover_sha256": "89e8e2be2475990bb8315173383dcd2a3c6b17eb749f69c1b35aa34e222a3bb1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ardila, Rubén",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 54,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71138",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/El mundo de la psicología - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-0fe3847a7ff875c7.webp",
+            "cover_sha256": "89e8e2be2475990bb8315173383dcd2a3c6b17eb749f69c1b35aa34e222a3bb1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 54,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71138",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/El mundo de la psicología - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-0fe3847a7ff875c7.webp",
+            "cover_sha256": "89e8e2be2475990bb8315173383dcd2a3c6b17eb749f69c1b35aa34e222a3bb1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 54,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71138",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/El mundo de la psicología - Ardila, Rubén.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-0fe3847a7ff875c7.webp",
+          "cover_sha256": "89e8e2be2475990bb8315173383dcd2a3c6b17eb749f69c1b35aa34e222a3bb1",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "327",
+        "imported_book_id": "325"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-13fe5aaddb7931dd.webp",
+      "libro": {
+        "titulo": "Estadística en psicología",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bologna, Eduardo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Brujas",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000145",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000145-776fbe3ab216.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78041",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-13fe5aaddb7931dd",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "326",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2a6db058bfa8ae91"
+        },
+        "author_bindings": [
+          {
+            "name": "Bologna, Eduardo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bologna, Eduardo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+            "observed_text": "Córdoba, Argentina : Editorial Brujas, 2010.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "8cfe2ce2d1aae464d34a0a5385cd66bf06ae91e3d9bd96d85b775e7f3ab14f47",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/78041.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "8cfe2ce2d1aae464d34a0a5385cd66bf06ae91e3d9bd96d85b775e7f3ab14f47",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/78041.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78041",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 55,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78041",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Estadística en psicología - Bologna, Eduardo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-13fe5aaddb7931dd.webp",
+            "cover_sha256": "776fbe3ab216c32e74b9b07bbddf1658f5b43fb4f8bcceed46141b78b4957bfa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bologna, Eduardo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 55,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78041",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Estadística en psicología - Bologna, Eduardo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-13fe5aaddb7931dd.webp",
+            "cover_sha256": "776fbe3ab216c32e74b9b07bbddf1658f5b43fb4f8bcceed46141b78b4957bfa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 55,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78041",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Estadística en psicología - Bologna, Eduardo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-13fe5aaddb7931dd.webp",
+            "cover_sha256": "776fbe3ab216c32e74b9b07bbddf1658f5b43fb4f8bcceed46141b78b4957bfa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 55,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78041",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Estadística en psicología - Bologna, Eduardo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-13fe5aaddb7931dd.webp",
+          "cover_sha256": "776fbe3ab216c32e74b9b07bbddf1658f5b43fb4f8bcceed46141b78b4957bfa",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "328",
+        "imported_book_id": "326"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-7f4b1c3b4d2275b4.webp",
+      "libro": {
+        "titulo": "Homosexualidad y psicología (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ardila, Rubén",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Manual Moderno",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000148",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000148-6a53d3493ec1.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71137",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-7f4b1c3b4d2275b4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "327",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-54ddf30cc6e03067"
+        },
+        "author_bindings": [
+          {
+            "name": "Ardila, Rubén",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ardila, Rubén",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+            "observed_text": "Bogotá : El Manual Moderno, 2008.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "39e207a3cb7dbee6e22cd601338d944d01ab4c439264ddd058a75ffd2269eaa4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71137.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "39e207a3cb7dbee6e22cd601338d944d01ab4c439264ddd058a75ffd2269eaa4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71137.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71137",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 56,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71137",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Homosexualidad y psicología (2a. ed.) - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-7f4b1c3b4d2275b4.webp",
+            "cover_sha256": "6a53d3493ec1e01ccf8d08d829f63ab9bde879751a7d38f7bce3995b98e00d18",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ardila, Rubén",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 56,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71137",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Homosexualidad y psicología (2a. ed.) - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-7f4b1c3b4d2275b4.webp",
+            "cover_sha256": "6a53d3493ec1e01ccf8d08d829f63ab9bde879751a7d38f7bce3995b98e00d18",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 56,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71137",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Homosexualidad y psicología (2a. ed.) - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-7f4b1c3b4d2275b4.webp",
+            "cover_sha256": "6a53d3493ec1e01ccf8d08d829f63ab9bde879751a7d38f7bce3995b98e00d18",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 56,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71137",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Homosexualidad y psicología (2a. ed.) - Ardila, Rubén.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-7f4b1c3b4d2275b4.webp",
+          "cover_sha256": "6a53d3493ec1e01ccf8d08d829f63ab9bde879751a7d38f7bce3995b98e00d18",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "329",
+        "imported_book_id": "327"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-9e5abbbd2405e7b5.webp",
+      "libro": {
+        "titulo": "La psicología y su pluralidad",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Colombo, María Elena",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Eudeba",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000271",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000271-033a945e5bac.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119841",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-9e5abbbd2405e7b5",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "328",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-43de0c566d60a454"
+        },
+        "author_bindings": [
+          {
+            "name": "Colombo, María Elena",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Colombo, María Elena",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+            "observed_text": "Buenos Aires : Eudeba, 2012.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "b5084ad826484959f77342d4b9d7b29e1772498225c739374f8326c3f7388141",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/119841.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "b5084ad826484959f77342d4b9d7b29e1772498225c739374f8326c3f7388141",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/119841.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119841",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 58,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/La psicología y su pluralidad - Colombo, María Elena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-9e5abbbd2405e7b5.webp",
+            "cover_sha256": "033a945e5bac6e5b6297091a4224b3a5ef088d1ef78ddb9c187bfacc71b6dddc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Colombo, María Elena",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 58,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/La psicología y su pluralidad - Colombo, María Elena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-9e5abbbd2405e7b5.webp",
+            "cover_sha256": "033a945e5bac6e5b6297091a4224b3a5ef088d1ef78ddb9c187bfacc71b6dddc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 58,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/La psicología y su pluralidad - Colombo, María Elena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-9e5abbbd2405e7b5.webp",
+            "cover_sha256": "033a945e5bac6e5b6297091a4224b3a5ef088d1ef78ddb9c187bfacc71b6dddc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 58,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119841",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/La psicología y su pluralidad - Colombo, María Elena.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-9e5abbbd2405e7b5.webp",
+          "cover_sha256": "033a945e5bac6e5b6297091a4224b3a5ef088d1ef78ddb9c187bfacc71b6dddc",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "330",
+        "imported_book_id": "328"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-a6d0ccd57418264c.webp",
+      "libro": {
+        "titulo": "Psicología clínica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sánchez Escobedo, Pedro Antonio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Manual Moderno",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000249",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000249-a4b0aae242ac.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100383",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a6d0ccd57418264c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "329",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-e7def9de8c6d802b"
+        },
+        "author_bindings": [
+          {
+            "name": "Sánchez Escobedo, Pedro Antonio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sánchez Escobedo, Pedro Antonio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+            "observed_text": "México, D.F. : Manual Moderno, 2008.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "baa20c850a7029751c70331c601308948a47fa2ea67aea84bf920a91ce77ea25",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/100383.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "baa20c850a7029751c70331c601308948a47fa2ea67aea84bf920a91ce77ea25",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/100383.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100383",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 59,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100383",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología clínica - Sánchez Escobedo, Pedro Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a6d0ccd57418264c.webp",
+            "cover_sha256": "a4b0aae242aca478c9f3280e1fead628fe604f23b52b2e072c8dd4ff944ba752",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sánchez Escobedo, Pedro Antonio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 59,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100383",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología clínica - Sánchez Escobedo, Pedro Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a6d0ccd57418264c.webp",
+            "cover_sha256": "a4b0aae242aca478c9f3280e1fead628fe604f23b52b2e072c8dd4ff944ba752",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 59,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100383",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología clínica - Sánchez Escobedo, Pedro Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a6d0ccd57418264c.webp",
+            "cover_sha256": "a4b0aae242aca478c9f3280e1fead628fe604f23b52b2e072c8dd4ff944ba752",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 59,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100383",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología clínica - Sánchez Escobedo, Pedro Antonio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a6d0ccd57418264c.webp",
+          "cover_sha256": "a4b0aae242aca478c9f3280e1fead628fe604f23b52b2e072c8dd4ff944ba752",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "331",
+        "imported_book_id": "329"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-a1526abacd1bdb70.webp",
+      "libro": {
+        "titulo": "Psicología de la competición",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Martín-Albo Lucas, José",
+            "orden": 1
+          },
+          {
+            "nombre": "Núñez Alonso, Juan Luis",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Wanceulen Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000072",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000072-65f7f9daff19.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60221",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a1526abacd1bdb70",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "330",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-1b3240ecfac6e383"
+        },
+        "author_bindings": [
+          {
+            "name": "Martín-Albo Lucas, José",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Núñez Alonso, Juan Luis",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Martín-Albo Lucas, José; Núñez Alonso, Juan Luis",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+            "observed_text": "Sevilla : Wanceulen Editorial, 2004.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "c59de5f307a649dd80eda3c3d36062f6c1a5ee705decba5a85a61a2eea1490bf",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/60221.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "c59de5f307a649dd80eda3c3d36062f6c1a5ee705decba5a85a61a2eea1490bf",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/60221.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60221",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 60,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60221",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la competición - Martín-Albo Lucas, José; Núñez Alonso, Juan Luis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a1526abacd1bdb70.webp",
+            "cover_sha256": "65f7f9daff19aeaad40ec3a0bc7cd10bac4870e8ae893f8d1841ef46c1d485a1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Martín-Albo Lucas, José; Núñez Alonso, Juan Luis",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 60,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60221",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la competición - Martín-Albo Lucas, José; Núñez Alonso, Juan Luis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a1526abacd1bdb70.webp",
+            "cover_sha256": "65f7f9daff19aeaad40ec3a0bc7cd10bac4870e8ae893f8d1841ef46c1d485a1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 60,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60221",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la competición - Martín-Albo Lucas, José; Núñez Alonso, Juan Luis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a1526abacd1bdb70.webp",
+            "cover_sha256": "65f7f9daff19aeaad40ec3a0bc7cd10bac4870e8ae893f8d1841ef46c1d485a1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 60,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60221",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología de la competición - Martín-Albo Lucas, José; Núñez Alonso, Juan Luis.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a1526abacd1bdb70.webp",
+          "cover_sha256": "65f7f9daff19aeaad40ec3a0bc7cd10bac4870e8ae893f8d1841ef46c1d485a1",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "332",
+        "imported_book_id": "330"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-d690a764a51c9691.webp",
+      "libro": {
+        "titulo": "Psicología de la personalidad",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bermúdez Moreno, José",
+            "orden": 1
+          },
+          {
+            "nombre": "Pérez-García, Ana María",
+            "orden": 2
+          },
+          {
+            "nombre": "Ruiz Caballero, José Antonio",
+            "orden": 3
+          },
+          {
+            "nombre": "Sanjuán Suárez, Pilar",
+            "orden": 4
+          },
+          {
+            "nombre": "Rueda Laffond, Beatriz",
+            "orden": 5
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional de Educación a Distancia",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000218",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000218-a18f342c9986.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48581",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-d690a764a51c9691",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "331",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-3b213afef6444b57"
+        },
+        "author_bindings": [
+          {
+            "name": "Bermúdez Moreno, José",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Pérez-García, Ana María",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Ruiz Caballero, José Antonio",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Sanjuán Suárez, Pilar",
+            "order": 4,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Rueda Laffond, Beatriz",
+            "order": 5,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bermúdez Moreno, José; Pérez-García, Ana María; Ruiz Caballero, José Antonio; Sanjuán Suárez, Pilar; Rueda Laffond, Beatriz",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+            "observed_text": "Madrid : Universidad Nacional de Educación a Distancia, 2011.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "ce9f9a58d3c7e5efde07a871d2cf2e7c04acb5fb34bcc0b379569f5369715ebf",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/48581.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "ce9f9a58d3c7e5efde07a871d2cf2e7c04acb5fb34bcc0b379569f5369715ebf",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/48581.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48581",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 63,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48581",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la personalidad - Bermúdez Moreno, José; Pérez-García, Ana María; Ruiz Caballero, José Antonio; Sanjuán Suárez, Pilar; Rueda Laffond, Beatriz.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-d690a764a51c9691.webp",
+            "cover_sha256": "a18f342c99868ae7017257c4767828030d88abaa06f435e6769b433f3b0ba610",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bermúdez Moreno, José; Pérez-García, Ana María; Ruiz Caballero, José Antonio; Sanjuán Suárez, Pilar; Rueda Laffond, Beatriz",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 63,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48581",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la personalidad - Bermúdez Moreno, José; Pérez-García, Ana María; Ruiz Caballero, José Antonio; Sanjuán Suárez, Pilar; Rueda Laffond, Beatriz.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-d690a764a51c9691.webp",
+            "cover_sha256": "a18f342c99868ae7017257c4767828030d88abaa06f435e6769b433f3b0ba610",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 63,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48581",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la personalidad - Bermúdez Moreno, José; Pérez-García, Ana María; Ruiz Caballero, José Antonio; Sanjuán Suárez, Pilar; Rueda Laffond, Beatriz.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-d690a764a51c9691.webp",
+            "cover_sha256": "a18f342c99868ae7017257c4767828030d88abaa06f435e6769b433f3b0ba610",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 63,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48581",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología de la personalidad - Bermúdez Moreno, José; Pérez-García, Ana María; Ruiz Caballero, José Antonio; Sanjuán Suárez, Pilar; Rueda Laffond, Beatriz.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-d690a764a51c9691.webp",
+          "cover_sha256": "a18f342c99868ae7017257c4767828030d88abaa06f435e6769b433f3b0ba610",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "333",
+        "imported_book_id": "331"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-8a486f9b57ac9316.webp",
+      "libro": {
+        "titulo": "Psicología de las masas (6a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Le Bon, Gustave",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Morata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "17.99",
+        "sku": "PLG-BK-000165",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000165-0ed89dde2b9c.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116203",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-8a486f9b57ac9316",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "332",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5da514d7535cb530"
+        },
+        "author_bindings": [
+          {
+            "name": "Le Bon, Gustave",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Le Bon, Gustave",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+            "observed_text": "Madrid : Ediciones Morata, 2014.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "08c95cf5ccae975d4d7b6e1ac333b7b7df483582faf7e2296b06d220060b777a",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/116203.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "08c95cf5ccae975d4d7b6e1ac333b7b7df483582faf7e2296b06d220060b777a",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/116203.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116203",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 65,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116203",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de las masas (6a. ed.) - Le Bon, Gustave.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-8a486f9b57ac9316.webp",
+            "cover_sha256": "0ed89dde2b9cefa6a98e4edceab85845a078002c94214be752498e86696bdf24",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Le Bon, Gustave",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 65,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116203",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de las masas (6a. ed.) - Le Bon, Gustave.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-8a486f9b57ac9316.webp",
+            "cover_sha256": "0ed89dde2b9cefa6a98e4edceab85845a078002c94214be752498e86696bdf24",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 65,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116203",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de las masas (6a. ed.) - Le Bon, Gustave.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-8a486f9b57ac9316.webp",
+            "cover_sha256": "0ed89dde2b9cefa6a98e4edceab85845a078002c94214be752498e86696bdf24",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 65,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116203",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología de las masas (6a. ed.) - Le Bon, Gustave.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-8a486f9b57ac9316.webp",
+          "cover_sha256": "0ed89dde2b9cefa6a98e4edceab85845a078002c94214be752498e86696bdf24",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "334",
+        "imported_book_id": "332"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-e509af1fb945cdd3.webp",
+      "libro": {
+        "titulo": "Psicología del niño (18a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Piaget, Jean",
+            "orden": 1
+          },
+          {
+            "nombre": "Inhelder, Bärbel",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Morata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000136",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000136-f138f4adccd1.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116205",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-e509af1fb945cdd3",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "333",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-00bc7c6110c612fd"
+        },
+        "author_bindings": [
+          {
+            "name": "Piaget, Jean",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Inhelder, Bärbel",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Piaget, Jean; Inhelder, Bärbel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+            "observed_text": "Madrid : Ediciones Morata, 2016.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "dc5e2bcd19e8217a44fb9ffdab13e05aec14198a846ffbe1bfb3e6368a0daed9",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/116205.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "dc5e2bcd19e8217a44fb9ffdab13e05aec14198a846ffbe1bfb3e6368a0daed9",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/116205.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB116205",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 67,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116205",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del niño (18a. ed.) - Piaget, Jean; Inhelder, Bärbel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-e509af1fb945cdd3.webp",
+            "cover_sha256": "f138f4adccd11d53be697df574dc8f14768cac86010226e821e8cb3d5ced33cf",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Piaget, Jean; Inhelder, Bärbel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 67,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116205",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del niño (18a. ed.) - Piaget, Jean; Inhelder, Bärbel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-e509af1fb945cdd3.webp",
+            "cover_sha256": "f138f4adccd11d53be697df574dc8f14768cac86010226e821e8cb3d5ced33cf",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 67,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116205",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del niño (18a. ed.) - Piaget, Jean; Inhelder, Bärbel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-e509af1fb945cdd3.webp",
+            "cover_sha256": "f138f4adccd11d53be697df574dc8f14768cac86010226e821e8cb3d5ced33cf",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 67,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116205",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología del niño (18a. ed.) - Piaget, Jean; Inhelder, Bärbel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-e509af1fb945cdd3.webp",
+          "cover_sha256": "f138f4adccd11d53be697df574dc8f14768cac86010226e821e8cb3d5ced33cf",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "335",
+        "imported_book_id": "333"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-81d10bac39520b9d.webp",
+      "libro": {
+        "titulo": "Psicología diferencial",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Matud Aznar, María del Pilar",
+            "orden": 1
+          },
+          {
+            "nombre": "Marrero Quevedo, Rosario J.",
+            "orden": 2
+          },
+          {
+            "nombre": "Carballeira Abella, Mónica",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Biblioteca Nueva",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000199",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000199-1b9a67187d35.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106631",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-81d10bac39520b9d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "334",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c3b9b4171826bf0a"
+        },
+        "author_bindings": [
+          {
+            "name": "Matud Aznar, María del Pilar",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Marrero Quevedo, Rosario J.",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Carballeira Abella, Mónica",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Matud Aznar, María del Pilar; Marrero Quevedo, Rosario J.; Carballeira Abella, Mónica",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+            "observed_text": "Madrid : Biblioteca Nueva, 2014.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "82181d827c5f43d700bd827b9e05d05e73b3b32e14d73aaf91ba831f998594be",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/106631.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "82181d827c5f43d700bd827b9e05d05e73b3b32e14d73aaf91ba831f998594be",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/106631.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106631",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 69,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106631",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología diferencial - Matud Aznar, María del Pilar; Marrero Quevedo, Rosario J.; Carballeira Abella, Mónica.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-81d10bac39520b9d.webp",
+            "cover_sha256": "1b9a67187d35efadee3c9ef6422933867d73b2fbb92129dc0e296a12b47e2fb1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Matud Aznar, María del Pilar; Marrero Quevedo, Rosario J.; Carballeira Abella, Mónica",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 69,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106631",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología diferencial - Matud Aznar, María del Pilar; Marrero Quevedo, Rosario J.; Carballeira Abella, Mónica.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-81d10bac39520b9d.webp",
+            "cover_sha256": "1b9a67187d35efadee3c9ef6422933867d73b2fbb92129dc0e296a12b47e2fb1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 69,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106631",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología diferencial - Matud Aznar, María del Pilar; Marrero Quevedo, Rosario J.; Carballeira Abella, Mónica.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-81d10bac39520b9d.webp",
+            "cover_sha256": "1b9a67187d35efadee3c9ef6422933867d73b2fbb92129dc0e296a12b47e2fb1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 69,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106631",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología diferencial - Matud Aznar, María del Pilar; Marrero Quevedo, Rosario J.; Carballeira Abella, Mónica.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-81d10bac39520b9d.webp",
+          "cover_sha256": "1b9a67187d35efadee3c9ef6422933867d73b2fbb92129dc0e296a12b47e2fb1",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "336",
+        "imported_book_id": "334"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+      "libro": {
+        "titulo": "Psicología general (3a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Eva Laura García González",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Larousse - Grupo Editorial Patria",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000144",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000144-ce836530b65f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-555c90c48e9c9991",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "335",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-616b1e7a5433bfb3"
+        },
+        "author_bindings": [
+          {
+            "name": "Eva Laura García González",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Eva Laura García González",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+            "observed_text": "México D.F. : Larousse - Grupo Editorial Patria, [2014]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "3a080303072da9420987ae1a443f58b1503329043fa39608b7110fb134c2adb3",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/40402.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "3a080303072da9420987ae1a443f58b1503329043fa39608b7110fb134c2adb3",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/40402.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40402",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 71,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+            "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Eva Laura García González",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 71,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+            "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 71,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+            "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 71,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología general (3a. ed.) - Eva Laura García González.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+          "cover_sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "337",
+        "imported_book_id": "335"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-67511892222078e9.webp",
+      "libro": {
+        "titulo": "Psicología médica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Fuente, Ramón de la",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000220",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000220-47a264509afa.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/109986",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-67511892222078e9",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "336",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5d3039353ce04fe7"
+        },
+        "author_bindings": [
+          {
+            "name": "Fuente, Ramón de la",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Fuente, Ramón de la",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB109986",
+            "observed_text": "México, D.F. : Fondo de Cultura Económica, 1992.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "d15aba30fb68f016929bf6572554f80626f866f7fe365ce4e68db58b7a5f2711",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/109986.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB109986",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB109986",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "d15aba30fb68f016929bf6572554f80626f866f7fe365ce4e68db58b7a5f2711",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/109986.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB109986",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 72,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/109986",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología médica - Fuente, Ramón de la.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-67511892222078e9.webp",
+            "cover_sha256": "47a264509afa6694a56b49eff9fbcb70e4d2f8ac32c20cdf3d7cba5d287c0f58",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Fuente, Ramón de la",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 72,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/109986",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología médica - Fuente, Ramón de la.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-67511892222078e9.webp",
+            "cover_sha256": "47a264509afa6694a56b49eff9fbcb70e4d2f8ac32c20cdf3d7cba5d287c0f58",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 72,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/109986",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología médica - Fuente, Ramón de la.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-67511892222078e9.webp",
+            "cover_sha256": "47a264509afa6694a56b49eff9fbcb70e4d2f8ac32c20cdf3d7cba5d287c0f58",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 72,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/109986",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología médica - Fuente, Ramón de la.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-67511892222078e9.webp",
+          "cover_sha256": "47a264509afa6694a56b49eff9fbcb70e4d2f8ac32c20cdf3d7cba5d287c0f58",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "338",
+        "imported_book_id": "336"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-ba2dc1c5b664546f.webp",
+      "libro": {
+        "titulo": "Psicología social",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bello Dávila, Zoe",
+            "orden": 1
+          },
+          {
+            "nombre": "Casales Fernández, Julio César",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Félix Varela",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000204",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000204-fc3b28c3f665.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71802",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-ba2dc1c5b664546f",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "337",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7d4ccc40e8d40392"
+        },
+        "author_bindings": [
+          {
+            "name": "Bello Dávila, Zoe",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Casales Fernández, Julio César",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bello Dávila, Zoe; Casales Fernández, Julio César",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+            "observed_text": "Ciudad de la Habana : Editorial Félix Varela, 2005.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "d26ea6bf1fa4abb3a62f6a9087fd2c9bb2eeedb08b32fd0d24ba60a36865c9c9",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71802.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "d26ea6bf1fa4abb3a62f6a9087fd2c9bb2eeedb08b32fd0d24ba60a36865c9c9",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71802.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71802",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 73,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71802",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología social - Bello Dávila, Zoe; Casales Fernández, Julio César.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-ba2dc1c5b664546f.webp",
+            "cover_sha256": "fc3b28c3f66530db7f809b89984d4a2e360ce484bb0b830dacdeafa29d0795de",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bello Dávila, Zoe; Casales Fernández, Julio César",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 73,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71802",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología social - Bello Dávila, Zoe; Casales Fernández, Julio César.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-ba2dc1c5b664546f.webp",
+            "cover_sha256": "fc3b28c3f66530db7f809b89984d4a2e360ce484bb0b830dacdeafa29d0795de",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 73,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71802",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología social - Bello Dávila, Zoe; Casales Fernández, Julio César.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-ba2dc1c5b664546f.webp",
+            "cover_sha256": "fc3b28c3f66530db7f809b89984d4a2e360ce484bb0b830dacdeafa29d0795de",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 73,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71802",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología social - Bello Dávila, Zoe; Casales Fernández, Julio César.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-ba2dc1c5b664546f.webp",
+          "cover_sha256": "fc3b28c3f66530db7f809b89984d4a2e360ce484bb0b830dacdeafa29d0795de",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "339",
+        "imported_book_id": "337"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-5a67a4b7881c5a5f.webp",
+      "libro": {
+        "titulo": "Psicología. Lo inconsciente",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Töpf, José",
+            "orden": 1
+          },
+          {
+            "nombre": "Rojo, Heberto A.",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Eudeba",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000290",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000290-19da60012154.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119908",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-5a67a4b7881c5a5f",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "338",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-939b8a9ed465a219"
+        },
+        "author_bindings": [
+          {
+            "name": "Töpf, José",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Rojo, Heberto A.",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Töpf, José; Rojo, Heberto A.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+            "observed_text": "Ciudad Autónoma de Buenos Aires : Eudeba, 2014.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "26aa340089c9d7cf0a6b2f36443ac7d3dfc6dd628a8958601641cc1bc280c70b",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/119908.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "26aa340089c9d7cf0a6b2f36443ac7d3dfc6dd628a8958601641cc1bc280c70b",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/119908.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB119908",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 74,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119908",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología. Lo inconsciente - Töpf, José; Rojo, Heberto A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-5a67a4b7881c5a5f.webp",
+            "cover_sha256": "19da60012154c79673921837943b656ddb3e5f62eae9dbfc076155e6a6cac672",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Töpf, José; Rojo, Heberto A.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 74,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119908",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología. Lo inconsciente - Töpf, José; Rojo, Heberto A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-5a67a4b7881c5a5f.webp",
+            "cover_sha256": "19da60012154c79673921837943b656ddb3e5f62eae9dbfc076155e6a6cac672",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 74,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119908",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología. Lo inconsciente - Töpf, José; Rojo, Heberto A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-5a67a4b7881c5a5f.webp",
+            "cover_sha256": "19da60012154c79673921837943b656ddb3e5f62eae9dbfc076155e6a6cac672",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 74,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119908",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología. Lo inconsciente - Töpf, José; Rojo, Heberto A..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-5a67a4b7881c5a5f.webp",
+          "cover_sha256": "19da60012154c79673921837943b656ddb3e5f62eae9dbfc076155e6a6cac672",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "340",
+        "imported_book_id": "338"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/psicologia/portadas/ebook-f8e97f4f26b71ec3.webp",
+      "libro": {
+        "titulo": "Psicología: polimodal",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Divenosa, Marisa",
+            "orden": 1
+          },
+          {
+            "nombre": "Costa, Ivana",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Maipue",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000303",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000303-37c9e031cb0e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78946",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-f8e97f4f26b71ec3",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "339",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7aed2e124942ea66"
+        },
+        "author_bindings": [
+          {
+            "name": "Divenosa, Marisa",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Costa, Ivana",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Divenosa, Marisa; Costa, Ivana",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+            "observed_text": "Ituzaingó : Maipue, 2002.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "d94d83040f148ea375f1118e383056656440c13eb77dbeac926b32977d00a5ef",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/78946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "d94d83040f148ea375f1118e383056656440c13eb77dbeac926b32977d00a5ef",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/78946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78946",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 75,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología polimodal - Divenosa, Marisa; Costa, Ivana.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-f8e97f4f26b71ec3.webp",
+            "cover_sha256": "37c9e031cb0ef5b12e62e9d83d097b8e576692e1370acb72ecda5eb5cef89c16",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Divenosa, Marisa; Costa, Ivana",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 75,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología polimodal - Divenosa, Marisa; Costa, Ivana.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-f8e97f4f26b71ec3.webp",
+            "cover_sha256": "37c9e031cb0ef5b12e62e9d83d097b8e576692e1370acb72ecda5eb5cef89c16",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 75,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología polimodal - Divenosa, Marisa; Costa, Ivana.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-f8e97f4f26b71ec3.webp",
+            "cover_sha256": "37c9e031cb0ef5b12e62e9d83d097b8e576692e1370acb72ecda5eb5cef89c16",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 75,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78946",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología polimodal - Divenosa, Marisa; Costa, Ivana.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-f8e97f4f26b71ec3.webp",
+          "cover_sha256": "37c9e031cb0ef5b12e62e9d83d097b8e576692e1370acb72ecda5eb5cef89c16",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "341",
+        "imported_book_id": "339"
+      }
+    }
+  ]
+}

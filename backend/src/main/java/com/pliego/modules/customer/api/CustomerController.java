@@ -1,6 +1,7 @@
 package com.pliego.modules.customer.api;
 
 import java.util.List;
+import java.util.UUID;
 import java.math.RoundingMode;
 
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.pliego.foundation.web.ProblemResponse;
 import com.pliego.foundation.web.PageResponse;
@@ -66,7 +69,7 @@ public class CustomerController {
     public CustomerProfileResponse getProfile(@AuthenticationPrincipal Jwt jwt) {
         CustomerProfile profile = customerService.getProfile(actorUserId(jwt));
         return new CustomerProfileResponse(Long.toString(profile.customerId()), profile.email(), profile.firstNames(),
-                profile.lastNames(), profile.phone(), profile.state());
+                profile.lastNames(), profile.phone(), profile.state(), Long.toString(profile.version()));
     }
 
     @PutMapping(path = "/me", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -75,8 +78,35 @@ public class CustomerController {
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public ResponseEntity<Void> updateProfile(@AuthenticationPrincipal Jwt jwt,
             @Valid @RequestBody ProfileUpdateRequest request) {
-        customerService.updateProfile(actorUserId(jwt), request.firstNames(), request.lastNames(), request.phone());
+        customerService.updateProfile(actorUserId(jwt), Long.parseLong(request.expectedVersion()), request.firstNames(), request.lastNames(), request.phone());
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping(path = "/me", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Editar un campo de mi perfil", description = "Actualiza únicamente field con value si expectedVersion coincide. null borra solo el teléfono. Un conflicto requiere revisar el perfil actual.")
+    @ApiResponse(responseCode = "204", description = "Campo actualizado")
+    @ApiResponse(responseCode = "409", description = "El perfil cambió", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public ResponseEntity<Void> patchProfile(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody ProfilePatchRequest request) {
+        customerService.patchProfile(actorUserId(jwt), Long.parseLong(request.expectedVersion()), request.field(), request.value());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/me/addresses/attempts/{key}/resolve")
+    @Operation(summary = "Resolver una creación de dirección", description = "PENDING conserva la incertidumbre; CREATED devuelve el identificador original; NOT_CREATED bloquea el intento tardío antes de confirmar ausencia.")
+    @ApiResponse(responseCode = "200", description = "Resultado del intento", content = @Content(schema = @Schema(implementation = AddressAttemptResponse.class)))
+    public AddressAttemptResponse resolveAddress(@AuthenticationPrincipal Jwt jwt, @PathVariable UUID key) {
+        var attempt = customerService.resolveAddress(actorUserId(jwt), key);
+        return new AddressAttemptResponse(attempt.state(), attempt.addressId());
+    }
+
+    @PutMapping(path = "/me/email", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Cambiar mi correo", description = "Cambia el correo de inicio de sesión del cliente autenticado tras confirmar su contraseña actual. Las sesiones abiertas siguen activas.")
+    @ApiResponse(responseCode = "200", description = "Correo actualizado", content = @Content(schema = @Schema(implementation = EmailChangeResponse.class)))
+    @ApiResponse(responseCode = "400", description = "Datos inválidos o contraseña actual incorrecta", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "409", description = "El correo ya pertenece a otra cuenta", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public EmailChangeResponse changeEmail(@AuthenticationPrincipal Jwt jwt,
+            @Valid @RequestBody EmailChangeRequest request) {
+        return new EmailChangeResponse(customerService.changeEmail(actorUserId(jwt), request.newEmail(), request.currentPassword()));
     }
 
     @GetMapping("/me/addresses")
@@ -92,8 +122,9 @@ public class CustomerController {
     @ApiResponse(responseCode = "201", description = "Dirección creada", content = @Content(schema = @Schema(implementation = AddressCreatedResponse.class)))
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public ResponseEntity<AddressCreatedResponse> createAddress(@AuthenticationPrincipal Jwt jwt,
+            @RequestHeader("Idempotency-Key") UUID key,
             @Valid @RequestBody AddressRequest request) {
-        long addressId = customerService.createAddress(actorUserId(jwt), addressData(request.alias(),
+        long addressId = customerService.createAddress(actorUserId(jwt), key, addressData(request.alias(),
                 request.recipient(), request.line1(), request.line2(), request.city(), request.province(),
                 request.countryCode(), request.postalCode(), request.reference(), request.phone()),
                 request.makePrimary());

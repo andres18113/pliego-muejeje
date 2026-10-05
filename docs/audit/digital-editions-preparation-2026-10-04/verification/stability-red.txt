@@ -1,0 +1,23 @@
+......FE...
+======================================================================
+ERROR: test_native_allocator_appends_proposals_without_mutating_registry_or_images (test_prepare_digital_editions.DigitalPreparationTests.test_native_allocator_appends_proposals_without_mutating_registry_or_images)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 128, in test_native_allocator_appends_proposals_without_mutating_registry_or_images
+    later, updated = propose_skus([candidate], registry, set(), preserve_assignment_count=1)
+                     ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: propose_skus() got an unexpected keyword argument 'preserve_assignment_count'
+
+======================================================================
+FAIL: test_metadata_preflight_green_does_not_replace_real_price_or_identity_evidence (test_prepare_digital_editions.DigitalPreparationTests.test_metadata_preflight_green_does_not_replace_real_price_or_identity_evidence)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 105, in test_metadata_preflight_green_does_not_replace_real_price_or_identity_evidence
+    self.assertIn("REAL_PRICE_MISSING_OR_INVALID", readiness_errors(prepared))
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'REAL_PRICE_MISSING_OR_INVALID' not found in ['REAL_SOURCE_MISSING: edicion.editorial', 'REAL_SOURCE_MISSING: edicion.idioma']
+
+----------------------------------------------------------------------
+Ran 11 tests in 0.041s
+
+FAILED (failures=1, errors=1)

@@ -1,0 +1,2077 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000110",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000110-ac9f914c84ec.webp",
+      "sha256": "ac9f914c84ec3ac51b928f5b173aace75ff2d0ec9fb1472f8469aec15b39e111",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000276",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000276-e9bdb93ec6a2.webp",
+      "sha256": "e9bdb93ec6a2c4e180af4694910de9ea29b833779965abf21b25e9a347c826b8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000142",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000142-935a58d015ec.webp",
+      "sha256": "935a58d015ec74ab44909050759c0b489ccfa0707ab0431d1d26897e2832ef92",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000297",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000297-d53a94099b73.webp",
+      "sha256": "d53a94099b7328438f40a47dc72cd7d6c7fc36bdbc219d0ddcfb01f77d0354f3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000264",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000264-433fd5eb0390.webp",
+      "sha256": "433fd5eb0390779e870394653668a1cd7e55ae3d70fd8379870f77b41416ada0",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000203",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000203-25cff4a036eb.webp",
+      "sha256": "25cff4a036eb2cc53c9b3c3e2e6887afe7ada9a3b87eb35d724f7c84911b5a0b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000245",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000245-92907d30e20f.webp",
+      "sha256": "92907d30e20f57fc374f8d1655afaf1bfc5597dbde277d75e1cf74e87c8ff6e4",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000060",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000060-16d2c0d9c6d8.webp",
+      "sha256": "16d2c0d9c6d8cf00beb1c4e4b1626d12cd64cb0426a909063bf7bb2c42d7bb0c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000235",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000235-2a2079e80066.webp",
+      "sha256": "2a2079e80066310aa08819b4beeb118f90212695ee16e5d1672ddb39ffefacf6",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000076",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000076-64cdab670767.webp",
+      "sha256": "64cdab670767f49b8a3e41bb8f440da876146e797d5d00d1b204ed3db3e5cf61",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000225",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000225-dffd36793130.webp",
+      "sha256": "dffd36793130674623b991a4c79b648f3f33b632a3f5f78c48e49b1552c93d64",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000077",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000077-bcbed14ca4b3.webp",
+      "sha256": "bcbed14ca4b3c51812734437a2169991d3f5ea7b49040152cce3071624e1ec20",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000126",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000126-bd4320bb20ca.webp",
+      "sha256": "bd4320bb20ca202d7bf958baf709824676c6b3bc5624bc42e7ceebd4c5b38f46",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000125",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000125-f32d987659b8.webp",
+      "sha256": "f32d987659b8185fbb0f9fa741dad4b1278d797c71c2672e519ca300fcda33fa",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000118",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000118-a04a3956529a.webp",
+      "sha256": "a04a3956529a2dcd43d2bd6d9efe6bed98f64ce38ee8ec803c6db9a7ba7e4aaa",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000157",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000157-22d3b5098413.webp",
+      "sha256": "22d3b509841304196b22e9cec9429db7417f3a153cbfcc7bf4bca2d1d6e8d144",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000279",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000279-b796105c841a.webp",
+      "sha256": "b796105c841a842b761e0081af46ddd1b5878d04ee760e4cfecbeef9d3285a41",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000213",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000213-853ef54ef269.webp",
+      "sha256": "853ef54ef26976fa03ce9b1975c75a766b57c9dbce538db0746048fc39015f20",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000149",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000149-0ed92a8415bd.webp",
+      "sha256": "0ed92a8415bdf765ec3cc239734a52e882ded225926c0c3109effa706cffc540",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000293",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000293-f71e1ed0b221.webp",
+      "sha256": "f71e1ed0b2219c91e79b8baea873462bca6e31f0fa6230d913890d29b8be3fb0",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000261",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000261-69f79ed9bb60.webp",
+      "sha256": "69f79ed9bb60133dbcfd7f43833183034d68679d08222eb79c323f89f9e69527",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000074",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000074-ee028ef97b6f.webp",
+      "sha256": "ee028ef97b6ff9fffa5f328f553fd6f0c90993277f806a1588345c24727efe9d",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000209",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000209-b8d36d2f4bac.webp",
+      "sha256": "b8d36d2f4bac055b4489efe5e66525cd780ae65e161e6a937a373bab4ffba713",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000174",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000174-b1c667819ae2.webp",
+      "sha256": "b1c667819ae20ab71068bba4a716c57ae1ac74ef0df858e2b604422674949a00",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000147",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000147-30f48d3d61d3.webp",
+      "sha256": "30f48d3d61d39feb53176c61c8792a062bf311d537e47f8f0a186f9e5624d1b7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000130",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000130-2c8e064eb148.webp",
+      "sha256": "2c8e064eb148d08034ce544276191146ebdcbf8bb96c31539dc0ce3d97b67b6a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000111",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000111-870e7e1508c4.webp",
+      "sha256": "870e7e1508c423e9823e960ca84f0ca65bb81bb90305a22ca8024f98949ffa42",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000138",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000138-3fff7a27405c.webp",
+      "sha256": "3fff7a27405cc6fb53eb40139c2d0939bba821031084c791c1043019f0ca1e92",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000236",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000236-18ee9ca1bac5.webp",
+      "sha256": "18ee9ca1bac55499287696e322d300ea364642386af679347cc0890903499d5b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000281",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000281-f0010914a82a.webp",
+      "sha256": "f0010914a82a24e3b0addf14aab62fa535e25d5c4c3e8e1441c6044799329a34",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000189",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000189-6c3078d525c8.webp",
+      "sha256": "6c3078d525c8c0dae271815dda08828ec678e7065d7482f1eec778c3d46434b7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000232",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000232-12ee27948af1.webp",
+      "sha256": "12ee27948af163e8ff3f65c5d35979eb809dc7acfc1c2530fd8881544f31673c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000275",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000275-5fab167f30ea.webp",
+      "sha256": "5fab167f30ea86b18402bc9e39098753756415e1ae4b97c429409640abb0c5bf",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000098",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000098-21037a93cc95.webp",
+      "sha256": "21037a93cc95c95ffa868889f8dbb435e431bd4b279f16e74e1b579fdfe002af",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000124",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000124-e833b5aaa786.webp",
+      "sha256": "e833b5aaa7867e6ed2969ad810138741469a079a04d638789022d412f25f41d9",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000205",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000205-24ac0fa65c3e.webp",
+      "sha256": "24ac0fa65c3e67c5f81ec9b944ce5652e5e016ca7bd67258d0b1ec58a06c7705",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000070",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000070-2a66cdd32506.webp",
+      "sha256": "2a66cdd32506ecae70593ce91d9e5eec687402d704095b0e3fadffebc5a9859b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000269",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000269-249cbac036bc.webp",
+      "sha256": "249cbac036bcaa18d56138b116afb7d00e81353613dc3eb82d799e169975cd28",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000202",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000202-890d7fda61bc.webp",
+      "sha256": "890d7fda61bceeac35aa852b3bab709d949e92ce72b9cd51676762749e8f2429",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000143",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000143-bd1bcd21e34f.webp",
+      "sha256": "bd1bcd21e34fece00274580fa871a586afdd1b0834b834efb0c5df79f82161ed",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000080",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000080-9b4680698e44.webp",
+      "sha256": "9b4680698e44ef0fabdf73b568b8db7d4323a1537e5633313b975d24eb81a1b8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000231",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000231-f6b7c7b69ea9.webp",
+      "sha256": "f6b7c7b69ea9cac1b3ca7e7636b11e8035c3e913689dc54afca7846bfcac1841",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000158",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000158-81a4e74c8cc7.webp",
+      "sha256": "81a4e74c8cc76366e75375b74df4344670c11161110c8c6f112aead272b9c613",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000310",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000310-14670e5cb004.webp",
+      "sha256": "14670e5cb00496d5fbd72ae39c837e0a1ea889734da030eb3b4eb5fcbcee16d1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000153",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000153-79bf819e2014.webp",
+      "sha256": "79bf819e201440b36c5b782ed1babe1202a1533b852183e4c0eb501d4c5ccfd2",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000151",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000151-7f1bd2431a36.webp",
+      "sha256": "7f1bd2431a36932e6b1cd5b3e99cffad8fd2e2df19a8a9fea7f59abeb5262b50",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000292",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000292-948278f0422d.webp",
+      "sha256": "948278f0422dfa4fccff4f421b95227ac428b7d109a95fe0bab46091de74f692",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000146",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000146-59ffc760b61c.webp",
+      "sha256": "59ffc760b61c60fd4d604dd9c008656f01af3e491ad02f125b77797bf88ad49a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000230",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000230-141504459915.webp",
+      "sha256": "141504459915d7ffd32c7be49a63d07723078812c04370d497f3abc9669eaabf",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000177",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000177-681c86f70122.webp",
+      "sha256": "681c86f7012239f5e8226ce8c4364f27d7f002687e94ee89a314667fb074c82b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000312",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000312-d2eccebff072.webp",
+      "sha256": "d2eccebff0721ebe3f3a5ccdcb0d290abe08a36910c9fbb48c204aba11b92dc4",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000224",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000224-6426eb226d4c.webp",
+      "sha256": "6426eb226d4cdc174e1e6cb306d6aa459651855f04a9b001269a556e8e6815b8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000058",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000058-7c38a4a76226.webp",
+      "sha256": "7c38a4a76226a50e9eb87bf9ae9f67f216ca18c47ac40b7345f1bb408b41e9c8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000190",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000190-b801a08072fc.webp",
+      "sha256": "b801a08072fc861ef156ce2b7983a0822021a0af8290e663f750c302578705db",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000314",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000314-6a218fbec916.webp",
+      "sha256": "6a218fbec916705c6501141990370a1e7686ac227a3ae366447bd9e4efb9fc60",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000135",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000135-0fde21aafefb.webp",
+      "sha256": "0fde21aafefbb915f3311adb73cbc6e078861d70a05e50cfd2671e30ecaa0577",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000266",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000266-79c8593fef38.webp",
+      "sha256": "79c8593fef38e7465d63cfdb3bb99f8ea99d4bf7abea53c7db0e06f761156788",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000109",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000109-353e0c91e77e.webp",
+      "sha256": "353e0c91e77eb0452fb71f904e216d019a77f89288f1497582b7dda363bfe668",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000101",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000101-a4799f49d644.webp",
+      "sha256": "a4799f49d6444b83413f95a22adb5c68d1ac8923afbc1ce506265db213e6ac14",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000141",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000141-e9e58003fe2e.webp",
+      "sha256": "e9e58003fe2e5b9546a5f9f9be9e6aa897ee1d211b9f737fb8ddfd4bd8d30c26",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000184",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000184-1d927443fb51.webp",
+      "sha256": "1d927443fb51cef8c0d2025358808adfa8679ecd2d48ef2818a1d7c0e5c4b8e1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000067",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000067-32b4139c5145.webp",
+      "sha256": "32b4139c5145118f9bee8fbb6b0c4679c2ba1169a667e4ef17ea09b74a88a936",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000059",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000059-b983d1e8997c.webp",
+      "sha256": "b983d1e8997c85d4c01a4f8596af87b0f8e5c1f44ad852977e95d1295e1ae5f3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000075",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000075-af92c3c98a60.webp",
+      "sha256": "af92c3c98a60df22c4a42b82923e20935fa5a409f6b8369ee125e12dd6126fad",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000282",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000282-54fbe7390903.webp",
+      "sha256": "54fbe7390903e77cfe48795cb233e8de5ff6d5a0e4fada3bc643b0cd5f183989",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000066",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000066-7f29f1be1dba.webp",
+      "sha256": "7f29f1be1dbab154ca9f794d40a66e2588a49cbbb30a9d397da70ad31db9227e",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000192",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000192-9b1865917a87.webp",
+      "sha256": "9b1865917a87c87f644b851fd6fea709a21643d9927c9b22ffeeb05896def73d",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000097",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000097-252735602ded.webp",
+      "sha256": "252735602ded6168a5c17f26063d31f5eb512867a2824371cdcfcfd1bffad0ae",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000291",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000291-6198efed4b8a.webp",
+      "sha256": "6198efed4b8a07b37dc7aa4af418cb3afd0d3f0e3220965a2d88bdd1136c320e",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000263",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000263-07bf4e5269f8.webp",
+      "sha256": "07bf4e5269f82cdd458e103943681f206cb5f164f6931c4a763075876cc87b25",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000166",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000166-67ab06f44893.webp",
+      "sha256": "67ab06f448931e53e55238dbd862953cd9ab625a07115b7c8c8ab5e4f059fb44",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000285",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000285-da4d8fcb7da8.webp",
+      "sha256": "da4d8fcb7da8aafc4bcdc80f4ef8a01eb82224f7447f97a00b9ca01996081525",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000113",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000113-21854e1958e2.webp",
+      "sha256": "21854e1958e2886d811c7d4329fea8bb9447ceb4cdc815f91406039b57395176",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000187",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000187-b8c006b332ef.webp",
+      "sha256": "b8c006b332efed8ebc7c494a932f6541c147819b8a21f951b541b2d4128d9088",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000120",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000120-c48bb14e87e9.webp",
+      "sha256": "c48bb14e87e9c86a7a3c1c490c527b14ed822e7625fc33cfc68c21ae0dad3094",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000188",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000188-b87a9677da54.webp",
+      "sha256": "b87a9677da5494c936b8ddc8b4589172de5bcbf29d35ecc4ada78428e63c4fbb",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000084",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000084-97fdee242717.webp",
+      "sha256": "97fdee242717125ed84c3e23ead263d95a1bcc1664ec2302b3c8ea84dbb6a04b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000294",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000294-acc75ef16ee0.webp",
+      "sha256": "acc75ef16ee0928e54736170dddbaef0a5f5b546b963957d5ef853d19fb2d981",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000161",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000161-488c35a2b7c5.webp",
+      "sha256": "488c35a2b7c5d635a471d90afb3dfccb116b36a6f7acdf709dae5c89ab35dd86",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000108",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000108-00a4ab0116ed.webp",
+      "sha256": "00a4ab0116ed4e2cdd690e38a02d33de851b7306ede43b77dedc9b09a1915d0f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000086",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000086-5edf32cd1df2.webp",
+      "sha256": "5edf32cd1df23aeec6bbb92fcf305b6a8791ac4cef77e2f93e8732022749b0d4",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000260",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000260-5281d2d3194f.webp",
+      "sha256": "5281d2d3194f810e733601dd314f5c89fb6ad3ebc7ac87ce69ba441774f07039",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000132",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000132-5683a3d9c137.webp",
+      "sha256": "5683a3d9c13724749b6a7cec9dda87a33d26cc199bd27b221f63768bac721d6f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000087",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000087-63870356e278.webp",
+      "sha256": "63870356e278273bb7ed8c81afe82062d7a74be3b4fbc0516de1320b2277e7ad",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000287",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000287-722365f7ef94.webp",
+      "sha256": "722365f7ef94183a001ab6f787bbd01b64afe33ddfe0929d1b1620b7d5bafcfc",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000284",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000284-eda150b61f88.webp",
+      "sha256": "eda150b61f88eafd4ba23754e172ecc6d03379e5bfdeda459841e02d63f87427",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000175",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000175-6c0130a2bcbb.webp",
+      "sha256": "6c0130a2bcbbc56c23b94bae2628dff674d84dd7ebc4e7f793b7448fab562b04",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000088",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000088-2b7be887c7c8.webp",
+      "sha256": "2b7be887c7c8bd963c5c27e6d2e1862a14af3f348c4523d405f0c6809ae7067c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000164",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000164-ade7eef81da3.webp",
+      "sha256": "ade7eef81da3be9d7d233f9273c51bee827de060a2e9540de0ed800ac80a6b90",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000195",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000195-218bfe19d268.webp",
+      "sha256": "218bfe19d268008925825a9b47343579cd4637818ab6b2eddb0f795c90e6257f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000243",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000243-096bd96eb56b.webp",
+      "sha256": "096bd96eb56bee922514360636144daa20fb6935c3b8b4a1d8d76e9b2675d625",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000137",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000137-9dc4cc95d9ed.webp",
+      "sha256": "9dc4cc95d9ed637b931b35c8c85226f6ec97d92fc877810c36090f71d5d60087",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000197",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000197-433f0fa20eba.webp",
+      "sha256": "433f0fa20eba83ec31fa496649759c1255e30d543acba3c310d673ef2a0e389a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000196",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000196-6611a0c58763.webp",
+      "sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000242",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000242-00cff5b9af71.webp",
+      "sha256": "00cff5b9af71ae90cd33245f26af053c5934933f3ff3021ba701ce8eb0eb21e3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000172",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000172-2748cac3f392.webp",
+      "sha256": "2748cac3f39219d3c6577f751145c923c7bf7109613ff4dd95b71aeb2d924ae3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000117",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000117-ebd90f80a420.webp",
+      "sha256": "ebd90f80a420e2269c9462804bf94faa5d08eca218fdf18e478290d36502ee82",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000227",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000227-2d968ef9c5ce.webp",
+      "sha256": "2d968ef9c5ceb108af325ccce5f0fb8de301e8e93a6ee03b88a99807790e52fa",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000096",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000096-0514e5a68d10.webp",
+      "sha256": "0514e5a68d103a6528a185c88c412cadc3b373b414e23cc0a3c7ee11f5e4dcb5",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000253",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000253-0efaea019901.webp",
+      "sha256": "0efaea0199010648f6b292dcb88c800cb235e36a624128b1967ac56cf588982c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000180",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000180-ea23342e2f9f.webp",
+      "sha256": "ea23342e2f9fb086c3ba8e178c995f00d9bf704b27151f0efcd99b4d05f69afb",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000307",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000307-31d3bd8f7f5e.webp",
+      "sha256": "31d3bd8f7f5e178fe04c2d79f1a913e21742c518dc06d6b36b48d7e60e6ad43d",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000248",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000248-d2c57fec7558.webp",
+      "sha256": "d2c57fec75585ee01fb249eceb45c077f1708f6fb0aafce68d9115025e24c2d7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000288",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000288-7ef8d42c7ece.webp",
+      "sha256": "7ef8d42c7ece6a651188d6a97dbaaa1ffb6fb0df6445bff261e3de6c7fbb7c02",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000139",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000139-0577aa4a63da.webp",
+      "sha256": "0577aa4a63da2d7232e5bf150a9ceb62b07086d6459b0d3321c5225fe8da5990",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000306",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000306-1de08b400baa.webp",
+      "sha256": "1de08b400baa0b8625ee764dc25dca4c40d2592f93ebd920f36139587c388067",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000181",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000181-dc3388e7233f.webp",
+      "sha256": "dc3388e7233ff27baf5e24eff4482b6ab4df4c7b23d4aea6a470ce57e02c6072",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000301",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000301-b4d903c8565a.webp",
+      "sha256": "b4d903c8565afba817059546be3d42449a3f1dce609264dbcdfad6339d25bd86",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000186",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000186-9739b5421e24.webp",
+      "sha256": "9739b5421e24fbc92197fad6f440fc0bc0f9194cae7f88541b7fafd9d0837e51",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000273",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000273-497e835cc887.webp",
+      "sha256": "497e835cc88783362d9fccc932c2179423fbd14a1a974b22680bf5e8e6217a8f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000127",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000127-ffa793621bb8.webp",
+      "sha256": "ffa793621bb83e48384547d3f591843c2ec78f42121b17454c0857408c307552",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000251",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000251-7f01ee48ea8d.webp",
+      "sha256": "7f01ee48ea8d43983720b06224cc3de5ada596e97429cc9b69e05f4c92ac832c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000234",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000234-62323918bca1.webp",
+      "sha256": "62323918bca12e3d4c7f05f00500b7cde4eb11ba1d4511ce0ebd88456fbd2a22",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000305",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000305-2a2f8a7c99a5.webp",
+      "sha256": "2a2f8a7c99a59e843436516b1fbbf6b6f54d4d393ab9cd985cc0a79a20cca5eb",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000207",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000207-63a1f77b776f.webp",
+      "sha256": "63a1f77b776fa5abdf5337732d4832c4f83c2e3df2906b5f4de77a9b3c6d9003",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000162",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000162-872499629629.webp",
+      "sha256": "87249962962943adf8c9d1aee60f3dccdccfe2fb434adbd032ff50cfbbe5a3c7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000311",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000311-85ebfef37037.webp",
+      "sha256": "85ebfef3703793e6372f2859ca1795c1e819449ef478c6a13184d8c28e0e47b1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000228",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000228-8507b04ffd87.webp",
+      "sha256": "8507b04ffd877f218b0b6215852b5b8d265c5dcc42561535410c24cd240b21c7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000193",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000193-e2f0422878b8.webp",
+      "sha256": "e2f0422878b84c5031d7a5a36c2ff093e7010beada48deccecb79dbe4d6d0f1c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000277",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000277-b15a169548a7.webp",
+      "sha256": "b15a169548a76353585e592f8741f6c6e35f90947eb7dcc26f2a31ccef754eee",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000106",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000106-9ecfb3b6390c.webp",
+      "sha256": "9ecfb3b6390c61b9a68f81fd014bed276df05a2bfd101fb52767f4426b629c1a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000090",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000090-c55041c65552.webp",
+      "sha256": "c55041c6555209718d061416f57f1ea2175ae6ce78541bbc9b218af43ad28cee",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000214",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000214-78187b088c4d.webp",
+      "sha256": "78187b088c4d385c7556542dc0947af7f1afde3612c41698330cb02ad7a8b2aa",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000057",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000057-be83a24f55ad.webp",
+      "sha256": "be83a24f55ad7454b20c6a57cebcb5a5bab027571fb51c57534256fbe676f4b9",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000134",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000134-9268b1a4c117.webp",
+      "sha256": "9268b1a4c117b29ccf6d5f0293cb03c36f121d6b54e4747b04108d9ef1eb49a8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000123",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000123-c33004170d08.webp",
+      "sha256": "c33004170d083872700d0bda53a2e6b2751bff3cc737f5ec7f75e02f42c81bda",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000168",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000168-25a3be237af1.webp",
+      "sha256": "25a3be237af16d2ab022c3c647260a554bbf00837e07d61414eeab4183595b1f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000247",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000247-1a7dfbc68d41.webp",
+      "sha256": "1a7dfbc68d414197fd8d675fa32fc5ba24a7b7be489f019db9ce7f929b07d2f6",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000304",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000304-c03b700f5169.webp",
+      "sha256": "c03b700f516974727795c88ebea6e91f5c5e95007d71293bb7cf15a428d0c1a1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000296",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000296-af243b6bf32e.webp",
+      "sha256": "af243b6bf32ee20db54a67568cb3a33a82c648353700a8a6642e979096ffdf9d",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000100",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000100-6784c3d88265.webp",
+      "sha256": "6784c3d88265a9fbfea21e21cba4e886b59038265cff76171c386c9d7d47fb64",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000270",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000270-57ef6068224d.webp",
+      "sha256": "57ef6068224d8ffafb111a1c8196b67df0833758cdcfea55ee293778ee22085d",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000107",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000107-c2d4399eb827.webp",
+      "sha256": "c2d4399eb82790446daf01b8dad531ef1c14795c104c2f1e1ccc7f8307b71722",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000239",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000239-2b125333d4e2.webp",
+      "sha256": "2b125333d4e25cca05f066c0cd89faf9655861e63f22be3a6d3858d6b2efd747",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000062",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000062-e88a08f37c2b.webp",
+      "sha256": "e88a08f37c2b1feabb1d19ffafad9ca71766b395345f21a01dd9c6d7a53c70fa",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000221",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000221-05fdbc3220b2.webp",
+      "sha256": "05fdbc3220b2a44f3c986adff87f6a3f66603f355dc4946e386fe13088ed82f3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000315",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000315-f3e62e45c613.webp",
+      "sha256": "f3e62e45c613644ae0d63c03f6d94c9cf7a10e98b5d937ce75718064fe49f571",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000178",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000178-787489c9d123.webp",
+      "sha256": "787489c9d123a2272cf077e1e5f0e9164c63d858de515cd4f1aa9ad749ce3550",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000185",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000185-48d1658c6ccd.webp",
+      "sha256": "48d1658c6ccdf36afe14d2cdeaabed68ae3e6051d0a67dee0595e5854a9eb3e6",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000283",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000283-b557443a890a.webp",
+      "sha256": "b557443a890a8a7bd15fca5736325cebcf4f111f5244f7bda366ca69d2cf3ea2",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000229",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000229-72508ec17e22.webp",
+      "sha256": "72508ec17e228f94005c3ec59d79636098cfe058974277094c165be51c2097c8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000085",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000085-468d68de2243.webp",
+      "sha256": "468d68de2243bb4077a3a31b851af13df1415500a650a06b2938c4763fcd0255",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000122",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000122-71eb30d75bb6.webp",
+      "sha256": "71eb30d75bb6ccc1651d0e6cfdf6c8924a980e32d6231e56e3d274d3f5852ffb",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000208",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000208-4d567317e96b.webp",
+      "sha256": "4d567317e96bc5dd519f877066d59fadf9c548308ff8a3ec12ac0747de171d09",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000160",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000160-6ad93478f274.webp",
+      "sha256": "6ad93478f2741aac40aeecdaf472873cdb812867332aa88af6994aa68cb53381",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000089",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000089-32dd5cb64b3f.webp",
+      "sha256": "32dd5cb64b3fe2d71577aafcf04ed8594266840fffe35a460956c9c0368393bb",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000159",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000159-58e37f41bc49.webp",
+      "sha256": "58e37f41bc49bb195dfeba0c60447074e8bba8ad74b9ab43f93eb611e27c5c08",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000079",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000079-816d46cebf7b.webp",
+      "sha256": "816d46cebf7b6618ace4536c78fb2981b3ca4c03f97baded90c60c4c3fe66659",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000163",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000163-71dccfe55039.webp",
+      "sha256": "71dccfe55039d74ccf4050e6d487dee1f00d4633bdf2d31d7a2f90c773aebc55",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000095",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000095-c1fc97a5fb10.webp",
+      "sha256": "c1fc97a5fb10c47aa83fc0196dd516d8ca411f68cf9465e7223fba5ff4bbfc81",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000171",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000171-58dd5140a39b.webp",
+      "sha256": "58dd5140a39b22b39ff8c96e2d50c40bbc803c843e06bda6a249bd188b1a7433",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000200",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000200-a635647e9da1.webp",
+      "sha256": "a635647e9da1b2cf73503b0c3c7dfc41d61184352121f74aa0944fcaf04ca6ac",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000286",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000286-dd71e85f0e2b.webp",
+      "sha256": "dd71e85f0e2b340d3a65d902d55006155d195517251343c4fe12599ca0e85c19",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000064",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000064-2dda50c069e4.webp",
+      "sha256": "2dda50c069e44ffec3c4113e18080f07dad2dd93599efef1c6a450e02597a061",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000268",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000268-ec90efc8b0dc.webp",
+      "sha256": "ec90efc8b0dc80ea5b971bbbd220b566f558b5bad19691d9b412bb9a5853dcdc",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000092",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000092-b990f4163170.webp",
+      "sha256": "b990f416317029f7a73cc67304a91f675d421d6a91803a21bb23a12146efb207",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000131",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000131-12169133b04c.webp",
+      "sha256": "12169133b04cf14e8ed8ebe7d28ed062b0be336477140f74a80a7efb98083c70",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000313",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000313-89dfe0bb7b00.webp",
+      "sha256": "89dfe0bb7b0016671b5e1b3d8f79b251587221f4199d570bd65f42ee2dfeed23",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000176",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000176-43612a5f46cc.webp",
+      "sha256": "43612a5f46cc52564d6e9ce3e4c698f3bac92a56194c778c7c36814be9784964",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000128",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000128-ce33116a7386.webp",
+      "sha256": "ce33116a73861ef3fd468b702be5d86c23698bad79ec232f511173896e30c07a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000105",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000105-fdb50b221f87.webp",
+      "sha256": "fdb50b221f8742173b68275e3e485a432265b36491c7dffea81b50d8e180c6e6",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000152",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000152-602d19f2051a.webp",
+      "sha256": "602d19f2051a10b0b7c256cd3f943e2d8bf57ae890302552e1d6472524d629f5",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000063-e67d4964b228.webp",
+      "sha256": "e67d4964b228d5d977646edaeea3a96fa94cd07a2305dec08aef94134feb5825",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000240",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000240-b171e32573ef.webp",
+      "sha256": "b171e32573ef4a11acdacafe0f237f01652b41734056fb07c0a9f396f251868a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000289",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000289-5b39c0f5ef04.webp",
+      "sha256": "5b39c0f5ef04394cd21e4dac654e3270a16559a0f6fc1b7586d2f7a0227c78b4",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000308",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000308-2377abf961da.webp",
+      "sha256": "2377abf961dae386c62673c355b5d7451d826b5ac5d069ce2f032b044596dde3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000104",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000104-0483d9221173.webp",
+      "sha256": "0483d92211731312dd114a09012896fc8368d362fffb752c76b8441a26365853",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000179",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000179-1f00d4d34440.webp",
+      "sha256": "1f00d4d3444090f26b0e8206054329cf94b86f1c7a0ab52ff32ab682a4dcd718",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000116",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000116-c88b07e0857a.webp",
+      "sha256": "c88b07e0857ad040e0b2079faa81f702ebe7d7777e24da2a1ae94180e261d79f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000278",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000278-6f4e1379b685.webp",
+      "sha256": "6f4e1379b6854112d5e9b20169b8873cfb4d73727a83dafe9e96a49d1a074686",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000206",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000206-7966b219bf65.webp",
+      "sha256": "7966b219bf651f4bb4c5b0366e70d15dd5c4d12a3ab8dabcd3d782275651cdf4",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000222",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000222-45d8513c57dc.webp",
+      "sha256": "45d8513c57dc8bb90f55e887944ac9ea01ea3d47e44ff787babe076465a3682f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000258",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000258-beda915bf876.webp",
+      "sha256": "beda915bf876c46a6ab5095efa9b8495c386f26ab0962e6e802b9cbb9e6f5a46",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000295",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000295-618a75c8351b.webp",
+      "sha256": "618a75c8351b9ca894ec64771c23cc2fa9ddeb81f1c60b8e2f08db4450118ab7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000198",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000198-ef3829174e0c.webp",
+      "sha256": "ef3829174e0c3e7103df8e0191f98b16919c52881bdbb80071c47fe6a4ae033e",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000219",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000219-956214e1f8b4.webp",
+      "sha256": "956214e1f8b4258126e8328fdd4538544b9b6c9edcf7b6b094142c7f118d25c6",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000078",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000078-80788f22e0b2.webp",
+      "sha256": "80788f22e0b24176eccd89ef4b4aea9803e1c70ddcf8917218049559d76ae68a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000300",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000300-d64be50e7abe.webp",
+      "sha256": "d64be50e7abe0ed160137ed9b262a854900327ca56f5ee29a04d345326e4179a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000115",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000115-57f2d1b6ea0b.webp",
+      "sha256": "57f2d1b6ea0ba5fba670613288354493fc6b5fe34a0fdbbc3cd0c12bd0ba7298",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000155",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000155-8384029381f6.webp",
+      "sha256": "8384029381f609a7284dc7721a90140667e7e25fdd5ddd790ff82e6203d2627c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000216",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000216-65b4347a7cee.webp",
+      "sha256": "65b4347a7cee2f04d33a2189bcdbd75f9306231c721a3ba6688474067805d2c3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000274",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000274-c0445dc61963.webp",
+      "sha256": "c0445dc619639df480f7189c88123d24817005215024d43f01232247c84ccba8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000133",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000133-6a01a754c671.webp",
+      "sha256": "6a01a754c671299e18cd960b85c603358972a70646354bbba4033a0018cb415c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000071",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000071-ed7c865479a4.webp",
+      "sha256": "ed7c865479a485c5ff91182ac9bce0d2334e6406f7ea8b4ee053a1137f435955",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000280",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000280-14035be61c6a.webp",
+      "sha256": "14035be61c6aad58f14748d32d0f7a13ba5cbe600d4e480b817fdf800eacab66",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000267",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000267-c12642555b78.webp",
+      "sha256": "c12642555b78792c796027ef05beb767284a19d81bce8e0dded180ed94138be5",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000226",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000226-ae97df848a1b.webp",
+      "sha256": "ae97df848a1ba4092afe3c61a2d982e96e31ba0febdaf33b643b0039091377e1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000102",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000102-53ec33644484.webp",
+      "sha256": "53ec3364448494cdfd9b71738c7109ca28e6dd7469a31e7cce403cd50430fde8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000112",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000112-5eb032eac09e.webp",
+      "sha256": "5eb032eac09e42fb68cd3d354606c0569ad258dfac1ed5a08a45890e01b3676d",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000257",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000257-a5497ba8f5f5.webp",
+      "sha256": "a5497ba8f5f5c41dcb691d6c6a81faea26a866fa6d3ced08013dc02190aace0b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000103",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000103-079083fdb362.webp",
+      "sha256": "079083fdb362443aa11c80a8c1eb591702dc302ed071288ea7d014973a321dd1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000252",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000252-70351687a006.webp",
+      "sha256": "70351687a006be9716a67cd80d55aa2e858ad0eb336a35846a8294759c240521",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000069",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000069-3977629513e6.webp",
+      "sha256": "3977629513e6888b3c9f763e840b5cfbb380aae9cdadc91fb225f78c587169ff",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000244",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp",
+      "sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000182",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000182-e20f67a9a1e0.webp",
+      "sha256": "e20f67a9a1e0e64a7ba53bf9eff375afacf3f3fd23d118a66283d7b98cf8e42c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000081",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000081-241155985f6b.webp",
+      "sha256": "241155985f6b82b372dd3081bc6d5e01fd086471e53dc316ebf49b7c84cf6d73",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000259",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000259-613a6d7ef62e.webp",
+      "sha256": "613a6d7ef62ed16ca20ec0ae92bd588517903cb535ccda04d6ebbe8c272dfc6d",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000173",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000173-538c62787067.webp",
+      "sha256": "538c62787067f7ea0d6d222e703e813d7c2ed40036ae2329baa85f449d2ec3fd",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000241",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000241-36ef6cfb95a2.webp",
+      "sha256": "36ef6cfb95a23c57f4d4037c4f7202de94f986e67599dd41fe6a04bd4a7e5699",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000114",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000114-fcd19dc85651.webp",
+      "sha256": "fcd19dc8565150a38b5b0918ea6b2e584d2953b09360b5a396dd9d87b0240cd3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000082",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000082-6653afc2da7a.webp",
+      "sha256": "6653afc2da7a7f9ab54b944ecb158fcdf97d70cd8771f9f007695b1013fc75dc",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000302",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000302-18b9dbb8d3c3.webp",
+      "sha256": "18b9dbb8d3c393896d807bb0b7b670022c5a1ff2f8309a7c13dedcfb56218534",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000255",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000255-b0c1e98ca45e.webp",
+      "sha256": "b0c1e98ca45e5b6234871714037890d6765ebc9755e9ee6d2b39055944331c14",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000167",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000167-d70e0f473f32.webp",
+      "sha256": "d70e0f473f32f16eaa3c3f8f19bf30aa74c70ecb3ade521837ff77df3dd17d71",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000170",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000170-7a3e08eac676.webp",
+      "sha256": "7a3e08eac67603efa6eff1215ed036553bf874c1d89db02a35741f36d64f957c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000250",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000250-732a7fe04b7d.webp",
+      "sha256": "732a7fe04b7daf1ad33803750056908a68799cad1cd32f85a26a737a01594c3f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000211",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000211-d31b45eeb5ec.webp",
+      "sha256": "d31b45eeb5ec991dcb6a0e9d7c8001357b1c9b2f68ec95b978571b2d23384f3f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000201",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000201-3e670b0ab789.webp",
+      "sha256": "3e670b0ab789be87b1ef5bbf1c4860881f02f6533df4cca8b75d412651de5b9a",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000194",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000194-7d7e478237e7.webp",
+      "sha256": "7d7e478237e74558a54a4af3bfc3c7bfa38126830d05e7b25ec8d13050c2ed43",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000068",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000068-0bae1dbd2d29.webp",
+      "sha256": "0bae1dbd2d293c17eb37ebe02be71b3cd548f648f991b2833e32f2af221131a8",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000256",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000256-eb340eda0916.webp",
+      "sha256": "eb340eda0916639883ac79874e09f0b27c88a0b39f781894379d59126cee7983",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000093",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000093-81deaded1284.webp",
+      "sha256": "81deaded12840c56c96df2ab3193dedbd58e36dc2bf9d23a3722ca0fb48e819c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000246",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000246-1cf6d7c511c0.webp",
+      "sha256": "1cf6d7c511c035da21b3f9cd5fb874be203024c9ed0621164556ac87d14c68aa",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000238",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000238-a32e3471545b.webp",
+      "sha256": "a32e3471545b6db52f480dcaf681bca57b01b92a8256f1e39383f3a6bce5f177",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000065",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000065-83b6d2fb5000.webp",
+      "sha256": "83b6d2fb500092fdc78394500ac89c24aea9423ba59e93ac0bb45545216c984c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000223",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000223-b97d0b7a925e.webp",
+      "sha256": "b97d0b7a925eb67c4a986dcb39c1c36ecb1a1a8f5e2d728f5249dbb92ffefbed",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000094",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000094-9e3687e0be51.webp",
+      "sha256": "9e3687e0be51ce9e3972acd55a5643e1afff3344469d5a5ceab134c5eb61584b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000150",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000150-37d3bf68f548.webp",
+      "sha256": "37d3bf68f548251c0206fad7b927a3ddf72d5697e1ca494c4b989fb8c396e90f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000083",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000083-0fbeab76ed9d.webp",
+      "sha256": "0fbeab76ed9dbfcc7073b10821059f68587b0bfb63ee346de8083197f5027cf3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000237",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000237-92bef533d43e.webp",
+      "sha256": "92bef533d43eb388375fddd1cf9f62d73790a6a868f0266248d6b51c478e0028",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000212",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000212-4a54fe4ac78f.webp",
+      "sha256": "4a54fe4ac78f0bafcd6242d0abe47afcd318d9f5960cd988bb30d6d7a3324373",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000091",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000091-9a62dd0758d8.webp",
+      "sha256": "9a62dd0758d882aa7b62af635d16b5b66189068317834dd36bbd19f33101852b",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000217",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000217-9c429e51343b.webp",
+      "sha256": "9c429e51343b4261dc89222c80f9d6451db99df25a268c95218f4dd26fd47125",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000265",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000265-293ad579ad84.webp",
+      "sha256": "293ad579ad84f5a71ffeb025e134e9d3e2f65f6b2b4d36760081eb3b26466cb4",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000073",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000073-b44e6508e334.webp",
+      "sha256": "b44e6508e3340edfc5a9f4616fd1ee9ab262527b87a392e8d854a702491a492f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000254",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000254-f9472c6d9b88.webp",
+      "sha256": "f9472c6d9b883c33bfb1399027ef01c07401e10c41f3157387f8f66ee104f359",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000169",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000169-09f84dc38bd6.webp",
+      "sha256": "09f84dc38bd6390ff4e54197cd4faf6b346add3cd1e3c820f8a1797ca9016aa7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000121",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000121-9bf6533fec2a.webp",
+      "sha256": "9bf6533fec2a4f607b0a9da4c7d36463e53ec6d9b36d4b987b4503f016e0216f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000215",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000215-638adbd97519.webp",
+      "sha256": "638adbd975199d569b1aa8fd300caef428601aeeac6be6e87e32d6db2a531fa7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000154",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000154-40eeed0d457a.webp",
+      "sha256": "40eeed0d457ac47b4585476bd5bfa98dca4110fcc9f6c5d5e9bb14a8b5cc861e",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000119",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000119-4ab919a3a5c5.webp",
+      "sha256": "4ab919a3a5c55a0f2f1673c024cadcec0c1b361a5c50a07421c2f9efcec9c821",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000298",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000298-fe522c3f4340.webp",
+      "sha256": "fe522c3f43409494867e6b30fd6d71477a3a910e3a01404dfe8b7bf575fbadff",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000061",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000061-f57236bb6f98.webp",
+      "sha256": "f57236bb6f98e2c255ffd70ba9d209eb7f5a7e74f71b1763bee62020d79584d7",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000140",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000140-ab0b39e4a661.webp",
+      "sha256": "ab0b39e4a6614d92b3e0de166f59e4005928b1e31c1ff0f930690b0d5fcfe19f",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000210",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000210-4dc172de7701.webp",
+      "sha256": "4dc172de7701f0a77091202651d8f6d9bd5b12961d7d58a495e60c0e489a45e6",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000129",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000129-89e8e2be2475.webp",
+      "sha256": "89e8e2be2475990bb8315173383dcd2a3c6b17eb749f69c1b35aa34e222a3bb1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000145",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000145-776fbe3ab216.webp",
+      "sha256": "776fbe3ab216c32e74b9b07bbddf1658f5b43fb4f8bcceed46141b78b4957bfa",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000148",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000148-6a53d3493ec1.webp",
+      "sha256": "6a53d3493ec1e01ccf8d08d829f63ab9bde879751a7d38f7bce3995b98e00d18",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000271",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000271-033a945e5bac.webp",
+      "sha256": "033a945e5bac6e5b6297091a4224b3a5ef088d1ef78ddb9c187bfacc71b6dddc",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000249",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000249-a4b0aae242ac.webp",
+      "sha256": "a4b0aae242aca478c9f3280e1fead628fe604f23b52b2e072c8dd4ff944ba752",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000072",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000072-65f7f9daff19.webp",
+      "sha256": "65f7f9daff19aeaad40ec3a0bc7cd10bac4870e8ae893f8d1841ef46c1d485a1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000218",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000218-a18f342c9986.webp",
+      "sha256": "a18f342c99868ae7017257c4767828030d88abaa06f435e6769b433f3b0ba610",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000165",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000165-0ed89dde2b9c.webp",
+      "sha256": "0ed89dde2b9cefa6a98e4edceab85845a078002c94214be752498e86696bdf24",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000136",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000136-f138f4adccd1.webp",
+      "sha256": "f138f4adccd11d53be697df574dc8f14768cac86010226e821e8cb3d5ced33cf",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000199",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000199-1b9a67187d35.webp",
+      "sha256": "1b9a67187d35efadee3c9ef6422933867d73b2fbb92129dc0e296a12b47e2fb1",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000144",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000144-ce836530b65f.webp",
+      "sha256": "ce836530b65f3951a9d6439828dfbfdec509b4c2075b074e6bf68ef1cdcb1434",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000220",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000220-47a264509afa.webp",
+      "sha256": "47a264509afa6694a56b49eff9fbcb70e4d2f8ac32c20cdf3d7cba5d287c0f58",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000204",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000204-fc3b28c3f665.webp",
+      "sha256": "fc3b28c3f66530db7f809b89984d4a2e360ce484bb0b830dacdeafa29d0795de",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000290",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000290-19da60012154.webp",
+      "sha256": "19da60012154c79673921837943b656ddb3e5f62eae9dbfc076155e6a6cac672",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000303",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000303-37c9e031cb0e.webp",
+      "sha256": "37c9e031cb0ef5b12e62e9d83d097b8e576692e1370acb72ecda5eb5cef89c16",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000183",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000183-f4d194dabae6.webp",
+      "sha256": "f4d194dabae6db2d92dbe7bb908ab7f5d7ef430ac925659ced7378f632d467f5",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000309",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000309-9f8667bcf95e.webp",
+      "sha256": "9f8667bcf95e65c55a6008c7438042340ed2801f6b7862419d19f15f21cd752c",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000156",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000156-e1d5bedd237a.webp",
+      "sha256": "e1d5bedd237abe679bc338e8760cdcf928ac10bf55e33809ee3b374809561471",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000099",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000099-35be0191f4c1.webp",
+      "sha256": "35be0191f4c1839c985be9d77fe59821b17e497bf444864286851dce7f773d81",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000272",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000272-9378ba8d9f88.webp",
+      "sha256": "9378ba8d9f88d5d74f49347735d73323ceaa6c99b54532f2f14816ed3b144ec2",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000299",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000299-2a036cbc00f9.webp",
+      "sha256": "2a036cbc00f9276b25ea84ac35dddfb83ad09f8ae14ba410cc3dadeef8aa7b34",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000233",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000233-04d5f3c2e0af.webp",
+      "sha256": "04d5f3c2e0afe8cdc42cfe5806bb6b4c7d173182270f473dbe70109812a4f495",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000191",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000191-142199180447.webp",
+      "sha256": "1421991804470861811210e1950b17599e8bfa463c4601c4c0a16a57d32d85a2",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    },
+    {
+      "sku": "PLG-BK-000262",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000262-6feefd6a527d.webp",
+      "sha256": "6feefd6a527d63dd769ca5fdceacaaf1a6693bb64374cb788dec10c07e1209c3",
+      "Content-Type": "image/webp",
+      "Cache-Control": "public, max-age=31536000, immutable",
+      "status": 200
+    }
+  ],
+  "verified": 259
+}

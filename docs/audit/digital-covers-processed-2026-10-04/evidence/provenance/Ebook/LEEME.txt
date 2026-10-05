@@ -1,0 +1,11 @@
+PLIEGO — catálogo visual académico simulado
+
+225 portadas: 25 en cada una de las nueve categorías.
+
+Las imágenes se obtuvieron de las fichas de eLibro mediante el acceso institucional PUCE. Solo se descargaron portadas; no libros, PDF, EPUB ni páginas de lectura. Se conserva el formato JPEG original y la resolución de portada expuesta por la interfaz consultada (220 × 320 px), sin ampliación artificial ni conversión.
+
+inventario.csv contiene las cuatro columnas solicitadas. Archivo es relativo a esta carpeta Ebook. fuentes.csv añade el identificador y enlace de cada ficha para trazabilidad. Los CSV usan UTF-8 con BOM. Los nombres conservan título y autor(es); solo se retiraron caracteres no permitidos por Windows.
+
+Validación: archivos existentes y decodificables, 225 identificadores y hashes distintos, revisión visual y descarte de imágenes genéricas, en blanco o recortadas.
+
+Extrae en una ruta corta para evitar límites de longitud de Windows. Este conjunto se preparó para la simulación académica solicitada; la descarga no constituye una licencia de publicación comercial.

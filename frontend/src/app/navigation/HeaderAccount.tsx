@@ -27,6 +27,14 @@ export function HeaderCart() {
   );
 }
 
+/** The customer's account destinations; the account menu is their only navigation (current = ultramar + yellow dot). */
+const accountSections = [
+  { to: "/account", icon: "account_circle", label: "Perfil", current: (path: string) => path === "/account" },
+  { to: "/account/addresses", icon: "location_on", label: "Direcciones", current: (path: string) => path.startsWith("/account/addresses") },
+  { to: "/favorites", icon: "favorite", label: "Favoritos", current: (path: string) => path.startsWith("/favorites") },
+  { to: "/orders", icon: "shopping_bag", label: "Pedidos", current: (path: string) => path.startsWith("/orders") },
+] as const;
+
 export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange: (opened: boolean) => void }) {
   const { session, clear, logout } = useSession();
   const location = useLocation();
@@ -68,7 +76,7 @@ export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange:
   }
 
   return (
-    <Menu opened={opened} onChange={onChange} withInitialFocusPlaceholder={false} position="bottom-end" offset={12} width={272} zIndex={70} returnFocus={false} transitionProps={{ duration: 0 }} classNames={{ dropdown: classes.accountPanel, item: classes.accountItem }}>
+    <Menu opened={opened} onChange={onChange} withInitialFocusPlaceholder={false} position="bottom-end" offset={12} width={288} zIndex={70} returnFocus={false} transitionProps={{ duration: 0 }} classNames={{ dropdown: classes.accountPanel, item: classes.accountItem }}>
       <Menu.Target>
         <ActionIcon ref={trigger} variant="subtle" className={classes.icon} aria-label="Menú de cuenta" title="Mi cuenta" onKeyDown={(event) => {
           if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
@@ -87,16 +95,16 @@ export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange:
         if (event.key === "Escape") requestAnimationFrame(() => trigger.current?.focus({ preventScroll: true }));
       }}>
         <div className={classes.identity}>
-          <Text fw={600} size="sm">{isCustomer && profile.data ? `${profile.data.firstNames} ${profile.data.lastNames}` : isCustomer ? "Tu cuenta" : "Administración"}</Text>
-          <Text size="xs" className={classes.muted}>{session.user.email}</Text>
+          <Text className={classes.identityName}>{isCustomer && profile.data ? `${profile.data.firstNames} ${profile.data.lastNames}` : isCustomer ? "Tu cuenta" : "Administración"}</Text>
+          <Text size="sm" className={classes.muted}>{session.user.email}</Text>
           {profile.isError && <Text size="xs" className={classes.muted}>No pudimos consultar tu nombre.</Text>}
         </div>
-        <Menu.Divider />
-        {isCustomer ? <>
-          <Menu.Item component={Link} to="/account" data-autofocus leftSection={<MaterialSymbol name="account_circle" />} aria-current={location.pathname.startsWith("/account") ? "page" : undefined}>Mi cuenta</Menu.Item>
-          <Menu.Item component={Link} to="/orders" leftSection={<MaterialSymbol name="shopping_bag" />} aria-current={location.pathname.startsWith("/orders") ? "page" : undefined}>Mis pedidos</Menu.Item>
-          <Menu.Item component={Link} to="/favorites" leftSection={<MaterialSymbol name="favorite" />} aria-current={location.pathname === "/favorites" ? "page" : undefined}>Favoritos</Menu.Item>
-        </> : <Menu.Item component={Link} to="/admin" data-autofocus leftSection={<MaterialSymbol name="inventory_2" />}>Administración</Menu.Item>}
+        {isCustomer ? accountSections.map((section, index) => {
+          const current = section.current(location.pathname);
+          return <Menu.Item key={section.to} component={Link} to={section.to} data-autofocus={index === 0 || undefined}
+            leftSection={<MaterialSymbol name={section.icon} />} rightSection={current ? <span className={classes.hereDot} aria-hidden="true" /> : undefined}
+            aria-current={current ? "page" : undefined}>{section.label}</Menu.Item>;
+        }) : <Menu.Item component={Link} to="/admin" data-autofocus leftSection={<MaterialSymbol name="inventory_2" />}>Administración</Menu.Item>}
         <Menu.Divider />
         {logoutError && <Text role="alert" size="sm" className={classes.error}>No se pudo cerrar la sesión. Comprueba tu conexión e inténtalo otra vez.</Text>}
         <Menu.Item closeMenuOnClick={false} disabled={loggingOut} onClick={() => void signOut()} leftSection={<MaterialSymbol name="logout" />}>{loggingOut ? "Cerrando sesión…" : "Cerrar sesión"}</Menu.Item>

@@ -38,7 +38,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
     private static final String DETAIL = "SELECT order_id,order_state,subtotal,total,created_at,updated_at,"
             + "items::text AS items,address::text AS address,payment::text AS payment,"
             + "state_history::text AS state_history,purchase_state,fulfillment::text,shipment::text,invoice::text,"
-            + "credit_notes::text,available_actions::text FROM pliego.fn_customer_order_detail(?,?)";
+            + "credit_notes::text,available_actions::text,tax_rate,tax_amount,shipping_amount FROM pliego.fn_customer_order_detail_priced(?,?)";
     private static final String CANCEL = "CALL pliego.sp_order_cancel(?,?,?,?,?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
@@ -111,17 +111,19 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
     private RowMapper<Detail> detailMapper() {
         return (rs, row) -> {
             JsonNode items = parseJson(rs.getString("items"), "items");
-            JsonNode address = parseJson(rs.getString("address"), "address");
+            JsonNode address = rs.getString("address") == null ? null : parseJson(rs.getString("address"), "address");
             JsonNode payment = parseJson(rs.getString("payment"), "payment");
             JsonNode history = parseJson(rs.getString("state_history"), "state history");
-            if (!items.isArray() || !address.isObject() || !payment.isObject() || !history.isArray()) {
+            var extras=postPurchase.detail(rs);
+            boolean pickup=extras.fulfillment()!=null && "STORE_PICKUP".equals(extras.fulfillment().method());
+            if (!items.isArray() || (address==null ? !pickup : !address.isObject()) || !payment.isObject() || !history.isArray()) {
                 throw new SQLException("Order detail Function returned incomplete JSON", "XX000");
             }
             return new Detail(Long.toString(rs.getLong("order_id")), rs.getString("order_state"),
                     rs.getBigDecimal("subtotal"), rs.getBigDecimal("total"),
                     rs.getObject("created_at", OffsetDateTime.class).toInstant(),
                     rs.getObject("updated_at", OffsetDateTime.class).toInstant(),
-                    parseItems(items), new Address(text(address, "destinatario"),
+                    parseItems(items), address==null ? null : new Address(text(address, "destinatario"),
                             text(address, "direccion_linea1"), text(address, "direccion_linea2"),
                             text(address, "ciudad"), text(address, "provincia"),
                             text(address, "pais_codigo"), text(address, "codigo_postal"),
@@ -129,7 +131,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
                     new Payment(text(payment, "paymentId"), text(payment, "method"),
                             text(payment, "state"), decimal(payment, "amount"),
                             text(payment, "reference"), text(payment, "resultDetail"),
-                            text(payment, "createdAt"), text(payment, "updatedAt")), parseHistory(history),postPurchase.detail(rs));
+                            text(payment, "createdAt"), text(payment, "updatedAt")), parseHistory(history),extras);
         };
     }
 

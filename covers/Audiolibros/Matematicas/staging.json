@@ -1,0 +1,2146 @@
+{
+  "schema": "pliego-published-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "portadas/audiobook-2e70a2bb71e8dfd5.webp",
+      "libro": {
+        "titulo": "Cálculo avanzado: introducción",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Caicedo Contreras, José Francisco",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional de Colombia. Facultad de Ciencias",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000236",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4494,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000236-18ee9ca1bac5.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127754",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2e70a2bb71e8dfd5",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "119",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d9f8860939169f64"
+        },
+        "author_bindings": [
+          {
+            "name": "Caicedo Contreras, José Francisco",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Caicedo Contreras, José Francisco",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+            "sha256": "e1eb89ad04425c2038242a6927957368a8ff349bb97ef9f72d00a9a1caba08f4",
+            "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias, 2012.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "e1eb89ad04425c2038242a6927957368a8ff349bb97ef9f72d00a9a1caba08f4",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2e70a2bb71e8dfd5.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+            "sha256": "e1eb89ad04425c2038242a6927957368a8ff349bb97ef9f72d00a9a1caba08f4",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "e1eb89ad04425c2038242a6927957368a8ff349bb97ef9f72d00a9a1caba08f4",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2e70a2bb71e8dfd5.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127754",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 177,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127754",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Cálculo avanzado introducción - Caicedo Contreras, José Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-2e70a2bb71e8dfd5.webp",
+            "cover_sha256": "18ee9ca1bac55499287696e322d300ea364642386af679347cc0890903499d5b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Caicedo Contreras, José Francisco",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 177,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127754",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Cálculo avanzado introducción - Caicedo Contreras, José Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-2e70a2bb71e8dfd5.webp",
+            "cover_sha256": "18ee9ca1bac55499287696e322d300ea364642386af679347cc0890903499d5b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 177,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127754",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Cálculo avanzado introducción - Caicedo Contreras, José Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-2e70a2bb71e8dfd5.webp",
+            "cover_sha256": "18ee9ca1bac55499287696e322d300ea364642386af679347cc0890903499d5b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 177,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127754",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Cálculo avanzado introducción - Caicedo Contreras, José Francisco.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-2e70a2bb71e8dfd5.webp",
+          "cover_sha256": "18ee9ca1bac55499287696e322d300ea364642386af679347cc0890903499d5b",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "120",
+        "imported_book_id": "119"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-6193d7218a6f349d.webp",
+      "libro": {
+        "titulo": "Estadística aplicada básica (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Moore, David S.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Antoni Bosch editor",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "29.99",
+        "sku": "PLG-BK-000281",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3834,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000281-f0010914a82a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60046",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-6193d7218a6f349d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "120",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-37317fafe7ca9200"
+        },
+        "author_bindings": [
+          {
+            "name": "Moore, David S.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Moore, David S.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+            "sha256": "87d9c0982d4972ab3ef1c144e8fb7416d3d067fca457e815cd67267b03a56b6b",
+            "observed_text": "Madrid : Antoni Bosch editor, 2005.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "87d9c0982d4972ab3ef1c144e8fb7416d3d067fca457e815cd67267b03a56b6b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6193d7218a6f349d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+            "sha256": "87d9c0982d4972ab3ef1c144e8fb7416d3d067fca457e815cd67267b03a56b6b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "87d9c0982d4972ab3ef1c144e8fb7416d3d067fca457e815cd67267b03a56b6b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6193d7218a6f349d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60046",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 182,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60046",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística aplicada básica (2a. ed.) - Moore, David S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-6193d7218a6f349d.webp",
+            "cover_sha256": "f0010914a82a24e3b0addf14aab62fa535e25d5c4c3e8e1441c6044799329a34",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Moore, David S.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 182,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60046",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística aplicada básica (2a. ed.) - Moore, David S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-6193d7218a6f349d.webp",
+            "cover_sha256": "f0010914a82a24e3b0addf14aab62fa535e25d5c4c3e8e1441c6044799329a34",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 182,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60046",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística aplicada básica (2a. ed.) - Moore, David S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-6193d7218a6f349d.webp",
+            "cover_sha256": "f0010914a82a24e3b0addf14aab62fa535e25d5c4c3e8e1441c6044799329a34",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 182,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60046",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Estadística aplicada básica (2a. ed.) - Moore, David S..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-6193d7218a6f349d.webp",
+          "cover_sha256": "f0010914a82a24e3b0addf14aab62fa535e25d5c4c3e8e1441c6044799329a34",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "121",
+        "imported_book_id": "120"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-84c02787a4bc623d.webp",
+      "libro": {
+        "titulo": "Estadística Inferencial",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Llinás Solano, Humberto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad del Norte",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000189",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1023,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000189-6c3078d525c8.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70060",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-84c02787a4bc623d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "121",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d601ce86a5c0b5ba"
+        },
+        "author_bindings": [
+          {
+            "name": "Llinás Solano, Humberto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Llinás Solano, Humberto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+            "sha256": "f808fe82c3dc2399e46bb36e39122b2d23d61dc580319e1f47df77a164586f83",
+            "observed_text": "Barranquilla : Universidad del Norte, 2017.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "f808fe82c3dc2399e46bb36e39122b2d23d61dc580319e1f47df77a164586f83",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-84c02787a4bc623d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+            "sha256": "f808fe82c3dc2399e46bb36e39122b2d23d61dc580319e1f47df77a164586f83",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "f808fe82c3dc2399e46bb36e39122b2d23d61dc580319e1f47df77a164586f83",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-84c02787a4bc623d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70060",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 184,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70060",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística Inferencial - Llinás Solano, Humberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-84c02787a4bc623d.webp",
+            "cover_sha256": "6c3078d525c8c0dae271815dda08828ec678e7065d7482f1eec778c3d46434b7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Llinás Solano, Humberto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 184,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70060",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística Inferencial - Llinás Solano, Humberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-84c02787a4bc623d.webp",
+            "cover_sha256": "6c3078d525c8c0dae271815dda08828ec678e7065d7482f1eec778c3d46434b7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 184,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70060",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística Inferencial - Llinás Solano, Humberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-84c02787a4bc623d.webp",
+            "cover_sha256": "6c3078d525c8c0dae271815dda08828ec678e7065d7482f1eec778c3d46434b7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 184,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70060",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Estadística Inferencial - Llinás Solano, Humberto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-84c02787a4bc623d.webp",
+          "cover_sha256": "6c3078d525c8c0dae271815dda08828ec678e7065d7482f1eec778c3d46434b7",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "122",
+        "imported_book_id": "121"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-3fdc91d85e14cdbc.webp",
+      "libro": {
+        "titulo": "Estadística y muestreo (14a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Martínez Bencardino, Ciro",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ecoe Ediciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "33.99",
+        "sku": "PLG-BK-000232",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1536,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000232-12ee27948af1.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125946",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-3fdc91d85e14cdbc",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "122",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-95d4f49c399e02bd"
+        },
+        "author_bindings": [
+          {
+            "name": "Martínez Bencardino, Ciro",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Martínez Bencardino, Ciro",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+            "sha256": "c8ba1c956a7e44ffee7f85d4a56398bd3ee52133ce83ce9dd301af1c3aa48380",
+            "observed_text": "Bogotá : Ecoe Ediciones, 2019.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "c8ba1c956a7e44ffee7f85d4a56398bd3ee52133ce83ce9dd301af1c3aa48380",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3fdc91d85e14cdbc.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+            "sha256": "c8ba1c956a7e44ffee7f85d4a56398bd3ee52133ce83ce9dd301af1c3aa48380",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "c8ba1c956a7e44ffee7f85d4a56398bd3ee52133ce83ce9dd301af1c3aa48380",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3fdc91d85e14cdbc.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125946",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 186,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística y muestreo (14a. ed.) - Martínez Bencardino, Ciro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-3fdc91d85e14cdbc.webp",
+            "cover_sha256": "12ee27948af163e8ff3f65c5d35979eb809dc7acfc1c2530fd8881544f31673c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Martínez Bencardino, Ciro",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 186,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística y muestreo (14a. ed.) - Martínez Bencardino, Ciro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-3fdc91d85e14cdbc.webp",
+            "cover_sha256": "12ee27948af163e8ff3f65c5d35979eb809dc7acfc1c2530fd8881544f31673c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 186,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística y muestreo (14a. ed.) - Martínez Bencardino, Ciro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-3fdc91d85e14cdbc.webp",
+            "cover_sha256": "12ee27948af163e8ff3f65c5d35979eb809dc7acfc1c2530fd8881544f31673c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 186,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125946",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Estadística y muestreo (14a. ed.) - Martínez Bencardino, Ciro.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-3fdc91d85e14cdbc.webp",
+          "cover_sha256": "12ee27948af163e8ff3f65c5d35979eb809dc7acfc1c2530fd8881544f31673c",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "123",
+        "imported_book_id": "122"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-d5e1e8df5d591fa7.webp",
+      "libro": {
+        "titulo": "Fundamentos de estadística",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Peña, Daniel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alianza Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "26.99",
+        "sku": "PLG-BK-000275",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3540,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000275-5fab167f30ea.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45429",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-d5e1e8df5d591fa7",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "123",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-39bf85e7614bbcb7"
+        },
+        "author_bindings": [
+          {
+            "name": "Peña, Daniel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Peña, Daniel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "sha256": "3e74f33a545d43f617853c1b818fcea9f68f8b6f58faad97c5a912acc9d88262",
+            "observed_text": "Alianza Editorial",
+            "basis": "Sello editorial legible en la portada original suministrada; título y autoría concordantes.",
+            "source_path": "covers/Audiolibros/Matemáticas/originales/Fundamentos de estadística - Peña, Daniel.jpg",
+            "capture_sha256": "3e74f33a545d43f617853c1b818fcea9f68f8b6f58faad97c5a912acc9d88262",
+            "source": "covers/Audiolibros/Matemáticas/originales/Fundamentos de estadística - Peña, Daniel.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://dialnet.unirioja.es/servlet/libro?codigo=369575",
+            "sha256": "d3751c52247be9ad4776b46c08c1e8b847d3e4a401ffa125f3b2806706eb87cb",
+            "observed_text": "Autores: Daniel Peña Sánchez de Rivera; Editores: Alianza Editorial; Idioma: español",
+            "basis": "Registro bibliográfico primario de Dialnet (Fundación de Universidad de La Rioja); título, autor y sello coinciden con portada.",
+            "capture_sha256": "d3751c52247be9ad4776b46c08c1e8b847d3e4a401ffa125f3b2806706eb87cb",
+            "capture_path": "/tmp/pliego-digital-completion/science/dialnet-fundamentos.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://dialnet.unirioja.es/servlet/libro?codigo=369575",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 187,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45429",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Fundamentos de estadística - Peña, Daniel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-d5e1e8df5d591fa7.webp",
+            "cover_sha256": "5fab167f30ea86b18402bc9e39098753756415e1ae4b97c429409640abb0c5bf",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Peña, Daniel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 187,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45429",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Fundamentos de estadística - Peña, Daniel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-d5e1e8df5d591fa7.webp",
+            "cover_sha256": "5fab167f30ea86b18402bc9e39098753756415e1ae4b97c429409640abb0c5bf",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 187,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45429",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Fundamentos de estadística - Peña, Daniel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-d5e1e8df5d591fa7.webp",
+            "cover_sha256": "5fab167f30ea86b18402bc9e39098753756415e1ae4b97c429409640abb0c5bf",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 187,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45429",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Fundamentos de estadística - Peña, Daniel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-d5e1e8df5d591fa7.webp",
+          "cover_sha256": "5fab167f30ea86b18402bc9e39098753756415e1ae4b97c429409640abb0c5bf",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "124",
+        "imported_book_id": "123"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-41593a3c01bb3bb5.webp",
+      "libro": {
+        "titulo": "Geometría elemental",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pogorélov, A. V.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Instituto Politécnico Nacional",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000098",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3108,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000098-21037a93cc95.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/104762",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-41593a3c01bb3bb5",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "124",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-e29580be339e9d83"
+        },
+        "author_bindings": [
+          {
+            "name": "Pogorélov, A. V.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pogorélov, A. V.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+            "sha256": "1717ea615c8bf86c79ca9ab49c6580486aa3f781c3ff3cc450c95abb4b8b63b0",
+            "observed_text": "México : Instituto Politécnico Nacional, 1998.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "1717ea615c8bf86c79ca9ab49c6580486aa3f781c3ff3cc450c95abb4b8b63b0",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-41593a3c01bb3bb5.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+            "sha256": "1717ea615c8bf86c79ca9ab49c6580486aa3f781c3ff3cc450c95abb4b8b63b0",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "1717ea615c8bf86c79ca9ab49c6580486aa3f781c3ff3cc450c95abb4b8b63b0",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-41593a3c01bb3bb5.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB104762",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 189,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/104762",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Geometría elemental - Pogorélov, A. V..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-41593a3c01bb3bb5.webp",
+            "cover_sha256": "21037a93cc95c95ffa868889f8dbb435e431bd4b279f16e74e1b579fdfe002af",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pogorélov, A. V.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 189,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/104762",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Geometría elemental - Pogorélov, A. V..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-41593a3c01bb3bb5.webp",
+            "cover_sha256": "21037a93cc95c95ffa868889f8dbb435e431bd4b279f16e74e1b579fdfe002af",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 189,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/104762",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Geometría elemental - Pogorélov, A. V..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-41593a3c01bb3bb5.webp",
+            "cover_sha256": "21037a93cc95c95ffa868889f8dbb435e431bd4b279f16e74e1b579fdfe002af",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 189,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/104762",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Geometría elemental - Pogorélov, A. V..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-41593a3c01bb3bb5.webp",
+          "cover_sha256": "21037a93cc95c95ffa868889f8dbb435e431bd4b279f16e74e1b579fdfe002af",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "125",
+        "imported_book_id": "124"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-e802891e2e2bf310.webp",
+      "libro": {
+        "titulo": "Geometría riemanniana",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sánchez Morgado, Héctor",
+            "orden": 1
+          },
+          {
+            "nombre": "Óscar A. Palmas Velasco",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional Autónoma de México",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "26.99",
+        "sku": "PLG-BK-000124",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5568,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000124-e833b5aaa786.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/74615",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-e802891e2e2bf310",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "125",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-8ba2425d25bfb858"
+        },
+        "author_bindings": [
+          {
+            "name": "Sánchez Morgado, Héctor",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Óscar A. Palmas Velasco",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sánchez Morgado, Héctor; Óscar A. Palmas Velasco",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+            "sha256": "be917ec1098370fbbbee80453b4845f02834c311401eb89efbba78ced2081d0b",
+            "observed_text": "México D.F. : Universidad Nacional Autónoma de México, 2007.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "be917ec1098370fbbbee80453b4845f02834c311401eb89efbba78ced2081d0b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e802891e2e2bf310.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+            "sha256": "be917ec1098370fbbbee80453b4845f02834c311401eb89efbba78ced2081d0b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "be917ec1098370fbbbee80453b4845f02834c311401eb89efbba78ced2081d0b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e802891e2e2bf310.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB74615",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 190,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/74615",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Geometría riemanniana - Sánchez Morgado, Héctor; Óscar A. Palmas Velasco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e802891e2e2bf310.webp",
+            "cover_sha256": "e833b5aaa7867e6ed2969ad810138741469a079a04d638789022d412f25f41d9",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sánchez Morgado, Héctor; Óscar A. Palmas Velasco",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 190,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/74615",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Geometría riemanniana - Sánchez Morgado, Héctor; Óscar A. Palmas Velasco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e802891e2e2bf310.webp",
+            "cover_sha256": "e833b5aaa7867e6ed2969ad810138741469a079a04d638789022d412f25f41d9",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 190,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/74615",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Geometría riemanniana - Sánchez Morgado, Héctor; Óscar A. Palmas Velasco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e802891e2e2bf310.webp",
+            "cover_sha256": "e833b5aaa7867e6ed2969ad810138741469a079a04d638789022d412f25f41d9",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 190,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/74615",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Geometría riemanniana - Sánchez Morgado, Héctor; Óscar A. Palmas Velasco.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e802891e2e2bf310.webp",
+          "cover_sha256": "e833b5aaa7867e6ed2969ad810138741469a079a04d638789022d412f25f41d9",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "126",
+        "imported_book_id": "125"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-e7e528202ac4b259.webp",
+      "libro": {
+        "titulo": "Inferencia estadística",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Miguel Ángel Gómez Villegas",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Díaz de Santos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000205",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4124,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000205-24ac0fa65c3e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52874",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-e7e528202ac4b259",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "126",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-90095858cae54545"
+        },
+        "author_bindings": [
+          {
+            "name": "Miguel Ángel Gómez Villegas",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Miguel Ángel Gómez Villegas",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+            "sha256": "3bca5fd1844a144225a657a60d6e596a4e18b2d447bc965a3d2d7636fadb0ac7",
+            "observed_text": "Madrid : Ediciones Díaz de Santos, 2005.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "3bca5fd1844a144225a657a60d6e596a4e18b2d447bc965a3d2d7636fadb0ac7",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e7e528202ac4b259.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+            "sha256": "3bca5fd1844a144225a657a60d6e596a4e18b2d447bc965a3d2d7636fadb0ac7",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "3bca5fd1844a144225a657a60d6e596a4e18b2d447bc965a3d2d7636fadb0ac7",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e7e528202ac4b259.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52874",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 191,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52874",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Inferencia estadística - Miguel Ángel Gómez Villegas.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e7e528202ac4b259.webp",
+            "cover_sha256": "24ac0fa65c3e67c5f81ec9b944ce5652e5e016ca7bd67258d0b1ec58a06c7705",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Miguel Ángel Gómez Villegas",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 191,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52874",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Inferencia estadística - Miguel Ángel Gómez Villegas.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e7e528202ac4b259.webp",
+            "cover_sha256": "24ac0fa65c3e67c5f81ec9b944ce5652e5e016ca7bd67258d0b1ec58a06c7705",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 191,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52874",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Inferencia estadística - Miguel Ángel Gómez Villegas.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e7e528202ac4b259.webp",
+            "cover_sha256": "24ac0fa65c3e67c5f81ec9b944ce5652e5e016ca7bd67258d0b1ec58a06c7705",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 191,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52874",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Inferencia estadística - Miguel Ángel Gómez Villegas.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e7e528202ac4b259.webp",
+          "cover_sha256": "24ac0fa65c3e67c5f81ec9b944ce5652e5e016ca7bd67258d0b1ec58a06c7705",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "127",
+        "imported_book_id": "126"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-98a184bad47674ce.webp",
+      "libro": {
+        "titulo": "La geometría de las ciudades",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sorando Muzás, José María",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Los libros de la Catarata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "33.99",
+        "sku": "PLG-BK-000070",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5538,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000070-2a66cdd32506.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233100",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-98a184bad47674ce",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "127",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-99717d139b7a4206"
+        },
+        "author_bindings": [
+          {
+            "name": "Sorando Muzás, José María",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sorando Muzás, José María",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+            "sha256": "76d972c775dc8c920d8c7049e9501e1dd66f0467ba4563aa53acec7d3e537a00",
+            "observed_text": "Madrid : Los libros de la Catarata, 2020.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "76d972c775dc8c920d8c7049e9501e1dd66f0467ba4563aa53acec7d3e537a00",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-98a184bad47674ce.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+            "sha256": "76d972c775dc8c920d8c7049e9501e1dd66f0467ba4563aa53acec7d3e537a00",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "76d972c775dc8c920d8c7049e9501e1dd66f0467ba4563aa53acec7d3e537a00",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-98a184bad47674ce.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233100",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 195,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233100",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/La geometría de las ciudades - Sorando Muzás, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-98a184bad47674ce.webp",
+            "cover_sha256": "2a66cdd32506ecae70593ce91d9e5eec687402d704095b0e3fadffebc5a9859b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sorando Muzás, José María",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 195,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233100",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/La geometría de las ciudades - Sorando Muzás, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-98a184bad47674ce.webp",
+            "cover_sha256": "2a66cdd32506ecae70593ce91d9e5eec687402d704095b0e3fadffebc5a9859b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 195,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233100",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/La geometría de las ciudades - Sorando Muzás, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-98a184bad47674ce.webp",
+            "cover_sha256": "2a66cdd32506ecae70593ce91d9e5eec687402d704095b0e3fadffebc5a9859b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 195,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233100",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/La geometría de las ciudades - Sorando Muzás, José María.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-98a184bad47674ce.webp",
+          "cover_sha256": "2a66cdd32506ecae70593ce91d9e5eec687402d704095b0e3fadffebc5a9859b",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "128",
+        "imported_book_id": "127"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-a73c8fe399446f23.webp",
+      "libro": {
+        "titulo": "La geometría del universo",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Leon, Manuel de",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Los libros de la Catarata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "34.99",
+        "sku": "PLG-BK-000269",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4944,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000269-249cbac036bc.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/239571",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-a73c8fe399446f23",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "128",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-f28cd34741929e85"
+        },
+        "author_bindings": [
+          {
+            "name": "Leon, Manuel de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Leon, Manuel de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB239571",
+            "sha256": "d841e7969100eccd9343a079f02f287134682ab8201943f93b829023e49a845d",
+            "observed_text": "Madrid : Los libros de la Catarata, 2012.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "d841e7969100eccd9343a079f02f287134682ab8201943f93b829023e49a845d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-a73c8fe399446f23.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB239571",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://www.iberlibro.com/9788483197769/Geometr%C3%ADa-Universo-Qu%C3%A9-Le%C3%B3n-Manuel-8483197766/plp",
+            "observed_text": "Idioma: Español; ISBN 13: 9788483197769; De León, Manuel; LOS LIBROS DE LA CATARATA",
+            "basis": "Campo explícito Idioma de ficha de edición exacta, corroborada por catálogo primario Catarata con mismo título, autor e ISBN. Portadas original, editorial y proveedor inspeccionadas: mismo diseño geométrico cósmico, autor Manuel de León, colección ¿Qué sabemos de? y logos CSIC/Catarata.",
+            "capture_sha256": "fd6321ed578085121272e9395a6b6313a8d5af38d5d0f82ed813ae59267d9996",
+            "capture_path": "/tmp/pliego-digital-completion/social/geometry-search-log.json",
+            "capture_format": "TOOL_OUTPUT_JSON",
+            "source": "https://www.iberlibro.com/9788483197769/Geometr%C3%ADa-Universo-Qu%C3%A9-Le%C3%B3n-Manuel-8483197766/plp",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 196,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/239571",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/La geometría del universo - Leon, Manuel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-a73c8fe399446f23.webp",
+            "cover_sha256": "249cbac036bcaa18d56138b116afb7d00e81353613dc3eb82d799e169975cd28",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Leon, Manuel de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 196,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/239571",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/La geometría del universo - Leon, Manuel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-a73c8fe399446f23.webp",
+            "cover_sha256": "249cbac036bcaa18d56138b116afb7d00e81353613dc3eb82d799e169975cd28",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 196,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/239571",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/La geometría del universo - Leon, Manuel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-a73c8fe399446f23.webp",
+            "cover_sha256": "249cbac036bcaa18d56138b116afb7d00e81353613dc3eb82d799e169975cd28",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 196,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/239571",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/La geometría del universo - Leon, Manuel de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-a73c8fe399446f23.webp",
+          "cover_sha256": "249cbac036bcaa18d56138b116afb7d00e81353613dc3eb82d799e169975cd28",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "129",
+        "imported_book_id": "128"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-8af061372fbf6a49.webp",
+      "libro": {
+        "titulo": "Una introducción a la geometría fractal",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sabogal, Sonia",
+            "orden": 1
+          },
+          {
+            "nombre": "Arenas, Gilberto",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones UIS",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000202",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 7098,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000202-890d7fda61bc.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117594",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-8af061372fbf6a49",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "129",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-acdaa4c68c6c72fe"
+        },
+        "author_bindings": [
+          {
+            "name": "Sabogal, Sonia",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Arenas, Gilberto",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sabogal, Sonia; Arenas, Gilberto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+            "sha256": "46c7c1ca324210b2ccb8de26888cfc589882e7c9b02c446ea4daae2d8c4ec68f",
+            "observed_text": "Bucaramanga : Ediciones UIS, 2011.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "46c7c1ca324210b2ccb8de26888cfc589882e7c9b02c446ea4daae2d8c4ec68f",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8af061372fbf6a49.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+            "sha256": "46c7c1ca324210b2ccb8de26888cfc589882e7c9b02c446ea4daae2d8c4ec68f",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "46c7c1ca324210b2ccb8de26888cfc589882e7c9b02c446ea4daae2d8c4ec68f",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8af061372fbf6a49.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117594",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 198,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117594",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Una introducción a la geometría fractal - Sabogal, Sonia; Arenas, Gilberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-8af061372fbf6a49.webp",
+            "cover_sha256": "890d7fda61bceeac35aa852b3bab709d949e92ce72b9cd51676762749e8f2429",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sabogal, Sonia; Arenas, Gilberto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 198,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117594",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Una introducción a la geometría fractal - Sabogal, Sonia; Arenas, Gilberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-8af061372fbf6a49.webp",
+            "cover_sha256": "890d7fda61bceeac35aa852b3bab709d949e92ce72b9cd51676762749e8f2429",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 198,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117594",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Una introducción a la geometría fractal - Sabogal, Sonia; Arenas, Gilberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-8af061372fbf6a49.webp",
+            "cover_sha256": "890d7fda61bceeac35aa852b3bab709d949e92ce72b9cd51676762749e8f2429",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 198,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117594",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Una introducción a la geometría fractal - Sabogal, Sonia; Arenas, Gilberto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-8af061372fbf6a49.webp",
+          "cover_sha256": "890d7fda61bceeac35aa852b3bab709d949e92ce72b9cd51676762749e8f2429",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "130",
+        "imported_book_id": "129"
+      }
+    }
+  ]
+}

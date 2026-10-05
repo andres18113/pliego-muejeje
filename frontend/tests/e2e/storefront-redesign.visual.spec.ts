@@ -47,13 +47,13 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 
         await page.evaluate(() => document.documentElement.style.fontSize = "");
         if (surface === "home") { const next = page.getByRole("button", { name: "Ver más libros", exact: true }); await next.scrollIntoViewIfNeeded(); if (width <= 1024) await next.tap(); else await next.click(); await expect.poll(() => page.locator('[data-presentation="rail"]').evaluate((node) => node.scrollLeft)).toBeGreaterThan(0); }
       }
-      await page.getByRole("button", { name: "Buscar en el catálogo", exact: true }).click();
+      await page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true }).click();
       const dialog = page.getByRole("dialog", { name: "Buscar en el catálogo", exact: true }); const search = dialog.getByRole("searchbox");
       await expect(search).toBeFocused(); await search.fill("cien");
       await expect(dialog.getByRole("link", { name: /Cien años de soledad/ })).toBeVisible(); await search.press("ArrowDown");
       await expect(dialog.getByRole("link", { name: /Cien años de soledad/ })).toBeFocused(); await accessible(page);
       await page.screenshot({ path: `${output}search-${scheme}-${width}.png` }); await page.keyboard.press("Escape");
-      await expect(page.getByRole("button", { name: "Buscar en el catálogo", exact: true })).toBeFocused();
+      await expect(page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true })).toBeFocused();
       await page.getByRole("button", { name: width >= 1280 ? "Literatura" : "Abrir navegación", exact: true }).click();
       const menu = width >= 1280 ? page.locator("#categorias-escritorio") : page.getByRole("dialog", { name: "Categorías", exact: true });
       if (width < 1280) await menu.getByRole("button", { name: "Literatura", exact: true }).click();

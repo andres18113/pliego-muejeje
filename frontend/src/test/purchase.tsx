@@ -10,19 +10,20 @@ export type Handler = (request: Request) => Response | Promise<Response>;
 
 /** Routes fetch calls by "METHOD /path" and records every request for assertions. */
 export function stubApi(routes: Record<string, Handler | Handler[]>) {
-  const calls: { method: string; path: string; body: unknown }[] = [];
+  const calls: { method: string; path: string; body: unknown; headers: Headers }[] = [];
   const queues = new Map(Object.entries(routes).map(([key, value]) => [key, Array.isArray(value) ? [...value] : value]));
   const fetchMock = vi.fn(async (request: Request) => {
     const url = new URL(request.url);
     const key = `${request.method} ${url.pathname}`;
     const text = request.method === "GET" || request.method === "DELETE" ? "" : await request.clone().text();
-    calls.push({ method: request.method, path: url.pathname + url.search, body: text ? JSON.parse(text) : undefined });
-    const entry = queues.get(key);
+    calls.push({ method: request.method, path: url.pathname + url.search, body: text ? JSON.parse(text) : undefined, headers: request.headers });
+    const entry = queues.get(key) ?? [...queues].find(([pattern]) => pattern.includes("*") && new RegExp(`^${pattern.replaceAll("*", "[^/]+")}$`).test(key))?.[1];
     if (!entry && key === "POST /api/v1/auth/refresh") return new Response(null, { status: 204 });
     if (!entry && key === "POST /api/v1/auth/logout") return new Response(null, { status: 204 });
     if (!entry && key === "GET /api/v1/reference/countries") return json([{ code: "EC", name: "Ecuador" }, { code: "CO", name: "Colombia" }]);
     if (!entry && key === "GET /api/v1/reference/transfer-details") return json({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
-    if (!entry && key === "GET /api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE" });
+    if (!entry && key === "GET /api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
+    if (!entry && key === "GET /api/v1/me/favorites") return json({ items: [], page: 0, pageSize: 20, totalCount: "0" });
     if (!entry) return json({ title: "Sin ruta de prueba", detail: key }, 599);
     if (Array.isArray(entry)) {
       const next = entry.length > 1 ? entry.shift()! : entry[0];
@@ -91,7 +92,7 @@ export function cartBody(items: Partial<CartItemFixture>[] = [{}], total?: strin
   };
 }
 
-type CartItemFixture = ReturnType<typeof cartItem>;
+type CartItemFixture = ReturnType<typeof cartItem> & { format?: string };
 
 function cartItem(index: number) {
   return {

@@ -1,5 +1,6 @@
 """Live PostgreSQL/JDBC/REST coverage for simulated digital editions (V032)."""
 import json
+import os
 import uuid
 from urllib.parse import urlencode
 from full_journey_http_gate import admin_token, request, assert_spanish_problem
@@ -88,6 +89,8 @@ def main():
     # Customer sees and buys digital without inventing stock.
     email = f'v032-customer-{suffix}@example.invalid'
     ok('/api/v1/auth/register', None, 'POST', {'email': email, 'password': 'Digital-fixture-1', 'firstNames': 'Cliente', 'lastNames': 'Digital'}, 201)
+    from email_verification_fixture import verify_registered_email
+    verify_registered_email(email, os.environ['CHECKOUT_BASE_URL'])
     customer = 'Bearer ' + ok('/api/v1/auth/login', None, 'POST', {'email': email, 'password': 'Digital-fixture-1'})['accessToken']
     address = ok('/api/v1/me/addresses', customer, 'POST', {'alias': 'Casa', 'recipient': 'Cliente Digital', 'line1': 'Calle Digital',
                  'line2': None, 'city': 'Quito', 'province': 'Pichincha', 'countryCode': 'EC', 'postalCode': None, 'reference': None,

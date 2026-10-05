@@ -1,0 +1,174 @@
+/* Order detail: the story scene leads and is painted by the server-reported state —
+   in progress = the page's ultramar field (white type, yellow track and actions),
+   arrived = yellow, needs the customer = lavender, closed = quiet paper.
+   Below, the content the customer needs now (ordered per story) beside a payment/documents aside. */
+.back { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--acc-ink); font-weight: 600; text-decoration: none; }
+.back:hover { color: var(--acc-blue); text-decoration: underline; text-underline-offset: 4px; }
+.back:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 6px; }
+.missing h2 { margin: 0 0 8px; font: 650 1.75rem/1.1 var(--acc-display); letter-spacing: -.04em; }
+
+.order { display: grid; gap: clamp(24px, 3.4vw, 40px); min-width: 0; }
+
+/* ---------- Story scene ---------- */
+.scene {
+  --scene-ink: #fff; --scene-muted: rgb(255 255 255 / 78%); --scene-rule: rgb(255 255 255 / 22%); --scene-accent: var(--store-yellow, #f3df83);
+  --scene-mark-ink: var(--store-ink, #252740); --scene-focus: var(--store-yellow, #f3df83);
+  display: grid; gap: clamp(18px, 2.6vw, 28px); min-width: 0;
+  padding: clamp(22px, 3.6vw, 44px); border-radius: 28px;
+  background: var(--store-blue, #283da8); color: var(--scene-ink);
+}
+.scene[data-tone="arrived"] { --scene-ink: var(--store-ink, #252740); --scene-muted: #4b4632; --scene-rule: rgb(37 39 64 / 16%); --scene-accent: var(--store-blue, #283da8); --scene-mark-ink: #fff; --scene-focus: var(--store-blue, #283da8); background: var(--store-yellow, #f3df83); }
+.scene[data-tone="attention"] { --scene-ink: var(--store-ink, #252740); --scene-muted: #4c4a63; --scene-rule: rgb(37 39 64 / 14%); --scene-accent: var(--store-blue, #283da8); --scene-mark-ink: #fff; --scene-focus: var(--store-blue, #283da8); background: var(--store-lavender, #e4def4); }
+.scene[data-tone="closed"] { --scene-ink: var(--acc-ink); --scene-muted: var(--acc-muted); --scene-rule: var(--acc-line); --scene-accent: var(--acc-muted); --scene-mark-ink: var(--acc-paper); --scene-focus: var(--acc-blue); background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line); }
+:global([data-mantine-color-scheme="dark"]) .scene[data-tone="progress"] { background: #2f3f9e; }
+
+.facts { display: flex; flex-wrap: wrap; gap: 8px 32px; margin: 0; padding-bottom: clamp(14px, 2vw, 20px); border-bottom: 1.5px solid var(--scene-rule); }
+.facts div { display: grid; gap: 2px; }
+.facts dt { color: var(--scene-muted); font-size: .8125rem; }
+.facts dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.storyCopy { display: grid; gap: 10px; max-width: 46rem; }
+.headline { margin: 0; color: var(--scene-ink); font: 700 clamp(2.5rem, 1.8rem + 3vw, 4.25rem)/.98 var(--acc-display); letter-spacing: -.055em; overflow-wrap: anywhere; }
+.scene[data-tone="closed"] .headline { color: var(--acc-muted); }
+.lead { margin: 0; max-width: 44ch; color: var(--scene-ink); font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem); line-height: 1.45; }
+
+/* Shipment track: five documented steps; done and current carry the accent, next stays a hairline. */
+.track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; margin: 0; padding: 0; list-style: none; }
+.track li { position: relative; display: grid; align-content: start; gap: 6px; min-width: 0; padding-top: 30px; padding-right: 10px; }
+.track li::before { content: ""; position: absolute; top: 10px; left: 0; right: 0; height: 3px; border-radius: 3px; background: var(--scene-rule); }
+.track li[data-state="done"]::before, .track li[data-state="current"]::before { background: var(--scene-accent); }
+.track li[data-state="current"]::before { right: calc(100% - 22px); }
+.track li:last-child::before { right: calc(100% - 22px); }
+.trackMark { position: absolute; top: 0; left: 0; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--scene-accent); color: var(--scene-mark-ink); }
+.track li[data-state="next"] .trackMark { background: transparent; box-shadow: inset 0 0 0 2px var(--scene-rule); }
+.track li[data-state="current"] .trackMark { box-shadow: 0 0 0 5px color-mix(in srgb, var(--scene-accent) 30%, transparent); }
+.trackLabel { font-size: .9375rem; font-weight: 600; line-height: 1.25; overflow-wrap: anywhere; }
+.track li[data-state="next"] .trackLabel { color: var(--scene-muted); font-weight: 500; }
+.trackTime { color: var(--scene-muted); font-size: .8125rem; line-height: 1.3; }
+
+/* Story actions sit inside the scene; on ultramar the primary turns yellow. */
+.actions { display: grid; gap: 16px; min-width: 0; }
+.actionRow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
+.scene :global(.button-primary) { background: var(--scene-accent); color: var(--scene-mark-ink); border-color: transparent; }
+.scene[data-tone="progress"] :global(.button-primary) { color: var(--store-ink, #252740); }
+.scene :global(.button-primary:hover) { background: color-mix(in srgb, var(--scene-accent) 86%, #fff); color: inherit; }
+.scene :global(.button-secondary) { border-color: var(--scene-ink); color: var(--scene-ink); background: transparent; }
+.scene :global(.button-secondary:hover) { background: color-mix(in srgb, var(--scene-ink) 12%, transparent); color: var(--scene-ink); }
+.scene :global(.text-button) { color: var(--scene-ink); }
+.scene :is(a, button):focus-visible { outline: 3px solid var(--scene-focus); outline-offset: 3px; }
+
+.cancel { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; padding-top: 18px; border-top: 1.5px solid var(--scene-rule); }
+.cancel > p { flex: 1 1 22rem; margin: 0; color: var(--scene-ink); line-height: 1.45; }
+.cancelConfirm { display: grid; gap: 12px; width: 100%; }
+.cancelConfirm p { margin: 0; font-weight: 600; }
+
+.tracking { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; padding: 16px 18px; border-radius: 18px; background: color-mix(in srgb, var(--scene-ink) 10%, transparent); }
+.trackingCode { display: grid; gap: 2px; min-width: 0; }
+.trackingCode span { color: var(--scene-muted); font-size: .8125rem; }
+.trackingCode strong { font: 650 1.375rem/1.15 var(--acc-display); letter-spacing: .01em; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.copy, .follow { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px; border-radius: 8px; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+.copy { border: 1.5px solid var(--scene-ink); background: transparent; color: var(--scene-ink); }
+.follow { border: 0; background: var(--scene-accent); color: var(--store-ink, #252740); }
+.scene[data-tone="arrived"] .follow, .scene[data-tone="attention"] .follow { color: #fff; }
+
+.inset { padding: 18px; border-radius: 18px; background: var(--acc-paper); color: var(--acc-ink); }
+
+/* ---------- Layout below the scene ---------- */
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 360px); gap: clamp(24px, 3.4vw, 48px); align-items: start; min-width: 0; }
+.main { display: grid; gap: clamp(28px, 3.4vw, 40px); min-width: 0; }
+.aside { position: sticky; top: 96px; display: grid; gap: 16px; min-width: 0; }
+
+.section { display: grid; gap: 16px; min-width: 0; }
+.sectionHead { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
+.sectionHead h2 { margin: 0; color: var(--acc-ink); font: 650 clamp(1.375rem, 1.2rem + .6vw, 1.625rem)/1.1 var(--acc-display); letter-spacing: -.035em; }
+.sectionHead span { color: var(--acc-muted); font-size: .9375rem; }
+.quiet { margin: 0; color: var(--acc-muted); line-height: 1.5; }
+.snapshotNote { margin: 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.45; }
+
+.books { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.book { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 18px; align-items: center; padding: 14px 18px 14px 14px; border-radius: 18px; background: var(--acc-mist); }
+.section[data-muted] .book { background: transparent; box-shadow: inset 0 0 0 1.5px var(--acc-line); }
+.bookCover { display: block; width: 64px; }
+.bookCover :global(.book-cover) { width: 100%; filter: drop-shadow(3px 6px 8px rgb(37 39 64 / 20%)); }
+.section[data-muted] .bookCover { opacity: .7; }
+.bookCopy { display: grid; gap: 3px; min-width: 0; }
+.bookCopy h3 { margin: 0; font: 650 1.1875rem/1.15 var(--acc-display); letter-spacing: -.03em; overflow-wrap: anywhere; }
+.bookCopy p { margin: 0; color: var(--acc-muted); font-size: .9375rem; overflow-wrap: anywhere; }
+.bookFormat { font-size: .8125rem !important; }
+.bookPrice { display: grid; justify-items: end; gap: 2px; text-align: right; font-variant-numeric: tabular-nums; }
+.bookPrice strong { font: 650 1.25rem/1.1 var(--acc-display); letter-spacing: -.02em; white-space: nowrap; }
+.bookPrice span { color: var(--acc-muted); font-size: .8125rem; white-space: nowrap; }
+
+.delivery { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 32px; align-items: start; padding: 20px 22px; border-radius: 20px; background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line); }
+.addressBlock { display: grid; gap: 8px; min-width: 0; }
+.addressBlock h3 { margin: 0; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
+.address { display: grid; gap: 2px; font-style: normal; line-height: 1.45; overflow-wrap: anywhere; }
+.shipmentFacts { display: grid; gap: 10px; margin: 0; }
+.shipmentFacts div { display: grid; gap: 2px; }
+.shipmentFacts dt { color: var(--acc-muted); font-size: .8125rem; }
+.shipmentFacts dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+
+.timeline { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.timeline li { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; gap: 4px 14px; align-items: baseline; padding: 0 0 18px; }
+.timeline li:not(:last-child)::before { content: ""; position: absolute; top: 14px; bottom: 0; left: 6px; width: 2px; background: var(--acc-line); }
+.timelineMark { position: relative; top: 1px; width: 14px; height: 14px; border-radius: 50%; background: var(--acc-sheet); box-shadow: inset 0 0 0 2px var(--acc-line); }
+.timeline li[data-latest] .timelineMark { background: var(--acc-blue); box-shadow: 0 0 0 4px color-mix(in srgb, var(--acc-blue) 18%, transparent); }
+.timeline li > div { display: grid; gap: 2px; min-width: 0; }
+.timeline strong { font-weight: 600; overflow-wrap: anywhere; }
+.timeline li > div span { color: var(--acc-muted); font-size: .875rem; overflow-wrap: anywhere; }
+.timeline time { color: var(--acc-muted); font-size: .8125rem; white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ---------- Aside ---------- */
+.panel { display: grid; gap: 14px; min-width: 0; padding: 22px; border-radius: 22px; background: var(--acc-mist); }
+.panel + .panel { background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line); }
+.panel > h2 { margin: 0; font: 650 1.375rem/1.1 var(--acc-display); letter-spacing: -.035em; }
+.paymentLine { display: flex; align-items: flex-start; gap: 12px; margin: 0; }
+.paymentLine > span { display: grid; gap: 2px; }
+.paymentState { color: var(--acc-muted); font-size: .9375rem; }
+.paymentState[data-state="APPROVED"] { color: var(--acc-ink); }
+.reference { display: grid; gap: 2px; margin: 0; font-size: .875rem; }
+.reference span { color: var(--acc-muted); }
+.reference strong { font-weight: 600; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.totals { display: grid; gap: 8px; margin: 0; padding-top: 14px; border-top: 1.5px solid color-mix(in srgb, var(--acc-ink) 12%, transparent); }
+.totals div { display: flex; justify-content: space-between; gap: 16px; }
+.totals dt { color: var(--acc-muted); }
+.totals dd { margin: 0; font-variant-numeric: tabular-nums; }
+.grandTotal dt, .grandTotal dd { color: var(--acc-ink) !important; font: 650 1.375rem/1.15 var(--acc-display); letter-spacing: -.02em; }
+.refund dd { color: var(--acc-blue); font-weight: 600; }
+
+.document { display: grid; gap: 10px; min-width: 0; }
+.document + .document { padding-top: 14px; border-top: 1.5px solid var(--acc-line); }
+.document h3 { margin: 0; font-size: 1rem; font-weight: 650; overflow-wrap: anywhere; }
+.document dl { display: grid; gap: 8px; margin: 0; }
+.document dl div { display: grid; grid-template-columns: minmax(7.5rem, auto) minmax(0, 1fr); gap: 12px; }
+.document dt { color: var(--acc-muted); font-size: .875rem; }
+.document dd { display: grid; gap: 2px; margin: 0; font-size: .9375rem; overflow-wrap: anywhere; }
+.document dd span { color: var(--acc-muted); font-size: .875rem; }
+
+@media (max-width: 959px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+  .aside { position: static; }
+}
+@media (max-width: 599px) {
+  .scene { border-radius: 22px; margin-inline: calc(-1 * min(6px, var(--page-inset, 16px))); }
+  .facts { gap: 8px 20px; }
+  /* The track becomes a vertical list so each step keeps its label and time. */
+  .track { grid-template-columns: minmax(0, 1fr); }
+  .track li { grid-template-columns: auto minmax(0, 1fr); padding: 0 0 14px 36px; }
+  .track li::before { top: 22px; bottom: -2px; left: 10px; right: auto; width: 3px; height: auto; }
+  .track li:last-child::before, .track li[data-state="current"]::before { display: none; }
+  .trackLabel { grid-column: 1 / -1; }
+  .trackTime { grid-column: 1 / -1; }
+  .book { grid-template-columns: 52px minmax(0, 1fr); gap: 14px; }
+  .bookCover { width: 52px; }
+  .bookPrice { grid-column: 2; justify-items: start; text-align: left; }
+  .delivery { grid-template-columns: minmax(0, 1fr); padding: 18px; }
+  .timeline li { grid-template-columns: 22px minmax(0, 1fr); }
+  .timeline time { grid-column: 2; }
+  .document dl div { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .tracking { padding: 14px; }
+}
+@media (forced-colors: active) {
+  .scene, .panel, .book, .delivery { border: 1px solid CanvasText; }
+  .trackMark, .timelineMark { background: CanvasText; }
+}

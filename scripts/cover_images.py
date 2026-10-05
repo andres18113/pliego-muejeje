@@ -148,13 +148,76 @@ def _contains(box, regions, width, height, guard=2) -> bool:
     return True
 
 
+
+def _normalize_reviewed_crop(image: Image.Image, override: dict, details: dict,
+                             alpha_box: tuple, source_sha256: str) -> tuple[Image.Image, dict]:
+    """Apply only an explicit, source-bound visual decision; never infer an override."""
+    box = override.get("reviewedCropBox")
+    reason = override.get("reviewedCropReason")
+    digest = override.get("reviewedSourceSha256")
+    width, height = details["oriented_size"]["width"], details["oriented_size"]["height"]
+    if (not isinstance(box, (list, tuple)) or len(box) != 4
+            or any(type(v) not in {int, float} or not 0 <= v <= max(width, height) or not np.isfinite(v) for v in box)
+            or not 0 <= box[0] < box[2] <= width or not 0 <= box[1] < box[3] <= height):
+        raise CoverRejected("REVISION_ENCUADRE", "reviewedCropBox requiere cuatro coordenadas válidas dentro del original orientado.", details)
+    if not isinstance(reason, str) or not reason.strip():
+        raise CoverRejected("REVISION_ENCUADRE", "reviewedCropReason requiere una justificación visual por archivo.", details)
+    if not isinstance(digest, str) or digest != source_sha256:
+        raise CoverRejected("REVISION_ENCUADRE", "reviewedSourceSha256 no coincide con el archivo revisado.", details)
+    bw, bh = box[2] - box[0], box[3] - box[1]
+    if abs(3 * bw - 2 * bh) > 1e-7 * max(bw, bh) or override.get("mode") == "contain":
+        raise CoverRejected("REVISION_ENCUADRE", "El recorte revisado debe ser 2:3; no se deformará ni añadirá padding.", details)
+    left, top, right, bottom = alpha_box
+    if box[0] < left or box[1] < top or box[2] > right or box[3] > bottom:
+        raise CoverRejected("REVISION_ENCUADRE", "El recorte revisado incluye exterior transparente; no se añadirá un fondo.", details)
+    chosen = (box[0] - left, box[1] - top, box[2] - left, box[3] - top)
+    details["reviewed_crop"] = {"source_box": list(box), "coordinate_space": "exif_oriented_source_pixels",
+                                "source_sha256": digest, "reason": reason.strip()}
+    explicit = override.get("protectedRegions", [])
+    if not isinstance(explicit, list):
+        raise CoverRejected("REVISION_ENCUADRE", "protectedRegions debe ser una lista.", details)
+    regions = []
+    for region in explicit:
+        if (not isinstance(region, (list, tuple)) or len(region) != 4
+                or any(type(v) not in {int, float} or not 0 <= v <= max(width, height) or not np.isfinite(v) for v in region)
+                or not 0 <= region[0] < region[2] <= width or not 0 <= region[1] < region[3] <= height):
+            raise CoverRejected("REVISION_ENCUADRE", "protectedRegions contiene coordenadas inválidas.", details)
+        regions.append((region[0] - left, region[1] - top, region[2] - left, region[3] - top))
+    if not _contains(chosen, regions, image.width, image.height):
+        raise CoverRejected("REVISION_ENCUADRE", "El recorte revisado afectaría marcas explícitamente protegidas.", details)
+    sides = override.get("editorialBorders", [])
+    edges = {"left": chosen[0], "top": chosen[1], "right": image.width - chosen[2], "bottom": image.height - chosen[3]}
+    if not isinstance(sides, list) or any(not isinstance(s, str) or s not in edges for s in sides):
+        raise CoverRejected("REVISION_ENCUADRE", "editorialBorders contiene lados inválidos.", details)
+    if any(abs(edges[side]) > 1e-9 for side in sides):
+        raise CoverRejected("REVISION_ENCUADRE", "El recorte revisado afectaría bordes editoriales explícitamente protegidos.", details)
+    if _suspect_perspective(image):
+        raise CoverRejected("REVISION_ENCUADRE", "Cubierta con perspectiva sobre un fondo de captura; no se deformará.", details)
+    scale = max(TARGET_W / bw, TARGET_H / bh)
+    fraction = 1 - bw * bh / (image.width * image.height)
+    details.update(upscale_factor=round(scale, 6), upscaled=scale > 1, aspect_crop_fraction=round(fraction, 6))
+    if scale > MAX_UPSCALE + 1e-9:
+        raise CoverRejected("FUENTE_INSUFICIENTE", "La ampliación necesaria supera 4×.", details)
+    details["crop"] = {"box": list(chosen), "fraction": round(fraction, 6),
+                       "shift_x": round((chosen[0] - (image.width - bw) / 2) / image.width, 6),
+                       "shift_y": round((chosen[1] - (image.height - bh) / 2) / image.height, 6)}
+    output = image.resize((TARGET_W, TARGET_H), Image.Resampling.LANCZOS, box=chosen)
+    output.info.clear()
+    details.update(normalized_size=size(output), status="ACEPTADO", reason=None,
+                   protected_regions=[list(r) for r in regions], mode="REVIEWED_CROP")
+    return output, details
+
+
 def normalize_image(source: Path, override: dict | None = None) -> tuple[Image.Image, dict]:
     details = initial_report()
     if override is not None and not isinstance(override, dict):
         raise CoverRejected("REVISION_ENCUADRE", "Las opciones de normalización deben ser un objeto.", details)
     override = override or {}
+    reviewed = any(key in override for key in ("reviewedCropBox", "reviewedCropReason", "reviewedSourceSha256"))
     try:
-        with Image.open(source) as opened:
+        # Decode and hash the same bytes so a review cannot attach to another source.
+        source_bytes = source.read_bytes() if reviewed else None
+        with Image.open(io.BytesIO(source_bytes) if reviewed else source) as opened:
             details["original_size"] = size(opened)
             if getattr(opened, "n_frames", 1) != 1 or opened.format not in {"JPEG", "PNG", "WEBP"}:
                 raise ValueError("Se requiere JPG, PNG o WebP estático.")
@@ -185,6 +248,8 @@ def normalize_image(source: Path, override: dict | None = None) -> tuple[Image.I
     alpha_left, alpha_top, alpha_right, alpha_bottom = alpha_box
     details["trim"] = {"left": alpha_left, "top": alpha_top, "right": width-alpha_right, "bottom": height-alpha_bottom}
     details["clean_size"] = size(image)
+    if reviewed:
+        return _normalize_reviewed_crop(image, override, details, alpha_box, hashlib.sha256(source_bytes).hexdigest())
     if any(details["trim"][side] / (width if side in {"left","right"} else height) > MAX_TRIM
            for side in details["trim"]):
         raise CoverRejected("REVISION_ENCUADRE", "El exterior transparente supera 5 % por lado.", details)

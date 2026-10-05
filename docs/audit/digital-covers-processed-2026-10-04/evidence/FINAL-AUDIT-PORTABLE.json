@@ -1,0 +1,130 @@
+{
+  "status": "PASS_WITH_PENDING",
+  "audit_result": "PASS",
+  "audit_scope": "FINAL reviewed-crop run; actual files, 450 source records, 259 pending WebPs, 19 applied visual decisions",
+  "reviewed_crops_verified": 19,
+  "previous_webps_preserved": 240,
+  "independent_tests_passed": 69,
+  "audited_at_utc": "2026-10-04T03:36:52.437845+00:00",
+  "independent_read_only_audit": true,
+  "check_count": 7479,
+  "failed_checks": [],
+  "summary": {
+    "input": 450,
+    "accepted": 0,
+    "pending": 450,
+    "preserved": 55
+  },
+  "per_format": {
+    "EBOOK": {
+      "input": 225,
+      "statuses": {
+        "REVISION_ENCUADRE": 83,
+        "METADATOS_PENDIENTES": 142
+      },
+      "metadata_problem_counts": {
+        "Falta la editorial.": 225,
+        "Falta un idioma válido.": 225
+      }
+    },
+    "AUDIOBOOK": {
+      "input": 225,
+      "statuses": {
+        "METADATOS_PENDIENTES": 117,
+        "REVISION_ENCUADRE": 108
+      },
+      "metadata_problem_counts": {
+        "Falta la editorial.": 225,
+        "Falta un idioma válido.": 225,
+        "AUDIOBOOK requiere duración positiva, narradores y páginas null.": 225
+      }
+    }
+  },
+  "original_cover_count": 450,
+  "original_auxiliary_metadata_files": 4,
+  "category_counts": {
+    "Ebook": {
+      "Literatura": 25,
+      "Filosofía": 25,
+      "Psicología": 25,
+      "Historia": 25,
+      "Ciencias Sociales": 25,
+      "Ciencias": 25,
+      "Tecnología e Informática": 25,
+      "Matemáticas": 25,
+      "Medicina": 25
+    },
+    "Audiolibros": {
+      "Literatura": 25,
+      "Filosofía": 25,
+      "Psicología": 25,
+      "Historia": 25,
+      "Ciencias Sociales": 25,
+      "Ciencias": 25,
+      "Tecnología e Informática": 25,
+      "Matemáticas": 25,
+      "Medicina": 25
+    }
+  },
+  "actual_new_webps": 259,
+  "new_webp_width": 720,
+  "new_webp_height": 1080,
+  "new_webp_maximum_bytes": 115538,
+  "new_webp_unique_hashes": 259,
+  "metadata_missing": {
+    "editorial": 450,
+    "idioma": 450,
+    "audioDurationSeconds": 225,
+    "narrators": 225,
+    "note": "AUDIOBOOK paginas is already null; do not invent missing data."
+  },
+  "framing_review_count": 191,
+  "framing_review_reasons": {
+    "No existe un crop seguro para las marcas protegidas.": 190,
+    "El margen exterior supera 5 % por lado.": 1
+  },
+  "registry_assignments": 56,
+  "new_skus": 0,
+  "registry_next_sequence": 57,
+  "normalized_manifest_records": 55,
+  "historical_normalized_dimensions": {
+    "600x900": 55
+  },
+  "historical_source_webps": 56,
+  "historical_recreated_unversioned_copies": 56,
+  "all_working_webps": 426,
+  "recommended_delivery_webps": 370,
+  "excluded_sku": "PLG-BK-000042",
+  "active_public_object_orphans": 0,
+  "pending_image_orphans": 0,
+  "absolute_path_findings": [],
+  "source_archive_sha256": {
+    "PLIEGO_Ebook_Portadas.zip": "3543b79a9d2d201c27c523c1361d6ec9c188c45a01c212b47be49e01ccc200b5",
+    "PLIEGO_Audiolibros_Portadas.zip": "a68df78e6fddaf754810ba0ee8552128a5b183e8939a566f505b264f4d571e89"
+  },
+  "packaging": {
+    "original_package_files_preserved_except_authorized_patch": [
+      "README-DOTS.md",
+      "scripts/cover_images.py",
+      "scripts/process-digital-covers.py"
+    ],
+    "exclude": [
+      ".venv/",
+      "__pycache__/",
+      "*.lock",
+      "covers/generated/r2/"
+    ],
+    "keep_historical_manifest": "covers/generated/manifest.json",
+    "historical_manifest_explanation": "Unchanged original file has 56 unversioned object keys, including excluded SKU 42. Its unversioned local physical copies were not in the supplied pipeline package and are redundant. It is historical, not the active digital delivery manifest.",
+    "authoritative_manifest": "covers/generated/manifest-normalized.json",
+    "include_original_auxiliary_provenance": true,
+    "new_digital_outputs_are_pending_only": true,
+    "do_not_upload_or_seed": true
+  },
+  "limitations": [
+    "Integrity and decoder validation does not replace human framing review. The 191 held covers remain untransformed; 19 approved source-bound crops were applied.",
+    "Audit reproduced 19 direct crops and WebP encodings in memory only; did not alter pipeline output, upload R2 objects, seed a database, or run network operations.",
+    "Package audit covers current working data; final assembled ZIP requires its own manifest/hash verification."
+  ],
+  "new_webps_rgb_metadata_stripped": true
+}

@@ -1,0 +1,28 @@
+/* Quantity choice: the country/phone picker's trigger (edge, radius, ultramar focus) sized to its content,
+   and the same floating paper list — lavender tint for the hover/keyboard row, ultramar + check for the choice. */
+.trigger.trigger { width: auto; gap: 8px; padding-inline: 14px 8px; font-variant-numeric: tabular-nums; }
+.trigger[aria-disabled="true"] { cursor: progress; opacity: .72; }
+.caption { color: var(--pliego-text-muted, #595a6e); }
+.value { min-width: 1.5ch; font-weight: 650; text-align: center; }
+
+.panel.panel {
+  --qp-blue: var(--store-blue, #283da8);
+  --qp-tint: color-mix(in srgb, var(--store-lavender, #e4def4) 62%, var(--store-paper, #f6f5f0));
+  min-width: 112px; padding: 6px; border: 0; border-radius: 16px;
+  background: var(--store-paper, #f6f5f0); color: var(--store-ink, #252740);
+  box-shadow: 0 1px 0 #dcdad2, 0 18px 40px -18px rgb(20 23 55 / 38%);
+  font-variant-numeric: tabular-nums;
+}
+/* Portalled outside the page's token scope: dark mode names PLIEGO's dark sheet and lavender directly. */
+:global([data-mantine-color-scheme="dark"]) .panel.panel { --qp-blue: var(--store-link, #c5bcff); --qp-tint: #3a3660; background: #26283f; color: #f1eff9; box-shadow: 0 0 0 1px #3d3964, 0 18px 40px -18px rgb(0 0 0 / 60%); }
+.list { display: block; max-height: min(308px, 52vh); overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.option.option { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 44px; padding: 6px 10px 6px 14px; border-radius: 10px; background: transparent; color: inherit; font-size: 1rem; cursor: pointer; }
+.option.option:hover, .option.option[data-combobox-selected] { background: var(--qp-tint); color: inherit; }
+.option.option[data-combobox-active] { color: var(--qp-blue); font-weight: 650; }
+.check { visibility: hidden; }
+.option[data-combobox-active] .check { visibility: visible; }
+@media (pointer: coarse) { .option.option { min-height: 48px; } }
+@media (forced-colors: active) {
+  .panel.panel { border: 1px solid CanvasText; }
+  .option.option[data-combobox-selected] { outline: 2px solid Highlight; outline-offset: -2px; }
+}

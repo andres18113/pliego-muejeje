@@ -1,0 +1,76 @@
+{
+  "package": "PLIEGO-Cover-Pipeline",
+  "python_requirement": "Python >=3.12 on Linux/WSL (fcntl)",
+  "directory_validation": {
+    "tests": 49,
+    "failures": 0,
+    "errors": 0,
+    "imports": {
+      "cover_catalog": "scripts/cover_catalog.py",
+      "cover_images": "scripts/cover_images.py",
+      "prepare_covers_loader": "scripts/prepare_covers_loader.py"
+    },
+    "original_repository_access": "blocked_and_probed",
+    "network_access": "blocked",
+    "baseline_normalized_records": 55,
+    "registry_assignments": 56,
+    "exclusion_preserved": true,
+    "reference_present": true,
+    "packaged_files_unchanged": true,
+    "python": "3.13.15"
+  },
+  "zip_extracted_validation": {
+    "tests": 49,
+    "failures": 0,
+    "errors": 0,
+    "imports": {
+      "cover_catalog": "scripts/cover_catalog.py",
+      "cover_images": "scripts/cover_images.py",
+      "prepare_covers_loader": "scripts/prepare_covers_loader.py"
+    },
+    "original_repository_access": "blocked_and_probed",
+    "network_access": "blocked",
+    "baseline_normalized_records": 55,
+    "registry_assignments": 56,
+    "exclusion_preserved": true,
+    "reference_present": true,
+    "packaged_files_unchanged": true,
+    "python": "3.13.15"
+  },
+  "copied_implementation_and_baseline": "byte-for-byte identical to inspected source files",
+  "runtime_scripts": [
+    "scripts/process-digital-covers.py",
+    "scripts/cover_images.py",
+    "scripts/cover_catalog.py",
+    "scripts/prepare_covers_loader.py",
+    "scripts/prepare-covers.py",
+    "scripts/requirements-covers.txt"
+  ],
+  "verification_only_auxiliaries": [
+    "scripts/normalize-covers.py",
+    "scripts/seed-development-catalog.py",
+    "scripts/upload-r2-covers.py"
+  ],
+  "baseline": {
+    "physical_staging_documents": 3,
+    "physical_source_webp": 56,
+    "normalized_webp": 55,
+    "sku_assignments": 56,
+    "next_sequence": 57,
+    "excluded_sku": "PLG-BK-000042",
+    "reference": "covers/generated/r2-normalized/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp"
+  },
+  "excluded_from_package": [
+    "original repository internals",
+    "credentials/environment files",
+    "R2 configuration",
+    "old unversioned R2 copies",
+    "normalization overrides unused by digital processing",
+    "old normalization report/contact sheet",
+    "new digital batches",
+    "virtual environments/caches",
+    "backend/frontend/database"
+  ],
+  "help_from_extracted_root": "passed",
+  "file_count": 136
+}

@@ -55,7 +55,7 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 
       expect((await header.boundingBox())!.y).toBe(0);
       await page.screenshot({ path: `${output}${name}-${scheme}-${width}-scroll.png` });
     }
-    await page.getByRole("button", { name: "Buscar en el catálogo", exact: true }).click();
+    await page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true }).click();
     const search = page.getByRole("dialog", { name: "Buscar en el catálogo" });
     await expect(search.getByRole("searchbox")).toBeFocused();
     await search.getByRole("searchbox").fill("cien");
@@ -65,7 +65,7 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 
     expect(searchBounds.x).toBeGreaterThanOrEqual(0);
     expect(searchBounds.x + searchBounds.width).toBeLessThanOrEqual(width);
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("button", { name: "Buscar en el catálogo", exact: true })).toBeFocused();
+    await expect(page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true })).toBeFocused();
     await page.getByRole("button", { name: width >= 1280 ? "Literatura" : "Abrir navegación", exact: true }).click();
     const categories = width >= 1280 ? page.locator("#categorias-escritorio") : page.getByRole("dialog", { name: "Categorías", exact: true });
     if (width < 1280) await categories.getByRole("button", { name: "Literatura", exact: true }).click();

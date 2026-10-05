@@ -1,0 +1,14 @@
+.............F
+======================================================================
+FAIL: test_work_proposal_identity_keeps_distinct_subtitles_separate (test_prepare_digital_editions.DigitalPreparationTests.test_work_proposal_identity_keeps_distinct_subtitles_separate)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 91, in test_work_proposal_identity_keeps_distinct_subtitles_separate
+    self.assertNotEqual(a["preparacion"]["work"].get("proposal_key"), b["preparacion"]["work"].get("proposal_key"))
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: None == None
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.058s
+
+FAILED (failures=1)

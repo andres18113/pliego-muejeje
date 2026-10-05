@@ -1,0 +1,21 @@
+{
+  "status": "PASS_WITH_PENDING",
+  "audio_demo_candidates": 117,
+  "fields_marked_simulated_per_candidate": 2,
+  "deterministic_durations_verified": 117,
+  "labelled_narrators_verified": 117,
+  "source_limitation_preserved": true,
+  "ebook_audio_fields_untouched": 142,
+  "sku_map_preserved": 259,
+  "active_registry_assignments_preserved": 56,
+  "protected_files_preserved": 801,
+  "stock_generated": 0,
+  "price_missing": 259,
+  "publication_ready": 0,
+  "v032_readonly": {
+    "checked": 259,
+    "ebook_valid": 142,
+    "audiobook_valid": 117,
+    "invalid": 0
+  }
+}

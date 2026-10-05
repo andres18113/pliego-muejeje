@@ -1,0 +1,7 @@
+...................................................................................
+----------------------------------------------------------------------
+Ran 83 tests in 4.504s
+
+OK
+PLG-BK-000001: 7 listo
+Portadas CDN: 0 actualizadas; 1 vigentes; 0 SKU sin edición importada; 0 SKU excluidos del catálogo.

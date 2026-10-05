@@ -8,15 +8,14 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { login, register } from "@/shared/api/auth";
-import { ApiRequestError, describeApiError } from "@/shared/api/errors";
+import { ApiRequestError, describeApiError, fieldErrorMessages } from "@/shared/api/errors";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
+import { personNameSchema, optionalPhoneSchema } from "@/shared/validation/person";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { stateAfterRegistration, stateAfterSignIn } from "@/features/favorites/favoriteIntent";
 
 const MAX_PASSWORD_UTF8_BYTES = 72;
-const phoneCharacters = /^\+?[0-9\s().-]+$/;
-const normalizedPhone = /^\+?[0-9]{7,19}$/;
 
 const emailSchema = z.string()
   .trim()
@@ -34,16 +33,6 @@ const signInSchema = z.object({
     .refine(passwordByteLimit, "La contraseña es demasiado larga. Usa una más corta."),
 });
 
-const personNameSchema = (fieldName: string) => z.string()
-  .trim()
-  .min(1, `Escribe tus ${fieldName}.`)
-  .max(120, `Los ${fieldName} no pueden superar 120 caracteres.`);
-
-const phoneSchema = z.string()
-  .trim()
-  .refine((value) => value === "" || phoneCharacters.test(value), "Escribe un teléfono válido o deja el campo vacío.")
-  .transform(normalizePhone)
-  .refine((value) => value === "" || normalizedPhone.test(value), "Escribe un teléfono válido o deja el campo vacío.");
 
 const registerSchema = z.object({
   firstNames: personNameSchema("nombres"),
@@ -52,7 +41,7 @@ const registerSchema = z.object({
   password: z.string()
     .refine((value) => [...value].length >= 8, "Usa al menos 8 caracteres.")
     .refine(passwordByteLimit, "La contraseña es demasiado larga. Usa una más corta."),
-  phone: phoneSchema,
+  phone: optionalPhoneSchema,
 });
 
 type SignInValues = z.infer<typeof signInSchema>;
@@ -74,6 +63,7 @@ export function SignInPage() {
     register: registerField,
     handleSubmit,
     setFocus,
+    setError,
     formState: { errors, isSubmitting, isValidating },
   } = useForm<SignInValues>({
     resolver: zodResolver(signInSchema),
@@ -106,6 +96,12 @@ export function SignInPage() {
       if (response.user.role === "ADMIN") navigate("/admin", { replace: true });
       else navigate(intent, { replace: true, state: stateAfterSignIn(location.state) });
     } catch (error: unknown) {
+      const fields = (["email", "password"] as const).filter((field) => {
+        const message=fieldErrorMessages(error,field);
+        if(message) setError(field,{type:"server",message});
+        return Boolean(message);
+      });
+      if(fields.length) { setFocus(fields[0]); setFeedback({state:"error",message:"Revisa los campos señalados."}); return; }
       setServerError(authFailure(error, "No se pudo iniciar sesión", "Comprueba tu conexión e inténtalo otra vez.", true));
       setFeedback({ state: "error", message: "No se pudo iniciar sesión." });
     }
@@ -190,6 +186,9 @@ export function SignInPage() {
             </Button>
           </form>
 
+          <p><Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link></p>
+          <p><Link to="/reenviar-verificacion">Reenviar verificación</Link></p>
+
           <p className="auth-switch">
             ¿Todavía no tienes una cuenta? <Link to={authLocation("/register", intent)} state={location.state}>Crear cuenta</Link>
           </p>
@@ -217,6 +216,7 @@ export function RegisterPage() {
     handleSubmit,
     reset,
     setFocus,
+    setError,
     setValue,
     clearErrors,
     formState: { errors, isSubmitting, isValidating },
@@ -249,9 +249,19 @@ export function RegisterPage() {
       });
       reset({ email: values.email, password: "", firstNames: "", lastNames: "", phone: "" });
       setRegisteredEmail(values.email);
-      setFeedback({ state: "success", message: "La cuenta se creó correctamente. Ahora inicia sesión para continuar." });
+      setFeedback({ state: "success", message: "La cuenta se creó correctamente. Verifica tu correo antes de iniciar sesión." });
       setRegistered(true);
     } catch (error: unknown) {
+      const fields=(["firstNames","lastNames","email","password","phone"] as const).filter((field) => {
+        const message=fieldErrorMessages(error,field);
+        if(message) setError(field,{type:"server",message});
+        return Boolean(message);
+      });
+      if(fields.length) {
+        if(fields.includes("phone")) setPhoneVisible(true);
+        requestAnimationFrame(() => setFocus(fields[0]));
+        setFeedback({state:"error",message:"Revisa los campos señalados."}); return;
+      }
       setServerError(authFailure(error, "No pudimos crear tu cuenta", "Comprueba tu conexión e inténtalo otra vez."));
       setFeedback({ state: "error", message: "No pudimos crear tu cuenta." });
     }
@@ -283,7 +293,8 @@ export function RegisterPage() {
           {registered ? (
             <section className="auth-success" aria-labelledby="register-success-heading">
               <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Cuenta creada</h1>
-              <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong className="auth-success-email">{registeredEmail}</strong>. Inicia sesión con ese correo para continuar.</p>
+              <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong className="auth-success-email">{registeredEmail}</strong>. Verifica tu correo con el enlace enviado antes de iniciar sesión. Revisa también el correo no deseado.</p>
+              <p><Link to="/reenviar-verificacion" state={{ email: registeredEmail }}>Reenviar verificación</Link></p>
               <ButtonLink variant="primary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink>
             </section>
           ) : (
@@ -305,7 +316,6 @@ export function RegisterPage() {
                     type="text"
                     autoComplete="given-name"
                     autoCapitalize="words"
-                    maxLength={120}
                     required
                     aria-required="true"
                     aria-invalid={Boolean(errors.firstNames)}
@@ -320,7 +330,6 @@ export function RegisterPage() {
                     type="text"
                     autoComplete="family-name"
                     autoCapitalize="words"
-                    maxLength={120}
                     required
                     aria-required="true"
                     aria-invalid={Boolean(errors.lastNames)}
@@ -380,14 +389,13 @@ export function RegisterPage() {
                     type="tel"
                     autoComplete="tel"
                     inputMode="tel"
-                    maxLength={32}
                     aria-invalid={Boolean(errors.phone)}
                     aria-describedby={errors.phone ? "register-phone-error" : "register-phone-help"}
                     {...registerField("phone")}
                   />
                   {errors.phone
                     ? <FieldMessage tone="error" id="register-phone-error">{errors.phone.message}</FieldMessage>
-                    : <FieldMessage tone="help" id="register-phone-help">Puedes usar espacios, paréntesis o guiones; añade el código de país si corresponde.</FieldMessage>}
+                    : <FieldMessage tone="help" id="register-phone-help">Incluye el prefijo internacional, por ejemplo +593 99 123 4567. Puedes usar espacios, paréntesis o guiones.</FieldMessage>}
                 </Field>
                 {activeFeedback.state === "error" && !serverError && (
                   <p className="auth-feedback auth-feedback--error" role="status" aria-live="polite">{activeFeedback.message}</p>
@@ -418,9 +426,6 @@ export function RegisterPage() {
   );
 }
 
-function normalizePhone(value: string) {
-  return value.replace(/[\s().-]/g, "");
-}
 
 function registrationEmailFromState(state: unknown) {
   if (state === null || typeof state !== "object" || !("registeredEmail" in state)) return "";

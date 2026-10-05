@@ -1,0 +1,3 @@
+BEGIN
+{"checked" : 259, "valid_format_metadata" : 259, "valid_language" : 259, "valid_price" : 259, "valid_publisher" : 259, "valid_sku" : 259, "unique_skus" : 259}
+COMMIT

@@ -43,6 +43,7 @@ import com.pliego.modules.customer.gateway.CustomerGateway.AddressData;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerAddress;
 import com.pliego.modules.customer.gateway.CustomerGateway.CustomerProfile;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i11_test",
         "spring.datasource.username=pliego_test",
@@ -320,9 +321,21 @@ class AdminCustomerApiIntegrationTest {
             return new CustomerProfile(87, "ana@example.com", "Ana", "Pérez", null, "ACTIVE");
         }
 
-        @Override public void updateProfile(long actorUserId, String firstNames, String lastNames, String phone) { }
+        @Override public void patchProfile(long actorUserId, long expectedVersion, String field, String value) {
+            CustomerProfile current = findProfile(actorUserId);
+            updateProfile(actorUserId, expectedVersion,
+                    "firstNames".equals(field) ? value : current.firstNames(),
+                    "lastNames".equals(field) ? value : current.lastNames(),
+                    "phone".equals(field) ? value : current.phone());
+        }
+        @Override public com.pliego.modules.customer.application.AddressAttempt resolveAddress(long actorUserId, UUID key) {
+            return new com.pliego.modules.customer.application.AddressAttempt("PENDING", null);
+        }
+        @Override public void updateProfile(long actorUserId, long expectedVersion, String firstNames, String lastNames, String phone) { }
+        @Override public String passwordHash(long actorUserId) { return null; }
+        @Override public String changeEmail(long actorUserId, String newEmail) { return newEmail; }
         @Override public List<CustomerAddress> listAddresses(long actorUserId) { return List.of(); }
-        @Override public long createAddress(long actorUserId, AddressData address, boolean makePrimary) { return 1; }
+        @Override public long createAddress(long actorUserId, UUID key, AddressData address, boolean makePrimary) { return 1; }
         @Override public void updateAddress(long actorUserId, long addressId, AddressData address) { }
         @Override public void deleteAddress(long actorUserId, long addressId) { }
         @Override public void setPrimaryAddress(long actorUserId, long addressId) { }

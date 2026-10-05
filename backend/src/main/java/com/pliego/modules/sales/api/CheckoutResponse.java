@@ -1,4 +1,5 @@
 package com.pliego.modules.sales.api;
 
 public record CheckoutResponse(String orderId, String orderState, String paymentState, String total,
-        String paymentReference) { }
+        String paymentReference, com.pliego.modules.sales.application.PostPurchaseModels.Fulfillment fulfillment,
+        String subtotal, String taxRate, String taxAmount, String shippingAmount) { }

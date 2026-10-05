@@ -64,13 +64,13 @@ describe("BookCard controlled contract", () => {
     const button = screen.getByRole("button", { name: `${label}: ${edition.title}` });
     expect(button).toHaveTextContent(`${icon}${text}`);
     expect(button.querySelector('.material-symbol')).toHaveAttribute("aria-hidden", "true");
-    if (state === "pending") { expect(button).toBeDisabled(); expect(button).toHaveAttribute("aria-busy", "true"); }
+    if (state === "pending") { expect(button).toHaveAttribute("aria-disabled", "true"); expect(button).toHaveAttribute("aria-busy", "true"); }
     else { fireEvent.click(button); expect(press).toHaveBeenCalledOnce(); }
   });
 
-  it("disables only the pending action and does not announce unconfirmed favorite membership", () => {
+  it("keeps a pending favorite focusable without an active mutation handler", () => {
     setup({ favorite: { state: "pending", selected: true } });
-    expect(screen.getByRole("button", { name: `Guardando favorito…: ${edition.title}` })).toBeDisabled();
+    expect(screen.getByRole("button", { name: `Guardando favorito…: ${edition.title}` })).toHaveAttribute("aria-disabled", "true");
     expect(screen.getByRole("button", { name: `Agregar al carrito: ${edition.title}` })).toBeEnabled();
   });
 

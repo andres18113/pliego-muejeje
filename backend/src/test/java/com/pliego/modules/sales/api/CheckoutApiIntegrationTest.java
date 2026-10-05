@@ -39,6 +39,7 @@ import com.pliego.foundation.security.JwtTokenIssuer;
 import com.pliego.modules.sales.application.CheckoutResult;
 import com.pliego.modules.sales.gateway.CheckoutGateway;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i8_test",
         "spring.datasource.username=pliego_test",
@@ -53,6 +54,15 @@ import com.pliego.modules.sales.gateway.CheckoutGateway;
 @Import(CheckoutApiIntegrationTest.TestConfigurationForCheckout.class)
 @ExtendWith(OutputCaptureExtension.class)
 class CheckoutApiIntegrationTest {
+
+    @Test
+    void pickupAcceptsLocationWithoutDeliveryAddress() throws Exception {
+        mvc.perform(post("/api/v1/checkout").header("Authorization", token("100", "CUSTOMER"))
+                .header("Idempotency-Key", java.util.UUID.randomUUID().toString())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"fulfillmentMethod\":\"STORE_PICKUP\",\"pickupLocationId\":\"1\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}"))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.orderState").value("CONFIRMED"));
+    }
 
     private static final String CARD = "4242424242424242";
     private static final String APPROVED_REFERENCE = "SIM-550e8400-e29b-41d4-a716-446655440000";
@@ -161,7 +171,7 @@ class CheckoutApiIntegrationTest {
         String valid = "{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}";
         mvc.perform(post("/api/v1/checkout").contentType(MediaType.APPLICATION_JSON).content(valid))
                 .andExpect(status().isUnauthorized());
-        mvc.perform(post("/api/v1/checkout").header("Authorization", token("7", "ADMIN"))
+        mvc.perform(post("/api/v1/checkout").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", token("7", "ADMIN"))
                         .contentType(MediaType.APPLICATION_JSON).content(valid))
                 .andExpect(status().isForbidden());
         perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\",\"actorUserId\":\"7\"}")
@@ -211,7 +221,7 @@ class CheckoutApiIntegrationTest {
     }
 
     private org.springframework.test.web.servlet.ResultActions perform(String body) throws Exception {
-        return mvc.perform(post("/api/v1/checkout").header("Authorization", token("42", "CUSTOMER"))
+        return mvc.perform(post("/api/v1/checkout").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", token("42", "CUSTOMER"))
                 .contentType(MediaType.APPLICATION_JSON).content(body));
     }
 
@@ -236,24 +246,27 @@ class CheckoutApiIntegrationTest {
     static class FakeCheckoutGateway implements CheckoutGateway {
         int calls;
         long actor;
-        long address;
+        Long address;
         String method;
         String outcome;
         DatabaseException failure;
         CheckoutResult result;
 
+        @Override public com.pliego.modules.sales.application.CheckoutAttempt resolve(long actorUserId, UUID key) {
+            return new com.pliego.modules.sales.application.CheckoutAttempt("CREATED", result);
+        }
         void reset() {
             calls = 0;
             actor = 0;
-            address = 0;
+            address = 0L;
             method = null;
             outcome = null;
             failure = null;
             result = new CheckoutResult("700", "CONFIRMED", "APPROVED", new BigDecimal("39.80"), APPROVED_REFERENCE);
         }
 
-        @Override public CheckoutResult checkout(long actorUserId, long addressId, String paymentMethod,
-                String paymentOutcome) {
+        @Override public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod,
+                String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId) {
             calls++;
             actor = actorUserId;
             address = addressId;

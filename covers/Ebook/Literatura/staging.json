@@ -1,0 +1,2411 @@
+{
+  "schema": "pliego-published-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "portadas/ebook-d901c48cf0708fb8.webp",
+      "libro": {
+        "titulo": "Historia de historias",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Uribe, Álvaro",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Malpaso Ediciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000178",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000178-787489c9d123.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117062",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-d901c48cf0708fb8",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "228",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-a1ee989650276621"
+        },
+        "author_bindings": [
+          {
+            "name": "Uribe, Álvaro",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Uribe, Álvaro",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117062",
+            "source_sha256": "9a5f2d1b3af9cd1937fe86dc26decd213ac09b14937fd896f87146a6f6f00a3b",
+            "observed_text": "Malpaso Ediciones,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 117062.",
+            "capture_sha256": "9a5f2d1b3af9cd1937fe86dc26decd213ac09b14937fd896f87146a6f6f00a3b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117062.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117062",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117062",
+            "source_sha256": "9a5f2d1b3af9cd1937fe86dc26decd213ac09b14937fd896f87146a6f6f00a3b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 117062.",
+            "capture_sha256": "9a5f2d1b3af9cd1937fe86dc26decd213ac09b14937fd896f87146a6f6f00a3b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117062.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117062",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 6,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117062",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Historia de historias - Uribe, Álvaro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d901c48cf0708fb8.webp",
+            "cover_sha256": "787489c9d123a2272cf077e1e5f0e9164c63d858de515cd4f1aa9ad749ce3550",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Uribe, Álvaro",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 6,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117062",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Historia de historias - Uribe, Álvaro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d901c48cf0708fb8.webp",
+            "cover_sha256": "787489c9d123a2272cf077e1e5f0e9164c63d858de515cd4f1aa9ad749ce3550",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 6,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117062",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Historia de historias - Uribe, Álvaro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d901c48cf0708fb8.webp",
+            "cover_sha256": "787489c9d123a2272cf077e1e5f0e9164c63d858de515cd4f1aa9ad749ce3550",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 6,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117062",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Historia de historias - Uribe, Álvaro.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d901c48cf0708fb8.webp",
+          "cover_sha256": "787489c9d123a2272cf077e1e5f0e9164c63d858de515cd4f1aa9ad749ce3550",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "229",
+        "imported_book_id": "228"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-152fc74e8097c3b1.webp",
+      "libro": {
+        "titulo": "La era victoriana en literatura",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Chesterton, Gilbert Keith",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Prometeo Libros",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000185",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000185-48d1658c6ccd.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191119",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-152fc74e8097c3b1",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "229",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4dcba44a1f25735a"
+        },
+        "author_bindings": [
+          {
+            "name": "Chesterton, Gilbert Keith",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Chesterton, Gilbert Keith",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119",
+            "source_sha256": "1d87cb00b745b4c81b0ee472b428958a21eb083950a92f58b7749a3178e9b999",
+            "observed_text": "Prometeo Libros,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 191119.",
+            "capture_sha256": "1d87cb00b745b4c81b0ee472b428958a21eb083950a92f58b7749a3178e9b999",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191119.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119/Details",
+            "source_sha256": "0e0c7d5661bf2662f57940c5bb4df9b905aae55608ff73df77e605469ee9e29a",
+            "observed_text": "041 1 |a spa |h eng",
+            "basis": "MARC 041$a spa es idioma del texto; 041$h eng es idioma original, no edición bilingüe.",
+            "capture_sha256": "0e0c7d5661bf2662f57940c5bb4df9b905aae55608ff73df77e605469ee9e29a",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191119-details.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191119/Details",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 7,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191119",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La era victoriana en literatura - Chesterton, Gilbert Keith.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-152fc74e8097c3b1.webp",
+            "cover_sha256": "48d1658c6ccdf36afe14d2cdeaabed68ae3e6051d0a67dee0595e5854a9eb3e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Chesterton, Gilbert Keith",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 7,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191119",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La era victoriana en literatura - Chesterton, Gilbert Keith.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-152fc74e8097c3b1.webp",
+            "cover_sha256": "48d1658c6ccdf36afe14d2cdeaabed68ae3e6051d0a67dee0595e5854a9eb3e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 7,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191119",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La era victoriana en literatura - Chesterton, Gilbert Keith.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-152fc74e8097c3b1.webp",
+            "cover_sha256": "48d1658c6ccdf36afe14d2cdeaabed68ae3e6051d0a67dee0595e5854a9eb3e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 7,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191119",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/La era victoriana en literatura - Chesterton, Gilbert Keith.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-152fc74e8097c3b1.webp",
+          "cover_sha256": "48d1658c6ccdf36afe14d2cdeaabed68ae3e6051d0a67dee0595e5854a9eb3e6",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "230",
+        "imported_book_id": "229"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-5c51985965164200.webp",
+      "libro": {
+        "titulo": "La literatura",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Martín Alegre, Sara",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000283",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000283-b557443a890a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/56436",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-5c51985965164200",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "230",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-20c05b3eecd30d7b"
+        },
+        "author_bindings": [
+          {
+            "name": "Martín Alegre, Sara",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Martín Alegre, Sara",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB56436",
+            "source_sha256": "255b464eea88ce6547f63d7fe9d884553ae85f565f08a5881cd443356ab5c62d",
+            "observed_text": "Editorial UOC,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 56436.",
+            "capture_sha256": "255b464eea88ce6547f63d7fe9d884553ae85f565f08a5881cd443356ab5c62d",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns56436.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB56436",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB56436",
+            "source_sha256": "255b464eea88ce6547f63d7fe9d884553ae85f565f08a5881cd443356ab5c62d",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 56436.",
+            "capture_sha256": "255b464eea88ce6547f63d7fe9d884553ae85f565f08a5881cd443356ab5c62d",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns56436.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB56436",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 9,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/56436",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura - Martín Alegre, Sara.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-5c51985965164200.webp",
+            "cover_sha256": "b557443a890a8a7bd15fca5736325cebcf4f111f5244f7bda366ca69d2cf3ea2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Martín Alegre, Sara",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 9,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/56436",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura - Martín Alegre, Sara.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-5c51985965164200.webp",
+            "cover_sha256": "b557443a890a8a7bd15fca5736325cebcf4f111f5244f7bda366ca69d2cf3ea2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 9,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/56436",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura - Martín Alegre, Sara.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-5c51985965164200.webp",
+            "cover_sha256": "b557443a890a8a7bd15fca5736325cebcf4f111f5244f7bda366ca69d2cf3ea2",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 9,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/56436",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/La literatura - Martín Alegre, Sara.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-5c51985965164200.webp",
+          "cover_sha256": "b557443a890a8a7bd15fca5736325cebcf4f111f5244f7bda366ca69d2cf3ea2",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "231",
+        "imported_book_id": "230"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-be4f33f6d94229e7.webp",
+      "libro": {
+        "titulo": "La literatura dramática",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Foguet, Francesc - Santamaria, Núria",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000229",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000229-72508ec17e22.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/156644",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-be4f33f6d94229e7",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "231",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-8d3c9d20ea0b49c3"
+        },
+        "author_bindings": [
+          {
+            "name": "Foguet, Francesc - Santamaria, Núria",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Foguet, Francesc - Santamaria, Núria",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+            "source_sha256": "af213ed1bafda6bf914d1cfea9e34be373c1e0504b311765e2df4ba5cd8e8a70",
+            "observed_text": "Editorial UOC,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 156644.",
+            "capture_sha256": "af213ed1bafda6bf914d1cfea9e34be373c1e0504b311765e2df4ba5cd8e8a70",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns156644.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+            "source_sha256": "af213ed1bafda6bf914d1cfea9e34be373c1e0504b311765e2df4ba5cd8e8a70",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 156644.",
+            "capture_sha256": "af213ed1bafda6bf914d1cfea9e34be373c1e0504b311765e2df4ba5cd8e8a70",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns156644.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB156644",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 10,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/156644",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura dramática - Foguet, Francesc - Santamaria, Núria.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-be4f33f6d94229e7.webp",
+            "cover_sha256": "72508ec17e228f94005c3ec59d79636098cfe058974277094c165be51c2097c8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Foguet, Francesc - Santamaria, Núria",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 10,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/156644",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura dramática - Foguet, Francesc - Santamaria, Núria.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-be4f33f6d94229e7.webp",
+            "cover_sha256": "72508ec17e228f94005c3ec59d79636098cfe058974277094c165be51c2097c8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 10,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/156644",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura dramática - Foguet, Francesc - Santamaria, Núria.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-be4f33f6d94229e7.webp",
+            "cover_sha256": "72508ec17e228f94005c3ec59d79636098cfe058974277094c165be51c2097c8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 10,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/156644",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/La literatura dramática - Foguet, Francesc - Santamaria, Núria.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-be4f33f6d94229e7.webp",
+          "cover_sha256": "72508ec17e228f94005c3ec59d79636098cfe058974277094c165be51c2097c8",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "232",
+        "imported_book_id": "231"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-404c350b49f8d484.webp",
+      "libro": {
+        "titulo": "La literatura española",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Torri, Julio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000085",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000085-468d68de2243.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/111061",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-404c350b49f8d484",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "232",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ef7362d5a0b5288f"
+        },
+        "author_bindings": [
+          {
+            "name": "Torri, Julio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Torri, Julio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB111061",
+            "source_sha256": "2064db96aa36c5176bae9a4cfd45913375c6f571608dcfabe1e81df3397842f0",
+            "observed_text": "FCE - Fondo de Cultura Económica,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 111061.",
+            "capture_sha256": "2064db96aa36c5176bae9a4cfd45913375c6f571608dcfabe1e81df3397842f0",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns111061.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB111061",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB111061",
+            "source_sha256": "2064db96aa36c5176bae9a4cfd45913375c6f571608dcfabe1e81df3397842f0",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 111061.",
+            "capture_sha256": "2064db96aa36c5176bae9a4cfd45913375c6f571608dcfabe1e81df3397842f0",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns111061.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB111061",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 12,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/111061",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura española - Torri, Julio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-404c350b49f8d484.webp",
+            "cover_sha256": "468d68de2243bb4077a3a31b851af13df1415500a650a06b2938c4763fcd0255",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Torri, Julio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 12,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/111061",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura española - Torri, Julio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-404c350b49f8d484.webp",
+            "cover_sha256": "468d68de2243bb4077a3a31b851af13df1415500a650a06b2938c4763fcd0255",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 12,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/111061",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La literatura española - Torri, Julio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-404c350b49f8d484.webp",
+            "cover_sha256": "468d68de2243bb4077a3a31b851af13df1415500a650a06b2938c4763fcd0255",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 12,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/111061",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/La literatura española - Torri, Julio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-404c350b49f8d484.webp",
+          "cover_sha256": "468d68de2243bb4077a3a31b851af13df1415500a650a06b2938c4763fcd0255",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "233",
+        "imported_book_id": "232"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-6fb37f2956809505.webp",
+      "libro": {
+        "titulo": "Literatura clásica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Álvarez Bravo, Armando",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "16.99",
+        "sku": "PLG-BK-000122",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000122-71eb30d75bb6.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36434",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-6fb37f2956809505",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "233",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-6d436d3bbcae8adb"
+        },
+        "author_bindings": [
+          {
+            "name": "Álvarez Bravo, Armando",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Álvarez Bravo, Armando",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+            "source_sha256": "32a4f08ec2a11809c66591e1b2ed35d4251c36281af8957951014c102e375b87",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36434.",
+            "capture_sha256": "32a4f08ec2a11809c66591e1b2ed35d4251c36281af8957951014c102e375b87",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36434.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+            "source_sha256": "32a4f08ec2a11809c66591e1b2ed35d4251c36281af8957951014c102e375b87",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36434.",
+            "capture_sha256": "32a4f08ec2a11809c66591e1b2ed35d4251c36281af8957951014c102e375b87",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36434.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36434",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 15,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36434",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura clásica - Álvarez Bravo, Armando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-6fb37f2956809505.webp",
+            "cover_sha256": "71eb30d75bb6ccc1651d0e6cfdf6c8924a980e32d6231e56e3d274d3f5852ffb",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Álvarez Bravo, Armando",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 15,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36434",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura clásica - Álvarez Bravo, Armando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-6fb37f2956809505.webp",
+            "cover_sha256": "71eb30d75bb6ccc1651d0e6cfdf6c8924a980e32d6231e56e3d274d3f5852ffb",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 15,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36434",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura clásica - Álvarez Bravo, Armando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-6fb37f2956809505.webp",
+            "cover_sha256": "71eb30d75bb6ccc1651d0e6cfdf6c8924a980e32d6231e56e3d274d3f5852ffb",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 15,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36434",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Literatura clásica - Álvarez Bravo, Armando.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-6fb37f2956809505.webp",
+          "cover_sha256": "71eb30d75bb6ccc1651d0e6cfdf6c8924a980e32d6231e56e3d274d3f5852ffb",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "234",
+        "imported_book_id": "233"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-b6e98eacfdbf3d38.webp",
+      "libro": {
+        "titulo": "Literatura española",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Reyes, Alfonso",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "7.99",
+        "sku": "PLG-BK-000208",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000208-4d567317e96b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110740",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-b6e98eacfdbf3d38",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "234",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-fa3eaf35c71f04e3"
+        },
+        "author_bindings": [
+          {
+            "name": "Reyes, Alfonso",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Reyes, Alfonso",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110740",
+            "source_sha256": "cdf3379dd6a641a8f33eb83fe59998c769bf4deba0fa1579785c467c5eab2544",
+            "observed_text": "FCE - Fondo de Cultura Económica,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 110740.",
+            "capture_sha256": "cdf3379dd6a641a8f33eb83fe59998c769bf4deba0fa1579785c467c5eab2544",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110740.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110740",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110740",
+            "source_sha256": "cdf3379dd6a641a8f33eb83fe59998c769bf4deba0fa1579785c467c5eab2544",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 110740.",
+            "capture_sha256": "cdf3379dd6a641a8f33eb83fe59998c769bf4deba0fa1579785c467c5eab2544",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110740.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110740",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 17,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110740",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura española - Reyes, Alfonso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-b6e98eacfdbf3d38.webp",
+            "cover_sha256": "4d567317e96bc5dd519f877066d59fadf9c548308ff8a3ec12ac0747de171d09",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Reyes, Alfonso",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 17,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110740",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura española - Reyes, Alfonso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-b6e98eacfdbf3d38.webp",
+            "cover_sha256": "4d567317e96bc5dd519f877066d59fadf9c548308ff8a3ec12ac0747de171d09",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 17,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110740",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura española - Reyes, Alfonso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-b6e98eacfdbf3d38.webp",
+            "cover_sha256": "4d567317e96bc5dd519f877066d59fadf9c548308ff8a3ec12ac0747de171d09",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 17,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110740",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Literatura española - Reyes, Alfonso.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-b6e98eacfdbf3d38.webp",
+          "cover_sha256": "4d567317e96bc5dd519f877066d59fadf9c548308ff8a3ec12ac0747de171d09",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "235",
+        "imported_book_id": "234"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a310ba6cc9128e79.webp",
+      "libro": {
+        "titulo": "Literatura Oriental",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Álvarez Bravo, Armando",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000160",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000160-6ad93478f274.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36433",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a310ba6cc9128e79",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "235",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4d878d584561c738"
+        },
+        "author_bindings": [
+          {
+            "name": "Álvarez Bravo, Armando",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Álvarez Bravo, Armando",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+            "source_sha256": "935835836f503cb7d85931fbc1a0ef68314cbb4ee460a1e935aed59f2d77fa8b",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36433.",
+            "capture_sha256": "935835836f503cb7d85931fbc1a0ef68314cbb4ee460a1e935aed59f2d77fa8b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36433.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+            "source_sha256": "935835836f503cb7d85931fbc1a0ef68314cbb4ee460a1e935aed59f2d77fa8b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36433.",
+            "capture_sha256": "935835836f503cb7d85931fbc1a0ef68314cbb4ee460a1e935aed59f2d77fa8b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36433.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36433",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 19,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36433",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura Oriental - Álvarez Bravo, Armando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-a310ba6cc9128e79.webp",
+            "cover_sha256": "6ad93478f2741aac40aeecdaf472873cdb812867332aa88af6994aa68cb53381",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Álvarez Bravo, Armando",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 19,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36433",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura Oriental - Álvarez Bravo, Armando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-a310ba6cc9128e79.webp",
+            "cover_sha256": "6ad93478f2741aac40aeecdaf472873cdb812867332aa88af6994aa68cb53381",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 19,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36433",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura Oriental - Álvarez Bravo, Armando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-a310ba6cc9128e79.webp",
+            "cover_sha256": "6ad93478f2741aac40aeecdaf472873cdb812867332aa88af6994aa68cb53381",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 19,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36433",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Literatura Oriental - Álvarez Bravo, Armando.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-a310ba6cc9128e79.webp",
+          "cover_sha256": "6ad93478f2741aac40aeecdaf472873cdb812867332aa88af6994aa68cb53381",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "236",
+        "imported_book_id": "235"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-0762786d97e31d89.webp",
+      "libro": {
+        "titulo": "Literatura universal",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Reyes, Alfonso",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000089",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000089-32dd5cb64b3f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110738",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0762786d97e31d89",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "236",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ff772a4d1793887d"
+        },
+        "author_bindings": [
+          {
+            "name": "Reyes, Alfonso",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Reyes, Alfonso",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+            "source_sha256": "96047ecd7afad12fc91f792f87bdcffe3325343355c59c644b8223f6df39f697",
+            "observed_text": "FCE - Fondo de Cultura Económica,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 110738.",
+            "capture_sha256": "96047ecd7afad12fc91f792f87bdcffe3325343355c59c644b8223f6df39f697",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110738.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+            "source_sha256": "96047ecd7afad12fc91f792f87bdcffe3325343355c59c644b8223f6df39f697",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 110738.",
+            "capture_sha256": "96047ecd7afad12fc91f792f87bdcffe3325343355c59c644b8223f6df39f697",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110738.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110738",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 20,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110738",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura universal - Reyes, Alfonso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-0762786d97e31d89.webp",
+            "cover_sha256": "32dd5cb64b3fe2d71577aafcf04ed8594266840fffe35a460956c9c0368393bb",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Reyes, Alfonso",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 20,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110738",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura universal - Reyes, Alfonso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-0762786d97e31d89.webp",
+            "cover_sha256": "32dd5cb64b3fe2d71577aafcf04ed8594266840fffe35a460956c9c0368393bb",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 20,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110738",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura universal - Reyes, Alfonso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-0762786d97e31d89.webp",
+            "cover_sha256": "32dd5cb64b3fe2d71577aafcf04ed8594266840fffe35a460956c9c0368393bb",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 20,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110738",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Literatura universal - Reyes, Alfonso.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-0762786d97e31d89.webp",
+          "cover_sha256": "32dd5cb64b3fe2d71577aafcf04ed8594266840fffe35a460956c9c0368393bb",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "237",
+        "imported_book_id": "236"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-09c6216e91ce8a01.webp",
+      "libro": {
+        "titulo": "Literatura y cine",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Gutiérrez Carbajo, Francisco",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "UNED - Universidad Nacional de Educación a Distancia",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000159",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000159-58e37f41bc49.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48881",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-09c6216e91ce8a01",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "237",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c6eef336b947dfae"
+        },
+        "author_bindings": [
+          {
+            "name": "Gutiérrez Carbajo, Francisco",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Gutiérrez Carbajo, Francisco",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+            "source_sha256": "a769976a9fb127b57e5601b24cb3959cc21088b3ff9b48e1efd06bb3f97b45d6",
+            "observed_text": "UNED - Universidad Nacional de Educación a Distancia,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 48881.",
+            "capture_sha256": "a769976a9fb127b57e5601b24cb3959cc21088b3ff9b48e1efd06bb3f97b45d6",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48881.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+            "source_sha256": "a769976a9fb127b57e5601b24cb3959cc21088b3ff9b48e1efd06bb3f97b45d6",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 48881.",
+            "capture_sha256": "a769976a9fb127b57e5601b24cb3959cc21088b3ff9b48e1efd06bb3f97b45d6",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48881.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48881",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 21,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48881",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura y cine - Gutiérrez Carbajo, Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-09c6216e91ce8a01.webp",
+            "cover_sha256": "58e37f41bc49bb195dfeba0c60447074e8bba8ad74b9ab43f93eb611e27c5c08",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Gutiérrez Carbajo, Francisco",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 21,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48881",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura y cine - Gutiérrez Carbajo, Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-09c6216e91ce8a01.webp",
+            "cover_sha256": "58e37f41bc49bb195dfeba0c60447074e8bba8ad74b9ab43f93eb611e27c5c08",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 21,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48881",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literatura y cine - Gutiérrez Carbajo, Francisco.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-09c6216e91ce8a01.webp",
+            "cover_sha256": "58e37f41bc49bb195dfeba0c60447074e8bba8ad74b9ab43f93eb611e27c5c08",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 21,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48881",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Literatura y cine - Gutiérrez Carbajo, Francisco.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-09c6216e91ce8a01.webp",
+          "cover_sha256": "58e37f41bc49bb195dfeba0c60447074e8bba8ad74b9ab43f93eb611e27c5c08",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "238",
+        "imported_book_id": "237"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-d7c3927d622d4808.webp",
+      "libro": {
+        "titulo": "Literaturas compartidas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Basile, Teresa - Foffani, Enrique",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial de la Universidad Nacional de La Plata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000079",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000079-816d46cebf7b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66439",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-d7c3927d622d4808",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "238",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-004c022bd091e6d2"
+        },
+        "author_bindings": [
+          {
+            "name": "Basile, Teresa - Foffani, Enrique",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Basile, Teresa - Foffani, Enrique",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66439",
+            "source_sha256": "0d84913075cbfc151713a74fc7b6a6ab7c53dd1f95da11f36372a63aeb059750",
+            "observed_text": "D - Editorial de la Universidad Nacional de La Plata,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 66439.",
+            "capture_sha256": "0d84913075cbfc151713a74fc7b6a6ab7c53dd1f95da11f36372a63aeb059750",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns66439.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66439",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66439",
+            "source_sha256": "0d84913075cbfc151713a74fc7b6a6ab7c53dd1f95da11f36372a63aeb059750",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 66439.",
+            "capture_sha256": "0d84913075cbfc151713a74fc7b6a6ab7c53dd1f95da11f36372a63aeb059750",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns66439.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66439",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 23,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66439",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literaturas compartidas - Basile, Teresa - Foffani, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d7c3927d622d4808.webp",
+            "cover_sha256": "816d46cebf7b6618ace4536c78fb2981b3ca4c03f97baded90c60c4c3fe66659",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Basile, Teresa - Foffani, Enrique",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 23,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66439",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literaturas compartidas - Basile, Teresa - Foffani, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d7c3927d622d4808.webp",
+            "cover_sha256": "816d46cebf7b6618ace4536c78fb2981b3ca4c03f97baded90c60c4c3fe66659",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 23,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66439",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Literaturas compartidas - Basile, Teresa - Foffani, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d7c3927d622d4808.webp",
+            "cover_sha256": "816d46cebf7b6618ace4536c78fb2981b3ca4c03f97baded90c60c4c3fe66659",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 23,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66439",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Literaturas compartidas - Basile, Teresa - Foffani, Enrique.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d7c3927d622d4808.webp",
+          "cover_sha256": "816d46cebf7b6618ace4536c78fb2981b3ca4c03f97baded90c60c4c3fe66659",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "239",
+        "imported_book_id": "238"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-de8cba7332b1dd7d.webp",
+      "libro": {
+        "titulo": "Páginas de historia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Mitre, Bartolomé",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Cid Editor",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000163",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000163-71dccfe55039.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36151",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-de8cba7332b1dd7d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "239",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7110f1572ea5901b"
+        },
+        "author_bindings": [
+          {
+            "name": "Mitre, Bartolomé",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Mitre, Bartolomé",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+            "source_sha256": "7a8e4db41d69d93e22e31e1bcbb8af00cfa3b145f0900d36d61c36f5d4a456fb",
+            "observed_text": "El Cid Editor,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36151.",
+            "capture_sha256": "7a8e4db41d69d93e22e31e1bcbb8af00cfa3b145f0900d36d61c36f5d4a456fb",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36151.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+            "source_sha256": "7a8e4db41d69d93e22e31e1bcbb8af00cfa3b145f0900d36d61c36f5d4a456fb",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36151.",
+            "capture_sha256": "7a8e4db41d69d93e22e31e1bcbb8af00cfa3b145f0900d36d61c36f5d4a456fb",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36151.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36151",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 24,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36151",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Páginas de historia - Mitre, Bartolomé.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-de8cba7332b1dd7d.webp",
+            "cover_sha256": "71dccfe55039d74ccf4050e6d487dee1f00d4633bdf2d31d7a2f90c773aebc55",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Mitre, Bartolomé",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 24,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36151",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Páginas de historia - Mitre, Bartolomé.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-de8cba7332b1dd7d.webp",
+            "cover_sha256": "71dccfe55039d74ccf4050e6d487dee1f00d4633bdf2d31d7a2f90c773aebc55",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 24,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36151",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Páginas de historia - Mitre, Bartolomé.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-de8cba7332b1dd7d.webp",
+            "cover_sha256": "71dccfe55039d74ccf4050e6d487dee1f00d4633bdf2d31d7a2f90c773aebc55",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 24,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36151",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Páginas de historia - Mitre, Bartolomé.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-de8cba7332b1dd7d.webp",
+          "cover_sha256": "71dccfe55039d74ccf4050e6d487dee1f00d4633bdf2d31d7a2f90c773aebc55",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "240",
+        "imported_book_id": "239"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-cef7824007532bb5.webp",
+      "libro": {
+        "titulo": "Romancero gitano",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "García Lorca, Federico",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Cid Editor",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000095",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000095-c1fc97a5fb10.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35142",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-cef7824007532bb5",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "240",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-a5f38c6a1524ee76"
+        },
+        "author_bindings": [
+          {
+            "name": "García Lorca, Federico",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "García Lorca, Federico",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35142",
+            "source_sha256": "ab540d9ef2ec08d7f7175784acb7936a3b9a2460fb7d7bceaa6e216154af5670",
+            "observed_text": "El Cid Editor,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 35142.",
+            "capture_sha256": "ab540d9ef2ec08d7f7175784acb7936a3b9a2460fb7d7bceaa6e216154af5670",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns35142.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35142",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35142",
+            "source_sha256": "ab540d9ef2ec08d7f7175784acb7936a3b9a2460fb7d7bceaa6e216154af5670",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 35142.",
+            "capture_sha256": "ab540d9ef2ec08d7f7175784acb7936a3b9a2460fb7d7bceaa6e216154af5670",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns35142.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35142",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 25,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35142",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Romancero gitano - García Lorca, Federico.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-cef7824007532bb5.webp",
+            "cover_sha256": "c1fc97a5fb10c47aa83fc0196dd516d8ca411f68cf9465e7223fba5ff4bbfc81",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "García Lorca, Federico",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 25,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35142",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Romancero gitano - García Lorca, Federico.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-cef7824007532bb5.webp",
+            "cover_sha256": "c1fc97a5fb10c47aa83fc0196dd516d8ca411f68cf9465e7223fba5ff4bbfc81",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 25,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35142",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Romancero gitano - García Lorca, Federico.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-cef7824007532bb5.webp",
+            "cover_sha256": "c1fc97a5fb10c47aa83fc0196dd516d8ca411f68cf9465e7223fba5ff4bbfc81",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 25,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35142",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Romancero gitano - García Lorca, Federico.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-cef7824007532bb5.webp",
+          "cover_sha256": "c1fc97a5fb10c47aa83fc0196dd516d8ca411f68cf9465e7223fba5ff4bbfc81",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "241",
+        "imported_book_id": "240"
+      }
+    }
+  ]
+}

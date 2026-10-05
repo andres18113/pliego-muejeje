@@ -1,3 +1,4 @@
+import { stockReadOptions } from "@/features/catalog/stockStatusModel";
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link, useLocation, useNavigate, useNavigationType } from "react-router-dom";
@@ -46,6 +47,7 @@ export function CatalogPage() {
   });
   const editionsQuery = useQuery({
     queryKey: ["public-catalog", "editions", criteria],
+    ...stockReadOptions,
     queryFn: ({ signal }) => searchPublicEditions(criteria, signal),
     staleTime: 20_000,
   });

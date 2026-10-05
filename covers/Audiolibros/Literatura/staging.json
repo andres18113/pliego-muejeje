@@ -1,0 +1,2317 @@
+{
+  "schema": "pliego-published-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "portadas/audiobook-8a40bb278ab30a3b.webp",
+      "libro": {
+        "titulo": "Cómo comportarse en la multitud: una novela",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bordas, Camille",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Malpaso Ediciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "26.99",
+        "sku": "PLG-BK-000279",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5740,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000279-b796105c841a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117024",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-8a40bb278ab30a3b",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "107",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-bfb6adf7fece4869"
+        },
+        "author_bindings": [
+          {
+            "name": "Bordas, Camille",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bordas, Camille",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117024",
+            "source_sha256": "7f9a25d160a6adcfd44281e2e58e718bd1b87ddbee495c4b26f068c764d86785",
+            "observed_text": "Malpaso Ediciones,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 117024.",
+            "capture_sha256": "7f9a25d160a6adcfd44281e2e58e718bd1b87ddbee495c4b26f068c764d86785",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117024.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117024",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117024",
+            "source_sha256": "7f9a25d160a6adcfd44281e2e58e718bd1b87ddbee495c4b26f068c764d86785",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 117024.",
+            "capture_sha256": "7f9a25d160a6adcfd44281e2e58e718bd1b87ddbee495c4b26f068c764d86785",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns117024.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117024",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 2,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117024",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Cómo comportarse en la multitud una novela - Bordas, Camille.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-8a40bb278ab30a3b.webp",
+            "cover_sha256": "b796105c841a842b761e0081af46ddd1b5878d04ee760e4cfecbeef9d3285a41",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bordas, Camille",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 2,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117024",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Cómo comportarse en la multitud una novela - Bordas, Camille.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-8a40bb278ab30a3b.webp",
+            "cover_sha256": "b796105c841a842b761e0081af46ddd1b5878d04ee760e4cfecbeef9d3285a41",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 2,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117024",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Cómo comportarse en la multitud una novela - Bordas, Camille.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-8a40bb278ab30a3b.webp",
+            "cover_sha256": "b796105c841a842b761e0081af46ddd1b5878d04ee760e4cfecbeef9d3285a41",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 2,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117024",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Cómo comportarse en la multitud una novela - Bordas, Camille.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-8a40bb278ab30a3b.webp",
+          "cover_sha256": "b796105c841a842b761e0081af46ddd1b5878d04ee760e4cfecbeef9d3285a41",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "108",
+        "imported_book_id": "107"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-91b68a3cdb70cf6c.webp",
+      "libro": {
+        "titulo": "Cómo se hace una novela",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Unamuno, Miguel de",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "31.99",
+        "sku": "PLG-BK-000213",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4740,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000213-853ef54ef269.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217630",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-91b68a3cdb70cf6c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "108",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ac6c1aa81eb76087"
+        },
+        "author_bindings": [
+          {
+            "name": "Unamuno, Miguel de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Unamuno, Miguel de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB217630",
+            "source_sha256": "41b674632f82e259529ea0e3518f5f27988ece2c60dfc9fb6e4094d63960bfe8",
+            "observed_text": "Editorial Verbum,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 217630.",
+            "capture_sha256": "41b674632f82e259529ea0e3518f5f27988ece2c60dfc9fb6e4094d63960bfe8",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns217630.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB217630",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB217630",
+            "source_sha256": "41b674632f82e259529ea0e3518f5f27988ece2c60dfc9fb6e4094d63960bfe8",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 217630.",
+            "capture_sha256": "41b674632f82e259529ea0e3518f5f27988ece2c60dfc9fb6e4094d63960bfe8",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns217630.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB217630",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 3,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217630",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Cómo se hace una novela - Unamuno, Miguel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-91b68a3cdb70cf6c.webp",
+            "cover_sha256": "853ef54ef26976fa03ce9b1975c75a766b57c9dbce538db0746048fc39015f20",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Unamuno, Miguel de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 3,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217630",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Cómo se hace una novela - Unamuno, Miguel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-91b68a3cdb70cf6c.webp",
+            "cover_sha256": "853ef54ef26976fa03ce9b1975c75a766b57c9dbce538db0746048fc39015f20",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 3,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217630",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Cómo se hace una novela - Unamuno, Miguel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-91b68a3cdb70cf6c.webp",
+            "cover_sha256": "853ef54ef26976fa03ce9b1975c75a766b57c9dbce538db0746048fc39015f20",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 3,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217630",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Cómo se hace una novela - Unamuno, Miguel de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-91b68a3cdb70cf6c.webp",
+          "cover_sha256": "853ef54ef26976fa03ce9b1975c75a766b57c9dbce538db0746048fc39015f20",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "109",
+        "imported_book_id": "108"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-3ce2558363ac8234.webp",
+      "libro": {
+        "titulo": "Discurso y conflicto en la novela",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Parrilla Sotomayor, Eduardo Enrique",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Plaza y Valdés, S.A. de C.V.",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000149",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6825,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000149-0ed92a8415bd.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39117",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-3ce2558363ac8234",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "109",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-a29138544d14bf9c"
+        },
+        "author_bindings": [
+          {
+            "name": "Parrilla Sotomayor, Eduardo Enrique",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Parrilla Sotomayor, Eduardo Enrique",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+            "source_sha256": "926c5ce33b7961b4decc1fc6aa72643893af11d2a8c430912b9335e058f68838",
+            "observed_text": "Plaza y Valdés, S.A. de C.V.,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 39117.",
+            "capture_sha256": "926c5ce33b7961b4decc1fc6aa72643893af11d2a8c430912b9335e058f68838",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39117.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+            "source_sha256": "926c5ce33b7961b4decc1fc6aa72643893af11d2a8c430912b9335e058f68838",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 39117.",
+            "capture_sha256": "926c5ce33b7961b4decc1fc6aa72643893af11d2a8c430912b9335e058f68838",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39117.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39117",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 4,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39117",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Discurso y conflicto en la novela - Parrilla Sotomayor, Eduardo Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-3ce2558363ac8234.webp",
+            "cover_sha256": "0ed92a8415bdf765ec3cc239734a52e882ded225926c0c3109effa706cffc540",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Parrilla Sotomayor, Eduardo Enrique",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 4,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39117",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Discurso y conflicto en la novela - Parrilla Sotomayor, Eduardo Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-3ce2558363ac8234.webp",
+            "cover_sha256": "0ed92a8415bdf765ec3cc239734a52e882ded225926c0c3109effa706cffc540",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 4,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39117",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Discurso y conflicto en la novela - Parrilla Sotomayor, Eduardo Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-3ce2558363ac8234.webp",
+            "cover_sha256": "0ed92a8415bdf765ec3cc239734a52e882ded225926c0c3109effa706cffc540",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 4,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39117",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Discurso y conflicto en la novela - Parrilla Sotomayor, Eduardo Enrique.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-3ce2558363ac8234.webp",
+          "cover_sha256": "0ed92a8415bdf765ec3cc239734a52e882ded225926c0c3109effa706cffc540",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "110",
+        "imported_book_id": "109"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-4058fa136c5702ee.webp",
+      "libro": {
+        "titulo": "El retorno de los desplazados: novela",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Gordillo Barahona, Beatriz",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Grado Cero",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000293",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6171,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000293-f71e1ed0b221.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/288325",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-4058fa136c5702ee",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "110",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-95b0ebbc6d0746e5"
+        },
+        "author_bindings": [
+          {
+            "name": "Gordillo Barahona, Beatriz",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Gordillo Barahona, Beatriz",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "/home/andres18123/PLIEGO/covers/Audiolibros/Literatura/originales/El retorno de los desplazados novela - Gordillo Barahona, Beatriz.jpg",
+            "source_sha256": "c088a36a7d9d766fe488daccde7ffaf9c48ff52f99798dd9f1550e594a14e560",
+            "observed_text": "GRADO CERO",
+            "basis": "Nombre de editorial literal legible en la portada original aportada; identidad de título y autor cotejada.",
+            "source_path": "covers/Audiolibros/Literatura/originales/El retorno de los desplazados novela - Gordillo Barahona, Beatriz.jpg",
+            "capture_sha256": "c088a36a7d9d766fe488daccde7ffaf9c48ff52f99798dd9f1550e594a14e560",
+            "source": "/home/andres18123/PLIEGO/covers/Audiolibros/Literatura/originales/El retorno de los desplazados novela - Gordillo Barahona, Beatriz.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://porrua.mx/el-retorno-de-los-desplazados-9789942717696.html",
+            "source_sha256": "b8984ef65125b3ead5994a6dc66445e8d748ae477fb3f4d9b7065205bb185871",
+            "observed_text": "Formato Ebook Editorial Grado Cero Editores Autor(es) Beatriz Gordillo Barahona Idioma Español / Castellano",
+            "basis": "Ficha pública del ebook muestra idioma explícito y título, autor, editorial y cubierta coherentes. Fuente de librería/distribuidor; eLibro exact ID ausente en los catálogos consultados.",
+            "capture_sha256": "b8984ef65125b3ead5994a6dc66445e8d748ae477fb3f4d9b7065205bb185871",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/fallback-publisher3.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://porrua.mx/el-retorno-de-los-desplazados-9789942717696.html",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 5,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/288325",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/El retorno de los desplazados novela - Gordillo Barahona, Beatriz.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-4058fa136c5702ee.webp",
+            "cover_sha256": "f71e1ed0b2219c91e79b8baea873462bca6e31f0fa6230d913890d29b8be3fb0",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Gordillo Barahona, Beatriz",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 5,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/288325",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/El retorno de los desplazados novela - Gordillo Barahona, Beatriz.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-4058fa136c5702ee.webp",
+            "cover_sha256": "f71e1ed0b2219c91e79b8baea873462bca6e31f0fa6230d913890d29b8be3fb0",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 5,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/288325",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/El retorno de los desplazados novela - Gordillo Barahona, Beatriz.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-4058fa136c5702ee.webp",
+            "cover_sha256": "f71e1ed0b2219c91e79b8baea873462bca6e31f0fa6230d913890d29b8be3fb0",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 5,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/288325",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/El retorno de los desplazados novela - Gordillo Barahona, Beatriz.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-4058fa136c5702ee.webp",
+          "cover_sha256": "f71e1ed0b2219c91e79b8baea873462bca6e31f0fa6230d913890d29b8be3fb0",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "111",
+        "imported_book_id": "110"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-227ccd7c091f9040.webp",
+      "libro": {
+        "titulo": "Está temblando. Novela",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pérez de Arce, Hermógenes",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial El Roble",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "25.99",
+        "sku": "PLG-BK-000261",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6748,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000261-69f79ed9bb60.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/195499",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-227ccd7c091f9040",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "111",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-851c64704fa716de"
+        },
+        "author_bindings": [
+          {
+            "name": "Pérez de Arce, Hermógenes",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pérez de Arce, Hermógenes",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499",
+            "source_sha256": "7839378ac9726c4bd1f7a331ee7e83650bf2776a68e0d1fccc40600acde4fc40",
+            "observed_text": "Editorial El Roble,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 195499.",
+            "capture_sha256": "7839378ac9726c4bd1f7a331ee7e83650bf2776a68e0d1fccc40600acde4fc40",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns195499.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499",
+            "source_sha256": "7839378ac9726c4bd1f7a331ee7e83650bf2776a68e0d1fccc40600acde4fc40",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 195499.",
+            "capture_sha256": "7839378ac9726c4bd1f7a331ee7e83650bf2776a68e0d1fccc40600acde4fc40",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns195499.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB195499",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 7,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/195499",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Está temblando. Novela - Pérez de Arce, Hermógenes.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-227ccd7c091f9040.webp",
+            "cover_sha256": "69f79ed9bb60133dbcfd7f43833183034d68679d08222eb79c323f89f9e69527",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pérez de Arce, Hermógenes",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 7,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/195499",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Está temblando. Novela - Pérez de Arce, Hermógenes.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-227ccd7c091f9040.webp",
+            "cover_sha256": "69f79ed9bb60133dbcfd7f43833183034d68679d08222eb79c323f89f9e69527",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 7,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/195499",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Está temblando. Novela - Pérez de Arce, Hermógenes.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-227ccd7c091f9040.webp",
+            "cover_sha256": "69f79ed9bb60133dbcfd7f43833183034d68679d08222eb79c323f89f9e69527",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 7,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/195499",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Está temblando. Novela - Pérez de Arce, Hermógenes.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-227ccd7c091f9040.webp",
+          "cover_sha256": "69f79ed9bb60133dbcfd7f43833183034d68679d08222eb79c323f89f9e69527",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "112",
+        "imported_book_id": "111"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-2de821b1482db906.webp",
+      "libro": {
+        "titulo": "La confesión: novela",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Hailji",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "7.99",
+        "sku": "PLG-BK-000074",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4835,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000074-ee028ef97b6f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270884",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2de821b1482db906",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "112",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d817580db1e15172"
+        },
+        "author_bindings": [
+          {
+            "name": "Hailji",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Hailji",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270884",
+            "source_sha256": "75ce941b31226ea982c64abb530f18dd756356f6a9b057e6e2b55c171a0c6e1e",
+            "observed_text": "Editorial Verbum,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 270884.",
+            "capture_sha256": "75ce941b31226ea982c64abb530f18dd756356f6a9b057e6e2b55c171a0c6e1e",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns270884.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270884",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270884",
+            "source_sha256": "75ce941b31226ea982c64abb530f18dd756356f6a9b057e6e2b55c171a0c6e1e",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 270884.",
+            "capture_sha256": "75ce941b31226ea982c64abb530f18dd756356f6a9b057e6e2b55c171a0c6e1e",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns270884.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270884",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 11,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270884",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La confesión novela - Hailji.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2de821b1482db906.webp",
+            "cover_sha256": "ee028ef97b6ff9fffa5f328f553fd6f0c90993277f806a1588345c24727efe9d",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Hailji",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 11,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270884",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La confesión novela - Hailji.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2de821b1482db906.webp",
+            "cover_sha256": "ee028ef97b6ff9fffa5f328f553fd6f0c90993277f806a1588345c24727efe9d",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 11,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270884",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La confesión novela - Hailji.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2de821b1482db906.webp",
+            "cover_sha256": "ee028ef97b6ff9fffa5f328f553fd6f0c90993277f806a1588345c24727efe9d",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 11,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270884",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/La confesión novela - Hailji.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2de821b1482db906.webp",
+          "cover_sha256": "ee028ef97b6ff9fffa5f328f553fd6f0c90993277f806a1588345c24727efe9d",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "113",
+        "imported_book_id": "112"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-d660454291ad5fa3.webp",
+      "libro": {
+        "titulo": "La novela rosa",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "González Lejárraga, Antonio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Consejo Superior de Investigaciones Científicas",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "33.99",
+        "sku": "PLG-BK-000209",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3241,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000209-b8d36d2f4bac.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41629",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-d660454291ad5fa3",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "113",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-3e071745ecd9ed79"
+        },
+        "author_bindings": [
+          {
+            "name": "González Lejárraga, Antonio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "González Lejárraga, Antonio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+            "source_sha256": "4503965e9d7824a6049575be406a2322da67c4769fb02036a5703b1f02325a71",
+            "observed_text": "Consejo Superior de Investigaciones Científicas,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 41629.",
+            "capture_sha256": "4503965e9d7824a6049575be406a2322da67c4769fb02036a5703b1f02325a71",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns41629.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+            "source_sha256": "4503965e9d7824a6049575be406a2322da67c4769fb02036a5703b1f02325a71",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 41629.",
+            "capture_sha256": "4503965e9d7824a6049575be406a2322da67c4769fb02036a5703b1f02325a71",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns41629.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41629",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 15,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41629",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La novela rosa - González Lejárraga, Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d660454291ad5fa3.webp",
+            "cover_sha256": "b8d36d2f4bac055b4489efe5e66525cd780ae65e161e6a937a373bab4ffba713",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "González Lejárraga, Antonio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 15,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41629",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La novela rosa - González Lejárraga, Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d660454291ad5fa3.webp",
+            "cover_sha256": "b8d36d2f4bac055b4489efe5e66525cd780ae65e161e6a937a373bab4ffba713",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 15,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41629",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/La novela rosa - González Lejárraga, Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d660454291ad5fa3.webp",
+            "cover_sha256": "b8d36d2f4bac055b4489efe5e66525cd780ae65e161e6a937a373bab4ffba713",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 15,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41629",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/La novela rosa - González Lejárraga, Antonio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d660454291ad5fa3.webp",
+          "cover_sha256": "b8d36d2f4bac055b4489efe5e66525cd780ae65e161e6a937a373bab4ffba713",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "114",
+        "imported_book_id": "113"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-98a1a860b5649584.webp",
+      "libro": {
+        "titulo": "Lady Susan y otras novelas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Jane Austen",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alianza Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000174",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1939,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000174-b1c667819ae2.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122857",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-98a1a860b5649584",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "114",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7410ddd55255751b"
+        },
+        "author_bindings": [
+          {
+            "name": "Jane Austen",
+            "order": 1,
+            "authorId": "48",
+            "action": "REUSE_EXISTING_AUTHOR"
+          }
+        ],
+        "raw_authorship": "Austen, Jane",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "/home/andres18123/PLIEGO/covers/Audiolibros/Literatura/originales/Lady Susan y otras novelas - Austen, Jane.jpg",
+            "source_sha256": "10eb503c7b74f795033b6cfaf4bdf521ebc470902e7db3fdfb6ca633fd711159",
+            "observed_text": "Alianza Editorial",
+            "basis": "Nombre de editorial literal legible en la portada original aportada; identidad de título y autor cotejada.",
+            "source_path": "covers/Audiolibros/Literatura/originales/Lady Susan y otras novelas - Austen, Jane.jpg",
+            "capture_sha256": "10eb503c7b74f795033b6cfaf4bdf521ebc470902e7db3fdfb6ca633fd711159",
+            "source": "/home/andres18123/PLIEGO/covers/Audiolibros/Literatura/originales/Lady Susan y otras novelas - Austen, Jane.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "INFERRED_UNEQUIVOCAL",
+            "source_url": "https://alianzaeditorial.es/primer_capitulo/lady-susan-y-otras-novelas.pdf",
+            "observed_text": "Mi querido cuñado: No puedo seguir negándome el placer",
+            "basis": "Muestra editorial de la misma obra, autor y editorial contiene prosa extensa en español. Portada original corresponde a edición española de Alianza; no se transfiere ISBN de la muestra.",
+            "capture_sha256": "65b311bd01df23f16a73fc5cca073569c1491f523b69fb7dca576edaf0447478",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/web-publisher-samples.json",
+            "capture_format": "TOOL_OUTPUT_JSON",
+            "source": "https://alianzaeditorial.es/primer_capitulo/lady-susan-y-otras-novelas.pdf",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 17,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122857",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Lady Susan y otras novelas - Austen, Jane.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-98a1a860b5649584.webp",
+            "cover_sha256": "b1c667819ae20ab71068bba4a716c57ae1ac74ef0df858e2b604422674949a00",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Austen, Jane",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 17,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122857",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Lady Susan y otras novelas - Austen, Jane.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-98a1a860b5649584.webp",
+            "cover_sha256": "b1c667819ae20ab71068bba4a716c57ae1ac74ef0df858e2b604422674949a00",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 17,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122857",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Lady Susan y otras novelas - Austen, Jane.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-98a1a860b5649584.webp",
+            "cover_sha256": "b1c667819ae20ab71068bba4a716c57ae1ac74ef0df858e2b604422674949a00",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 17,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122857",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Lady Susan y otras novelas - Austen, Jane.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-98a1a860b5649584.webp",
+          "cover_sha256": "b1c667819ae20ab71068bba4a716c57ae1ac74ef0df858e2b604422674949a00",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "115",
+        "imported_book_id": "114"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-2b8c1c97bbc86318.webp",
+      "libro": {
+        "titulo": "Las novelas de Torquemada",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pérez Galdós, Benito",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alianza Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "31.99",
+        "sku": "PLG-BK-000147",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2966,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000147-30f48d3d61d3.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216008",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2b8c1c97bbc86318",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "115",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-834996955d89333d"
+        },
+        "author_bindings": [
+          {
+            "name": "Pérez Galdós, Benito",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pérez Galdós, Benito",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "/home/andres18123/PLIEGO/covers/Audiolibros/Literatura/originales/Las novelas de Torquemada - Pérez Galdós, Benito.jpg",
+            "source_sha256": "7615f7199083a303de23b5f5b3d7971b299a4c2cd86b63b2b534eb5508ad0879",
+            "observed_text": "Alianza Editorial",
+            "basis": "Nombre de editorial literal legible en la portada original aportada; identidad de título y autor cotejada.",
+            "source_path": "covers/Audiolibros/Literatura/originales/Las novelas de Torquemada - Pérez Galdós, Benito.jpg",
+            "capture_sha256": "7615f7199083a303de23b5f5b3d7971b299a4c2cd86b63b2b534eb5508ad0879",
+            "source": "/home/andres18123/PLIEGO/covers/Audiolibros/Literatura/originales/Las novelas de Torquemada - Pérez Galdós, Benito.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "INFERRED_UNEQUIVOCAL",
+            "source_url": "https://www.alianzaeditorial.es/primer_capitulo/las-novelas-de-torquemada.pdf",
+            "observed_text": "Voy a contar cómo fue al quemadero el inhumano",
+            "basis": "Muestra editorial de la misma obra, autor y editorial contiene prosa extensa en español. Portada original corresponde a edición española de Alianza; no se transfiere ISBN de la muestra.",
+            "capture_sha256": "65b311bd01df23f16a73fc5cca073569c1491f523b69fb7dca576edaf0447478",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/web-publisher-samples.json",
+            "capture_format": "TOOL_OUTPUT_JSON",
+            "source": "https://www.alianzaeditorial.es/primer_capitulo/las-novelas-de-torquemada.pdf",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 18,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216008",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Las novelas de Torquemada - Pérez Galdós, Benito.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2b8c1c97bbc86318.webp",
+            "cover_sha256": "30f48d3d61d39feb53176c61c8792a062bf311d537e47f8f0a186f9e5624d1b7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pérez Galdós, Benito",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 18,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216008",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Las novelas de Torquemada - Pérez Galdós, Benito.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2b8c1c97bbc86318.webp",
+            "cover_sha256": "30f48d3d61d39feb53176c61c8792a062bf311d537e47f8f0a186f9e5624d1b7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 18,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216008",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Las novelas de Torquemada - Pérez Galdós, Benito.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2b8c1c97bbc86318.webp",
+            "cover_sha256": "30f48d3d61d39feb53176c61c8792a062bf311d537e47f8f0a186f9e5624d1b7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 18,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216008",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Las novelas de Torquemada - Pérez Galdós, Benito.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2b8c1c97bbc86318.webp",
+          "cover_sha256": "30f48d3d61d39feb53176c61c8792a062bf311d537e47f8f0a186f9e5624d1b7",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "116",
+        "imported_book_id": "115"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-d4d96850c4ea25cb.webp",
+      "libro": {
+        "titulo": "Novela negra con argentinos",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Valenzuela, Luisa",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "28.99",
+        "sku": "PLG-BK-000130",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2881,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000130-2c8e064eb148.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/218933",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-d4d96850c4ea25cb",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "116",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-400b679d9451280b"
+        },
+        "author_bindings": [
+          {
+            "name": "Valenzuela, Luisa",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Valenzuela, Luisa",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB218933",
+            "source_sha256": "de354cf0a07232cfcc1f79f193904a3cc16dca87dfc599095d4702bb2212e72f",
+            "observed_text": "Fondo de Cultura Económica,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 218933.",
+            "capture_sha256": "de354cf0a07232cfcc1f79f193904a3cc16dca87dfc599095d4702bb2212e72f",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns218933.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB218933",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB218933",
+            "source_sha256": "de354cf0a07232cfcc1f79f193904a3cc16dca87dfc599095d4702bb2212e72f",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 218933.",
+            "capture_sha256": "de354cf0a07232cfcc1f79f193904a3cc16dca87dfc599095d4702bb2212e72f",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns218933.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB218933",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 19,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/218933",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Novela negra con argentinos - Valenzuela, Luisa.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d4d96850c4ea25cb.webp",
+            "cover_sha256": "2c8e064eb148d08034ce544276191146ebdcbf8bb96c31539dc0ce3d97b67b6a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Valenzuela, Luisa",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 19,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/218933",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Novela negra con argentinos - Valenzuela, Luisa.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d4d96850c4ea25cb.webp",
+            "cover_sha256": "2c8e064eb148d08034ce544276191146ebdcbf8bb96c31539dc0ce3d97b67b6a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 19,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/218933",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Novela negra con argentinos - Valenzuela, Luisa.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d4d96850c4ea25cb.webp",
+            "cover_sha256": "2c8e064eb148d08034ce544276191146ebdcbf8bb96c31539dc0ce3d97b67b6a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 19,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/218933",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Novela negra con argentinos - Valenzuela, Luisa.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d4d96850c4ea25cb.webp",
+          "cover_sha256": "2c8e064eb148d08034ce544276191146ebdcbf8bb96c31539dc0ce3d97b67b6a",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "117",
+        "imported_book_id": "116"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-b917d2622c19f5b7.webp",
+      "libro": {
+        "titulo": "Novelas amorosas y ejemplares",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Zayas y Sotomayor, María de",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Verbum",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "16.99",
+        "sku": "PLG-BK-000111",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3743,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000111-870e7e1508c4.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/267853",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-b917d2622c19f5b7",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "117",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-72b422e8171e53c8"
+        },
+        "author_bindings": [
+          {
+            "name": "Zayas y Sotomayor, María de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Zayas y Sotomayor, María de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB267853",
+            "source_sha256": "2a177e8df2e04082270026c3c236f56a109575a0e2ae2bcd763cfea3d1579f5e",
+            "observed_text": "Editorial Verbum,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 267853.",
+            "capture_sha256": "2a177e8df2e04082270026c3c236f56a109575a0e2ae2bcd763cfea3d1579f5e",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns267853.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB267853",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB267853",
+            "source_sha256": "2a177e8df2e04082270026c3c236f56a109575a0e2ae2bcd763cfea3d1579f5e",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 267853.",
+            "capture_sha256": "2a177e8df2e04082270026c3c236f56a109575a0e2ae2bcd763cfea3d1579f5e",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns267853.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB267853",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 20,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/267853",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Novelas amorosas y ejemplares - Zayas y Sotomayor, María de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-b917d2622c19f5b7.webp",
+            "cover_sha256": "870e7e1508c423e9823e960ca84f0ca65bb81bb90305a22ca8024f98949ffa42",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Zayas y Sotomayor, María de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 20,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/267853",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Novelas amorosas y ejemplares - Zayas y Sotomayor, María de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-b917d2622c19f5b7.webp",
+            "cover_sha256": "870e7e1508c423e9823e960ca84f0ca65bb81bb90305a22ca8024f98949ffa42",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 20,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/267853",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Novelas amorosas y ejemplares - Zayas y Sotomayor, María de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-b917d2622c19f5b7.webp",
+            "cover_sha256": "870e7e1508c423e9823e960ca84f0ca65bb81bb90305a22ca8024f98949ffa42",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 20,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/267853",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Novelas amorosas y ejemplares - Zayas y Sotomayor, María de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-b917d2622c19f5b7.webp",
+          "cover_sha256": "870e7e1508c423e9823e960ca84f0ca65bb81bb90305a22ca8024f98949ffa42",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "118",
+        "imported_book_id": "117"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/audiobook-524d4e31cdfd7fd8.webp",
+      "libro": {
+        "titulo": "Valentín: novela histórica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Hernández Beltrán, Rosalío",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Literatura"
+        ]
+      },
+      "edicion": {
+        "editorial": "Plaza y Valdés",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000138",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4744,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000138-3fff7a27405c.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39199",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-524d4e31cdfd7fd8",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "118",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-fdf5109d03ced055"
+        },
+        "author_bindings": [
+          {
+            "name": "Hernández Beltrán, Rosalío",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Hernández Beltrán, Rosalío",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+            "source_sha256": "949374a1455e0e4b19f57934a177811659c7e13a7c93689de05c5abcae5061c4",
+            "observed_text": "Plaza y Valdés,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 39199.",
+            "capture_sha256": "949374a1455e0e4b19f57934a177811659c7e13a7c93689de05c5abcae5061c4",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39199.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+            "source_sha256": "949374a1455e0e4b19f57934a177811659c7e13a7c93689de05c5abcae5061c4",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 39199.",
+            "capture_sha256": "949374a1455e0e4b19f57934a177811659c7e13a7c93689de05c5abcae5061c4",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns39199.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39199",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 26,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39199",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Valentín novela histórica - Hernández Beltrán, Rosalío.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-524d4e31cdfd7fd8.webp",
+            "cover_sha256": "3fff7a27405cc6fb53eb40139c2d0939bba821031084c791c1043019f0ca1e92",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Hernández Beltrán, Rosalío",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 26,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39199",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Valentín novela histórica - Hernández Beltrán, Rosalío.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-524d4e31cdfd7fd8.webp",
+            "cover_sha256": "3fff7a27405cc6fb53eb40139c2d0939bba821031084c791c1043019f0ca1e92",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 26,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39199",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Literatura/originales/Valentín novela histórica - Hernández Beltrán, Rosalío.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-524d4e31cdfd7fd8.webp",
+            "cover_sha256": "3fff7a27405cc6fb53eb40139c2d0939bba821031084c791c1043019f0ca1e92",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 26,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39199",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Literatura/originales/Valentín novela histórica - Hernández Beltrán, Rosalío.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-524d4e31cdfd7fd8.webp",
+          "cover_sha256": "3fff7a27405cc6fb53eb40139c2d0939bba821031084c791c1043019f0ca1e92",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Literatura",
+          "categoryId": "34",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Literatura/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "119",
+        "imported_book_id": "118"
+      }
+    }
+  ]
+}

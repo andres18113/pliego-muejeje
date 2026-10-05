@@ -1,0 +1,1966 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-e8a8d5d56c6bbdae.webp",
+      "libro": {
+        "titulo": "Apuntes de ecología microbiana",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Gutiérrez Castrejón, Teodoro",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Instituto Politécnico Nacional",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "29.99",
+        "sku": "PLG-BK-000143",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1785,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000143-bd1bcd21e34f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72775",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-e8a8d5d56c6bbdae",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "130",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4430477f54a22fa4"
+        },
+        "author_bindings": [
+          {
+            "name": "Gutiérrez Castrejón, Teodoro",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Gutiérrez Castrejón, Teodoro",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+            "sha256": "45b0cebf615f621ec62bf4ad4e92df86185618890a36ce0b40afce0f8f554cd7",
+            "observed_text": "México : Instituto Politécnico Nacional, 1996.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "45b0cebf615f621ec62bf4ad4e92df86185618890a36ce0b40afce0f8f554cd7",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e8a8d5d56c6bbdae.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+            "sha256": "45b0cebf615f621ec62bf4ad4e92df86185618890a36ce0b40afce0f8f554cd7",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "45b0cebf615f621ec62bf4ad4e92df86185618890a36ce0b40afce0f8f554cd7",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-e8a8d5d56c6bbdae.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72775",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 127,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72775",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Apuntes de ecología microbiana - Gutiérrez Castrejón, Teodoro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-e8a8d5d56c6bbdae.webp",
+            "cover_sha256": "bd1bcd21e34fece00274580fa871a586afdd1b0834b834efb0c5df79f82161ed",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Gutiérrez Castrejón, Teodoro",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 127,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72775",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Apuntes de ecología microbiana - Gutiérrez Castrejón, Teodoro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-e8a8d5d56c6bbdae.webp",
+            "cover_sha256": "bd1bcd21e34fece00274580fa871a586afdd1b0834b834efb0c5df79f82161ed",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 127,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72775",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Apuntes de ecología microbiana - Gutiérrez Castrejón, Teodoro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-e8a8d5d56c6bbdae.webp",
+            "cover_sha256": "bd1bcd21e34fece00274580fa871a586afdd1b0834b834efb0c5df79f82161ed",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 127,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72775",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Apuntes de ecología microbiana - Gutiérrez Castrejón, Teodoro.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-e8a8d5d56c6bbdae.webp",
+          "cover_sha256": "bd1bcd21e34fece00274580fa871a586afdd1b0834b834efb0c5df79f82161ed",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "131",
+        "imported_book_id": "130"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-2a754808d8c97445.webp",
+      "libro": {
+        "titulo": "Astronomía: de la tierra al cosmos",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Zandanel, Armando Eugenio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Maipue",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "30.99",
+        "sku": "PLG-BK-000080",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2039,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000080-9b4680698e44.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/112787",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2a754808d8c97445",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "131",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2c462bf051b2b918"
+        },
+        "author_bindings": [
+          {
+            "name": "Zandanel, Armando Eugenio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Zandanel, Armando Eugenio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+            "sha256": "e21f6fc6218d0d63acce57c2c209da116e72912b73e359b862baa5c854518158",
+            "observed_text": "Ituzaingó : Editorial Maipue, 2018.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "e21f6fc6218d0d63acce57c2c209da116e72912b73e359b862baa5c854518158",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a754808d8c97445.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+            "sha256": "e21f6fc6218d0d63acce57c2c209da116e72912b73e359b862baa5c854518158",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "e21f6fc6218d0d63acce57c2c209da116e72912b73e359b862baa5c854518158",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a754808d8c97445.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB112787",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 129,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/112787",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Astronomía de la tierra al cosmos - Zandanel, Armando Eugenio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-2a754808d8c97445.webp",
+            "cover_sha256": "9b4680698e44ef0fabdf73b568b8db7d4323a1537e5633313b975d24eb81a1b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Zandanel, Armando Eugenio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 129,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/112787",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Astronomía de la tierra al cosmos - Zandanel, Armando Eugenio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-2a754808d8c97445.webp",
+            "cover_sha256": "9b4680698e44ef0fabdf73b568b8db7d4323a1537e5633313b975d24eb81a1b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 129,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/112787",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Astronomía de la tierra al cosmos - Zandanel, Armando Eugenio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-2a754808d8c97445.webp",
+            "cover_sha256": "9b4680698e44ef0fabdf73b568b8db7d4323a1537e5633313b975d24eb81a1b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 129,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/112787",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Astronomía de la tierra al cosmos - Zandanel, Armando Eugenio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-2a754808d8c97445.webp",
+          "cover_sha256": "9b4680698e44ef0fabdf73b568b8db7d4323a1537e5633313b975d24eb81a1b8",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "132",
+        "imported_book_id": "131"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-f8ceb3a2ee2a1163.webp",
+      "libro": {
+        "titulo": "Botánica aplicada",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Molina Abril, José Antonio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Dextra Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000231",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4269,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000231-f6b7c7b69ea9.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131465",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-f8ceb3a2ee2a1163",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "132",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4b957209ffc6eaf5"
+        },
+        "author_bindings": [
+          {
+            "name": "Molina Abril, José Antonio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Molina Abril, José Antonio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+            "sha256": "7bb3b0115356d00f612b062887cdadb1fda9d99b2c51b63c52e578bc34fdd357",
+            "observed_text": "Madrid : Dextra Editorial, 2019.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "7bb3b0115356d00f612b062887cdadb1fda9d99b2c51b63c52e578bc34fdd357",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f8ceb3a2ee2a1163.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+            "sha256": "7bb3b0115356d00f612b062887cdadb1fda9d99b2c51b63c52e578bc34fdd357",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "7bb3b0115356d00f612b062887cdadb1fda9d99b2c51b63c52e578bc34fdd357",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f8ceb3a2ee2a1163.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131465",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 130,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131465",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Botánica aplicada - Molina Abril, José Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f8ceb3a2ee2a1163.webp",
+            "cover_sha256": "f6b7c7b69ea9cac1b3ca7e7636b11e8035c3e913689dc54afca7846bfcac1841",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Molina Abril, José Antonio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 130,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131465",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Botánica aplicada - Molina Abril, José Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f8ceb3a2ee2a1163.webp",
+            "cover_sha256": "f6b7c7b69ea9cac1b3ca7e7636b11e8035c3e913689dc54afca7846bfcac1841",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 130,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131465",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Botánica aplicada - Molina Abril, José Antonio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f8ceb3a2ee2a1163.webp",
+            "cover_sha256": "f6b7c7b69ea9cac1b3ca7e7636b11e8035c3e913689dc54afca7846bfcac1841",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 130,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131465",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Botánica aplicada - Molina Abril, José Antonio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f8ceb3a2ee2a1163.webp",
+          "cover_sha256": "f6b7c7b69ea9cac1b3ca7e7636b11e8035c3e913689dc54afca7846bfcac1841",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "133",
+        "imported_book_id": "132"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-ea66d96a5be19bc6.webp",
+      "libro": {
+        "titulo": "Colapso: cuando el clima lo cambia todo",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Baquedano, Manuel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Cuarto Propio",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "27.99",
+        "sku": "PLG-BK-000158",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2791,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000158-81a4e74c8cc7.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/190898",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-ea66d96a5be19bc6",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "133",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2e9807f4d06886ad"
+        },
+        "author_bindings": [
+          {
+            "name": "Baquedano, Manuel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Baquedano, Manuel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+            "sha256": "2e105a2f8e949b2769b741a83e0dabb727c72c66e641ef6989d85a3f839d5f67",
+            "observed_text": "Santiago de Chile : Editorial Cuarto Propio, 2019.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "2e105a2f8e949b2769b741a83e0dabb727c72c66e641ef6989d85a3f839d5f67",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ea66d96a5be19bc6.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+            "sha256": "2e105a2f8e949b2769b741a83e0dabb727c72c66e641ef6989d85a3f839d5f67",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "2e105a2f8e949b2769b741a83e0dabb727c72c66e641ef6989d85a3f839d5f67",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ea66d96a5be19bc6.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB190898",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 132,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/190898",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Colapso cuando el clima lo cambia todo - Baquedano, Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-ea66d96a5be19bc6.webp",
+            "cover_sha256": "81a4e74c8cc76366e75375b74df4344670c11161110c8c6f112aead272b9c613",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Baquedano, Manuel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 132,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/190898",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Colapso cuando el clima lo cambia todo - Baquedano, Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-ea66d96a5be19bc6.webp",
+            "cover_sha256": "81a4e74c8cc76366e75375b74df4344670c11161110c8c6f112aead272b9c613",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 132,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/190898",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Colapso cuando el clima lo cambia todo - Baquedano, Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-ea66d96a5be19bc6.webp",
+            "cover_sha256": "81a4e74c8cc76366e75375b74df4344670c11161110c8c6f112aead272b9c613",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 132,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/190898",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Colapso cuando el clima lo cambia todo - Baquedano, Manuel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-ea66d96a5be19bc6.webp",
+          "cover_sha256": "81a4e74c8cc76366e75375b74df4344670c11161110c8c6f112aead272b9c613",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "134",
+        "imported_book_id": "133"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-b734e320648e8926.webp",
+      "libro": {
+        "titulo": "Ecología del Paisaje",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Farina, Almo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Alicante",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000310",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2601,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000310-14670e5cb004.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60609",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-b734e320648e8926",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "134",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-1ae438860436574e"
+        },
+        "author_bindings": [
+          {
+            "name": "Farina, Almo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Farina, Almo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+            "sha256": "08c9080a4c98e6c9b05717477c4d621562ec3b3b29e6ff1cd9d26edd16deebf6",
+            "observed_text": "Alicante : Universidad de Alicante, 2016.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "08c9080a4c98e6c9b05717477c4d621562ec3b3b29e6ff1cd9d26edd16deebf6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b734e320648e8926.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+            "sha256": "08c9080a4c98e6c9b05717477c4d621562ec3b3b29e6ff1cd9d26edd16deebf6",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "08c9080a4c98e6c9b05717477c4d621562ec3b3b29e6ff1cd9d26edd16deebf6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b734e320648e8926.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60609",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 135,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60609",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Ecología del Paisaje - Farina, Almo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b734e320648e8926.webp",
+            "cover_sha256": "14670e5cb00496d5fbd72ae39c837e0a1ea889734da030eb3b4eb5fcbcee16d1",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Farina, Almo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 135,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60609",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Ecología del Paisaje - Farina, Almo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b734e320648e8926.webp",
+            "cover_sha256": "14670e5cb00496d5fbd72ae39c837e0a1ea889734da030eb3b4eb5fcbcee16d1",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 135,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60609",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Ecología del Paisaje - Farina, Almo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b734e320648e8926.webp",
+            "cover_sha256": "14670e5cb00496d5fbd72ae39c837e0a1ea889734da030eb3b4eb5fcbcee16d1",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 135,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60609",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Ecología del Paisaje - Farina, Almo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b734e320648e8926.webp",
+          "cover_sha256": "14670e5cb00496d5fbd72ae39c837e0a1ea889734da030eb3b4eb5fcbcee16d1",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "135",
+        "imported_book_id": "134"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-9ce9ae3a37f15e8d.webp",
+      "libro": {
+        "titulo": "Glosario botánico ilustrado",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Esteras Pérez, Francisco Javier",
+            "orden": 1
+          },
+          {
+            "nombre": "Sanchis Duato, Enrique",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universitat Politècnica de València",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000153",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6833,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000153-79bf819e2014.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219257",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-9ce9ae3a37f15e8d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "135",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7a1d17aaaaa8c612"
+        },
+        "author_bindings": [
+          {
+            "name": "Esteras Pérez, Francisco Javier",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Sanchis Duato, Enrique",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Esteras Pérez, Francisco Javier; Sanchis Duato, Enrique",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+            "sha256": "236add93b7dea0f1e7ccbf450ac0a9e1170de46685e58d477e2cafc919f736e3",
+            "observed_text": "Valencia, España : Universitat Politècnica de València, 2022.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "236add93b7dea0f1e7ccbf450ac0a9e1170de46685e58d477e2cafc919f736e3",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-9ce9ae3a37f15e8d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+            "sha256": "236add93b7dea0f1e7ccbf450ac0a9e1170de46685e58d477e2cafc919f736e3",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "236add93b7dea0f1e7ccbf450ac0a9e1170de46685e58d477e2cafc919f736e3",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-9ce9ae3a37f15e8d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219257",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 137,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219257",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Glosario botánico ilustrado - Esteras Pérez, Francisco Javier; Sanchis Duato, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-9ce9ae3a37f15e8d.webp",
+            "cover_sha256": "79bf819e201440b36c5b782ed1babe1202a1533b852183e4c0eb501d4c5ccfd2",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Esteras Pérez, Francisco Javier; Sanchis Duato, Enrique",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 137,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219257",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Glosario botánico ilustrado - Esteras Pérez, Francisco Javier; Sanchis Duato, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-9ce9ae3a37f15e8d.webp",
+            "cover_sha256": "79bf819e201440b36c5b782ed1babe1202a1533b852183e4c0eb501d4c5ccfd2",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 137,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219257",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Glosario botánico ilustrado - Esteras Pérez, Francisco Javier; Sanchis Duato, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-9ce9ae3a37f15e8d.webp",
+            "cover_sha256": "79bf819e201440b36c5b782ed1babe1202a1533b852183e4c0eb501d4c5ccfd2",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 137,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219257",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Glosario botánico ilustrado - Esteras Pérez, Francisco Javier; Sanchis Duato, Enrique.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-9ce9ae3a37f15e8d.webp",
+          "cover_sha256": "79bf819e201440b36c5b782ed1babe1202a1533b852183e4c0eb501d4c5ccfd2",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "136",
+        "imported_book_id": "135"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-b57cdac6c1c6043b.webp",
+      "libro": {
+        "titulo": "Introducción a la geología (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Iriondo, Martín Horacio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Brujas",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000151",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2849,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000151-7f1bd2431a36.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78025",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-b57cdac6c1c6043b",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "136",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2e575d71159f7119"
+        },
+        "author_bindings": [
+          {
+            "name": "Iriondo, Martín Horacio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Iriondo, Martín Horacio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+            "sha256": "14ff1ad9be9f34d75d8638067bf458b44f82b5474e0d22c2d075cb31fdd92d6d",
+            "observed_text": "Córdoba : Editorial Brujas, 2009.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "14ff1ad9be9f34d75d8638067bf458b44f82b5474e0d22c2d075cb31fdd92d6d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b57cdac6c1c6043b.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+            "sha256": "14ff1ad9be9f34d75d8638067bf458b44f82b5474e0d22c2d075cb31fdd92d6d",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "14ff1ad9be9f34d75d8638067bf458b44f82b5474e0d22c2d075cb31fdd92d6d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b57cdac6c1c6043b.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB78025",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 140,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78025",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Introducción a la geología (2a. ed.) - Iriondo, Martín Horacio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b57cdac6c1c6043b.webp",
+            "cover_sha256": "7f1bd2431a36932e6b1cd5b3e99cffad8fd2e2df19a8a9fea7f59abeb5262b50",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Iriondo, Martín Horacio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 140,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78025",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Introducción a la geología (2a. ed.) - Iriondo, Martín Horacio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b57cdac6c1c6043b.webp",
+            "cover_sha256": "7f1bd2431a36932e6b1cd5b3e99cffad8fd2e2df19a8a9fea7f59abeb5262b50",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 140,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78025",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Introducción a la geología (2a. ed.) - Iriondo, Martín Horacio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b57cdac6c1c6043b.webp",
+            "cover_sha256": "7f1bd2431a36932e6b1cd5b3e99cffad8fd2e2df19a8a9fea7f59abeb5262b50",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 140,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78025",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Introducción a la geología (2a. ed.) - Iriondo, Martín Horacio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b57cdac6c1c6043b.webp",
+          "cover_sha256": "7f1bd2431a36932e6b1cd5b3e99cffad8fd2e2df19a8a9fea7f59abeb5262b50",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "137",
+        "imported_book_id": "136"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-f4e93bafe1053b4c.webp",
+      "libro": {
+        "titulo": "La astronomía es fácil",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Lopesino, Jordi",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Marcombo",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000292",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4396,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000292-948278f0422d.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281683",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-f4e93bafe1053b4c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "137",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4d648eb3a687ef91"
+        },
+        "author_bindings": [
+          {
+            "name": "Lopesino, Jordi",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Lopesino, Jordi",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+            "sha256": "76a138a2243f5b11cb5837f3e5e0874eac88fc288d9c88adf25bd6e457db0e28",
+            "observed_text": "Barcelona (España) : Marcombo, 2023.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "76a138a2243f5b11cb5837f3e5e0874eac88fc288d9c88adf25bd6e457db0e28",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f4e93bafe1053b4c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+            "sha256": "76a138a2243f5b11cb5837f3e5e0874eac88fc288d9c88adf25bd6e457db0e28",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "76a138a2243f5b11cb5837f3e5e0874eac88fc288d9c88adf25bd6e457db0e28",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-f4e93bafe1053b4c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB281683",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 141,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281683",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/La astronomía es fácil - Lopesino, Jordi.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f4e93bafe1053b4c.webp",
+            "cover_sha256": "948278f0422dfa4fccff4f421b95227ac428b7d109a95fe0bab46091de74f692",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Lopesino, Jordi",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 141,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281683",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/La astronomía es fácil - Lopesino, Jordi.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f4e93bafe1053b4c.webp",
+            "cover_sha256": "948278f0422dfa4fccff4f421b95227ac428b7d109a95fe0bab46091de74f692",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 141,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281683",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/La astronomía es fácil - Lopesino, Jordi.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f4e93bafe1053b4c.webp",
+            "cover_sha256": "948278f0422dfa4fccff4f421b95227ac428b7d109a95fe0bab46091de74f692",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 141,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281683",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/La astronomía es fácil - Lopesino, Jordi.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f4e93bafe1053b4c.webp",
+          "cover_sha256": "948278f0422dfa4fccff4f421b95227ac428b7d109a95fe0bab46091de74f692",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "138",
+        "imported_book_id": "137"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-09f707889516a345.webp",
+      "libro": {
+        "titulo": "Magnetismo en Geología y la prospección magnética terrestre",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Lasfargues, Pierre",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Instituto Politécnico Nacional",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000146",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6792,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000146-59ffc760b61c.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72209",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-09f707889516a345",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "138",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2f08a447db45922f"
+        },
+        "author_bindings": [
+          {
+            "name": "Lasfargues, Pierre",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Lasfargues, Pierre",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+            "sha256": "238a95f1c6423b3e0d0e21d7b93c2355c9b0c566f2a5c11c461377adf13d4d20",
+            "observed_text": "México : Instituto Politécnico Nacional, 1995.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "238a95f1c6423b3e0d0e21d7b93c2355c9b0c566f2a5c11c461377adf13d4d20",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-09f707889516a345.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+            "sha256": "238a95f1c6423b3e0d0e21d7b93c2355c9b0c566f2a5c11c461377adf13d4d20",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "238a95f1c6423b3e0d0e21d7b93c2355c9b0c566f2a5c11c461377adf13d4d20",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-09f707889516a345.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB72209",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 145,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72209",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Magnetismo en Geología y la prospección magnética terrestre - Lasfargues, Pierre.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-09f707889516a345.webp",
+            "cover_sha256": "59ffc760b61c60fd4d604dd9c008656f01af3e491ad02f125b77797bf88ad49a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Lasfargues, Pierre",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 145,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72209",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Magnetismo en Geología y la prospección magnética terrestre - Lasfargues, Pierre.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-09f707889516a345.webp",
+            "cover_sha256": "59ffc760b61c60fd4d604dd9c008656f01af3e491ad02f125b77797bf88ad49a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 145,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72209",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Magnetismo en Geología y la prospección magnética terrestre - Lasfargues, Pierre.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-09f707889516a345.webp",
+            "cover_sha256": "59ffc760b61c60fd4d604dd9c008656f01af3e491ad02f125b77797bf88ad49a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 145,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72209",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Magnetismo en Geología y la prospección magnética terrestre - Lasfargues, Pierre.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-09f707889516a345.webp",
+          "cover_sha256": "59ffc760b61c60fd4d604dd9c008656f01af3e491ad02f125b77797bf88ad49a",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "139",
+        "imported_book_id": "138"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias/portadas/audiobook-6a94e01622f5eda9.webp",
+      "libro": {
+        "titulo": "Manual de zoología",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Muñoz del Viejo, Antonio",
+            "orden": 1
+          },
+          {
+            "nombre": "Pérez Bote, José Luis",
+            "orden": 2
+          },
+          {
+            "nombre": "Rubio, Eduardo da Silva",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Extremadura, Servicio de Publicaciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000230",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4975,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000230-141504459915.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289642",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-6a94e01622f5eda9",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "139",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-1ce175132ab9845d"
+        },
+        "author_bindings": [
+          {
+            "name": "Muñoz del Viejo, Antonio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Pérez Bote, José Luis",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Rubio, Eduardo da Silva",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Muñoz del Viejo, Antonio; Pérez Bote, José Luis; Rubio, Eduardo da Silva",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://publicauex.unex.es/libro/manual-de-zoologia_135809/",
+            "observed_text": "Muñoz del Viejo A, Silva Rubio E da, Pérez Bote JL. Manual de zoología. Universidad de Extremadura, Servicio de Publicaciones.",
+            "basis": "Catálogo oficial del editor; título y autoría cotejados con portada original.",
+            "sha256": "6302e2d1c80c7a26c64ece136727926276538ce327cb67a6b307773f2082dd4f",
+            "capture_sha256": "6302e2d1c80c7a26c64ece136727926276538ce327cb67a6b307773f2082dd4f",
+            "capture_path": "/tmp/pliego-digital-completion/science/primary-86010fab55fc2abf.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://publicauex.unex.es/libro/manual-de-zoologia_135809/",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://publicauex.unex.es/libro/manual-de-zoologia_135809/",
+            "observed_text": "Idioma Castellano",
+            "basis": "Idioma bibliográfico explícito en fuente primaria.",
+            "sha256": "6302e2d1c80c7a26c64ece136727926276538ce327cb67a6b307773f2082dd4f",
+            "capture_sha256": "6302e2d1c80c7a26c64ece136727926276538ce327cb67a6b307773f2082dd4f",
+            "capture_path": "/tmp/pliego-digital-completion/science/primary-86010fab55fc2abf.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://publicauex.unex.es/libro/manual-de-zoologia_135809/",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 146,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289642",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Manual de zoología - Muñoz del Viejo, Antonio; Pérez Bote, José Luis; Rubio, Eduardo da Silva.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-6a94e01622f5eda9.webp",
+            "cover_sha256": "141504459915d7ffd32c7be49a63d07723078812c04370d497f3abc9669eaabf",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Muñoz del Viejo, Antonio; Pérez Bote, José Luis; Rubio, Eduardo da Silva",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 146,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289642",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Manual de zoología - Muñoz del Viejo, Antonio; Pérez Bote, José Luis; Rubio, Eduardo da Silva.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-6a94e01622f5eda9.webp",
+            "cover_sha256": "141504459915d7ffd32c7be49a63d07723078812c04370d497f3abc9669eaabf",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 146,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289642",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Manual de zoología - Muñoz del Viejo, Antonio; Pérez Bote, José Luis; Rubio, Eduardo da Silva.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-6a94e01622f5eda9.webp",
+            "cover_sha256": "141504459915d7ffd32c7be49a63d07723078812c04370d497f3abc9669eaabf",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 146,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289642",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Manual de zoología - Muñoz del Viejo, Antonio; Pérez Bote, José Luis; Rubio, Eduardo da Silva.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-6a94e01622f5eda9.webp",
+          "cover_sha256": "141504459915d7ffd32c7be49a63d07723078812c04370d497f3abc9669eaabf",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "140",
+        "imported_book_id": "139"
+      }
+    }
+  ]
+}

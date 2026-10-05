@@ -1,0 +1,130 @@
+{
+  "status": "PASS",
+  "phase": "DATA_READY_PENDING_PUBLICATION",
+  "suite": {
+    "tests": 87,
+    "exit": 0
+  },
+  "completion": {
+    "status": "PASS",
+    "ready_for_future_publication": 259,
+    "real_metadata_blockers": 0,
+    "editorials_verified": 259,
+    "languages_verified": 254,
+    "languages_inferred_unequivocal": 5,
+    "primary_ebook_id_catalog_records": 239,
+    "previous_ambiguous_identities_resolved": 2,
+    "commercial_prices_required": false,
+    "artifacts": {
+      "status": "PASS",
+      "candidates_ready": 259,
+      "ebook_ready": 142,
+      "audiobook_ready": 117,
+      "real_metadata_blockers": 0,
+      "ambiguous_identities": 0,
+      "existing_work_reuse": 1,
+      "new_work_proposals": 258,
+      "sku_mapping_preserved": 259,
+      "active_registry_entries_preserved": 56,
+      "historical_records_preserved": 55,
+      "delivery_cover_files_unchanged": 837,
+      "prior_historical_assets_unchanged": true,
+      "deterministic_demo_prices": 259,
+      "original_demo_audio_values_preserved": 117,
+      "legacy_active_records_unchanged": 56,
+      "staging_groups": 18,
+      "price_missing_rows": 0,
+      "blocker_rows": 0,
+      "stock_rows_generated": 0,
+      "diff_check_exit": 0
+    },
+    "v032_readonly": {
+      "checked": 259,
+      "valid_format_metadata": 259,
+      "valid_language": 259,
+      "valid_price": 259,
+      "valid_publisher": 259,
+      "valid_sku": 259,
+      "unique_skus": 259,
+      "database_writes": false
+    },
+    "remaining_real_blockers": 0,
+    "operations": {
+      "seed": false,
+      "r2_upload": false,
+      "publish": false,
+      "commit": false,
+      "push": false,
+      "deploy": false
+    }
+  },
+  "artifacts": {
+    "status": "PASS",
+    "candidates_ready": 259,
+    "ebook_ready": 142,
+    "audiobook_ready": 117,
+    "real_metadata_blockers": 0,
+    "ambiguous_identities": 0,
+    "existing_work_reuse": 1,
+    "new_work_proposals": 258,
+    "sku_mapping_preserved": 259,
+    "active_registry_entries_preserved": 56,
+    "historical_records_preserved": 55,
+    "delivery_cover_files_unchanged": 837,
+    "prior_historical_assets_unchanged": true,
+    "deterministic_demo_prices": 259,
+    "original_demo_audio_values_preserved": 117,
+    "legacy_active_records_unchanged": 56,
+    "staging_groups": 18,
+    "price_missing_rows": 0,
+    "blocker_rows": 0,
+    "stock_rows_generated": 0,
+    "diff_check_exit": 0
+  },
+  "v032_readonly": {
+    "checked": 259,
+    "valid_format_metadata": 259,
+    "valid_language": 259,
+    "valid_price": 259,
+    "valid_publisher": 259,
+    "valid_sku": 259,
+    "unique_skus": 259,
+    "database_writes": false
+  },
+  "research": {
+    "editorials_verified": 259,
+    "languages_verified": 254,
+    "languages_inferred_unequivocal": 5,
+    "same_ebook_id_uns_records": 239,
+    "remaining_metadata_blockers": 0
+  },
+  "operations": {
+    "database_writes": false,
+    "seed_cli": false,
+    "r2_upload": false,
+    "publish": false,
+    "commit": false,
+    "push": false,
+    "deploy": false
+  },
+  "historical_evidence": "verification/pre-completion-gates.json",
+  "independent_review": {
+    "status": "APPROVED_FOR_PENDING_PREPARATION",
+    "critical": 0,
+    "important": 0,
+    "minor": 0,
+    "tests_passed": 87,
+    "capture_hashes_verified": 489,
+    "candidate_regeneration_verified": 259,
+    "image_references_verified": 259,
+    "existing_registry_assignments_preserved": 56,
+    "sku_proposals_preserved": 259,
+    "audio_demo_values_preserved": 117,
+    "scope_limits": [
+      "Actual external source availability",
+      "Future import/publication execution",
+      "New SQL connection; current SQL verification covered by root read-only gate"
+    ]
+  },
+  "final_diff_check_exit": 0
+}

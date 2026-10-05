@@ -1,4 +1,4 @@
-import { screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cartBody, json, problem, renderPurchaseRoute, savedAddress, stubApi } from "@/test/purchase";
@@ -12,19 +12,92 @@ const routes = [
 
 const approved = { orderId: "700", orderState: "CONFIRMED", paymentState: "APPROVED", total: "18.50", paymentReference: "SIM-1" };
 
+/** Opens the payment choice if a method is already settled, then picks one. Tarjeta opens the card dialog. */
+async function choosePayment(user: ReturnType<typeof userEvent.setup>, method: "Tarjeta" | "Transferencia") {
+  const change = screen.queryByRole("button", { name: "Cambiar método de pago" });
+  if (change) await user.click(change);
+  await user.click(screen.getByRole("button", { name: new RegExp(method) }));
+  if (method === "Tarjeta") await screen.findByLabelText("Número de tarjeta");
+}
+
 async function fillCheckout(user: ReturnType<typeof userEvent.setup>, method: "Tarjeta" | "Transferencia", card?: string) {
   await screen.findByText(/Av\. Principal 123/);
-  await user.click(screen.getByRole("radio", { name: new RegExp(method) }));
+  await choosePayment(user, method);
   if (card !== undefined) {
     await user.type(screen.getByLabelText("Número de tarjeta"), card);
     await user.type(screen.getByLabelText("Caducidad (MM/AA)"), "12/30");
     await user.type(screen.getByLabelText("Código de seguridad"), "123");
     await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
+    await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
   }
 }
 
 describe("CheckoutPage", () => {
   afterEach(() => vi.unstubAllGlobals());
+
+  it("opens concise CVV help with keyboard and returns focus without closing the card dialog", async () => {
+    stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    expect(screen.queryByText("3 dígitos al reverso de la tarjeta; 4 en el frente si es American Express.")).not.toBeInTheDocument();
+    const help = screen.getByRole("button", { name: "Ayuda sobre el código de seguridad" });
+    help.focus(); await user.keyboard("{Enter}");
+    const panel = await screen.findByRole("dialog", { name: "Código de seguridad" });
+    expect(within(panel).getByText("Busca los 3 dígitos en el reverso de tu tarjeta.")).toBeInTheDocument();
+    expect((await within(panel).findByRole("img", { name: "Código de 3 dígitos al reverso de la tarjeta" })).tagName.toLowerCase()).toBe("svg");
+    await user.keyboard("{Escape}");
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "Código de seguridad" })).not.toBeInTheDocument());
+    expect(help).toHaveFocus();
+    expect(screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Hacer pedido" })).toBeDisabled();
+  });
+
+  it("uses the detected American Express brand for four-digit front-of-card help", async () => {
+    stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    await user.type(screen.getByLabelText("Número de tarjeta"), "378282246310005");
+    await user.click(screen.getByRole("button", { name: "Ayuda sobre el código de seguridad" }));
+    const panel = await screen.findByRole("dialog", { name: "Código de seguridad" });
+    expect(within(panel).getByText("Busca los 4 dígitos en el frente de tu tarjeta.")).toBeInTheDocument();
+    expect(await within(panel).findByRole("img", { name: "Código de 4 dígitos en el frente de la tarjeta" })).toBeInTheDocument();
+    expect(screen.getByLabelText("Código de seguridad", { selector: "input" })).toHaveAttribute("maxlength", "4");
+    await user.click(within(panel).getByRole("button", { name: "Entendido" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "Ayuda sobre el código de seguridad" })).toHaveFocus());
+    expect(screen.getByLabelText("Número de tarjeta")).toHaveValue("3782 822463 10005");
+  });
+
+  it("disables placing an order until a card is confirmed or transfer is selected", async () => {
+    const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/);
+    const pay = screen.getByRole("button", { name: "Hacer pedido" });
+    expect(pay).toBeDisabled();
+    await choosePayment(user, "Tarjeta");
+    expect(pay).toBeDisabled();
+    await user.click(screen.getByRole("button", { name: "Cancelar" }));
+    expect(pay).toBeDisabled();
+    await fillCheckout(user, "Tarjeta", "4111111111111111");
+    expect(pay).toBeEnabled();
+    await choosePayment(user, "Transferencia");
+    await screen.findByText("Banco Guayaquil");
+    expect(pay).toBeEnabled();
+    expect(api.count("POST", "/api/v1/checkout")).toBe(0);
+  });
+
+  it("does not submit a valid card before the customer confirms using it", async () => {
+    const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]), "POST /api/v1/checkout": () => json(approved, 201) });
+    const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    await user.type(screen.getByLabelText("Número de tarjeta"), "4111111111111111");
+    await user.type(screen.getByLabelText("Caducidad (MM/AA)"), "12/30");
+    await user.type(screen.getByLabelText("Código de seguridad"), "123");
+    await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
+    await act(async () => { fireEvent.submit(screen.getByRole("form", { name: "Pago" })); });
+    expect(api.count("POST", "/api/v1/checkout")).toBe(0);
+    expect(api.count("GET", "/api/v1/cart")).toBe(1);
+    expect(screen.getByRole("button", { name: "Hacer pedido" })).toBeDisabled();
+  });
 
   it("shows only card brands supported by the current validator before entry", async () => {
     stubApi({
@@ -35,10 +108,9 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
     await screen.findByText(/Av\. Principal 123/);
 
-    await user.click(screen.getByRole("radio", { name: /Tarjeta/ }));
+    await choosePayment(user, "Tarjeta");
 
-    expect(screen.getByText("Proceso de compra seguro")).toBeInTheDocument();
-    expect(screen.getByRole("list", { name: "Tarjetas aceptadas" })).toBeInTheDocument();
+    expect(screen.getByRole("list", { name: "Tarjetas de prueba compatibles" })).toBeInTheDocument();
     for (const brand of ["Visa", "Mastercard", "American Express", "Diners Club"]) {
       expect(screen.getByRole("img", { name: brand })).toBeInTheDocument();
     }
@@ -53,7 +125,7 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
     await screen.findByText(/Av\. Principal 123/);
-    await user.click(screen.getByRole("radio", { name: /Tarjeta/ }));
+    await choosePayment(user, "Tarjeta");
 
     const expiry = screen.getByLabelText("Caducidad (MM/AA)");
     await user.type(expiry, "1");
@@ -116,9 +188,9 @@ describe("CheckoutPage", () => {
     await fillCheckout(user, "Transferencia");
     const submittedAt = Date.now();
 
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
-    expect(await screen.findByText("Procesando tu pago…")).toBeInTheDocument();
+    expect(await screen.findByText("Creando tu pedido simulado…")).toBeInTheDocument();
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
     expect(Date.now() - submittedAt).toBeGreaterThanOrEqual(480);
   });
@@ -135,7 +207,7 @@ describe("CheckoutPage", () => {
     const expiry = screen.getByLabelText("Caducidad (MM/AA)");
     await user.clear(expiry);
     await user.type(expiry, "1328");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Escribe la fecha de caducidad en formato MM/AA.")).toBeInTheDocument();
     expect(expiry).toHaveAttribute("aria-invalid", "true");
@@ -151,20 +223,102 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
 
-    await fillCheckout(user, "Tarjeta", "4111111111111111");
+    await screen.findByText(/Av\. Principal 123/);
+    await choosePayment(user, "Tarjeta");
     const previousMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1);
     const expiredDigits = `${String(previousMonth.getMonth() + 1).padStart(2, "0")}${String(previousMonth.getFullYear() % 100).padStart(2, "0")}`;
+    await user.type(screen.getByLabelText("Número de tarjeta"), "4111111111111111");
     const expiry = screen.getByLabelText("Caducidad (MM/AA)");
-    await user.clear(expiry);
     await user.type(expiry, expiredDigits);
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.type(screen.getByLabelText("Código de seguridad"), "123");
+    await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
+    await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
 
+    // The dialog keeps the card until it is valid: nothing reaches the page or the server.
     expect(await screen.findByText("La fecha de caducidad de la tarjeta ya venció.")).toBeInTheDocument();
     expect(expiry).toHaveFocus();
+    expect(screen.queryByText(/^Visa-/)).not.toBeInTheDocument();
     expect(api.count("POST", "/api/v1/checkout")).toBe(0);
   });
 
-  it("uses the shared searchable country picker for a new checkout address", async () => {
+  it("shows the saved address compactly and switches to a focused selection to change it", async () => {
+    const office = { ...savedAddress, addressId: "16", alias: "Oficina", line1: "Av. Amazonas 900", primary: false };
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress, office]),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+
+    const deliver = await screen.findByRole("tabpanel", { name: "Entrega" });
+    expect(await within(deliver).findByText(/Av\. Principal 123/)).toBeInTheDocument();
+    expect(within(deliver).queryByRole("radio")).not.toBeInTheDocument();
+    expect(within(deliver).queryByLabelText("Ciudad")).not.toBeInTheDocument();
+
+    await user.click(within(deliver).getByRole("button", { name: "Cambiar dirección" }));
+    expect(within(deliver).getAllByRole("radio")).toHaveLength(2);
+    expect(within(deliver).getByRole("button", { name: "Añadir nueva dirección" })).toBeInTheDocument();
+    expect(within(deliver).getByRole("link", { name: "Direcciones" })).toHaveAttribute("href", "/account/addresses");
+
+    await user.click(within(deliver).getByRole("radio", { name: /Oficina/ }));
+    expect(within(deliver).getByText(/Av\. Amazonas 900/)).toBeInTheDocument();
+    expect(within(deliver).queryByRole("radio")).not.toBeInTheDocument();
+    await waitFor(() => expect(within(deliver).getByRole("button", { name: "Cambiar dirección" })).toHaveFocus());
+  });
+
+  it("states the delivery window the cart API reports and nothing when it reports none", async () => {
+    stubApi({
+      "GET /api/v1/cart": [
+        () => json({ ...cartBody(), estimatedDeliveryFrom: "2026-12-31", estimatedDeliveryTo: "2027-01-02" }),
+        () => json(cartBody()),
+      ],
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+    });
+    const view = renderPurchaseRoute(routes, "/checkout");
+    const deliver = await screen.findByRole("tabpanel", { name: "Entrega" });
+    expect(await within(deliver).findByText("Entrega 31 Dic 2026 - 2 Ene 2027")).toBeInTheDocument();
+    expect(within(deliver).getByRole("list", { name: "Libros de esta entrega" })).toHaveTextContent("Cien años de soledad");
+    view.unmount();
+
+    renderPurchaseRoute(routes, "/checkout");
+    const again = await screen.findByRole("tabpanel", { name: "Entrega" });
+    await within(again).findByText("Entrega a domicilio");
+    expect(within(again).queryByText(/^Entrega \d/)).not.toBeInTheDocument();
+  });
+
+  it("keeps the card out of the page: it is entered in a dialog, summarised by its last digits and asked again after an attempt", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+      "POST /api/v1/checkout": () => problem(409, "P5007", "Referencia en uso", "Intenta otra vez."),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/);
+
+    await choosePayment(user, "Tarjeta");
+    const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
+    expect(within(dialog).getByLabelText("Código de seguridad")).toHaveAccessibleDescription(/3 dígitos al reverso/);
+    await user.click(within(dialog).getByRole("button", { name: "Usar esta tarjeta" }));
+    expect(await within(dialog).findByText("Escribe el número de tu tarjeta.")).toBeInTheDocument();
+    expect(within(dialog).getByLabelText("Número de tarjeta")).toHaveFocus();
+
+    await user.type(within(dialog).getByLabelText("Número de tarjeta"), "4111111111111111");
+    await user.type(within(dialog).getByLabelText("Caducidad (MM/AA)"), "12/30");
+    await user.type(within(dialog).getByLabelText("Código de seguridad"), "123");
+    await user.type(within(dialog).getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
+    await user.click(within(dialog).getByRole("button", { name: "Usar esta tarjeta" }));
+
+    expect(await screen.findByText("Visa-1111")).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole("button", { name: "Cambiar método de pago" })).toHaveFocus());
+
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    expect(await screen.findByRole("heading", { name: "No se creó el pedido." })).toBeInTheDocument();
+    expect(await screen.findByText(/No conservamos los datos de la tarjeta entre intentos/)).toBeInTheDocument();
+    expect(screen.queryByText("Visa-1111")).not.toBeInTheDocument();
+  });
+
+  it("opens the shared address editor, with its searchable country picker, when no address is saved", async () => {
     stubApi({
       "GET /api/v1/cart": () => json(cartBody()),
       "GET /api/v1/me/addresses": () => json([]),
@@ -172,6 +326,9 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
 
+    // Without a saved address, "Entregar en" offers the shared editor straight away.
+    await user.click(await screen.findByRole("button", { name: "Añadir dirección" }));
+    await screen.findByRole("dialog", { name: "Nueva dirección" });
     const country = await screen.findByRole("combobox", { name: "País de entrega" });
     await user.click(country);
     const search = await screen.findByRole("combobox", { name: "Buscar país de entrega" });
@@ -179,7 +336,7 @@ describe("CheckoutPage", () => {
     await user.keyboard("{ArrowDown}{Enter}");
 
     expect(country).toHaveTextContent("Colombia");
-    expect(screen.queryByRole("combobox", { name: "Buscar país de entrega" })).not.toBeInTheDocument();
+    await waitFor(() => expect(screen.queryByRole("combobox", { name: "Buscar país de entrega" })).not.toBeInTheDocument());
   });
 
   it("sends one CARD checkout with the saved address and opens the created order", async () => {
@@ -196,12 +353,14 @@ describe("CheckoutPage", () => {
     expect(screen.queryByText("Pago aprobado")).not.toBeInTheDocument();
     expect(screen.getByLabelText("Número de tarjeta")).toHaveValue("4111 1111 1111 1111");
     expect(screen.getByRole("img", { name: "Visa detectada" })).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
     const post = api.calls.find((call) => call.method === "POST");
     expect(post?.body).toEqual({
+      fulfillmentMethod: "HOME_DELIVERY",
       addressId: "15",
+      expectedCartId: "40",
       paymentMethod: "CARD",
       simulationOutcome: "APPROVED",
       cardNumber: "4111111111111111",
@@ -218,7 +377,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Tarjeta", "4111111111111112");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Este número de tarjeta no es válido. Revisa los dígitos.")).toBeInTheDocument();
     expect(screen.getByLabelText("Número de tarjeta")).toHaveFocus();
@@ -236,7 +395,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Tarjeta", "4111111111111111");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     await waitFor(() => expect(api.count("POST", "/api/v1/checkout")).toBe(1));
     expect(await screen.findByText("Número de tarjeta: El número no pasó la validación. Vuelve a escribirlo.")).toBeInTheDocument();
@@ -259,7 +418,8 @@ describe("CheckoutPage", () => {
     expect(screen.getByLabelText("Código de seguridad")).toHaveAttribute("maxlength", "4");
     await user.clear(screen.getByLabelText("Código de seguridad"));
     await user.type(screen.getByLabelText("Código de seguridad"), "1234");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
     expect(api.calls.find((call) => call.method === "POST")?.body).toMatchObject({ cardNumber: "378282246310005" });
   });
@@ -275,71 +435,68 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Tarjeta", "4111111111111111");
-    await user.click(screen.getByRole("radio", { name: /Transferencia/ }));
+    await choosePayment(user, "Transferencia");
     expect(await screen.findByText("Banco Guayaquil")).toBeInTheDocument();
     expect(screen.getByText("2557897233")).toBeInTheDocument();
-    expect(screen.queryByLabelText("Número de tarjeta")).not.toBeInTheDocument();
-    await user.click(screen.getByRole("radio", { name: /Tarjeta/ }));
+    await waitFor(() => expect(screen.queryByLabelText("Número de tarjeta")).not.toBeInTheDocument());
+    await choosePayment(user, "Tarjeta");
     expect(screen.getByLabelText("Número de tarjeta")).toHaveValue("");
-    await user.click(screen.getByRole("radio", { name: /Transferencia/ }));
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    // Leaving the card dialog without confirming keeps the transfer that was chosen.
+    await user.click(screen.getByRole("button", { name: "Cancelar" }));
+    await waitFor(() => expect(screen.queryByLabelText("Número de tarjeta")).not.toBeInTheDocument());
+    expect(screen.getByRole("button", { name: /Transferencia/ })).toHaveAttribute("aria-pressed", "true");
+    await user.click(screen.getByRole("button", { name: /Transferencia/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     await screen.findByRole("heading", { name: "Pedido abierto" });
     expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({
+      fulfillmentMethod: "HOME_DELIVERY",
       addressId: "15",
+      expectedCartId: "40",
       paymentMethod: "TRANSFER",
       simulationOutcome: "APPROVED",
     });
   });
 
-  it("does not replay checkout after an unknown outcome and reconciles through orders", async () => {
+  it("resolves an unknown outcome through its exact attempt without replaying checkout", async () => {
     const api = stubApi({
       "GET /api/v1/cart": () => json(cartBody()),
       "GET /api/v1/me/addresses": () => json([savedAddress]),
-      "GET /api/v1/orders": [
-        () => json({ items: [{ orderId: "699", orderState: "CONFIRMED", total: "5.00" }], page: 0, pageSize: 1, totalCount: "1" }),
-        () => json({ items: [
-          { orderId: "700", orderState: "CONFIRMED", total: "18.50" },
-          { orderId: "699", orderState: "CONFIRMED", total: "5.00" },
-        ], page: 0, pageSize: 5, totalCount: "2" }),
-      ],
       "POST /api/v1/checkout": () => { throw new TypeError("Failed to fetch"); },
+      "POST /api/v1/checkout/attempts/*/resolve": [
+        () => json({ state: "PENDING", order: null }),
+        () => json({ state: "CREATED", order: approved }),
+      ],
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
-
-    expect(await screen.findByRole("heading", { name: "No pudimos confirmar si se creó tu pedido." })).toBeInTheDocument();
-    const submitButton = screen.getByRole("button", { name: /Pagar/ });
-    expect(submitButton).toHaveAttribute("aria-disabled", "true");
-    await user.click(submitButton);
-    expect(api.count("POST", "/api/v1/checkout")).toBe(1);
-
-    await user.click(screen.getByRole("button", { name: "Consultar mis pedidos" }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await user.click(await screen.findByRole("button", { name: "Consultar resultado" }));
+    await waitFor(() => expect(screen.getByRole("button", { name: "Hacer pedido" })).toHaveAttribute("aria-disabled", "true"));
+    expect(screen.queryByText("No se creó ningún pedido.")).not.toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Consultar resultado" }));
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
-    expect(api.count("POST", "/api/v1/checkout")).toBe(1);
+    const original = api.calls.filter((call) => call.method === "POST" && call.path === "/api/v1/checkout");
+    expect(original).toHaveLength(1);
+    const key = original[0].headers.get("Idempotency-Key");
+    expect(api.calls.filter((call) => call.path.includes("/resolve")).every((call) => call.path.includes(key!))).toBe(true);
   });
 
-  it("re-enables a deliberate attempt only after orders show no new order", async () => {
-    const empty = () => json({ items: [], page: 0, pageSize: 5, totalCount: "0" });
-    const api = stubApi({
+  it("allows a new attempt only after the backend fences and confirms absence", async () => {
+    stubApi({
       "GET /api/v1/cart": () => json(cartBody()),
       "GET /api/v1/me/addresses": () => json([savedAddress]),
-      "GET /api/v1/orders": empty,
       "POST /api/v1/checkout": () => problem(503, "INTERNAL_SERVER_ERROR", "Error", "Falla temporal."),
+      "POST /api/v1/checkout/attempts/*/resolve": () => json({ state: "NOT_CREATED", order: null }),
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
-    await user.click(await screen.findByRole("button", { name: "Consultar mis pedidos" }));
-
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await user.click(await screen.findByRole("button", { name: "Consultar resultado" }));
     expect(await screen.findByRole("heading", { name: "No se creó ningún pedido." })).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Pagar/ })).not.toHaveAttribute("aria-disabled");
-    expect(api.count("POST", "/api/v1/checkout")).toBe(1);
+    expect(screen.getByRole("button", { name: "Hacer pedido" })).not.toHaveAttribute("aria-disabled");
   });
 
   it("stops before submitting when the server cart changed since it was shown", async () => {
@@ -355,10 +512,12 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: /Pagar \$\s?18,50/ }));
+    const summary = screen.getByRole("complementary", { name: "Resumen del pedido" });
+    expect(within(summary).getByText("Total").nextSibling).toHaveTextContent("18,50");
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByRole("heading", { name: "Tu carrito cambió." })).toBeInTheDocument();
-    expect(await screen.findByRole("button", { name: /Pagar \$\s?19,00/ })).toBeInTheDocument();
+    await waitFor(() => expect(within(summary).getByText("Total").nextSibling).toHaveTextContent("19,00"));
     expect(api.count("POST", "/api/v1/checkout")).toBe(0);
   });
 
@@ -377,7 +536,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByRole("heading", { name: "La disponibilidad cambió y no se creó el pedido." })).toBeInTheDocument();
     // The summary renders as a mobile disclosure and a desktop aside; CSS shows one.
@@ -396,9 +555,25 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Esa dirección ya no está disponible. Elige otra o agrega una nueva.")).toBeInTheDocument();
+  });
+
+  it("maps server field violations to the payment choice instead of inferring another field", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+      "POST /api/v1/checkout": () => json({code:"VALIDATION_ERROR",title:"Datos inválidos",detail:"Revisa los campos indicados.",
+        violations:[{field:"paymentMethod",message:"Elige un método de pago de prueba disponible."}]},400),
+    });
+    const user=userEvent.setup(); renderPurchaseRoute(routes,"/checkout");
+    await fillCheckout(user,"Transferencia");
+    await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+    const error=await screen.findByText("Elige un método de pago de prueba disponible.");
+    expect(error).toBeInTheDocument();
+    expect(screen.getByRole("group",{name:"Método de pago"})).toHaveAccessibleDescription("Elige un método de pago de prueba disponible.");
+    expect(screen.getByRole("button",{name:/Transferencia/})).toHaveAttribute("aria-pressed","true");
   });
 
   it("asks a guest to sign in and return to checkout", async () => {
@@ -414,15 +589,14 @@ describe("CheckoutPage", () => {
 
   it("clears the session and asks for sign-in again after a 401", async () => {
     stubApi({
-      "GET /api/v1/cart": () => json(cartBody()),
       "GET /api/v1/me/addresses": () => json([savedAddress]),
-      "GET /api/v1/orders": () => problem(401, "AUTH_INVALID_TOKEN", "Sesión no válida", "Inicia sesión otra vez."),
+      "GET /api/v1/cart": [() => json(cartBody()), () => problem(401, "AUTH_INVALID_TOKEN", "Sesión no válida", "Inicia sesión otra vez.")],
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: /Pagar/ }));
+    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     await waitFor(() => expect(screen.getByRole("heading", { name: "Tu sesión ya no está activa." })).toBeInTheDocument());
   });

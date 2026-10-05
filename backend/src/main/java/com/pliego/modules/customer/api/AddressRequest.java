@@ -1,6 +1,10 @@
 package com.pliego.modules.customer.api;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import com.pliego.foundation.validation.AddressRecipient;
+import com.pliego.foundation.validation.PersonRules;
+import com.pliego.foundation.validation.PhoneNumber;
+import com.pliego.foundation.validation.PhoneNumbers;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -10,8 +14,8 @@ import jakarta.validation.constraints.Size;
 public record AddressRequest(
         @NotBlank(message = "El alias es obligatorio.") @Size(max = 80, message = "El alias no puede superar 80 caracteres.")
         @Schema(example = "Casa", maxLength = 80) String alias,
-        @NotBlank(message = "El destinatario es obligatorio.") @Size(max = 200, message = "El destinatario no puede superar 200 caracteres.")
-        @Schema(example = "Ana Pérez", maxLength = 200) String recipient,
+        @AddressRecipient
+        @Schema(example = "Ana Pérez", requiredMode = Schema.RequiredMode.REQUIRED, minLength = 1, maxLength = 241) String recipient,
         @NotBlank(message = "La dirección principal es obligatoria.") @Size(max = 200, message = "La dirección principal no puede superar 200 caracteres.")
         @Schema(example = "Av. Principal 123", maxLength = 200) String line1,
         @Size(max = 200, message = "El complemento no puede superar 200 caracteres.")
@@ -26,8 +30,9 @@ public record AddressRequest(
         @Schema(example = "170101", nullable = true, maxLength = 20) String postalCode,
         @Size(max = 300, message = "La referencia no puede superar 300 caracteres.")
         @Schema(example = "Frente al parque", nullable = true, maxLength = 300) String reference,
-        @NotBlank(message = "El teléfono es obligatorio.") @Pattern(regexp = "^\\+?[0-9]{7,19}$", message = "El teléfono tiene un formato inválido.")
-        @Schema(example = "+59325550134", pattern = "^\\+?[0-9]{7,19}$") String phone,
+        @PhoneNumber(required = true)
+        @Schema(example = "+59325550134", requiredMode = Schema.RequiredMode.REQUIRED, description = "Teléfono internacional con prefijo explícito.") String phone,
         @NotNull(message = "Indica si la dirección debe ser principal.")
         @Schema(example = "true") Boolean makePrimary) {
+    public AddressRequest { recipient=PersonRules.name(recipient); phone=PhoneNumbers.normalized(phone); }
 }

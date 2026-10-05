@@ -1,5 +1,11 @@
 import { expect, test, type Browser, type Page } from "@playwright/test";
 
+/** Account pages are reached from the header's account menu. */
+async function openAccountSection(page: import("@playwright/test").Page, name: "Perfil" | "Direcciones" | "Favoritos" | "Pedidos") {
+  await page.getByRole("button", { name: "Menú de cuenta" }).click();
+  await page.getByRole("menuitem", { name, exact: true }).click();
+}
+
 const env = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env ?? {};
 test.skip(!env.PLIEGO_E2E_LIVE, "Set PLIEGO_E2E_LIVE=1 to run against PostgreSQL and the live API.");
 const origin = (env.PLIEGO_API_BASE_URL || "http://127.0.0.1:8080").replace(/\/$/, "");
@@ -8,7 +14,7 @@ const api = `${origin}/api/v1`;
 type Edition = { editionId: string; title: string; authors: string; price: string; available: boolean };
 
 function cardFor(page: Page, editionId: string) {
-  return page.locator(`.edition-item:has(a[href*="/catalog/editions/${editionId}?"])`).first();
+  return page.locator(`:is(.edition-item, [data-favorite-row]):has(a[href*="/catalog/editions/${editionId}?"])`).first();
 }
 
 async function signInWithIntent(page: Page, email: string, password: string) {
@@ -18,9 +24,7 @@ async function signInWithIntent(page: Page, email: string, password: string) {
 }
 
 async function openFavorites(page: Page) {
-  await page.getByRole("button", { name: "Menú de cuenta" }).click();
-  await page.getByRole("menuitem", { name: "Mi cuenta" }).click();
-  await page.getByRole("link", { name: "Favoritos" }).click();
+  await openAccountSection(page, "Favoritos");
   await expect(page.getByRole("heading", { level: 1, name: "Favoritos" })).toBeVisible();
 }
 
@@ -81,7 +85,7 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
 
     await openFavorites(page);
     const favoriteCount = unavailableEdition ? 3 : 2;
-    await expect(page.locator(".edition-item")).toHaveCount(favoriteCount);
+    await expect(page.locator("[data-favorite-row]")).toHaveCount(favoriteCount);
     const favoriteTitles = await page.locator("[data-bookcard-title]").allTextContents();
     expect(favoriteTitles).toContain(catalogEdition.title);
     expect(favoriteTitles).toContain(detailEdition.title);
@@ -98,14 +102,14 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
     await expect(listedFavorite.locator("[data-bookcard-link]")).toHaveAttribute("href", new RegExp(`/catalog/editions/${catalogEdition.editionId}\\?`));
 
     await page.reload();
-    await expect(page.locator(".edition-item")).toHaveCount(favoriteCount);
+    await expect(page.locator("[data-favorite-row]")).toHaveCount(favoriteCount);
     await expect(page.locator("[data-bookcard-title]", { hasText: catalogEdition.title })).toBeVisible();
 
     const reopened = await saveStateFor(browser, page);
     const reopenedPage = await reopened.newPage();
     try {
       await reopenedPage.goto("/favorites");
-      await expect(reopenedPage.locator(".edition-item")).toHaveCount(favoriteCount);
+      await expect(reopenedPage.locator("[data-favorite-row]")).toHaveCount(favoriteCount);
       await expect(reopenedPage.locator("[data-bookcard-title]", { hasText: detailEdition.title })).toBeVisible();
     } finally {
       await reopened.close();
@@ -150,4 +154,33 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
       if (unavailableEdition) await request.delete(`${api}/me/favorites/${unavailableEdition.editionId}`, { headers });
     }
   }
+});
+
+test("reconciles a lost successful DELETE using the real authoritative favorite status", async ({ page, request }) => {
+  const email = `favorite-loss-${Date.now()}@pliego.local`, password = "Lectura-segura-2026";
+  expect((await request.post(`${api}/auth/register`, { data: { email, password, firstNames: "Lectora", lastNames: "Prueba" } })).status()).toBe(201);
+  const catalog = await (await request.get(`${api}/catalog/editions?page=0&pageSize=20`)).json();
+  const edition = catalog.items[0] as Edition;
+  expect(edition).toBeTruthy();
+  await page.goto("/sign-in?from=%2Fcatalog");
+  const loginResponse = page.waitForResponse(response => response.url().endsWith("/auth/login") && response.request().method() === "POST");
+  await signInWithIntent(page, email, password);
+  const login = await (await loginResponse).json();
+  await expect(page).toHaveURL(/\/catalog$/);
+  const card = cardFor(page, edition.editionId);
+  await card.getByRole("button", { name: `Agregar a favoritos: ${edition.title}` }).click();
+  const remove = card.getByRole("button", { name: `Quitar de favoritos: ${edition.title}` });
+  await expect(remove).toHaveAttribute("aria-pressed", "true");
+  let deletes = 0;
+  await page.route(`**/api/v1/me/favorites/${edition.editionId}`, async route => {
+    deletes++;
+    expect((await route.fetch()).status()).toBe(204);
+    await route.abort("failed");
+  });
+  await remove.focus(); await page.keyboard.press("Enter");
+  await expect(card.getByRole("button", { name: `Agregar a favoritos: ${edition.title}` })).toHaveAttribute("aria-pressed", "false");
+  await expect(card.locator("[data-bookcard-feedback]")).toContainText("Quitado de favoritos.");
+  const state = await (await request.get(`${api}/me/favorites/status?editionIds=${edition.editionId}`, { headers: { Authorization: `Bearer ${login.accessToken}` } })).json();
+  expect(state).toEqual([{ editionId: edition.editionId, favorite: false }]);
+  expect(deletes).toBe(1);
 });

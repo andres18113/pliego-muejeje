@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pliego.foundation.security.DummyPasswordHash;
 import com.pliego.foundation.security.InvalidCredentialsException;
+import com.pliego.foundation.security.EmailNotVerifiedException;
 import com.pliego.foundation.security.JwtTokenIssuer;
 import com.pliego.modules.identity.gateway.IdentityGateway;
 import com.pliego.modules.identity.gateway.RegistrationResult;
@@ -32,22 +33,25 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final DummyPasswordHash dummyPasswordHash;
     private final JwtTokenIssuer jwtTokenIssuer;
+    private final EmailActionTokens emailTokens;
 
     public AuthService(IdentityGateway identityGateway, PasswordEncoder passwordEncoder,
             DummyPasswordHash dummyPasswordHash, JwtTokenIssuer jwtTokenIssuer,
-            AuthSessionCredentialService sessionCredentials) {
+            AuthSessionCredentialService sessionCredentials, EmailActionTokens emailTokens) {
         this.identityGateway = identityGateway;
         this.sessionCredentials = sessionCredentials;
         this.passwordEncoder = passwordEncoder;
         this.dummyPasswordHash = dummyPasswordHash;
         this.jwtTokenIssuer = jwtTokenIssuer;
+        this.emailTokens = emailTokens;
     }
 
     @Transactional
     public RegistrationResult register(String email, String password, String firstNames, String lastNames,
             String phone) {
         String passwordHash = passwordEncoder.encode(password);
-        return identityGateway.register(email, passwordHash, firstNames, lastNames, phone);
+        var credential = emailTokens.issue("VERIFY_EMAIL");
+        return identityGateway.register(email, passwordHash, firstNames, lastNames, phone, credential.hash(), credential.nonce());
     }
 
     @Transactional
@@ -57,6 +61,9 @@ public class AuthService {
                 ? dummyPasswordHash.matches(password)
                 : passwordEncoder.matches(password, user.passwordHash());
 
+        if (passwordMatches && user != null && "UNVERIFIED".equals(user.state())) {
+            throw new EmailNotVerifiedException();
+        }
         if (!passwordMatches || user == null || !"ACTIVE".equals(user.state())
                 || !("CUSTOMER".equals(user.role()) || "ADMIN".equals(user.role()))) {
             throw new InvalidCredentialsException();
@@ -66,7 +73,9 @@ public class AuthService {
         Instant expiresAt = issuedAt.plusSeconds(ACCESS_TOKEN_TTL_SECONDS);
         Instant sessionExpiresAt = Instant.now().plusSeconds(SESSION_TTL_SECONDS);
         String refreshToken = sessionCredentials.newSessionToken();
-        identityGateway.createSession(user.userId(), hashRefreshToken(refreshToken), sessionExpiresAt);
+        if (!identityGateway.createSession(user.userId(), hashRefreshToken(refreshToken), sessionExpiresAt, user.passwordHash())) {
+            throw new InvalidCredentialsException();
+        }
         String accessToken = jwtTokenIssuer.issue(Long.toString(user.userId()), user.role(), issuedAt, expiresAt,
                 UUID.randomUUID().toString());
         return new LoginResult(accessToken, ACCESS_TOKEN_TTL_SECONDS, user.userId(), user.email(), user.role(),

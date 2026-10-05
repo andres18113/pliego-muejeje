@@ -2,6 +2,7 @@ import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { formatUsd } from "@/features/catalog/formatters";
+import classes from "./transferFacts.module.css";
 
 type CopyableFact = { key: string; label: string; value: string; prominent?: boolean };
 
@@ -33,20 +34,19 @@ export function TransferFacts({ details, amount, reference }: {
   }
 
   return (
-    <div className="transfer-facts-card">
-      <div className="transfer-bank-heading">
-        <span className="transfer-bank-icon"><MaterialSymbol name="account_balance" aria-hidden="true" size={18} /></span>
-        <span className="transfer-bank-name"><small>Banco</small><strong>{details.bank}</strong></span>
-        <span className="transfer-account-type">Cuenta {details.accountType.toLocaleLowerCase("es-EC")}</span>
+    <div className={classes.card} data-purchase="transfer-facts">
+      <div className={classes.bank}>
+        <span className={classes.bankIcon}><MaterialSymbol name="account_balance" aria-hidden="true" size={18} /></span>
+        <span className={classes.bankName}><small>Banco</small><strong>{details.bank}</strong></span>
+        <span className={classes.accountType}>Cuenta {details.accountType.toLocaleLowerCase("es-EC")}</span>
       </div>
-      <dl className="transfer-facts">
+      <dl className={classes.facts}>
         {rows.map((row) => (
-          <div className={`transfer-fact${row.prominent ? " transfer-fact--prominent" : ""}`} key={row.key}>
+          <div className={classes.fact} data-prominent={row.prominent ? "" : undefined} key={row.key}>
             <dt>{row.label}</dt>
             <dd><span>{row.value}</span></dd>
             <Button
-              className="transfer-copy"
-              variant="text"
+              className={classes.copy}
               type="button"
               aria-label={`Copiar ${row.label.toLocaleLowerCase("es-EC")}`}
               onClick={() => void copy(row.label, row.value)}

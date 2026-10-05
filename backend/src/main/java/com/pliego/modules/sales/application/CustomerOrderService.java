@@ -23,7 +23,7 @@ public class CustomerOrderService {
         return gateway.list(actorUserId, page, pageSize);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Detail detail(long actorUserId, long orderId) {
         return gateway.detail(actorUserId, orderId);
     }

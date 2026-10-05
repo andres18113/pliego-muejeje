@@ -1,3 +1,4 @@
+import { stockReadOptions } from "@/features/catalog/stockStatusModel";
 import { useQuery } from "@tanstack/react-query";
 import { getCartDetail } from "@/shared/api/cart";
 import { ApiRequestError } from "@/shared/api/errors";
@@ -11,6 +12,7 @@ export const cartQueryKey = ["customer-cart"] as const;
 export function useCustomerCart(enabled: boolean, { fresh = true }: { fresh?: boolean } = {}) {
   return useQuery({
     queryKey: cartQueryKey,
+    ...stockReadOptions,
     queryFn: ({ signal }) => getCartDetail(signal),
     enabled,
     meta: { authRequired: true },

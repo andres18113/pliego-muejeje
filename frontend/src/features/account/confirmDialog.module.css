@@ -1,0 +1,19 @@
+/* The Account's confirmation dialog. Portalled, so it carries the Account tokens itself (.shell in the markup). */
+.dialog.dialog {
+  display: block; padding: clamp(22px, 5vw, 30px); border-radius: 24px; background: var(--acc-sheet); color: var(--acc-ink);
+  box-shadow: 0 24px 60px -24px color-mix(in srgb, var(--store-ink, #252740) 45%, transparent);
+}
+.title.title { margin: 0; color: var(--acc-ink); font: 650 clamp(1.375rem, 1.2rem + .8vw, 1.625rem)/1.15 var(--acc-display); letter-spacing: -.035em; overflow-wrap: anywhere; text-wrap: balance; }
+.body.body { margin: 0; padding: 12px 0 0; color: var(--acc-ink); line-height: 1.5; }
+.body p { margin: 0; }
+.body p + p { margin-top: 8px; color: var(--acc-muted); }
+/* The safe answer is first to receive focus; the decisive one closes the row, where the eye ends. */
+.actions { display: flex; flex-flow: row-reverse wrap; justify-content: flex-start; gap: 10px 12px; margin-top: 24px; }
+.actions > * { min-height: 44px; }
+.destructive.destructive { border-color: var(--error, #7e281f); background: var(--error, #7e281f); color: #fff; }
+.destructive.destructive:hover:not([aria-disabled="true"]) { border-color: #651f18; background: #651f18; }
+.actions [aria-disabled="true"] { cursor: progress; opacity: .7; }
+.dialog :focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
+
+@media (max-width: 479px) { .actions > * { flex: 1 1 100%; } }
+@media (forced-colors: active) { .dialog.dialog { border: 1px solid CanvasText; } }

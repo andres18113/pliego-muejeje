@@ -19,7 +19,8 @@ final class PostPurchaseRowMapper {
         return new Extras(rs.getString("purchase_state"), read(rs,"fulfillment",Fulfillment.class),
                 read(rs,"shipment",Shipment.class),read(rs,"invoice",Invoice.class),
                 readList(rs,"credit_notes",new TypeReference<List<CreditNote>>() { }),
-                read(rs,"available_actions",Actions.class));
+                read(rs,"available_actions",Actions.class),new com.pliego.foundation.money.MonetaryAmounts(rs.getBigDecimal("subtotal"),
+                    rs.getBigDecimal("tax_rate"),rs.getBigDecimal("tax_amount"),rs.getBigDecimal("shipping_amount"),rs.getBigDecimal("total")));
     }
     SummaryExtras summary(ResultSet rs) throws SQLException {
         return new SummaryExtras(rs.getString("purchase_state"),rs.getString("fulfillment_method"),

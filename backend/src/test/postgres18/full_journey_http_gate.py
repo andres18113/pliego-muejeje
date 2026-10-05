@@ -20,6 +20,7 @@ import urllib.request
 import uuid
 
 from checkout_last_unit import query
+from home_delivery_test_support import age_shipment
 
 
 def encoded(value):
@@ -40,6 +41,12 @@ def admin_token(actor):
 
 def request(path, authorization=None, method="GET", body=None):
     headers = {}
+    if method == "POST" and path in ("/api/v1/checkout", "/api/v1/me/addresses"):
+        headers["Idempotency-Key"] = str(uuid.uuid4())
+    if method == "PUT" and path == "/api/v1/me" and body is not None and "expectedVersion" not in body:
+        current_status, _, current = request(path, authorization)
+        if current_status == 200:
+            body = {**body, "expectedVersion": current["version"]}
     data = None
     if authorization is not None:
         headers["Authorization"] = authorization
@@ -84,7 +91,9 @@ def main():
     status, _, registered = request("/api/v1/auth/register", method="POST", body={
         "email": email, "password": "Secreta-journey-1",
         "firstNames": "Cliente", "lastNames": "Journey", "phone": "+59325550134"})
-    assert status == 201 and registered["state"] == "ACTIVE", (status, registered)
+    assert status == 201 and registered["state"] == "PENDING_VERIFICATION", (status, registered)
+    from email_verification_fixture import verify_registered_email
+    verify_registered_email(email, os.environ["CHECKOUT_BASE_URL"])
     status, headers, problem = request("/api/v1/auth/register", method="POST", body={
         "email": email, "password": "Secreta-journey-1",
         "firstNames": "Cliente", "lastNames": "Journey"})
@@ -104,6 +113,7 @@ def main():
         "email": other_email, "password": "Secreta-journey-2",
         "firstNames": "Otro", "lastNames": "Cliente"})
     assert status == 201, (status, other_session)
+    verify_registered_email(other_email, os.environ["CHECKOUT_BASE_URL"])
     status, _, other_login = request("/api/v1/auth/login", method="POST", body={
         "email": other_email, "password": "Secreta-journey-2"})
     other = "Bearer " + other_login["accessToken"]
@@ -219,7 +229,7 @@ def main():
     status, _, mutation = request(f"/api/v1/cart/items/{cart_item}", customer, method="PUT", body={"quantity": 2})
     assert status == 200 and mutation["quantity"] == 2, (status, mutation)
     status, _, cart = request("/api/v1/cart", customer)
-    assert status == 200 and cart["totalCurrent"] == "40.00" and len(cart["items"]) == 1, (status, cart)
+    assert status == 200 and cart["totalCurrent"] == "46.00" and len(cart["items"]) == 1, (status, cart)
 
     # --- checkout: invalid CARD first (no persistence), then APPROVED ---
     status, headers, problem = request("/api/v1/checkout", customer, method="POST", body={
@@ -237,14 +247,14 @@ def main():
     assert status == 201, (status, order)
     assert headers["Location"] == "/api/v1/orders/" + order["orderId"], headers
     assert order["orderState"] == "CONFIRMED" and order["paymentState"] == "APPROVED"
-    assert order["total"] == "40.00" and order["paymentReference"].startswith("SIM-")
+    assert order["total"] == "46.00" and order["paymentReference"].startswith("SIM-")
     assert "cardNumber" not in order
     order_id = order["orderId"]
     assert query(f"SELECT stock_actual FROM pliego.inventario WHERE edicion_id={edition_id}") == "3"
 
     # --- customer order detail + snapshots survive later catalog edits ---
     status, _, bought = request(f"/api/v1/orders/{order_id}", customer)
-    assert status == 200 and bought["total"] == "40.00" and len(bought["items"]) == 1, (status, bought)
+    assert status == 200 and bought["total"] == "46.00" and len(bought["items"]) == 1, (status, bought)
     assert bought["items"][0]["unitPrice"] == "20.00"
     assert bought["items"][0]["title"] == f"Libro Journey {suffix}"
     assert bought["address"]["line1"] == "Calle 2"
@@ -262,7 +272,7 @@ def main():
     status, _, frozen = request(f"/api/v1/orders/{order_id}", customer)
     assert status == 200, (status, frozen)
     assert frozen["items"][0]["title"] == f"Libro Journey {suffix}", frozen["items"]
-    assert frozen["items"][0]["unitPrice"] == "20.00" and frozen["total"] == "40.00"
+    assert frozen["items"][0]["unitPrice"] == "20.00" and frozen["total"] == "46.00"
 
     # --- ownership: another customer sees safe 404s ---
     status, headers, problem = request(f"/api/v1/orders/{order_id}", other)
@@ -281,17 +291,19 @@ def main():
     assert admin_detail["items"][0]["unitPrice"] == "20.00"
     assert len(admin_detail["inventoryMovements"]) == 1
     assert admin_detail["inventoryMovements"][0]["type"] == "SALE"
-    for target, previous in (("PREPARING", "CONFIRMED"), ("SHIPPED", "PREPARING"), ("DELIVERED", "SHIPPED")):
+    for target, minutes in (("PREPARING",0),("SHIPPED",3),("DELIVERED",4)):
+        age_shipment(order_id,minutes)
         status, _, transition = request(f"/api/v1/admin/orders/{order_id}/transitions", admin,
                                         method="POST", body={"targetState": target})
         assert status == 200 and transition == {
-            "orderId": order_id, "previousState": previous, "orderState": target}, (status, transition)
+            "orderId": order_id, "previousState": "CONFIRMED", "orderState": "CONFIRMED"}, (status, transition)
     status, _, problem = request(f"/api/v1/orders/{order_id}/cancel", customer, method="POST")
     assert status == 409 and problem["code"] == "P5003", (status, problem)
     status, _, problem = request(f"/api/v1/admin/orders/{order_id}/cancel", admin, method="POST")
     assert status == 409 and problem["code"] == "P5003", (status, problem)
     status, _, delivered = request(f"/api/v1/orders/{order_id}", customer)
-    assert delivered["orderState"] == "DELIVERED" and len(delivered["stateHistory"]) == 5, delivered
+    assert delivered["orderState"] == "CONFIRMED" and len(delivered["stateHistory"]) == 2, delivered
+    assert delivered["shipment"]["state"] == "DELIVERED" and len(delivered["shipment"]["history"]) == 4
     assert (delivered["items"], delivered["address"]) == (bought["items"], bought["address"])
 
     print("PostgreSQL 18 full-journey gate passed: auth/profile/addresses/catalog/inventory/cart/checkout/snapshots/transitions/ownership/Spanish errors")

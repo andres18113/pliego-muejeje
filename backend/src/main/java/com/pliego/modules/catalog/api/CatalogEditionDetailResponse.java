@@ -14,7 +14,7 @@ public record CatalogEditionDetailResponse(String editionId, String bookId, Stri
         @Schema(nullable = true) String coverAttribution,
         boolean available,
         @Schema(nullable = true, allowableValues = {"EPUB", "PDF"}) String ebookFileFormat,
-        @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators) {
+        @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators, @Schema(nullable = true) CatalogOfferResponse offer) {
 
     public record Author(String authorId, String name, int order) {
     }

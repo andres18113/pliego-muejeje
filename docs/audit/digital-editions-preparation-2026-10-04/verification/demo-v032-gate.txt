@@ -1,0 +1,3 @@
+BEGIN
+{"checked" : 259, "ebook_valid" : 142, "audiobook_valid" : 117, "invalid" : 0}
+COMMIT

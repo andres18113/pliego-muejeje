@@ -133,7 +133,7 @@ for (const theme of ["light", "dark"] as const) for (const width of [320, 375, 7
           await expect.poll(() => page.locator('[data-presentation="rail"]').evaluate((rail) => rail.scrollLeft)).toBeGreaterThan(0);
         }
         measurements.push({ surface, geometry });
-        await page.getByRole("button", { name: "Buscar en el catálogo", exact: true }).click();
+        await page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true }).click();
         const search = page.getByRole("searchbox", { name: "Buscar en el catálogo" });
         await expect(search).toBeFocused();
         await unclipped(page.getByRole("search", { name: "Catálogo" }), 4);

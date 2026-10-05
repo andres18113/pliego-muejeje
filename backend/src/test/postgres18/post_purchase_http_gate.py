@@ -4,6 +4,7 @@ import uuid
 
 from admin_orders_http_gate import request
 from checkout_last_unit import query
+from home_delivery_test_support import age_shipment
 from order_cancel_concurrency import two_item_order
 
 
@@ -22,7 +23,7 @@ class PostPurchaseHttpGate(unittest.TestCase):
     def test_compact_list_detail_consistency_and_actions(self):
         detail = self.detail()
         self.assertEqual("CONFIRMED", detail.get("purchaseState"))
-        self.assertEqual("PENDING", detail["shipment"]["state"])
+        self.assertEqual("PREPARING", detail["shipment"]["state"])
         self.assertEqual("HOME_DELIVERY", detail["fulfillment"]["method"])
         self.assertEqual({"cancel": True, "changeShippingAddress": False}, detail["availableActions"])
         self.assertIsNone(detail["invoice"])
@@ -50,19 +51,20 @@ class PostPurchaseHttpGate(unittest.TestCase):
                 "estimatedDeliveryFrom": "2026-11-01T08:00:00Z",
                 "estimatedDeliveryTo": "2026-11-03T18:00:00Z"})
         self.assertEqual(200, status, result)
-        for state in ("PREPARING", "SHIPPED", "OUT_FOR_DELIVERY", "DELIVERED"):
+        for state, minutes, expected in (("PREPARING",0,"PREPARING"),("SHIPPED",3,"IN_TRANSIT"),("OUT_FOR_DELIVERY",2,"OUT_FOR_DELIVERY"),("DELIVERED",2,"DELIVERED")):
+            age_shipment(self.order,minutes)
             status, result = request(self.admin_path + "/shipment/transitions", self.admin,
                                     method="POST", body={"targetState": state})
             self.assertEqual(200, status, result)
-            self.assertEqual(state, result["shipment"]["state"])
+            self.assertEqual(expected, result["shipment"]["state"])
         detail = self.detail()
         self.assertEqual("CONFIRMED", detail["purchaseState"])
-        self.assertEqual("DELIVERED", detail["orderState"])
+        self.assertEqual("CONFIRMED", detail["orderState"])
         self.assertEqual("APPROVED", detail["payment"]["state"])
         self.assertEqual("DELIVERED", detail["shipment"]["state"])
         self.assertEqual("FIXTURE-1", detail["shipment"]["trackingCode"])
         self.assertIsNotNone(detail["shipment"]["deliveredAt"])
-        self.assertEqual(6, len(detail["shipment"]["history"]))
+        self.assertEqual(5, len(detail["shipment"]["history"]))
         self.assertFalse(detail["availableActions"]["cancel"])
         status, problem = request(self.admin_path + "/shipment/transitions", self.admin,
                                  method="POST", body={"targetState": "PREPARING"})
@@ -79,10 +81,10 @@ class PostPurchaseHttpGate(unittest.TestCase):
         invoice = self.detail()["invoice"]
         self.assertEqual("ISSUED", invoice["state"])
         self.assertIsInstance(invoice["invoiceId"], str)
-        self.assertEqual("18.65", invoice["total"])
-        self.assertEqual("0.00", invoice["taxTotal"])
+        self.assertEqual("21.45", invoice["total"])
+        self.assertEqual("2.80", invoice["taxTotal"])
         self.assertEqual("Dirección de cobro", invoice["billingAddress"]["line1"])
-        self.assertEqual("NOT_ASSESSED", invoice["items"][0]["taxTreatment"])
+        self.assertEqual("ASSESSED", invoice["items"][0]["taxTreatment"])
         self.assertFalse(invoice["pdfAvailable"])
         self.assertFalse(invoice["xmlAvailable"])
         status, duplicate = request(self.admin_path + "/invoice", self.admin, method="POST", body=invoice_request)
@@ -99,7 +101,7 @@ class PostPurchaseHttpGate(unittest.TestCase):
         detail = self.detail()
         self.assertEqual(invoice, detail["invoice"])
         self.assertEqual("ISSUED", detail["creditNotes"][0]["state"])
-        self.assertEqual("18.65", detail["creditNotes"][0]["total"])
+        self.assertEqual("21.45", detail["creditNotes"][0]["total"])
 
     def test_admin_commands_reject_customer_and_invalid_input(self):
         for suffix, method, body in (("/invoice", "POST", {}), ("/credit-notes", "POST", {}),

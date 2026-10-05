@@ -43,6 +43,7 @@ import com.pliego.modules.sales.application.OrderModels.Summary;
 import com.pliego.modules.sales.gateway.CustomerOrderGateway;
 import com.pliego.modules.sales.application.PostPurchaseModels;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i9_test",
         "spring.datasource.username=pliego_test",
@@ -306,7 +307,8 @@ class CustomerOrderApiIntegrationTest {
                                     "2026-09-23T19:30:00Z"),
                             new History("1001", null, "SYSTEM", "PENDING_PAYMENT", "CONFIRMED",
                                     "2026-09-23T19:31:00Z")),
-                    new PostPurchaseModels.Extras("CONFIRMED",null,null,null,List.of(),new PostPurchaseModels.Actions(true,false)));
+                    new PostPurchaseModels.Extras("CONFIRMED",null,null,null,List.of(),new PostPurchaseModels.Actions(true,false),
+                        new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("39.80"),BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,new BigDecimal("39.80"))));
         }
     }
 }

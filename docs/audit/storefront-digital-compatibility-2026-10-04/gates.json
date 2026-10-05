@@ -1,0 +1,35 @@
+{
+  "unitTests": {
+    "files": 45,
+    "passed": 397,
+    "exitCode": 0
+  },
+  "build": {
+    "typecheck": "PASS",
+    "vite": "PASS",
+    "exitCode": 0
+  },
+  "catalogHeaderBrowser": {
+    "passed": 38,
+    "workers": 2,
+    "exitCode": 0
+  },
+  "liveApiBrowser": {
+    "passed": 2,
+    "exitCode": 0
+  },
+  "visual": {
+    "viewports": [
+      1440,
+      390
+    ],
+    "horizontalOverflow": false
+  },
+  "physicalCoverReuse": {
+    "physicalEditions": 65,
+    "exactMatches": 1,
+    "recommendedReplacements": 0
+  },
+  "independentReview": "PASS",
+  "remainingBlockers": []
+}

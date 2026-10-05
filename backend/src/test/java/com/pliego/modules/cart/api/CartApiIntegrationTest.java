@@ -43,6 +43,7 @@ import com.pliego.modules.cart.application.CartModels.CartItem;
 import com.pliego.modules.cart.application.CartModels.CartItemResult;
 import com.pliego.modules.cart.gateway.CartGateway;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i7_test",
         "spring.datasource.username=pliego_test",
@@ -147,6 +148,27 @@ class CartApiIntegrationTest {
     }
 
     @Test
+    void deliveryWindowIsExposedAsTheDatabaseDatesAndOmittedWhenNothingShips() throws Exception {
+        var amounts = new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("19.90"), new BigDecimal("15.00"),
+                new BigDecimal("2.99"), new BigDecimal("0.00"), new BigDecimal("22.89"));
+        var items = List.of(new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 1,
+                new BigDecimal("19.90"), new BigDecimal("19.90"), true, null, "PAPERBACK"));
+        gateway.cart = new Cart("40", "ACTIVE", items, new BigDecimal("22.89"), amounts,
+                new com.pliego.modules.cart.application.CartModels.DeliveryWindow(
+                        java.time.LocalDate.of(2026, 12, 31), java.time.LocalDate.of(2027, 1, 2)));
+        mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.estimatedDeliveryFrom").value("2026-12-31"))
+                .andExpect(jsonPath("$.estimatedDeliveryTo").value("2027-01-02"));
+
+        gateway.cart = new Cart("40", "ACTIVE", items, new BigDecimal("22.89"), amounts);
+        mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.estimatedDeliveryFrom").doesNotExist())
+                .andExpect(jsonPath("$.estimatedDeliveryTo").doesNotExist());
+    }
+
+    @Test
     void currentPricesSubtotalsAndTotalUseExactDecimalStringsAndUnavailableItemsRemainVisible() throws Exception {
         gateway.cart = new Cart("40", "ACTIVE", List.of(
                 new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 2,
@@ -187,6 +209,56 @@ class CartApiIntegrationTest {
                     .andReturn().getResponse().getContentAsString();
             assertFalse(body.contains("private postgres"));
             assertFalse(body.contains("constraint"));
+        }
+    }
+
+    @Test
+    void fractionalQuantitiesAreRejectedBeforeAnyCartMutation() throws Exception {
+        for (String quantity : List.of("1.5", "-1.5", "1.0000000000000001", "1e-1")) {
+            for (Endpoint endpoint : List.of(
+                    new Endpoint("POST", "/api/v1/cart/items", "{\"editionId\":\"250\",\"quantity\":" + quantity + "}"),
+                    new Endpoint("PUT", "/api/v1/cart/items/100", "{\"quantity\":" + quantity + "}"))) {
+                mvc.perform(endpoint.request().header("Authorization", customerToken("42")))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                        .andExpect(jsonPath("$.violations[0].field").value("quantity"))
+                        .andExpect(jsonPath("$.violations[0].message")
+                                .value("Escribe una cantidad entera de hasta 2147483647, sin decimales."));
+            }
+        }
+        assertTrue(gateway.calls.isEmpty());
+    }
+
+    @Test
+    void quantitiesOutsideTheIntegerRangeHaveFieldValidationFeedback() throws Exception {
+        for (String quantity : List.of("2147483648", "-2147483649", "1e100")) {
+            for (Endpoint endpoint : List.of(
+                    new Endpoint("POST", "/api/v1/cart/items", "{\"editionId\":\"250\",\"quantity\":" + quantity + "}"),
+                    new Endpoint("PUT", "/api/v1/cart/items/100", "{\"quantity\":" + quantity + "}"))) {
+                mvc.perform(endpoint.request().header("Authorization", customerToken("42")))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                        .andExpect(jsonPath("$.violations[0].field").value("quantity"));
+            }
+        }
+        assertTrue(gateway.calls.isEmpty());
+    }
+
+    @Test
+    void exactIntegerQuantitiesReachTheGatewayWithoutChangingTheirValue() throws Exception {
+        record Example(String json, int expected) { }
+        for (Example example : List.of(new Example("1", 1), new Example("1.0", 1),
+                new Example("2147483647", 2147483647), new Example("-2147483648", -2147483648),
+                new Example("0", 0), new Example("-1", -1))) {
+            mvc.perform(post("/api/v1/cart/items").header("Authorization", customerToken("42"))
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content("{\"editionId\":\"250\",\"quantity\":" + example.json() + "}"))
+                    .andExpect(status().isOk());
+            assertEquals(example.expected(), gateway.lastQuantity);
+            mvc.perform(put("/api/v1/cart/items/100").header("Authorization", customerToken("42"))
+                            .contentType(MediaType.APPLICATION_JSON).content("{\"quantity\":" + example.json() + "}"))
+                    .andExpect(status().isOk());
+            assertEquals(example.expected(), gateway.lastQuantity);
         }
     }
 

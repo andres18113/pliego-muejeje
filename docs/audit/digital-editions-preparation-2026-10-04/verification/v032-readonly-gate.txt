@@ -1,0 +1,4 @@
+BEGIN
+{"checked" : 259, "ebook_valid" : 142, "audiobook_valid" : 0, "audiobook_pending" : 117}
+{"demo_contract_valid" : true, "ebook_null_optional_fields_valid" : true, "digital_stock_rows_in_live_catalog" : 0}
+COMMIT

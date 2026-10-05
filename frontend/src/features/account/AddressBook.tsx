@@ -1,21 +1,24 @@
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { AddressForm } from "@/features/purchase/AddressForm";
 import { ReadFailure } from "@/features/purchase/CartPage";
 import { addressesQueryKey, deleteAddress, listAddresses, setPrimaryAddress, type CustomerAddress } from "@/shared/api/customer";
 import { ApiRequestError } from "@/shared/api/errors";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
-import { AccountNavigation } from "./AccountNavigation";
+import { AccountShell } from "./AccountShell";
+import { AddressEditorDialog } from "./AddressEditorDialog";
+import { ConfirmDialog } from "./ConfirmDialog";
+import classes from "./addresses.module.css";
 import { useCountries } from "@/shared/api/reference";
 
 type Action = { kind: "delete" | "primary"; addressId: string };
 
 export function AddressBookPage() {
   return <PurchasePage title="Mis direcciones"><CustomerOnly intent="/account/addresses" task="ver tus direcciones">
-    <div className="account-page"><header className="purchase-heading"><h1>Mis direcciones</h1><p>Guarda tus lugares de entrega para elegirlos al comprar.</p></header><AccountNavigation /><AddressBook /></div>
+    <AccountShell title="Direcciones" trail="Direcciones" intro="Dónde recibes tus libros. La dirección principal aparece primero al finalizar una compra."><AddressBook /></AccountShell>
   </CustomerOnly></PurchasePage>;
 }
 
@@ -35,7 +38,10 @@ export function AddressBook() {
   const noticeRef = useRef<HTMLParagraphElement>(null);
   const missingRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
-  const confirmRef = useRef<HTMLButtonElement>(null);
+  // Dialogs outlive their own close animation: remember what the delete confirmation was asking about.
+  const deleteShown = useRef<{ addressId: string; alias: string; where: string } | null>(null);
+  // The editor outlives its own close animation: remember what it was showing and give every opening a fresh form.
+  const shown = useRef<{ id: string | "new"; opening: number }>({ id: "new", opening: 0 });
   const mutation = useMutation({
     mutationFn: ({ kind, addressId }: Action) => kind === "delete" ? deleteAddress(addressId) : setPrimaryAddress(addressId),
     retry: false,
@@ -45,7 +51,6 @@ export function AddressBook() {
     if (query.error instanceof ApiRequestError && query.error.status === 401) clear("expired");
   }, [clear, query.error]);
   useEffect(() => { if (notice) noticeRef.current?.focus({ preventScroll: true }); }, [notice]);
-  useEffect(() => { if (confirmDeleteId) confirmRef.current?.focus({ preventScroll: true }); }, [confirmDeleteId]);
 
   async function perform(action: Action) {
     if (mutation.isPending || query.isError || query.isFetching) return;
@@ -77,33 +82,44 @@ export function AddressBook() {
 
   const addresses = query.data;
   const currentRead = !query.isError && !query.isFetching && !mutation.isPending;
-  const editable = currentRead && formAddressId === null && confirmDeleteId === null;
+  // The editor and the confirmations are modal, so the list behind them keeps its normal, readable state.
+  const editable = currentRead;
   const editing = formAddressId === "new" ? undefined : addresses?.find((address) => address.addressId === formAddressId);
+  const editorOpen = formAddressId !== null && (formAddressId === "new" || Boolean(editing));
+  const shownAddress = shown.current.id === "new" ? undefined : addresses?.find((address) => address.addressId === shown.current.id);
   const missingEditedAddress = formAddressId !== null && formAddressId !== "new" && Boolean(addresses) && !editing;
   useEffect(() => { if (missingEditedAddress) missingRef.current?.focus({ preventScroll: true }); }, [missingEditedAddress]);
 
-  function startEdit(addressId: string, trigger: HTMLButtonElement) {
+  function openEditor(id: string | "new", trigger: HTMLButtonElement) {
     triggerRef.current = trigger;
+    shown.current = { id, opening: shown.current.opening + 1 };
     setNotice(null);
     setConfirmDeleteId(null);
-    setFormAddressId(addressId);
+    setFormAddressId(id);
   }
 
-  function startDelete(addressId: string, trigger: HTMLButtonElement) {
+  function closeEditor() {
+    setFormAddressId(null);
+    returnFocus();
+  }
+
+  function startDelete(address: CustomerAddress, trigger: HTMLButtonElement) {
     triggerRef.current = trigger;
+    deleteShown.current = { addressId: address.addressId, alias: address.alias, where: `${address.line1}, ${address.city}` };
     setNotice(null);
-    setConfirmDeleteId(addressId);
+    setConfirmDeleteId(address.addressId);
   }
 
   function returnFocus() {
     requestAnimationFrame(() => triggerRef.current?.focus({ preventScroll: true }));
   }
 
-  return <section className="account-section account-addresses" id="direcciones" aria-labelledby="account-addresses-heading">
-    <div className="account-section-heading">
-      <div><h2 id="account-addresses-heading">Direcciones de entrega</h2><p>Elige una dirección principal para encontrarla primero al finalizar una compra.</p></div>
-      {addresses && formAddressId === null && <Button variant="secondary" type="button" disabled={!editable} onClick={(event) => { triggerRef.current = event.currentTarget; setNotice(null); setFormAddressId("new"); }}><MaterialSymbol name="add" aria-hidden="true" size={16} />Agregar dirección</Button>}
-    </div>
+  const addButton = addresses && <button type="button" className={classes.addTile} disabled={!editable} aria-label="Agregar dirección" aria-describedby="account-add-address-hint" onClick={(event) => openEditor("new", event.currentTarget)}>
+    <span className={classes.addIcon}><MaterialSymbol name="add" aria-hidden="true" size={22} /></span>
+    <span className={classes.addCopy}><strong>Agregar dirección</strong><small id="account-add-address-hint">{addresses.length ? "Casa, oficina o donde prefieras recibirlos." : "Agrega una para elegir dónde recibir tus libros al comprar."}</small></span>
+  </button>;
+  return <section className={`account-section account-addresses ${classes.section}`} id="direcciones" aria-labelledby="account-addresses-heading">
+    <h2 id="account-addresses-heading" className="visually-hidden">Direcciones de entrega</h2>
     {query.isPending ? <p className="purchase-loading" role="status">Consultando tus direcciones…</p> : !addresses ? <ReadFailure title="No pudimos consultar tus direcciones." onRetry={() => void query.refetch()} retrying={query.isFetching} /> : <>
       {query.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus direcciones. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void query.refetch()}>Actualizar</Button></p>}
       {notice && <p
@@ -112,79 +128,72 @@ export function AddressBook() {
         className={`purchase-notice ${notice.error ? "purchase-notice--error" : "purchase-notice--success"}`}
         role={notice.error ? "alert" : "status"}
       >{notice.text}</p>}
-      {addresses.length === 0 && <div className="purchase-empty account-address-empty"><h3>Aún no tienes direcciones guardadas.</h3><p>Agrega una para elegir dónde recibir tus libros al finalizar una compra.</p></div>}
-      {addresses.length > 0 && <ul className="account-address-list">
+      {addresses.length === 0 && <div className={`purchase-empty account-address-empty ${classes.empty}`}><h3>Aún no tienes direcciones guardadas.</h3></div>}
+      <div className={classes.grid}>
+      {addresses.length > 0 && <ul className={`account-address-list ${classes.list}`}>
         {addresses.map((address) => <AddressRow
           key={address.addressId}
           address={address}
           countryName={countries.data?.find((country) => country.code === address.countryCode)?.name ?? new Intl.DisplayNames(["es"], { type: "region" }).of(address.countryCode) ?? ""}
           editable={editable}
-          canConfirm={currentRead}
-          busy={mutation.isPending}
-          confirming={confirmDeleteId === address.addressId}
-          confirmRef={confirmRef}
-          onEdit={(trigger) => startEdit(address.addressId, trigger)}
+          onEdit={(trigger) => openEditor(address.addressId, trigger)}
           onPrimary={() => void perform({ kind: "primary", addressId: address.addressId })}
-          onDelete={(trigger) => startDelete(address.addressId, trigger)}
-          onConfirmDelete={() => void perform({ kind: "delete", addressId: address.addressId })}
-          onKeep={() => { if (mutation.isPending) return; setConfirmDeleteId(null); returnFocus(); }}
+          onDelete={(trigger) => startDelete(address, trigger)}
         />)}
       </ul>}
+      {addButton}
+      </div>
       {missingEditedAddress && <div ref={missingRef} tabIndex={-1} className="purchase-problem" role="alert" aria-label="Esta dirección ya no está guardada."><h3>Esta dirección ya no está guardada.</h3><p>Actualizamos tu lista de direcciones. Puedes elegir otra o agregar una nueva.</p><Button variant="secondary" type="button" onClick={() => setFormAddressId(null)}>Volver a la lista</Button></div>}
-      {formAddressId !== null && (formAddressId === "new" || editing) && <AddressForm
-        key={formAddressId}
-        address={editing}
+      <AddressEditorDialog
+        opened={editorOpen}
+        opening={shown.current.opening}
+        address={shownAddress}
         firstAddress={addresses.length === 0}
-        focusOnMount
         disabled={query.isError || query.isFetching || mutation.isPending}
+        onClose={closeEditor}
         onSaved={async () => {
           const current = await query.refetch();
           setFormAddressId(null);
-          setNotice({ text: current.isError ? "Guardamos la dirección, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarla." : editing ? "Guardamos los cambios de la dirección." : "Guardamos la dirección. Ya puedes elegirla al finalizar una compra.", error: current.isError });
+          setNotice({ text: current.isError ? "Guardamos la dirección, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarla." : shownAddress ? "Guardamos los cambios de la dirección." : "Guardamos la dirección. Ya puedes elegirla al finalizar una compra.", error: current.isError });
         }}
-        onCancel={() => { setFormAddressId(null); returnFocus(); }}
         onUncertain={async () => { await query.refetch(); }}
         onSessionExpired={() => clear("expired")}
-      />}
+      />
+      <ConfirmDialog opened={confirmDeleteId !== null} destructive title={`¿Eliminar «${deleteShown.current?.alias ?? ""}»?`}
+        confirmLabel="Eliminar dirección" busyLabel="Eliminando…" keepLabel="Conservar dirección" busy={mutation.isPending}
+        onConfirm={() => { if (confirmDeleteId) void perform({ kind: "delete", addressId: confirmDeleteId }); }}
+        onKeep={() => { setConfirmDeleteId(null); returnFocus(); }}>
+        <p>Ya no podrás elegir {deleteShown.current?.where} en compras nuevas.</p>
+        <p>Los pedidos anteriores conservan los datos de entrega con los que se hicieron.</p>
+      </ConfirmDialog>
     </>}
   </section>;
 }
 
-function AddressRow({ address, countryName, editable, canConfirm, busy, confirming, confirmRef, onEdit, onPrimary, onDelete, onConfirmDelete, onKeep }: {
+function AddressRow({ address, countryName, editable, onEdit, onPrimary, onDelete }: {
   address: CustomerAddress;
   countryName: string;
   editable: boolean;
-  canConfirm: boolean;
-  busy: boolean;
-  confirming: boolean;
-  confirmRef: React.RefObject<HTMLButtonElement | null>;
   onEdit: (trigger: HTMLButtonElement) => void;
   onPrimary: () => void;
   onDelete: (trigger: HTMLButtonElement) => void;
-  onConfirmDelete: () => void;
-  onKeep: () => void;
 }) {
-  return <li className="account-address-row">
-    <div className="account-address-copy">
-      <h3><MaterialSymbol name="location_on" aria-hidden="true" size={19} />{address.alias}{address.primary && <span className="choice-tag">Principal</span>}</h3>
-      <address>
-        {address.line1}{address.line2 && <>, {address.line2}</>}<br />
-        {address.city}, {address.province}, {countryName}{address.postalCode && <> · {address.postalCode}</>}<br />
-        {address.phone}
-      </address>
-      {address.reference && <p>{address.reference}</p>}
+  return <li className={`account-address-row ${classes.object}`} data-primary={address.primary || undefined}>
+    <div className={classes.objectHead}>
+      <h3 className={classes.alias}>{address.alias}</h3>
+      {address.primary && <span className={classes.primaryMark}><span className={classes.primaryDot} aria-hidden="true" />Principal</span>}
     </div>
-    <div className="account-address-actions">
-      <Button variant="text" type="button" disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><MaterialSymbol name="edit" aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
-      {!address.primary && <Button variant="text" type="button" disabled={!editable} onClick={onPrimary}>Elegir {address.alias} como principal</Button>}
-      <Button variant="text" type="button" disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><MaterialSymbol name="delete" aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
+    <address className={classes.lines}>
+      <span className={classes.recipient}>{address.recipient}</span>
+      <span>{address.line1}{address.line2 && <>, {address.line2}</>}</span>
+      <span>{address.city}, {address.province}, {countryName}{address.postalCode && <> · {address.postalCode}</>}</span>
+      <span className={classes.phone}>{parsePhoneNumberFromString(address.phone)?.formatInternational() ?? address.phone}</span>
+    </address>
+    {address.reference && <p className={classes.reference}>{address.reference}</p>}
+    <div className={`account-address-actions ${classes.actions}`}>
+      {!address.primary && <Button variant="secondary" type="button" className={classes.makePrimary} disabled={!editable} onClick={onPrimary}>Usar como principal<span className="visually-hidden"> {address.alias}</span></Button>}
+      <Button variant="text" type="button" className={classes.quiet} disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><MaterialSymbol name="edit" aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
+      <Button variant="text" type="button" className={classes.quiet} disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><MaterialSymbol name="delete" aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
     </div>
-    {confirming && <div className="account-delete-confirm" role="group" aria-label={`Eliminar ${address.alias}`}>
-      <p>¿Eliminar {address.alias}? Ya no podrás elegir esta dirección para compras nuevas. Los pedidos anteriores conservarán sus datos de entrega.</p>
-      <div className="purchase-actions">
-        <Button ref={confirmRef} variant="secondary" type="button" aria-disabled={!canConfirm || undefined} aria-busy={busy || undefined} onClick={() => { if (canConfirm) onConfirmDelete(); }}>{busy ? "Eliminando…" : "Confirmar eliminación"}</Button>
-        <Button variant="text" type="button" aria-disabled={busy || undefined} onClick={onKeep}>Conservar dirección</Button>
-      </div>
-    </div>}
   </li>;
 }

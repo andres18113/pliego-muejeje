@@ -40,7 +40,7 @@ BEGIN
     CALL pliego.sp_inventory_entry(v_admin, v_in_retired_book, 5, 'fixture', v_movement, v_before, v_after);
 
     CALL pliego.sp_customer_register('v25-cart-codes-customer@pliego.local', 'fixture-hash',
-        'Cliente', 'V25', NULL, v_user, v_customer, v_user_state);
+        'Cliente', 'Prueba', NULL, v_user, v_customer, v_user_state);
     CALL pliego.sp_cart_add_item(v_user, v_available, 1, v_cart, v_item, v_quantity);
     CALL pliego.sp_cart_add_item(v_user, v_edition_retired, 1, v_cart, v_item, v_quantity);
     CALL pliego.sp_cart_add_item(v_user, v_short_stock, 2, v_cart, v_short_item, v_quantity);

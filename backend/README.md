@@ -2,6 +2,16 @@
 
 Java 25 / Spring Boot backend for the approved PLIEGO REST and PostgreSQL Database API contracts.
 
+V039 adds transactional email through a PostgreSQL outbox and Mailtrap, account verification and password recovery. See [configuration, endpoints, retries and local stub verification](../docs/backend/transactional-email.md). New registrations require email verification before login; existing accounts retain access.
+
+V040 adds basic STORE_PICKUP on existing fulfillment; V041 adds authoritative configured IVA15% monetary projections. See [pickup/pricing contracts, lifecycle and validation](../docs/backend/store-pickup-and-pricing.md). HOME_DELIVERY clients retain their existing request shape; frontend must display the database-provided monetary values.
+
+V043 adds database-owned HOME_DELIVERY simulation: PREPARING → IN_TRANSIT → OUT_FOR_DELIVERY → DELIVERED, with default durations of two minutes per stage from confirmation. Commercial order/payment stay CONFIRMED/APPROVED; STORE_PICKUP keeps its existing collection lifecycle. Customer/admin detail and cancellation reconcile overdue shipments before projecting state or deciding eligibility. Cancellation is allowed only during PREPARING. Existing administrative shipment requests cannot accelerate the simulation; matching the current stage is idempotent, and legacy SHIPPED input maps to IN_TRANSIT.
+
+Durations persist in PostgreSQL `home_delivery_config`. Change them for future shipments with `CALL pliego.sp_home_delivery_configure(preparingMinutes, inTransitMinutes, outForDeliveryMinutes)` (integer minutes, each 1–1440); existing shipment deadlines stay fixed through configuration changes and restarts. The lightweight scheduler defaults to enabled, PT10S polling and batch size 100. Configure `PLIEGO_HOME_DELIVERY_SCHEDULER_ENABLED`, `PLIEGO_HOME_DELIVERY_POLL_INTERVAL`, and `PLIEGO_HOME_DELIVERY_BATCH_SIZE` (1–1000). Detail reconciliation remains active when scheduling is disabled. See [ADR-0024](../docs/adr/0024-authoritative-home-delivery-simulation.md).
+
+`run_ci_gates.sh` includes real PostgreSQL lifecycle, concurrency, HTTP and scheduled-worker coverage. Run `python3 backend/src/test/postgres18/home_delivery_upgrade_gate.py` separately against an empty disposable database with the same database/JWT/admin environment to verify Flyway V042→V043 catch-up and immutable legacy history. No external mail provider is required.
+
 ## Architecture
 
 This is one deployable with modules grouped by business context. Add implementation as vertical slices; do not add placeholder Controllers or Services.
@@ -151,5 +161,5 @@ tax computation, document artifacts and SRI integration remain future work.
 
 V033 backfills physical shipments from purchased formats and recorded state history;
 V034 adds typed invoice/document extension tables without fabricating old invoices.
-The CI gate now expects 34 migrations. See [API amendment v1.0.8](../docs/api-amendments/0008-post-purchase-v1.0.8.md)
+The CI gate now expects 43 migrations. See [API amendment v1.0.8](../docs/api-amendments/0008-post-purchase-v1.0.8.md)
 and [ADR-0017](../docs/adr/0017-post-purchase-lifecycle-and-documents.md).

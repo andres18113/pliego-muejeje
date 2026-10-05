@@ -1,0 +1,44 @@
+{
+  "status": "PASS_WITH_PENDING",
+  "delivery_hashes_verified": 864,
+  "installed_cover_files_verified": 837,
+  "report_csv_rows_verified": 1091,
+  "originals_verified": 450,
+  "provenance_rows_verified": 450,
+  "historical_records_preserved": 55,
+  "sku_assignments_preserved": 56,
+  "new_skus": 0,
+  "accepted_digital": 0,
+  "valid_pending_webps": 259,
+  "pending_by_format": {
+    "EBOOK": 142,
+    "AUDIOBOOK": 117
+  },
+  "framing_review": 191,
+  "framing_by_format": {
+    "EBOOK": 83,
+    "AUDIOBOOK": 108
+  },
+  "visual_decisions": {
+    "impossible": 190,
+    "hold": 1
+  },
+  "overrides_reproduced_exactly": 19,
+  "metadata_fields": {
+    "EBOOK": [
+      "edicion.editorial",
+      "edicion.idioma"
+    ],
+    "AUDIOBOOK": [
+      "edicion.editorial",
+      "edicion.idioma",
+      "edicion.audioDurationSeconds",
+      "edicion.narrators"
+    ]
+  },
+  "limitations": [
+    "Integridad y decisiones documentadas del lote; no sustituye inspección visual humana nueva.",
+    "Los hashes de los ZIP originales de origen son evidencia del lote; no se han comparado con esos ZIP no suministrados.",
+    "No se consultó BD: no se afirma que existan ediciones digitales equivalentes; el registro local carece de asignaciones para este lote."
+  ]
+}

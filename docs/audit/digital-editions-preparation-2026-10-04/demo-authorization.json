@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-04",
+  "scope": "117 AUDIOBOOK candidates with valid covers",
+  "user_answer": "Sí, DEMO determinista con esa limitación documentada",
+  "accepted_limitation": "Narrators and duration are not available in accessible sources; their absence behind institutional authentication cannot be confirmed.",
+  "authorized_fields": ["edicion.audioDurationSeconds", "edicion.narrators"],
+  "required_classification": "SIMULATED/DEMO",
+  "real_bibliographic_source_claim": false,
+  "publication_status": "PENDING"
+}

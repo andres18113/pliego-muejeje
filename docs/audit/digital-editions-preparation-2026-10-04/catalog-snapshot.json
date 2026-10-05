@@ -1,0 +1,4310 @@
+{
+  "schema": "pliego-catalog-readonly-snapshot-v1",
+  "captured_at": "2026-10-04T19:19:54.058617-05:00",
+  "scope": "ALL_STATES",
+  "complete": true,
+  "book_count": 63,
+  "edition_count": 65,
+  "publisher_count": 38,
+  "books": [
+    {
+      "state": "ACTIVE",
+      "title": "Tractatus Logico-Philosophicus",
+      "book_id": 88,
+      "subtitle": null,
+      "synopsis": "Wittgenstein estudia la relación entre lenguaje, pensamiento y mundo mediante una estructura de proposiciones numeradas.\nSostiene que el lenguaje puede representar hechos cuando comparte con ellos una estructura lógica y delimita qué puede expresarse con sentido.\nLa obra concluye señalando los límites del lenguaje y, con ellos, los límites de aquello que puede formularse filosóficamente.",
+      "created_at": "2026-09-27T19:43:14.783611-05:00",
+      "updated_at": "2026-09-27T19:43:14.783611-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Ludwig Wittgenstein",
+          "order": 1,
+          "authorId": 87
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Sobre la libertad",
+      "book_id": 87,
+      "subtitle": null,
+      "synopsis": "John Stuart Mill analiza hasta dónde puede llegar legítimamente el poder de la sociedad sobre las decisiones de cada individuo.\nDefiende la libertad de pensamiento, expresión y formas de vida siempre que el ejercicio de esa libertad no cause daño a otros.\nEl ensayo examina la individualidad como elemento esencial del desarrollo humano y de una sociedad abierta.",
+      "created_at": "2026-09-27T19:43:14.755663-05:00",
+      "updated_at": "2026-09-27T19:43:14.755663-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "John Stuart Mill",
+          "order": 1,
+          "authorId": 86
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Meditaciones",
+      "book_id": 86,
+      "subtitle": null,
+      "synopsis": "Marco Aurelio reúne reflexiones personales escritas como ejercicio de disciplina filosófica y examen de sí mismo.\nDesde una perspectiva estoica aborda el deber, el autocontrol, la fugacidad de la vida y la aceptación de aquello que no depende de nosotros.\nSus notas proponen actuar con razón, justicia y serenidad frente a las dificultades cotidianas.",
+      "created_at": "2026-09-27T19:43:14.732834-05:00",
+      "updated_at": "2026-09-27T19:43:14.732834-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Marco Aurelio",
+          "order": 1,
+          "authorId": 85
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Meditaciones metafísicas",
+      "book_id": 85,
+      "subtitle": null,
+      "synopsis": "Descartes parte de una duda radical para buscar una base absolutamente segura para el conocimiento.\nA lo largo de seis meditaciones examina la existencia del yo pensante, la naturaleza de las ideas y la relación entre mente y cuerpo.\nLa obra profundiza el proyecto filosófico iniciado en el Discurso del método.",
+      "created_at": "2026-09-27T19:43:14.708881-05:00",
+      "updated_at": "2026-09-27T19:43:14.708881-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "René Descartes",
+          "order": 1,
+          "authorId": 81
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Más allá del bien y del mal",
+      "book_id": 84,
+      "subtitle": null,
+      "synopsis": "Nietzsche critica los supuestos que sostienen buena parte de la filosofía y la moral occidentales.\nMediante aforismos examina verdad, poder, religión, cultura y los prejuicios que influyen en los sistemas filosóficos.\nLa obra propone superar oposiciones morales rígidas y reconsiderar el origen y el valor de nuestras convicciones.",
+      "created_at": "2026-09-27T19:43:14.687595-05:00",
+      "updated_at": "2026-09-27T19:43:14.687595-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Friedrich Nietzsche",
+          "order": 1,
+          "authorId": 79
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "La República",
+      "book_id": 83,
+      "subtitle": null,
+      "synopsis": "Platón desarrolla un diálogo sobre la justicia tanto en el individuo como en la organización de una ciudad.\nA través de Sócrates examina educación, formas de gobierno, conocimiento, virtud y la relación entre filosofía y poder.\nLa obra incluye la célebre alegoría de la caverna y presenta una de las formulaciones más influyentes de la filosofía política occidental.",
+      "created_at": "2026-09-27T19:43:14.670786-05:00",
+      "updated_at": "2026-09-27T19:43:14.670786-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Platón",
+          "order": 1,
+          "authorId": 84
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "La genealogía de la moral",
+      "book_id": 82,
+      "subtitle": null,
+      "synopsis": "Nietzsche investiga cómo surgieron y se transformaron conceptos morales como culpa, bien, mal y responsabilidad.\nEn tres tratados relaciona esos valores con procesos históricos, psicológicos y sociales en lugar de tratarlos como verdades universales.\nLa obra cuestiona la moral heredada y examina el resentimiento, la mala conciencia y los ideales ascéticos.",
+      "created_at": "2026-09-27T19:43:14.650716-05:00",
+      "updated_at": "2026-09-27T19:43:14.650716-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Friedrich Nietzsche",
+          "order": 1,
+          "authorId": 79
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Ética a Nicómaco",
+      "book_id": 81,
+      "subtitle": null,
+      "synopsis": "Aristóteles estudia qué significa vivir bien y sostiene que la felicidad se alcanza mediante una actividad racional guiada por la virtud.\nAnaliza virtudes como la justicia, la valentía y la templanza, entendidas como hábitos formados mediante la práctica.\nLa obra también examina la amistad, el placer y la relación entre ética, carácter y vida comunitaria.",
+      "created_at": "2026-09-27T19:43:14.637089-05:00",
+      "updated_at": "2026-09-27T19:43:14.637089-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Aristóteles",
+          "order": 1,
+          "authorId": 83
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "El príncipe",
+      "book_id": 80,
+      "subtitle": null,
+      "synopsis": "Maquiavelo examina cómo un gobernante adquiere, conserva y fortalece el poder en contextos políticos inestables.\nEl texto analiza decisiones, alianzas, conflictos y la relación entre virtud, fortuna y necesidad política.\nSu enfoque separa el análisis del poder de las idealizaciones morales tradicionales y marca un hito en la teoría política moderna.",
+      "created_at": "2026-09-27T19:43:14.617169-05:00",
+      "updated_at": "2026-09-27T19:43:14.617169-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Nicolás Maquiavelo",
+          "order": 1,
+          "authorId": 82
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Discurso del método",
+      "book_id": 79,
+      "subtitle": null,
+      "synopsis": "Descartes expone un método para conducir la razón y buscar conocimientos firmes evitando aceptar como verdadero aquello que pueda ponerse en duda.\nA partir de la duda metódica formula principios para analizar problemas, ordenar el pensamiento y revisar las conclusiones.\nLa obra constituye uno de los textos fundacionales de la filosofía moderna.",
+      "created_at": "2026-09-27T19:43:14.601584-05:00",
+      "updated_at": "2026-09-27T19:43:14.601584-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "René Descartes",
+          "order": 1,
+          "authorId": 81
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Crítica de la razón pura",
+      "book_id": 78,
+      "subtitle": null,
+      "synopsis": "Kant investiga los límites y las condiciones del conocimiento humano y pregunta qué puede conocer la razón antes de recurrir a la experiencia.\nDistingue sensibilidad, entendimiento y razón para explicar cómo construimos conocimiento sobre el mundo.\nLa obra busca establecer qué puede sostener legítimamente la metafísica y dónde comienzan los límites de la razón.",
+      "created_at": "2026-09-27T19:43:14.584647-05:00",
+      "updated_at": "2026-09-27T19:43:14.584647-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Immanuel Kant",
+          "order": 1,
+          "authorId": 80
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Crítica de la razón práctica",
+      "book_id": 77,
+      "subtitle": null,
+      "synopsis": "Kant analiza cómo la razón puede orientar la acción moral independientemente de los deseos y las circunstancias particulares.\nLa obra desarrolla conceptos como deber, autonomía y ley moral, y profundiza en la idea de una voluntad racional.\nEs una pieza central de su filosofía ética y complementa la investigación iniciada en la Crítica de la razón pura.",
+      "created_at": "2026-09-27T19:43:14.57203-05:00",
+      "updated_at": "2026-09-27T19:43:14.57203-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Immanuel Kant",
+          "order": 1,
+          "authorId": 80
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Así habló Zaratustra",
+      "book_id": 76,
+      "subtitle": null,
+      "synopsis": "Zaratustra abandona su retiro para comunicar una filosofía que cuestiona los valores heredados y las certezas tradicionales.\nA través de discursos, parábolas y episodios simbólicos, Nietzsche desarrolla ideas como la superación personal, el eterno retorno y la creación de valores.\nLa obra combina reflexión filosófica, poesía y crítica cultural.",
+      "created_at": "2026-09-27T19:43:14.553195-05:00",
+      "updated_at": "2026-09-27T19:43:14.553195-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Friedrich Nietzsche",
+          "order": 1,
+          "authorId": 79
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Filosofía",
+          "slug": "filosofia",
+          "categoryId": 36
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Problemas resueltos de álgebra lineal",
+      "book_id": 75,
+      "subtitle": null,
+      "synopsis": "Colección universitaria orientada a reforzar el álgebra lineal mediante problemas completamente desarrollados.\nTrabaja matrices, sistemas de ecuaciones, espacios vectoriales, transformaciones, determinantes y valores y vectores propios.\nLa exposición combina teoría accesible con procedimientos de resolución destinados principalmente a estudiantes de ingeniería.",
+      "created_at": "2026-09-27T19:43:14.531239-05:00",
+      "updated_at": "2026-09-27T19:43:14.531239-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Moisés Lázaro Carrión",
+          "order": 1,
+          "authorId": 60
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Métodos numéricos para ingenieros",
+      "book_id": 74,
+      "subtitle": null,
+      "synopsis": "Texto aplicado que presenta métodos numéricos junto con su implementación y uso en problemas de ingeniería.\nIncluye análisis de errores, raíces de ecuaciones, sistemas lineales, optimización, ajuste de curvas, integración y diferenciación numéricas.\nTambién desarrolla métodos para ecuaciones diferenciales ordinarias y parciales, con estudios de caso y apoyo computacional.",
+      "created_at": "2026-09-27T19:43:14.505115-05:00",
+      "updated_at": "2026-09-27T19:43:14.505115-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Steven C. Chapra",
+          "order": 1,
+          "authorId": 77
+        },
+        {
+          "name": "Raymond P. Canale",
+          "order": 2,
+          "authorId": 78
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Métodos numéricos aplicados a la ingeniería",
+      "book_id": 73,
+      "subtitle": null,
+      "synopsis": "Texto de métodos numéricos orientado a la resolución computacional de problemas frecuentes en ingeniería.\nPresenta técnicas para ecuaciones lineales y no lineales, aproximación, interpolación, integración y otros procedimientos de cálculo numérico.\nLa obra combina fundamentos matemáticos con algoritmos y aplicaciones prácticas para cursos universitarios.",
+      "created_at": "2026-09-27T19:43:14.474231-05:00",
+      "updated_at": "2026-09-27T19:43:14.474231-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Antonio Nieves Hurtado",
+          "order": 1,
+          "authorId": 75
+        },
+        {
+          "name": "Federico C. Domínguez Sánchez",
+          "order": 2,
+          "authorId": 76
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Matemática estructural",
+      "book_id": 72,
+      "subtitle": null,
+      "synopsis": "Introducción rigurosa a las matemáticas desde la teoría de conjuntos, la lógica y los métodos de demostración.\nDesarrolla inducción, conteo, divisibilidad, relaciones, funciones, equivalencia, cardinalidad y nociones de estructura e isomorfismo.\nSu propósito es fortalecer el razonamiento formal y preparar al estudiante para cursos matemáticos de mayor abstracción.",
+      "created_at": "2026-09-27T19:43:14.442163-05:00",
+      "updated_at": "2026-09-27T19:43:14.442163-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Andrés Forero Cuervo",
+          "order": 1,
+          "authorId": 74
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Introducción al álgebra lineal",
+      "book_id": 71,
+      "subtitle": null,
+      "synopsis": "Material universitario de apoyo para el aprendizaje sistemático de los conceptos esenciales del álgebra lineal.\nDesarrolla matrices, sistemas de ecuaciones, determinantes, álgebra vectorial, espacios vectoriales, transformaciones lineales y valores propios.\nIncluye explicaciones didácticas, problemas y ejercicios orientados a carreras de ingeniería, ciencias y matemáticas.",
+      "created_at": "2026-09-27T19:43:14.416093-05:00",
+      "updated_at": "2026-09-27T19:43:14.416093-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "José Alfredo Collazos Sánchez",
+          "order": 1,
+          "authorId": 71
+        },
+        {
+          "name": "Carlos Alberto Ramírez Vanegas",
+          "order": 2,
+          "authorId": 72
+        },
+        {
+          "name": "Óscar Danilo Montoya Giraldo",
+          "order": 3,
+          "authorId": 73
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Inferencia bayesiana y el método de máxima entropía",
+      "book_id": 70,
+      "subtitle": "Teoría, computación y aplicaciones en econometría",
+      "synopsis": "Estudio de los fundamentos y aplicaciones de la inferencia bayesiana y del principio de máxima entropía en econometría.\nContrasta estos enfoques con métodos frecuentistas y desarrolla herramientas para problemas con información limitada.\nLa parte aplicada utiliza modelos de series de tiempo, corte transversal, estado-espacio y métodos semiparamétricos con apoyo computacional.",
+      "created_at": "2026-09-27T19:43:14.386634-05:00",
+      "updated_at": "2026-09-27T19:43:14.386634-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Juan Esteban Jacobo Vásquez",
+          "order": 1,
+          "authorId": 70
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Geometría y trigonometría Baldor",
+      "book_id": 69,
+      "subtitle": null,
+      "synopsis": "Curso completo de geometría plana, geometría del espacio y trigonometría con numerosos ejemplos y ejercicios desarrollados paso a paso.\nEstudia ángulos, triángulos, polígonos, circunferencia, áreas, cuerpos geométricos y relaciones métricas.\nLa parte trigonométrica aborda funciones, identidades, resolución de triángulos y aplicaciones apoyadas por recursos de cálculo.",
+      "created_at": "2026-09-27T19:43:14.346602-05:00",
+      "updated_at": "2026-09-27T19:43:14.346602-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Aurelio Baldor",
+          "order": 1,
+          "authorId": 53
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Ecuaciones diferenciales con aplicaciones de modelado",
+      "book_id": 68,
+      "subtitle": null,
+      "synopsis": "Introducción a las ecuaciones diferenciales con énfasis en su utilización para construir y analizar modelos matemáticos.\nDesarrolla ecuaciones de primer orden, ecuaciones lineales de orden superior, transformada de Laplace, sistemas y soluciones en series.\nIncluye además métodos numéricos y numerosos ejemplos vinculados con fenómenos de ciencias e ingeniería.",
+      "created_at": "2026-09-27T19:43:14.332057-05:00",
+      "updated_at": "2026-09-27T19:43:14.332057-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Dennis G. Zill",
+          "order": 1,
+          "authorId": 69
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+      "book_id": 67,
+      "subtitle": null,
+      "synopsis": "Curso amplio de ecuaciones diferenciales que combina técnicas de solución, teoría y modelado matemático.\nIncluye ecuaciones de primer y segundo orden, sistemas, transformada de Laplace, métodos numéricos, series y análisis cualitativo.\nLa obra dedica además atención específica a problemas con valores en la frontera y a aplicaciones en ciencias e ingeniería.",
+      "created_at": "2026-09-27T19:43:14.310223-05:00",
+      "updated_at": "2026-09-27T19:43:14.310223-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "R. Kent Nagle",
+          "order": 1,
+          "authorId": 66
+        },
+        {
+          "name": "Edward B. Saff",
+          "order": 2,
+          "authorId": 67
+        },
+        {
+          "name": "Arthur David Snider",
+          "order": 3,
+          "authorId": 68
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+      "book_id": 66,
+      "subtitle": null,
+      "synopsis": "Texto universitario sobre ecuaciones diferenciales ordinarias y problemas de frontera con atención a fundamentos y aplicaciones.\nIncluye ecuaciones de primer orden, ecuaciones lineales de orden superior, transformada de Laplace, sistemas, métodos numéricos y estabilidad.\nTambién estudia ecuaciones diferenciales parciales, series de Fourier y teoría de Sturm-Liouville.",
+      "created_at": "2026-09-27T19:43:14.273416-05:00",
+      "updated_at": "2026-09-27T19:43:14.273416-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "William E. Boyce",
+          "order": 1,
+          "authorId": 64
+        },
+        {
+          "name": "Richard C. DiPrima",
+          "order": 2,
+          "authorId": 65
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Cálculo y análisis vectorial",
+      "book_id": 65,
+      "subtitle": null,
+      "synopsis": "Texto universitario dedicado a técnicas de integración múltiple y al análisis de curvas, superficies y campos vectoriales.\nRevisa integrales dobles y triples, integrales de línea y de superficie, y su interpretación en problemas de cálculo superior.\nSirve como complemento para cursos avanzados de cálculo vectorial y análisis matemático.",
+      "created_at": "2026-09-27T19:43:14.244536-05:00",
+      "updated_at": "2026-09-27T19:43:14.244536-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Moisés Lázaro Carrión",
+          "order": 1,
+          "authorId": 60
+        },
+        {
+          "name": "César Junior Esteban Chávez",
+          "order": 2,
+          "authorId": 63
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Análisis numérico",
+      "book_id": 64,
+      "subtitle": null,
+      "synopsis": "Introducción sistemática a los métodos de aproximación numérica y al análisis de sus errores y condiciones de convergencia.\nIncluye raíces de ecuaciones, interpolación, integración y derivación numéricas, sistemas lineales, aproximación y valores propios.\nTambién aborda métodos numéricos para ecuaciones diferenciales ordinarias y parciales con ejemplos y ejercicios aplicados.",
+      "created_at": "2026-09-27T19:43:14.221506-05:00",
+      "updated_at": "2026-09-27T19:43:14.221506-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Richard L. Burden",
+          "order": 1,
+          "authorId": 61
+        },
+        {
+          "name": "J. Douglas Faires",
+          "order": 2,
+          "authorId": 62
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Análisis matemático IV",
+      "book_id": 63,
+      "subtitle": "Cálculo vectorial",
+      "synopsis": "Texto de cálculo vectorial dedicado a la integración en varias variables y al estudio de campos escalares y vectoriales.\nTrabaja integrales dobles y triples, coordenadas polares, cilíndricas y esféricas, integrales de línea e integrales de superficie.\nTambién desarrolla los teoremas de Green, Gauss y Stokes mediante teoría y problemas resueltos.",
+      "created_at": "2026-09-27T19:43:14.193374-05:00",
+      "updated_at": "2026-09-27T19:43:14.193374-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Moisés Lázaro Carrión",
+          "order": 1,
+          "authorId": 60
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Análisis matemático II",
+      "book_id": 62,
+      "subtitle": null,
+      "synopsis": "Continuación orientada al cálculo integral y sus aplicaciones en matemáticas, ciencias e ingeniería.\nDesarrolla antiderivadas, integrales definidas e impropias, técnicas de integración, curvas paramétricas y coordenadas polares.\nIncluye aplicaciones de la integral al cálculo de áreas, volúmenes y distintos problemas físicos.",
+      "created_at": "2026-09-27T19:43:14.175031-05:00",
+      "updated_at": "2026-09-27T19:43:14.175031-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Moisés Lázaro Carrión",
+          "order": 1,
+          "authorId": 60
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Análisis matemático I",
+      "book_id": 61,
+      "subtitle": "Cálculo diferencial",
+      "synopsis": "Texto universitario centrado en el cálculo diferencial y en el desarrollo operativo de la derivada.\nIncluye curvas paramétricas, derivadas parciales, derivación implícita, diferenciales, funciones inversas y aplicaciones a problemas de optimización.\nFinaliza con el polinomio de Taylor y una colección de ejercicios orientados a consolidar los procedimientos.",
+      "created_at": "2026-09-27T19:43:14.153158-05:00",
+      "updated_at": "2026-09-27T19:43:14.153158-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Moisés Lázaro Carrión",
+          "order": 1,
+          "authorId": 60
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Análisis matemático",
+      "book_id": 60,
+      "subtitle": null,
+      "synopsis": "Tratado riguroso de análisis que parte de los sistemas numéricos y la topología elemental para desarrollar límites, continuidad y derivación.\nIncluye integración de Riemann-Stieltjes y Lebesgue, series, sucesiones de funciones, análisis de Fourier y cálculo en varias variables.\nSu enfoque combina precisión teórica con una cobertura amplia de herramientas fundamentales del análisis moderno.",
+      "created_at": "2026-09-27T19:43:14.130249-05:00",
+      "updated_at": "2026-09-27T19:43:14.130249-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Tom M. Apostol",
+          "order": 1,
+          "authorId": 59
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Álgebra lineal y sus aplicaciones",
+      "book_id": 59,
+      "subtitle": null,
+      "synopsis": "Texto universitario que presenta los conceptos fundamentales del álgebra lineal y los relaciona con aplicaciones científicas y de ingeniería.\nAborda ecuaciones lineales, matrices, espacios vectoriales, transformaciones, valores propios, ortogonalidad y otros métodos esenciales.\nIncluye problemas conceptuales y computacionales orientados a desarrollar interpretación geométrica y capacidad de modelado.",
+      "created_at": "2026-09-27T19:43:14.108823-05:00",
+      "updated_at": "2026-09-27T19:43:14.108823-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "David C. Lay",
+          "order": 1,
+          "authorId": 56
+        },
+        {
+          "name": "Steven R. Lay",
+          "order": 2,
+          "authorId": 57
+        },
+        {
+          "name": "Judi J. McDonald",
+          "order": 3,
+          "authorId": 58
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Álgebra lineal",
+      "book_id": 58,
+      "subtitle": "Una introducción moderna",
+      "synopsis": "Introducción al álgebra lineal con énfasis en la comprensión geométrica antes de formalizar los procedimientos computacionales.\nDesarrolla vectores, sistemas de ecuaciones, matrices, valores y vectores propios, ortogonalidad, espacios vectoriales y aproximación.\nIntegra teoría y aplicaciones para facilitar la transición hacia cursos matemáticos de mayor abstracción.",
+      "created_at": "2026-09-27T19:43:14.052776-05:00",
+      "updated_at": "2026-09-27T19:43:14.052776-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "David Poole",
+          "order": 1,
+          "authorId": 55
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Álgebra lineal",
+      "book_id": 57,
+      "subtitle": "Serie Schaum",
+      "synopsis": "Manual de apoyo para cursos de álgebra lineal que combina resúmenes teóricos con numerosos problemas desarrollados y ejercicios propuestos.\nCubre sistemas de ecuaciones, matrices, espacios vectoriales, determinantes, valores propios, transformaciones lineales y formas canónicas.\nEstá pensado tanto para estudio guiado como para práctica autónoma y repaso.",
+      "created_at": "2026-09-27T19:43:14.01603-05:00",
+      "updated_at": "2026-09-27T19:43:14.01603-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Seymour Lipschutz",
+          "order": 1,
+          "authorId": 54
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Álgebra Baldor",
+      "book_id": 56,
+      "subtitle": null,
+      "synopsis": "Texto clásico de álgebra elemental orientado al aprendizaje progresivo mediante teoría, ejemplos y una amplia colección de ejercicios.\nDesarrolla operaciones algebraicas, factorización, fracciones, ecuaciones, desigualdades, funciones, radicales, progresiones y logaritmos.\nLa cuarta edición incorpora apoyos para el uso de calculadora científica y recursos complementarios.",
+      "created_at": "2026-09-27T19:43:13.98222-05:00",
+      "updated_at": "2026-09-27T19:43:13.98222-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Aurelio Baldor",
+          "order": 1,
+          "authorId": 53
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Matemáticas",
+          "slug": "matematicas",
+          "categoryId": 35
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Soldados de Salamina",
+      "book_id": 55,
+      "subtitle": null,
+      "synopsis": "Un escritor investiga un episodio de la Guerra Civil española relacionado con Rafael Sánchez Mazas y su fallida ejecución.\nLa búsqueda se concentra en el soldado republicano que pudo matarlo, pero decidió dejarlo vivir.\nLa novela mezcla investigación, memoria y ficción para reflexionar sobre el heroísmo y la manera en que se construyen los relatos del pasado.",
+      "created_at": "2026-09-27T19:43:13.952406-05:00",
+      "updated_at": "2026-09-27T19:43:13.952406-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Javier Cercas",
+          "order": 1,
+          "authorId": 52
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Romeo y Julieta",
+      "book_id": 54,
+      "subtitle": null,
+      "synopsis": "Romeo Montesco y Julieta Capuleto se enamoran pese a la enemistad que enfrenta a sus familias.\nLa pareja intenta mantener su relación en secreto mientras la violencia entre ambos bandos continúa creciendo.\nUna cadena de decisiones apresuradas y malentendidos conduce la historia hacia su desenlace trágico.",
+      "created_at": "2026-09-27T19:43:13.92579-05:00",
+      "updated_at": "2026-09-27T19:43:13.92579-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "William Shakespeare",
+          "order": 1,
+          "authorId": 51
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Rayuela",
+      "book_id": 53,
+      "subtitle": null,
+      "synopsis": "Horacio Oliveira recorre París y Buenos Aires mientras intenta comprender su relación con la Maga y su propio lugar en el mundo.\nLa novela permite distintas rutas de lectura y rompe deliberadamente con una estructura lineal tradicional.\nEntre conversaciones, pérdidas y búsquedas, explora el amor, el lenguaje, el azar y la necesidad de encontrar sentido.",
+      "created_at": "2026-09-27T19:43:13.898184-05:00",
+      "updated_at": "2026-09-27T19:43:13.898184-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Julio Cortázar",
+          "order": 1,
+          "authorId": 50
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Pedro Páramo",
+      "book_id": 52,
+      "subtitle": null,
+      "synopsis": "Juan Preciado llega a Comala para buscar a su padre, Pedro Páramo, cumpliendo una promesa hecha a su madre.\nEl pueblo parece vacío, pero pronto se llena de voces, recuerdos y muertos que reconstruyen una historia fragmentada.\nLa novela explora el poder, la culpa, la memoria y la frontera incierta entre vida y muerte.",
+      "created_at": "2026-09-27T19:43:13.863473-05:00",
+      "updated_at": "2026-09-27T19:43:13.863473-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Juan Rulfo",
+          "order": 1,
+          "authorId": 49
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Orgullo y prejuicio",
+      "book_id": 51,
+      "subtitle": null,
+      "synopsis": "Elizabeth Bennet y Fitzwilliam Darcy se conocen bajo prejuicios, diferencias sociales y primeras impresiones poco favorables.\nSus encuentros obligan a ambos a revisar lo que creen saber sobre el otro y sobre sí mismos.\nLa novela combina romance, ironía y crítica social alrededor de la familia, el matrimonio y las clases sociales.",
+      "created_at": "2026-09-27T19:43:13.834455-05:00",
+      "updated_at": "2026-09-27T19:43:13.834455-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Jane Austen",
+          "order": 1,
+          "authorId": 48
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Moby Dick",
+      "book_id": 50,
+      "subtitle": null,
+      "synopsis": "Ishmael se embarca en el Pequod, un ballenero comandado por el capitán Ahab.\nPronto descubre que el verdadero objetivo del viaje es perseguir a Moby Dick, la gran ballena blanca que obsesiona a Ahab.\nLa travesía convierte esa cacería en una reflexión sobre obsesión, destino, naturaleza y límites humanos.",
+      "created_at": "2026-09-27T19:43:13.811764-05:00",
+      "updated_at": "2026-09-27T19:43:13.811764-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Herman Melville",
+          "order": 1,
+          "authorId": 47
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Madame Bovary",
+      "book_id": 49,
+      "subtitle": null,
+      "synopsis": "Emma Bovary se siente atrapada en una vida provincial que no coincide con las expectativas románticas que ha construido.\nBusca escapar mediante relaciones amorosas, consumo y fantasías de una existencia más intensa.\nLa distancia entre deseo y realidad la conduce a una espiral de deudas, frustración y consecuencias trágicas.",
+      "created_at": "2026-09-27T19:43:13.785238-05:00",
+      "updated_at": "2026-09-27T19:43:13.785238-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Gustave Flaubert",
+          "order": 1,
+          "authorId": 46
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Los miserables",
+      "book_id": 48,
+      "subtitle": null,
+      "synopsis": "Jean Valjean intenta reconstruir su vida después de años de prisión, pero el inspector Javert continúa persiguiéndolo.\nSu historia se cruza con personajes marcados por la pobreza, la injusticia y los conflictos de la Francia del siglo XIX.\nLa novela contrapone ley y compasión mientras explora redención, dignidad y responsabilidad social.",
+      "created_at": "2026-09-27T19:43:13.752004-05:00",
+      "updated_at": "2026-09-27T19:43:13.752004-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Victor Hugo",
+          "order": 1,
+          "authorId": 45
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "La Ilíada",
+      "book_id": 47,
+      "subtitle": null,
+      "synopsis": "En los últimos episodios de la guerra de Troya, la cólera de Aquiles altera el destino de griegos y troyanos.\nEl enfrentamiento entre orgullo, honor y deber desencadena pérdidas que afectan tanto a héroes como a familias.\nEl poema épico reflexiona sobre la gloria, la mortalidad, el destino y el costo humano de la guerra.",
+      "created_at": "2026-09-27T19:43:13.723332-05:00",
+      "updated_at": "2026-09-27T19:43:13.723332-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Homero",
+          "order": 1,
+          "authorId": 44
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "La ciudad y los perros",
+      "book_id": 46,
+      "subtitle": null,
+      "synopsis": "Un grupo de cadetes del Colegio Militar Leoncio Prado aprende a sobrevivir dentro de una disciplina marcada por la violencia y las jerarquías.\nUn robo y sus consecuencias revelan lealtades, abusos y silencios dentro de la institución.\nLa novela cuestiona la brutalidad, las ideas rígidas de masculinidad y los mecanismos de poder.",
+      "created_at": "2026-09-27T19:43:13.689119-05:00",
+      "updated_at": "2026-09-27T19:43:13.689119-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Mario Vargas Llosa",
+          "order": 1,
+          "authorId": 43
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "La casa de los espíritus",
+      "book_id": 45,
+      "subtitle": null,
+      "synopsis": "La historia sigue a varias generaciones de la familia Trueba y entrelaza sus conflictos íntimos con profundas transformaciones sociales.\nAmores, rencores, recuerdos y elementos sobrenaturales acompañan el ascenso y la fractura de la familia.\nLa novela explora el poder, la memoria, la violencia y la capacidad de reconstruir el pasado.",
+      "created_at": "2026-09-27T19:43:13.638651-05:00",
+      "updated_at": "2026-09-27T19:43:13.638651-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Isabel Allende",
+          "order": 1,
+          "authorId": 42
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Ficciones",
+      "book_id": 44,
+      "subtitle": null,
+      "synopsis": "Esta colección reúne relatos donde bibliotecas, laberintos, espejos, libros imaginarios y mundos posibles alteran la percepción de la realidad.\nBorges convierte ideas filosóficas y literarias en tramas precisas, fantásticas y a veces policiales.\nLos cuentos exploran el infinito, la identidad, el tiempo y los límites entre ficción y conocimiento.",
+      "created_at": "2026-09-27T19:43:13.60997-05:00",
+      "updated_at": "2026-09-27T19:43:13.60997-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Jorge Luis Borges",
+          "order": 1,
+          "authorId": 41
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "El retrato de Dorian Gray",
+      "book_id": 43,
+      "subtitle": null,
+      "synopsis": "Dorian Gray desea conservar para siempre su juventud mientras un retrato suyo carga con las marcas del tiempo y de sus actos.\nLibre de consecuencias visibles, se entrega a una vida de placer y creciente degradación moral.\nLa novela examina la belleza, la vanidad, la influencia y el precio de una vida sin responsabilidad.",
+      "created_at": "2026-09-27T19:43:13.579549-05:00",
+      "updated_at": "2026-09-27T19:43:13.579549-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Oscar Wilde",
+          "order": 1,
+          "authorId": 40
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "El mito de Sísifo",
+      "book_id": 42,
+      "subtitle": null,
+      "synopsis": "Camus parte de una pregunta radical: cómo vivir cuando el ser humano busca sentido en un mundo que no ofrece respuestas definitivas.\nA partir de esa tensión desarrolla su idea del absurdo y rechaza las salidas que eliminan el problema.\nEl ensayo propone la lucidez, la libertad y la rebelión como formas de afrontar la existencia.",
+      "created_at": "2026-09-27T19:43:13.552344-05:00",
+      "updated_at": "2026-09-27T19:43:13.552344-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Albert Camus",
+          "order": 1,
+          "authorId": 38
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "El gran Gatsby",
+      "book_id": 41,
+      "subtitle": null,
+      "synopsis": "Nick Carraway llega a Long Island y conoce al enigmático Jay Gatsby, famoso por sus grandes fiestas.\nDetrás de su riqueza se encuentra una obsesión por recuperar una relación del pasado con Daisy Buchanan.\nLa historia cuestiona el éxito, el deseo, las apariencias y la promesa del sueño americano.",
+      "created_at": "2026-09-27T19:43:13.522891-05:00",
+      "updated_at": "2026-09-27T19:43:13.522891-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "F. Scott Fitzgerald",
+          "order": 1,
+          "authorId": 39
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "El extranjero",
+      "book_id": 40,
+      "subtitle": null,
+      "synopsis": "Meursault vive con una marcada indiferencia frente a las expectativas emocionales y sociales de quienes lo rodean.\nTras cometer un homicidio, su juicio termina evaluando tanto su conducta personal como el propio crimen.\nLa novela plantea la extrañeza ante el mundo, el absurdo y la búsqueda de sentido.",
+      "created_at": "2026-09-27T19:43:13.481136-05:00",
+      "updated_at": "2026-09-27T19:43:13.481136-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Albert Camus",
+          "order": 1,
+          "authorId": 38
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "El amor en los tiempos del cólera",
+      "book_id": 39,
+      "subtitle": null,
+      "synopsis": "Florentino Ariza se enamora de Fermina Daza y mantiene ese sentimiento durante décadas, incluso cuando sus vidas toman caminos distintos.\nEl paso del tiempo transforma a los personajes, sus afectos y la idea misma del amor.\nLa novela explora la espera, la memoria, la vejez y la persistencia de los vínculos.",
+      "created_at": "2026-09-27T19:43:13.448661-05:00",
+      "updated_at": "2026-09-27T19:43:13.448661-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Gabriel García Márquez",
+          "order": 1,
+          "authorId": 35
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Don Quijote de la Mancha",
+      "book_id": 38,
+      "subtitle": null,
+      "synopsis": "Alonso Quijano, fascinado por los libros de caballerías, decide convertirse en el caballero Don Quijote.\nJunto a Sancho Panza recorre caminos en los que sus ideales chocan continuamente con la realidad.\nLa obra combina aventura, humor y reflexión sobre la imaginación, la libertad y la identidad.",
+      "created_at": "2026-09-27T19:43:13.416389-05:00",
+      "updated_at": "2026-09-27T19:43:13.416389-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Miguel de Cervantes",
+          "order": 1,
+          "authorId": 37
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Crónica de una muerte anunciada",
+      "book_id": 37,
+      "subtitle": null,
+      "synopsis": "Todo un pueblo sabe que Santiago Nasar va a ser asesinado, pero nadie consigue impedirlo.\nAños después, el narrador reconstruye las horas previas al crimen y las contradicciones de quienes fueron testigos.\nLa novela examina el honor, la fatalidad y la responsabilidad colectiva.",
+      "created_at": "2026-09-27T19:43:13.384593-05:00",
+      "updated_at": "2026-09-27T19:43:13.384593-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Gabriel García Márquez",
+          "order": 1,
+          "authorId": 35
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Crimen y castigo",
+      "book_id": 36,
+      "subtitle": null,
+      "synopsis": "Rodión Raskólnikov, un joven empobrecido de San Petersburgo, comete un asesinato convencido de poder justificarlo racionalmente.\nLa culpa y la presión de la investigación comienzan a quebrar sus certezas.\nSu relación con Sonia abre un camino de confrontación moral, sufrimiento y posible redención.",
+      "created_at": "2026-09-27T19:43:13.349222-05:00",
+      "updated_at": "2026-09-27T19:43:13.349222-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Fiódor Dostoyevski",
+          "order": 1,
+          "authorId": 36
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Cien años de soledad",
+      "book_id": 35,
+      "subtitle": null,
+      "synopsis": "La novela sigue a varias generaciones de la familia Buendía en el pueblo ficticio de Macondo.\nAmores, guerras, descubrimientos y tragedias se repiten mientras pasado y presente parecen confundirse.\nLa historia combina lo cotidiano con lo extraordinario para explorar la memoria, el destino y la soledad.",
+      "created_at": "2026-09-27T19:43:13.307247-05:00",
+      "updated_at": "2026-09-27T19:43:13.307247-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Gabriel García Márquez",
+          "order": 1,
+          "authorId": 35
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Anna Karénina",
+      "book_id": 34,
+      "subtitle": null,
+      "synopsis": "Anna Karénina vive atrapada entre las convenciones de la aristocracia rusa y un amor que transforma su vida.\nSu relación con el conde Vronski la enfrenta a su familia, a la sociedad y a sus propias contradicciones.\nEn paralelo, la historia de Levin explora otras formas de amor, familia, fe y búsqueda de sentido.",
+      "created_at": "2026-09-27T19:43:13.224817-05:00",
+      "updated_at": "2026-09-27T19:43:13.224817-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Lev Tolstói",
+          "order": 1,
+          "authorId": 34
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Literatura",
+          "slug": "literatura",
+          "categoryId": 34
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro Journey d378a71a47d7 (reeditado)",
+      "book_id": 19,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:57.958914-05:00",
+      "updated_at": "2026-09-27T17:32:58.20953-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor Journey d378a71a47d7",
+          "order": 1,
+          "authorId": 15
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría Journey d378a71a47d7",
+          "slug": "i12-journey-d378a71a47d7",
+          "categoryId": 20
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro I10 90dafd61a302",
+      "book_id": 18,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:55.750518-05:00",
+      "updated_at": "2026-09-27T17:32:55.750518-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor I10 90dafd61a302",
+          "order": 1,
+          "authorId": 14
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría I10 90dafd61a302",
+          "slug": "i10-conc-90dafd61a302",
+          "categoryId": 19
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro Conc 16377e10e857",
+      "book_id": 17,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:55.247068-05:00",
+      "updated_at": "2026-09-27T17:32:55.247068-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor Conc 16377e10e857",
+          "order": 1,
+          "authorId": 13
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría Conc 16377e10e857",
+          "slug": "i8-conc-16377e10e857",
+          "categoryId": 18
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro Conc f400098bd0ef",
+      "book_id": 16,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:54.932944-05:00",
+      "updated_at": "2026-09-27T17:32:54.932944-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor Conc f400098bd0ef",
+          "order": 1,
+          "authorId": 12
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría Conc f400098bd0ef",
+          "slug": "i8-conc-f400098bd0ef",
+          "categoryId": 17
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro Conc 838f861c4f93",
+      "book_id": 15,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:54.618026-05:00",
+      "updated_at": "2026-09-27T17:32:54.618026-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor Conc 838f861c4f93",
+          "order": 1,
+          "authorId": 11
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría Conc 838f861c4f93",
+          "slug": "i8-conc-838f861c4f93",
+          "categoryId": 16
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro I10 75887496cf76",
+      "book_id": 14,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:43.195186-05:00",
+      "updated_at": "2026-09-27T17:32:43.195186-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor I10 75887496cf76",
+          "order": 1,
+          "authorId": 10
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría I10 75887496cf76",
+          "slug": "i10-conc-75887496cf76",
+          "categoryId": 15
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro Conc 1c5360c6f36f",
+      "book_id": 13,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:34.459198-05:00",
+      "updated_at": "2026-09-27T17:32:34.459198-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor Conc 1c5360c6f36f",
+          "order": 1,
+          "authorId": 9
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría Conc 1c5360c6f36f",
+          "slug": "i8-conc-1c5360c6f36f",
+          "categoryId": 14
+        }
+      ]
+    },
+    {
+      "state": "ACTIVE",
+      "title": "Libro Conc a64a2d805854",
+      "book_id": 12,
+      "subtitle": null,
+      "synopsis": null,
+      "created_at": "2026-09-27T17:32:30.247088-05:00",
+      "updated_at": "2026-09-27T17:32:30.247088-05:00",
+      "total_count": 63,
+      "authors_json": [
+        {
+          "name": "Autor Conc a64a2d805854",
+          "order": 1,
+          "authorId": 8
+        }
+      ],
+      "categories_json": [
+        {
+          "name": "Categoría Conc a64a2d805854",
+          "slug": "i8-conc-a64a2d805854",
+          "categoryId": 13
+        }
+      ]
+    }
+  ],
+  "editions": [
+    {
+      "sku": "PLG-BK-000041",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788499538761",
+      "book_id": 88,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000041-3499d99d15ce.webp",
+      "narrators": [],
+      "book_title": "Tractatus Logico-Philosophicus",
+      "created_at": "2026-09-27T19:43:14.793354-05:00",
+      "edition_id": 88,
+      "page_count": 134,
+      "updated_at": "2026-09-27T19:50:40.998397-05:00",
+      "total_count": 65,
+      "publisher_id": 63,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Linkgua Ediciones",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000023",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788417666439",
+      "book_id": 87,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000023-d6ead8529220.webp",
+      "narrators": [],
+      "book_title": "Sobre la libertad",
+      "created_at": "2026-09-27T19:43:14.768213-05:00",
+      "edition_id": 87,
+      "page_count": 256,
+      "updated_at": "2026-09-27T19:50:40.989374-05:00",
+      "total_count": 65,
+      "publisher_id": 62,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Ygriega",
+      "cover_source_url": null,
+      "publication_date": "2021-08-30",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000037",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788490745113",
+      "book_id": 86,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000037-c3fa6daeb218.webp",
+      "narrators": [],
+      "book_title": "Meditaciones",
+      "created_at": "2026-09-27T19:43:14.740148-05:00",
+      "edition_id": 86,
+      "page_count": 160,
+      "updated_at": "2026-09-27T19:50:40.980526-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": "2018-08-21",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000020",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788413373423",
+      "book_id": 85,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000020-0eb2ac315613.webp",
+      "narrators": [],
+      "book_title": "Meditaciones metafísicas",
+      "created_at": "2026-09-27T19:43:14.715077-05:00",
+      "edition_id": 85,
+      "page_count": 74,
+      "updated_at": "2026-09-27T19:50:40.972579-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": "2020-11-10",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000025",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": "9788419599940",
+      "book_id": 84,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000025-41cf64eb537a.webp",
+      "narrators": [],
+      "book_title": "Más allá del bien y del mal",
+      "created_at": "2026-09-27T19:43:14.698194-05:00",
+      "edition_id": 84,
+      "page_count": 304,
+      "updated_at": "2026-09-27T19:50:40.964458-05:00",
+      "total_count": 65,
+      "publisher_id": 61,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Alma",
+      "cover_source_url": null,
+      "publication_date": "2024-10-01",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000056",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9798224715541",
+      "book_id": 83,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000056-6d9506beae9e.webp",
+      "narrators": [],
+      "book_title": "La República",
+      "created_at": "2026-09-27T19:43:14.676496-05:00",
+      "edition_id": 83,
+      "page_count": 412,
+      "updated_at": "2026-09-27T19:50:40.94346-05:00",
+      "total_count": 65,
+      "publisher_id": 60,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Innisfree",
+      "cover_source_url": null,
+      "publication_date": "2024-05-01",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000026",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788419651730",
+      "book_id": 82,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000026-26fcbd0dabe9.webp",
+      "narrators": [],
+      "book_title": "La genealogía de la moral",
+      "created_at": "2026-09-27T19:43:14.656131-05:00",
+      "edition_id": 82,
+      "page_count": 192,
+      "updated_at": "2026-09-27T19:50:40.928563-05:00",
+      "total_count": 65,
+      "publisher_id": 43,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Plutón Ediciones",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000022",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788413376936",
+      "book_id": 81,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000022-3b1726043bc7.webp",
+      "narrators": [],
+      "book_title": "Ética a Nicómaco",
+      "created_at": "2026-09-27T19:43:14.641653-05:00",
+      "edition_id": 81,
+      "page_count": 254,
+      "updated_at": "2026-09-27T19:50:40.919901-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": "2021-10-20",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000055",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9798215299210",
+      "book_id": 80,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000055-78a9bcec4411.webp",
+      "narrators": [],
+      "book_title": "El príncipe",
+      "created_at": "2026-09-27T19:43:14.626352-05:00",
+      "edition_id": 80,
+      "page_count": 114,
+      "updated_at": "2026-09-27T19:50:40.911347-05:00",
+      "total_count": 65,
+      "publisher_id": 60,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Innisfree",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000053",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9791370180652",
+      "book_id": 79,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000053-700e1f21cf58.webp",
+      "narrators": [],
+      "book_title": "Discurso del método",
+      "created_at": "2026-09-27T19:43:14.60652-05:00",
+      "edition_id": 79,
+      "page_count": 94,
+      "updated_at": "2026-09-27T19:50:40.90091-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": "2026-01-28",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000018",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788413371702",
+      "book_id": 78,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000018-9795eea29c87.webp",
+      "narrators": [],
+      "book_title": "Crítica de la razón pura",
+      "created_at": "2026-09-27T19:43:14.59016-05:00",
+      "edition_id": 78,
+      "page_count": 646,
+      "updated_at": "2026-09-27T19:50:40.892811-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 4,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": "2020-03-16",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000017",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788413371696",
+      "book_id": 77,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000017-41c9a4ae0f39.webp",
+      "narrators": [],
+      "book_title": "Crítica de la razón práctica",
+      "created_at": "2026-09-27T19:43:14.576648-05:00",
+      "edition_id": 77,
+      "page_count": 186,
+      "updated_at": "2026-09-27T19:50:40.883768-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 4,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": "2020-03-16",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000016",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788413370200",
+      "book_id": 76,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000016-d230fc853c6f.webp",
+      "narrators": [],
+      "book_title": "Así habló Zaratustra",
+      "created_at": "2026-09-27T19:43:14.559106-05:00",
+      "edition_id": 76,
+      "page_count": 298,
+      "updated_at": "2026-09-27T19:50:40.875902-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": "2019-09-16",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000012",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786124441165",
+      "book_id": 75,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000012-0b128b7cc271.webp",
+      "narrators": [],
+      "book_title": "Problemas resueltos de álgebra lineal",
+      "created_at": "2026-09-27T19:43:14.537719-05:00",
+      "edition_id": 75,
+      "page_count": 256,
+      "updated_at": "2026-09-27T19:50:40.867685-05:00",
+      "total_count": 65,
+      "publisher_id": 52,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Moshera",
+      "cover_source_url": null,
+      "publication_date": "2023-05-31",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000003",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786071512949",
+      "book_id": 74,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000003-6249aab14969.webp",
+      "narrators": [],
+      "book_title": "Métodos numéricos para ingenieros",
+      "created_at": "2026-09-27T19:43:14.520041-05:00",
+      "edition_id": 74,
+      "page_count": 756,
+      "updated_at": "2026-09-27T19:50:40.859389-05:00",
+      "total_count": 65,
+      "publisher_id": 59,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "McGraw-Hill",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000048",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789702402589",
+      "book_id": 73,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000048-3f3528aa2b7d.webp",
+      "narrators": [],
+      "book_title": "Métodos numéricos aplicados a la ingeniería",
+      "created_at": "2026-09-27T19:43:14.485028-05:00",
+      "edition_id": 73,
+      "page_count": 600,
+      "updated_at": "2026-09-27T19:50:40.848865-05:00",
+      "total_count": 65,
+      "publisher_id": 58,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Compañía Editorial Continental",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000046",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789586954525",
+      "book_id": 72,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000046-16e1f40ce870.webp",
+      "narrators": [],
+      "book_title": "Matemática estructural",
+      "created_at": "2026-09-27T19:43:14.454104-05:00",
+      "edition_id": 72,
+      "page_count": 326,
+      "updated_at": "2026-09-27T19:50:40.838283-05:00",
+      "total_count": 65,
+      "publisher_id": 57,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Ediciones Uniandes",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000044",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789585082656",
+      "book_id": 71,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000044-204968142c57.webp",
+      "narrators": [],
+      "book_title": "Introducción al álgebra lineal",
+      "created_at": "2026-09-27T19:43:14.427478-05:00",
+      "edition_id": 71,
+      "page_count": 224,
+      "updated_at": "2026-09-27T19:50:40.82165-05:00",
+      "total_count": 65,
+      "publisher_id": 56,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Ecoe Ediciones",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000043",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789585062665",
+      "book_id": 70,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000043-eb2957751239.webp",
+      "narrators": [],
+      "book_title": "Inferencia bayesiana y el método de máxima entropía",
+      "created_at": "2026-09-27T19:43:14.397281-05:00",
+      "edition_id": 70,
+      "page_count": 500,
+      "updated_at": "2026-09-27T19:50:40.811728-05:00",
+      "total_count": 65,
+      "publisher_id": 55,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Universidad Externado de Colombia",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000008",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": "9786075502069",
+      "book_id": 69,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000008-0bb82992c0eb.webp",
+      "narrators": [],
+      "book_title": "Geometría y trigonometría Baldor",
+      "created_at": "2026-09-27T19:43:14.351423-05:00",
+      "edition_id": 69,
+      "page_count": 556,
+      "updated_at": "2026-09-27T19:50:40.801711-05:00",
+      "total_count": 65,
+      "publisher_id": 47,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Grupo Editorial Patria",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000007",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786075266312",
+      "book_id": 68,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000007-d2e55c4175ca.webp",
+      "narrators": [],
+      "book_title": "Ecuaciones diferenciales con aplicaciones de modelado",
+      "created_at": "2026-09-27T19:43:14.337221-05:00",
+      "edition_id": 68,
+      "page_count": 480,
+      "updated_at": "2026-09-27T19:50:40.794021-05:00",
+      "total_count": 65,
+      "publisher_id": 49,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Cengage Learning",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000049",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789702605928",
+      "book_id": 67,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000049-ff9728f0ddef.webp",
+      "narrators": [],
+      "book_title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+      "created_at": "2026-09-27T19:43:14.31916-05:00",
+      "edition_id": 67,
+      "page_count": 816,
+      "updated_at": "2026-09-27T19:50:40.786331-05:00",
+      "total_count": 65,
+      "publisher_id": 54,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Pearson Educación",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000047",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789681849740",
+      "book_id": 66,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000047-aa33471e3d31.webp",
+      "narrators": [],
+      "book_title": "Ecuaciones diferenciales y problemas con valores en la frontera",
+      "created_at": "2026-09-27T19:43:14.286466-05:00",
+      "edition_id": 66,
+      "page_count": 760,
+      "updated_at": "2026-09-27T19:50:40.776465-05:00",
+      "total_count": 65,
+      "publisher_id": 53,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Limusa Wiley",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000011",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786124441141",
+      "book_id": 65,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000011-48509a85c734.webp",
+      "narrators": [],
+      "book_title": "Cálculo y análisis vectorial",
+      "created_at": "2026-09-27T19:43:14.251803-05:00",
+      "edition_id": 65,
+      "page_count": 422,
+      "updated_at": "2026-09-27T19:50:40.765425-05:00",
+      "total_count": 65,
+      "publisher_id": 52,
+      "stock_actual": 4,
+      "cover_license": null,
+      "publisher_name": "Moshera",
+      "cover_source_url": null,
+      "publication_date": "2023-04-29",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000005",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786074816631",
+      "book_id": 64,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000005-41b83fcf3974.webp",
+      "narrators": [],
+      "book_title": "Análisis numérico",
+      "created_at": "2026-09-27T19:43:14.228243-05:00",
+      "edition_id": 64,
+      "page_count": 888,
+      "updated_at": "2026-09-27T19:50:40.757736-05:00",
+      "total_count": 65,
+      "publisher_id": 49,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Cengage Learning",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000010",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786124441073",
+      "book_id": 63,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000010-9edf89eab2f1.webp",
+      "narrators": [],
+      "book_title": "Análisis matemático IV",
+      "created_at": "2026-09-27T19:43:14.200406-05:00",
+      "edition_id": 63,
+      "page_count": 612,
+      "updated_at": "2026-09-27T19:50:40.749981-05:00",
+      "total_count": 65,
+      "publisher_id": 52,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Moshera",
+      "cover_source_url": null,
+      "publication_date": "2020-10-31",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000051",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789972813665",
+      "book_id": 62,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000051-319fe6c039de.webp",
+      "narrators": [],
+      "book_title": "Análisis matemático II",
+      "created_at": "2026-09-27T19:43:14.181689-05:00",
+      "edition_id": 62,
+      "page_count": 754,
+      "updated_at": "2026-09-27T19:50:40.739713-05:00",
+      "total_count": 65,
+      "publisher_id": 52,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Moshera",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000052",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789972813818",
+      "book_id": 61,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000052-b80e012ee00e.webp",
+      "narrators": [],
+      "book_title": "Análisis matemático I",
+      "created_at": "2026-09-27T19:43:14.162643-05:00",
+      "edition_id": 61,
+      "page_count": 456,
+      "updated_at": "2026-09-27T19:50:40.729744-05:00",
+      "total_count": 65,
+      "publisher_id": 52,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Moshera",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000028",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788429150049",
+      "book_id": 60,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000028-5c3053a00867.webp",
+      "narrators": [],
+      "book_title": "Análisis matemático",
+      "created_at": "2026-09-27T19:43:14.141125-05:00",
+      "edition_id": 60,
+      "page_count": 616,
+      "updated_at": "2026-09-27T19:50:40.718047-05:00",
+      "total_count": 65,
+      "publisher_id": 51,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Editorial Reverté",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000004",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786073259521",
+      "book_id": 59,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000004-79eace1d30c0.webp",
+      "narrators": [],
+      "book_title": "Álgebra lineal y sus aplicaciones",
+      "created_at": "2026-09-27T19:43:14.117683-05:00",
+      "edition_id": 59,
+      "page_count": 752,
+      "updated_at": "2026-09-27T19:50:40.705081-05:00",
+      "total_count": 65,
+      "publisher_id": 50,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Pearson",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000006",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786075263113",
+      "book_id": 58,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000006-942d503cab30.webp",
+      "narrators": [],
+      "book_title": "Álgebra lineal",
+      "created_at": "2026-09-27T19:43:14.088759-05:00",
+      "edition_id": 58,
+      "page_count": 752,
+      "updated_at": "2026-09-27T19:50:40.69405-05:00",
+      "total_count": 65,
+      "publisher_id": 49,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Cengage Learning",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000034",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788476157589",
+      "book_id": 57,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000034-9c9fd78eb909.webp",
+      "narrators": [],
+      "book_title": "Álgebra lineal",
+      "created_at": "2026-09-27T19:43:14.028565-05:00",
+      "edition_id": 57,
+      "page_count": 512,
+      "updated_at": "2026-09-27T19:50:40.681436-05:00",
+      "total_count": 65,
+      "publisher_id": 48,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "McGraw-Hill Interamericana de España",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000009",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": "9786075502090",
+      "book_id": 56,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000009-4c913e2c7914.webp",
+      "narrators": [],
+      "book_title": "Álgebra Baldor",
+      "created_at": "2026-09-27T19:43:13.996697-05:00",
+      "edition_id": 56,
+      "page_count": 588,
+      "updated_at": "2026-09-27T19:50:40.668929-05:00",
+      "total_count": 65,
+      "publisher_id": 47,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Grupo Editorial Patria",
+      "cover_source_url": null,
+      "publication_date": "2019-05-17",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000032",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788466388627",
+      "book_id": 55,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000032-12d4196d1f21.webp",
+      "narrators": [],
+      "book_title": "Soldados de Salamina",
+      "created_at": "2026-09-27T19:43:13.960168-05:00",
+      "edition_id": 55,
+      "page_count": 224,
+      "updated_at": "2026-09-27T19:50:40.656031-05:00",
+      "total_count": 65,
+      "publisher_id": 35,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Debolsillo",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000036",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788490743720",
+      "book_id": 54,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000036-7e4f0adf170d.webp",
+      "narrators": [],
+      "book_title": "Romeo y Julieta",
+      "created_at": "2026-09-27T19:43:13.933485-05:00",
+      "edition_id": 54,
+      "page_count": 144,
+      "updated_at": "2026-09-27T19:50:40.639272-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000027",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788420414706",
+      "book_id": 53,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000027-7a8520bbdab9.webp",
+      "narrators": [],
+      "book_title": "Rayuela",
+      "created_at": "2026-09-27T19:43:13.906249-05:00",
+      "edition_id": 53,
+      "page_count": 632,
+      "updated_at": "2026-09-27T19:50:40.625586-05:00",
+      "total_count": 65,
+      "publisher_id": 42,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Alfaguara",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000039",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788493442606",
+      "book_id": 52,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000039-a27819d45f6e.webp",
+      "narrators": [],
+      "book_title": "Pedro Páramo",
+      "created_at": "2026-09-27T19:43:13.877977-05:00",
+      "edition_id": 52,
+      "page_count": 132,
+      "updated_at": "2026-09-27T19:50:40.61506-05:00",
+      "total_count": 65,
+      "publisher_id": 46,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "RM",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000033",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": "9788467070835",
+      "book_id": 51,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000033-541b16122de7.webp",
+      "narrators": [],
+      "book_title": "Orgullo y prejuicio",
+      "created_at": "2026-09-27T19:43:13.845758-05:00",
+      "edition_id": 51,
+      "page_count": 384,
+      "updated_at": "2026-09-27T19:50:40.60127-05:00",
+      "total_count": 65,
+      "publisher_id": 45,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Austral",
+      "cover_source_url": null,
+      "publication_date": "2023-09-13",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000021",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788413373836",
+      "book_id": 50,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000021-86bb100040cb.webp",
+      "narrators": [],
+      "book_title": "Moby Dick",
+      "created_at": "2026-09-27T19:43:13.819256-05:00",
+      "edition_id": 50,
+      "page_count": 588,
+      "updated_at": "2026-09-27T19:50:40.58781-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000015",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788410011045",
+      "book_id": 49,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000015-219ca801124c.webp",
+      "narrators": [],
+      "book_title": "Madame Bovary",
+      "created_at": "2026-09-27T19:43:13.796618-05:00",
+      "edition_id": 49,
+      "page_count": 326,
+      "updated_at": "2026-09-27T19:50:40.576242-05:00",
+      "total_count": 65,
+      "publisher_id": 44,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Ardea",
+      "cover_source_url": null,
+      "publication_date": "2024-06-15",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000054",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": "9791387692865",
+      "book_id": 48,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000054-fe0fdb7fdd82.webp",
+      "narrators": [],
+      "book_title": "Los miserables",
+      "created_at": "2026-09-27T19:43:13.766218-05:00",
+      "edition_id": 48,
+      "page_count": 1296,
+      "updated_at": "2026-09-27T19:50:40.563122-05:00",
+      "total_count": 65,
+      "publisher_id": 43,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Plutón Ediciones",
+      "cover_source_url": null,
+      "publication_date": "2025-10-10",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000019",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788413372945",
+      "book_id": 47,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000019-8039b46f6a32.webp",
+      "narrators": [],
+      "book_title": "La Ilíada",
+      "created_at": "2026-09-27T19:43:13.731708-05:00",
+      "edition_id": 47,
+      "page_count": 492,
+      "updated_at": "2026-09-27T19:50:40.550152-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000013",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786125020727",
+      "book_id": 46,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000013-3d9a3ffe7035.webp",
+      "narrators": [],
+      "book_title": "La ciudad y los perros",
+      "created_at": "2026-09-27T19:43:13.703358-05:00",
+      "edition_id": 46,
+      "page_count": 488,
+      "updated_at": "2026-09-27T19:50:40.537712-05:00",
+      "total_count": 65,
+      "publisher_id": 42,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Alfaguara",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000030",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788466362085",
+      "book_id": 45,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000030-c78433dbae44.webp",
+      "narrators": [],
+      "book_title": "La casa de los espíritus",
+      "created_at": "2026-09-27T19:43:13.648571-05:00",
+      "edition_id": 45,
+      "page_count": 460,
+      "updated_at": "2026-09-27T19:50:40.522793-05:00",
+      "total_count": 65,
+      "publisher_id": 35,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Debolsillo",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000050",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789875666474",
+      "book_id": 44,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000050-beb18072d331.webp",
+      "narrators": [],
+      "book_title": "Ficciones",
+      "created_at": "2026-09-27T19:43:13.618224-05:00",
+      "edition_id": 44,
+      "page_count": 224,
+      "updated_at": "2026-09-27T19:50:40.509337-05:00",
+      "total_count": 65,
+      "publisher_id": 35,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Debolsillo",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000001",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9781915088406",
+      "book_id": 43,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000001-52ead14866be.webp",
+      "narrators": [],
+      "book_title": "El retrato de Dorian Gray",
+      "created_at": "2026-09-27T19:43:13.592918-05:00",
+      "edition_id": 43,
+      "page_count": 195,
+      "updated_at": "2026-09-27T19:50:40.494737-05:00",
+      "total_count": 65,
+      "publisher_id": 41,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Rosetta Edu",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000045",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9789585581685",
+      "book_id": 42,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000045-d2fd169f1556.webp",
+      "narrators": [],
+      "book_title": "El mito de Sísifo",
+      "created_at": "2026-09-27T19:43:13.564582-05:00",
+      "edition_id": 42,
+      "page_count": 160,
+      "updated_at": "2026-09-27T19:50:40.479814-05:00",
+      "total_count": 65,
+      "publisher_id": 40,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Literatura Random House",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000024",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788419190123",
+      "book_id": 41,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000024-edb8b7717a8b.webp",
+      "narrators": [],
+      "book_title": "El gran Gatsby",
+      "created_at": "2026-09-27T19:43:13.538955-05:00",
+      "edition_id": 41,
+      "page_count": 172,
+      "updated_at": "2026-09-27T19:50:40.464367-05:00",
+      "total_count": 65,
+      "publisher_id": 39,
+      "stock_actual": 5,
+      "cover_license": null,
+      "publisher_name": "Adapta Editorial S.L.",
+      "cover_source_url": null,
+      "publication_date": "2023-02-14",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000002",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9786070738548",
+      "book_id": 40,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000002-ca452ee580f4.webp",
+      "narrators": [],
+      "book_title": "El extranjero",
+      "created_at": "2026-09-27T19:43:13.496975-05:00",
+      "edition_id": 40,
+      "page_count": 160,
+      "updated_at": "2026-09-27T19:50:40.448099-05:00",
+      "total_count": 65,
+      "publisher_id": 38,
+      "stock_actual": 3,
+      "cover_license": null,
+      "publisher_name": "Booket",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000031",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": "9788466378581",
+      "book_id": 39,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000031-ef11f23f18e2.webp",
+      "narrators": [],
+      "book_title": "El amor en los tiempos del cólera",
+      "created_at": "2026-09-27T19:43:13.461035-05:00",
+      "edition_id": 39,
+      "page_count": 496,
+      "updated_at": "2026-09-27T19:50:40.430867-05:00",
+      "total_count": 65,
+      "publisher_id": 35,
+      "stock_actual": 4,
+      "cover_license": null,
+      "publisher_name": "Debolsillo",
+      "cover_source_url": null,
+      "publication_date": "2025-11-12",
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000029",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788432172281",
+      "book_id": 38,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000029-37c3121f9eca.webp",
+      "narrators": [],
+      "book_title": "Don Quijote de la Mancha",
+      "created_at": "2026-09-27T19:43:13.43179-05:00",
+      "edition_id": 38,
+      "page_count": 238,
+      "updated_at": "2026-09-27T19:50:40.415009-05:00",
+      "total_count": 65,
+      "publisher_id": 37,
+      "stock_actual": 3,
+      "cover_license": null,
+      "publisher_name": "Rialp",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000040",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788497592437",
+      "book_id": 37,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000040-e2551aada44a.webp",
+      "narrators": [],
+      "book_title": "Crónica de una muerte anunciada",
+      "created_at": "2026-09-27T19:43:13.394113-05:00",
+      "edition_id": 37,
+      "page_count": 144,
+      "updated_at": "2026-09-27T19:50:40.397147-05:00",
+      "total_count": 65,
+      "publisher_id": 35,
+      "stock_actual": 2,
+      "cover_license": null,
+      "publisher_name": "Debolsillo",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000038",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788490747681",
+      "book_id": 36,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000038-ff38aafc3811.webp",
+      "narrators": [],
+      "book_title": "Crimen y castigo",
+      "created_at": "2026-09-27T19:43:13.365784-05:00",
+      "edition_id": 36,
+      "page_count": 670,
+      "updated_at": "2026-09-27T19:50:40.382705-05:00",
+      "total_count": 65,
+      "publisher_id": 36,
+      "stock_actual": 4,
+      "cover_license": null,
+      "publisher_name": "Editorial Verbum",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000014",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": "9786287745131",
+      "book_id": 35,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000014-b456b439611b.webp",
+      "narrators": [],
+      "book_title": "Cien años de soledad",
+      "created_at": "2026-09-27T19:43:13.324198-05:00",
+      "edition_id": 35,
+      "page_count": 496,
+      "updated_at": "2026-09-27T19:50:40.364309-05:00",
+      "total_count": 65,
+      "publisher_id": 35,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Debolsillo",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "PLG-BK-000035",
+      "price": 20.0,
+      "state": "ACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": "9788478883608",
+      "book_id": 34,
+      "language": "es",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000035-b62b28e2ae01.webp",
+      "narrators": [],
+      "book_title": "Anna Karénina",
+      "created_at": "2026-09-27T19:43:13.263912-05:00",
+      "edition_id": 34,
+      "page_count": 992,
+      "updated_at": "2026-09-27T19:50:40.337116-05:00",
+      "total_count": 65,
+      "publisher_id": 34,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Salamandra",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I12-JOURNEY-D378A71A47D7",
+      "price": 99.99,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 19,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Journey d378a71a47d7 (reeditado)",
+      "created_at": "2026-09-27T17:32:57.977498-05:00",
+      "edition_id": 25,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.81685-05:00",
+      "total_count": 65,
+      "publisher_id": 15,
+      "stock_actual": 3,
+      "cover_license": null,
+      "publisher_name": "Editorial Journey d378a71a47d7",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I10-CONC-90DAFD61A302",
+      "price": 7.25,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 18,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro I10 90dafd61a302",
+      "created_at": "2026-09-27T17:32:55.750518-05:00",
+      "edition_id": 24,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.823239-05:00",
+      "total_count": 65,
+      "publisher_id": 14,
+      "stock_actual": 1,
+      "cover_license": null,
+      "publisher_name": "Editorial I10 90dafd61a302",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I9-CONC-011E9507140D",
+      "price": 11.4,
+      "state": "INACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": null,
+      "book_id": 17,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Conc 16377e10e857",
+      "created_at": "2026-09-27T17:32:55.34188-05:00",
+      "edition_id": 23,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.828127-05:00",
+      "total_count": 65,
+      "publisher_id": 13,
+      "stock_actual": 1,
+      "cover_license": null,
+      "publisher_name": "Editorial Conc 16377e10e857",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I8-CONC-16377E10E857",
+      "price": 7.25,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 17,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Conc 16377e10e857",
+      "created_at": "2026-09-27T17:32:55.247068-05:00",
+      "edition_id": 22,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.833513-05:00",
+      "total_count": 65,
+      "publisher_id": 13,
+      "stock_actual": 1,
+      "cover_license": null,
+      "publisher_name": "Editorial Conc 16377e10e857",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I8-CONC-F400098BD0EF",
+      "price": 7.25,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 16,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Conc f400098bd0ef",
+      "created_at": "2026-09-27T17:32:54.932944-05:00",
+      "edition_id": 21,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.838025-05:00",
+      "total_count": 65,
+      "publisher_id": 12,
+      "stock_actual": 1,
+      "cover_license": null,
+      "publisher_name": "Editorial Conc f400098bd0ef",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I8-CONC-838F861C4F93",
+      "price": 7.25,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 15,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Conc 838f861c4f93",
+      "created_at": "2026-09-27T17:32:54.618026-05:00",
+      "edition_id": 20,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.84205-05:00",
+      "total_count": 65,
+      "publisher_id": 11,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Editorial Conc 838f861c4f93",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I10-CONC-75887496CF76",
+      "price": 7.25,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 14,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro I10 75887496cf76",
+      "created_at": "2026-09-27T17:32:43.195186-05:00",
+      "edition_id": 19,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.845775-05:00",
+      "total_count": 65,
+      "publisher_id": 10,
+      "stock_actual": 1,
+      "cover_license": null,
+      "publisher_name": "Editorial I10 75887496cf76",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I9-CONC-F55A02379B96",
+      "price": 11.4,
+      "state": "INACTIVE",
+      "format": "HARDCOVER",
+      "isbn13": null,
+      "book_id": 13,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Conc 1c5360c6f36f",
+      "created_at": "2026-09-27T17:32:34.560556-05:00",
+      "edition_id": 18,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.849676-05:00",
+      "total_count": 65,
+      "publisher_id": 9,
+      "stock_actual": 1,
+      "cover_license": null,
+      "publisher_name": "Editorial Conc 1c5360c6f36f",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I8-CONC-1C5360C6F36F",
+      "price": 7.25,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 13,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Conc 1c5360c6f36f",
+      "created_at": "2026-09-27T17:32:34.459198-05:00",
+      "edition_id": 17,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.853503-05:00",
+      "total_count": 65,
+      "publisher_id": 9,
+      "stock_actual": 1,
+      "cover_license": null,
+      "publisher_name": "Editorial Conc 1c5360c6f36f",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    },
+    {
+      "sku": "I8-CONC-A64A2D805854",
+      "price": 7.25,
+      "state": "INACTIVE",
+      "format": "PAPERBACK",
+      "isbn13": null,
+      "book_id": 12,
+      "language": "es",
+      "cover_url": null,
+      "narrators": [],
+      "book_title": "Libro Conc a64a2d805854",
+      "created_at": "2026-09-27T17:32:30.247088-05:00",
+      "edition_id": 16,
+      "page_count": 100,
+      "updated_at": "2026-09-27T19:43:14.857453-05:00",
+      "total_count": 65,
+      "publisher_id": 8,
+      "stock_actual": 0,
+      "cover_license": null,
+      "publisher_name": "Editorial Conc a64a2d805854",
+      "cover_source_url": null,
+      "publication_date": null,
+      "cover_attribution": null,
+      "ebook_file_format": null,
+      "audio_duration_seconds": null
+    }
+  ],
+  "publishers": [
+    {
+      "name": "Linkgua Ediciones",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.787743-05:00",
+      "updated_at": "2026-09-27T19:43:14.787743-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 63
+    },
+    {
+      "name": "Editorial Ygriega",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.761763-05:00",
+      "updated_at": "2026-09-27T19:43:14.761763-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 62
+    },
+    {
+      "name": "Editorial Alma",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.692308-05:00",
+      "updated_at": "2026-09-27T19:43:14.692308-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 61
+    },
+    {
+      "name": "Innisfree",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.621518-05:00",
+      "updated_at": "2026-09-27T19:43:14.621518-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 60
+    },
+    {
+      "name": "McGraw-Hill",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.514181-05:00",
+      "updated_at": "2026-09-27T19:43:14.514181-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 59
+    },
+    {
+      "name": "Compañía Editorial Continental",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.47929-05:00",
+      "updated_at": "2026-09-27T19:43:14.47929-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 58
+    },
+    {
+      "name": "Ediciones Uniandes",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.44777-05:00",
+      "updated_at": "2026-09-27T19:43:14.44777-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 57
+    },
+    {
+      "name": "Ecoe Ediciones",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.421768-05:00",
+      "updated_at": "2026-09-27T19:43:14.421768-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 56
+    },
+    {
+      "name": "Universidad Externado de Colombia",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.392135-05:00",
+      "updated_at": "2026-09-27T19:43:14.392135-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 55
+    },
+    {
+      "name": "Pearson Educación",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.314037-05:00",
+      "updated_at": "2026-09-27T19:43:14.314037-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 54
+    },
+    {
+      "name": "Limusa Wiley",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.279675-05:00",
+      "updated_at": "2026-09-27T19:43:14.279675-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 53
+    },
+    {
+      "name": "Moshera",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.157551-05:00",
+      "updated_at": "2026-09-27T19:43:14.157551-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 52
+    },
+    {
+      "name": "Editorial Reverté",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.135802-05:00",
+      "updated_at": "2026-09-27T19:43:14.135802-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 51
+    },
+    {
+      "name": "Pearson",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.11311-05:00",
+      "updated_at": "2026-09-27T19:43:14.11311-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 50
+    },
+    {
+      "name": "Cengage Learning",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.071669-05:00",
+      "updated_at": "2026-09-27T19:43:14.071669-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 49
+    },
+    {
+      "name": "McGraw-Hill Interamericana de España",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:14.022246-05:00",
+      "updated_at": "2026-09-27T19:43:14.022246-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 48
+    },
+    {
+      "name": "Grupo Editorial Patria",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.988878-05:00",
+      "updated_at": "2026-09-27T19:43:13.988878-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 47
+    },
+    {
+      "name": "RM",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.869759-05:00",
+      "updated_at": "2026-09-27T19:43:13.869759-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 46
+    },
+    {
+      "name": "Austral",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.838724-05:00",
+      "updated_at": "2026-09-27T19:43:13.838724-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 45
+    },
+    {
+      "name": "Ardea",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.790431-05:00",
+      "updated_at": "2026-09-27T19:43:13.790431-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 44
+    },
+    {
+      "name": "Plutón Ediciones",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.758179-05:00",
+      "updated_at": "2026-09-27T19:43:13.758179-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 43
+    },
+    {
+      "name": "Alfaguara",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.695184-05:00",
+      "updated_at": "2026-09-27T19:43:13.695184-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 42
+    },
+    {
+      "name": "Rosetta Edu",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.585273-05:00",
+      "updated_at": "2026-09-27T19:43:13.585273-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 41
+    },
+    {
+      "name": "Literatura Random House",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.557423-05:00",
+      "updated_at": "2026-09-27T19:43:13.557423-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 40
+    },
+    {
+      "name": "Adapta Editorial S.L.",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.529853-05:00",
+      "updated_at": "2026-09-27T19:43:13.529853-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 39
+    },
+    {
+      "name": "Booket",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.487827-05:00",
+      "updated_at": "2026-09-27T19:43:13.487827-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 38
+    },
+    {
+      "name": "Rialp",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.423646-05:00",
+      "updated_at": "2026-09-27T19:43:13.423646-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 37
+    },
+    {
+      "name": "Editorial Verbum",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.356463-05:00",
+      "updated_at": "2026-09-27T19:43:13.356463-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 36
+    },
+    {
+      "name": "Debolsillo",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.314152-05:00",
+      "updated_at": "2026-09-27T19:43:13.314152-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 35
+    },
+    {
+      "name": "Salamandra",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.240424-05:00",
+      "updated_at": "2026-09-27T19:43:13.240424-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 34
+    },
+    {
+      "name": "Editorial Journey d378a71a47d7",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:57.9207-05:00",
+      "updated_at": "2026-09-27T17:32:57.9207-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 15
+    },
+    {
+      "name": "Editorial I10 90dafd61a302",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:55.750518-05:00",
+      "updated_at": "2026-09-27T17:32:55.750518-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 14
+    },
+    {
+      "name": "Editorial Conc 16377e10e857",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:55.247068-05:00",
+      "updated_at": "2026-09-27T17:32:55.247068-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 13
+    },
+    {
+      "name": "Editorial Conc f400098bd0ef",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:54.932944-05:00",
+      "updated_at": "2026-09-27T17:32:54.932944-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 12
+    },
+    {
+      "name": "Editorial Conc 838f861c4f93",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:54.618026-05:00",
+      "updated_at": "2026-09-27T17:32:54.618026-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 11
+    },
+    {
+      "name": "Editorial I10 75887496cf76",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:43.195186-05:00",
+      "updated_at": "2026-09-27T17:32:43.195186-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 10
+    },
+    {
+      "name": "Editorial Conc 1c5360c6f36f",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:34.459198-05:00",
+      "updated_at": "2026-09-27T17:32:34.459198-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 9
+    },
+    {
+      "name": "Editorial Conc a64a2d805854",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:30.247088-05:00",
+      "updated_at": "2026-09-27T17:32:30.247088-05:00",
+      "description": null,
+      "total_count": 38,
+      "publisher_id": 8
+    }
+  ],
+  "authors_count": 62,
+  "authors": [
+    {
+      "name": "Ludwig Wittgenstein",
+      "state": "ACTIVE",
+      "author_id": 87,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.780871-05:00",
+      "updated_at": "2026-09-27T19:43:14.780871-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "John Stuart Mill",
+      "state": "ACTIVE",
+      "author_id": 86,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.751794-05:00",
+      "updated_at": "2026-09-27T19:43:14.751794-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Marco Aurelio",
+      "state": "ACTIVE",
+      "author_id": 85,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.727576-05:00",
+      "updated_at": "2026-09-27T19:43:14.727576-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Platón",
+      "state": "ACTIVE",
+      "author_id": 84,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.667072-05:00",
+      "updated_at": "2026-09-27T19:43:14.667072-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Aristóteles",
+      "state": "ACTIVE",
+      "author_id": 83,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.634476-05:00",
+      "updated_at": "2026-09-27T19:43:14.634476-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Nicolás Maquiavelo",
+      "state": "ACTIVE",
+      "author_id": 82,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.614365-05:00",
+      "updated_at": "2026-09-27T19:43:14.614365-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "René Descartes",
+      "state": "ACTIVE",
+      "author_id": 81,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.599194-05:00",
+      "updated_at": "2026-09-27T19:43:14.599194-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Immanuel Kant",
+      "state": "ACTIVE",
+      "author_id": 80,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.569356-05:00",
+      "updated_at": "2026-09-27T19:43:14.569356-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Friedrich Nietzsche",
+      "state": "ACTIVE",
+      "author_id": 79,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.549909-05:00",
+      "updated_at": "2026-09-27T19:43:14.549909-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Raymond P. Canale",
+      "state": "ACTIVE",
+      "author_id": 78,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.50095-05:00",
+      "updated_at": "2026-09-27T19:43:14.50095-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Steven C. Chapra",
+      "state": "ACTIVE",
+      "author_id": 77,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.495829-05:00",
+      "updated_at": "2026-09-27T19:43:14.495829-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Federico C. Domínguez Sánchez",
+      "state": "ACTIVE",
+      "author_id": 76,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.470059-05:00",
+      "updated_at": "2026-09-27T19:43:14.470059-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Antonio Nieves Hurtado",
+      "state": "ACTIVE",
+      "author_id": 75,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.465423-05:00",
+      "updated_at": "2026-09-27T19:43:14.465423-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Andrés Forero Cuervo",
+      "state": "ACTIVE",
+      "author_id": 74,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.438416-05:00",
+      "updated_at": "2026-09-27T19:43:14.438416-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Óscar Danilo Montoya Giraldo",
+      "state": "ACTIVE",
+      "author_id": 73,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.41344-05:00",
+      "updated_at": "2026-09-27T19:43:14.41344-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Carlos Alberto Ramírez Vanegas",
+      "state": "ACTIVE",
+      "author_id": 72,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.409902-05:00",
+      "updated_at": "2026-09-27T19:43:14.409902-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "José Alfredo Collazos Sánchez",
+      "state": "ACTIVE",
+      "author_id": 71,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.406196-05:00",
+      "updated_at": "2026-09-27T19:43:14.406196-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Juan Esteban Jacobo Vásquez",
+      "state": "ACTIVE",
+      "author_id": 70,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.37948-05:00",
+      "updated_at": "2026-09-27T19:43:14.37948-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Dennis G. Zill",
+      "state": "ACTIVE",
+      "author_id": 69,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.329153-05:00",
+      "updated_at": "2026-09-27T19:43:14.329153-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Arthur David Snider",
+      "state": "ACTIVE",
+      "author_id": 68,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.307402-05:00",
+      "updated_at": "2026-09-27T19:43:14.307402-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Edward B. Saff",
+      "state": "ACTIVE",
+      "author_id": 67,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.303623-05:00",
+      "updated_at": "2026-09-27T19:43:14.303623-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "R. Kent Nagle",
+      "state": "ACTIVE",
+      "author_id": 66,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.298682-05:00",
+      "updated_at": "2026-09-27T19:43:14.298682-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Richard C. DiPrima",
+      "state": "ACTIVE",
+      "author_id": 65,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.269184-05:00",
+      "updated_at": "2026-09-27T19:43:14.269184-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "William E. Boyce",
+      "state": "ACTIVE",
+      "author_id": 64,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.264245-05:00",
+      "updated_at": "2026-09-27T19:43:14.264245-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "César Junior Esteban Chávez",
+      "state": "ACTIVE",
+      "author_id": 63,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.240192-05:00",
+      "updated_at": "2026-09-27T19:43:14.240192-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "J. Douglas Faires",
+      "state": "ACTIVE",
+      "author_id": 62,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.217465-05:00",
+      "updated_at": "2026-09-27T19:43:14.217465-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Richard L. Burden",
+      "state": "ACTIVE",
+      "author_id": 61,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.21215-05:00",
+      "updated_at": "2026-09-27T19:43:14.21215-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Moisés Lázaro Carrión",
+      "state": "ACTIVE",
+      "author_id": 60,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.150634-05:00",
+      "updated_at": "2026-09-27T19:43:14.150634-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Tom M. Apostol",
+      "state": "ACTIVE",
+      "author_id": 59,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.12751-05:00",
+      "updated_at": "2026-09-27T19:43:14.12751-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Judi J. McDonald",
+      "state": "ACTIVE",
+      "author_id": 58,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.106113-05:00",
+      "updated_at": "2026-09-27T19:43:14.106113-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Steven R. Lay",
+      "state": "ACTIVE",
+      "author_id": 57,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.10242-05:00",
+      "updated_at": "2026-09-27T19:43:14.10242-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "David C. Lay",
+      "state": "ACTIVE",
+      "author_id": 56,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.098803-05:00",
+      "updated_at": "2026-09-27T19:43:14.098803-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "David Poole",
+      "state": "ACTIVE",
+      "author_id": 55,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.047676-05:00",
+      "updated_at": "2026-09-27T19:43:14.047676-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Seymour Lipschutz",
+      "state": "ACTIVE",
+      "author_id": 54,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:14.011479-05:00",
+      "updated_at": "2026-09-27T19:43:14.011479-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Aurelio Baldor",
+      "state": "ACTIVE",
+      "author_id": 53,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.977199-05:00",
+      "updated_at": "2026-09-27T19:43:13.977199-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Javier Cercas",
+      "state": "ACTIVE",
+      "author_id": 52,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.947545-05:00",
+      "updated_at": "2026-09-27T19:43:13.947545-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "William Shakespeare",
+      "state": "ACTIVE",
+      "author_id": 51,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.920988-05:00",
+      "updated_at": "2026-09-27T19:43:13.920988-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Julio Cortázar",
+      "state": "ACTIVE",
+      "author_id": 50,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.893159-05:00",
+      "updated_at": "2026-09-27T19:43:13.893159-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Juan Rulfo",
+      "state": "ACTIVE",
+      "author_id": 49,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.85997-05:00",
+      "updated_at": "2026-09-27T19:43:13.85997-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Jane Austen",
+      "state": "ACTIVE",
+      "author_id": 48,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.831589-05:00",
+      "updated_at": "2026-09-27T19:43:13.831589-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Herman Melville",
+      "state": "ACTIVE",
+      "author_id": 47,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.808542-05:00",
+      "updated_at": "2026-09-27T19:43:13.808542-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Gustave Flaubert",
+      "state": "ACTIVE",
+      "author_id": 46,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.781652-05:00",
+      "updated_at": "2026-09-27T19:43:13.781652-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Victor Hugo",
+      "state": "ACTIVE",
+      "author_id": 45,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.746453-05:00",
+      "updated_at": "2026-09-27T19:43:13.746453-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Homero",
+      "state": "ACTIVE",
+      "author_id": 44,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.718377-05:00",
+      "updated_at": "2026-09-27T19:43:13.718377-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Mario Vargas Llosa",
+      "state": "ACTIVE",
+      "author_id": 43,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.684651-05:00",
+      "updated_at": "2026-09-27T19:43:13.684651-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Isabel Allende",
+      "state": "ACTIVE",
+      "author_id": 42,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.633283-05:00",
+      "updated_at": "2026-09-27T19:43:13.633283-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Jorge Luis Borges",
+      "state": "ACTIVE",
+      "author_id": 41,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.605224-05:00",
+      "updated_at": "2026-09-27T19:43:13.605224-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Oscar Wilde",
+      "state": "ACTIVE",
+      "author_id": 40,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.576292-05:00",
+      "updated_at": "2026-09-27T19:43:13.576292-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "F. Scott Fitzgerald",
+      "state": "ACTIVE",
+      "author_id": 39,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.518008-05:00",
+      "updated_at": "2026-09-27T19:43:13.518008-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Albert Camus",
+      "state": "ACTIVE",
+      "author_id": 38,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.476174-05:00",
+      "updated_at": "2026-09-27T19:43:13.476174-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Miguel de Cervantes",
+      "state": "ACTIVE",
+      "author_id": 37,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.410742-05:00",
+      "updated_at": "2026-09-27T19:43:13.410742-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Fiódor Dostoyevski",
+      "state": "ACTIVE",
+      "author_id": 36,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.340206-05:00",
+      "updated_at": "2026-09-27T19:43:13.340206-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Gabriel García Márquez",
+      "state": "ACTIVE",
+      "author_id": 35,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.303147-05:00",
+      "updated_at": "2026-09-27T19:43:13.303147-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Lev Tolstói",
+      "state": "ACTIVE",
+      "author_id": 34,
+      "biography": null,
+      "created_at": "2026-09-27T19:43:13.200591-05:00",
+      "updated_at": "2026-09-27T19:43:13.200591-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor Journey d378a71a47d7",
+      "state": "ACTIVE",
+      "author_id": 15,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:57.908621-05:00",
+      "updated_at": "2026-09-27T17:32:57.908621-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor I10 90dafd61a302",
+      "state": "ACTIVE",
+      "author_id": 14,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:55.750518-05:00",
+      "updated_at": "2026-09-27T17:32:55.750518-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor Conc 16377e10e857",
+      "state": "ACTIVE",
+      "author_id": 13,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:55.247068-05:00",
+      "updated_at": "2026-09-27T17:32:55.247068-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor Conc f400098bd0ef",
+      "state": "ACTIVE",
+      "author_id": 12,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:54.932944-05:00",
+      "updated_at": "2026-09-27T17:32:54.932944-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor Conc 838f861c4f93",
+      "state": "ACTIVE",
+      "author_id": 11,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:54.618026-05:00",
+      "updated_at": "2026-09-27T17:32:54.618026-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor I10 75887496cf76",
+      "state": "ACTIVE",
+      "author_id": 10,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:43.195186-05:00",
+      "updated_at": "2026-09-27T17:32:43.195186-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor Conc 1c5360c6f36f",
+      "state": "ACTIVE",
+      "author_id": 9,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:34.459198-05:00",
+      "updated_at": "2026-09-27T17:32:34.459198-05:00",
+      "total_count": 62
+    },
+    {
+      "name": "Autor Conc a64a2d805854",
+      "state": "ACTIVE",
+      "author_id": 8,
+      "biography": null,
+      "created_at": "2026-09-27T17:32:30.247088-05:00",
+      "updated_at": "2026-09-27T17:32:30.247088-05:00",
+      "total_count": 62
+    }
+  ],
+  "categories_count": 11,
+  "categories": [
+    {
+      "name": "Filosofía",
+      "slug": "filosofia",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.18083-05:00",
+      "updated_at": "2026-09-27T19:43:13.18083-05:00",
+      "category_id": 36,
+      "description": "Categoría de catálogo para datos locales de desarrollo.",
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Matemáticas",
+      "slug": "matematicas",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.173058-05:00",
+      "updated_at": "2026-09-27T19:43:13.173058-05:00",
+      "category_id": 35,
+      "description": "Categoría de catálogo para datos locales de desarrollo.",
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Literatura",
+      "slug": "literatura",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T19:43:13.16019-05:00",
+      "updated_at": "2026-09-27T19:43:13.16019-05:00",
+      "category_id": 34,
+      "description": "Categoría de catálogo para datos locales de desarrollo.",
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría Journey d378a71a47d7",
+      "slug": "i12-journey-d378a71a47d7",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:57.934569-05:00",
+      "updated_at": "2026-09-27T17:32:57.934569-05:00",
+      "category_id": 20,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría I10 90dafd61a302",
+      "slug": "i10-conc-90dafd61a302",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:55.750518-05:00",
+      "updated_at": "2026-09-27T17:32:55.750518-05:00",
+      "category_id": 19,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría Conc 16377e10e857",
+      "slug": "i8-conc-16377e10e857",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:55.247068-05:00",
+      "updated_at": "2026-09-27T17:32:55.247068-05:00",
+      "category_id": 18,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría Conc f400098bd0ef",
+      "slug": "i8-conc-f400098bd0ef",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:54.932944-05:00",
+      "updated_at": "2026-09-27T17:32:54.932944-05:00",
+      "category_id": 17,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría Conc 838f861c4f93",
+      "slug": "i8-conc-838f861c4f93",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:54.618026-05:00",
+      "updated_at": "2026-09-27T17:32:54.618026-05:00",
+      "category_id": 16,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría I10 75887496cf76",
+      "slug": "i10-conc-75887496cf76",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:43.195186-05:00",
+      "updated_at": "2026-09-27T17:32:43.195186-05:00",
+      "category_id": 15,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría Conc 1c5360c6f36f",
+      "slug": "i8-conc-1c5360c6f36f",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:34.459198-05:00",
+      "updated_at": "2026-09-27T17:32:34.459198-05:00",
+      "category_id": 14,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    },
+    {
+      "name": "Categoría Conc a64a2d805854",
+      "slug": "i8-conc-a64a2d805854",
+      "state": "ACTIVE",
+      "created_at": "2026-09-27T17:32:30.247088-05:00",
+      "updated_at": "2026-09-27T17:32:30.247088-05:00",
+      "category_id": 13,
+      "description": null,
+      "parent_name": null,
+      "total_count": 11,
+      "parent_category_id": null
+    }
+  ]
+}

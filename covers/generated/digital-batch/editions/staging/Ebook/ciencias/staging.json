@@ -1,0 +1,2501 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-a5f63174410bc51e.webp",
+      "libro": {
+        "titulo": "Biología cuántica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Miret Artés, Salvador",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "CSIC : Los Libros de la Catarata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000308",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000308-2377abf961da.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233731",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a5f63174410bc51e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "255",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-cd6a005ba56e7da2"
+        },
+        "author_bindings": [
+          {
+            "name": "Miret Artés, Salvador",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Miret Artés, Salvador",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+            "sha256": "10cdf81d52991fdbd07dea840b8565061e4ca85b8fde41cb53027cb71d9d70a4",
+            "observed_text": "Madrid : CSIC : Los Libros de la Catarata, [2019]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "10cdf81d52991fdbd07dea840b8565061e4ca85b8fde41cb53027cb71d9d70a4",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a5f63174410bc51e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+            "sha256": "10cdf81d52991fdbd07dea840b8565061e4ca85b8fde41cb53027cb71d9d70a4",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "10cdf81d52991fdbd07dea840b8565061e4ca85b8fde41cb53027cb71d9d70a4",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a5f63174410bc51e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233731",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 127,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233731",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología cuántica - Miret Artés, Salvador.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a5f63174410bc51e.webp",
+            "cover_sha256": "2377abf961dae386c62673c355b5d7451d826b5ac5d069ce2f032b044596dde3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Miret Artés, Salvador",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 127,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233731",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología cuántica - Miret Artés, Salvador.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a5f63174410bc51e.webp",
+            "cover_sha256": "2377abf961dae386c62673c355b5d7451d826b5ac5d069ce2f032b044596dde3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 127,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233731",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología cuántica - Miret Artés, Salvador.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a5f63174410bc51e.webp",
+            "cover_sha256": "2377abf961dae386c62673c355b5d7451d826b5ac5d069ce2f032b044596dde3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 127,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233731",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Biología cuántica - Miret Artés, Salvador.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a5f63174410bc51e.webp",
+          "cover_sha256": "2377abf961dae386c62673c355b5d7451d826b5ac5d069ce2f032b044596dde3",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "257",
+        "imported_book_id": "255"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-9e0170ed63685c45.webp",
+      "libro": {
+        "titulo": "Biología de hongos",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cepero, María Caridad",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de los Andes",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000104",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000104-0483d9221173.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69414",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-9e0170ed63685c45",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "256",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-23e99a9aee6f3c0c"
+        },
+        "author_bindings": [
+          {
+            "name": "Cepero, María Caridad",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cepero, María Caridad",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+            "sha256": "6958eed77d127fef3fa1cc7a2dea724e6def40d2ebfe25410ad1adb2f1cfe3c7",
+            "observed_text": "Bogotá : Universidad de los Andes, 2012.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "6958eed77d127fef3fa1cc7a2dea724e6def40d2ebfe25410ad1adb2f1cfe3c7",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9e0170ed63685c45.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+            "sha256": "6958eed77d127fef3fa1cc7a2dea724e6def40d2ebfe25410ad1adb2f1cfe3c7",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "6958eed77d127fef3fa1cc7a2dea724e6def40d2ebfe25410ad1adb2f1cfe3c7",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9e0170ed63685c45.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69414",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 128,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69414",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología de hongos - Cepero, María Caridad.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9e0170ed63685c45.webp",
+            "cover_sha256": "0483d92211731312dd114a09012896fc8368d362fffb752c76b8441a26365853",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cepero, María Caridad",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 128,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69414",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología de hongos - Cepero, María Caridad.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9e0170ed63685c45.webp",
+            "cover_sha256": "0483d92211731312dd114a09012896fc8368d362fffb752c76b8441a26365853",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 128,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69414",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología de hongos - Cepero, María Caridad.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9e0170ed63685c45.webp",
+            "cover_sha256": "0483d92211731312dd114a09012896fc8368d362fffb752c76b8441a26365853",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 128,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69414",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Biología de hongos - Cepero, María Caridad.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9e0170ed63685c45.webp",
+          "cover_sha256": "0483d92211731312dd114a09012896fc8368d362fffb752c76b8441a26365853",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "258",
+        "imported_book_id": "256"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-8598c47d271fd83e.webp",
+      "libro": {
+        "titulo": "Biología para ciencias ambientales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pallotti Sagripanti, C. G.",
+            "orden": 1
+          },
+          {
+            "nombre": "Sanchis Duato, E.",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universitat Politècnica de València",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000179",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000179-1f00d4d34440.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/153581",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-8598c47d271fd83e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "257",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-9ab8fdebbd148bc8"
+        },
+        "author_bindings": [
+          {
+            "name": "Pallotti Sagripanti, C. G.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Sanchis Duato, E.",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pallotti Sagripanti, C. G.; Sanchis Duato, E.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+            "sha256": "86c23c825f8bb723007d7206edd80e231d3a5789d858d1958d9712f29a644e53",
+            "observed_text": "Valencia : Universitat Politècnica de València, 2020.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "86c23c825f8bb723007d7206edd80e231d3a5789d858d1958d9712f29a644e53",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8598c47d271fd83e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+            "sha256": "86c23c825f8bb723007d7206edd80e231d3a5789d858d1958d9712f29a644e53",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "86c23c825f8bb723007d7206edd80e231d3a5789d858d1958d9712f29a644e53",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-8598c47d271fd83e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB153581",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 130,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/153581",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología para ciencias ambientales - Pallotti Sagripanti, C. G.; Sanchis Duato, E..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-8598c47d271fd83e.webp",
+            "cover_sha256": "1f00d4d3444090f26b0e8206054329cf94b86f1c7a0ab52ff32ab682a4dcd718",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pallotti Sagripanti, C. G.; Sanchis Duato, E.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 130,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/153581",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología para ciencias ambientales - Pallotti Sagripanti, C. G.; Sanchis Duato, E..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-8598c47d271fd83e.webp",
+            "cover_sha256": "1f00d4d3444090f26b0e8206054329cf94b86f1c7a0ab52ff32ab682a4dcd718",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 130,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/153581",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Biología para ciencias ambientales - Pallotti Sagripanti, C. G.; Sanchis Duato, E..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-8598c47d271fd83e.webp",
+            "cover_sha256": "1f00d4d3444090f26b0e8206054329cf94b86f1c7a0ab52ff32ab682a4dcd718",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 130,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/153581",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Biología para ciencias ambientales - Pallotti Sagripanti, C. G.; Sanchis Duato, E..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-8598c47d271fd83e.webp",
+          "cover_sha256": "1f00d4d3444090f26b0e8206054329cf94b86f1c7a0ab52ff32ab682a4dcd718",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "259",
+        "imported_book_id": "257"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-9fd94e585e52923a.webp",
+      "libro": {
+        "titulo": "Ecología química",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Anaya Lang, Ana Luisa",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Plaza y Valdés, S.A. de C.V",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000116",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000116-c88b07e0857a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75520",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-9fd94e585e52923a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "258",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-618b02b6c9c1843c"
+        },
+        "author_bindings": [
+          {
+            "name": "Anaya Lang, Ana Luisa",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Anaya Lang, Ana Luisa",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+            "sha256": "cda99a7d4de9c77d4a524fb7253320ce595160d3c54bf9947639e4eef1f21228",
+            "observed_text": "México D.F. : Plaza y Valdés, S.A. de C.V., 2003.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "cda99a7d4de9c77d4a524fb7253320ce595160d3c54bf9947639e4eef1f21228",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9fd94e585e52923a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+            "sha256": "cda99a7d4de9c77d4a524fb7253320ce595160d3c54bf9947639e4eef1f21228",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "cda99a7d4de9c77d4a524fb7253320ce595160d3c54bf9947639e4eef1f21228",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-9fd94e585e52923a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75520",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 131,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75520",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Ecología química - Anaya Lang, Ana Luisa.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9fd94e585e52923a.webp",
+            "cover_sha256": "c88b07e0857ad040e0b2079faa81f702ebe7d7777e24da2a1ae94180e261d79f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Anaya Lang, Ana Luisa",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 131,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75520",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Ecología química - Anaya Lang, Ana Luisa.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9fd94e585e52923a.webp",
+            "cover_sha256": "c88b07e0857ad040e0b2079faa81f702ebe7d7777e24da2a1ae94180e261d79f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 131,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75520",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Ecología química - Anaya Lang, Ana Luisa.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9fd94e585e52923a.webp",
+            "cover_sha256": "c88b07e0857ad040e0b2079faa81f702ebe7d7777e24da2a1ae94180e261d79f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 131,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75520",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Ecología química - Anaya Lang, Ana Luisa.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9fd94e585e52923a.webp",
+          "cover_sha256": "c88b07e0857ad040e0b2079faa81f702ebe7d7777e24da2a1ae94180e261d79f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "260",
+        "imported_book_id": "258"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-406219fdd9361588.webp",
+      "libro": {
+        "titulo": "Física de la música",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Félix, Julián",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Cid Editor",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000278",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000278-6f4e1379b685.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35789",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-406219fdd9361588",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "259",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ac1e37be08901431"
+        },
+        "author_bindings": [
+          {
+            "name": "Félix, Julián",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Félix, Julián",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+            "sha256": "d96fe1810d267bec39e29c53756b39adb4da113b134f11583c5617e8e3dc1281",
+            "observed_text": "[Santa Fe] : El Cid Editor, 2004.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "d96fe1810d267bec39e29c53756b39adb4da113b134f11583c5617e8e3dc1281",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-406219fdd9361588.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+            "sha256": "d96fe1810d267bec39e29c53756b39adb4da113b134f11583c5617e8e3dc1281",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "d96fe1810d267bec39e29c53756b39adb4da113b134f11583c5617e8e3dc1281",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-406219fdd9361588.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35789",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 133,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35789",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física de la música - Félix, Julián.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-406219fdd9361588.webp",
+            "cover_sha256": "6f4e1379b6854112d5e9b20169b8873cfb4d73727a83dafe9e96a49d1a074686",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Félix, Julián",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 133,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35789",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física de la música - Félix, Julián.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-406219fdd9361588.webp",
+            "cover_sha256": "6f4e1379b6854112d5e9b20169b8873cfb4d73727a83dafe9e96a49d1a074686",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 133,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35789",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física de la música - Félix, Julián.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-406219fdd9361588.webp",
+            "cover_sha256": "6f4e1379b6854112d5e9b20169b8873cfb4d73727a83dafe9e96a49d1a074686",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 133,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35789",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Física de la música - Félix, Julián.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-406219fdd9361588.webp",
+          "cover_sha256": "6f4e1379b6854112d5e9b20169b8873cfb4d73727a83dafe9e96a49d1a074686",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "261",
+        "imported_book_id": "259"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-afdd523836273442.webp",
+      "libro": {
+        "titulo": "Física del estado sólido",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Meléndez Martínez, Juan J.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Extremadura, Servicio de Publicaciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000206",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000206-7966b219bf65.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289288",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-afdd523836273442",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "260",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-9de7d51dfa1f2a05"
+        },
+        "author_bindings": [
+          {
+            "name": "Meléndez Martínez, Juan J.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Meléndez Martínez, Juan J.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+            "observed_text": "Meléndez Martínez, J. J. (2012). Física del estado sólido. Universidad de Extremadura, Servicio de Publicaciones.",
+            "basis": "Catálogo oficial del editor; título y autoría cotejados con portada original.",
+            "sha256": "780b68f8e4bd792dd9d1b6eff06a839426389bf2efe96b6e79c92aeadf0650b6",
+            "capture_sha256": "780b68f8e4bd792dd9d1b6eff06a839426389bf2efe96b6e79c92aeadf0650b6",
+            "capture_path": "/tmp/pliego-digital-completion/science/primary-331661eab1cc4d23.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+            "observed_text": "Idioma Castellano",
+            "basis": "Idioma bibliográfico explícito en fuente primaria.",
+            "sha256": "780b68f8e4bd792dd9d1b6eff06a839426389bf2efe96b6e79c92aeadf0650b6",
+            "capture_sha256": "780b68f8e4bd792dd9d1b6eff06a839426389bf2efe96b6e79c92aeadf0650b6",
+            "capture_path": "/tmp/pliego-digital-completion/science/primary-331661eab1cc4d23.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://publicauex.unex.es/libro/fisica-del-estado-solido_135321/",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 134,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289288",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física del estado sólido - Meléndez Martínez, Juan J..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-afdd523836273442.webp",
+            "cover_sha256": "7966b219bf651f4bb4c5b0366e70d15dd5c4d12a3ab8dabcd3d782275651cdf4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Meléndez Martínez, Juan J.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 134,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289288",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física del estado sólido - Meléndez Martínez, Juan J..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-afdd523836273442.webp",
+            "cover_sha256": "7966b219bf651f4bb4c5b0366e70d15dd5c4d12a3ab8dabcd3d782275651cdf4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 134,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289288",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física del estado sólido - Meléndez Martínez, Juan J..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-afdd523836273442.webp",
+            "cover_sha256": "7966b219bf651f4bb4c5b0366e70d15dd5c4d12a3ab8dabcd3d782275651cdf4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 134,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289288",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Física del estado sólido - Meléndez Martínez, Juan J..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-afdd523836273442.webp",
+          "cover_sha256": "7966b219bf651f4bb4c5b0366e70d15dd5c4d12a3ab8dabcd3d782275651cdf4",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "262",
+        "imported_book_id": "260"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-a9dc9b16ce0ee11b.webp",
+      "libro": {
+        "titulo": "Física experimental",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ardila, Ángel Miguel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Física",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000222",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000222-45d8513c57dc.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128446",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a9dc9b16ce0ee11b",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "261",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d998da13a14a70df"
+        },
+        "author_bindings": [
+          {
+            "name": "Ardila, Ángel Miguel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ardila, Ángel Miguel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+            "sha256": "77ace4aa2ec648e812bfedc9bfacf3699ce2142a968218c8cc00e18ad32b290c",
+            "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Física, 2007.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "77ace4aa2ec648e812bfedc9bfacf3699ce2142a968218c8cc00e18ad32b290c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9dc9b16ce0ee11b.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+            "sha256": "77ace4aa2ec648e812bfedc9bfacf3699ce2142a968218c8cc00e18ad32b290c",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "77ace4aa2ec648e812bfedc9bfacf3699ce2142a968218c8cc00e18ad32b290c",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a9dc9b16ce0ee11b.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128446",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 135,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física experimental - Ardila, Ángel Miguel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a9dc9b16ce0ee11b.webp",
+            "cover_sha256": "45d8513c57dc8bb90f55e887944ac9ea01ea3d47e44ff787babe076465a3682f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ardila, Ángel Miguel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 135,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física experimental - Ardila, Ángel Miguel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a9dc9b16ce0ee11b.webp",
+            "cover_sha256": "45d8513c57dc8bb90f55e887944ac9ea01ea3d47e44ff787babe076465a3682f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 135,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física experimental - Ardila, Ángel Miguel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a9dc9b16ce0ee11b.webp",
+            "cover_sha256": "45d8513c57dc8bb90f55e887944ac9ea01ea3d47e44ff787babe076465a3682f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 135,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128446",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Física experimental - Ardila, Ángel Miguel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a9dc9b16ce0ee11b.webp",
+          "cover_sha256": "45d8513c57dc8bb90f55e887944ac9ea01ea3d47e44ff787babe076465a3682f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "263",
+        "imported_book_id": "261"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-4f4ad6da3cd6e43c.webp",
+      "libro": {
+        "titulo": "Física fundamental",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Gómez Espíndola, José del Carmen",
+            "orden": 1
+          },
+          {
+            "nombre": "González Pineda, Campo Elías",
+            "orden": 2
+          },
+          {
+            "nombre": "Mayoral Ramírez, César Alberto",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ecoe Ediciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000258",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000258-beda915bf876.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131876",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-4f4ad6da3cd6e43c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "262",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-0080210d9be96597"
+        },
+        "author_bindings": [
+          {
+            "name": "Gómez Espíndola, José del Carmen",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "González Pineda, Campo Elías",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Mayoral Ramírez, César Alberto",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Gómez Espíndola, José del Carmen; González Pineda, Campo Elías; Mayoral Ramírez, César Alberto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+            "sha256": "fb439e61dfca7c6a1c6b9f50b679d01b3855dc3593c36ecfe4994427cf334d24",
+            "observed_text": "Bogotá : Ecoe Ediciones, 2016.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "fb439e61dfca7c6a1c6b9f50b679d01b3855dc3593c36ecfe4994427cf334d24",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4f4ad6da3cd6e43c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+            "sha256": "fb439e61dfca7c6a1c6b9f50b679d01b3855dc3593c36ecfe4994427cf334d24",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "fb439e61dfca7c6a1c6b9f50b679d01b3855dc3593c36ecfe4994427cf334d24",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4f4ad6da3cd6e43c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131876",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 136,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131876",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física fundamental - Gómez Espíndola, José del Carmen; González Pineda, Campo Elías; Mayoral Ramírez, César Alberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-4f4ad6da3cd6e43c.webp",
+            "cover_sha256": "beda915bf876c46a6ab5095efa9b8495c386f26ab0962e6e802b9cbb9e6f5a46",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Gómez Espíndola, José del Carmen; González Pineda, Campo Elías; Mayoral Ramírez, César Alberto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 136,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131876",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física fundamental - Gómez Espíndola, José del Carmen; González Pineda, Campo Elías; Mayoral Ramírez, César Alberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-4f4ad6da3cd6e43c.webp",
+            "cover_sha256": "beda915bf876c46a6ab5095efa9b8495c386f26ab0962e6e802b9cbb9e6f5a46",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 136,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131876",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física fundamental - Gómez Espíndola, José del Carmen; González Pineda, Campo Elías; Mayoral Ramírez, César Alberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-4f4ad6da3cd6e43c.webp",
+            "cover_sha256": "beda915bf876c46a6ab5095efa9b8495c386f26ab0962e6e802b9cbb9e6f5a46",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 136,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131876",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Física fundamental - Gómez Espíndola, José del Carmen; González Pineda, Campo Elías; Mayoral Ramírez, César Alberto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-4f4ad6da3cd6e43c.webp",
+          "cover_sha256": "beda915bf876c46a6ab5095efa9b8495c386f26ab0962e6e802b9cbb9e6f5a46",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "264",
+        "imported_book_id": "262"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-ffd0c6ebbc7e8688.webp",
+      "libro": {
+        "titulo": "Física y programación",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Merino Arranz, David",
+            "orden": 1
+          },
+          {
+            "nombre": "Rossinyol Casals, Emma",
+            "orden": 2
+          },
+          {
+            "nombre": "Perez-Navarro, Antoni",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000295",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000295-618a75c8351b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/188309",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-ffd0c6ebbc7e8688",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "263",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-9c1b8f757ff78fd0"
+        },
+        "author_bindings": [
+          {
+            "name": "Merino Arranz, David",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Rossinyol Casals, Emma",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Perez-Navarro, Antoni",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Merino Arranz, David; Rossinyol Casals, Emma; Perez-Navarro, Antoni",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+            "sha256": "1d3aa661b19d1d5f15b868770d2e5b719d5f4ad57e8728d10b06c1f745273e06",
+            "observed_text": "Barcelona : Editorial UOC, 2021.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "1d3aa661b19d1d5f15b868770d2e5b719d5f4ad57e8728d10b06c1f745273e06",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ffd0c6ebbc7e8688.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+            "sha256": "1d3aa661b19d1d5f15b868770d2e5b719d5f4ad57e8728d10b06c1f745273e06",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "1d3aa661b19d1d5f15b868770d2e5b719d5f4ad57e8728d10b06c1f745273e06",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ffd0c6ebbc7e8688.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB188309",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 139,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/188309",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física y programación - Merino Arranz, David; Rossinyol Casals, Emma; Perez-Navarro, Antoni.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-ffd0c6ebbc7e8688.webp",
+            "cover_sha256": "618a75c8351b9ca894ec64771c23cc2fa9ddeb81f1c60b8e2f08db4450118ab7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Merino Arranz, David; Rossinyol Casals, Emma; Perez-Navarro, Antoni",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 139,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/188309",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física y programación - Merino Arranz, David; Rossinyol Casals, Emma; Perez-Navarro, Antoni.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-ffd0c6ebbc7e8688.webp",
+            "cover_sha256": "618a75c8351b9ca894ec64771c23cc2fa9ddeb81f1c60b8e2f08db4450118ab7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 139,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/188309",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Física y programación - Merino Arranz, David; Rossinyol Casals, Emma; Perez-Navarro, Antoni.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-ffd0c6ebbc7e8688.webp",
+            "cover_sha256": "618a75c8351b9ca894ec64771c23cc2fa9ddeb81f1c60b8e2f08db4450118ab7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 139,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/188309",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Física y programación - Merino Arranz, David; Rossinyol Casals, Emma; Perez-Navarro, Antoni.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-ffd0c6ebbc7e8688.webp",
+          "cover_sha256": "618a75c8351b9ca894ec64771c23cc2fa9ddeb81f1c60b8e2f08db4450118ab7",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "265",
+        "imported_book_id": "263"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-197928bfdeb8ee42.webp",
+      "libro": {
+        "titulo": "Introducción a la física",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Lara Barragán Gómez, Antonio",
+            "orden": 1
+          },
+          {
+            "nombre": "Núñez Trejo, Héctor",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Grupo Editorial Patria",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "4.99",
+        "sku": "PLG-BK-000198",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000198-ef3829174e0c.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39447",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-197928bfdeb8ee42",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "264",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-33033c947e8fd563"
+        },
+        "author_bindings": [
+          {
+            "name": "Lara Barragán Gómez, Antonio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Núñez Trejo, Héctor",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Lara Barragán Gómez, Antonio; Núñez Trejo, Héctor",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+            "sha256": "9afb36a4a946bf6678b0f5724d84cb713f0c3e553fb8a3bbcc06d800721c52d6",
+            "observed_text": "México D.F. : Grupo Editorial Patria, 2014.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "9afb36a4a946bf6678b0f5724d84cb713f0c3e553fb8a3bbcc06d800721c52d6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-197928bfdeb8ee42.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+            "sha256": "9afb36a4a946bf6678b0f5724d84cb713f0c3e553fb8a3bbcc06d800721c52d6",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "9afb36a4a946bf6678b0f5724d84cb713f0c3e553fb8a3bbcc06d800721c52d6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-197928bfdeb8ee42.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB39447",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 140,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39447",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Introducción a la física - Lara Barragán Gómez, Antonio; Núñez Trejo, Héctor.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-197928bfdeb8ee42.webp",
+            "cover_sha256": "ef3829174e0c3e7103df8e0191f98b16919c52881bdbb80071c47fe6a4ae033e",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Lara Barragán Gómez, Antonio; Núñez Trejo, Héctor",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 140,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39447",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Introducción a la física - Lara Barragán Gómez, Antonio; Núñez Trejo, Héctor.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-197928bfdeb8ee42.webp",
+            "cover_sha256": "ef3829174e0c3e7103df8e0191f98b16919c52881bdbb80071c47fe6a4ae033e",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 140,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39447",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Introducción a la física - Lara Barragán Gómez, Antonio; Núñez Trejo, Héctor.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-197928bfdeb8ee42.webp",
+            "cover_sha256": "ef3829174e0c3e7103df8e0191f98b16919c52881bdbb80071c47fe6a4ae033e",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 140,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39447",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Introducción a la física - Lara Barragán Gómez, Antonio; Núñez Trejo, Héctor.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-197928bfdeb8ee42.webp",
+          "cover_sha256": "ef3829174e0c3e7103df8e0191f98b16919c52881bdbb80071c47fe6a4ae033e",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "266",
+        "imported_book_id": "264"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-80b87603433ba1ab.webp",
+      "libro": {
+        "titulo": "Problemas de Física (27a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Burbano García, Enrique",
+            "orden": 1
+          },
+          {
+            "nombre": "Gracia Muñoz, Carlos",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Tébar Flores",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000219",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000219-956214e1f8b4.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270906",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-80b87603433ba1ab",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "265",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-b3322e6c83dc75df"
+        },
+        "author_bindings": [
+          {
+            "name": "Burbano García, Enrique",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Gracia Muñoz, Carlos",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Burbano García, Enrique; Gracia Muñoz, Carlos",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+            "sha256": "a42d940c6f98b38ee282f06192668a4d7f86ef1145f40a39c90c6c278262ae96",
+            "observed_text": "Madrid : Editorial Tébar Flores, uuuu.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "a42d940c6f98b38ee282f06192668a4d7f86ef1145f40a39c90c6c278262ae96",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-80b87603433ba1ab.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+            "sha256": "a42d940c6f98b38ee282f06192668a4d7f86ef1145f40a39c90c6c278262ae96",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "a42d940c6f98b38ee282f06192668a4d7f86ef1145f40a39c90c6c278262ae96",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-80b87603433ba1ab.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB270906",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 145,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270906",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Problemas de Física (27a. ed.) - Burbano García, Enrique; Gracia Muñoz, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-80b87603433ba1ab.webp",
+            "cover_sha256": "956214e1f8b4258126e8328fdd4538544b9b6c9edcf7b6b094142c7f118d25c6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Burbano García, Enrique; Gracia Muñoz, Carlos",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 145,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270906",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Problemas de Física (27a. ed.) - Burbano García, Enrique; Gracia Muñoz, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-80b87603433ba1ab.webp",
+            "cover_sha256": "956214e1f8b4258126e8328fdd4538544b9b6c9edcf7b6b094142c7f118d25c6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 145,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270906",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Problemas de Física (27a. ed.) - Burbano García, Enrique; Gracia Muñoz, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-80b87603433ba1ab.webp",
+            "cover_sha256": "956214e1f8b4258126e8328fdd4538544b9b6c9edcf7b6b094142c7f118d25c6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 145,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270906",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Problemas de Física (27a. ed.) - Burbano García, Enrique; Gracia Muñoz, Carlos.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-80b87603433ba1ab.webp",
+          "cover_sha256": "956214e1f8b4258126e8328fdd4538544b9b6c9edcf7b6b094142c7f118d25c6",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "267",
+        "imported_book_id": "265"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-d2d6d2bdfba7e8fe.webp",
+      "libro": {
+        "titulo": "Química experimental (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pacheco Espejel, Martha Patricia",
+            "orden": 1
+          },
+          {
+            "nombre": "Alvarado Arellano, Martha",
+            "orden": 2
+          },
+          {
+            "nombre": "Sánchez Aguilar, Josefina",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "Grupo Editorial Patria",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000078",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000078-80788f22e0b2.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40187",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-d2d6d2bdfba7e8fe",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "266",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-e0ac3074340c178a"
+        },
+        "author_bindings": [
+          {
+            "name": "Pacheco Espejel, Martha Patricia",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Alvarado Arellano, Martha",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Sánchez Aguilar, Josefina",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pacheco Espejel, Martha Patricia; Alvarado Arellano, Martha; Sánchez Aguilar, Josefina",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+            "sha256": "fa51c1f49d9f049ad44ba0591ea726c9088f69ce38196a84a153e5876c527182",
+            "observed_text": "Ciudad de México : Grupo Editorial Patria, 2018.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "fa51c1f49d9f049ad44ba0591ea726c9088f69ce38196a84a153e5876c527182",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d2d6d2bdfba7e8fe.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+            "sha256": "fa51c1f49d9f049ad44ba0591ea726c9088f69ce38196a84a153e5876c527182",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "fa51c1f49d9f049ad44ba0591ea726c9088f69ce38196a84a153e5876c527182",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d2d6d2bdfba7e8fe.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40187",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 147,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40187",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Química experimental (2a. ed.) - Pacheco Espejel, Martha Patricia; Alvarado Arellano, Martha; Sánchez Aguilar, Josefina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-d2d6d2bdfba7e8fe.webp",
+            "cover_sha256": "80788f22e0b24176eccd89ef4b4aea9803e1c70ddcf8917218049559d76ae68a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pacheco Espejel, Martha Patricia; Alvarado Arellano, Martha; Sánchez Aguilar, Josefina",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 147,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40187",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Química experimental (2a. ed.) - Pacheco Espejel, Martha Patricia; Alvarado Arellano, Martha; Sánchez Aguilar, Josefina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-d2d6d2bdfba7e8fe.webp",
+            "cover_sha256": "80788f22e0b24176eccd89ef4b4aea9803e1c70ddcf8917218049559d76ae68a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 147,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40187",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Química experimental (2a. ed.) - Pacheco Espejel, Martha Patricia; Alvarado Arellano, Martha; Sánchez Aguilar, Josefina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-d2d6d2bdfba7e8fe.webp",
+            "cover_sha256": "80788f22e0b24176eccd89ef4b4aea9803e1c70ddcf8917218049559d76ae68a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 147,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40187",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Química experimental (2a. ed.) - Pacheco Espejel, Martha Patricia; Alvarado Arellano, Martha; Sánchez Aguilar, Josefina.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-d2d6d2bdfba7e8fe.webp",
+          "cover_sha256": "80788f22e0b24176eccd89ef4b4aea9803e1c70ddcf8917218049559d76ae68a",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "268",
+        "imported_book_id": "266"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/ciencias/portadas/ebook-39051a640e5a8148.webp",
+      "libro": {
+        "titulo": "Química orgánica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cabildo Miranda, María del Pilar",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias"
+        ]
+      },
+      "edicion": {
+        "editorial": "UNED - Universidad Nacional de Educación a Distancia",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000300",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000300-d64be50e7abe.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48371",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-39051a640e5a8148",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "267",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d98ead39d9f6d7b4"
+        },
+        "author_bindings": [
+          {
+            "name": "Cabildo Miranda, María del Pilar",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cabildo Miranda, María del Pilar",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+            "sha256": "6093f656777a15cff55924b8a6299591694a64aca77bf1a03e781033450cda7e",
+            "observed_text": "Madrid : UNED - Universidad Nacional de Educación a Distancia, [2008]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "6093f656777a15cff55924b8a6299591694a64aca77bf1a03e781033450cda7e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-39051a640e5a8148.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+            "sha256": "6093f656777a15cff55924b8a6299591694a64aca77bf1a03e781033450cda7e",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "6093f656777a15cff55924b8a6299591694a64aca77bf1a03e781033450cda7e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-39051a640e5a8148.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48371",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 149,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48371",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Química orgánica - Cabildo Miranda, María del Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-39051a640e5a8148.webp",
+            "cover_sha256": "d64be50e7abe0ed160137ed9b262a854900327ca56f5ee29a04d345326e4179a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cabildo Miranda, María del Pilar",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 149,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48371",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Química orgánica - Cabildo Miranda, María del Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-39051a640e5a8148.webp",
+            "cover_sha256": "d64be50e7abe0ed160137ed9b262a854900327ca56f5ee29a04d345326e4179a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 149,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48371",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias/originales/Química orgánica - Cabildo Miranda, María del Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-39051a640e5a8148.webp",
+            "cover_sha256": "d64be50e7abe0ed160137ed9b262a854900327ca56f5ee29a04d345326e4179a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 149,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48371",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias/originales/Química orgánica - Cabildo Miranda, María del Pilar.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-39051a640e5a8148.webp",
+          "cover_sha256": "d64be50e7abe0ed160137ed9b262a854900327ca56f5ee29a04d345326e4179a",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "269",
+        "imported_book_id": "267"
+      }
+    }
+  ]
+}

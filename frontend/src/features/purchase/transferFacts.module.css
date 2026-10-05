@@ -1,0 +1,23 @@
+/* Bank data for a transfer: the bank leads, then each datum as a paper row with its own copy action.
+   Reads the tokens of the surface it sits on (purchase flow or order story), with PLIEGO fallbacks. */
+.card { min-width: 0; color: var(--pliego-text, #252740); }
+.bank { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; min-width: 0; padding-bottom: 18px; }
+.bankIcon { display: grid; flex: 0 0 auto; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--store-blue, #283da8); color: #fff; }
+.bankName { display: grid; gap: 1px; min-width: 0; }
+.bankName small { color: var(--pliego-text-muted, #595a6e); font-size: .8125rem; line-height: 1.2; }
+.bankName strong { font-size: 1.0625rem; font-weight: 650; overflow-wrap: anywhere; }
+.accountType { margin-left: auto; color: var(--pliego-text-muted, #595a6e); font-size: .875rem; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px; margin: 0; }
+.fact { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label action" "value action"; align-content: center; align-items: center; gap: 4px 14px; min-width: 0; min-height: 76px; padding: 14px 16px; border-radius: 14px; background: var(--pf-sheet, var(--acc-sheet, #fbfaf7)); box-shadow: inset 0 0 0 1.5px var(--pf-line, var(--acc-line, #d9d5e6)); }
+.fact[data-prominent] { grid-column: 1 / -1; }
+.fact dt { grid-area: label; color: var(--pliego-text-muted, #595a6e); font-size: .8125rem; line-height: 1.35; }
+.fact dd { grid-area: value; min-width: 0; margin: 0; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.fact[data-prominent] dd { font: 650 1.1875rem/1.2 var(--store-display); letter-spacing: -.01em; }
+.copy { grid-area: action; display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: 104px; min-height: 44px; padding: 7px 12px; border: 1.5px solid var(--pf-line, var(--acc-line, #d9d5e6)); border-radius: 8px; background: transparent; color: var(--pf-blue, var(--acc-blue, #283da8)); font-size: .875rem; font-weight: 600; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.copy:hover { border-color: currentColor; background: var(--store-lavender, #e4def4); color: var(--store-blue, #283da8); }
+.copy:focus-visible { outline: 3px solid var(--pf-blue, var(--acc-blue, #283da8)); outline-offset: 2px; }
+@media (max-width: 400px) {
+  .fact { grid-template-columns: minmax(0, 1fr); grid-template-areas: "label" "value" "action"; }
+  .copy { justify-self: start; }
+}
+@media (forced-colors: active) { .fact { border: 1px solid CanvasText; } }

@@ -1,0 +1,12 @@
+API format filters PASS:142 EBOOK+117 AUDIOBOOK; public catalog314.
+Detail/search/availability verified 50 /259
+Detail/search/availability verified 100 /259
+Detail/search/availability verified 150 /259
+Detail/search/availability verified 200 /259
+Detail/search/availability verified 250 /259
+Cart verified and cleaned 50 /259
+Cart verified and cleaned 100 /259
+Cart verified and cleaned 150 /259
+Cart verified and cleaned 200 /259
+Cart verified and cleaned 250 /259
+PASS API details/search/filters/availability/cart/CDN URLs for259; no digital inventory; cart cleaned.

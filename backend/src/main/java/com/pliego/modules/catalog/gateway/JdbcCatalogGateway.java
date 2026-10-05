@@ -28,22 +28,23 @@ import com.pliego.modules.catalog.application.PublicCatalogFilterOptions;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
+import com.pliego.modules.catalog.application.CatalogOffer;
 
 /** Reads public catalog data only through the approved PostgreSQL Functions. */
 @Repository
 public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGateway {
 
     private static final String CATALOG_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
-            + "publisher_name, btrim(isbn13::text) AS isbn13, price, cover_url, cover_license, cover_attribution, "
-            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators FROM pliego.fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?)";
+            + "publisher_name, btrim(isbn13::text) AS isbn13, s.price, cover_url, cover_license, cover_attribution, "
+            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators, o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
     private static final String CATALOG_GLOBAL_SEARCH_QUERY = "SELECT edition_id, book_id, title, authors_ordered, "
-            + "publisher_name, btrim(isbn13::text) AS isbn13, price, cover_url, cover_license, cover_attribution, "
-            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators FROM pliego.fn_catalog_search_global(?,?,?,?,?,?,?,?,?)";
+            + "publisher_name, btrim(isbn13::text) AS isbn13, s.price, cover_url, cover_license, cover_attribution, "
+            + "format, language, available, total_count, ebook_file_format, audio_duration_seconds, narrators, o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_catalog_search_global(?,?,?,?,?,?,?,?,?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
     private static final String EDITION_DETAIL_QUERY = "SELECT edition_id, book_id, title, subtitle, synopsis, "
             + "authors_json::text AS authors_json, categories_json::text AS categories_json, publisher_id, "
             + "publisher_name, btrim(isbn13::text) AS isbn13, sku, language, format, page_count, publication_date, "
-            + "price, cover_url, cover_license, cover_source_url, cover_attribution, available, ebook_file_format, audio_duration_seconds, narrators "
-            + "FROM pliego.fn_edition_detail(?)";
+            + "s.price, cover_url, cover_license, cover_source_url, cover_attribution, available, ebook_file_format, audio_duration_seconds, narrators, "
+            + "o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_edition_detail(?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
     private static final String PUBLIC_CATEGORY_LIST_QUERY = "SELECT category_slug, category_name, "
             + "parent_category_slug FROM pliego.fn_public_category_list()";
     private static final String PUBLIC_FILTER_OPTIONS_QUERY = "SELECT languages::text AS languages_json, "
@@ -105,12 +106,28 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                 statement -> statement.setLong(1, editionId), editionDetailRowMapper()).stream().findFirst());
     }
 
+    @Override
+    public com.pliego.modules.catalog.application.OffersFilterOptions findOffersFilterOptions() {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.queryForObject("SELECT pliego.fn_offers_filter_options()::text", (results, row) -> {
+            try { return objectMapper.readValue(results.getString(1), com.pliego.modules.catalog.application.OffersFilterOptions.class); }
+            catch (RuntimeException exception) { throw new SQLException("Invalid offers filter options JSON", exception); }
+        }));
+    }
+
     private List<CatalogSearchRow> runCatalogSearch(CatalogQuery query, int page) {
+        if (query.offersOnly()) {
+            String sql = CATALOG_SEARCH_QUERY.replace("fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?)", "fn_catalog_search_offers(?,?,?,?,?,?,?,?,?,?,?,?)");
+            return jdbcTemplate.query(sql, statement -> {
+                bindSearch(statement, query, page);
+                setNullableString(statement, 9, query.productType());
+                statement.setString(10, query.sort()); statement.setInt(11, page); statement.setInt(12, query.pageSize());
+            }, catalogSearchRowMapper());
+        }
         if (query.query() != null && !query.query().isBlank()) {
-            return jdbcTemplate.query(CATALOG_GLOBAL_SEARCH_QUERY,
+            return jdbcTemplate.query(query.offersOnly() ? CATALOG_GLOBAL_SEARCH_QUERY.replace("fn_catalog_search_global(", "fn_catalog_search_global_offers(") : CATALOG_GLOBAL_SEARCH_QUERY,
                     statement -> bindGlobalSearch(statement, query, page), catalogSearchRowMapper());
         }
-        return jdbcTemplate.query(CATALOG_SEARCH_QUERY, statement -> bindSearch(statement, query, page),
+        return jdbcTemplate.query(query.offersOnly() ? CATALOG_SEARCH_QUERY.replace("fn_catalog_search(", "fn_catalog_search_offers(") : CATALOG_SEARCH_QUERY, statement -> bindSearch(statement, query, page),
                 catalogSearchRowMapper());
     }
 
@@ -150,8 +167,16 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                         results.getString("cover_url"), results.getString("cover_license"),
                         results.getString("cover_attribution"), results.getString("format"),
                         results.getString("language"), results.getBoolean("available"), results.getString("ebook_file_format"),
-                        results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators")),
+                        results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators"), offer(results)),
                 results.getLong("total_count"));
+    }
+
+    private static CatalogOffer offer(java.sql.ResultSet results) throws SQLException {
+        Long offerId = results.getObject("offer_id", Long.class);
+        return offerId == null ? null : new CatalogOffer(Long.toString(offerId), results.getBigDecimal("original_price"),
+                results.getBigDecimal("discount_amount"), results.getObject("starts_at", java.time.OffsetDateTime.class).toInstant(),
+                results.getObject("ends_at", java.time.OffsetDateTime.class).toInstant(), results.getInt("days_remaining"),
+                results.getBoolean("ending_soon"), results.getString("offer_copy"), results.getString("terms"), results.getBigDecimal("price"), results.getBigDecimal("savings_percent"));
     }
 
     private RowMapper<CatalogEditionDetail> editionDetailRowMapper() {
@@ -166,7 +191,7 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
                 results.getString("cover_url"), results.getString("cover_license"),
                 results.getString("cover_source_url"), results.getString("cover_attribution"),
                 results.getBoolean("available"), results.getString("ebook_file_format"),
-                results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators"));
+                results.getObject("audio_duration_seconds", Integer.class), JdbcArrays.strings(results, "narrators"), offer(results));
     }
 
     private List<Author> parseAuthors(String json) throws SQLException {

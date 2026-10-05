@@ -184,6 +184,8 @@ def load_catalog_seeds(covers: dict[str, dict[str, str | None]], registry_path: 
         records = document.get("libros") if isinstance(document, dict) else None
         if not isinstance(records, list):
             raise ApiError(f"El catálogo de {staging_path.name} debe contener libros.")
+        if document.get("publication_status") == "PENDING" or any(isinstance(record, dict) and "preparacion" in record for record in records):
+            raise ApiError("El staging digital pendiente requiere un importador que conserve identidad, precio autorizado y procedencia DEMO; no admite el seed de desarrollo.")
         for record in records:
             staging_count += 1
             if not isinstance(record, dict):

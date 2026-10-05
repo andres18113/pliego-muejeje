@@ -22,6 +22,9 @@ public class CatalogService {
     }
 
     @Transactional(readOnly = true)
+    public OffersFilterOptions getOffersFilterOptions() { return catalogGateway.findOffersFilterOptions(); }
+
+    @Transactional(readOnly = true)
     public List<PublicCatalogCategory> listPublicCategories() {
         return catalogGateway.findPublicCategories();
     }

@@ -1,6 +1,7 @@
 package com.pliego.modules.cart.application;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 /** Cart read and command results returned by PostgreSQL's Database API. */
@@ -8,7 +9,20 @@ public final class CartModels {
 
     private CartModels() { }
 
-    public record Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent) { }
+    public record Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
+            com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow) {
+        public Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
+                com.pliego.foundation.money.MonetaryAmounts amounts) {
+            this(cartId,state,items,totalCurrent,amounts,null);
+        }
+        public Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent) {
+            this(cartId,state,items,totalCurrent,new com.pliego.foundation.money.MonetaryAmounts(
+                    totalCurrent,BigDecimal.ZERO,BigDecimal.ZERO,BigDecimal.ZERO,totalCurrent));
+        }
+    }
+
+    /** Home-delivery window computed by the Database API in the store's calendar; absent when nothing ships. */
+    public record DeliveryWindow(LocalDate from, LocalDate to) { }
 
     public record CartItem(String cartItemId, String editionId, String title, String authors, String sku,
             String coverUrl, int quantity, BigDecimal currentPrice, BigDecimal currentSubtotal,

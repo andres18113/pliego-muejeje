@@ -1,0 +1,9 @@
+Offline guard loaded and probed; descendants inherit network-denied syscalls: socket, socketpair, connect, accept, accept4, bind, listen, sendto, sendmsg, sendmmsg, recvfrom, recvmsg, recvmmsg
+Executing: ['./.venv/bin/python', '-m', 'unittest', 'discover', '-s', 'scripts', '-p', 'test_*.py']
+..............PLG-BK-000001: 7 listo
+Portadas CDN: 0 actualizadas; 1 vigentes; 0 SKU sin edición importada; 0 SKU excluidos del catálogo.
+.......................................................
+----------------------------------------------------------------------
+Ran 69 tests in 6.331s
+
+OK

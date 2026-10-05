@@ -13,6 +13,8 @@ public interface CatalogGateway {
 
     CatalogSearchPage search(CatalogQuery query);
 
+    com.pliego.modules.catalog.application.OffersFilterOptions findOffersFilterOptions();
+
     List<PublicCatalogCategory> findPublicCategories();
 
     PublicCatalogFilterOptions findPublicFilterOptions();

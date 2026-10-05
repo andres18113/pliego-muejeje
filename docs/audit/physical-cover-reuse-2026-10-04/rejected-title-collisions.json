@@ -1,0 +1,42 @@
+{
+  "records": [
+    {
+      "physical_sku": "PLG-BK-000028",
+      "physical_edition_id": "60",
+      "physical_book_id": "60",
+      "physical_title": "Análisis matemático",
+      "physical_authors": [
+        "Tom M. Apostol"
+      ],
+      "digital_sku": "PLG-BK-000171",
+      "digital_edition_id": "242",
+      "digital_book_id": "241",
+      "digital_title": "Análisis matemático",
+      "digital_authors": [
+        "Roca Martínez, Alicia",
+        "Jornet, David",
+        "Montesinos Santalucia, Vicente"
+      ],
+      "reason": "REJECTED_DIFFERENT_ORDERED_AUTHOR_IDENTITY",
+      "evidence": "Same normalized title, but different ordered authors and different bookId; no fuzzy merge permitted."
+    },
+    {
+      "physical_sku": "PLG-BK-000028",
+      "physical_edition_id": "60",
+      "physical_book_id": "60",
+      "physical_title": "Análisis matemático",
+      "physical_authors": [
+        "Tom M. Apostol"
+      ],
+      "digital_sku": "PLG-BK-000200",
+      "digital_edition_id": "243",
+      "digital_book_id": "242",
+      "digital_title": "Análisis matemático",
+      "digital_authors": [
+        "Takeuchi, Yu"
+      ],
+      "reason": "REJECTED_DIFFERENT_ORDERED_AUTHOR_IDENTITY",
+      "evidence": "Same normalized title, but different ordered authors and different bookId; no fuzzy merge permitted."
+    }
+  ]
+}

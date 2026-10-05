@@ -1,0 +1,2936 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-a0afc19150ca51a9.webp",
+      "libro": {
+        "titulo": "Análisis matemático",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Roca Martínez, Alicia",
+            "orden": 1
+          },
+          {
+            "nombre": "Jornet, David",
+            "orden": 2
+          },
+          {
+            "nombre": "Montesinos Santalucia, Vicente",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Politécnica de Valencia",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000171",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000171-58dd5140a39b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60568",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a0afc19150ca51a9",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "241",
+          "reason": "Fuente primaria identifica otra obra con autoría distinta; no se fusiona con el homónimo.",
+          "potential_book_ids": [
+            "60"
+          ],
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": [
+              "60"
+            ],
+            "primary_identity_resolution": {
+              "action": "CREATE_NEW_WORK",
+              "evidence": [
+                {
+                  "kind": "REAL_SOURCE",
+                  "source_url": "https://rac.es/ficheros/doc/00603.pdf",
+                  "observed_text": "D. JORNET, V. MONTESINOS, A. ROCA. Análisis Matemático. Editorial UPV. 2003. ISBN: 84-9705-411-3.",
+                  "basis": "Currículo bibliográfico del coautor Vicente Montesinos publicado por Real Academia de Ciencias; la portada original imprime el nombre completo de editorial."
+                },
+                {
+                  "kind": "REAL_SOURCE",
+                  "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+                  "path": "/tmp/pliego-digital-completion/science/uns/ebook-a0afc19150ca51a9.html",
+                  "sha256": "702b727dc4e5a156ab24102238f6f99ee0f53ee04b1fb88807b165dc433d4f56",
+                  "observed_text": "Valencia : Universidad Politécnica de Valencia, 2003.",
+                  "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original."
+                }
+              ],
+              "notes": "Obra de autoría distinta a libro existente 60, Análisis matemático de Tom M. Apostol; la coincidencia de título no identifica la obra. La fuente primaria atribuye esta obra a Roca Martínez, Alicia; Jornet, David; Montesinos Santalucia, Vicente. También distinta del otro candidato homónimo por autoría y editorial. Registro eLibro exacto confirma autoría y edición de este candidato.",
+              "source_url": "https://rac.es/ficheros/doc/00603.pdf",
+              "observed_text": "D. JORNET, V. MONTESINOS, A. ROCA. Análisis Matemático. Editorial UPV. 2003. ISBN: 84-9705-411-3.",
+              "confirmed_distinct_authorship": true,
+              "basis": "Primary work identified by distinct documented authors; compared with bookId60 Tom M. Apostol; no fuzzy reuse."
+            }
+          },
+          "proposal_key": "work-8b10ffa4bda7b82f",
+          "status": "CREATED_VERIFIED"
+        },
+        "author_bindings": [
+          {
+            "name": "Roca Martínez, Alicia",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Jornet, David",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Montesinos Santalucia, Vicente",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Roca Martínez, Alicia; Jornet, David; Montesinos Santalucia, Vicente",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+            "sha256": "702b727dc4e5a156ab24102238f6f99ee0f53ee04b1fb88807b165dc433d4f56",
+            "observed_text": "Valencia : Universidad Politécnica de Valencia, 2003.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "702b727dc4e5a156ab24102238f6f99ee0f53ee04b1fb88807b165dc433d4f56",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a0afc19150ca51a9.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+            "sha256": "702b727dc4e5a156ab24102238f6f99ee0f53ee04b1fb88807b165dc433d4f56",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "702b727dc4e5a156ab24102238f6f99ee0f53ee04b1fb88807b165dc433d4f56",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-a0afc19150ca51a9.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB60568",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 177,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60568",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Análisis matemático - Roca Martínez, Alicia; Jornet, David; Montesinos Santalucia, Vicente.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-a0afc19150ca51a9.webp",
+            "cover_sha256": "58dd5140a39b22b39ff8c96e2d50c40bbc803c843e06bda6a249bd188b1a7433",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Roca Martínez, Alicia; Jornet, David; Montesinos Santalucia, Vicente",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 177,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60568",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Análisis matemático - Roca Martínez, Alicia; Jornet, David; Montesinos Santalucia, Vicente.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-a0afc19150ca51a9.webp",
+            "cover_sha256": "58dd5140a39b22b39ff8c96e2d50c40bbc803c843e06bda6a249bd188b1a7433",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 177,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60568",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Análisis matemático - Roca Martínez, Alicia; Jornet, David; Montesinos Santalucia, Vicente.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-a0afc19150ca51a9.webp",
+            "cover_sha256": "58dd5140a39b22b39ff8c96e2d50c40bbc803c843e06bda6a249bd188b1a7433",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 177,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60568",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Análisis matemático - Roca Martínez, Alicia; Jornet, David; Montesinos Santalucia, Vicente.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-a0afc19150ca51a9.webp",
+          "cover_sha256": "58dd5140a39b22b39ff8c96e2d50c40bbc803c843e06bda6a249bd188b1a7433",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "242",
+        "imported_book_id": "241"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-714897609843648e.webp",
+      "libro": {
+        "titulo": "Análisis matemático",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Takeuchi, Yu",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional de Colombia. Facultad de Ciencias",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000200",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000200-a635647e9da1.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127753",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-714897609843648e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "242",
+          "reason": "Fuente primaria identifica otra obra con autoría distinta; no se fusiona con el homónimo.",
+          "potential_book_ids": [
+            "60"
+          ],
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": [
+              "60"
+            ],
+            "primary_identity_resolution": {
+              "action": "CREATE_NEW_WORK",
+              "evidence": [
+                {
+                  "kind": "REAL_SOURCE",
+                  "source_url": "https://portaldelibros.unal.edu.co/gpd-anyalisis-matemyatico-9789587618891.html",
+                  "observed_text": "Editorial Universidad Nacional de Colombia",
+                  "basis": "Ficha bibliográfica primaria del editor de la obra con título y autoría concordantes; cotejada con portada original."
+                },
+                {
+                  "kind": "REAL_SOURCE",
+                  "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+                  "path": "/tmp/pliego-digital-completion/science/uns/ebook-714897609843648e.html",
+                  "sha256": "683318d257aebe42f22e5875c16a44bebb371218b98d84e8c0f1d30284b11b4b",
+                  "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias, 2008.",
+                  "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original."
+                }
+              ],
+              "notes": "Obra de autoría distinta a libro existente 60, Análisis matemático de Tom M. Apostol; la coincidencia de título no identifica la obra. La fuente primaria atribuye esta obra a Takeuchi, Yu. También distinta del otro candidato homónimo por autoría y editorial. Registro eLibro exacto confirma autoría y edición de este candidato.",
+              "source_url": "https://portaldelibros.unal.edu.co/gpd-anyalisis-matemyatico-9789587618891.html",
+              "observed_text": "Editorial Universidad Nacional de Colombia",
+              "confirmed_distinct_authorship": true,
+              "basis": "Primary work identified by distinct documented authors; compared with bookId60 Tom M. Apostol; no fuzzy reuse."
+            }
+          },
+          "proposal_key": "work-61cfb48cef75b109",
+          "status": "CREATED_VERIFIED"
+        },
+        "author_bindings": [
+          {
+            "name": "Takeuchi, Yu",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Takeuchi, Yu",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+            "sha256": "683318d257aebe42f22e5875c16a44bebb371218b98d84e8c0f1d30284b11b4b",
+            "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias, 2008.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "683318d257aebe42f22e5875c16a44bebb371218b98d84e8c0f1d30284b11b4b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-714897609843648e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+            "sha256": "683318d257aebe42f22e5875c16a44bebb371218b98d84e8c0f1d30284b11b4b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "683318d257aebe42f22e5875c16a44bebb371218b98d84e8c0f1d30284b11b4b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-714897609843648e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB127753",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 178,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127753",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Análisis matemático - Takeuchi, Yu.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-714897609843648e.webp",
+            "cover_sha256": "a635647e9da1b2cf73503b0c3c7dfc41d61184352121f74aa0944fcaf04ca6ac",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Takeuchi, Yu",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 178,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127753",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Análisis matemático - Takeuchi, Yu.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-714897609843648e.webp",
+            "cover_sha256": "a635647e9da1b2cf73503b0c3c7dfc41d61184352121f74aa0944fcaf04ca6ac",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 178,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127753",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Análisis matemático - Takeuchi, Yu.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-714897609843648e.webp",
+            "cover_sha256": "a635647e9da1b2cf73503b0c3c7dfc41d61184352121f74aa0944fcaf04ca6ac",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 178,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127753",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Análisis matemático - Takeuchi, Yu.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-714897609843648e.webp",
+          "cover_sha256": "a635647e9da1b2cf73503b0c3c7dfc41d61184352121f74aa0944fcaf04ca6ac",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "243",
+        "imported_book_id": "242"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-4c43b7b6b2f7d801.webp",
+      "libro": {
+        "titulo": "Estadística matemática",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cepeda Cuervo, Edilberto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Estadística",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000286",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000286-dd71e85f0e2b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/129009",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-4c43b7b6b2f7d801",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "243",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-1ab8fb270fec2922"
+        },
+        "author_bindings": [
+          {
+            "name": "Cepeda Cuervo, Edilberto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cepeda Cuervo, Edilberto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+            "sha256": "ace22b21503a3fb2d838cec8824baa49f44ad14cc3846bf8dd876d2b9a26148b",
+            "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Estadística, 2015.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "ace22b21503a3fb2d838cec8824baa49f44ad14cc3846bf8dd876d2b9a26148b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4c43b7b6b2f7d801.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+            "sha256": "ace22b21503a3fb2d838cec8824baa49f44ad14cc3846bf8dd876d2b9a26148b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "ace22b21503a3fb2d838cec8824baa49f44ad14cc3846bf8dd876d2b9a26148b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-4c43b7b6b2f7d801.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB129009",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 180,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/129009",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística matemática - Cepeda Cuervo, Edilberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-4c43b7b6b2f7d801.webp",
+            "cover_sha256": "dd71e85f0e2b340d3a65d902d55006155d195517251343c4fe12599ca0e85c19",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cepeda Cuervo, Edilberto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 180,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/129009",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística matemática - Cepeda Cuervo, Edilberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-4c43b7b6b2f7d801.webp",
+            "cover_sha256": "dd71e85f0e2b340d3a65d902d55006155d195517251343c4fe12599ca0e85c19",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 180,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/129009",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Estadística matemática - Cepeda Cuervo, Edilberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-4c43b7b6b2f7d801.webp",
+            "cover_sha256": "dd71e85f0e2b340d3a65d902d55006155d195517251343c4fe12599ca0e85c19",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 180,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/129009",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Estadística matemática - Cepeda Cuervo, Edilberto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-4c43b7b6b2f7d801.webp",
+          "cover_sha256": "dd71e85f0e2b340d3a65d902d55006155d195517251343c4fe12599ca0e85c19",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "244",
+        "imported_book_id": "243"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-e7ad27a2d7986fb8.webp",
+      "libro": {
+        "titulo": "Fundamentos de matemáticas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Zalamea Traba, Fernando",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Matemáticas",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000064",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000064-2dda50c069e4.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128447",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-e7ad27a2d7986fb8",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "244",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-b19309f257a989ba"
+        },
+        "author_bindings": [
+          {
+            "name": "Zalamea Traba, Fernando",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Zalamea Traba, Fernando",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+            "sha256": "c155a80650e081503202bd3fc82b5d26815bb1d3e22d5814b0b49c7d6d88539d",
+            "observed_text": "Bogotá : Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Matemáticas, 2000.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "c155a80650e081503202bd3fc82b5d26815bb1d3e22d5814b0b49c7d6d88539d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-e7ad27a2d7986fb8.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+            "sha256": "c155a80650e081503202bd3fc82b5d26815bb1d3e22d5814b0b49c7d6d88539d",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "c155a80650e081503202bd3fc82b5d26815bb1d3e22d5814b0b49c7d6d88539d",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-e7ad27a2d7986fb8.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128447",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 181,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128447",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Fundamentos de matemáticas - Zalamea Traba, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-e7ad27a2d7986fb8.webp",
+            "cover_sha256": "2dda50c069e44ffec3c4113e18080f07dad2dd93599efef1c6a450e02597a061",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Zalamea Traba, Fernando",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 181,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128447",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Fundamentos de matemáticas - Zalamea Traba, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-e7ad27a2d7986fb8.webp",
+            "cover_sha256": "2dda50c069e44ffec3c4113e18080f07dad2dd93599efef1c6a450e02597a061",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 181,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128447",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Fundamentos de matemáticas - Zalamea Traba, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-e7ad27a2d7986fb8.webp",
+            "cover_sha256": "2dda50c069e44ffec3c4113e18080f07dad2dd93599efef1c6a450e02597a061",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 181,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128447",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Fundamentos de matemáticas - Zalamea Traba, Fernando.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-e7ad27a2d7986fb8.webp",
+          "cover_sha256": "2dda50c069e44ffec3c4113e18080f07dad2dd93599efef1c6a450e02597a061",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "245",
+        "imported_book_id": "244"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-47d0e535b02ad600.webp",
+      "libro": {
+        "titulo": "Iniciación a las matemáticas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Juan Manuel García Dozagarat",
+            "orden": 1
+          },
+          {
+            "nombre": "Fernando Alonso Molina",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ministerio de Educación",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000268",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000268-ec90efc8b0dc.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49195",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-47d0e535b02ad600",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "245",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7ef4b4e920ea4092"
+        },
+        "author_bindings": [
+          {
+            "name": "Juan Manuel García Dozagarat",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Fernando Alonso Molina",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Juan Manuel García Dozagarat; Fernando Alonso Molina",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+            "sha256": "a538197cf5d74b622bb9891d7e17871d36635cb952dd4d58c22c16aedfebeccf",
+            "observed_text": "[Madrid] : Ministerio de Educación, [2011]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "a538197cf5d74b622bb9891d7e17871d36635cb952dd4d58c22c16aedfebeccf",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-47d0e535b02ad600.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+            "sha256": "a538197cf5d74b622bb9891d7e17871d36635cb952dd4d58c22c16aedfebeccf",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "a538197cf5d74b622bb9891d7e17871d36635cb952dd4d58c22c16aedfebeccf",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-47d0e535b02ad600.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49195",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 182,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49195",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Iniciación a las matemáticas - Juan Manuel García Dozagarat; Fernando Alonso Molina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-47d0e535b02ad600.webp",
+            "cover_sha256": "ec90efc8b0dc80ea5b971bbbd220b566f558b5bad19691d9b412bb9a5853dcdc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Juan Manuel García Dozagarat; Fernando Alonso Molina",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 182,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49195",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Iniciación a las matemáticas - Juan Manuel García Dozagarat; Fernando Alonso Molina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-47d0e535b02ad600.webp",
+            "cover_sha256": "ec90efc8b0dc80ea5b971bbbd220b566f558b5bad19691d9b412bb9a5853dcdc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 182,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49195",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Iniciación a las matemáticas - Juan Manuel García Dozagarat; Fernando Alonso Molina.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-47d0e535b02ad600.webp",
+            "cover_sha256": "ec90efc8b0dc80ea5b971bbbd220b566f558b5bad19691d9b412bb9a5853dcdc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 182,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49195",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Iniciación a las matemáticas - Juan Manuel García Dozagarat; Fernando Alonso Molina.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-47d0e535b02ad600.webp",
+          "cover_sha256": "ec90efc8b0dc80ea5b971bbbd220b566f558b5bad19691d9b412bb9a5853dcdc",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "246",
+        "imported_book_id": "245"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-0bb555fed263f27e.webp",
+      "libro": {
+        "titulo": "Introducción a las matemáticas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Arévalo Ovalle, Diego",
+            "orden": 1
+          },
+          {
+            "nombre": "Zambrano Valentín, Martha Helena",
+            "orden": 2
+          },
+          {
+            "nombre": "Chappe Chappe, Angélica",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Politécnico Grancolombiano",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000092",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000092-b990f4163170.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70987",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0bb555fed263f27e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "246",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-728e8806e463878e"
+        },
+        "author_bindings": [
+          {
+            "name": "Arévalo Ovalle, Diego",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Zambrano Valentín, Martha Helena",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Chappe Chappe, Angélica",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Arévalo Ovalle, Diego; Zambrano Valentín, Martha Helena; Chappe Chappe, Angélica",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+            "sha256": "2b0cced1e3f59d66db10150d94cec87de26abd6d4ffe6f226e1ac28a04fd68cc",
+            "observed_text": "Bogotá : Editorial Politécnico Grancolombiano, 2012.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "2b0cced1e3f59d66db10150d94cec87de26abd6d4ffe6f226e1ac28a04fd68cc",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0bb555fed263f27e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+            "sha256": "2b0cced1e3f59d66db10150d94cec87de26abd6d4ffe6f226e1ac28a04fd68cc",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "2b0cced1e3f59d66db10150d94cec87de26abd6d4ffe6f226e1ac28a04fd68cc",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-0bb555fed263f27e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70987",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 183,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70987",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Introducción a las matemáticas - Arévalo Ovalle, Diego; Zambrano Valentín, Martha Helena; Chappe Chappe, Angélica.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-0bb555fed263f27e.webp",
+            "cover_sha256": "b990f416317029f7a73cc67304a91f675d421d6a91803a21bb23a12146efb207",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Arévalo Ovalle, Diego; Zambrano Valentín, Martha Helena; Chappe Chappe, Angélica",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 183,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70987",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Introducción a las matemáticas - Arévalo Ovalle, Diego; Zambrano Valentín, Martha Helena; Chappe Chappe, Angélica.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-0bb555fed263f27e.webp",
+            "cover_sha256": "b990f416317029f7a73cc67304a91f675d421d6a91803a21bb23a12146efb207",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 183,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70987",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Introducción a las matemáticas - Arévalo Ovalle, Diego; Zambrano Valentín, Martha Helena; Chappe Chappe, Angélica.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-0bb555fed263f27e.webp",
+            "cover_sha256": "b990f416317029f7a73cc67304a91f675d421d6a91803a21bb23a12146efb207",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 183,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70987",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Introducción a las matemáticas - Arévalo Ovalle, Diego; Zambrano Valentín, Martha Helena; Chappe Chappe, Angélica.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-0bb555fed263f27e.webp",
+          "cover_sha256": "b990f416317029f7a73cc67304a91f675d421d6a91803a21bb23a12146efb207",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "247",
+        "imported_book_id": "246"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-130f04b7f33dfe76.webp",
+      "libro": {
+        "titulo": "Las matemáticas de la luz",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Timón, Ágata",
+            "orden": 1
+          },
+          {
+            "nombre": "León, Manuel de",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial CSIC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000131",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000131-12169133b04c.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100206",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-130f04b7f33dfe76",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "247",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c3ea8bc209a4293a"
+        },
+        "author_bindings": [
+          {
+            "name": "Timón, Ágata",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "León, Manuel de",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Timón, Ágata; León, Manuel de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+            "sha256": "79bdf8042c88571afac1c28428536cc7560e4ff5f49ca1c9f4fac8afa1edc218",
+            "observed_text": "Madrid : Editorial CSIC, 2017.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "79bdf8042c88571afac1c28428536cc7560e4ff5f49ca1c9f4fac8afa1edc218",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-130f04b7f33dfe76.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+            "sha256": "79bdf8042c88571afac1c28428536cc7560e4ff5f49ca1c9f4fac8afa1edc218",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "79bdf8042c88571afac1c28428536cc7560e4ff5f49ca1c9f4fac8afa1edc218",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-130f04b7f33dfe76.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB100206",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 184,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100206",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de la luz - Timón, Ágata; León, Manuel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-130f04b7f33dfe76.webp",
+            "cover_sha256": "12169133b04cf14e8ed8ebe7d28ed062b0be336477140f74a80a7efb98083c70",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Timón, Ágata; León, Manuel de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 184,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100206",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de la luz - Timón, Ágata; León, Manuel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-130f04b7f33dfe76.webp",
+            "cover_sha256": "12169133b04cf14e8ed8ebe7d28ed062b0be336477140f74a80a7efb98083c70",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 184,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100206",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de la luz - Timón, Ágata; León, Manuel de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-130f04b7f33dfe76.webp",
+            "cover_sha256": "12169133b04cf14e8ed8ebe7d28ed062b0be336477140f74a80a7efb98083c70",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 184,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100206",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Las matemáticas de la luz - Timón, Ágata; León, Manuel de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-130f04b7f33dfe76.webp",
+          "cover_sha256": "12169133b04cf14e8ed8ebe7d28ed062b0be336477140f74a80a7efb98083c70",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "248",
+        "imported_book_id": "247"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-eca4b568c194b9d0.webp",
+      "libro": {
+        "titulo": "Las matemáticas de los cristales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "León, Manuel de",
+            "orden": 1
+          },
+          {
+            "nombre": "Timón, Ágata",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial CSIC Consejo Superior de Investigaciones Científicas : Los Libros de la Catarata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000313",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000313-89dfe0bb7b00.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41821",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-eca4b568c194b9d0",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "248",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-86abce026a2025b6"
+        },
+        "author_bindings": [
+          {
+            "name": "León, Manuel de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Timón, Ágata",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "León, Manuel de; Timón, Ágata",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+            "sha256": "9943571d9bfcf61048af7e35263e81a14f2d9f5d777c6fdb049ff8257a3be90b",
+            "observed_text": "Madrid : Editorial CSIC Consejo Superior de Investigaciones Científicas : Los Libros de la Catarata, [2015]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "9943571d9bfcf61048af7e35263e81a14f2d9f5d777c6fdb049ff8257a3be90b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-eca4b568c194b9d0.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+            "sha256": "9943571d9bfcf61048af7e35263e81a14f2d9f5d777c6fdb049ff8257a3be90b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "9943571d9bfcf61048af7e35263e81a14f2d9f5d777c6fdb049ff8257a3be90b",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-eca4b568c194b9d0.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB41821",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 185,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41821",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de los cristales - León, Manuel de; Timón, Ágata.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-eca4b568c194b9d0.webp",
+            "cover_sha256": "89dfe0bb7b0016671b5e1b3d8f79b251587221f4199d570bd65f42ee2dfeed23",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "León, Manuel de; Timón, Ágata",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 185,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41821",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de los cristales - León, Manuel de; Timón, Ágata.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-eca4b568c194b9d0.webp",
+            "cover_sha256": "89dfe0bb7b0016671b5e1b3d8f79b251587221f4199d570bd65f42ee2dfeed23",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 185,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41821",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de los cristales - León, Manuel de; Timón, Ágata.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-eca4b568c194b9d0.webp",
+            "cover_sha256": "89dfe0bb7b0016671b5e1b3d8f79b251587221f4199d570bd65f42ee2dfeed23",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 185,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41821",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Las matemáticas de los cristales - León, Manuel de; Timón, Ágata.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-eca4b568c194b9d0.webp",
+          "cover_sha256": "89dfe0bb7b0016671b5e1b3d8f79b251587221f4199d570bd65f42ee2dfeed23",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "249",
+        "imported_book_id": "248"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-f8eb2117edbe4873.webp",
+      "libro": {
+        "titulo": "Las matemáticas de nuestra vida",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sepulcre Martínez, Juan Matías",
+            "orden": 1
+          },
+          {
+            "nombre": "Segura Abad, Lorena",
+            "orden": 2
+          },
+          {
+            "nombre": "Mulero González, Julio",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Publicacions Universitat Alacant",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "17.99",
+        "sku": "PLG-BK-000176",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000176-43612a5f46cc.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117208",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-f8eb2117edbe4873",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "249",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5472c381d6307b57"
+        },
+        "author_bindings": [
+          {
+            "name": "Sepulcre Martínez, Juan Matías",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Segura Abad, Lorena",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Mulero González, Julio",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sepulcre Martínez, Juan Matías; Segura Abad, Lorena; Mulero González, Julio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+            "sha256": "8029b0d93da10f796c4bab0592edc4dd304832b02b13ae1938d06e13602b99e2",
+            "observed_text": "Alicante : Publicacions Universitat Alacant, 2016.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "8029b0d93da10f796c4bab0592edc4dd304832b02b13ae1938d06e13602b99e2",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f8eb2117edbe4873.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+            "sha256": "8029b0d93da10f796c4bab0592edc4dd304832b02b13ae1938d06e13602b99e2",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "8029b0d93da10f796c4bab0592edc4dd304832b02b13ae1938d06e13602b99e2",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f8eb2117edbe4873.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB117208",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 186,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117208",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de nuestra vida - Sepulcre Martínez, Juan Matías; Segura Abad, Lorena; Mulero González, Julio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f8eb2117edbe4873.webp",
+            "cover_sha256": "43612a5f46cc52564d6e9ce3e4c698f3bac92a56194c778c7c36814be9784964",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sepulcre Martínez, Juan Matías; Segura Abad, Lorena; Mulero González, Julio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 186,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117208",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de nuestra vida - Sepulcre Martínez, Juan Matías; Segura Abad, Lorena; Mulero González, Julio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f8eb2117edbe4873.webp",
+            "cover_sha256": "43612a5f46cc52564d6e9ce3e4c698f3bac92a56194c778c7c36814be9784964",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 186,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117208",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas de nuestra vida - Sepulcre Martínez, Juan Matías; Segura Abad, Lorena; Mulero González, Julio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f8eb2117edbe4873.webp",
+            "cover_sha256": "43612a5f46cc52564d6e9ce3e4c698f3bac92a56194c778c7c36814be9784964",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 186,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117208",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Las matemáticas de nuestra vida - Sepulcre Martínez, Juan Matías; Segura Abad, Lorena; Mulero González, Julio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f8eb2117edbe4873.webp",
+          "cover_sha256": "43612a5f46cc52564d6e9ce3e4c698f3bac92a56194c778c7c36814be9784964",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "250",
+        "imported_book_id": "249"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-dc02b5a84a5bfb29.webp",
+      "libro": {
+        "titulo": "Las matemáticas ocultas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Jamet, Robin",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alianza Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000128",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000128-ce33116a7386.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122863",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-dc02b5a84a5bfb29",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "250",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-18c009262aedff0c"
+        },
+        "author_bindings": [
+          {
+            "name": "Jamet, Robin",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Jamet, Robin",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://www.alianzaeditorial.es/primer_capitulo/las-matematicas-ocultas.pdf",
+            "observed_text": "Alianza Editorial",
+            "basis": "Ficha bibliográfica primaria del editor de la obra con título y autoría concordantes; cotejada con portada original.",
+            "source": "https://www.alianzaeditorial.es/primer_capitulo/las-matematicas-ocultas.pdf",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "INFERRED_UNEQUIVOCAL",
+            "source_url": "https://www.alianzaeditorial.es/primer_capitulo/las-matematicas-ocultas.pdf",
+            "observed_text": "Toma dos hojas de papel rectangulares iguales y pégalas juntas con papel celo por los cuatro lados.",
+            "basis": "Índice o texto de la obra en español, contenido inequívoco; no se infiere por el título.",
+            "source": "https://www.alianzaeditorial.es/primer_capitulo/las-matematicas-ocultas.pdf",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 187,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122863",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas ocultas - Jamet, Robin.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-dc02b5a84a5bfb29.webp",
+            "cover_sha256": "ce33116a73861ef3fd468b702be5d86c23698bad79ec232f511173896e30c07a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Jamet, Robin",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 187,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122863",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas ocultas - Jamet, Robin.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-dc02b5a84a5bfb29.webp",
+            "cover_sha256": "ce33116a73861ef3fd468b702be5d86c23698bad79ec232f511173896e30c07a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 187,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122863",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Las matemáticas ocultas - Jamet, Robin.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-dc02b5a84a5bfb29.webp",
+            "cover_sha256": "ce33116a73861ef3fd468b702be5d86c23698bad79ec232f511173896e30c07a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 187,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122863",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Las matemáticas ocultas - Jamet, Robin.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-dc02b5a84a5bfb29.webp",
+          "cover_sha256": "ce33116a73861ef3fd468b702be5d86c23698bad79ec232f511173896e30c07a",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "251",
+        "imported_book_id": "250"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-d3d40c615e3ed52f.webp",
+      "libro": {
+        "titulo": "Lo imposible en matemáticas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Prieto de Castro, Carlos",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000105",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000105-fdb50b221f87.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37796",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-d3d40c615e3ed52f",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "251",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-cfd2d00e9ee6d631"
+        },
+        "author_bindings": [
+          {
+            "name": "Prieto de Castro, Carlos",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Prieto de Castro, Carlos",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+            "sha256": "cd15f2d63616c39f81308973e4172feaf188cb0aa5b26ba3f3610e766ea5dd66",
+            "observed_text": "México, D.F. : Fondo de Cultura Económica, 2017.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "cd15f2d63616c39f81308973e4172feaf188cb0aa5b26ba3f3610e766ea5dd66",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d3d40c615e3ed52f.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+            "sha256": "cd15f2d63616c39f81308973e4172feaf188cb0aa5b26ba3f3610e766ea5dd66",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "cd15f2d63616c39f81308973e4172feaf188cb0aa5b26ba3f3610e766ea5dd66",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-d3d40c615e3ed52f.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37796",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 188,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37796",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Lo imposible en matemáticas - Prieto de Castro, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-d3d40c615e3ed52f.webp",
+            "cover_sha256": "fdb50b221f8742173b68275e3e485a432265b36491c7dffea81b50d8e180c6e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Prieto de Castro, Carlos",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 188,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37796",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Lo imposible en matemáticas - Prieto de Castro, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-d3d40c615e3ed52f.webp",
+            "cover_sha256": "fdb50b221f8742173b68275e3e485a432265b36491c7dffea81b50d8e180c6e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 188,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37796",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Lo imposible en matemáticas - Prieto de Castro, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-d3d40c615e3ed52f.webp",
+            "cover_sha256": "fdb50b221f8742173b68275e3e485a432265b36491c7dffea81b50d8e180c6e6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 188,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37796",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Lo imposible en matemáticas - Prieto de Castro, Carlos.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-d3d40c615e3ed52f.webp",
+          "cover_sha256": "fdb50b221f8742173b68275e3e485a432265b36491c7dffea81b50d8e180c6e6",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "252",
+        "imported_book_id": "251"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-f92c6a802890688d.webp",
+      "libro": {
+        "titulo": "Matemática en espiral",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Falconí Asanza, Aldo",
+            "orden": 1
+          },
+          {
+            "nombre": "Hernández Crespo, Franco Manuel",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Universo Sur",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000152",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000152-602d19f2051a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131900",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-f92c6a802890688d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "252",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-28d0e00083b37b3b"
+        },
+        "author_bindings": [
+          {
+            "name": "Falconí Asanza, Aldo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Hernández Crespo, Franco Manuel",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Falconí Asanza, Aldo; Hernández Crespo, Franco Manuel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+            "sha256": "f4589553c4257894fd6a768463e0c5a91a46cbd5be60023550abc0a454073c79",
+            "observed_text": "Cuba : Editorial Universo Sur, 2020.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "f4589553c4257894fd6a768463e0c5a91a46cbd5be60023550abc0a454073c79",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f92c6a802890688d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+            "sha256": "f4589553c4257894fd6a768463e0c5a91a46cbd5be60023550abc0a454073c79",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "f4589553c4257894fd6a768463e0c5a91a46cbd5be60023550abc0a454073c79",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-f92c6a802890688d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB131900",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 190,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131900",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemática en espiral - Falconí Asanza, Aldo; Hernández Crespo, Franco Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f92c6a802890688d.webp",
+            "cover_sha256": "602d19f2051a10b0b7c256cd3f943e2d8bf57ae890302552e1d6472524d629f5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Falconí Asanza, Aldo; Hernández Crespo, Franco Manuel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 190,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131900",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemática en espiral - Falconí Asanza, Aldo; Hernández Crespo, Franco Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f92c6a802890688d.webp",
+            "cover_sha256": "602d19f2051a10b0b7c256cd3f943e2d8bf57ae890302552e1d6472524d629f5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 190,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131900",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemática en espiral - Falconí Asanza, Aldo; Hernández Crespo, Franco Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f92c6a802890688d.webp",
+            "cover_sha256": "602d19f2051a10b0b7c256cd3f943e2d8bf57ae890302552e1d6472524d629f5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 190,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131900",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Matemática en espiral - Falconí Asanza, Aldo; Hernández Crespo, Franco Manuel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f92c6a802890688d.webp",
+          "cover_sha256": "602d19f2051a10b0b7c256cd3f943e2d8bf57ae890302552e1d6472524d629f5",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "253",
+        "imported_book_id": "252"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-ecb575e0c500e089.webp",
+      "libro": {
+        "titulo": "Matemática estructural",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Andrés Forero Cuervo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de los Andes",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000063",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000063-e67d4964b228.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69334",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-ecb575e0c500e089",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "REUSE_EXISTING_WORK",
+          "bookId": "72",
+          "book_state": "ACTIVE",
+          "matched_author_names": [
+            "Andrés Forero Cuervo"
+          ],
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": [
+              "72"
+            ]
+          },
+          "proposal_key": "work-f45190a7c6260b03",
+          "status": "REUSED_VERIFIED"
+        },
+        "author_bindings": [
+          {
+            "name": "Andrés Forero Cuervo",
+            "order": 1,
+            "authorId": "74",
+            "action": "REUSE_EXISTING_AUTHOR"
+          }
+        ],
+        "raw_authorship": "Forero Cuervo, Andrés",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+            "sha256": "bad4757c82f3ada6901f9fb5ffc77e19d86d11fceab0dc0272c9d212e6054992",
+            "observed_text": "Bogotá : Universidad de los Andes, 2009.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "bad4757c82f3ada6901f9fb5ffc77e19d86d11fceab0dc0272c9d212e6054992",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ecb575e0c500e089.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+            "sha256": "bad4757c82f3ada6901f9fb5ffc77e19d86d11fceab0dc0272c9d212e6054992",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "bad4757c82f3ada6901f9fb5ffc77e19d86d11fceab0dc0272c9d212e6054992",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-ecb575e0c500e089.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69334",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 191,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69334",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemática estructural - Forero Cuervo, Andrés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-ecb575e0c500e089.webp",
+            "cover_sha256": "e67d4964b228d5d977646edaeea3a96fa94cd07a2305dec08aef94134feb5825",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Forero Cuervo, Andrés",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 191,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69334",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemática estructural - Forero Cuervo, Andrés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-ecb575e0c500e089.webp",
+            "cover_sha256": "e67d4964b228d5d977646edaeea3a96fa94cd07a2305dec08aef94134feb5825",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 191,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69334",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemática estructural - Forero Cuervo, Andrés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-ecb575e0c500e089.webp",
+            "cover_sha256": "e67d4964b228d5d977646edaeea3a96fa94cd07a2305dec08aef94134feb5825",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 191,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69334",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Matemática estructural - Forero Cuervo, Andrés.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-ecb575e0c500e089.webp",
+          "cover_sha256": "e67d4964b228d5d977646edaeea3a96fa94cd07a2305dec08aef94134feb5825",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "254",
+        "imported_book_id": "72"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-b2ba6d8bffd99663.webp",
+      "libro": {
+        "titulo": "Matemáticas básicas (4a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Escudero Trujillo, Rafael",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad del Norte",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000240",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000240-b171e32573ef.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69967",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-b2ba6d8bffd99663",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "253",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-6198667ff1053ad1"
+        },
+        "author_bindings": [
+          {
+            "name": "Escudero Trujillo, Rafael",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Escudero Trujillo, Rafael",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+            "sha256": "e10b5ff6705106e2be79124a6a2b8463b34860a882aaa325ff08b070484d0742",
+            "observed_text": "Barranquilla : Universidad del Norte, [2015]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "e10b5ff6705106e2be79124a6a2b8463b34860a882aaa325ff08b070484d0742",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b2ba6d8bffd99663.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+            "sha256": "e10b5ff6705106e2be79124a6a2b8463b34860a882aaa325ff08b070484d0742",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "e10b5ff6705106e2be79124a6a2b8463b34860a882aaa325ff08b070484d0742",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-b2ba6d8bffd99663.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB69967",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 197,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69967",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemáticas básicas (4a. ed.) - Escudero Trujillo, Rafael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-b2ba6d8bffd99663.webp",
+            "cover_sha256": "b171e32573ef4a11acdacafe0f237f01652b41734056fb07c0a9f396f251868a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Escudero Trujillo, Rafael",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 197,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69967",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemáticas básicas (4a. ed.) - Escudero Trujillo, Rafael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-b2ba6d8bffd99663.webp",
+            "cover_sha256": "b171e32573ef4a11acdacafe0f237f01652b41734056fb07c0a9f396f251868a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 197,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69967",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Matemáticas básicas (4a. ed.) - Escudero Trujillo, Rafael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-b2ba6d8bffd99663.webp",
+            "cover_sha256": "b171e32573ef4a11acdacafe0f237f01652b41734056fb07c0a9f396f251868a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 197,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69967",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Matemáticas básicas (4a. ed.) - Escudero Trujillo, Rafael.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-b2ba6d8bffd99663.webp",
+          "cover_sha256": "b171e32573ef4a11acdacafe0f237f01652b41734056fb07c0a9f396f251868a",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "255",
+        "imported_book_id": "253"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/Matematicas/portadas/ebook-c2773c7db8f50e89.webp",
+      "libro": {
+        "titulo": "Pensar en la matemática",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Lorenzo Martínez, Javier de",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Matemáticas"
+        ]
+      },
+      "edicion": {
+        "editorial": "Comares",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000289",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000289-5b39c0f5ef04.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/162803",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-c2773c7db8f50e89",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "254",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-23e1b563ca70fa0d"
+        },
+        "author_bindings": [
+          {
+            "name": "Lorenzo Martínez, Javier de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Lorenzo Martínez, Javier de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+            "sha256": "0eb39da1b1fd7b3bbc6e72fcc9aea3b9f3d255720500691df1ba09d59eaa9c58",
+            "observed_text": "Albolote, Granada : Comares, 2015.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "0eb39da1b1fd7b3bbc6e72fcc9aea3b9f3d255720500691df1ba09d59eaa9c58",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2773c7db8f50e89.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+            "sha256": "0eb39da1b1fd7b3bbc6e72fcc9aea3b9f3d255720500691df1ba09d59eaa9c58",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "0eb39da1b1fd7b3bbc6e72fcc9aea3b9f3d255720500691df1ba09d59eaa9c58",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/ebook-c2773c7db8f50e89.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB162803",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 200,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/162803",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Pensar en la matemática - Lorenzo Martínez, Javier de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-c2773c7db8f50e89.webp",
+            "cover_sha256": "5b39c0f5ef04394cd21e4dac654e3270a16559a0f6fc1b7586d2f7a0227c78b4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Lorenzo Martínez, Javier de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 200,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/162803",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Pensar en la matemática - Lorenzo Martínez, Javier de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-c2773c7db8f50e89.webp",
+            "cover_sha256": "5b39c0f5ef04394cd21e4dac654e3270a16559a0f6fc1b7586d2f7a0227c78b4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 200,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/162803",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Matemáticas/originales/Pensar en la matemática - Lorenzo Martínez, Javier de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-c2773c7db8f50e89.webp",
+            "cover_sha256": "5b39c0f5ef04394cd21e4dac654e3270a16559a0f6fc1b7586d2f7a0227c78b4",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 200,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/162803",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Matemáticas/originales/Pensar en la matemática - Lorenzo Martínez, Javier de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-c2773c7db8f50e89.webp",
+          "cover_sha256": "5b39c0f5ef04394cd21e4dac654e3270a16559a0f6fc1b7586d2f7a0227c78b4",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Matemáticas",
+          "categoryId": "35",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Matematicas/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "256",
+        "imported_book_id": "254"
+      }
+    }
+  ]
+}

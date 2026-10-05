@@ -1,0 +1,3091 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-c7c794efb03c3148.webp",
+      "libro": {
+        "titulo": "Escritos sobre ética",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "García, Camilo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "La Carreta Editores",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000110",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 938,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000110-ac9f914c84ec.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70889",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-c7c794efb03c3148",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "91",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ecac68faebc62ba8"
+        },
+        "author_bindings": [
+          {
+            "name": "García, Camilo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "García, Camilo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+            "source_sha256": "0066f381f2916403576eac685b1c49904187adceaf76b69c5ae6a82fc23258f3",
+            "observed_text": "La Carreta Editores,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 70889.",
+            "capture_sha256": "0066f381f2916403576eac685b1c49904187adceaf76b69c5ae6a82fc23258f3",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns70889.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+            "source_sha256": "0066f381f2916403576eac685b1c49904187adceaf76b69c5ae6a82fc23258f3",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 70889.",
+            "capture_sha256": "0066f381f2916403576eac685b1c49904187adceaf76b69c5ae6a82fc23258f3",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns70889.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB70889",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 27,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70889",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Escritos sobre ética - García, Camilo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c7c794efb03c3148.webp",
+            "cover_sha256": "ac9f914c84ec3ac51b928f5b173aace75ff2d0ec9fb1472f8469aec15b39e111",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "García, Camilo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 27,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70889",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Escritos sobre ética - García, Camilo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c7c794efb03c3148.webp",
+            "cover_sha256": "ac9f914c84ec3ac51b928f5b173aace75ff2d0ec9fb1472f8469aec15b39e111",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 27,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70889",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Escritos sobre ética - García, Camilo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c7c794efb03c3148.webp",
+            "cover_sha256": "ac9f914c84ec3ac51b928f5b173aace75ff2d0ec9fb1472f8469aec15b39e111",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 27,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70889",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Escritos sobre ética - García, Camilo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c7c794efb03c3148.webp",
+          "cover_sha256": "ac9f914c84ec3ac51b928f5b173aace75ff2d0ec9fb1472f8469aec15b39e111",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "92",
+        "imported_book_id": "91"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-43dc30b23ed17e4e.webp",
+      "libro": {
+        "titulo": "La responsividad ética",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Patiño González, Susana Magdalena",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Plaza y Valdés, S.L.",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000276",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2718,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000276-e9bdb93ec6a2.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59505",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-43dc30b23ed17e4e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "92",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-f51b03a4296c4ffd"
+        },
+        "author_bindings": [
+          {
+            "name": "Patiño González, Susana Magdalena",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Patiño González, Susana Magdalena",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+            "source_sha256": "ff3ab7366cd456523b24d929420ca3849233759cc0116e7a871fd0726b613305",
+            "observed_text": "Plaza y Valdés, S.L.,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 59505.",
+            "capture_sha256": "ff3ab7366cd456523b24d929420ca3849233759cc0116e7a871fd0726b613305",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59505.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+            "source_sha256": "ff3ab7366cd456523b24d929420ca3849233759cc0116e7a871fd0726b613305",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 59505.",
+            "capture_sha256": "ff3ab7366cd456523b24d929420ca3849233759cc0116e7a871fd0726b613305",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59505.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59505",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 29,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59505",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La responsividad ética - Patiño González, Susana Magdalena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-43dc30b23ed17e4e.webp",
+            "cover_sha256": "e9bdb93ec6a2c4e180af4694910de9ea29b833779965abf21b25e9a347c826b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Patiño González, Susana Magdalena",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 29,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59505",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La responsividad ética - Patiño González, Susana Magdalena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-43dc30b23ed17e4e.webp",
+            "cover_sha256": "e9bdb93ec6a2c4e180af4694910de9ea29b833779965abf21b25e9a347c826b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 29,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59505",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La responsividad ética - Patiño González, Susana Magdalena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-43dc30b23ed17e4e.webp",
+            "cover_sha256": "e9bdb93ec6a2c4e180af4694910de9ea29b833779965abf21b25e9a347c826b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 29,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59505",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/La responsividad ética - Patiño González, Susana Magdalena.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-43dc30b23ed17e4e.webp",
+          "cover_sha256": "e9bdb93ec6a2c4e180af4694910de9ea29b833779965abf21b25e9a347c826b8",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "93",
+        "imported_book_id": "92"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-724a798ecab60e86.webp",
+      "libro": {
+        "titulo": "La ética en la era de la tecnociencia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pulgar Castro, Rodrigo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "RIL editores",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000142",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3919,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000142-935a58d015ec.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106271",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-724a798ecab60e86",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "93",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2c3eeedfe9094e7f"
+        },
+        "author_bindings": [
+          {
+            "name": "Pulgar Castro, Rodrigo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pulgar Castro, Rodrigo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+            "source_sha256": "48c3ef7d4326e0a6ef2255ca760d6db2e6afc431470eabfc8e4cfb3b36744abd",
+            "observed_text": "RIL editores,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 106271.",
+            "capture_sha256": "48c3ef7d4326e0a6ef2255ca760d6db2e6afc431470eabfc8e4cfb3b36744abd",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns106271.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+            "source_sha256": "48c3ef7d4326e0a6ef2255ca760d6db2e6afc431470eabfc8e4cfb3b36744abd",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 106271.",
+            "capture_sha256": "48c3ef7d4326e0a6ef2255ca760d6db2e6afc431470eabfc8e4cfb3b36744abd",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns106271.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB106271",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 32,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106271",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La ética en la era de la tecnociencia - Pulgar Castro, Rodrigo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-724a798ecab60e86.webp",
+            "cover_sha256": "935a58d015ec74ab44909050759c0b489ccfa0707ab0431d1d26897e2832ef92",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pulgar Castro, Rodrigo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 32,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106271",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La ética en la era de la tecnociencia - Pulgar Castro, Rodrigo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-724a798ecab60e86.webp",
+            "cover_sha256": "935a58d015ec74ab44909050759c0b489ccfa0707ab0431d1d26897e2832ef92",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 32,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106271",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La ética en la era de la tecnociencia - Pulgar Castro, Rodrigo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-724a798ecab60e86.webp",
+            "cover_sha256": "935a58d015ec74ab44909050759c0b489ccfa0707ab0431d1d26897e2832ef92",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 32,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106271",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/La ética en la era de la tecnociencia - Pulgar Castro, Rodrigo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-724a798ecab60e86.webp",
+          "cover_sha256": "935a58d015ec74ab44909050759c0b489ccfa0707ab0431d1d26897e2832ef92",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "94",
+        "imported_book_id": "93"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-2d0a07a10e6b0b80.webp",
+      "libro": {
+        "titulo": "La ética explorada",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "González, Ana Marta",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "EUNSA",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000297",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5369,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000297-d53a94099b73.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47307",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2d0a07a10e6b0b80",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "94",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-515e34e1d45c7d8a"
+        },
+        "author_bindings": [
+          {
+            "name": "González, Ana Marta",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "González, Ana Marta",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+            "source_sha256": "6d1288cfaf8e10f3f45d9523a97542ad7ee192f446a6e1714caaf3796d28f1d2",
+            "observed_text": "EUNSA,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 47307.",
+            "capture_sha256": "6d1288cfaf8e10f3f45d9523a97542ad7ee192f446a6e1714caaf3796d28f1d2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47307.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+            "source_sha256": "6d1288cfaf8e10f3f45d9523a97542ad7ee192f446a6e1714caaf3796d28f1d2",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 47307.",
+            "capture_sha256": "6d1288cfaf8e10f3f45d9523a97542ad7ee192f446a6e1714caaf3796d28f1d2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47307.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47307",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 33,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47307",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La ética explorada - González, Ana Marta.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2d0a07a10e6b0b80.webp",
+            "cover_sha256": "d53a94099b7328438f40a47dc72cd7d6c7fc36bdbc219d0ddcfb01f77d0354f3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "González, Ana Marta",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 33,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47307",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La ética explorada - González, Ana Marta.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2d0a07a10e6b0b80.webp",
+            "cover_sha256": "d53a94099b7328438f40a47dc72cd7d6c7fc36bdbc219d0ddcfb01f77d0354f3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 33,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47307",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La ética explorada - González, Ana Marta.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2d0a07a10e6b0b80.webp",
+            "cover_sha256": "d53a94099b7328438f40a47dc72cd7d6c7fc36bdbc219d0ddcfb01f77d0354f3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 33,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47307",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/La ética explorada - González, Ana Marta.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2d0a07a10e6b0b80.webp",
+          "cover_sha256": "d53a94099b7328438f40a47dc72cd7d6c7fc36bdbc219d0ddcfb01f77d0354f3",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "95",
+        "imported_book_id": "94"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-2e27906c918a7d2d.webp",
+      "libro": {
+        "titulo": "Metafísica de la web",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ferraris, Maurizio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Dykinson",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000264",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1077,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000264-433fd5eb0390.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/159993",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2e27906c918a7d2d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "95",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-01c6426c579c1ca6"
+        },
+        "author_bindings": [
+          {
+            "name": "Ferraris, Maurizio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ferraris, Maurizio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+            "source_sha256": "a525d82012765c069d54ee1a153707d12423f076edcba67cbd7a821679084e0b",
+            "observed_text": "Dykinson,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 159993.",
+            "capture_sha256": "a525d82012765c069d54ee1a153707d12423f076edcba67cbd7a821679084e0b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns159993.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+            "source_sha256": "a525d82012765c069d54ee1a153707d12423f076edcba67cbd7a821679084e0b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 159993.",
+            "capture_sha256": "a525d82012765c069d54ee1a153707d12423f076edcba67cbd7a821679084e0b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns159993.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB159993",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 36,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/159993",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Metafísica de la web - Ferraris, Maurizio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2e27906c918a7d2d.webp",
+            "cover_sha256": "433fd5eb0390779e870394653668a1cd7e55ae3d70fd8379870f77b41416ada0",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ferraris, Maurizio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 36,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/159993",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Metafísica de la web - Ferraris, Maurizio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2e27906c918a7d2d.webp",
+            "cover_sha256": "433fd5eb0390779e870394653668a1cd7e55ae3d70fd8379870f77b41416ada0",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 36,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/159993",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Metafísica de la web - Ferraris, Maurizio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2e27906c918a7d2d.webp",
+            "cover_sha256": "433fd5eb0390779e870394653668a1cd7e55ae3d70fd8379870f77b41416ada0",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 36,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/159993",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Metafísica de la web - Ferraris, Maurizio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2e27906c918a7d2d.webp",
+          "cover_sha256": "433fd5eb0390779e870394653668a1cd7e55ae3d70fd8379870f77b41416ada0",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "96",
+        "imported_book_id": "95"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-f1fae131a4859d4d.webp",
+      "libro": {
+        "titulo": "¿Hay que desconstruir la metafísica?",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Aubenque, Pierre",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Encuentro",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000203",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3193,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000203-25cff4a036eb.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61805",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-f1fae131a4859d4d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "96",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-6ac496b9a48d1f61"
+        },
+        "author_bindings": [
+          {
+            "name": "Aubenque, Pierre",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Aubenque, Pierre",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+            "source_sha256": "a5374ea134c231e0c4d1f3fe8a87aa3159d7c3faf918c410e2a58525f286bbba",
+            "observed_text": "Encuentro,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 61805.",
+            "capture_sha256": "a5374ea134c231e0c4d1f3fe8a87aa3159d7c3faf918c410e2a58525f286bbba",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns61805.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+            "source_sha256": "a5374ea134c231e0c4d1f3fe8a87aa3159d7c3faf918c410e2a58525f286bbba",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 61805.",
+            "capture_sha256": "a5374ea134c231e0c4d1f3fe8a87aa3159d7c3faf918c410e2a58525f286bbba",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns61805.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61805",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 37,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61805",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Hay que desconstruir la metafísica - Aubenque, Pierre.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-f1fae131a4859d4d.webp",
+            "cover_sha256": "25cff4a036eb2cc53c9b3c3e2e6887afe7ada9a3b87eb35d724f7c84911b5a0b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Aubenque, Pierre",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 37,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61805",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Hay que desconstruir la metafísica - Aubenque, Pierre.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-f1fae131a4859d4d.webp",
+            "cover_sha256": "25cff4a036eb2cc53c9b3c3e2e6887afe7ada9a3b87eb35d724f7c84911b5a0b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 37,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61805",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Hay que desconstruir la metafísica - Aubenque, Pierre.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-f1fae131a4859d4d.webp",
+            "cover_sha256": "25cff4a036eb2cc53c9b3c3e2e6887afe7ada9a3b87eb35d724f7c84911b5a0b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 37,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61805",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/¿Hay que desconstruir la metafísica - Aubenque, Pierre.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-f1fae131a4859d4d.webp",
+          "cover_sha256": "25cff4a036eb2cc53c9b3c3e2e6887afe7ada9a3b87eb35d724f7c84911b5a0b",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "97",
+        "imported_book_id": "96"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-1b8619eae91a6a97.webp",
+      "libro": {
+        "titulo": "¿Qué es eso llamado metafísica?",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Garrett, Brian",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alianza Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000245",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5909,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000245-92907d30e20f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45443",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-1b8619eae91a6a97",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "97",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2337861378b643fe"
+        },
+        "author_bindings": [
+          {
+            "name": "Garrett, Brian",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Garrett, Brian",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "/home/andres18123/PLIEGO/covers/Audiolibros/Filosofía/originales/¿Qué es eso llamado metafísica - Garrett, Brian.jpg",
+            "source_sha256": "9763260428c234c5e8bba72e8a5c7870a2d3d37cdfde4d6c5dcdf427a63843c5",
+            "observed_text": "Alianza Editorial",
+            "basis": "Nombre de editorial literal legible en la portada original aportada; identidad de título y autor cotejada.",
+            "source_path": "covers/Audiolibros/Filosofía/originales/¿Qué es eso llamado metafísica - Garrett, Brian.jpg",
+            "capture_sha256": "9763260428c234c5e8bba72e8a5c7870a2d3d37cdfde4d6c5dcdf427a63843c5",
+            "source": "/home/andres18123/PLIEGO/covers/Audiolibros/Filosofía/originales/¿Qué es eso llamado metafísica - Garrett, Brian.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://nextory.com/es/book/que-es-eso-llamado-metafisica-5625981",
+            "observed_text": "Autor/a: Brian Garrett Idioma: Español Editorial: Alianza Editorial Traducción: Fabio Morales García",
+            "basis": "Catálogo público de ebook especifica idioma; título, autor y editorial coinciden. ISBN digital del catálogo corroborado en página oficial Alianza; no se asigna al candidato.",
+            "capture_sha256": "9308991f065d838c879e8ee18a87e9d38527e35e335d229d58172bfe451d2631",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/web-nextory-open.json",
+            "capture_format": "TOOL_OUTPUT_JSON",
+            "source": "https://nextory.com/es/book/que-es-eso-llamado-metafisica-5625981",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 38,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45443",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es eso llamado metafísica - Garrett, Brian.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1b8619eae91a6a97.webp",
+            "cover_sha256": "92907d30e20f57fc374f8d1655afaf1bfc5597dbde277d75e1cf74e87c8ff6e4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Garrett, Brian",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 38,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45443",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es eso llamado metafísica - Garrett, Brian.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1b8619eae91a6a97.webp",
+            "cover_sha256": "92907d30e20f57fc374f8d1655afaf1bfc5597dbde277d75e1cf74e87c8ff6e4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 38,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45443",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es eso llamado metafísica - Garrett, Brian.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1b8619eae91a6a97.webp",
+            "cover_sha256": "92907d30e20f57fc374f8d1655afaf1bfc5597dbde277d75e1cf74e87c8ff6e4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 38,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45443",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/¿Qué es eso llamado metafísica - Garrett, Brian.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1b8619eae91a6a97.webp",
+          "cover_sha256": "92907d30e20f57fc374f8d1655afaf1bfc5597dbde277d75e1cf74e87c8ff6e4",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "98",
+        "imported_book_id": "97"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-1ec4175129c2f6f9.webp",
+      "libro": {
+        "titulo": "Ética básica (3a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Etxeberria Mauleón, Xabier",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Deusto",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000060",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3328,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000060-16d2c0d9c6d8.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34160",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-1ec4175129c2f6f9",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "98",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4d113245ed0f3382"
+        },
+        "author_bindings": [
+          {
+            "name": "Etxeberria Mauleón, Xabier",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Etxeberria Mauleón, Xabier",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+            "source_sha256": "2e90a5d1416e2bb7ab9cb428bdf08909b95209cd96a991042d6bb65c08fd0915",
+            "observed_text": "Universidad de Deusto,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 34160.",
+            "capture_sha256": "2e90a5d1416e2bb7ab9cb428bdf08909b95209cd96a991042d6bb65c08fd0915",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34160.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+            "source_sha256": "2e90a5d1416e2bb7ab9cb428bdf08909b95209cd96a991042d6bb65c08fd0915",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 34160.",
+            "capture_sha256": "2e90a5d1416e2bb7ab9cb428bdf08909b95209cd96a991042d6bb65c08fd0915",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34160.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34160",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 40,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34160",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética básica (3a. ed.) - Etxeberria Mauleón, Xabier.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1ec4175129c2f6f9.webp",
+            "cover_sha256": "16d2c0d9c6d8cf00beb1c4e4b1626d12cd64cb0426a909063bf7bb2c42d7bb0c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Etxeberria Mauleón, Xabier",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 40,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34160",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética básica (3a. ed.) - Etxeberria Mauleón, Xabier.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1ec4175129c2f6f9.webp",
+            "cover_sha256": "16d2c0d9c6d8cf00beb1c4e4b1626d12cd64cb0426a909063bf7bb2c42d7bb0c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 40,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34160",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética básica (3a. ed.) - Etxeberria Mauleón, Xabier.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1ec4175129c2f6f9.webp",
+            "cover_sha256": "16d2c0d9c6d8cf00beb1c4e4b1626d12cd64cb0426a909063bf7bb2c42d7bb0c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 40,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34160",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética básica (3a. ed.) - Etxeberria Mauleón, Xabier.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1ec4175129c2f6f9.webp",
+          "cover_sha256": "16d2c0d9c6d8cf00beb1c4e4b1626d12cd64cb0426a909063bf7bb2c42d7bb0c",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "99",
+        "imported_book_id": "98"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-c922336fdf5b1257.webp",
+      "libro": {
+        "titulo": "Ética de la comunicación",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Prado Flores, Rogelio del",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Gedisa",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000235",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6935,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000235-2a2079e80066.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128281",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-c922336fdf5b1257",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "99",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-31bfcc01ac125b13"
+        },
+        "author_bindings": [
+          {
+            "name": "Prado Flores, Rogelio del",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Prado Flores, Rogelio del",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+            "source_sha256": "e02942244d980aa22a81aa2d00bf3b8705bf922eeaccf1e24a6c6e4344cd7713",
+            "observed_text": "Editorial Gedisa,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 128281.",
+            "capture_sha256": "e02942244d980aa22a81aa2d00bf3b8705bf922eeaccf1e24a6c6e4344cd7713",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns128281.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+            "source_sha256": "e02942244d980aa22a81aa2d00bf3b8705bf922eeaccf1e24a6c6e4344cd7713",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 128281.",
+            "capture_sha256": "e02942244d980aa22a81aa2d00bf3b8705bf922eeaccf1e24a6c6e4344cd7713",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns128281.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128281",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 42,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128281",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de la comunicación - Prado Flores, Rogelio del.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c922336fdf5b1257.webp",
+            "cover_sha256": "2a2079e80066310aa08819b4beeb118f90212695ee16e5d1672ddb39ffefacf6",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Prado Flores, Rogelio del",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 42,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128281",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de la comunicación - Prado Flores, Rogelio del.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c922336fdf5b1257.webp",
+            "cover_sha256": "2a2079e80066310aa08819b4beeb118f90212695ee16e5d1672ddb39ffefacf6",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 42,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128281",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de la comunicación - Prado Flores, Rogelio del.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c922336fdf5b1257.webp",
+            "cover_sha256": "2a2079e80066310aa08819b4beeb118f90212695ee16e5d1672ddb39ffefacf6",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 42,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128281",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética de la comunicación - Prado Flores, Rogelio del.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c922336fdf5b1257.webp",
+          "cover_sha256": "2a2079e80066310aa08819b4beeb118f90212695ee16e5d1672ddb39ffefacf6",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "100",
+        "imported_book_id": "99"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-7c148898de839f87.webp",
+      "libro": {
+        "titulo": "Ética de la sexualidad",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bonete, Enrique",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Desclée de Brouwer",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "33.99",
+        "sku": "PLG-BK-000076",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5119,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000076-64cdab670767.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47807",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-7c148898de839f87",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "100",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-9972e55f01af24be"
+        },
+        "author_bindings": [
+          {
+            "name": "Bonete, Enrique",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bonete, Enrique",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "/home/andres18123/PLIEGO/covers/Audiolibros/Filosofía/originales/Ética de la sexualidad - Bonete, Enrique.jpg",
+            "source_sha256": "14f71343f0ae9c815187c944f5ceaa59b79b32e705c1419eb1d62f109e6ad222",
+            "observed_text": "DESCLEE DE BROUWER",
+            "basis": "Imprint literal completo legible de la portada original; corrige errata Bruwer del catálogo del mismo eLibro ID.",
+            "source_path": "covers/Audiolibros/Filosofía/originales/Ética de la sexualidad - Bonete, Enrique.jpg",
+            "capture_sha256": "14f71343f0ae9c815187c944f5ceaa59b79b32e705c1419eb1d62f109e6ad222",
+            "source": "/home/andres18123/PLIEGO/covers/Audiolibros/Filosofía/originales/Ética de la sexualidad - Bonete, Enrique.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47807",
+            "source_sha256": "9b2ac0f704cfcbdce3e2f0f633525df9749e5f607580da2a777e4865954cdf65",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 47807.",
+            "capture_sha256": "9b2ac0f704cfcbdce3e2f0f633525df9749e5f607580da2a777e4865954cdf65",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47807.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47807",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 43,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47807",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de la sexualidad - Bonete, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7c148898de839f87.webp",
+            "cover_sha256": "64cdab670767f49b8a3e41bb8f440da876146e797d5d00d1b204ed3db3e5cf61",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bonete, Enrique",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 43,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47807",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de la sexualidad - Bonete, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7c148898de839f87.webp",
+            "cover_sha256": "64cdab670767f49b8a3e41bb8f440da876146e797d5d00d1b204ed3db3e5cf61",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 43,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47807",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de la sexualidad - Bonete, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7c148898de839f87.webp",
+            "cover_sha256": "64cdab670767f49b8a3e41bb8f440da876146e797d5d00d1b204ed3db3e5cf61",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 43,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47807",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética de la sexualidad - Bonete, Enrique.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7c148898de839f87.webp",
+          "cover_sha256": "64cdab670767f49b8a3e41bb8f440da876146e797d5d00d1b204ed3db3e5cf61",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "101",
+        "imported_book_id": "100"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp",
+      "libro": {
+        "titulo": "Ética de las nanotecnologías",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ruiz Trujillo, Pere",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Herder Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000225",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5208,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000225-dffd36793130.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128199",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-7af4d1003a034ea7",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "101",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-96f31f19577bf785"
+        },
+        "author_bindings": [
+          {
+            "name": "Ruiz Trujillo, Pere",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ruiz Trujillo, Pere",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128199",
+            "source_sha256": "66c4159e5a2dce91e9e9d1ede5feee7bff717ac58d74d3126841d350f9554635",
+            "observed_text": "Herder,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 128199.",
+            "capture_sha256": "66c4159e5a2dce91e9e9d1ede5feee7bff717ac58d74d3126841d350f9554635",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns128199.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128199",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128199",
+            "source_sha256": "66c4159e5a2dce91e9e9d1ede5feee7bff717ac58d74d3126841d350f9554635",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 128199.",
+            "capture_sha256": "66c4159e5a2dce91e9e9d1ede5feee7bff717ac58d74d3126841d350f9554635",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns128199.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128199",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 44,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128199",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de las nanotecnologías - Ruiz Trujillo, Pere.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp",
+            "cover_sha256": "dffd36793130674623b991a4c79b648f3f33b632a3f5f78c48e49b1552c93d64",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ruiz Trujillo, Pere",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 44,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128199",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de las nanotecnologías - Ruiz Trujillo, Pere.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp",
+            "cover_sha256": "dffd36793130674623b991a4c79b648f3f33b632a3f5f78c48e49b1552c93d64",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 44,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128199",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética de las nanotecnologías - Ruiz Trujillo, Pere.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp",
+            "cover_sha256": "dffd36793130674623b991a4c79b648f3f33b632a3f5f78c48e49b1552c93d64",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 44,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128199",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética de las nanotecnologías - Ruiz Trujillo, Pere.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp",
+          "cover_sha256": "dffd36793130674623b991a4c79b648f3f33b632a3f5f78c48e49b1552c93d64",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "102",
+        "imported_book_id": "101"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-54322882e821818c.webp",
+      "libro": {
+        "titulo": "Ética general (6a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Rodríguez Luño, Ángel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "EUNSA",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "30.99",
+        "sku": "PLG-BK-000077",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5663,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000077-bcbed14ca4b3.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46946",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-54322882e821818c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "102",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-6272333c6cd6e782"
+        },
+        "author_bindings": [
+          {
+            "name": "Rodríguez Luño, Ángel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Rodríguez Luño, Ángel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+            "source_sha256": "6c765b9c1b7181887192301f2ecd027f917b3b79b45628625258873fd8c6d132",
+            "observed_text": "Eunsa,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 46946.",
+            "capture_sha256": "6c765b9c1b7181887192301f2ecd027f917b3b79b45628625258873fd8c6d132",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+            "source_sha256": "6c765b9c1b7181887192301f2ecd027f917b3b79b45628625258873fd8c6d132",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 46946.",
+            "capture_sha256": "6c765b9c1b7181887192301f2ecd027f917b3b79b45628625258873fd8c6d132",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46946",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 46,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética general (6a. ed.) - Rodríguez Luño, Ángel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-54322882e821818c.webp",
+            "cover_sha256": "bcbed14ca4b3c51812734437a2169991d3f5ea7b49040152cce3071624e1ec20",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Rodríguez Luño, Ángel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 46,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética general (6a. ed.) - Rodríguez Luño, Ángel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-54322882e821818c.webp",
+            "cover_sha256": "bcbed14ca4b3c51812734437a2169991d3f5ea7b49040152cce3071624e1ec20",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 46,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética general (6a. ed.) - Rodríguez Luño, Ángel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-54322882e821818c.webp",
+            "cover_sha256": "bcbed14ca4b3c51812734437a2169991d3f5ea7b49040152cce3071624e1ec20",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 46,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46946",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética general (6a. ed.) - Rodríguez Luño, Ángel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-54322882e821818c.webp",
+          "cover_sha256": "bcbed14ca4b3c51812734437a2169991d3f5ea7b49040152cce3071624e1ec20",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "103",
+        "imported_book_id": "102"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-c1b41020fd3c464c.webp",
+      "libro": {
+        "titulo": "Ética y cultura",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ricoeur, Paul",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Prometeo Libros",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "27.99",
+        "sku": "PLG-BK-000126",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4548,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000126-bd4320bb20ca.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191960",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-c1b41020fd3c464c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "103",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-17fd17a5ca46e36b"
+        },
+        "author_bindings": [
+          {
+            "name": "Ricoeur, Paul",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ricoeur, Paul",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+            "source_sha256": "fb512dacf96f220b0d9203be960793b082d0a8860f2ca931b1c81da443d3eda2",
+            "observed_text": "Prometeo Libros,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 191960.",
+            "capture_sha256": "fb512dacf96f220b0d9203be960793b082d0a8860f2ca931b1c81da443d3eda2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191960.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+            "source_sha256": "fb512dacf96f220b0d9203be960793b082d0a8860f2ca931b1c81da443d3eda2",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 191960.",
+            "capture_sha256": "fb512dacf96f220b0d9203be960793b082d0a8860f2ca931b1c81da443d3eda2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns191960.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB191960",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 48,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191960",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y cultura - Ricoeur, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c1b41020fd3c464c.webp",
+            "cover_sha256": "bd4320bb20ca202d7bf958baf709824676c6b3bc5624bc42e7ceebd4c5b38f46",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ricoeur, Paul",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 48,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191960",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y cultura - Ricoeur, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c1b41020fd3c464c.webp",
+            "cover_sha256": "bd4320bb20ca202d7bf958baf709824676c6b3bc5624bc42e7ceebd4c5b38f46",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 48,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191960",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y cultura - Ricoeur, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c1b41020fd3c464c.webp",
+            "cover_sha256": "bd4320bb20ca202d7bf958baf709824676c6b3bc5624bc42e7ceebd4c5b38f46",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 48,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191960",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética y cultura - Ricoeur, Paul.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c1b41020fd3c464c.webp",
+          "cover_sha256": "bd4320bb20ca202d7bf958baf709824676c6b3bc5624bc42e7ceebd4c5b38f46",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "104",
+        "imported_book_id": "103"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-d6813d23c882b658.webp",
+      "libro": {
+        "titulo": "Ética y libertad",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Roman Garate",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Deusto",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "24.99",
+        "sku": "PLG-BK-000125",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5399,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000125-f32d987659b8.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34123",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-d6813d23c882b658",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "104",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-08649b9b8f6c1832"
+        },
+        "author_bindings": [
+          {
+            "name": "Roman Garate",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Roman Garate",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+            "source_sha256": "ac4ddaae00b102e6e5c19336b7f1729b057c22a11772d5cc3ad2f552a32f330f",
+            "observed_text": "Universidad de Deusto,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 34123.",
+            "capture_sha256": "ac4ddaae00b102e6e5c19336b7f1729b057c22a11772d5cc3ad2f552a32f330f",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34123.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+            "source_sha256": "ac4ddaae00b102e6e5c19336b7f1729b057c22a11772d5cc3ad2f552a32f330f",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 34123.",
+            "capture_sha256": "ac4ddaae00b102e6e5c19336b7f1729b057c22a11772d5cc3ad2f552a32f330f",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34123.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34123",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 49,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34123",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y libertad - Roman Garate.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-d6813d23c882b658.webp",
+            "cover_sha256": "f32d987659b8185fbb0f9fa741dad4b1278d797c71c2672e519ca300fcda33fa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Roman Garate",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 49,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34123",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y libertad - Roman Garate.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-d6813d23c882b658.webp",
+            "cover_sha256": "f32d987659b8185fbb0f9fa741dad4b1278d797c71c2672e519ca300fcda33fa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 49,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34123",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y libertad - Roman Garate.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-d6813d23c882b658.webp",
+            "cover_sha256": "f32d987659b8185fbb0f9fa741dad4b1278d797c71c2672e519ca300fcda33fa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 49,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34123",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética y libertad - Roman Garate.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-d6813d23c882b658.webp",
+          "cover_sha256": "f32d987659b8185fbb0f9fa741dad4b1278d797c71c2672e519ca300fcda33fa",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "105",
+        "imported_book_id": "104"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp",
+      "libro": {
+        "titulo": "Ética y política",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sánchez Vázquez, Adolfo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "27.99",
+        "sku": "PLG-BK-000118",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3413,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000118-a04a3956529a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110932",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-e13bdd919ce475f6",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "105",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-6e0253efe5e2b2f6"
+        },
+        "author_bindings": [
+          {
+            "name": "Sánchez Vázquez, Adolfo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sánchez Vázquez, Adolfo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110932",
+            "source_sha256": "cc3b22d1992b0234c76f8d3d11587882c62e164ec2c5567c472677b5d3d87941",
+            "observed_text": "FCE - Fondo de Cultura Económica,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 110932.",
+            "capture_sha256": "cc3b22d1992b0234c76f8d3d11587882c62e164ec2c5567c472677b5d3d87941",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110932.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110932",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110932",
+            "source_sha256": "cc3b22d1992b0234c76f8d3d11587882c62e164ec2c5567c472677b5d3d87941",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 110932.",
+            "capture_sha256": "cc3b22d1992b0234c76f8d3d11587882c62e164ec2c5567c472677b5d3d87941",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns110932.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110932",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 50,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110932",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y política - Sánchez Vázquez, Adolfo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp",
+            "cover_sha256": "a04a3956529a2dcd43d2bd6d9efe6bed98f64ce38ee8ec803c6db9a7ba7e4aaa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sánchez Vázquez, Adolfo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 50,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110932",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y política - Sánchez Vázquez, Adolfo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp",
+            "cover_sha256": "a04a3956529a2dcd43d2bd6d9efe6bed98f64ce38ee8ec803c6db9a7ba7e4aaa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 50,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110932",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y política - Sánchez Vázquez, Adolfo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp",
+            "cover_sha256": "a04a3956529a2dcd43d2bd6d9efe6bed98f64ce38ee8ec803c6db9a7ba7e4aaa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 50,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110932",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética y política - Sánchez Vázquez, Adolfo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp",
+          "cover_sha256": "a04a3956529a2dcd43d2bd6d9efe6bed98f64ce38ee8ec803c6db9a7ba7e4aaa",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "106",
+        "imported_book_id": "105"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/Filosofia/portadas/audiobook-e9c64ba5698c0cc9.webp",
+      "libro": {
+        "titulo": "Ética y psicoanálisis",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Fromm, Erich",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000157",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1095,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000157-22d3b5098413.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/173449",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-e9c64ba5698c0cc9",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "106",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-fbe30f796cca9f23"
+        },
+        "author_bindings": [
+          {
+            "name": "Fromm, Erich",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Fromm, Erich",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+            "source_sha256": "128882548b3e6f3a46eb4140262ad6a93bbb2228432427f37b65565bc91d27f2",
+            "observed_text": "FCE - Fondo de Cultura Económica,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 173449.",
+            "capture_sha256": "128882548b3e6f3a46eb4140262ad6a93bbb2228432427f37b65565bc91d27f2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns173449.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+            "source_sha256": "128882548b3e6f3a46eb4140262ad6a93bbb2228432427f37b65565bc91d27f2",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 173449.",
+            "capture_sha256": "128882548b3e6f3a46eb4140262ad6a93bbb2228432427f37b65565bc91d27f2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns173449.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB173449",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 51,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/173449",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y psicoanálisis - Fromm, Erich.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e9c64ba5698c0cc9.webp",
+            "cover_sha256": "22d3b509841304196b22e9cec9429db7417f3a153cbfcc7bf4bca2d1d6e8d144",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Fromm, Erich",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 51,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/173449",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y psicoanálisis - Fromm, Erich.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e9c64ba5698c0cc9.webp",
+            "cover_sha256": "22d3b509841304196b22e9cec9429db7417f3a153cbfcc7bf4bca2d1d6e8d144",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 51,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/173449",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Ética y psicoanálisis - Fromm, Erich.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e9c64ba5698c0cc9.webp",
+            "cover_sha256": "22d3b509841304196b22e9cec9429db7417f3a153cbfcc7bf4bca2d1d6e8d144",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 51,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/173449",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Ética y psicoanálisis - Fromm, Erich.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e9c64ba5698c0cc9.webp",
+          "cover_sha256": "22d3b509841304196b22e9cec9429db7417f3a153cbfcc7bf4bca2d1d6e8d144",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Audiolibros/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "107",
+        "imported_book_id": "106"
+      }
+    }
+  ]
+}

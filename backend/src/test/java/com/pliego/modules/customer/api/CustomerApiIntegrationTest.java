@@ -44,6 +44,7 @@ import com.pliego.modules.customer.application.CustomerFavorites.Favorite;
 import com.pliego.modules.customer.application.CustomerFavorites.Page;
 import com.pliego.modules.customer.application.CustomerFavorites.Status;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i3_test",
         "spring.datasource.username=pliego_test",
@@ -55,6 +56,7 @@ import com.pliego.modules.customer.application.CustomerFavorites.Status;
         "pliego.cors.allowed-origins="
 })
 @AutoConfigureMockMvc
+@org.springframework.test.context.event.RecordApplicationEvents
 @Import(CustomerApiIntegrationTest.TestConfigurationForCustomerApi.class)
 class CustomerApiIntegrationTest {
 
@@ -81,6 +83,20 @@ class CustomerApiIntegrationTest {
     @Autowired
     FakeCustomerGateway gateway;
 
+    @Autowired
+    org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
+    @Autowired
+    org.springframework.test.context.event.ApplicationEvents events;
+
+    @BeforeEach
+    void resetEmailActions() {
+        org.mockito.Mockito.reset(emailActions);
+    }
+
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.application.EmailActionService emailActions;
+
     @BeforeEach
     void resetGateway() {
         gateway.reset();
@@ -97,7 +113,7 @@ class CustomerApiIntegrationTest {
 
         mvc.perform(put("/api/v1/me").header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"firstNames\":\"Ana\",\"lastNames\":\"Pérez\",\"phone\":null}"))
+                        .content("{\"expectedVersion\":\"0\",\"firstNames\":\"Ana\",\"lastNames\":\"Pérez\",\"phone\":null}"))
                 .andExpect(status().isNoContent());
         assertEquals(100L, gateway.lastActorUserId);
         assertEquals("Ana", gateway.profile.firstNames());
@@ -105,11 +121,63 @@ class CustomerApiIntegrationTest {
 
         mvc.perform(put("/api/v1/me").header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"customerId\":\"999\",\"firstNames\":\"Intruso\",\"lastNames\":\"Pérez\",\"phone\":null}"))
+                        .content("{\"customerId\":\"999\",\"expectedVersion\":\"0\",\"firstNames\":\"Intruso\",\"lastNames\":\"Pérez\",\"phone\":null}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("MALFORMED_JSON"))
                 .andExpect(jsonPath("$.title").value("Solicitud inválida"));
         assertEquals("Ana", gateway.profile.firstNames());
+    }
+
+    @Test
+    void changesOwnEmailOnlyAfterConfirmingTheCurrentPassword() throws Exception {
+        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
+
+        mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"newEmail\":\"Nueva@Example.com\",\"currentPassword\":\"no-es-esta\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("CURRENT_PASSWORD_INVALID"))
+                .andExpect(jsonPath("$.title").value("Contraseña incorrecta"));
+        assertEquals(0, gateway.changeEmailCalls);
+        assertEquals("ana@example.com", gateway.profile.email());
+        assertEquals(0, events.stream(com.pliego.modules.customer.application.CustomerEmailChanged.class).count());
+
+        mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"newEmail\":\"Nueva@Example.com\",\"currentPassword\":\"Lectura-segura-2026\"}"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value("nueva@example.com"));
+        assertEquals(100L, gateway.lastActorUserId);
+        assertEquals("nueva@example.com", gateway.profile.email());
+        // The integration point for the future mail adapter carries both addresses.
+        assertEquals(List.of(new com.pliego.modules.customer.application.CustomerEmailChanged(100L, "ana@example.com", "nueva@example.com")),
+                events.stream(com.pliego.modules.customer.application.CustomerEmailChanged.class).toList());
+    }
+
+    @Test
+    void rejectsATakenOrMalformedEmailWithSpanishProblems() throws Exception {
+        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
+
+        mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"newEmail\":\"tomado@example.com\",\"currentPassword\":\"Lectura-segura-2026\"}"))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("P1101"))
+                .andExpect(jsonPath("$.title").value("Correo ya registrado"));
+
+        mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"newEmail\":\"sin-arroba\",\"currentPassword\":\"Lectura-segura-2026\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
+
+        mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"newEmail\":\"nueva@example.com\"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
+        assertEquals(1, gateway.changeEmailCalls);
+        assertEquals("ana@example.com", gateway.profile.email());
     }
 
     @Test
@@ -131,14 +199,14 @@ class CustomerApiIntegrationTest {
                 .andExpect(status().isOk()).andExpect(jsonPath("$").isArray()).andExpect(jsonPath("$").isEmpty());
         assertEquals(100L, gateway.lastActorUserId);
 
-        String first = mvc.perform(post("/api/v1/me/addresses").header("Authorization", customerToken("100"))
+        String first = mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(ADDRESS))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.addressId").value("501"))
                 .andReturn().getResponse().getContentAsString();
         assertFalse(first.contains("customerId"));
 
         String secondRequest = ADDRESS.replace("\"Casa\"", "\"Trabajo\"");
-        mvc.perform(post("/api/v1/me/addresses").header("Authorization", customerToken("100"))
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(secondRequest))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.addressId").value("502"));
 
@@ -159,7 +227,7 @@ class CustomerApiIntegrationTest {
 
     @Test
     void updatesAndDeletesOwnAddressesWithoutDisclosingForeignOwnership() throws Exception {
-        mvc.perform(post("/api/v1/me/addresses").header("Authorization", customerToken("100"))
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(ADDRESS))
                 .andExpect(status().isCreated());
         mvc.perform(put("/api/v1/me/addresses/501").header("Authorization", customerToken("100"))
@@ -186,10 +254,10 @@ class CustomerApiIntegrationTest {
 
     @Test
     void deletingPrimaryMayLeaveNoPrimaryAndInvalidInputIsSpanish() throws Exception {
-        mvc.perform(post("/api/v1/me/addresses").header("Authorization", customerToken("100"))
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(ADDRESS))
                 .andExpect(status().isCreated());
-        mvc.perform(post("/api/v1/me/addresses").header("Authorization", customerToken("100"))
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(ADDRESS.replace("\"Casa\"", "\"Otra\"")
                                 .replace("\"makePrimary\":true", "\"makePrimary\":false")))
                 .andExpect(status().isCreated());
@@ -198,7 +266,7 @@ class CustomerApiIntegrationTest {
         assertTrue(gateway.addresses.stream().noneMatch(CustomerAddress::primary));
 
         String invalidCountry = ADDRESS.replace("\"EC\"", "\"E\"");
-        String invalid = mvc.perform(post("/api/v1/me/addresses").header("Authorization", customerToken("100"))
+        String invalid = mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(invalidCountry))
                 .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
                 .andExpect(jsonPath("$.title").value("Datos inválidos"))
@@ -207,18 +275,18 @@ class CustomerApiIntegrationTest {
         assertTrue(invalid.contains("El código de país debe tener dos letras."));
 
         String invalidPhone = ADDRESS.replace("+59325550134", "phone");
-        mvc.perform(post("/api/v1/me/addresses").header("Authorization", customerToken("100"))
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(invalidPhone))
                 .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
                 .andExpect(result -> assertTrue(result.getResponse().getContentAsString()
-                        .contains("El teléfono tiene un formato inválido.")));
+                        .contains("Usa solo dígitos, espacios, paréntesis, puntos o guiones; no incluyas letras ni extensiones.")));
 
         mvc.perform(put("/api/v1/me").header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"firstNames\":\" \",\"lastNames\":\"Pérez\",\"phone\":\"123\"}"))
+                        .content("{\"expectedVersion\":\"0\",\"firstNames\":\" \",\"lastNames\":\"Pérez\",\"phone\":\"123\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(result -> assertTrue(result.getResponse().getContentAsString()
-                        .contains("El nombre no puede estar vacío.")));
+                        .contains("Escribe tus nombres.")));
     }
 
     @Test
@@ -335,6 +403,8 @@ class CustomerApiIntegrationTest {
         private long nextAddressId = 501;
         private DatabaseException failure;
         private final List<Favorite> favorites = new ArrayList<>();
+        private String passwordHash;
+        private int changeEmailCalls;
 
         FakeCustomerGateway(DatabaseExceptionTranslator translator) {
             this.translator = translator;
@@ -347,6 +417,8 @@ class CustomerApiIntegrationTest {
             nextAddressId = 501;
             failure = null;
             favorites.clear();
+            passwordHash = null;
+            changeEmailCalls = 0;
         }
 
         private void beforeCall(long actorUserId) {
@@ -359,10 +431,37 @@ class CustomerApiIntegrationTest {
             return profile;
         }
 
-        @Override public void updateProfile(long actorUserId, String firstNames, String lastNames, String phone) {
+        @Override public void patchProfile(long actorUserId, long expectedVersion, String field, String value) {
+            CustomerProfile current = findProfile(actorUserId);
+            updateProfile(actorUserId, expectedVersion,
+                    "firstNames".equals(field) ? value : current.firstNames(),
+                    "lastNames".equals(field) ? value : current.lastNames(),
+                    "phone".equals(field) ? value : current.phone());
+        }
+        @Override public com.pliego.modules.customer.application.AddressAttempt resolveAddress(long actorUserId, UUID key) {
+            return new com.pliego.modules.customer.application.AddressAttempt("PENDING", null);
+        }
+        @Override public void updateProfile(long actorUserId, long expectedVersion, String firstNames, String lastNames, String phone) {
             beforeCall(actorUserId);
             profile = new CustomerProfile(profile.customerId(), profile.email(), firstNames, lastNames, phone,
                     profile.state());
+        }
+
+        @Override public String passwordHash(long actorUserId) {
+            beforeCall(actorUserId);
+            return passwordHash;
+        }
+
+        @Override public String changeEmail(long actorUserId, String newEmail) {
+            beforeCall(actorUserId);
+            changeEmailCalls++;
+            String normalized = newEmail.trim().toLowerCase(java.util.Locale.ROOT);
+            if (normalized.equals("tomado@example.com")) {
+                throw translator.translate(new SQLException("private unique constraint uq_usuario_email", "P1101"));
+            }
+            profile = new CustomerProfile(profile.customerId(), normalized, profile.firstNames(), profile.lastNames(),
+                    profile.phone(), profile.state());
+            return normalized;
         }
 
         @Override public List<CustomerAddress> listAddresses(long actorUserId) {
@@ -370,7 +469,7 @@ class CustomerApiIntegrationTest {
             return List.copyOf(addresses);
         }
 
-        @Override public long createAddress(long actorUserId, AddressData address, boolean makePrimary) {
+        @Override public long createAddress(long actorUserId, UUID key, AddressData address, boolean makePrimary) {
             beforeCall(actorUserId);
             if (makePrimary) setNoAddressesPrimary();
             long id = nextAddressId++;

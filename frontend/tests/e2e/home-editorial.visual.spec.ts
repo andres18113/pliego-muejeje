@@ -73,9 +73,9 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 
       await page.evaluate(() => { document.activeElement instanceof HTMLElement && document.activeElement.blur(); document.documentElement.style.fontSize = "32px"; });
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(width); await page.evaluate(() => scrollTo(0, 0));
       await page.screenshot({ path: `${output}text200-${scheme}-${width}.png`, fullPage: true }); await page.evaluate(() => document.documentElement.style.fontSize = "");
-      await page.getByRole("button", { name: "Buscar en el catálogo", exact: true }).click(); const search = page.getByRole("dialog", { name: "Buscar en el catálogo" });
+      await page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true }).click(); const search = page.getByRole("dialog", { name: "Buscar en el catálogo" });
       await expect(search.getByRole("searchbox")).toBeFocused(); await search.getByRole("searchbox").fill("cien"); await expect(search.getByRole("link", { name: /Cien años de soledad/ })).toBeVisible(); await accessible(page);
-      await page.keyboard.press("Escape"); await expect(page.getByRole("button", { name: "Buscar en el catálogo", exact: true })).toBeFocused();
+      await page.keyboard.press("Escape"); await expect(page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true })).toBeFocused();
       await page.getByRole("navigation", { name: "Explora por tema" }).getByRole("link", { name: "Matemáticas", exact: true }).click();
       await expect(page).toHaveURL(/\/catalog\?category=matematicas/); await expect(page.getByTestId("site-header")).not.toHaveAttribute("data-home"); expect(errors).toEqual([]);
       await testInfo.attach("geometry", { body: JSON.stringify({ width, scheme, geometry, errors }, null, 2), contentType: "application/json" });

@@ -45,6 +45,7 @@ import com.pliego.modules.inventory.application.InventoryModels.Page;
 import com.pliego.modules.inventory.application.InventoryModels.Search;
 import com.pliego.modules.inventory.gateway.InventoryGateway;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i6_test",
         "spring.datasource.username=pliego_test",

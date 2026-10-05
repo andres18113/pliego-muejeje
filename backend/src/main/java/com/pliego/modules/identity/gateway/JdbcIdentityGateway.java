@@ -16,10 +16,10 @@ import com.pliego.foundation.database.JdbcGatewaySupport;
 @Repository
 public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityGateway {
 
-    private static final String REGISTER_CALL = "CALL pliego.sp_customer_register(?,?,?,?,?,?,?,?)";
+    private static final String REGISTER_CALL = "CALL pliego.sp_customer_register_with_verification(?,?,?,?,?,?,?,?,?,?)";
     private static final String AUTH_QUERY = "SELECT user_id, email_canonical, password_hash, role, state "
             + "FROM pliego.fn_user_auth_data(?)";
-    private static final String CREATE_SESSION_QUERY = "SELECT pliego.fn_auth_session_create(?,?,?)";
+    private static final String CREATE_SESSION_QUERY = "SELECT pliego.fn_auth_session_create_checked(?,?,?,?)";
     private static final String REFRESH_SESSION_QUERY = "SELECT user_id, email_canonical, role, expires_at "
             + "FROM pliego.fn_auth_session_refresh(?,?)";
     private static final String REVOKE_SESSION_QUERY = "SELECT pliego.fn_auth_session_revoke(?)";
@@ -33,7 +33,7 @@ public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityG
 
     @Override
     public RegistrationResult register(String email, String passwordHash, String firstNames, String lastNames,
-            String phone) {
+            String phone, String verificationHash, String verificationNonce) {
         return withDatabaseErrorTranslation(() -> jdbcTemplate.execute(
                 (ConnectionCallback<RegistrationResult>) connection -> {
                     try (PreparedStatement statement = connection.prepareStatement(REGISTER_CALL)) {
@@ -42,9 +42,11 @@ public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityG
                         statement.setString(3, firstNames);
                         statement.setString(4, lastNames);
                         statement.setString(5, phone);
-                        statement.setNull(6, Types.BIGINT);
-                        statement.setNull(7, Types.BIGINT);
-                        statement.setNull(8, Types.VARCHAR);
+                        statement.setString(6, verificationHash);
+                        statement.setString(7, verificationNonce);
+                        statement.setNull(8, Types.BIGINT);
+                        statement.setNull(9, Types.BIGINT);
+                        statement.setNull(10, Types.VARCHAR);
                         try (ResultSet outputs = statement.executeQuery()) {
                             if (!outputs.next()) {
                                 throw new SQLException("sp_customer_register returned no result", "02000");
@@ -54,6 +56,24 @@ public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityG
                         }
                     }
                 }));
+    }
+
+    @Override
+    public boolean requestEmailAction(String email, String purpose, String tokenHash, String nonce, String requestHash) {
+        return withDatabaseErrorTranslation(() -> Boolean.TRUE.equals(jdbcTemplate.queryForObject(
+                "SELECT pliego.fn_email_action_request(?,?,?,?,?)", Boolean.class, email, purpose, tokenHash, nonce, requestHash)));
+    }
+
+    @Override
+    public boolean consumeEmailAction(String purpose, String tokenHash, String passwordHash) {
+        return withDatabaseErrorTranslation(() -> Boolean.TRUE.equals(jdbcTemplate.queryForObject(
+                "SELECT pliego.fn_email_action_consume(?,?,?)", Boolean.class, purpose, tokenHash, passwordHash)));
+    }
+
+    @Override
+    public void enqueueEmailVerification(long userId, String tokenHash, String nonce) {
+        withDatabaseErrorTranslation(() -> jdbcTemplate.query("SELECT pliego.fn_email_verification_for_user(?,?,?)",
+                statement -> { statement.setLong(1,userId); statement.setString(2,tokenHash); statement.setString(3,nonce); }, resultSet -> null));
     }
 
     @Override
@@ -67,13 +87,14 @@ public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityG
     }
 
     @Override
-    public void createSession(long userId, String refreshTokenHash, Instant expiresAt) {
-        withDatabaseErrorTranslation(() -> jdbcTemplate.query(CREATE_SESSION_QUERY,
+    public boolean createSession(long userId, String refreshTokenHash, Instant expiresAt, String expectedPasswordHash) {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.query(CREATE_SESSION_QUERY,
                 statement -> {
                     statement.setLong(1, userId);
                     statement.setString(2, refreshTokenHash);
                     statement.setTimestamp(3, java.sql.Timestamp.from(expiresAt));
-                }, resultSet -> null));
+                    statement.setString(4, expectedPasswordHash);
+                }, resultSet -> resultSet.next() && resultSet.getBoolean(1)));
     }
 
     @Override

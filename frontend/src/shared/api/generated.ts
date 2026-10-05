@@ -25,7 +25,11 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        patch?: never;
+        /**
+         * Editar un campo de mi perfil
+         * @description Actualiza únicamente field con value si expectedVersion coincide. null borra solo el teléfono. Un conflicto requiere revisar el perfil actual.
+         */
+        patch: operations["patchProfile"];
         trace?: never;
     };
     "/api/v1/me/favorites/{editionId}": {
@@ -47,6 +51,26 @@ export interface paths {
          * @description La operación es idempotente.
          */
         delete: operations["removeFavorite"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/email": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Cambiar mi correo
+         * @description Cambia el correo de inicio de sesión del cliente autenticado tras confirmar su contraseña actual. Las sesiones abiertas siguen activas.
+         */
+        put: operations["changeEmail"];
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -139,6 +163,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/orders/{orderId}/shipment/tracking": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Actualizar seguimiento y ventana estimada
+         * @description Reemplaza los datos de seguimiento del envío y registra un evento histórico.
+         */
+        put: operations["updateTracking"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/inventory/{editionId}/minimum": {
         parameters: {
             query?: never;
@@ -185,6 +229,30 @@ export interface paths {
         put: operations["editionStatus"];
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/editions/{editionId}/offer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /**
+         * Establecer una oferta de edición
+         * @description Reemplaza la única oferta de la edición. PostgreSQL valida el precio inferior al precio base y el intervalo de fechas.
+         */
+        put: operations["set"];
+        post?: never;
+        /**
+         * Desactivar una oferta de edición
+         * @description Desactiva la oferta sin cambiar el precio base ni los importes históricos de pedidos.
+         */
+        delete: operations["clear"];
         options?: never;
         head?: never;
         patch?: never;
@@ -347,6 +415,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/addresses/attempts/{key}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resolver una creación de dirección
+         * @description PENDING conserva la incertidumbre; CREATED devuelve el identificador original; NOT_CREATED bloquea el intento tardío antes de confirmar ausencia.
+         */
+        post: operations["resolveAddress"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/checkout": {
         parameters: {
             query?: never;
@@ -357,10 +445,30 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Finalizar compra
-         * @description El resultado simulado es determinista. Tras una respuesta desconocida, consulta los pedidos antes de crear otro intento; no reintentes automáticamente.
+         * Finalizar compra simulada
+         * @description No realiza cobros reales. Idempotency-Key identifica el intento; repetirlo devuelve el resultado original. Resuelve una respuesta perdida mediante el intento exacto.
          */
         post: operations["checkout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/checkout/attempts/{key}/resolve": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Resolver un intento de compra
+         * @description PENDING mantiene el resultado sin resolver. CREATED identifica el pedido exacto. NOT_CREATED bloquea permanentemente el intento antes de confirmar ausencia, incluso si la petición original llega tarde.
+         */
+        post: operations["resolve"];
         delete?: never;
         options?: never;
         head?: never;
@@ -384,6 +492,66 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/verify-email": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Verificar correo
+         * @description Consume un token de uso único que vence a las 24 horas. No inicia sesión automáticamente.
+         */
+        post: operations["verify"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/reset-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restablecer contraseña
+         * @description Consume token de recuperación, aplica BCrypt y revoca todas las sesiones de refresco. Los access tokens anteriores conservan su expiración máxima de 30 minutos.
+         */
+        post: operations["reset"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/resend-verification": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Solicitar otro enlace de verificación
+         * @description Respuesta neutra. Un minuto entre emisiones, hasta cinco solicitudes por correo y veinte por IP por hora.
+         */
+        post: operations["resend"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/register": {
         parameters: {
             query?: never;
@@ -395,7 +563,7 @@ export interface paths {
         put?: never;
         /**
          * Registrar una cuenta CUSTOMER
-         * @description Aplica BCrypt a la contraseña antes de llamar al procedimiento aprobado de PostgreSQL.
+         * @description Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Confirma el enlace antes de iniciar sesión.
          */
         post: operations["register"];
         delete?: never;
@@ -464,6 +632,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/forgot-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Solicitar recuperación de contraseña
+         * @description Respuesta idéntica para cuentas existentes, desconocidas, bloqueadas o limitadas. Enlace de uso único durante 15 minutos.
+         */
+        post: operations["forgot"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/publishers": {
         parameters: {
             query?: never;
@@ -496,6 +684,86 @@ export interface paths {
          * @description Si se pierde la respuesta, consulta el detalle antes de decidir una nueva transición.
          */
         post: operations["transition"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{orderId}/shipment/transitions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Avanzar el estado del envío
+         * @description Consulta el detalle después de una respuesta desconocida antes de repetir el comando.
+         */
+        post: operations["transitionShipment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{orderId}/pickup/collect": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirmar retiro del pedido
+         * @description Comando ADMIN con referencia de retiro. Marca el pedido entregado y registra historial; repetirlo no duplica la entrega. La hora estimada no bloquea una entrega preparada antes.
+         */
+        post: operations["collect"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{orderId}/invoice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Emitir documento comercial del pedido
+         * @description Preserva identidad y dirección de cobro explícitas. No realiza autorización fiscal ni integración con SRI. Consulta el detalle antes de repetir tras una respuesta desconocida.
+         */
+        post: operations["issueInvoice"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{orderId}/credit-notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Emitir nota de crédito total
+         * @description Requiere pago reembolsado y factura emitida. Conserva la factura original; no implementa correcciones parciales ni integración fiscal.
+         */
+        post: operations["issueCreditNote"];
         delete?: never;
         options?: never;
         head?: never;
@@ -660,6 +928,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/pickup-locations": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar puntos de retiro activos
+         * @description Dirección, coordenadas, zona horaria, horario informativo y minutos estimados de preparación. No contiene contratos de proveedores de mapas.
+         */
+        get: operations["locations"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/orders": {
         parameters: {
             query?: never;
@@ -729,6 +1017,46 @@ export interface paths {
          * @description Devuelve si cada edición solicitada pertenece a los favoritos del cliente. Admite hasta 50 identificadores por petición.
          */
         get: operations["favoriteStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/offers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Buscar ofertas vigentes
+         * @description Pagina únicamente ediciones publicables con una oferta vigente; los precios y descuentos los calcula PostgreSQL.
+         */
+        get: operations["offers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/catalog/offers/filter-options": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar filtros aplicables a ofertas vigentes
+         * @description Tipos de producto, categorías, recuentos, ordenaciones y configuración temporal definidos por PostgreSQL.
+         */
+        get: operations["offersFilterOptions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -929,8 +1257,12 @@ export interface components {
             firstNames: string;
             /** @example Pérez López */
             lastNames: string;
-            /** @example +59325550134 */
+            /**
+             * @description Prefijo internacional obligatorio; admite separadores de presentación.
+             * @example +59325550134
+             */
             phone?: string | null;
+            expectedVersion: string;
         };
         /** @description Detalle de problema RFC 9457 con campos de correlación de PLIEGO. */
         ProblemDetail: {
@@ -961,6 +1293,24 @@ export interface components {
             /** @example 8f2ab598-3e33-40b1-a5c7-15f676a84f9a */
             traceId?: string;
         };
+        /** @description Cambia el correo de inicio de sesión del CUSTOMER autenticado; requiere su contraseña actual. */
+        EmailChangeRequest: {
+            /**
+             * Format: email
+             * @example nuevo@example.com
+             */
+            newEmail: string;
+            /**
+             * Format: password
+             * @description Contraseña actual, para confirmar el cambio.
+             */
+            currentPassword: string;
+        };
+        /** @description Correo de inicio de sesión vigente, normalizado. */
+        EmailChangeResponse: {
+            /** @example nuevo@example.com */
+            email?: string;
+        };
         /** @description Reemplaza todos los datos mutables de la dirección. */
         AddressUpdateRequest: {
             /** @example Casa */
@@ -981,7 +1331,10 @@ export interface components {
             postalCode?: string | null;
             /** @example Frente al parque */
             reference?: string | null;
-            /** @example +59325550134 */
+            /**
+             * @description Teléfono internacional con prefijo explícito.
+             * @example +59325550134
+             */
             phone: string;
         };
         Quantity: {
@@ -1001,6 +1354,47 @@ export interface components {
         Status: {
             state: string;
         };
+        Tracking: {
+            carrier?: string;
+            trackingCode?: string;
+            trackingUrl?: string;
+            /** Format: date-time */
+            estimatedDeliveryFrom?: string;
+            /** Format: date-time */
+            estimatedDeliveryTo?: string;
+        };
+        Shipment: {
+            shipmentId?: string;
+            state?: string;
+            carrier?: string;
+            trackingCode?: string;
+            trackingUrl?: string;
+            estimatedDeliveryFrom?: string;
+            estimatedDeliveryTo?: string;
+            createdAt?: string;
+            preparingAt?: string;
+            shippedAt?: string;
+            outForDeliveryAt?: string;
+            deliveredAt?: string;
+            canceledAt?: string;
+            history?: components["schemas"]["ShipmentEvent"][];
+        };
+        ShipmentEvent: {
+            eventId?: string;
+            type?: string;
+            origin?: string;
+            actorUserId?: string;
+            previousState?: string;
+            newState?: string;
+            carrier?: string;
+            trackingCode?: string;
+            trackingUrl?: string;
+            at?: string;
+        };
+        ShipmentResult: {
+            orderId?: string;
+            shipment?: components["schemas"]["Shipment"];
+        };
         Minimum: {
             /** Format: int32 */
             stockMinimum: number;
@@ -1009,9 +1403,10 @@ export interface components {
             publisherId: string;
             isbn13?: string;
             language: string;
-            format: string;
+            /** @enum {string} */
+            format: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             /** Format: int32 */
-            pageCount: number;
+            pageCount?: number | null;
             /** Format: date */
             publicationDate?: string;
             price: string;
@@ -1019,6 +1414,21 @@ export interface components {
             coverLicense?: string;
             coverSourceUrl?: string;
             coverAttribution?: string;
+            /** @enum {string|null} */
+            ebookFileFormat?: "EPUB" | "PDF" | null;
+            /** Format: int32 */
+            audioDurationSeconds?: number | null;
+            narrators?: string[];
+        };
+        EditionOfferRequest: {
+            /** @example 15.00 */
+            offerPrice: string;
+            /** Format: date-time */
+            startsAt: string;
+            /** Format: date-time */
+            endsAt: string;
+            offerCopy?: string;
+            terms?: string;
         };
         Category: {
             slug?: string;
@@ -1071,7 +1481,10 @@ export interface components {
             postalCode?: string | null;
             /** @example Frente al parque */
             reference?: string | null;
-            /** @example +59325550134 */
+            /**
+             * @description Teléfono internacional con prefijo explícito.
+             * @example +59325550134
+             */
             phone: string;
             /** @example true */
             makePrimary: boolean;
@@ -1080,12 +1493,23 @@ export interface components {
             /** @example 15 */
             addressId?: string;
         };
+        AddressAttemptResponse: {
+            state?: string;
+            addressId?: string;
+        };
         CheckoutRequest: {
-            addressId: string;
+            addressId?: string;
             paymentMethod: string;
             simulationOutcome: string;
             /** @description Se valida localmente y nunca se persiste ni se envía a PostgreSQL. */
             cardNumber?: string;
+            expectedCartId?: string;
+            /**
+             * @default HOME_DELIVERY
+             * @enum {string}
+             */
+            fulfillmentMethod: "HOME_DELIVERY" | "STORE_PICKUP";
+            pickupLocationId?: string;
         };
         CheckoutResponse: {
             orderId?: string;
@@ -1093,13 +1517,72 @@ export interface components {
             paymentState?: string;
             total?: string;
             paymentReference?: string;
+            fulfillment?: components["schemas"]["Fulfillment"];
+            subtotal?: string;
+            taxRate?: string;
+            taxAmount?: string;
+            shippingAmount?: string;
+        };
+        Fulfillment: {
+            method?: string;
+            pickup?: components["schemas"]["Pickup"];
+            state?: string;
+            collectedAt?: string;
+        };
+        OpeningHours: {
+            opensAt?: string;
+            closesAt?: string;
+        };
+        Pickup: {
+            location?: components["schemas"]["PickupLocation"];
+            estimatedAt?: string;
+            readyAt?: string;
+            /** Format: int32 */
+            preparationMinutes?: number;
+            pickupCode?: string;
+        };
+        /** @description Punto de retiro con dirección y coordenadas estándar, independiente del proveedor de mapas. */
+        PickupLocation: {
+            id?: string;
+            name?: string;
+            address?: string;
+            city?: string;
+            province?: string;
+            countryCode?: string;
+            postalCode?: string;
+            latitude?: number;
+            longitude?: number;
+            timezone?: string;
+            openingHours?: components["schemas"]["OpeningHours"];
+            active?: boolean;
+            /** Format: int32 */
+            preparationMinutes?: number;
+        };
+        CheckoutAttemptResponse: {
+            state?: string;
+            order?: components["schemas"]["CheckoutResponse"];
         };
         AddItem: {
             editionId: string;
             /** Format: int32 */
             quantity: number;
         };
-        /** @description Crea una cuenta CUSTOMER activa. */
+        EmailVerificationRequest: {
+            token: string;
+        };
+        PasswordResetRequest: {
+            token: string;
+            /** Format: password */
+            password: string;
+        };
+        EmailActionRequest: {
+            /** Format: email */
+            email: string;
+        };
+        AcceptedResponse: {
+            message?: string;
+        };
+        /** @description Crea una cuenta CUSTOMER pendiente de verificación de correo. */
         RegisterRequest: {
             /**
              * Format: email
@@ -1116,7 +1599,10 @@ export interface components {
             firstNames: string;
             /** @example Pérez López */
             lastNames: string;
-            /** @example +59325550134 */
+            /**
+             * @description Prefijo internacional obligatorio; admite separadores de presentación.
+             * @example +59325550134
+             */
             phone?: string | null;
         };
         RegisterResponse: {
@@ -1125,10 +1611,11 @@ export interface components {
             /** @example 87 */
             customerId?: string;
             /**
-             * @example ACTIVE
+             * @description Requiere verificar correo antes de iniciar sesión.
+             * @example PENDING_VERIFICATION
              * @enum {string}
              */
-            state?: "ACTIVE";
+            state?: "PENDING_VERIFICATION";
         };
         AuthenticatedUser: {
             /** @example 100 */
@@ -1171,6 +1658,41 @@ export interface components {
         Transition: {
             targetState: string;
         };
+        ShipmentTransition: {
+            targetState: string;
+        };
+        CollectRequest: {
+            pickupCode: string;
+        };
+        InvoiceBillingAddressRequest: {
+            line1: string;
+            line2?: string;
+            city: string;
+            province: string;
+            countryCode: string;
+            postalCode?: string;
+        };
+        IssueOrderInvoiceRequest: {
+            documentNumber: string;
+            buyerName: string;
+            identityType: string;
+            identityNumber: string;
+            /** Format: email */
+            buyerEmail?: string;
+            billingAddress: components["schemas"]["InvoiceBillingAddressRequest"];
+        };
+        IssuedInvoice: {
+            orderId?: string;
+            invoiceId?: string;
+        };
+        IssueOrderCreditNoteRequest: {
+            documentNumber: string;
+            reason: string;
+        };
+        IssuedCreditNote: {
+            orderId?: string;
+            creditNoteId?: string;
+        };
         Entry: {
             /** Format: int32 */
             quantity: number;
@@ -1195,9 +1717,10 @@ export interface components {
             sku: string;
             isbn13?: string;
             language: string;
-            format: string;
+            /** @enum {string} */
+            format: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             /** Format: int32 */
-            pageCount: number;
+            pageCount?: number | null;
             /** Format: date */
             publicationDate?: string;
             price: string;
@@ -1205,6 +1728,11 @@ export interface components {
             coverLicense?: string;
             coverSourceUrl?: string;
             coverAttribution?: string;
+            /** @enum {string|null} */
+            ebookFileFormat?: "EPUB" | "PDF" | null;
+            /** Format: int32 */
+            audioDurationSeconds?: number | null;
+            narrators?: string[];
         };
         EditionCreated: {
             editionId?: string;
@@ -1218,6 +1746,11 @@ export interface components {
         AuthorCreated: {
             authorId?: string;
         };
+        ProfilePatchRequest: {
+            field: string;
+            value: string | null;
+            expectedVersion: string;
+        };
         TransferDetails: {
             bank?: string;
             beneficiary?: string;
@@ -1229,13 +1762,44 @@ export interface components {
             code?: string;
             name?: string;
         };
-        PageResponse: {
-            items?: unknown[];
+        CustomerOrderSummary: {
+            orderId?: string;
+            createdAt?: string;
+            orderState?: string;
+            total?: string;
+            paymentState?: string;
+            purchaseState?: string;
+            fulfillmentMethod?: string;
+            shipmentState?: string;
+            estimatedDeliveryFrom?: string;
+            estimatedDeliveryTo?: string;
+            /** Format: int64 */
+            itemCount?: number;
+            /** Format: int64 */
+            unitCount?: number;
+            itemSummary?: components["schemas"]["ItemSummary"][];
+            invoiceState?: string;
+            invoicePdfAvailable?: boolean;
+            invoiceXmlAvailable?: boolean;
+        };
+        ItemSummary: {
+            orderItemId?: string;
+            title?: string;
+            format?: string;
+            /** Format: int32 */
+            quantity?: number;
+        };
+        PageResponseCustomerOrderSummary: {
+            items?: components["schemas"]["CustomerOrderSummary"][];
             /** Format: int32 */
             page?: number;
             /** Format: int32 */
             pageSize?: number;
             totalCount?: string;
+        };
+        Actions: {
+            cancel?: boolean;
+            changeShippingAddress?: boolean;
         };
         Address: {
             recipient?: string;
@@ -1248,7 +1812,15 @@ export interface components {
             reference?: string;
             phone?: string;
         };
-        Detail: {
+        BillingAddress: {
+            line1?: string;
+            line2?: string;
+            city?: string;
+            province?: string;
+            countryCode?: string;
+            postalCode?: string;
+        };
+        CustomerOrderDetail: {
             orderId?: string;
             orderState?: string;
             subtotal?: string;
@@ -1259,6 +1831,22 @@ export interface components {
             address?: components["schemas"]["Address"];
             payment?: components["schemas"]["Payment"];
             stateHistory?: components["schemas"]["History"][];
+            purchaseState?: string;
+            fulfillment?: components["schemas"]["Fulfillment"];
+            shipment?: components["schemas"]["Shipment"];
+            invoice?: components["schemas"]["OrderInvoice"];
+            creditNotes?: components["schemas"]["OrderCreditNote"][];
+            availableActions?: components["schemas"]["Actions"];
+            taxRate?: string;
+            taxAmount?: string;
+            shippingAmount?: string;
+        };
+        ElectronicIssuance: {
+            provider?: string;
+            state?: string;
+            externalReference?: string;
+            submittedAt?: string;
+            authorizedAt?: string;
         };
         History: {
             historyId?: string;
@@ -1282,6 +1870,53 @@ export interface components {
             /** Format: int32 */
             quantity?: number;
             subtotal?: string;
+        };
+        OrderCreditNote: {
+            creditNoteId?: string;
+            invoiceId?: string;
+            documentNumber?: string;
+            state?: string;
+            reason?: string;
+            subtotal?: string;
+            taxTotal?: string;
+            total?: string;
+            issuedAt?: string;
+            taxRate?: string;
+            shippingAmount?: string;
+        };
+        OrderInvoice: {
+            invoiceId?: string;
+            documentNumber?: string;
+            state?: string;
+            buyerName?: string;
+            identityType?: string;
+            identityNumber?: string;
+            buyerEmail?: string;
+            currency?: string;
+            subtotal?: string;
+            taxTotal?: string;
+            total?: string;
+            issuedAt?: string;
+            billingAddress?: components["schemas"]["BillingAddress"];
+            items?: components["schemas"]["OrderInvoiceItem"][];
+            electronicIssuance?: components["schemas"]["ElectronicIssuance"];
+            pdfAvailable?: boolean;
+            xmlAvailable?: boolean;
+            taxRate?: string;
+            shippingAmount?: string;
+        };
+        OrderInvoiceItem: {
+            invoiceItemId?: string;
+            orderItemId?: string;
+            description?: string;
+            /** Format: int32 */
+            quantity?: number;
+            unitPrice?: string;
+            subtotal?: string;
+            taxTreatment?: string;
+            taxRate?: string;
+            taxAmount?: string;
+            total?: string;
         };
         Payment: {
             paymentId?: string;
@@ -1309,6 +1944,11 @@ export interface components {
              * @enum {string}
              */
             state?: "ACTIVE" | "BLOCKED";
+            /**
+             * @description Versión decimal para actualizaciones condicionales.
+             * @example 0
+             */
+            version?: string;
         };
         CustomerFavorite: {
             editionId?: string;
@@ -1363,19 +2003,6 @@ export interface components {
             /** @example true */
             primary?: boolean;
         };
-        PublicCatalogFilterOptionsResponse: {
-            languages?: string[];
-            /**
-             * @description Formatos presentes en ediciones publicables
-             * @example [
-             *       "HARDCOVER",
-             *       "PAPERBACK"
-             *     ]
-             */
-            formats?: string[];
-            minimumPrice?: string | null;
-            maximumPrice?: string | null;
-        };
         CatalogEditionSearchResponse: {
             items?: components["schemas"]["CatalogEditionSummaryResponse"][];
             /** Format: int32 */
@@ -1395,9 +2022,65 @@ export interface components {
             coverUrl?: string | null;
             coverLicense?: string | null;
             coverAttribution?: string | null;
-            format?: string;
+            /** @enum {string} */
+            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             language?: string;
             available?: boolean;
+            /** @enum {string|null} */
+            ebookFileFormat?: "EPUB" | "PDF" | null;
+            /** Format: int32 */
+            audioDurationSeconds?: number | null;
+            narrators?: string[];
+            offer?: components["schemas"]["CatalogOfferResponse"];
+        };
+        /** @description Oferta activa calculada por el servidor; price es el precio vigente de la edición. */
+        CatalogOfferResponse: {
+            offerId?: string;
+            originalPrice?: string;
+            discountAmount?: string;
+            startsAt?: string;
+            endsAt?: string;
+            /** Format: int32 */
+            daysRemaining?: number;
+            endingSoon?: boolean;
+            offerCopy?: string | null;
+            terms?: string | null;
+            effectivePrice?: string;
+            savingsAmount?: string;
+            savingsPercent?: string;
+        };
+        OffersFilterOptions: {
+            productTypes?: components["schemas"]["ProductType"][];
+            categories?: components["schemas"]["Category"][];
+            sorts?: components["schemas"]["Sort"][];
+            /** Format: int32 */
+            endingSoonDays?: number;
+            timezone?: string;
+            totalCount?: string;
+        };
+        ProductType: {
+            code?: string;
+            label?: string;
+            count?: string;
+        };
+        Sort: {
+            code?: string;
+            label?: string;
+        };
+        PublicCatalogFilterOptionsResponse: {
+            languages?: string[];
+            /**
+             * @description Formatos presentes en ediciones publicables
+             * @example [
+             *       "AUDIOBOOK",
+             *       "EBOOK",
+             *       "HARDCOVER",
+             *       "PAPERBACK"
+             *     ]
+             */
+            formats?: string[];
+            minimumPrice?: string | null;
+            maximumPrice?: string | null;
         };
         CatalogEditionDetailResponse: {
             editionId?: string;
@@ -1411,9 +2094,10 @@ export interface components {
             isbn13?: string;
             sku?: string;
             language?: string;
-            format?: string;
+            /** @enum {string} */
+            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             /** Format: int32 */
-            pageCount?: number;
+            pageCount?: number | null;
             publicationDate?: string;
             price?: string;
             coverUrl?: string | null;
@@ -1421,6 +2105,12 @@ export interface components {
             coverSourceUrl?: string | null;
             coverAttribution?: string | null;
             available?: boolean;
+            /** @enum {string|null} */
+            ebookFileFormat?: "EPUB" | "PDF" | null;
+            /** Format: int32 */
+            audioDurationSeconds?: number | null;
+            narrators?: string[];
+            offer?: components["schemas"]["CatalogOfferResponse"];
         };
         CatalogCategoryListResponse: {
             items?: components["schemas"]["Category"][];
@@ -1430,6 +2120,23 @@ export interface components {
             state?: string | null;
             items?: components["schemas"]["CartItem"][];
             totalCurrent?: string;
+            subtotal?: string;
+            taxRate?: string;
+            taxAmount?: string;
+            shippingAmount?: string;
+            total?: string;
+            /**
+             * Format: date
+             * @description Primer día de la ventana de entrega a domicilio en el calendario de Ecuador (America/Guayaquil); null si el carrito no incluye libros físicos.
+             * @example 2026-10-05
+             */
+            estimatedDeliveryFrom?: string | null;
+            /**
+             * Format: date
+             * @description Último día de la ventana de entrega a domicilio: dos días después del primero; null si el carrito no incluye libros físicos.
+             * @example 2026-10-07
+             */
+            estimatedDeliveryTo?: string | null;
         };
         CartItem: {
             cartItemId?: string;
@@ -1444,11 +2151,13 @@ export interface components {
             currentSubtotal?: string;
             available?: boolean;
             /**
-             * @description SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, P2042 edición inactiva, P3002 existencias insuficientes; null si está disponible.
+             * @description SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida; null si está disponible.
              * @example P3002
              * @enum {string|null}
              */
-            unavailabilityReason?: "P2043" | "P2042" | "P3002" | null;
+            unavailabilityReason?: "P2043" | "P2042" | "P3002" | "P4004" | null;
+            /** @enum {string} */
+            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
         };
         PageResponsePublisher: {
             items?: components["schemas"]["Publisher"][];
@@ -1457,6 +2166,63 @@ export interface components {
             /** Format: int32 */
             pageSize?: number;
             totalCount?: string;
+        };
+        AdminOrderSummary: {
+            orderId?: string;
+            customerId?: string;
+            customerName?: string;
+            createdAt?: string;
+            orderState?: string;
+            total?: string;
+            paymentState?: string;
+        };
+        PageResponseAdminOrderSummary: {
+            items?: components["schemas"]["AdminOrderSummary"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            totalCount?: string;
+        };
+        AdminOrderDetail: {
+            orderId?: string;
+            customerId?: string;
+            customerEmail?: string;
+            customerName?: string;
+            orderState?: string;
+            subtotal?: string;
+            total?: string;
+            createdAt?: string;
+            updatedAt?: string;
+            items?: components["schemas"]["Item"][];
+            address?: components["schemas"]["Address"];
+            payment?: components["schemas"]["Payment"];
+            stateHistory?: components["schemas"]["History"][];
+            inventoryMovements?: components["schemas"]["InventoryMovement"][];
+            purchaseState?: string;
+            fulfillment?: components["schemas"]["Fulfillment"];
+            shipment?: components["schemas"]["Shipment"];
+            invoice?: components["schemas"]["OrderInvoice"];
+            creditNotes?: components["schemas"]["OrderCreditNote"][];
+            availableActions?: components["schemas"]["Actions"];
+            taxRate?: string;
+            taxAmount?: string;
+            shippingAmount?: string;
+        };
+        InventoryMovement: {
+            movementId?: string;
+            editionId?: string;
+            orderId?: string;
+            actorUserId?: string;
+            type?: string;
+            /** Format: int32 */
+            quantity?: number;
+            /** Format: int32 */
+            stockBefore?: number;
+            /** Format: int32 */
+            stockAfter?: number;
+            reason?: string;
+            eventAt?: string;
         };
         PageResponseItem: {
             items?: components["schemas"]["Item"][];
@@ -1498,9 +2264,10 @@ export interface components {
             sku?: string;
             isbn13?: string;
             language?: string;
-            format?: string;
+            /** @enum {string} */
+            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             /** Format: int32 */
-            pageCount?: number;
+            pageCount?: number | null;
             publicationDate?: string;
             price?: string;
             coverUrl?: string;
@@ -1512,6 +2279,11 @@ export interface components {
             stockActual?: number;
             createdAt?: string;
             updatedAt?: string;
+            /** @enum {string|null} */
+            ebookFileFormat?: "EPUB" | "PDF" | null;
+            /** Format: int32 */
+            audioDurationSeconds?: number | null;
+            narrators?: string[];
         };
         PageResponseEdition: {
             items?: components["schemas"]["Edition"][];
@@ -1631,6 +2403,37 @@ export interface operations {
             };
         };
     };
+    patchProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ProfilePatchRequest"];
+            };
+        };
+        responses: {
+            /** @description Campo actualizado */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description El perfil cambió */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     addFavorite: {
         parameters: {
             query?: never;
@@ -1725,6 +2528,48 @@ export interface operations {
             };
             /** @description Error interno */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    changeEmail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailChangeRequest"];
+            };
+        };
+        responses: {
+            /** @description Correo actualizado */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailChangeResponse"];
+                };
+            };
+            /** @description Datos inválidos o contraseña actual incorrecta */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description El correo ya pertenece a otra cuenta */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -1937,6 +2782,32 @@ export interface operations {
             };
         };
     };
+    updateTracking: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Tracking"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShipmentResult"];
+                };
+            };
+        };
+    };
     setMinimum: {
         parameters: {
             query?: never;
@@ -2006,6 +2877,77 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+        };
+    };
+    set: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                editionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EditionOfferRequest"];
+            };
+        };
+        responses: {
+            /** @description Oferta guardada */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Precio o fechas inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Edición no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    clear: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                editionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Oferta desactivada */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Edición no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
             };
         };
     };
@@ -2249,7 +3191,9 @@ export interface operations {
     createAddress: {
         parameters: {
             query?: never;
-            header?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -2279,10 +3223,34 @@ export interface operations {
             };
         };
     };
-    checkout: {
+    resolveAddress: {
         parameters: {
             query?: never;
             header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Resultado del intento */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AddressAttemptResponse"];
+                };
+            };
+        };
+    };
+    checkout: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -2308,6 +3276,28 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    resolve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                key: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Resultado del intento */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CheckoutAttemptResponse"];
                 };
             };
         };
@@ -2341,6 +3331,101 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    verify: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailVerificationRequest"];
+            };
+        };
+        responses: {
+            /** @description Correo verificado */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Enlace inválido, vencido o utilizado */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    reset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PasswordResetRequest"];
+            };
+        };
+        responses: {
+            /** @description Contraseña restablecida */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Enlace o contraseña inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    resend: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailActionRequest"];
+            };
+        };
+        responses: {
+            /** @description Solicitud recibida */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AcceptedResponse"];
+                };
+            };
+            /** @description Datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
                 };
             };
         };
@@ -2513,6 +3598,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
             };
+            /** @description Correo pendiente de verificación (EMAIL_NOT_VERIFIED) */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
             /** @description Error interno */
             500: {
                 headers: {
@@ -2520,6 +3614,39 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    forgot: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailActionRequest"];
+            };
+        };
+        responses: {
+            /** @description Solicitud recibida */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AcceptedResponse"];
+                };
+            };
+            /** @description Datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
                 };
             };
         };
@@ -2613,6 +3740,108 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    transitionShipment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ShipmentTransition"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShipmentResult"];
+                };
+            };
+        };
+    };
+    collect: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CollectRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    issueInvoice: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IssueOrderInvoiceRequest"];
+            };
+        };
+        responses: {
+            /** @description Documento comercial emitido */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssuedInvoice"];
+                };
+            };
+        };
+    };
+    issueCreditNote: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["IssueOrderCreditNoteRequest"];
+            };
+        };
+        responses: {
+            /** @description Nota de crédito emitida */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IssuedCreditNote"];
                 };
             };
         };
@@ -2715,6 +3944,7 @@ export interface operations {
                 query?: string;
                 state?: string;
                 bookId?: number;
+                format?: string;
                 page?: number;
                 pageSize?: number;
             };
@@ -2955,6 +4185,26 @@ export interface operations {
             };
         };
     };
+    locations: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PickupLocation"][];
+                };
+            };
+        };
+    };
     list: {
         parameters: {
             query?: {
@@ -2967,13 +4217,13 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Página de pedidos */
+            /** @description Página de pedidos con resúmenes históricos de compra, entrega y factura */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
+                    "application/json": components["schemas"]["PageResponseCustomerOrderSummary"];
                 };
             };
         };
@@ -2995,7 +4245,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Detail"];
+                    "application/json": components["schemas"]["CustomerOrderDetail"];
                 };
             };
             /** @description Pedido no disponible */
@@ -3105,6 +4355,62 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    offers: {
+        parameters: {
+            query?: {
+                format?: string;
+                productType?: string;
+                category?: string;
+                sort?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Página de ofertas */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CatalogEditionSearchResponse"];
+                };
+            };
+            /** @description Filtros inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    offersFilterOptions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Filtros y configuración temporal de ofertas */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OffersFilterOptions"];
                 };
             };
         };
@@ -3276,7 +4582,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageResponse"];
+                    "application/json": components["schemas"]["PageResponseAdminOrderSummary"];
                 };
             };
         };
@@ -3298,7 +4604,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Detail"];
+                    "application/json": components["schemas"]["AdminOrderDetail"];
                 };
             };
             /** @description Pedido no encontrado */

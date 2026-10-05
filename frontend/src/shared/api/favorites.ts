@@ -2,6 +2,7 @@ import { z } from "zod";
 import { apiClient } from "./client";
 import { parseTotalCount } from "./catalog";
 import { toApiRequestError } from "./errors";
+import { editionFormatSchema } from "./editionFormats";
 
 const favoriteEditionSchema = z.object({
   editionId: z.string().regex(/^[1-9][0-9]*$/),
@@ -13,7 +14,7 @@ const favoriteEditionSchema = z.object({
   coverUrl: z.string().nullable(),
   coverLicense: z.string().nullable(),
   coverAttribution: z.string().nullable(),
-  format: z.enum(["PAPERBACK", "HARDCOVER"]),
+  format: editionFormatSchema,
   language: z.string(),
   available: z.boolean(),
   favoritedAt: z.string(),
@@ -66,7 +67,7 @@ export async function getCustomerFavoriteStatus(editionIds: string[], signal?: A
   }
 
   const parsed = z.array(favoriteStatusSchema).safeParse(data);
-  if (!parsed.success || parsed.data.length !== new Set(editionIds).size) throw invalidFavoriteResponse();
+  if (!parsed.success || (parsed.data.length !== new Set(editionIds).size || new Set(parsed.data.map(status => status.editionId)).size !== parsed.data.length || parsed.data.some(status => !editionIds.includes(status.editionId)))) throw invalidFavoriteResponse();
   return parsed.data;
 }
 

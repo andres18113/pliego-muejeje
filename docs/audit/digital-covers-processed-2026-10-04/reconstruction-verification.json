@@ -1,0 +1,18 @@
+{
+  "filename": "PLIEGO-Digital-Covers-Processed.zip",
+  "bytes": 27117484,
+  "sha256": "b66027e6aabcb73ee387c84b34265786a7800da4f3c8e063ea79906a85567493",
+  "parts_sha256": [
+    "b18a85be324f46b08dfe3e759daef62bd2b85d2d98d8c1d32486310015d78f31",
+    "04373e810c1c7c3ba2afc7d34e31f6bfa9727f91951958eacd6265e5f0e7e081",
+    "f9674717d8de51930c4a22845ce5f15234fab7c08cf3aeadaf5a72ca6140d047"
+  ],
+  "binary_concatenation_order": [
+    "part001",
+    "part002",
+    "part003"
+  ],
+  "parts_and_final_zip_crc": "PASS",
+  "delivery_files_verified": 864,
+  "zip_entries": 865
+}

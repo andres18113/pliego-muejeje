@@ -132,7 +132,7 @@ test("touch topic navigation, filter selection and search work at 320 and 375px"
     await expect(page).toHaveURL(/format=HARDCOVER/);
     await filters.getByRole("button", { name: /^Ver \d+ edici/ }).tap();
     await expect(filters).toHaveCount(0);
-    await page.getByRole("button", { name: "Buscar en el catálogo" }).tap();
+    await page.getByRole("button", { name: "Buscar libros en el catálogo" }).tap();
     await page.getByRole("searchbox", { name: "Buscar en el catálogo" }).fill("Cien");
     await page.getByRole("dialog").getByRole("button", { name: "Buscar", exact: true }).tap();
     await expect(page).toHaveURL(/que=Cien$/);

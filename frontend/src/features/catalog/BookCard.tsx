@@ -1,10 +1,11 @@
+import { useAvailabilityFocus } from "@/features/catalog/useAvailabilityFocus";
 import { useId } from "react";
 import { Link } from "react-router-dom";
 import { ActionIcon, Anchor, Button, Text, Tooltip } from "@mantine/core";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { BookCover } from "./BookCover";
 import { StockStatus } from "./StockStatus";
-import { favoriteActionLabel, type BookCardProps } from "./bookCardModel";
+import { favoriteActionLabel, resolveCartAction, type BookCardProps } from "./bookCardModel";
 import classes from "./BookCard.module.css";
 export type { BookCardProps, BookCardData, FavoriteControl, CartControl, BookCardFeedback } from "./bookCardModel";
 
@@ -17,19 +18,17 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
   const uid = useId();
   const favoriteLabel = favoriteActionLabel(favorite);
   const selected = "selected" in favorite ? favorite.selected : undefined;
-  const cartLabel = !book.available ? "Agregar al carrito"
-    : cart.state === "pending" ? "Agregando…" : cart.state === "success" ? "Agregado al carrito. Agregar otra unidad"
-      : cart.state === "uncertain" ? "Consulta el carrito antes de reintentar" : "Agregar al carrito";
-  const cartIcon = !book.available ? "shopping_cart_off" : cart.state === "success" ? "check"
-    : cart.state === "pending" ? "schedule" : cart.state === "uncertain" ? "info" : "add_shopping_cart";
-  const cartText = !book.available ? "Agregar" : cart.state === "pending" ? "Agregando…"
-    : cart.state === "success" ? "Agregado" : cart.state === "uncertain" ? "Sin confirmar" : "Agregar";
+  const cartAction = resolveCartAction(book, cart, "card");
+  const cartFocus = useAvailabilityFocus(!cartAction.unavailable, () => {
+    const favorite = document.getElementById(`${uid}-favorite-action`) as HTMLButtonElement | null;
+    return favorite && !favorite.disabled ? favorite : document.getElementById(`${uid}-edition-link`);
+  });
   const reasons = [...new Set(["reason" in favorite ? favorite.reason : null, "reason" in cart ? cart.reason : null].filter((reason): reason is string => Boolean(reason)))];
   const reasonId = (reason: string) => feedback?.message === reason ? `${uid}-feedback` : `${uid}-reason-${reasons.indexOf(reason)}`;
   const Heading = headingOrder === 4 ? "h4" : "h3";
 
   return <article className={[classes.card, className].filter(Boolean).join(" ")} data-bookcard data-edition-id={book.id}>
-    <Anchor component={Link} to={to} state={navigationState} onClick={onNavigate} underline="never" className={classes.mainLink}
+    <Anchor id={`${uid}-edition-link`} component={Link} to={to} state={navigationState} onClick={onNavigate} underline="never" className={classes.mainLink}
       aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.editionLabel}`} aria-describedby={`${uid}-authors ${uid}-price ${uid}-availability`} data-bookcard-link>
       <div className={classes.shelf} data-bookcard-shelf>
         <BookCover url={book.cover.url} license={null} attribution={null} title={book.title} size="card" decorative loading="lazy" />
@@ -43,22 +42,31 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
     {/* Price in display type over its stock line (as in the Home scenes); the action line pairs the
         primary cart action with the quieter favorite, Home's "Agregar · Guardar" at shelf scale. */}
     <div className={classes.commercial} data-bookcard-commercial>
+      <div data-bookcard-pricing>
       <p className={classes.price} id={`${uid}-price`} data-bookcard-price>{book.priceLabel}</p>
-      <p className={classes.availability} id={`${uid}-availability`} data-bookcard-availability><StockStatus available={book.available} size="compact" /></p>
+      {book.originalPriceLabel && <p aria-label={`Precio anterior ${book.originalPriceLabel}. Descuento ${book.discountLabel}`}><s>{book.originalPriceLabel}</s> · Ahorras {book.discountLabel}</p>}
+      {book.offer && <div>
+        <p data-ending-soon={book.offer.endingSoon || undefined}>{book.offer.remainingLabel}</p>
+        {book.offer.offerCopy && <p>{book.offer.offerCopy}</p>}
+        <p>Válida hasta <time dateTime={book.offer.endsAt}>{book.offer.endsLabel}</time></p>
+        {book.offer.terms && <details><summary>Términos de la oferta</summary><p>{book.offer.terms}</p></details>}
+      </div>}
+      </div>
+      <p className={classes.availability} id={`${uid}-availability`} data-bookcard-availability><StockStatus available={book.available} size="compact" variant="quiet" /></p>
       <div className={classes.actionLine}><div className={classes.actions} data-bookcard-actions>
         <Button type="button" radius="md" variant="filled" className={classes.cart}
-          leftSection={<MaterialSymbol name={cartIcon} size={20} />}
-          aria-label={`${cartLabel}: ${book.title}`} aria-busy={cart.state === "pending" || undefined}
+          leftSection={<MaterialSymbol name={cartAction.icon} size={20} />}
+          aria-label={`${cartAction.label}: ${book.title}`} aria-busy={cartAction.busy || undefined}
           aria-describedby={`${uid}-authors ${uid}-price ${uid}-availability${"reason" in cart ? ` ${reasonId(cart.reason)}` : ""}`}
-          disabled={!book.available || !("onPress" in cart)} onClick={"onPress" in cart ? cart.onPress : undefined}
-          data-unavailable={!book.available || undefined} data-state={book.available ? cart.state : undefined} data-bookcard-cart>
-          <span id={`${uid}-cart-text`}>{cartText}</span>
+          disabled={cartAction.unavailable || (!cartAction.enabled && !cartAction.busy)} aria-disabled={!cartAction.enabled || undefined} {...cartFocus} onClick={"onPress" in cart ? cart.onPress : undefined}
+          data-unavailable={cartAction.unavailable || undefined} data-state={cartAction.unavailable ? undefined : cart.state} data-bookcard-cart>
+          <span id={`${uid}-cart-text`}>{cartAction.text}</span>
         </Button>
         <Tooltip label={favoriteLabel} events={{ hover: true, focus: true, touch: false }} position="top" multiline maw="calc(100vw - 32px)" withArrow>
-          <ActionIcon type="button" size={44} radius="md" variant="transparent"
+          <ActionIcon id={`${uid}-favorite-action`} type="button" size={44} radius="md" variant="transparent"
             aria-label={`${favoriteLabel}: ${book.title}`} aria-pressed={selected} aria-busy={favorite.state === "pending" || undefined}
             aria-describedby={`${uid}-authors${"reason" in favorite ? ` ${reasonId(favorite.reason)}` : ""}`}
-            disabled={favorite.state !== "ready"} onClick={"onPress" in favorite ? favorite.onPress : undefined} className={classes.favorite} data-bookcard-favorite>
+            disabled={!("onPress" in favorite) && favorite.state !== "pending"} aria-disabled={favorite.state === "pending" || undefined} onClick={"onPress" in favorite ? favorite.onPress : undefined} className={classes.favorite} data-bookcard-favorite>
             <MaterialSymbol name={selected ? "favorite" : "favorite_border"} fill={selected} size={22} />
           </ActionIcon>
         </Tooltip>

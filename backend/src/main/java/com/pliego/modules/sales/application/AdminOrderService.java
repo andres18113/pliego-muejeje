@@ -25,7 +25,7 @@ public class AdminOrderService {
         return gateway.search(actorUserId, search);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Detail detail(long actorUserId, long orderId) {
         return gateway.detail(actorUserId, orderId);
     }

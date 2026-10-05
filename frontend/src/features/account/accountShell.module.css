@@ -1,0 +1,75 @@
+/* Account family: paper page, a quiet orientation trail and each page's centered masthead (name, optional
+   intro); the account menu in the header moves between pages. Tokens shared by every Account page live on .shell. */
+.shell {
+  /* Legacy purchase tokens (buttons, fields, notices) re-pointed to PLIEGO: the shared form system. */
+  composes: surface from "../../shared/ui/pliegoFormSurface.module.css";
+  --acc-blue: var(--store-blue, #283da8);
+  --acc-blue-hover: #1d2c86;
+  --acc-ink: var(--pliego-text, #252740);
+  --acc-muted: var(--pliego-text-muted, #595a6e);
+  --acc-paper: var(--store-paper, #f6f5f0);
+  --acc-yellow: var(--store-yellow, #f3df83);
+  --acc-lavender: var(--store-lavender, #e4def4);
+  --acc-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0));
+  --acc-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
+  --acc-sheet: #fbfaf7;
+  --acc-on-blue: #fff;
+  --acc-ease: cubic-bezier(.32, .94, .6, 1);
+  --acc-display: var(--store-display);
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  color: var(--acc-ink);
+}
+:global([data-mantine-color-scheme="dark"]) .shell {
+  --acc-blue: var(--store-link, #c5bcff);
+  --acc-blue-hover: #d8d1ff;
+  --acc-mist: #2e2b4d;
+  --acc-line: #3d3964;
+  --acc-sheet: #26283f;
+  --acc-paper: var(--pliego-surface, #22243b);
+  --acc-lavender: #3a3660;
+  --acc-on-blue: var(--store-ink, #252740);
+}
+
+/* The header's own padding is the breathing room above the title; the page adds no top band of its own. */
+:global(.purchase-route):has(> .shell) { padding-top: 0; }
+/* Orientation, not navigation: one quiet line at the page's start — "Inicio" (a link with a 44px target
+   that keeps the line compact) | the current page, muted. The bar is drawn, so it is never read aloud. */
+/* Every Account page starts its trail on the same centered 760px axis as its title (Mi perfil's reading column). */
+.trail { justify-self: center; width: min(100%, 760px); min-width: 0; margin: 14px 0 16px; }
+.trail ol { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; color: var(--acc-muted); font-size: .9375rem; font-weight: 500; line-height: 1.5rem; }
+.trail li { display: inline-flex; align-items: center; min-width: 0; }
+.trail li + li::before { content: ""; width: 1.5px; height: 1em; margin-inline: 12px; background: currentColor; opacity: .55; }
+.trailLink { display: inline-flex; align-items: center; min-height: 44px; margin-block: -10px; color: var(--acc-ink); text-decoration: none; }
+.trailLink:hover { color: var(--acc-blue); text-decoration: underline; text-underline-offset: 4px; }
+.trailLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+
+/* The page's identity on the content axis: centered, in the header's functional face — clearly the page
+   heading by size, never the ultramar display wordmark. */
+.masthead { display: grid; justify-items: center; gap: 8px; min-width: 0; margin-bottom: clamp(20px, 2.4vw, 28px); text-align: center; }
+.before { justify-self: start; min-width: 0; }
+.title {
+  max-width: 100%;
+  margin: 0;
+  color: var(--acc-ink);
+  font-size: clamp(1.5rem, 1.3rem + .6vw, 1.875rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -.012em;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+.title:focus { outline: none; }
+.title:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 6px; border-radius: 6px; }
+.intro { max-width: 60ch; margin: 0; text-wrap: pretty; color: var(--acc-muted); font-size: 1.0625rem; line-height: 1.5; }
+
+.body { display: grid; gap: clamp(28px, 4vw, 48px); min-width: 0; }
+
+@media (max-width: 599px) { .masthead { margin-bottom: 20px; } .trail { margin: 10px 0 12px; } }
+
+/* Account content sits one step lighter than the header's paper — the Account sheet tone (--acc-sheet) — so
+   the global navigation and the page read as two surfaces without a rule or shadow. The tone change at the
+   header's lower edge is the whole separation. Dark mode keeps the same relation (sheet over surface). */
+:global(html):has(.shell), :global(body):has(.shell) { background: #fbfaf7; }
+:global(html[data-mantine-color-scheme="dark"]):has(.shell), :global([data-mantine-color-scheme="dark"] body):has(.shell) { background: #26283f; }

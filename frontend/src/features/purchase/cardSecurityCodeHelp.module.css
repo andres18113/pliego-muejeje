@@ -1,0 +1,20 @@
+.labelRow { display: flex; align-items: center; gap: 4px; min-width: 0; }
+.labelRow label { min-width: 0; margin: 0; line-height: 1.4; }
+.trigger { display: grid; flex: none; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 999px; background: transparent; color: var(--pf-blue, #283da8); cursor: pointer; }
+.trigger:hover { background: var(--pf-lavender, #e4def4); }
+.trigger:focus-visible { outline: 3px solid var(--pf-blue, #283da8); outline-offset: 2px; }
+.panel.panel { display: block; padding: 0; border-radius: 16px; background: var(--pf-sheet, #fbfaf7); color: var(--pf-ink, #252740); box-shadow: 0 8px 28px rgb(37 39 64 / 15%); }
+.header.header { padding: 24px 28px 10px; background: var(--pf-sheet, #fbfaf7); }
+.title.title { font: inherit; font-size: 1.25rem; font-weight: 600; line-height: 1.35; }
+.body.body { display: grid; gap: 18px; padding: 8px 28px 24px; }
+.body p { margin: 0; font-size: 1rem; line-height: 1.5; }
+.illustration { display: block; width: min(150px, 100%); height: auto; margin-inline: auto; }
+.card { fill: var(--pf-lavender, #e4def4); stroke: var(--pf-muted, #595a6e); stroke-width: 1.5; }
+.stripe { fill: var(--pf-ink, #252740); }
+.signature { fill: var(--pf-sheet, #fbfaf7); }
+.chip { fill: var(--pf-yellow, #f3df83); stroke: var(--pf-muted, #595a6e); stroke-width: 1; }
+.cardLines { fill: none; stroke: var(--pf-muted, #595a6e); stroke-width: 5; stroke-linecap: round; }
+.codeBox { fill: var(--pf-yellow, #f3df83); stroke: var(--pf-blue, #283da8); stroke-width: 3; }
+.digits { fill: var(--pf-ink, #252740); font: 650 18px var(--pf-display, sans-serif); }
+.actions { display: flex; justify-content: flex-end; }
+.actions :global(.button) { min-height: 44px; }

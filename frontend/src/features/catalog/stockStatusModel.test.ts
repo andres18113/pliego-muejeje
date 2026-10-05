@@ -2,11 +2,18 @@ import { describe, expect, it } from "vitest";
 import { availabilityConflictMessage, resolveStockStatus, type StockAvailability } from "./stockStatusModel";
 
 describe("StockStatus contract", () => {
+  it("lets an invalid digital quantity be corrected without allowing more units", () => {
+    const state = resolveStockStatus({ available: false, unavailabilityReason: "P4004" });
+    expect(state.canChangeQuantity).toBe(true);
+    expect(state.canIncreaseQuantity).toBe(false);
+    expect(state.explanation).toContain("una unidad");
+  });
   it("keeps an insufficient cart quantity separate from the edition's confirmed read", () => {
     expect(availabilityConflictMessage("P3002")).toBe("No hay existencias suficientes para esta cantidad en tu carrito.");
     expect(resolveStockStatus({ available: true }).label).toBe("Disponible");
     expect(availabilityConflictMessage("P3001")).toBe("No pudimos confirmar la disponibilidad de esta edición.");
     expect(availabilityConflictMessage("UNAUTHORIZED")).toBeNull();
+    expect(availabilityConflictMessage("P4004")).toBeNull();
   });
   it.each<{ input: StockAvailability; label: string; explanation: string | null }>([
     { input: { available: true }, label: "Disponible", explanation: null },
@@ -27,4 +34,9 @@ describe("StockStatus contract", () => {
     expect(status).toMatchObject({ state: "unavailable", label: "No disponible", icon: "block", explanation: null });
     expect(status.label).not.toContain("Agotado");
   });
+});
+
+it("permits recovery by reducing an insufficient quantity, and only removal for inactive editions", () => {
+  expect(resolveStockStatus({ available: false, unavailabilityReason: "P3002" })).toMatchObject({ canAddToCart: false, canChangeQuantity: true, canIncreaseQuantity: false });
+  expect(resolveStockStatus({ available: false, unavailabilityReason: "P2042" })).toMatchObject({ canAddToCart: false, canChangeQuantity: false, canIncreaseQuantity: false });
 });

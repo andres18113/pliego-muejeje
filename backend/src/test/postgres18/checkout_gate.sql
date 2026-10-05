@@ -30,7 +30,7 @@ BEGIN
     CALL pliego.sp_inventory_entry(v_admin,v_edition1,5,'fixture',v_movement,v_before,v_after);
     CALL pliego.sp_inventory_entry(v_admin,v_edition2,5,'fixture',v_movement,v_before,v_after);
     CALL pliego.sp_customer_register('i8-gate-customer@pliego.local','fixture-hash',
-        'Cliente','I8',NULL,v_user,v_customer,v_user_state);
+        'Cliente','Prueba',NULL,v_user,v_customer,v_user_state);
     CALL pliego.sp_address_create(v_user,'Casa','Cliente I8','Calle I8',NULL,
         'Quito','Pichincha','EC',NULL,'Referencia I8','+59325550134',TRUE,v_address);
     CALL pliego.sp_cart_add_item(v_user,v_edition1,2,v_cart,v_item,v_quantity);
@@ -40,7 +40,7 @@ BEGIN
         v_order,v_order_state,v_payment_state,v_total,v_reference);
 
     IF v_order_state <> 'CONFIRMED' OR v_payment_state <> 'APPROVED'
-       OR v_total <> 43.35
+       OR v_total <> 49.85
        OR v_reference !~ '^SIM-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
        OR (SELECT count(*) FROM pliego.pedido WHERE cliente_id=v_customer) <> 1
        OR (SELECT count(*) FROM pliego.pago WHERE pedido_id=v_order) <> 1
@@ -75,7 +75,7 @@ BEGIN
         v_rejected_order,v_order_state,v_payment_state,v_total,v_reference);
 
     IF v_order_state <> 'CANCELLED' OR v_payment_state <> 'REJECTED'
-       OR v_reference IS NOT NULL OR v_total <> 15.50
+       OR v_reference IS NOT NULL OR v_total <> 17.83
        OR (SELECT count(*) FROM pliego.pedido WHERE cliente_id=v_customer) <> 2
        OR (SELECT count(*) FROM pliego.pago WHERE pedido_id=v_rejected_order) <> 1
        OR (SELECT estado FROM pliego.pedido WHERE pedido_id=v_rejected_order) <> 'CANCELLED'
@@ -94,4 +94,14 @@ BEGIN
     END IF;
 END;
 $gate$;
+DO $mail$
+BEGIN
+ IF EXISTS(SELECT FROM pliego.pedido p WHERE p.estado='CONFIRMED' AND NOT EXISTS(
+  SELECT FROM pliego.correo_outbox o WHERE o.evento_clave='ORDER_CONFIRMED:'||p.pedido_id
+   AND o.tipo='ORDER_CONFIRMED' AND o.datos->>'orderId'=p.pedido_id::TEXT AND o.datos->>'total'=p.total::TEXT
+   AND jsonb_array_length(o.datos->'items')=(SELECT count(*) FROM pliego.pedido_item i WHERE i.pedido_id=p.pedido_id)))
+ THEN RAISE EXCEPTION 'confirmed checkout did not capture matching mail snapshot'; END IF;
+ IF EXISTS(SELECT FROM pliego.pedido p JOIN pliego.correo_outbox o ON o.evento_clave='ORDER_CONFIRMED:'||p.pedido_id WHERE p.estado='CANCELLED')
+ THEN RAISE EXCEPTION 'rejected checkout scheduled confirmation'; END IF;
+END $mail$;
 ROLLBACK;

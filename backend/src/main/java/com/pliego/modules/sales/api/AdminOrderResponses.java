@@ -19,7 +19,7 @@ public final class AdminOrderResponses {
             List<InventoryMovement> inventoryMovements, String purchaseState,
             PostPurchaseModels.Fulfillment fulfillment, PostPurchaseModels.Shipment shipment,
             PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
-            PostPurchaseModels.Actions availableActions) {
+            PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount) {
         public Detail {
             items = List.copyOf(items);
             stateHistory = List.copyOf(stateHistory);

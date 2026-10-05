@@ -12,6 +12,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,7 @@ import com.pliego.modules.catalog.application.CatalogEditionDetail.Category;
 import com.pliego.modules.catalog.application.CatalogEditionDetail.Publisher;
 import com.pliego.modules.catalog.application.CatalogEditionSummary;
 import com.pliego.modules.catalog.application.CatalogQuery;
+import com.pliego.modules.catalog.application.CatalogOffer;
 import com.pliego.modules.catalog.application.CatalogSearchPage;
 import com.pliego.modules.catalog.application.PublicCatalogCategory;
 import com.pliego.modules.catalog.application.PublicCatalogFilterOptions;
@@ -49,6 +51,7 @@ import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 import tools.jackson.databind.node.ObjectNode;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i4_test",
         "spring.datasource.username=pliego_test",
@@ -89,6 +92,51 @@ class CatalogApiIntegrationTest {
 
     @Autowired
     FakeCatalogGateway gateway;
+
+    @Test
+    void offersRouteValidatesAndForwardsPagination() throws Exception {
+        mvc.perform(get("/api/v1/catalog/offers").param("page", "2").param("pageSize", "5"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.page").value(2))
+                .andExpect(jsonPath("$.pageSize").value(5))
+                .andExpect(jsonPath("$.items[0].price").value("18.50"));
+        assertEquals(2, gateway.lastQuery.page());
+        assertEquals(5, gateway.lastQuery.pageSize());
+        mvc.perform(get("/api/v1/catalog/offers").param("pageSize", "51"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void offersAcceptServerSortAndRejectUnsupportedProductType() throws Exception {
+        mvc.perform(get("/api/v1/catalog/offers").param("productType", "PHYSICAL")
+                        .param("category", "novela").param("sort", "ENDING_SOON"))
+                .andExpect(status().isOk());
+        assertEquals("ENDING_SOON", gateway.lastQuery.sort());
+        assertEquals("novela", gateway.lastQuery.category());
+        mvc.perform(get("/api/v1/catalog/offers").param("productType", "VIDEO"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void offerDatesAlwaysIncludeSecondsForMidnightAndExactMinutes() throws Exception {
+        CatalogOffer offer = new CatalogOffer("10", new BigDecimal("18.50"), new BigDecimal("1.00"),
+                Instant.parse("2026-10-05T05:00:00Z"), Instant.parse("2026-10-06T13:30:00Z"),
+                1, true, null, null, new BigDecimal("17.50"), new BigDecimal("5.41"));
+        gateway.searchPage = new CatalogSearchPage(List.of(new CatalogEditionSummary("250", "80", "Una obra", "Autora",
+                "Editorial", null, new BigDecimal("17.50"), CDN_COVER_URL, null, null, "EBOOK", "es", true,
+                "EPUB", null, List.of(), offer)), 1);
+        gateway.publicEdition = Optional.of(new CatalogEditionDetail("250", "80", "Una obra", null, "Sinopsis",
+                DETAIL.authors(), DETAIL.categories(), DETAIL.publisher(), null, "DIGITAL-TEST", "es", "EBOOK", null,
+                null, new BigDecimal("17.50"), CDN_COVER_URL, null, null, null, true, "EPUB", null, List.of(), offer));
+        for (String path : List.of("/api/v1/catalog/editions", "/api/v1/catalog/offers")) {
+            mvc.perform(get(path)).andExpect(status().isOk())
+                    .andExpect(jsonPath("$.items[0].offer.startsAt").value("2026-10-05T00:00:00-05:00"))
+                    .andExpect(jsonPath("$.items[0].offer.endsAt").value("2026-10-06T08:30:00-05:00"));
+        }
+        mvc.perform(get("/api/v1/catalog/editions/250")).andExpect(status().isOk())
+                .andExpect(jsonPath("$.offer.startsAt").value("2026-10-05T00:00:00-05:00"))
+                .andExpect(jsonPath("$.offer.endsAt").value("2026-10-06T08:30:00-05:00"));
+    }
 
 
     @ParameterizedTest
@@ -374,7 +422,9 @@ class CatalogApiIntegrationTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
                 .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
                 .andExpect(jsonPath("$.title").value("Datos inválidos"))
-                .andExpect(jsonPath("$.detail").value("Revisa los filtros enviados e intenta nuevamente."));
+                .andExpect(jsonPath("$.detail").value("page".equals(name) ? "La página debe ser un número entero entre 0 y 2147483647."
+                        : "pageSize".equals(name) ? "El tamaño de página debe ser un número entero entre 1 y 50."
+                        : "Revisa los filtros enviados e intenta nuevamente."));
     }
 
     @TestConfiguration(proxyBeanMethods = false)
@@ -400,6 +450,11 @@ class CatalogApiIntegrationTest {
     }
 
     static class FakeCatalogGateway implements CatalogGateway {
+        @Override
+        public com.pliego.modules.catalog.application.OffersFilterOptions findOffersFilterOptions() {
+            return new com.pliego.modules.catalog.application.OffersFilterOptions(List.of(), List.of(), List.of(), 3, "America/Guayaquil", "0");
+        }
+
         private final DatabaseExceptionTranslator translator;
         private CatalogQuery lastQuery;
         private long lastEditionId;

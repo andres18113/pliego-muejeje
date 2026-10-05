@@ -44,6 +44,12 @@
 .menuBackdrop { position: fixed; inset: 0; z-index: -1; border: 0; padding: 0; width: 100%; height: 100%; background: rgb(0 0 0 / 75%); cursor: default; }
 .desktopMenu::before { content: ""; position: absolute; top: -12px; left: 0; right: 0; height: 12px; }
 .primary.primary { flex: 0 1 auto; min-width: 0; gap: 32px; }
+.bar.bar { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+.actions.actions { grid-column: 3; justify-self: end; }
+.primary.primary { grid-column: 1; justify-self: start; }
+.navigation { grid-column: 2; justify-content: center; }
+.mobileNavigation { display: grid; gap: 8px; padding-block: 12px; }
+.mobileNavigation .navLink { justify-content: flex-start; }
 .navigation { display: flex; align-items: center; gap: 4px; }
 .wordmark.wordmark { display: flex; min-height: 44px; align-items: center; flex-shrink: 0; color: var(--pliego-text); font-family: var(--store-display); font-size: 34px; transition: font-size 200ms cubic-bezier(.32, .94, .6, 1); font-weight: 800; letter-spacing: -.06em; line-height: 1; text-decoration: none; }
 .navLink.navLink { position: relative; display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border-radius: 999px; padding: 10px 14px; color: var(--pliego-text); font-size: 1rem; line-height: 1.5rem; font-weight: 500; text-decoration: none; }
@@ -62,11 +68,19 @@
 .skip { position: absolute; top: 0; left: 0; z-index: 120; min-height: 44px; border-radius: 6px; padding: 12px 16px; background: var(--pliego-surface); color: var(--pliego-text); transform: translateY(-180%); }
 .skip:focus { transform: none; }
 .header :focus-visible, .accountPanel :focus-visible, .overlayContent :focus-visible { outline: 2px solid var(--header-focus); outline-offset: 3px; }
-.accountPanel.accountPanel { max-width: calc(100vw - 24px); border: 0; border-radius: 6px; padding: 8px; background: var(--pliego-surface); color: var(--pliego-text); box-shadow: var(--mantine-shadow-md); }
-.identity { padding: 8px 12px 12px; overflow-wrap: anywhere; }
+/* The account menu: a paper panel that names who is signed in (display type on a quiet mist field), then
+   the account destinations. The current page reads ultramar with PLIEGO's yellow "here" dot. */
+.accountPanel.accountPanel { max-width: calc(100vw - 24px); border: 0; border-radius: 20px; padding: 8px; background: var(--pliego-surface); color: var(--pliego-text); box-shadow: 0 1px 0 var(--pliego-border), 0 18px 40px -18px rgb(20 23 55 / 38%); }
+.identity { display: grid; gap: 2px; margin-bottom: 6px; padding: 14px 14px 12px; border-radius: 14px; background: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--pliego-surface)); overflow-wrap: anywhere; }
+.identityName.identityName { color: var(--pliego-text); font: 700 1.125rem/1.2 var(--store-display); letter-spacing: -.03em; }
 .muted { color: var(--pliego-text-muted); }
-.accountItem.accountItem { min-height: 44px; border-radius: 12px; color: var(--pliego-text); font-size: 0.875rem; }
-.accountItem.accountItem:hover, .accountItem[data-hovered] { background: var(--pliego-surface-hover); }
+.accountItem.accountItem { min-height: 44px; padding-inline: 12px; border-radius: 12px; color: var(--pliego-text); font-size: .9375rem; font-weight: 500; }
+.accountItem.accountItem:hover, .accountItem[data-hovered] { background: color-mix(in srgb, var(--store-lavender, #e4def4) 60%, var(--pliego-surface)); }
+.accountItem[aria-current="page"] { color: var(--header-accent); font-weight: 600; }
+.hereDot { display: block; width: 8px; height: 8px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
+:global([data-mantine-color-scheme="dark"]) .identity { background: #2e2b4d; }
+:global([data-mantine-color-scheme="dark"]) .accountItem.accountItem:hover, :global([data-mantine-color-scheme="dark"]) .accountItem[data-hovered] { background: var(--pliego-surface-hover); }
+@media (forced-colors: active) { .hereDot { background: CanvasText; } .identity { border: 1px solid CanvasText; } }
 .error { padding: 8px 12px; color: var(--header-error); }
 .overlayInner.overlayInner { align-items: start; padding: 12px 24px; }
 .overlayContent.overlayContent { flex: 0 1 auto; min-width: 0; max-width: 1728px; width: 100%; max-height: calc(100dvh - 24px); overflow: visible; background: transparent; color: var(--pliego-text); border-radius: 0; box-shadow: none; }
@@ -155,6 +169,20 @@
 :global([data-mantine-color-scheme="light"]) :is(.header, .overlayContent) .wordmark.wordmark { color: var(--store-blue); }
 
 @media (hover: none) { .searchKey { display: none; } }
+/* Room to read: the pill holds its width instead of shrinking with the row, with air around the icon, label and key. */
+@media (min-width: 600px) { .searchTrigger.searchTrigger { flex: none; width: 216px; gap: 12px; margin-right: 16px; padding: 0 10px 0 16px; } }
+/* Where the centered navigation shares the row, the pill stays clear of it. */
+@media (min-width: 960px) and (max-width: 1199px) { .searchTrigger.searchTrigger { width: 200px; gap: 10px; margin-right: 12px; padding: 0 10px 0 14px; } }
+@media (min-width: 960px) and (max-width: 1023px) { .searchTrigger.searchTrigger { width: 164px; padding-right: 14px; } .searchKey { display: none; } }
+@media (min-width: 1200px) { .searchTrigger.searchTrigger { width: 264px; margin-right: 20px; padding: 0 12px 0 18px; } }
 @media (prefers-reduced-motion: reduce) { .header, .wordmark.wordmark, .navLink.navLink::after, .searchTrigger.searchTrigger { transition: none; } }
+@media (min-width: 960px) {
+  .navigation { display: flex; }
+  .menuTrigger.menuTrigger { display: none; }
+}
+@media (max-width: 959px) {
+  .navigation { display: none; }
+  .menuTrigger.menuTrigger { display: flex; }
+}
 /* PLIEGO's full stop: the same yellow mark as the hero and the selected topic. */
 .header .wordmark.wordmark::after { content: ""; flex: none; width: .19em; height: .19em; margin-left: .06em; align-self: center; transform: translateY(.26em); border-radius: 50%; background: var(--store-yellow); }

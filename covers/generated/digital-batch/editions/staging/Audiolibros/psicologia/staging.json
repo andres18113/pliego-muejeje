@@ -1,0 +1,2901 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+      "libro": {
+        "titulo": "24 ideas para una psicoterapia breve (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Mark Beyebach",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Herder Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "32.99",
+        "sku": "PLG-BK-000196",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1044,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000196-6611a0c58763.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-55c9e35ac75d34cf",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "184",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ac491f96948333df"
+        },
+        "author_bindings": [
+          {
+            "name": "Mark Beyebach",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Mark Beyebach",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+            "observed_text": "Barcelona : Herder Editorial, [2008]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "ddd76b347935cfa7cbcb35ba4b791938924902c5de1abf7c81f63b78a735c556",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/45760.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "ddd76b347935cfa7cbcb35ba4b791938924902c5de1abf7c81f63b78a735c556",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/45760.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45760",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 52,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+            "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Mark Beyebach",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 52,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+            "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 52,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+            "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 52,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/24 ideas para una psicoterapia breve (2a. ed.) - Mark Beyebach.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+          "cover_sha256": "6611a0c58763e2c68be9f2757ba31debe1affdf9a1addb6fd6d2e4ca7595eab6",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "185",
+        "imported_book_id": "184"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-4a795b65bdfd9ca1.webp",
+      "libro": {
+        "titulo": "Constructivismo y psicoterapia (3a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Feixas Viaplana, Guillem",
+            "orden": 1
+          },
+          {
+            "nombre": "Villegas Besora, Manuel",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Desclée de Brouwer",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000242",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1040,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000242-00cff5b9af71.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47644",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-4a795b65bdfd9ca1",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "185",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-642d15451c6ab367"
+        },
+        "author_bindings": [
+          {
+            "name": "Feixas Viaplana, Guillem",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Villegas Besora, Manuel",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Feixas Viaplana, Guillem; Villegas Besora, Manuel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+            "observed_text": "Bilbao : Desclée de Brouwer, c2004.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "2a85d9b755de0439a5105dbaabec255622ee10b250038302888e4e32555321bb",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/47644.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "2a85d9b755de0439a5105dbaabec255622ee10b250038302888e4e32555321bb",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/47644.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47644",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 54,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47644",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Constructivismo y psicoterapia (3a. ed.) - Feixas Viaplana, Guillem; Villegas Besora, Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-4a795b65bdfd9ca1.webp",
+            "cover_sha256": "00cff5b9af71ae90cd33245f26af053c5934933f3ff3021ba701ce8eb0eb21e3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Feixas Viaplana, Guillem; Villegas Besora, Manuel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 54,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47644",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Constructivismo y psicoterapia (3a. ed.) - Feixas Viaplana, Guillem; Villegas Besora, Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-4a795b65bdfd9ca1.webp",
+            "cover_sha256": "00cff5b9af71ae90cd33245f26af053c5934933f3ff3021ba701ce8eb0eb21e3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 54,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47644",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Constructivismo y psicoterapia (3a. ed.) - Feixas Viaplana, Guillem; Villegas Besora, Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-4a795b65bdfd9ca1.webp",
+            "cover_sha256": "00cff5b9af71ae90cd33245f26af053c5934933f3ff3021ba701ce8eb0eb21e3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 54,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47644",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Constructivismo y psicoterapia (3a. ed.) - Feixas Viaplana, Guillem; Villegas Besora, Manuel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-4a795b65bdfd9ca1.webp",
+          "cover_sha256": "00cff5b9af71ae90cd33245f26af053c5934933f3ff3021ba701ce8eb0eb21e3",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "186",
+        "imported_book_id": "185"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-6e39f5b1f9e5f84f.webp",
+      "libro": {
+        "titulo": "Crítica de la psicoterapia integrativa",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Guillermo Cepeda Armijos",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Abya-Yala",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000172",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1449,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000172-2748cac3f392.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79874",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-6e39f5b1f9e5f84f",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "186",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-8856c8c4d284a6fa"
+        },
+        "author_bindings": [
+          {
+            "name": "Guillermo Cepeda Armijos",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Guillermo Cepeda Armijos",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+            "observed_text": "Quito : Ediciones Abya-Yala, 2013.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "ed614cb719f3726c1df7a07594d692935b1da6ff1e68fd90e158f2ebe87f7660",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79874.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "ed614cb719f3726c1df7a07594d692935b1da6ff1e68fd90e158f2ebe87f7660",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79874.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79874",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 55,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79874",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Crítica de la psicoterapia integrativa - Guillermo Cepeda Armijos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-6e39f5b1f9e5f84f.webp",
+            "cover_sha256": "2748cac3f39219d3c6577f751145c923c7bf7109613ff4dd95b71aeb2d924ae3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Guillermo Cepeda Armijos",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 55,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79874",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Crítica de la psicoterapia integrativa - Guillermo Cepeda Armijos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-6e39f5b1f9e5f84f.webp",
+            "cover_sha256": "2748cac3f39219d3c6577f751145c923c7bf7109613ff4dd95b71aeb2d924ae3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 55,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79874",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Crítica de la psicoterapia integrativa - Guillermo Cepeda Armijos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-6e39f5b1f9e5f84f.webp",
+            "cover_sha256": "2748cac3f39219d3c6577f751145c923c7bf7109613ff4dd95b71aeb2d924ae3",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 55,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79874",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Crítica de la psicoterapia integrativa - Guillermo Cepeda Armijos.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-6e39f5b1f9e5f84f.webp",
+          "cover_sha256": "2748cac3f39219d3c6577f751145c923c7bf7109613ff4dd95b71aeb2d924ae3",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "187",
+        "imported_book_id": "186"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-b2d3df9243256b1b.webp",
+      "libro": {
+        "titulo": "Escritos de psicoterapia cognitiva",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Keegan, Eduardo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Eudeba",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "24.99",
+        "sku": "PLG-BK-000117",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5317,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000117-ebd90f80a420.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66218",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-b2d3df9243256b1b",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "187",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-efc2a95a9439f630"
+        },
+        "author_bindings": [
+          {
+            "name": "Keegan, Eduardo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Keegan, Eduardo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+            "observed_text": "Buenos Aires, Argentina : Eudeba, 2008.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "ae6509fbe2588d82cb97ee3743ab13706ec9702530bd9fb56784746be83c792c",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/66218.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "ae6509fbe2588d82cb97ee3743ab13706ec9702530bd9fb56784746be83c792c",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/66218.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB66218",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 56,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66218",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Escritos de psicoterapia cognitiva - Keegan, Eduardo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b2d3df9243256b1b.webp",
+            "cover_sha256": "ebd90f80a420e2269c9462804bf94faa5d08eca218fdf18e478290d36502ee82",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Keegan, Eduardo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 56,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66218",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Escritos de psicoterapia cognitiva - Keegan, Eduardo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b2d3df9243256b1b.webp",
+            "cover_sha256": "ebd90f80a420e2269c9462804bf94faa5d08eca218fdf18e478290d36502ee82",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 56,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66218",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Escritos de psicoterapia cognitiva - Keegan, Eduardo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b2d3df9243256b1b.webp",
+            "cover_sha256": "ebd90f80a420e2269c9462804bf94faa5d08eca218fdf18e478290d36502ee82",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 56,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66218",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Escritos de psicoterapia cognitiva - Keegan, Eduardo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b2d3df9243256b1b.webp",
+          "cover_sha256": "ebd90f80a420e2269c9462804bf94faa5d08eca218fdf18e478290d36502ee82",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "188",
+        "imported_book_id": "187"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-37f13fad292b679a.webp",
+      "libro": {
+        "titulo": "Historia de la psicología",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Santamaría, Carlos",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ariel",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000227",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1769,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000227-2d968ef9c5ce.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293923",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-37f13fad292b679a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "188",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-f17cb97f2bd33101"
+        },
+        "author_bindings": [
+          {
+            "name": "Santamaría, Carlos",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Santamaría, Carlos",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_path": "covers/Audiolibros/Psicología/originales/Historia de la psicología - Santamaría, Carlos.jpg",
+            "observed_text": "Ariel",
+            "basis": "Imprint editorial visible en la portada original suministrada; título y autor de la misma portada coinciden. Los logotipos inequívocos FCE se normalizan a Fondo de Cultura Económica.",
+            "capture_sha256": "bbdeaed1bb920151e292feca82e99c312ed6ca7996664456efab2bd8a6850630",
+            "source": "covers/Audiolibros/Psicología/originales/Historia de la psicología - Santamaría, Carlos.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://proassetspdlcom.cdnstatics2.com/usuaris/libros_contenido/arxius/38/37626_Historia_de_la_Psicologia.pdf",
+            "observed_text": "Derechos exclusivos de edición en español; Editorial Ariel es un sello editorial de Planeta",
+            "basis": "Página de créditos de muestra original publicada por la editorial; título y Carlos Santamaría coinciden, al igual que portada.",
+            "source": "https://proassetspdlcom.cdnstatics2.com/usuaris/libros_contenido/arxius/38/37626_Historia_de_la_Psicologia.pdf",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 57,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293923",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Historia de la psicología - Santamaría, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-37f13fad292b679a.webp",
+            "cover_sha256": "2d968ef9c5ceb108af325ccce5f0fb8de301e8e93a6ee03b88a99807790e52fa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Santamaría, Carlos",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 57,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293923",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Historia de la psicología - Santamaría, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-37f13fad292b679a.webp",
+            "cover_sha256": "2d968ef9c5ceb108af325ccce5f0fb8de301e8e93a6ee03b88a99807790e52fa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 57,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293923",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Historia de la psicología - Santamaría, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-37f13fad292b679a.webp",
+            "cover_sha256": "2d968ef9c5ceb108af325ccce5f0fb8de301e8e93a6ee03b88a99807790e52fa",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 57,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293923",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Historia de la psicología - Santamaría, Carlos.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-37f13fad292b679a.webp",
+          "cover_sha256": "2d968ef9c5ceb108af325ccce5f0fb8de301e8e93a6ee03b88a99807790e52fa",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "189",
+        "imported_book_id": "188"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-515007baa9e819ef.webp",
+      "libro": {
+        "titulo": "Historia de la psicología en Colombia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ardila, Rubén",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Manual Moderno",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "29.99",
+        "sku": "PLG-BK-000096",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5658,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000096-0514e5a68d10.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71159",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-515007baa9e819ef",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "189",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4e53f785fa600ea7"
+        },
+        "author_bindings": [
+          {
+            "name": "Ardila, Rubén",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ardila, Rubén",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+            "observed_text": "Bogotá : Manual Moderno, 2013.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "d28a4415fec42dc4228d86c2d58a2f1bd54e7bbdbf9a5a5442ba4acd2bb56f90",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71159.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "d28a4415fec42dc4228d86c2d58a2f1bd54e7bbdbf9a5a5442ba4acd2bb56f90",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/71159.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71159",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 58,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71159",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Historia de la psicología en Colombia - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-515007baa9e819ef.webp",
+            "cover_sha256": "0514e5a68d103a6528a185c88c412cadc3b373b414e23cc0a3c7ee11f5e4dcb5",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ardila, Rubén",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 58,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71159",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Historia de la psicología en Colombia - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-515007baa9e819ef.webp",
+            "cover_sha256": "0514e5a68d103a6528a185c88c412cadc3b373b414e23cc0a3c7ee11f5e4dcb5",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 58,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71159",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Historia de la psicología en Colombia - Ardila, Rubén.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-515007baa9e819ef.webp",
+            "cover_sha256": "0514e5a68d103a6528a185c88c412cadc3b373b414e23cc0a3c7ee11f5e4dcb5",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 58,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71159",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Historia de la psicología en Colombia - Ardila, Rubén.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-515007baa9e819ef.webp",
+          "cover_sha256": "0514e5a68d103a6528a185c88c412cadc3b373b414e23cc0a3c7ee11f5e4dcb5",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "190",
+        "imported_book_id": "189"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-c66b08fc14cb351c.webp",
+      "libro": {
+        "titulo": "Lecciones de psicología cognitiva",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Fernández, Humberto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Abierta Interamericana",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "33.99",
+        "sku": "PLG-BK-000253",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5394,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000253-0efaea019901.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/77154",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-c66b08fc14cb351c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "190",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ad16a4bdb0a3887f"
+        },
+        "author_bindings": [
+          {
+            "name": "Fernández, Humberto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Fernández, Humberto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+            "observed_text": "Buenos Aires : Universidad Abierta Interamericana, 2013.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "2a16b92107f12f8eb47888c2d4ea5180965c60454346b3d69451d370847dd668",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/77154.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "2a16b92107f12f8eb47888c2d4ea5180965c60454346b3d69451d370847dd668",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/77154.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB77154",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 60,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/77154",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Lecciones de psicología cognitiva - Fernández, Humberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-c66b08fc14cb351c.webp",
+            "cover_sha256": "0efaea0199010648f6b292dcb88c800cb235e36a624128b1967ac56cf588982c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Fernández, Humberto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 60,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/77154",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Lecciones de psicología cognitiva - Fernández, Humberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-c66b08fc14cb351c.webp",
+            "cover_sha256": "0efaea0199010648f6b292dcb88c800cb235e36a624128b1967ac56cf588982c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 60,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/77154",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Lecciones de psicología cognitiva - Fernández, Humberto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-c66b08fc14cb351c.webp",
+            "cover_sha256": "0efaea0199010648f6b292dcb88c800cb235e36a624128b1967ac56cf588982c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 60,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/77154",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Lecciones de psicología cognitiva - Fernández, Humberto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-c66b08fc14cb351c.webp",
+          "cover_sha256": "0efaea0199010648f6b292dcb88c800cb235e36a624128b1967ac56cf588982c",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "191",
+        "imported_book_id": "190"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-688c3a28f1d3c7da.webp",
+      "libro": {
+        "titulo": "Principios de una psicoterapia de la psicosis",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Álvarez, José María",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Xoroi Edicions",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "34.99",
+        "sku": "PLG-BK-000180",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6882,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000180-ea23342e2f9f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128573",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-688c3a28f1d3c7da",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "191",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-aaf6f26bfe22566b"
+        },
+        "author_bindings": [
+          {
+            "name": "Álvarez, José María",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Álvarez, José María",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+            "observed_text": "[Barcelona] : Xoroi Edicions, [2020]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "f82fe4b9bc30772f2f3e0e051b9a61453181ee9e7fb9121df7fd34c58874d093",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/128573.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "f82fe4b9bc30772f2f3e0e051b9a61453181ee9e7fb9121df7fd34c58874d093",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/128573.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128573",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 62,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128573",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Principios de una psicoterapia de la psicosis - Álvarez, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-688c3a28f1d3c7da.webp",
+            "cover_sha256": "ea23342e2f9fb086c3ba8e178c995f00d9bf704b27151f0efcd99b4d05f69afb",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Álvarez, José María",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 62,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128573",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Principios de una psicoterapia de la psicosis - Álvarez, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-688c3a28f1d3c7da.webp",
+            "cover_sha256": "ea23342e2f9fb086c3ba8e178c995f00d9bf704b27151f0efcd99b4d05f69afb",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 62,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128573",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Principios de una psicoterapia de la psicosis - Álvarez, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-688c3a28f1d3c7da.webp",
+            "cover_sha256": "ea23342e2f9fb086c3ba8e178c995f00d9bf704b27151f0efcd99b4d05f69afb",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 62,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128573",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Principios de una psicoterapia de la psicosis - Álvarez, José María.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-688c3a28f1d3c7da.webp",
+          "cover_sha256": "ea23342e2f9fb086c3ba8e178c995f00d9bf704b27151f0efcd99b4d05f69afb",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "192",
+        "imported_book_id": "191"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-75d305b10d871ee4.webp",
+      "libro": {
+        "titulo": "Psicología de la música",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Schön, Daniele",
+            "orden": 1
+          },
+          {
+            "nombre": "Akiva-Kabiri, Lilach",
+            "orden": 2
+          },
+          {
+            "nombre": "Vecchi, Tomaso",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alianza Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000307",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 916,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000307-31d3bd8f7f5e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216569",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-75d305b10d871ee4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "192",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-751fd4cf516f05a3"
+        },
+        "author_bindings": [
+          {
+            "name": "Schön, Daniele",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Akiva-Kabiri, Lilach",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Vecchi, Tomaso",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_path": "covers/Audiolibros/Psicología/originales/Psicología de la música - Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso.jpg",
+            "observed_text": "Alianza Editorial",
+            "basis": "Imprint editorial visible en la portada original suministrada; título y autor de la misma portada coinciden. Los logotipos inequívocos FCE se normalizan a Fondo de Cultura Económica.",
+            "capture_sha256": "f82ccfa2a8fb3d38f199ec396a1f21d920ea02e1f0dfd599d150608178471731",
+            "source": "covers/Audiolibros/Psicología/originales/Psicología de la música - Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "INFERRED_UNEQUIVOCAL",
+            "source_url": "https://www.alianzaeditorial.es/primer_capitulo/psicologia-de-la-musica.pdf",
+            "observed_text": "Cuando publicamos en 2007 la primera edición de este libro, nunca nos habríamos imaginado el «pequeño» éxito",
+            "basis": "Texto interior de primera página de capítulo inequívocamente español en muestra original editorial, con título y tres autores concordantes.",
+            "source": "https://www.alianzaeditorial.es/primer_capitulo/psicologia-de-la-musica.pdf",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 65,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216569",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la música - Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-75d305b10d871ee4.webp",
+            "cover_sha256": "31d3bd8f7f5e178fe04c2d79f1a913e21742c518dc06d6b36b48d7e60e6ad43d",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 65,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216569",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la música - Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-75d305b10d871ee4.webp",
+            "cover_sha256": "31d3bd8f7f5e178fe04c2d79f1a913e21742c518dc06d6b36b48d7e60e6ad43d",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 65,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216569",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología de la música - Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-75d305b10d871ee4.webp",
+            "cover_sha256": "31d3bd8f7f5e178fe04c2d79f1a913e21742c518dc06d6b36b48d7e60e6ad43d",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 65,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216569",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología de la música - Schön, Daniele; Akiva-Kabiri, Lilach; Vecchi, Tomaso.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-75d305b10d871ee4.webp",
+          "cover_sha256": "31d3bd8f7f5e178fe04c2d79f1a913e21742c518dc06d6b36b48d7e60e6ad43d",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "193",
+        "imported_book_id": "192"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-392b2831c54b8b36.webp",
+      "libro": {
+        "titulo": "Psicología del crecimiento interior",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ramírez Villafáñez, Amado",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Díaz de Santos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000248",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6937,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000248-d2c57fec7558.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63002",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-392b2831c54b8b36",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "193",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-971d6c135e723672"
+        },
+        "author_bindings": [
+          {
+            "name": "Ramírez Villafáñez, Amado",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ramírez Villafáñez, Amado",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+            "observed_text": "Madrid : Ediciones Díaz de Santos, 2015.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "e8aecc6a201480e68da28bf107ce4c95504306dee317d2233d7f9dd900cd058d",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/63002.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "e8aecc6a201480e68da28bf107ce4c95504306dee317d2233d7f9dd900cd058d",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/63002.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63002",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 67,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63002",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del crecimiento interior - Ramírez Villafáñez, Amado.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-392b2831c54b8b36.webp",
+            "cover_sha256": "d2c57fec75585ee01fb249eceb45c077f1708f6fb0aafce68d9115025e24c2d7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ramírez Villafáñez, Amado",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 67,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63002",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del crecimiento interior - Ramírez Villafáñez, Amado.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-392b2831c54b8b36.webp",
+            "cover_sha256": "d2c57fec75585ee01fb249eceb45c077f1708f6fb0aafce68d9115025e24c2d7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 67,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63002",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del crecimiento interior - Ramírez Villafáñez, Amado.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-392b2831c54b8b36.webp",
+            "cover_sha256": "d2c57fec75585ee01fb249eceb45c077f1708f6fb0aafce68d9115025e24c2d7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 67,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63002",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología del crecimiento interior - Ramírez Villafáñez, Amado.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-392b2831c54b8b36.webp",
+          "cover_sha256": "d2c57fec75585ee01fb249eceb45c077f1708f6fb0aafce68d9115025e24c2d7",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "194",
+        "imported_book_id": "193"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-bc5d121d338cba2f.webp",
+      "libro": {
+        "titulo": "Psicología del delincuente",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pollitz, Paul",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Olejnik",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000288",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1231,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000288-7ef8d42c7ece.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/240116",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-bc5d121d338cba2f",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "194",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2112d2dd3e0282f3"
+        },
+        "author_bindings": [
+          {
+            "name": "Pollitz, Paul",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pollitz, Paul",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+            "observed_text": "Santiago de Chile : Ediciones Olejnik, 2019.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "62f8f561643ecc63e786f8ec06416b048d9046a2328194b4708fc5ed7bb0c429",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/240116.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "62f8f561643ecc63e786f8ec06416b048d9046a2328194b4708fc5ed7bb0c429",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/240116.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB240116",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 68,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/240116",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del delincuente - Pollitz, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-bc5d121d338cba2f.webp",
+            "cover_sha256": "7ef8d42c7ece6a651188d6a97dbaaa1ffb6fb0df6445bff261e3de6c7fbb7c02",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pollitz, Paul",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 68,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/240116",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del delincuente - Pollitz, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-bc5d121d338cba2f.webp",
+            "cover_sha256": "7ef8d42c7ece6a651188d6a97dbaaa1ffb6fb0df6445bff261e3de6c7fbb7c02",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 68,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/240116",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del delincuente - Pollitz, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-bc5d121d338cba2f.webp",
+            "cover_sha256": "7ef8d42c7ece6a651188d6a97dbaaa1ffb6fb0df6445bff261e3de6c7fbb7c02",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 68,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/240116",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología del delincuente - Pollitz, Paul.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-bc5d121d338cba2f.webp",
+          "cover_sha256": "7ef8d42c7ece6a651188d6a97dbaaa1ffb6fb0df6445bff261e3de6c7fbb7c02",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "195",
+        "imported_book_id": "194"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-2958ef439959c6b6.webp",
+      "libro": {
+        "titulo": "Psicología del Poder",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Población, Pablo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Morata, S. L",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000139",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1618,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000139-0577aa4a63da.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/189415",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2958ef439959c6b6",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "195",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c768892038fed3dd"
+        },
+        "author_bindings": [
+          {
+            "name": "Población, Pablo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Población, Pablo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+            "observed_text": "España : Ediciones Morata, S. L., 2021.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "e42784b70a8f4b722117d9c7b4109269c849e2fb6ee1bccaa3bc8677864a55b3",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/189415.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "e42784b70a8f4b722117d9c7b4109269c849e2fb6ee1bccaa3bc8677864a55b3",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/189415.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB189415",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 70,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/189415",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del Poder - Población, Pablo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-2958ef439959c6b6.webp",
+            "cover_sha256": "0577aa4a63da2d7232e5bf150a9ceb62b07086d6459b0d3321c5225fe8da5990",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Población, Pablo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 70,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/189415",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del Poder - Población, Pablo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-2958ef439959c6b6.webp",
+            "cover_sha256": "0577aa4a63da2d7232e5bf150a9ceb62b07086d6459b0d3321c5225fe8da5990",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 70,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/189415",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicología del Poder - Población, Pablo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-2958ef439959c6b6.webp",
+            "cover_sha256": "0577aa4a63da2d7232e5bf150a9ceb62b07086d6459b0d3321c5225fe8da5990",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 70,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/189415",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicología del Poder - Población, Pablo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-2958ef439959c6b6.webp",
+          "cover_sha256": "0577aa4a63da2d7232e5bf150a9ceb62b07086d6459b0d3321c5225fe8da5990",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "196",
+        "imported_book_id": "195"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-fc7e8871dd33f964.webp",
+      "libro": {
+        "titulo": "Psicoterapia, asesoramiento y consejería (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Lucio Balarezo Chiriboga",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial de la Pontificia Universidad Católica del Ecuador",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000306",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6267,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000306-1de08b400baa.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/80166",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-fc7e8871dd33f964",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "196",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-1f681c74a4b5f0a8"
+        },
+        "author_bindings": [
+          {
+            "name": "Lucio Balarezo Chiriboga",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Lucio Balarezo Chiriboga",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+            "observed_text": "Quito : Editorial de la Pontificia Universidad Católica del Ecuador, 2017.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "9e3c66335fbed297da39ffb9c1332a05aeb84ced9f38a7b4804d653e5d0b358c",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/80166.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "9e3c66335fbed297da39ffb9c1332a05aeb84ced9f38a7b4804d653e5d0b358c",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/80166.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB80166",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 74,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/80166",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicoterapia, asesoramiento y consejería (2a. ed.) - Lucio Balarezo Chiriboga.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fc7e8871dd33f964.webp",
+            "cover_sha256": "1de08b400baa0b8625ee764dc25dca4c40d2592f93ebd920f36139587c388067",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Lucio Balarezo Chiriboga",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 74,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/80166",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicoterapia, asesoramiento y consejería (2a. ed.) - Lucio Balarezo Chiriboga.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fc7e8871dd33f964.webp",
+            "cover_sha256": "1de08b400baa0b8625ee764dc25dca4c40d2592f93ebd920f36139587c388067",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 74,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/80166",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Psicoterapia, asesoramiento y consejería (2a. ed.) - Lucio Balarezo Chiriboga.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fc7e8871dd33f964.webp",
+            "cover_sha256": "1de08b400baa0b8625ee764dc25dca4c40d2592f93ebd920f36139587c388067",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 74,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/80166",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Psicoterapia, asesoramiento y consejería (2a. ed.) - Lucio Balarezo Chiriboga.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fc7e8871dd33f964.webp",
+          "cover_sha256": "1de08b400baa0b8625ee764dc25dca4c40d2592f93ebd920f36139587c388067",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "197",
+        "imported_book_id": "196"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-b3f705160d54dbfe.webp",
+      "libro": {
+        "titulo": "Temas de psicología práctica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sarráis Oteo, Fernando",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "EUNSA",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000181",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3036,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000181-dc3388e7233f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47120",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-b3f705160d54dbfe",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "197",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-fe1ea164013f2cb4"
+        },
+        "author_bindings": [
+          {
+            "name": "Sarráis Oteo, Fernando",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sarráis Oteo, Fernando",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+            "observed_text": "Pamplona : EUNSA, 2012.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "d84c9e245576a4e0745cda62f4dbd285b094c2a5d82766d457ad3faef1b15412",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/47120.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "d84c9e245576a4e0745cda62f4dbd285b094c2a5d82766d457ad3faef1b15412",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/47120.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47120",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 75,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47120",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Temas de psicología práctica - Sarráis Oteo, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b3f705160d54dbfe.webp",
+            "cover_sha256": "dc3388e7233ff27baf5e24eff4482b6ab4df4c7b23d4aea6a470ce57e02c6072",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sarráis Oteo, Fernando",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 75,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47120",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Temas de psicología práctica - Sarráis Oteo, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b3f705160d54dbfe.webp",
+            "cover_sha256": "dc3388e7233ff27baf5e24eff4482b6ab4df4c7b23d4aea6a470ce57e02c6072",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 75,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47120",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Temas de psicología práctica - Sarráis Oteo, Fernando.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b3f705160d54dbfe.webp",
+            "cover_sha256": "dc3388e7233ff27baf5e24eff4482b6ab4df4c7b23d4aea6a470ce57e02c6072",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 75,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47120",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Temas de psicología práctica - Sarráis Oteo, Fernando.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b3f705160d54dbfe.webp",
+          "cover_sha256": "dc3388e7233ff27baf5e24eff4482b6ab4df4c7b23d4aea6a470ce57e02c6072",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "198",
+        "imported_book_id": "197"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/psicologia/portadas/audiobook-fcd4ee9a90e733d4.webp",
+      "libro": {
+        "titulo": "Teoría y técnica de la psicoterapia psicoanalítica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "González Núñez, José de Jesús",
+            "orden": 1
+          },
+          {
+            "nombre": "Rodríguez Cortés, María del Pilar",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Psicología"
+        ]
+      },
+      "edicion": {
+        "editorial": "Plaza y Valdés, S.A. de C.V",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "25.99",
+        "sku": "PLG-BK-000301",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2865,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000301-b4d903c8565a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75485",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-fcd4ee9a90e733d4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "198",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c6931466c2d586a5"
+        },
+        "author_bindings": [
+          {
+            "name": "González Núñez, José de Jesús",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Rodríguez Cortés, María del Pilar",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "González Núñez, José de Jesús; Rodríguez Cortés, María del Pilar",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+            "observed_text": "México D.F. : Plaza y Valdés, S.A. de C.V., 2008.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "bf8b575d6c7c4e37d6e9ef1fd62535ba5e85c81ad6b413c184f4afd38a37afc9",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/75485.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "bf8b575d6c7c4e37d6e9ef1fd62535ba5e85c81ad6b413c184f4afd38a37afc9",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/75485.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB75485",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 76,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75485",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Teoría y técnica de la psicoterapia psicoanalítica - González Núñez, José de Jesús; Rodríguez Cortés, María del Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fcd4ee9a90e733d4.webp",
+            "cover_sha256": "b4d903c8565afba817059546be3d42449a3f1dce609264dbcdfad6339d25bd86",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "González Núñez, José de Jesús; Rodríguez Cortés, María del Pilar",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 76,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75485",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Teoría y técnica de la psicoterapia psicoanalítica - González Núñez, José de Jesús; Rodríguez Cortés, María del Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fcd4ee9a90e733d4.webp",
+            "cover_sha256": "b4d903c8565afba817059546be3d42449a3f1dce609264dbcdfad6339d25bd86",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 76,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75485",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Psicología/originales/Teoría y técnica de la psicoterapia psicoanalítica - González Núñez, José de Jesús; Rodríguez Cortés, María del Pilar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fcd4ee9a90e733d4.webp",
+            "cover_sha256": "b4d903c8565afba817059546be3d42449a3f1dce609264dbcdfad6339d25bd86",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 76,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75485",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Psicología/originales/Teoría y técnica de la psicoterapia psicoanalítica - González Núñez, José de Jesús; Rodríguez Cortés, María del Pilar.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fcd4ee9a90e733d4.webp",
+          "cover_sha256": "b4d903c8565afba817059546be3d42449a3f1dce609264dbcdfad6339d25bd86",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Psicología",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/psicologia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "199",
+        "imported_book_id": "198"
+      }
+    }
+  ]
+}

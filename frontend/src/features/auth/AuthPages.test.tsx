@@ -62,6 +62,23 @@ afterEach(() => {
 });
 
 describe("authentication forms", () => {
+  it("offers password recovery and verification resend without an account-existence claim", () => {
+    renderAuth("/sign-in");
+    expect(screen.getByRole("link", { name: "¿Olvidaste tu contraseña?" })).toHaveAttribute("href", "/recuperar-contrasena");
+    expect(screen.getByRole("link", { name: "Reenviar verificación" })).toHaveAttribute("href", "/reenviar-verificacion");
+  });
+
+  it("asks a newly registered customer to verify their email before signing in", async () => {
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
+    renderAuth("/register");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    expect(await screen.findByRole("heading", { name: "Cuenta creada" })).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("Verifica tu correo");
+    expect(screen.getByRole("link", { name: "Reenviar verificación" })).toHaveAttribute("href", "/reenviar-verificacion");
+  });
+
   it("requires a sign-in email and focuses its associated Spanish error", async () => {
     const user = userEvent.setup();
     renderAuth("/sign-in");
@@ -90,20 +107,20 @@ describe("authentication forms", () => {
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
-  it("accepts trimmed single-character and non-letter names within the API limits", async () => {
+  it("accepts trimmed single-character Unicode names within the API limits", async () => {
     const user = userEvent.setup();
-    mockRegister.mockResolvedValue({ customerId: "21", state: "ACTIVE" });
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
     renderAuth("/register");
 
     await user.type(screen.getByLabelText("Nombres"), " 李 ");
-    await user.type(screen.getByLabelText("Apellidos"), " 2 ");
+    await user.type(screen.getByLabelText("Apellidos"), " 李 ");
     await user.type(screen.getByLabelText("Correo electrónico"), "ana@example.com");
     await user.type(screen.getByLabelText("Contraseña"), "lecturaSegura123");
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
 
     await waitFor(() => expect(mockRegister).toHaveBeenCalledWith({
       firstNames: "李",
-      lastNames: "2",
+      lastNames: "李",
       email: "ana@example.com",
       password: "lecturaSegura123",
       phone: undefined,
@@ -115,7 +132,7 @@ describe("authentication forms", () => {
     const user = userEvent.setup();
     const firstNames = "a".repeat(120);
     const lastNames = "b".repeat(120);
-    mockRegister.mockResolvedValue({ customerId: "21", state: "ACTIVE" });
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
     renderAuth("/register");
 
     fireEvent.change(screen.getByLabelText("Nombres"), { target: { value: firstNames } });
@@ -143,7 +160,7 @@ describe("authentication forms", () => {
     await user.type(screen.getByLabelText("Contraseña"), "lecturaSegura123");
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
 
-    expect(await screen.findByText("Los nombres no pueden superar 120 caracteres.")).toBeInTheDocument();
+    expect(await screen.findByText("Tus nombres no pueden superar 120 caracteres.")).toBeInTheDocument();
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
@@ -166,7 +183,7 @@ describe("authentication forms", () => {
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
 
     const phone = screen.getByLabelText(/Teléfono/);
-    expect(await screen.findByText("Escribe un teléfono válido o deja el campo vacío.")).toBeInTheDocument();
+    expect(await screen.findByText("Usa solo dígitos, espacios, paréntesis, puntos o guiones; no incluyas letras ni extensiones.")).toBeInTheDocument();
     expect(phone).toHaveAttribute("aria-describedby", "register-phone-error");
     await waitFor(() => expect(phone).toHaveFocus());
     expect(mockRegister).not.toHaveBeenCalled();
@@ -174,7 +191,7 @@ describe("authentication forms", () => {
 
   it("normalizes names, email, and formatted phone before registering, then requires sign-in", async () => {
     const user = userEvent.setup();
-    mockRegister.mockResolvedValue({ customerId: "21", state: "ACTIVE" });
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
     renderAuth("/register?from=%2F");
     await completeRegistration(user, "+593 (2) 555-0134");
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));

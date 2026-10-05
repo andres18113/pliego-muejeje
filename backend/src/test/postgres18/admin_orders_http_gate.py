@@ -17,6 +17,7 @@ import uuid
 
 from admin_order_concurrency import fixture
 from checkout_last_unit import query
+from home_delivery_test_support import age_shipment
 
 
 def encoded(value):
@@ -37,6 +38,8 @@ def token(actor, role):
 
 def request(path, actor=None, role="ADMIN", method="GET", body=None):
     headers = {}
+    if method == "POST" and path in ("/api/v1/checkout", "/api/v1/me/addresses"):
+        headers["Idempotency-Key"] = str(uuid.uuid4())
     data = None
     if actor is not None:
         headers["Authorization"] = "Bearer " + token(actor, role)
@@ -75,10 +78,10 @@ def main():
     assert detail["orderId"] == str(logistics_order)
     assert detail["customerId"] == query(f"SELECT cliente_id FROM pliego.pedido WHERE pedido_id={logistics_order}")
     assert detail["customerEmail"].startswith("i10-conc-customer-")
-    assert detail["orderState"] == "CONFIRMED" and detail["total"] == "7.25"
+    assert detail["orderState"] == "CONFIRMED" and detail["total"] == "8.34"
     assert len(detail["items"]) == 1 and detail["items"][0]["title"].startswith("Libro I10 ")
     assert detail["address"]["line1"] == "Calle I10"
-    assert detail["payment"]["state"] == "APPROVED" and detail["payment"]["amount"] == "7.25"
+    assert detail["payment"]["state"] == "APPROVED" and detail["payment"]["amount"] == "8.34"
     assert len(detail["stateHistory"]) == 2
     assert len(detail["inventoryMovements"]) == 1
     movement = detail["inventoryMovements"][0]
@@ -93,7 +96,7 @@ def main():
     status, page = request("/api/v1/admin/orders?" + date_filter, admin)
     assert status == 200 and page["totalCount"] == "2" and len(page["items"]) == 2, (status, page)
     assert {item["orderId"] for item in page["items"]} == {str(logistics_order), str(cancel_order)}
-    assert all(item["total"] == "7.25" for item in page["items"])
+    assert all(item["total"] == "8.34" for item in page["items"])
 
     status, missing = request("/api/v1/admin/orders/9223372036854775807", admin)
     assert status == 404 and missing["code"] == "P5001"
@@ -108,19 +111,19 @@ def main():
     status, unchanged = request(path, admin)
     assert status == 200 and unchanged["orderState"] == "CONFIRMED" and len(unchanged["stateHistory"]) == 2
 
-    for target, previous in (("PREPARING", "CONFIRMED"), ("SHIPPED", "PREPARING"),
-                             ("DELIVERED", "SHIPPED")):
+    for target, minutes in (("PREPARING",0),("SHIPPED",3),("DELIVERED",4)):
+        age_shipment(logistics_order,minutes)
         status, result = request(f"/api/v1/admin/orders/{logistics_order}/transitions", admin,
                                  method="POST", body={"targetState": target})
         assert status == 200 and result == {"orderId": str(logistics_order),
-                                            "previousState": previous, "orderState": target}, (status, result)
+                                            "previousState": "CONFIRMED", "orderState": "CONFIRMED"}, (status, result)
     status, terminal_cancel = request(f"/api/v1/admin/orders/{logistics_order}/cancel", admin, method="POST")
     assert status == 409 and terminal_cancel["code"] == "P5003"
     assert terminal_cancel["detail"] == "El pedido ya no puede cancelarse en su estado actual."
     status, delivered = request(path, admin)
-    assert status == 200 and delivered["orderState"] == "DELIVERED" and len(delivered["stateHistory"]) == 5
-    assert sum(row["newState"] in ("PREPARING", "SHIPPED", "DELIVERED")
-               and row["actorUserId"] == str(admin) for row in delivered["stateHistory"]) == 3
+    assert status == 200 and delivered["orderState"] == "CONFIRMED" and len(delivered["stateHistory"]) == 2
+    assert delivered['shipment']['state']=='DELIVERED'
+    assert len(delivered['shipment']['history'])==4
 
     status, invalid_target = request(f"/api/v1/admin/orders/{cancel_order}/transitions", admin,
                                      method="POST", body={"targetState": "CANCELLED"})

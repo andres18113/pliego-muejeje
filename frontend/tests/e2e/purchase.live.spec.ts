@@ -43,11 +43,11 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await page.getByLabel("Provincia").fill("Pichincha");
   await page.getByLabel("Teléfono de contacto").fill("0991234567");
   await page.getByRole("button", { name: "Guardar dirección" }).click();
-  await expect(page.locator(".checkout-selected-address")).toContainText("Casa");
-  await page.locator(".payment-method-option").filter({ hasText: "Tarjeta" }).click();
+  await expect(page.locator('[data-purchase="selected-address"]')).toContainText("Casa");
+  await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Tarjeta" }).click();
   await page.getByLabel("Número de tarjeta").fill("4111111111111111");
   await page.getByLabel("Caducidad (MM/AA)").fill("12/30");
-  await page.getByLabel("Código de seguridad").fill("123");
+  await page.getByLabel("Código de seguridad", { exact: true }).fill("123");
   await page.getByLabel("Nombre en la tarjeta").fill("Lectora E2E");
   await expect(page.getByText("Pago aprobado")).toHaveCount(0);
   for (const viewport of [
@@ -60,7 +60,7 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   }
   await page.getByRole("button", { name: /Pagar/ }).click();
 
-  await expect(page.locator(".checkout-submit [role='status']")).toContainText(/Procesando tu pago/);
+  await expect(page.locator('[data-purchase="summary"] [role="status"]')).toContainText(/Procesando tu pago/);
   await expect(page.getByRole("heading", { level: 1, name: /^Pedido N\.° \d+ confirmado$/ })).toBeVisible();
   await page.getByText("Pago", { exact: true }).click();
   await expect(page.getByText(/^SIM-/)).toBeVisible();
@@ -109,11 +109,11 @@ test("transfer checkout reads configured bank data and shows the generated refer
   await page.getByLabel("Provincia").fill("Pichincha");
   await page.getByLabel("Teléfono de contacto").fill("0991234567");
   await page.getByRole("button", { name: "Guardar dirección" }).click();
-  await page.locator(".payment-method-option").filter({ hasText: "Transferencia" }).click();
+  await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
   const configured = await (await request.get(`${api}/reference/transfer-details`)).json();
-  await expect(page.locator(".transfer-instructions")).toContainText(configured.bank);
-  await expect(page.locator(".transfer-instructions")).toContainText(configured.accountNumber);
-  await expect(page.locator(".transfer-instructions")).toContainText(configured.identification);
+  await expect(page.locator('[data-purchase="transfer"]')).toContainText(configured.bank);
+  await expect(page.locator('[data-purchase="transfer"]')).toContainText(configured.accountNumber);
+  await expect(page.locator('[data-purchase="transfer"]')).toContainText(configured.identification);
   await expect(page.getByRole("radio", { name: /Pago aprobado|Pago rechazado/ })).toHaveCount(0);
   for (const viewport of [
     { name: "desktop", width: 1280, height: 900 },
@@ -125,11 +125,11 @@ test("transfer checkout reads configured bank data and shows the generated refer
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
   await page.getByRole("button", { name: /Pagar/ }).click();
-  await expect(page.locator(".checkout-submit [role='status']")).toContainText(/Procesando tu pago/);
+  await expect(page.locator('[data-purchase="summary"] [role="status"]')).toContainText(/Procesando tu pago/);
   await expect(page.getByRole("heading", { level: 1, name: /^Pedido N\.° \d+ confirmado$/ })).toBeVisible();
   await page.getByText("Pago", { exact: true }).click();
-  await expect(page.locator(".transfer-facts-card")).toContainText(configured.bank);
-  await expect(page.locator(".transfer-facts-card")).toContainText(/SIM-/);
+  await expect(page.locator('[data-purchase="transfer-facts"]')).toContainText(configured.bank);
+  await expect(page.locator('[data-purchase="transfer-facts"]')).toContainText(/SIM-/);
   for (const label of ["Copiar número de cuenta", "Copiar beneficiario", "Copiar identificación", "Copiar monto exacto", "Copiar referencia"]) {
     await expect(page.getByRole("button", { name: label })).toBeVisible();
   }

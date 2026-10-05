@@ -1,0 +1,2597 @@
+{
+  "schema": "pliego-source-access-audit-v1",
+  "scope": "259 valid image candidates only",
+  "user_confirmed_additional_metadata_or_price_sources": false,
+  "observations": [
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100206",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "25151cf07a9c5791b9e7ac0f9ca86d3b2af9d14adf228c3d2820470cb8361861",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/100383",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "83dd79aa2b1ef90dff5c1430cca71e2baa3d241b4b60cf261f5899d307f9b2cc",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/104762",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "b7ac45cd84d17f6cc6cf86e7b030514d19b4c156309b2e7a2030266944b55d0d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/105476",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "ae47e5114ca0a79e8fc714f3edb4694778bba3c1825a8f89bc49285453542ac5",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106271",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "daa87387ad41d2611133286cdb82971540a8d3950952b0dc5e198f7b75545616",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/106631",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "4b4a249a698f718a320936896adde84a7498cfa265219f56cdff72317a4a28b9",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/109986",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "477c7fd995ec9e72fe2ec6117d974c14c1c32c583331a7a0d8d364df09cccc08",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110160",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "f5ed1cd155789df1e8bb88b50fa2cb4470ef7f82e422e0d389216a15ffac4cb0",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110396",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "f7d4221559dc4523376b33a17eb576ed9baf6f7531b3166ce40b6180bfe0d687",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110738",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "d5ba8936735367e7f9bfdce3df8691d4b18265dc7d7efd35cb95ebd6bf9e3958",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110740",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "707f2219445d380aaed1278f44057b155dae556014e843437654e6060364eab6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110932",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "0bb299728c1ef86d93dd3b5d3b33339e99f379b423e8061f75602dee2a4b479a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/111061",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3628df0471524f5e7f090f2649dd7685ea002e9e694cd7028704ebc0f8cfddcb",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/112787",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "6475c0ca31dd847af1ff555bdbc787626d47b1c56e08c6c3e921b660a57f53d3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116203",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "9cc4e9e00913f8674bb7d6db737cc42ef3a6a10f93483fbc88649c8f676a88a3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/116205",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "6b117b4f1773eaa9686d7a39801a5fa2abb99d637a9ad1ebdd6c742fb06711c7",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117024",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3c9301aba0b03c2a2fef75f647483cbbe2a74601b6f5b64f844b23bed4c494d8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117062",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a769ab33b7402db0af18a883dde9bdb411c3e75639f3937e71c1f062a776cb73",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117208",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3e54b1a7d570e6d4c82fbcec9dd42d39f4dc816db9600c1ddd8a58913a00d93a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/117594",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "d90fd59a7051960a132a264837f49e79f7ffaa59717432dd464d86151a6d73bb",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/118658",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "473404514e1bb255ab4bd4133d3727faa15260f64b13a89a8e5b53cc04067000",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119841",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a8b41c1346092a59eee1009ef38670252a2019e6887b647d1306edf4b46637d8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/119908",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "2c1c5132e971149106b111d5b7ab0a7fceee32cdd14cf175f7090daafbcb00da",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/121496",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3066368f01d7d32ec6b65e64a72901fcaaf9cb96aa87c86c9ff0a4ce593fd557",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122857",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "1044ab17e9a74b1937c319613e3951ca6b97866b391c36aa82fe298978376ed4",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/122863",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "e45d9e42f0a141391994de73f5bc4dfb46a6ca36412c0e1fa269a9e18abacaaa",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124809",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "fb50583bc121039efbf225684faaf6775cf460b942bb97190ac90562a256addd",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124823",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "f270e708ba3b5a8004a1674d73c655249cc2f6948c3c29edef49666867e403af",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125026",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "2754f1312e7ce6caa109f37ad6150ad57ed4e6b5126389d462efd66ecea628ff",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125329",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "0097d600920cb67062b1f2401b0d10a2233b098d95e15e10ef315af13b85706b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125946",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "f9c6a4b2011c4a9ca045b488cbd5037a5ba89d5800dcd8e9a2b2f0c3a19e7726",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127225",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "f8408635577a25c0e571f14d53986319368dd12906a91cf08df1392f1f82ed44",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127753",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "efd4df8fbd18bb77a6d75e5f20a238fa5555dc59520fccfc2b16e18920f0ceb8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/127754",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "c6081e5b6b6697e01a28e13133261241e9d7149722e8503105275673d6b07b4f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128199",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "78ef5e6895116a0f2e63f907002a6bf6cf9f5e4ebca35d6e86f1f0fc064f24c0",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128281",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "62564d3d2ffc6468df136c1988505c4d485c9565ab9fb12a8d29d53c4758ac24",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128358",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "be6d7a924ac58db8dcc776df2b185064959213712f054c25afd179aea334bdd6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128446",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "d3c5ac323bd0b3798bd65b1349df7b68a117f4368f229be7e20351c5930ae3c6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128447",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "55a84877813193e0251ecfb3276a6dab42fb486242fbfdcaccef51b90571a650",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128573",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "8db12cd825d77b3ff5afa0c41ad3a973eb8de16b58d9ce84e0cee12a4c82f91a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/129009",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "8cdfa8f1c8788fbb64b05a3c09ac3681bfc9c7a97e78d661c4abbd66eb071b5d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131465",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "2117866c9a9b2879797e4f0a92ceb939fb24d74140a00e51d76d0a769d37b379",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131876",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a3cb912ec258b3f89a7600b066f4a47481d1808ba599351fdf14d45e1a1d897c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131877",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a095bf63bec5c108d227c81072603b4a3ae008727d5773d9a7e384d206b70a26",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/131900",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "0a272cebe7ead8027fb291413956c1826b08d0e12e4f816630b60e28c10333db",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/153581",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3db9d95b24b9104321564f5e38cfa9a46479d055d824ac7a875dda95b2967314",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/156644",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "0ed4c4e290e8da4ca90032f0c8475e61ce05e00c1e82d66916835df7fc2ab7cc",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/159993",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "0da40cbe0fcde6bd2438c4e7274f80d8d7bac18f813d7c95db723b49d5190fe5",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/162803",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "d528e4ea1763f958c4b1aaf7fee4622a9ed297a10e6ee7111be60f74f9166d8f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/169287",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3877f6e2ee1201d4825431e9371634ea23815c55d1e64234d16cdcf279ff6a6c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/170159",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "9589ecafc8c0a8334e3b77779d978c9c6edbcd46d48a7500eebfc9847bad3957",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/173449",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "178dde15bb7e9d009407d5498766b2ed3415dbad00237e57a42005803bfc5034",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175150",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "2b12dc72b3f618736c706d1e839688d1cf0f0ad8cea5219c40644467c28f0cd3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175607",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "442f6ab2ec190388dd6f80fcf60f727e21154cd38a25f05cc93d9dee80d38584",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/188309",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "2a2dc0a6222536fcbd49d5a6f98438984e2fead3036ddc457e0ac7d0b2a6ad75",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/189415",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "87db3a32388e12a5ec70ee59a5e60fcb4d0c04980cc6752cb30e06a8fe0d7f0b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/190898",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "510f53676d0bb32b541b167214436fa3e6f58386408f21eccb376e2b2289f666",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191119",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3a7671c9e3b0e4eadeab1737968f7446834a856b85cbf04c93fbd2cb5c9d1266",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/191960",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "10eb563931902eb58fe79cf2b4428c634c33a7fd8695abfb0451d53443ce6530",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193604",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "058f97716c6375a17ffea142cd4bdba4ee90a31f52cefeda9cdf8fb80ae46d47",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193611",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "c808c626104abc668efb8345e111cd451dc7dc5df202407285d874d74bc572f4",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193613",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "60b7f9ed7abfeb804e4b51652ebcd07f977a3719bc0b1a071d8052caa6c24265",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193629",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "b5e408d07f81a82356c6b0e45a2a793b5c4b9fb505161c32a40954f0a76f7c38",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193634",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "b2e8c06b54f97d84896d4859ec11ce860256026a02f5a8d12424b856875ff611",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193635",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "d88a0f362c98d1e265c6ed8bf35ba7741f7b70c1a891f6249325b89dd673083d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193640",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "4a508404fa98e9122d7c533759ebeae716ba040b2c84b37d343415254be0a40d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/193644",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3561e60df62cb64061c52179401c6f4f4a840d072b0f4142d7bb902a5e29dcc5",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194884",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "b1abd45590f00818000e01357c5259d527d50aa4627995936628e6b5119ade57",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194885",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "9228d965da85e058b96bda5beeb2a941144d0345042e7f2ababedee83c91ab65",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194893",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "4aa45da4e0d5540f66e6893f654b8b5f0b7fb1ea3a140a79c6a63c03362efd5d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194902",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "af619e5525dbc00db786f8265669b4ba064f7469d63199594818544681c5ef7f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194927",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "4c0237cb004228f7a3a07d5c3810ca6435a24874ba2252a0ddd77de66fad9ea8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194928",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "8390a3846d40137843fb4be299245092505b80d294370f36a89ed26a2a1c25d7",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194932",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "b1f2a8cc5a5b083df8bf1a7fae82fa49f4225779126861b82de66a3b45aa784c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194936",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "c42e227167c8d0dd81d488624d995b25e1fd4cc9e91d91731d6267cb13601303",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194943",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a116f813e9e7ae59f9ded168d7567b0798227b0f53dfd514a04fab2164b342cc",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194981",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "48b815cb624c8a0c0d1c0152edbed9b5d3baef56cc6951f52abfdc562eb19d5b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194996",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "541fbfab0da1b69d4809119b8f8606f256f09eb2cacf64855b21198a4f8b8bfb",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/195499",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "ef1b2fd644da11f24e7e8528515a86edfa37d0a049dc4c07ed26b2d200d8e806",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/213815",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "cd0209ea642509b3dd54d6bcaad7afad8e9b59d6fdbc5580a3e598195c0ce578",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/214100",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "49aa3a38abb1ed2971c6e9c312ec2443bccd584c7bfbc06c5d1d78010b7ffee3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/214112",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "4230e2489cbb7672448e43f433d15a29856cc8ccf9c62fb6088c7600faee45e7",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216008",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "78ae5667a31a52a80ac29f06cb4c9881f6eb8120db9a1dd2e1460f8af96d2db3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216374",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "edd9cf259a1f6fae0fda3794379c3130e5dbf74dda95ef58c76a1a0d76ddf16a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216569",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "d7a197cd4751762a339a6d0efd9a42a954aa70a4f354aa4a1087f178d7868cae",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/217630",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "1dd230deebac969a1549e3c8c991faf5c3049ffb64a7861c733964cd937de6c6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/218933",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a6acd69a161deeb9dd5476ef55ebe638627f03718f74287b2594f93a749b0c89",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219236",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a363297597a95e236bbf8d034a665854b5590f22ff6e02c28150bae0c84062da",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219257",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "fff6278c3cb1d76a1f46d36b70c27d4e8660fba3f5d6aa239b669a7c3582a494",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/221757",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "762e7004446b911953b137e1c3fdce6a8330ad1bf78b316bda1d405ddf548e61",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/223081",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3627421e751a63bf77385c5c3f9b7b295b024a60a460f7b6ed457639706c9ace",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/226347",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "abb2c240a4132374d7edd907c2bd36caa844a91eb82bc67930b02460df18ade3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233100",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "03a6c136d1672acaa14ae29d5a6b2640fded90bae40adb201a85ca6579e77c32",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233731",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "da5ccaf58faa0c46f6ed49a219d2a4e1f6a4c171aa392396ef4c2d140825d362",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233793",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "98171f92ed93e955204646fd6ba19f594c0ee03e0f86e8eeedd3131ab8198088",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233834",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "c2b31c46c8719417cdb8a23258eab98beedb1d0a0bee045bff6eab21fab50257",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/235194",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "78cc402f918fa597320b91fff5d8806caa6ba4755321c507420c682ce234e33d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/239571",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "38a14110816ee05a61b3f3bac4c1a8be9bff458b0a1adee953038a790c3fcb6a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/240116",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a0282f4126b988aa01e0bbdde0859824f20cfc839ca1332063ed676b04366fe5",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247167",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "039d5d6c86fa104e13452e6990161328c47111b57ad11329b64b9159aeca5107",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247386",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a415ff75e2227a2dadc68e4ac4720eb166422ab10c15c905dc544ab0f52e1196",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/251021",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "8ca620d6cc0b1453e45b43ffa9bc6e159c228023e3d499ea322ad221bbe9d2f2",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/267853",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "6fa6df989e6b53ae976e89d857b2962ee48de74b91dfd1fb9249150b43d5698f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270884",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "ce8739d2b521c9347efe8633b07cb696ed0c7d28a676b0db015aaf0918aa96ad",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/270906",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "1c87c7ce42997912a63da9f25626527fe5fd89db95bc1fc0897275b2178edba5",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280056",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "10a860ed1444dccaf2bca376da829fc8f47ea7ff5e30b5f3f4eb275a426e5683",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280790",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "2167c5d87275d521dd334ff7e5cefddb8b106ac1f552db09fe704c9f87a76ba4",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281683",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "2e6245dfc08026e3e30e172383ad186771f29d1d982c227faff0eedcef25659b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/281693",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "6c1620a261b1b6a03f410ee6ef3718c93832002a78f22a6515f095e378601fd6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "a3126de1cc1d3b313e9cdf91a4c349156aed29555e85c8a315a4a34efeaee40c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286803",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "65e757278c3d2fa76cdda0048476dd209cfbbd4915e23915a34202eeda4f40e6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/286814",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "27305c18b1ff8704a7fc9c9893038e6b08f7bac90a920f8d283fb5ef4b02514d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/287524",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "3696835abc4d2de938f5800c47f63e135add0af81b822febd7f7be4c2e04b9df",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/288325",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "7e1c9e62320ac4a373d3178f6b777d5cbc1568541728d03c264aa4e1228b2d9e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289288",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "d34483df8465c0ebb36e5884a33494a78136aca334860b5f36cf11d8b30763f8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/289642",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "e6cba7ce599ac66e044681194c9a011b5ece1578fff6d2c5037c542991eb03cb",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293446",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "6284d609326c34d331f13cd515953607a3fd7cdefdaaa0c320baf839bbd2975e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293627",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "744297275d61ae731a9b7ab585c128d3a927ff57a4eaccf1c8c52f7fb052c42a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/293923",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "59367d4f4974eadb4b24032a29c71ef65ab42bb40523fda44e4881557ba76d8e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/294232",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "e32acf8e8e87157ce91cc60c08b2b18189c38ae4c3f61b10e51d47b2b189708d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/298017",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "1c76f6dd2e88ec5cbd4acca86a51675349d0f09fa2abf4a6ae31eb89ab6af44a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/300709",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "f5bc732f0d3275dba52fc76f30cb9193197c88e9efe73911026e2b0a8ba2d59c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/304769",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9201,
+      "response_sha256": "410724981d7c269fc42716f0418a18a059daa2c0a7030326601f4f18d9277e2b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/33935",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9471bdf8794476167a46c750c45292a25dc6646dab1b39bf4f71c2f55ceb4e69",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34008",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8a354a68f0a50aba3f7949d152ea7d22863339175d6c7639ca06ee17a0680cc1",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34085",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e31c93c4d656891caecac4f1d0595656ead5ef04b9da9e734e614d63ca88de41",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34123",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "941864252fdc0cecb76ae24e9b11983e4e6d3468afab6eb85ed6586430cd69c6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34160",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "0592effbadf3f30bb109a5f2518c8ecd03b1c569d6297c1e4d562d1a54adaf0f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34402",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "922d4a2f09f8391c821df4e2802660f7e7e2dd616f32e1d01db7e7889516c662",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34517",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "a0c0b680f752d50f3f0005dc828379fae238f94b4da15a42905b89810a517c6f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35142",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "5b68bce7f9f7ca848f134c391cf080cb9357a0faf891264365a272954cc61a7b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35499",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8b6311c5534849249db9b2238bcdc1e5c29c6175d4ba5a4adee48b34afa773a8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35789",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9e2825681ece8a9ed2e4912f36777906894df7a684f4e52acdb23d496b26ba91",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36151",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "66087947b41eb387aaf2834fbc5cd6305e9b9210acc077754b1ec6f2c221f5aa",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36197",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9b03e535a2d31cb602001a802717d555b35e20a0533c5a6b458264bff7665672",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36347",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "19a34cb0408ee9dce785b8e9b3d88c579ca05acf81d8e9850fc17d6b277fd917",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36348",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "1cd286f78218621e2e0665707e0796ebeb8417ae3f43c16e364cb0c233e9c621",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36349",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9fb6c694b869e6c7171187deab2d722efeb5024c615caf945545ffd09fde159c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36350",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "60d378361b4baa587dc82bf53760e0eb494889db3e06116c79fa4836639c7901",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36351",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "1e0acae2220fa48807a40f655fdc6f1a8d1ebd209f0d9f695438bda00cfc3e08",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36352",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "cf9b71e0ea82dc2e36188ca2fc8a1a395ee826914fa4a4e5680e2c0e8e825f2d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36379",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "4a93ae953c8b5525f88af22c81dfed974101d01b6eaffb5385ee63df6de491b5",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36433",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "5abad990765b9c53ae1372cf0e5612a16101cacb32435f32e3ab7c19c550fed8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36434",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "c6479fe09663893861aff65a11bc44a139099c793dbebfe55d67ac53f60f4dc8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37244",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "ce8a9733a26d3fadaceb0560a88a4eadbcc848beb28f1095c3c9659985083288",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37796",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "617020b401e386438383344da48abd9f06b563f7fafd72737c23a1d9e483c3ae",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39117",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "ae9d14b62f36d6390adf676e029f633f29ea77ad797508f3c2a5a24cd1d8aa2d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39199",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "3497feeda64ced5a96da5f6f018c1b2b00c948a41476592e59459df649ae5763",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/39447",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "391080c4ccbc7324b4c19ec9370e6d0cb61401c1439ff9c16aebde05744c5cd1",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40187",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "4cfda74def361c17c2376b1fb735a1d20f9f2a968008f1392fe0bc84d3c07b0d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40402",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "31edad929ca1c5c322f201f5c969213e653811400a19b16714e84499ad586976",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40870",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e205c7c974ae5ab4e445e46248302d30afe2186635be2d93c6f879af05a686fd",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40946",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "6ff18cc9f2e55dc549411581215ad4aad1f2cc90932e0131ea9b3718f886e4d8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41629",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "a2913c81eefc28c13508f123840f8dc98978815fdb53dffb5a179a34e3aab689",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/41821",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8569ba31e18f5bd542d3c563a2b0df07fcf36dd8a7f9105850d6089fdcff801f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/42785",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "3380bb7b2bc521cd093b046cc46cc804471286806c2679fc2ff07dc6cdf67e7b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/43244",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "c51f7d447edcc44200ea90211c55c3fefec5bdcd5854a531068d5b75a6702bbd",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45429",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "b135eba6ab69908cab1c81f3d964b8f05367ebe3e82fd908b1943c4093c0af63",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45443",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "6249f9bcaf919dd9a475222138c5ecf7a2143ff58cc9fd28f90ed76189fdf996",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45723",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "436183f59ae65dc733575cc4e2595877f625c1efa8d33c9ddac24bae253b7117",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45760",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "bd0ec9fae723ce719859c8209e062492908e4cb6187b59fd8d2940c0fb170c7d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45764",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "d621a9d43c2ff671e3b800ef91465adde4767140425d884b3d1b0dc3ec32f9e2",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45819",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "b2837760073bda89e3c287cf9c104dff0c5ac12cef7758374fb38d0cecf70fb5",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45841",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "d709de0b1d69cc9241c0ebc2455d2c6a579ff41753740221fb1222cbcf56ba3e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45891",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "918ad6b42fcd0433348552033cd736a09f85450db3dfc7cf7a3bfd2e99bba223",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46920",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e6406615a2e9c6383da0aba179bc6bcea159072b1b7cd461698d7bab6bc99a4f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46926",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "b6d4a9ab98009003650ca8b588ed86e5264ce84ff1f71e1b69dc225f9c5c9af0",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46946",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "329cb90114c65f2bb3fb9b60af7d2cffc5abf612b86e01f2798c06e912551230",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47080",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "a0647cafe9e9006987c0db7c34a28b42a6c905125f15964df5cbdb933df4db37",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47120",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "17685d74d6a61001f0cfe9d7f1fd2a42c0df368c23c5a2e98864effb20b4ea3c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47307",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "2ee0d0cbde8b45db6e882ea4ea8960d36eb6b5d60eddbeb34fe8e09a1d3d841d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47451",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "a745de586cdf7262db16e7e77d198208ff81f69d85212e4a4dae49a4b7ea0188",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47644",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "d99a6e02f8d6cbc6ab1324485a8c76898b21fa0e92274def443e84b7caad12df",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47807",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "2a29c9bc2c869d53d9980eeb67a03ca1f78047d8439d69688c6f10f663af0075",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48371",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "7bf5b785cf0c8d34db14614e92a87e7453e93366ac6c6806056f75a6c8a86273",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48581",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "3651b44b1d83742393f18bcd09a6786f50c6beb800da907685be15b1f8162f6b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48712",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "3bfeea71adabe11d1f9719a82cbfd30b78aa5dcfedc676f747b668e4af188d96",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48793",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "fa2adf5620bb624b780af50a90a3acd32a1a1f57b3b6434c45ed761c53c4ef0b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48881",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e521ad2efd971a244a021a722e67c59ab1215974300d83d435aa377ecf42283e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49195",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "53669d4683d13951f78bcf930e98004377d108074637fa6e5b6964c152f718a3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49347",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "013e66518a17ab327f4a54058b5e19bbfe3d1de905a03d7bb06e332ccbc58751",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49349",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "f6d81fc10b2a4471ffea0194241792e23b9d861f73c91dcfa8e3e8ef64139207",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49377",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9b5fd418c176456dc02e21fe6253f71b618254b82b305f71a9737ae60adc79c3",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49779",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "56dda51cc55faa82e0a00cd065980b880ea571f91e76436abffb6fdd8234ff6d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49780",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "96078f89ec9653b6c54c8c858c93c096a5a5b47de145ac9e932e868e3acf0183",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49810",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "66562907b5fce69ae750f7396a41e9e84cf9033ce57104cf0f89ab2d53fda02a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49811",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "19b5bb7632a2b945e27272db9446da19eb0755f310d34c983739e85c73a1eb47",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49812",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8fe70e5b2e575c2e3379599f29f02cea9a6b54977753a71ce1a45204a10d1835",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49813",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8f824317868b3b98c602ac064a5a043fb46eecf17e57e75d986d7d9b26842ac7",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/50193",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "94772f8f34767f6162b66567c140ea14475465daf7ded61197e4c05ec48a45ff",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51298",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9e0f468e664d78151002ffed1dff27d1d300e72e10c05fba7cfb7905a182671e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51741",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "73fc26064505e721a1684a8fba69057d5247ff7d10d773c24ba0085e18c046cc",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52118",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8f012aa8d260b3b18f1844cce6585995ebf058d50eef33fcc2792d8ab4004af6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52407",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "f008f629ae6c429470bc93efa2e9436070e7235b20d7913eeb847a0aee6a6b57",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52635",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "0d9f07909d49f4041de47b0f0cfdba9a9c39e139d19cfccca53331e77e1d0b24",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52874",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "7b01ddde8f362846904e0d78dd1e7c8fe1c9318ae713eb5e3e61e1386de775e1",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53028",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "f96ab04e93eeb85001ca8e3d42338e7b5434342791ab5de79e1df6ca6ae9dc65",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53098",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "6674a9a8a2f6a58018995437beda6fe3b1fa31f07e9b830cae7c74e0a4a508f8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53385",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "1e83bedd8b7f982be81396a2b7c994217463d02584e82adc48fce7e1a844fda2",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/56436",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e8977f91f1b23ab6a04d7e1815229dd6442418bf56bc060c787ca4320827e18b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57712",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "f132882595411930b80a571a28181787b4f01db337ac79d71dccf65fabeb78c0",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57841",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "ccd2871aa4d14bcde40aefdf3b8da4c867feb248128e6a12b08e303f939fd818",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58272",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8131acef73a6ee8cbb7bc4f49dc2a56e86952879d6cf1e95856b5abc35a4522d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58579",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "d821e614785f97144050b639344cd75ee9112671eff8e8b0bd637a940b86d2e7",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58619",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "8723c17f8854e8683d92b847065fcbfcde9a113d1f9faa9606f8f0ff29afdede",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59505",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e58431713d7599d92e0c9c5d3dbfbe52f3c1ef8b0b92063744dbc621cfca0caf",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59734",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "86cbb3fb56ce1e6da8890e1ae572a059ab0af77c9d9839e25858b49cd83a3bb2",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59773",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "a6a3c0c394c3ead14a72b90741791d8243a95694073bee630bcef61837bb35ac",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59774",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9855d7904cad7274343342cd575cd51094417b4addad074ed193d6544cbe52ff",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59981",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "dc6a71632300e1c0fe4a0ae3388d93a927ff1777da9312b4dd420f34db3c7636",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60046",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e296e55737dec82a9a67620663c48bab5a3f12a801044291c62c92b1baac4fb9",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60221",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "051db40d56da6ddb33cef17dc0fac860c8ba6345487bc4ef0f637eba995ba3e2",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60568",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9f0980c61baf4f55fb3d364a41be898617514e1fdb41c58a42c1ef1e91d65e16",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/60609",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "61cb697458bd58de9d12b097871610f2c0d7e8495e499ca3ff51cde79fd26465",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61137",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "4701e34b7f5fa1b848fa98b74b6556a8271a33d0a70fb5b7dfe0e8bd49381ada",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61258",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "f9455324a5910c80029e3b4b683fd82c5e1f7b182d2aec6f172b44a27a0ee43e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61593",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "5981d8c61e7bc220015710d12949b2552224f40b37eca94426c81b158c35b93f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61616",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "3aee4035e13a527522833d81bd9e08f224a22219abe266ef50abeee0c143a9d4",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61805",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "7848093f29eff2c41b0b86da47e4ffdf23a61bcd9c675706f0d52c6d87c6a082",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62415",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "f0067528484ae742e1a2c20561c961b2d736fd7a3bd02210ff43b43bc5db5488",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62450",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "92b55803b4254b8d2ae232ef8ad025b1e61c5945b859e3c3b3c4dd4fc78569df",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62860",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "b8c168f6c92f1599fb6862d287b551a2b3c18648d5cfbcb633e605c01432fb1f",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63002",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "6be89f347b2d6c5cd4935217cb8837bbaf72564de9aee353db371a5d7332360c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63446",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e6c79416902e2040593f73b5821ca3b3b5b9fe5131cf11f1c626e38a290fa77b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66218",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "3d9fdee614e1bc0723af0e9d8b956f12825b6a998dfae332fa91284cff5d6ad6",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/66439",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "0435712b0a9e74f1bffba03c42c6f234e039d030dd1d67ac2a1efbca231322b0",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67143",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "2f948e243dcad930f27ace1ea4717a57873bdb9fb07a3bc732af020ae49caffe",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/67148",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "85a01400da02ec9c4b39ca02004b788d9a0f933447a7d539fc895b6f6b72123b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69334",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "eb14a9376677ab7831b63658ce185be85c07044b51f4283690aec55ca2eaee95",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69414",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "87aa662b6c9b6ea287871e782560d2942525e8dd40fc04e826b5e6916c385ab8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/69967",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "48cce0b22e188d2b50661c4928b5f050415cc170d590eced74851fd3cdc14dec",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70060",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "6e3c9d2c1435689bc1bb32611052cd5d53943924b73c9335bfebc2b04917cd73",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70889",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "42e76bb55e9b3e1b7949a6302c1e668efdfad541a5d075efbd93a19ee8d0619e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/70987",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "9656b8291c0ee188f8952b587038ceb3212f1808172d83d2d0b6858677213b2e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71137",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "cf18721cc1bfcc47bd54c68be066bd2c4deb86e61f6355a21611f1a148496fa7",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71138",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "2d8e6b71ea61e6dd936512a56e09f9b1ce44b3f3f567b87b353a4c9450cd617d",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71151",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "6a6bf8f1eb93475e8d969055c89f1b3310e79006c0b03918e7637ba4e23343c1",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71159",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "27b72496387b71ac188c73a0d9d0f16b3414cc824f60f5b5d12f907a827fd1c8",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71802",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "5ed77f7d25925c38dd2dd8d4dfc1ade36b14c884a11f35c81e67be440fbec2ae",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71950",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "7f0c330e85882fb5854cbf982901154017fdf49be112ec75816d4a4df10632ef",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72209",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "ce4d184d7d307769006011a8463598cbe32e6c6540e329489af4ffc9caaa175a",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72229",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "ce541212bdab4829ec51e2952bed0262366694f1da45ef1d0ec58d298a9cfedf",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72621",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "69b8675cce64f133eba1373f817568b0996484ca11af1851bbbb2d7708fae559",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72757",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "42b87072283b57d5eb54b233e7b3578913c78ead2ef47d05ad96e0ae32c85e89",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/72775",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "e1ba593688eb946c9f1b916ee9e0312a63bb7f8ad82c000d3af8e023611dab86",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73456",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "6fb1af1842a3a9a520e311750e78d485f28f534e4423190770988de409951e6e",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/73999",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "ca5b18ad077279a1a9d97c9fb1118e7997de00a9e3be19b1a7cd09c23c2a83db",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/74615",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "a0d6d1c48b1e35669e1e8d1046f69b6773472a8415b1f27b7b77c87245c23e36",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75485",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "1c2a6a74efeeb15d3423fd652ef804cb5294feca814f7f5e96903b428c0e4601",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/75520",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "a632473fecec72b4e85785858b173c8dd12f192a33053b8c6868732855937b7c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/77154",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "7ffd9d0bf8abed45e9c2fdcbd1a6459425d9fba7f38530e9346a1fe2b8c639de",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78025",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "06e41690d97bed734c959ab0579a1ef4b43364ab426b8c9cef1caa0ae92a05ac",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78041",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "7734bb404b7ea98feaba82b07496dc93ff571a3f936511d4a1440448bfce0bfa",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/78946",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "43f810123043704c9313c75da488b7f0002c3551c3fec4d4614063102fc6222b",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79012",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "f9de6e6cdd6fce7c077c789d95df8e64e6fe27e6890e41b1bedd370b42a79d8c",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79196",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "0289b4fafc391b1cf0bdc2b27c15abe4cf88902e25f715c01bff8e9920b15f78",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79874",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "4c6c48619b66337d8f6dd87756d6531568746197d9a26fc1a3addc3c2a3037f2",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79954",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "1ae3f294a69f075fc629ba9f011229ad841838b9652f0017036032af3df01609",
+      "bibliographic_fields_obtained": []
+    },
+    {
+      "url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/80166",
+      "http_status": 200,
+      "final_host": "puce.elogim.com",
+      "final_path": "/auth-meta/login.php",
+      "status": "AUTH_REQUIRED",
+      "response_bytes": 9196,
+      "response_sha256": "7cb9e65bf4f8b374219ef9da30a808cbdc4ff9a673bda3bf69ea3e173d72f471",
+      "bibliographic_fields_obtained": []
+    }
+  ]
+}

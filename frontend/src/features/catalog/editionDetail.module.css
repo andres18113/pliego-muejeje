@@ -1,0 +1,143 @@
+/* Physical edition detail, in reading order: the jacket and the book's identity, then the purchase
+   decision as the page's one mist scene (price, stock, the ultramar action, the favorite), then the
+   edition's facts, the synopsis in a reading column and its categories. One flat grid, recomposed
+   per width; no rules between parts — spacing and type carry the grouping. */
+.page {
+  composes: surface from "../../shared/ui/pliegoFormSurface.module.css";
+  --ed-blue: var(--store-blue, #283da8);
+  --ed-blue-hover: #1d2c86;
+  --ed-on-blue: #fff;
+  --ed-ink: var(--pliego-text, #252740);
+  --ed-muted: var(--pliego-text-muted, #595a6e);
+  --ed-yellow: var(--store-yellow, #f3df83);
+  --ed-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0));
+  --ed-disc: var(--store-paper, #f6f5f0);
+  --ed-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
+  --ed-ease: cubic-bezier(.32, .94, .6, 1);
+  padding-top: 8px; color: var(--ed-ink);
+}
+:global([data-mantine-color-scheme="dark"]) .page {
+  --ed-blue: var(--store-link, #c5bcff);
+  --ed-blue-hover: #d8d1ff;
+  --ed-on-blue: var(--store-ink, #252740);
+  --ed-mist: #2e2b4d;
+  --ed-disc: #3a3660;
+  --ed-line: #3d3964;
+}
+
+/* The page ground follows the scheme, as on Account pages. */
+:global(html[data-mantine-color-scheme="dark"]):has(.page), :global([data-mantine-color-scheme="dark"] body):has(.page) { background: #26283f; }
+
+/* Orientation: Catálogo | this book, muted and on one line. */
+.trail { display: flex; align-items: center; max-width: 1048px; min-width: 0; margin: 0 auto; color: var(--ed-muted); font-size: .9375rem; font-weight: 500; line-height: 1.5rem; }
+.trail a { display: inline-flex; flex: none; align-items: center; min-height: 44px; color: var(--ed-ink); text-decoration: none; }
+.trail a:hover { color: var(--ed-blue); text-decoration: underline; text-underline-offset: 4px; }
+.trail a:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 2px; border-radius: 4px; }
+.trail span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.trail span::before { content: ""; display: inline-block; width: 1.5px; height: 1em; margin-inline: 12px; background: currentColor; opacity: .55; vertical-align: -.12em; }
+
+.edition {
+  display: grid; grid-template-columns: minmax(220px, 340px) minmax(0, 1fr); align-items: start;
+  grid-template-areas: "cover identity" "cover buy" "cover facts" "cover synopsis" "cover categories" "cover .";
+  grid-template-rows: auto auto auto auto auto 1fr;
+  gap: 0 clamp(36px, 6vw, 88px); max-width: 1048px; min-width: 0; margin: 12px auto 0;
+}
+
+/* The jacket at its own proportions: no stage, no letterbox; the shadow follows the real edge. */
+.cover { grid-area: cover; position: sticky; top: 112px; display: grid; gap: 14px; min-width: 0; }
+.cover :global(.cover-frame) { overflow: visible; aspect-ratio: auto; background: none; box-shadow: none; }
+.cover :global(.cover-frame):has(:global(.cover-image--loading)) { aspect-ratio: 2 / 3; }
+.cover :global(.cover-image) { width: 100%; height: auto; max-height: min(72vh, 560px); object-fit: contain; object-position: center top; filter: drop-shadow(0 14px 22px rgb(37 39 64 / 22%)); }
+.cover :global(.book-cover--fallback .cover-frame) { overflow: hidden; aspect-ratio: 2 / 3; border-radius: 6px; }
+.cover :global(.cover-fallback) { background: var(--ed-mist); color: var(--ed-muted); }
+.coverSource { color: var(--ed-muted); font-size: .8125rem; line-height: 1.4; text-underline-offset: 3px; }
+.coverSource:hover { color: var(--ed-blue); }
+
+.identity { grid-area: identity; display: grid; gap: 8px; min-width: 0; }
+.identity h1 { margin: 0; color: var(--ed-ink); font: 650 clamp(2rem, 1.4rem + 2.2vw, 3.25rem)/1.02 var(--store-display); letter-spacing: -.045em; text-wrap: balance; overflow-wrap: anywhere; }
+.identity h1[data-long] { font-size: clamp(1.625rem, 1.3rem + 1.2vw, 2.25rem); line-height: 1.08; letter-spacing: -.04em; }
+.identity h1:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 6px; border-radius: 6px; }
+.subtitle { margin: 0; color: var(--ed-muted); font-size: 1.125rem; line-height: 1.4; overflow-wrap: anywhere; }
+.authors { margin: 4px 0 0; font-size: 1.1875rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; }
+.secondary { display: flex; flex-wrap: wrap; margin: 0; color: var(--ed-muted); font-size: .9375rem; line-height: 1.5; }
+.secondary span:not(:last-child)::after { content: ","; margin-right: .35em; }
+
+/* The purchase decision */
+.buy { grid-area: buy; display: grid; gap: 16px; min-width: 0; margin-top: 24px; padding: clamp(18px, 2.2vw, 24px); border-radius: 18px; background: var(--ed-mist); }
+/* Unavailable steps back to paper with a hairline edge, as on the cards. */
+.edition[data-available="false"] .buy { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ed-line); }
+.edition[data-available="false"] .price { color: var(--ed-muted); }
+.offer { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; min-width: 0; }
+.price { margin: 0; font: 650 clamp(1.875rem, 1.6rem + 1vw, 2.375rem)/1.05 var(--store-display); letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
+.stock { font-size: .9375rem; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; min-width: 0; }
+.actions :global(.button) { min-width: 0; max-width: 100%; min-height: 48px; padding: 10px 22px; white-space: normal; text-align: center; overflow-wrap: anywhere; border-radius: 8px; font-size: 1rem; font-weight: 600; }
+.actions > :global(.button-primary), .actions :global(.detail-purchase-links) > :global(.button-primary) { flex: 1 1 14rem; background: var(--ed-blue); color: var(--ed-on-blue); }
+.actions > :global(.button-primary):hover, .actions :global(.detail-purchase-links) > :global(.button-primary):hover { background: var(--ed-blue-hover); color: var(--ed-on-blue); }
+/* Follow-ups ("Ver el carrito", "Comprobar…") take their own line below, so the primary action never moves or resizes. */
+.actions > :global(.button-secondary) { order: 1; flex: 1 1 100%; border-color: var(--ed-blue); color: var(--ed-blue); }
+.actions :global(.button):focus-visible, .favorite:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 3px; }
+.actions :global(.detail-purchase-links) { display: flex; flex: 1 1 100%; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
+.actions :global(.detail-purchase-links) > a:not(:global(.button)) { display: inline-flex; align-items: center; min-height: 44px; color: var(--ed-ink); font-weight: 600; text-underline-offset: 4px; }
+.actions :global(.detail-purchase-feedback) { flex: 1 1 100%; margin: 0; color: var(--ed-ink); font-size: .9375rem; line-height: 1.45; }
+.actions > :global(.mantine-Text-root) { flex: 1 1 100%; }
+
+/* Favorite: the secondary action. Saved = the yellow "this one" mark with an ultramar heart. */
+.favorite.favorite { flex: 0 1 auto; height: auto; min-height: 48px; padding: 8px 18px 8px 14px; border: 0; border-radius: 999px; background: var(--ed-disc); color: var(--ed-ink); font-size: .9375rem; font-weight: 600; transition: background-color 140ms var(--ed-ease), color 140ms var(--ed-ease); }
+.favorite.favorite:hover:not(:disabled) { background: color-mix(in srgb, var(--ed-disc) 70%, var(--store-lavender, #e4def4)); }
+.favorite.favorite[aria-pressed="true"] { background: var(--ed-yellow); color: var(--store-blue, #283da8); }
+.favorite.favorite:disabled { opacity: .6; }
+.favorite :global(.mantine-Button-inner) { height: auto; }
+.favorite :global(.mantine-Button-label) { height: auto; white-space: normal; overflow: visible; line-height: 1.3; text-align: left; }
+
+/* Edition facts: label over value, side by side; a record, not a table. */
+.facts { grid-area: facts; display: flex; flex-wrap: wrap; gap: 14px clamp(24px, 4vw, 48px); min-width: 0; margin: 28px 0 0; }
+.facts div { display: grid; gap: 2px; min-width: 0; }
+.facts dt { color: var(--ed-muted); font-size: .8125rem; line-height: 1.4; }
+.facts dd { margin: 0; font-size: .9375rem; font-weight: 500; line-height: 1.4; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.synopsis { grid-area: synopsis; display: grid; justify-items: start; gap: 10px; min-width: 0; max-width: 62ch; margin-top: 36px; }
+.synopsis h2 { margin: 0; font: 650 1.5rem/1.1 var(--store-display); letter-spacing: -.035em; }
+.synopsisText { display: grid; gap: .9em; font-size: 1.0625rem; line-height: 1.65; text-wrap: pretty; overflow-wrap: anywhere; }
+.synopsisText p { margin: 0; }
+.synopsisText[data-clamped] { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; line-clamp: 6; overflow: hidden; }
+.more { display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; color: var(--ed-blue); font: inherit; font-size: .9375rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; cursor: pointer; }
+.more:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 2px; border-radius: 6px; }
+
+/* Categories: one light line of links. */
+.categories { grid-area: categories; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; min-width: 0; margin-top: 24px; color: var(--ed-muted); font-size: .9375rem; line-height: 1.5; }
+.categories h2 { margin: 0; font-size: inherit; font-weight: 500; }
+.categories ul { display: flex; flex-wrap: wrap; gap: 2px 0; margin: 0; padding: 0; list-style: none; }
+.categories li:not(:last-child)::after { content: ","; margin-right: .4em; }
+.categories a { display: inline-block; padding-block: 10px; margin-block: -10px; color: var(--ed-ink); text-decoration: underline; text-decoration-color: var(--ed-line); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
+.categories a:hover { color: var(--ed-blue); text-decoration-color: currentColor; }
+.categories a:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 2px; border-radius: 4px; }
+
+/* Tablet: jacket beside identity and purchase; the reading parts take the full width below. */
+@media (max-width: 899px) {
+  .edition {
+    grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+    grid-template-areas: "cover identity" "cover buy" "facts facts" "synopsis synopsis" "categories categories";
+    grid-template-rows: auto 1fr auto auto auto; gap: 0 clamp(20px, 4vw, 36px);
+  }
+  .cover { position: static; }
+  .buy { align-self: start; margin-top: 20px; }
+}
+/* Phone: jacket, identity, purchase, then the rest — one column, actions full width. */
+@media (max-width: 599px) {
+  .edition { grid-template-columns: minmax(0, 1fr); grid-template-areas: "cover" "identity" "buy" "facts" "synopsis" "categories"; grid-template-rows: none; margin-top: 4px; }
+  .cover { justify-items: center; margin-bottom: 20px; }
+  .cover :global(.book-cover) { width: min(58%, 240px); }
+  .cover :global(.cover-image) { max-height: 44vh; }
+  .coverSource { text-align: center; }
+  .buy { margin-top: 18px; border-radius: 16px; }
+  .actions > :global(.button), .favorite.favorite, .actions :global(.detail-purchase-links) > :global(.button) { flex: 1 1 100%; }
+  .favorite :global(.mantine-Button-inner) { justify-content: center; }
+  .facts { margin-top: 24px; }
+  .synopsis { margin-top: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .favorite.favorite { transition: none; } }
+@media (forced-colors: active) {
+  .buy { border: 1px solid CanvasText; }
+  .cover :global(.cover-image) { filter: none; }
+}

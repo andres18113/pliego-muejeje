@@ -65,7 +65,7 @@ def fixture():
             VALUES ('{admin_email}','fixture-hash','ADMIN','ACTIVE')
             RETURNING usuario_id INTO v_admin;
             CALL pliego.sp_customer_register('{customer_email}','fixture-hash',
-                'Cliente I11','Gate {suffix}',NULL,v_user,v_customer,v_state);
+                'Cliente Prueba','Gate',NULL,v_user,v_customer,v_state);
         END;
         $fixture$;
     """)

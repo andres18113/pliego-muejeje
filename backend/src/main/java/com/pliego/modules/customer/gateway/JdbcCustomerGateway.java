@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Types;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
+import com.pliego.modules.customer.application.AddressAttempt;
 import java.util.stream.Collectors;
 
 import org.springframework.jdbc.core.ConnectionCallback;
@@ -26,13 +28,14 @@ import com.pliego.modules.customer.application.CustomerFavorites.Status;
 @Repository
 public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerGateway {
 
-    private static final String PROFILE_QUERY = "SELECT customer_id, email, first_names, last_names, phone, state "
-            + "FROM pliego.fn_customer_profile(?)";
-    private static final String PROFILE_UPDATE_CALL = "CALL pliego.sp_customer_update(?,?,?,?)";
+    private static final String PROFILE_QUERY = "SELECT * FROM pliego.fn_customer_profile_versioned(?)";
+    private static final String PROFILE_UPDATE_CALL = "CALL pliego.sp_customer_update_versioned(?,?,?,?,?)";
+    private static final String PASSWORD_HASH_QUERY = "SELECT pliego.fn_customer_password_hash(?) AS password_hash";
+    private static final String EMAIL_CHANGE_CALL = "CALL pliego.sp_customer_change_email(?,?,?)";
     private static final String ADDRESS_LIST_QUERY = "SELECT address_id, alias, recipient, line1, line2, city, "
             + "province, country_code, postal_code, reference, phone, is_primary "
             + "FROM pliego.fn_address_list(?)";
-    private static final String ADDRESS_CREATE_CALL = "CALL pliego.sp_address_create(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String ADDRESS_CREATE_CALL = "CALL pliego.sp_address_create_idempotent(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String ADDRESS_UPDATE_CALL = "CALL pliego.sp_address_update(?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String ADDRESS_DELETE_CALL = "CALL pliego.sp_address_delete(?,?)";
     private static final String ADDRESS_SET_PRIMARY_CALL = "CALL pliego.sp_address_set_primary(?,?)";
@@ -57,18 +60,63 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
                 statement -> statement.setLong(1, actorUserId), results -> results.next()
                         ? new CustomerProfile(results.getLong("customer_id"), results.getString("email"),
                                 results.getString("first_names"), results.getString("last_names"),
-                                results.getString("phone"), results.getString("state"))
+                                results.getString("phone"), results.getString("state"), results.getLong("version"))
                         : null));
     }
 
     @Override
-    public void updateProfile(long actorUserId, String firstNames, String lastNames, String phone) {
+    public void updateProfile(long actorUserId, long expectedVersion, String firstNames, String lastNames, String phone) {
         executeNoOutput(PROFILE_UPDATE_CALL, statement -> {
             statement.setLong(1, actorUserId);
-            statement.setString(2, firstNames);
-            statement.setString(3, lastNames);
-            setNullableString(statement, 4, phone);
+            statement.setLong(2, expectedVersion);
+            statement.setString(3, firstNames);
+            statement.setString(4, lastNames);
+            setNullableString(statement, 5, phone);
         });
+    }
+
+    @Override
+    public void patchProfile(long actorUserId, long expectedVersion, String field, String value) {
+        executeNoOutput("CALL pliego.sp_customer_patch(?,?,?,?)", statement -> {
+            statement.setLong(1, actorUserId); statement.setLong(2, expectedVersion);
+            statement.setString(3, field); setNullableString(statement, 4, value);
+        });
+    }
+
+    @Override
+    public AddressAttempt resolveAddress(long actorUserId, UUID key) {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.query(
+                "SELECT * FROM pliego.fn_address_create_resolve(?,?)", statement -> {
+                    statement.setLong(1, actorUserId); statement.setObject(2, key);
+                }, results -> {
+                    if (!results.next()) throw new SQLException("Address resolution returned no output", "02000");
+                    return new AddressAttempt(results.getString("state"), results.getString("address_id"));
+                }));
+    }
+
+    @Override
+    public String passwordHash(long actorUserId) {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.query(PASSWORD_HASH_QUERY,
+                statement -> statement.setLong(1, actorUserId),
+                results -> results.next() ? results.getString("password_hash") : null));
+    }
+
+    @Override
+    public String changeEmail(long actorUserId, String newEmail) {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.execute(
+                (ConnectionCallback<String>) connection -> {
+                    try (PreparedStatement statement = connection.prepareStatement(EMAIL_CHANGE_CALL)) {
+                        statement.setLong(1, actorUserId);
+                        statement.setString(2, newEmail);
+                        statement.setNull(3, Types.VARCHAR);
+                        try (ResultSet outputs = statement.executeQuery()) {
+                            if (!outputs.next()) {
+                                throw new SQLException("sp_customer_change_email returned no result", "02000");
+                            }
+                            return outputs.getString("o_email");
+                        }
+                    }
+                }));
     }
 
     @Override
@@ -83,14 +131,15 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
     }
 
     @Override
-    public long createAddress(long actorUserId, AddressData address, boolean makePrimary) {
+    public long createAddress(long actorUserId, UUID key, AddressData address, boolean makePrimary) {
         return withDatabaseErrorTranslation(() -> jdbcTemplate.execute(
                 (ConnectionCallback<Long>) connection -> {
                     try (PreparedStatement statement = connection.prepareStatement(ADDRESS_CREATE_CALL)) {
                         statement.setLong(1, actorUserId);
-                        bindAddress(statement, 2, address);
-                        statement.setBoolean(12, makePrimary);
-                        statement.setNull(13, Types.BIGINT);
+                        statement.setObject(2, key);
+                        bindAddress(statement, 3, address);
+                        statement.setBoolean(13, makePrimary);
+                        statement.setNull(14, Types.BIGINT);
                         try (ResultSet outputs = statement.executeQuery()) {
                             if (!outputs.next()) {
                                 throw new SQLException("sp_address_create returned no result", "02000");

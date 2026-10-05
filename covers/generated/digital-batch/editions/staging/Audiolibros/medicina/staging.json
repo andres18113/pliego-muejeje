@@ -1,0 +1,2587 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-ccecc542047c16dd.webp",
+      "libro": {
+        "titulo": "Anatomía y fisiología básicas en el niño",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Carbonero Celis, Carmen",
+            "orden": 1
+          },
+          {
+            "nombre": "Cañizares Márquez, José María",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Wanceulen Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000086",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 7173,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000086-5edf32cd1df2.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63446",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-ccecc542047c16dd",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "171",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-dda1a38188365b86"
+        },
+        "author_bindings": [
+          {
+            "name": "Carbonero Celis, Carmen",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Cañizares Márquez, José María",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Carbonero Celis, Carmen; Cañizares Márquez, José María",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+            "sha256": "2ad0bef570ec383c67ae509fdbe481a774d6fd09b8c9830ee6542a84c65e89d3",
+            "observed_text": "Sevilla : Wanceulen Editorial, 2017.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "2ad0bef570ec383c67ae509fdbe481a774d6fd09b8c9830ee6542a84c65e89d3",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ccecc542047c16dd.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+            "sha256": "2ad0bef570ec383c67ae509fdbe481a774d6fd09b8c9830ee6542a84c65e89d3",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "2ad0bef570ec383c67ae509fdbe481a774d6fd09b8c9830ee6542a84c65e89d3",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ccecc542047c16dd.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB63446",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 202,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía y fisiología básicas en el niño - Carbonero Celis, Carmen; Cañizares Márquez, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ccecc542047c16dd.webp",
+            "cover_sha256": "5edf32cd1df23aeec6bbb92fcf305b6a8791ac4cef77e2f93e8732022749b0d4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Carbonero Celis, Carmen; Cañizares Márquez, José María",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 202,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía y fisiología básicas en el niño - Carbonero Celis, Carmen; Cañizares Márquez, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ccecc542047c16dd.webp",
+            "cover_sha256": "5edf32cd1df23aeec6bbb92fcf305b6a8791ac4cef77e2f93e8732022749b0d4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 202,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63446",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía y fisiología básicas en el niño - Carbonero Celis, Carmen; Cañizares Márquez, José María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ccecc542047c16dd.webp",
+            "cover_sha256": "5edf32cd1df23aeec6bbb92fcf305b6a8791ac4cef77e2f93e8732022749b0d4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 202,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/63446",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Anatomía y fisiología básicas en el niño - Carbonero Celis, Carmen; Cañizares Márquez, José María.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ccecc542047c16dd.webp",
+          "cover_sha256": "5edf32cd1df23aeec6bbb92fcf305b6a8791ac4cef77e2f93e8732022749b0d4",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "172",
+        "imported_book_id": "171"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-7716c6d896d5a7b7.webp",
+      "libro": {
+        "titulo": "Anatomía y fisiología del sistema nervioso central",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Velayos, José Luis",
+            "orden": 1
+          },
+          {
+            "nombre": "Diéguez, Godofredo",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "CEU Ediciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "16.99",
+        "sku": "PLG-BK-000260",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1276,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000260-5281d2d3194f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/43244",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-7716c6d896d5a7b7",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "172",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-62a8e79c9dd019aa"
+        },
+        "author_bindings": [
+          {
+            "name": "Velayos, José Luis",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Diéguez, Godofredo",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Velayos, José Luis; Diéguez, Godofredo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+            "sha256": "9961dd01c174d60091a46eddf86fc033170705cf74c961e9bd66514992b6fb76",
+            "observed_text": "Madrid : CEU Ediciones, 2015.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "9961dd01c174d60091a46eddf86fc033170705cf74c961e9bd66514992b6fb76",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-7716c6d896d5a7b7.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+            "sha256": "9961dd01c174d60091a46eddf86fc033170705cf74c961e9bd66514992b6fb76",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "9961dd01c174d60091a46eddf86fc033170705cf74c961e9bd66514992b6fb76",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-7716c6d896d5a7b7.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB43244",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 203,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/43244",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía y fisiología del sistema nervioso central - Velayos, José Luis; Diéguez, Godofredo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7716c6d896d5a7b7.webp",
+            "cover_sha256": "5281d2d3194f810e733601dd314f5c89fb6ad3ebc7ac87ce69ba441774f07039",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Velayos, José Luis; Diéguez, Godofredo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 203,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/43244",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía y fisiología del sistema nervioso central - Velayos, José Luis; Diéguez, Godofredo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7716c6d896d5a7b7.webp",
+            "cover_sha256": "5281d2d3194f810e733601dd314f5c89fb6ad3ebc7ac87ce69ba441774f07039",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 203,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/43244",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Anatomía y fisiología del sistema nervioso central - Velayos, José Luis; Diéguez, Godofredo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7716c6d896d5a7b7.webp",
+            "cover_sha256": "5281d2d3194f810e733601dd314f5c89fb6ad3ebc7ac87ce69ba441774f07039",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 203,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/43244",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Anatomía y fisiología del sistema nervioso central - Velayos, José Luis; Diéguez, Godofredo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7716c6d896d5a7b7.webp",
+          "cover_sha256": "5281d2d3194f810e733601dd314f5c89fb6ad3ebc7ac87ce69ba441774f07039",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "173",
+        "imported_book_id": "172"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-60f254fb894b8c6a.webp",
+      "libro": {
+        "titulo": "El médico en casa: manual de consulta",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Carrete, Paula",
+            "orden": 1
+          },
+          {
+            "nombre": "Rubinstein, Esteban",
+            "orden": 2
+          },
+          {
+            "nombre": "Zárate, Miguel",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Delhospital ; NED",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000132",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6057,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000132-5683a3d9c137.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/121496",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-60f254fb894b8c6a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "173",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7a34101929124698"
+        },
+        "author_bindings": [
+          {
+            "name": "Carrete, Paula",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Rubinstein, Esteban",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Zárate, Miguel",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Carrete, Paula; Rubinstein, Esteban; Zárate, Miguel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+            "sha256": "b8d3f7e590d5323136afbd89ad4f21aac8aa123e424e37b58e46ae2579d97758",
+            "observed_text": "Buenos Aires : [Barcelona] : Delhospital ; NED, 2017.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "b8d3f7e590d5323136afbd89ad4f21aac8aa123e424e37b58e46ae2579d97758",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-60f254fb894b8c6a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+            "sha256": "b8d3f7e590d5323136afbd89ad4f21aac8aa123e424e37b58e46ae2579d97758",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "b8d3f7e590d5323136afbd89ad4f21aac8aa123e424e37b58e46ae2579d97758",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-60f254fb894b8c6a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB121496",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 204,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/121496",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El médico en casa manual de consulta - Carrete, Paula; Rubinstein, Esteban; Zárate, Miguel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-60f254fb894b8c6a.webp",
+            "cover_sha256": "5683a3d9c13724749b6a7cec9dda87a33d26cc199bd27b221f63768bac721d6f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Carrete, Paula; Rubinstein, Esteban; Zárate, Miguel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 204,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/121496",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El médico en casa manual de consulta - Carrete, Paula; Rubinstein, Esteban; Zárate, Miguel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-60f254fb894b8c6a.webp",
+            "cover_sha256": "5683a3d9c13724749b6a7cec9dda87a33d26cc199bd27b221f63768bac721d6f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 204,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/121496",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/El médico en casa manual de consulta - Carrete, Paula; Rubinstein, Esteban; Zárate, Miguel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-60f254fb894b8c6a.webp",
+            "cover_sha256": "5683a3d9c13724749b6a7cec9dda87a33d26cc199bd27b221f63768bac721d6f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 204,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/121496",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/El médico en casa manual de consulta - Carrete, Paula; Rubinstein, Esteban; Zárate, Miguel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-60f254fb894b8c6a.webp",
+          "cover_sha256": "5683a3d9c13724749b6a7cec9dda87a33d26cc199bd27b221f63768bac721d6f",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "174",
+        "imported_book_id": "173"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-6aa70e9b3495e853.webp",
+      "libro": {
+        "titulo": "Fisiología respiratoria (8a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "West, John B.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Wolters Kluwer Health",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "26.99",
+        "sku": "PLG-BK-000087",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5236,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000087-63870356e278.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124823",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-6aa70e9b3495e853",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "174",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-cb80bac18e2d4059"
+        },
+        "author_bindings": [
+          {
+            "name": "West, John B.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "West, John B.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+            "sha256": "255bdda43c46ea0322dc8b5bf9198e18cc76deaa4934e7c8aa661f39c2231bdc",
+            "observed_text": "Barcelona : Wolters Kluwer Health, 2009.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "255bdda43c46ea0322dc8b5bf9198e18cc76deaa4934e7c8aa661f39c2231bdc",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6aa70e9b3495e853.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+            "sha256": "255bdda43c46ea0322dc8b5bf9198e18cc76deaa4934e7c8aa661f39c2231bdc",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "255bdda43c46ea0322dc8b5bf9198e18cc76deaa4934e7c8aa661f39c2231bdc",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6aa70e9b3495e853.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124823",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 210,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124823",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fisiología respiratoria (8a. ed.) - West, John B..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6aa70e9b3495e853.webp",
+            "cover_sha256": "63870356e278273bb7ed8c81afe82062d7a74be3b4fbc0516de1320b2277e7ad",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "West, John B.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 210,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124823",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fisiología respiratoria (8a. ed.) - West, John B..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6aa70e9b3495e853.webp",
+            "cover_sha256": "63870356e278273bb7ed8c81afe82062d7a74be3b4fbc0516de1320b2277e7ad",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 210,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124823",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fisiología respiratoria (8a. ed.) - West, John B..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6aa70e9b3495e853.webp",
+            "cover_sha256": "63870356e278273bb7ed8c81afe82062d7a74be3b4fbc0516de1320b2277e7ad",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 210,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124823",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Fisiología respiratoria (8a. ed.) - West, John B..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6aa70e9b3495e853.webp",
+          "cover_sha256": "63870356e278273bb7ed8c81afe82062d7a74be3b4fbc0516de1320b2277e7ad",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "175",
+        "imported_book_id": "174"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-da20f31c48dae892.webp",
+      "libro": {
+        "titulo": "Fisiología y fisiopatología pulmonar: estudios de casos (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "West, John B.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Wolters Kluwer Health",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "7.99",
+        "sku": "PLG-BK-000287",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6764,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000287-722365f7ef94.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125026",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-da20f31c48dae892",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "175",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-b2a81f5c2c985b87"
+        },
+        "author_bindings": [
+          {
+            "name": "West, John B.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "West, John B.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+            "sha256": "8e294b297059344d4db49b3b6440b8828a21c531bde3987bb8b3a771012409f0",
+            "observed_text": "Barcelona : Wolters Kluwer Health, 2014.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "8e294b297059344d4db49b3b6440b8828a21c531bde3987bb8b3a771012409f0",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-da20f31c48dae892.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+            "sha256": "8e294b297059344d4db49b3b6440b8828a21c531bde3987bb8b3a771012409f0",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "8e294b297059344d4db49b3b6440b8828a21c531bde3987bb8b3a771012409f0",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-da20f31c48dae892.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB125026",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 212,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125026",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fisiología y fisiopatología pulmonar estudios de casos (2a. ed.) - West, John B..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-da20f31c48dae892.webp",
+            "cover_sha256": "722365f7ef94183a001ab6f787bbd01b64afe33ddfe0929d1b1620b7d5bafcfc",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "West, John B.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 212,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125026",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fisiología y fisiopatología pulmonar estudios de casos (2a. ed.) - West, John B..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-da20f31c48dae892.webp",
+            "cover_sha256": "722365f7ef94183a001ab6f787bbd01b64afe33ddfe0929d1b1620b7d5bafcfc",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 212,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125026",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fisiología y fisiopatología pulmonar estudios de casos (2a. ed.) - West, John B..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-da20f31c48dae892.webp",
+            "cover_sha256": "722365f7ef94183a001ab6f787bbd01b64afe33ddfe0929d1b1620b7d5bafcfc",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 212,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/125026",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Fisiología y fisiopatología pulmonar estudios de casos (2a. ed.) - West, John B..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-da20f31c48dae892.webp",
+          "cover_sha256": "722365f7ef94183a001ab6f787bbd01b64afe33ddfe0929d1b1620b7d5bafcfc",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "176",
+        "imported_book_id": "175"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-dc33785bd60e4578.webp",
+      "libro": {
+        "titulo": "Fundamentos de farmacología oncológica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cevallos Barrera, Edwin",
+            "orden": 1
+          },
+          {
+            "nombre": "Duque Proaño, Galo",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad del Azuay",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000284",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5550,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000284-eda150b61f88.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233834",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-dc33785bd60e4578",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "176",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-aeb0bd551fc21fb9"
+        },
+        "author_bindings": [
+          {
+            "name": "Cevallos Barrera, Edwin",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Duque Proaño, Galo",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cevallos Barrera, Edwin; Duque Proaño, Galo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+            "sha256": "97d61a8416b43c96c619f99789e7d1314a5e681909208d121f55512ae35aa610",
+            "observed_text": "Cuenca : Universidad del Azuay, 2018.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "97d61a8416b43c96c619f99789e7d1314a5e681909208d121f55512ae35aa610",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-dc33785bd60e4578.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+            "sha256": "97d61a8416b43c96c619f99789e7d1314a5e681909208d121f55512ae35aa610",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "97d61a8416b43c96c619f99789e7d1314a5e681909208d121f55512ae35aa610",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-dc33785bd60e4578.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233834",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 213,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233834",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fundamentos de farmacología oncológica - Cevallos Barrera, Edwin; Duque Proaño, Galo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-dc33785bd60e4578.webp",
+            "cover_sha256": "eda150b61f88eafd4ba23754e172ecc6d03379e5bfdeda459841e02d63f87427",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cevallos Barrera, Edwin; Duque Proaño, Galo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 213,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233834",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fundamentos de farmacología oncológica - Cevallos Barrera, Edwin; Duque Proaño, Galo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-dc33785bd60e4578.webp",
+            "cover_sha256": "eda150b61f88eafd4ba23754e172ecc6d03379e5bfdeda459841e02d63f87427",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 213,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233834",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Fundamentos de farmacología oncológica - Cevallos Barrera, Edwin; Duque Proaño, Galo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-dc33785bd60e4578.webp",
+            "cover_sha256": "eda150b61f88eafd4ba23754e172ecc6d03379e5bfdeda459841e02d63f87427",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 213,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233834",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Fundamentos de farmacología oncológica - Cevallos Barrera, Edwin; Duque Proaño, Galo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-dc33785bd60e4578.webp",
+          "cover_sha256": "eda150b61f88eafd4ba23754e172ecc6d03379e5bfdeda459841e02d63f87427",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "177",
+        "imported_book_id": "176"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-c8a5563777e61d13.webp",
+      "libro": {
+        "titulo": "Manual de fisiología articular",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Guzmán Velasco, Adriana",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Manual Moderno",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000175",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6255,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000175-6c0130a2bcbb.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71151",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-c8a5563777e61d13",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "177",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-905540d9f9592783"
+        },
+        "author_bindings": [
+          {
+            "name": "Guzmán Velasco, Adriana",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Guzmán Velasco, Adriana",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+            "sha256": "ca98a114bd841c8446ca9a7f248b9be984a78aa976a579c73d127df4d608f9ae",
+            "observed_text": "Bogotá : Manual Moderno, 2007.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "ca98a114bd841c8446ca9a7f248b9be984a78aa976a579c73d127df4d608f9ae",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-c8a5563777e61d13.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+            "sha256": "ca98a114bd841c8446ca9a7f248b9be984a78aa976a579c73d127df4d608f9ae",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "ca98a114bd841c8446ca9a7f248b9be984a78aa976a579c73d127df4d608f9ae",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-c8a5563777e61d13.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB71151",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 215,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71151",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Manual de fisiología articular - Guzmán Velasco, Adriana.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-c8a5563777e61d13.webp",
+            "cover_sha256": "6c0130a2bcbbc56c23b94bae2628dff674d84dd7ebc4e7f793b7448fab562b04",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Guzmán Velasco, Adriana",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 215,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71151",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Manual de fisiología articular - Guzmán Velasco, Adriana.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-c8a5563777e61d13.webp",
+            "cover_sha256": "6c0130a2bcbbc56c23b94bae2628dff674d84dd7ebc4e7f793b7448fab562b04",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 215,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71151",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Manual de fisiología articular - Guzmán Velasco, Adriana.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-c8a5563777e61d13.webp",
+            "cover_sha256": "6c0130a2bcbbc56c23b94bae2628dff674d84dd7ebc4e7f793b7448fab562b04",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 215,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/71151",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Manual de fisiología articular - Guzmán Velasco, Adriana.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-c8a5563777e61d13.webp",
+          "cover_sha256": "6c0130a2bcbbc56c23b94bae2628dff674d84dd7ebc4e7f793b7448fab562b04",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "178",
+        "imported_book_id": "177"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-7c90703dd5f5bc7d.webp",
+      "libro": {
+        "titulo": "Manual de práctica de semiología clínica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Chaveco Pérez, Moraima",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Abierta para Adultos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000088",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4482,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000088-2b7be887c7c8.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/294232",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-7c90703dd5f5bc7d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "178",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-af522a40f0f4edd4"
+        },
+        "author_bindings": [
+          {
+            "name": "Chaveco Pérez, Moraima",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Chaveco Pérez, Moraima",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://isbn.bnphu.gob.do/catalogo.php?mode=detalle&nt=33904",
+            "observed_text": "Universidad Abierta para Adultos",
+            "basis": "Registro primario de Agencia ISBN de República Dominicana; misma obra/autor y portada concordantes.",
+            "source": "https://isbn.bnphu.gob.do/catalogo.php?mode=detalle&nt=33904",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://isbn.bnphu.gob.do/catalogo.php?mode=detalle&nt=33904",
+            "observed_text": "Idioma: Español",
+            "basis": "Registro primario de Agencia ISBN de República Dominicana; misma obra/autor y portada concordantes.",
+            "source": "https://isbn.bnphu.gob.do/catalogo.php?mode=detalle&nt=33904",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 216,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/294232",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Manual de práctica de semiología clínica - Chaveco Pérez, Moraima.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7c90703dd5f5bc7d.webp",
+            "cover_sha256": "2b7be887c7c8bd963c5c27e6d2e1862a14af3f348c4523d405f0c6809ae7067c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Chaveco Pérez, Moraima",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 216,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/294232",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Manual de práctica de semiología clínica - Chaveco Pérez, Moraima.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7c90703dd5f5bc7d.webp",
+            "cover_sha256": "2b7be887c7c8bd963c5c27e6d2e1862a14af3f348c4523d405f0c6809ae7067c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 216,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/294232",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Manual de práctica de semiología clínica - Chaveco Pérez, Moraima.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7c90703dd5f5bc7d.webp",
+            "cover_sha256": "2b7be887c7c8bd963c5c27e6d2e1862a14af3f348c4523d405f0c6809ae7067c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 216,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/294232",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Manual de práctica de semiología clínica - Chaveco Pérez, Moraima.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7c90703dd5f5bc7d.webp",
+          "cover_sha256": "2b7be887c7c8bd963c5c27e6d2e1862a14af3f348c4523d405f0c6809ae7067c",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "179",
+        "imported_book_id": "178"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-2d193ee8f693ac3d.webp",
+      "libro": {
+        "titulo": "Neuroanatomía, funcional y clínica (5a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bustamante B., Jairo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Médica Celsus",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000164",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3131,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000164-ade7eef81da3.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280790",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2d193ee8f693ac3d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "179",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-52c472f7557efd20"
+        },
+        "author_bindings": [
+          {
+            "name": "Bustamante B., Jairo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bustamante B., Jairo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+            "sha256": "bbe8d7f941c8291a936f7de5d090135b5948f3e6cccc81ad4c7c7bfe7fcbb31a",
+            "observed_text": "Bogotá : Editorial Médica Celsus, 2016.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "bbe8d7f941c8291a936f7de5d090135b5948f3e6cccc81ad4c7c7bfe7fcbb31a",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2d193ee8f693ac3d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+            "sha256": "bbe8d7f941c8291a936f7de5d090135b5948f3e6cccc81ad4c7c7bfe7fcbb31a",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "bbe8d7f941c8291a936f7de5d090135b5948f3e6cccc81ad4c7c7bfe7fcbb31a",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2d193ee8f693ac3d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280790",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 220,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280790",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Neuroanatomía, funcional y clínica (5a. ed.) - Bustamante B., Jairo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2d193ee8f693ac3d.webp",
+            "cover_sha256": "ade7eef81da3be9d7d233f9273c51bee827de060a2e9540de0ed800ac80a6b90",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bustamante B., Jairo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 220,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280790",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Neuroanatomía, funcional y clínica (5a. ed.) - Bustamante B., Jairo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2d193ee8f693ac3d.webp",
+            "cover_sha256": "ade7eef81da3be9d7d233f9273c51bee827de060a2e9540de0ed800ac80a6b90",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 220,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280790",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Neuroanatomía, funcional y clínica (5a. ed.) - Bustamante B., Jairo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2d193ee8f693ac3d.webp",
+            "cover_sha256": "ade7eef81da3be9d7d233f9273c51bee827de060a2e9540de0ed800ac80a6b90",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 220,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280790",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Neuroanatomía, funcional y clínica (5a. ed.) - Bustamante B., Jairo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2d193ee8f693ac3d.webp",
+          "cover_sha256": "ade7eef81da3be9d7d233f9273c51bee827de060a2e9540de0ed800ac80a6b90",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "180",
+        "imported_book_id": "179"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-6c6624b4dbb6c732.webp",
+      "libro": {
+        "titulo": "Oxígeno: fisiología, terapéutica, toxicidad",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cristancho Gómez, William",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial El Manual Moderno",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000195",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6152,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000195-218bfe19d268.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128358",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-6c6624b4dbb6c732",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "180",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d0f51ef0e71028ac"
+        },
+        "author_bindings": [
+          {
+            "name": "Cristancho Gómez, William",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cristancho Gómez, William",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+            "sha256": "dbb963aef81e3718c90908f2b84c6a165751e5156a88d3e11d8a916a76018eae",
+            "observed_text": "Bogotá : Editorial El Manual Moderno, 2019.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "dbb963aef81e3718c90908f2b84c6a165751e5156a88d3e11d8a916a76018eae",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6c6624b4dbb6c732.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+            "sha256": "dbb963aef81e3718c90908f2b84c6a165751e5156a88d3e11d8a916a76018eae",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "dbb963aef81e3718c90908f2b84c6a165751e5156a88d3e11d8a916a76018eae",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-6c6624b4dbb6c732.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB128358",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 221,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128358",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Oxígeno fisiología, terapéutica, toxicidad - Cristancho Gómez, William.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6c6624b4dbb6c732.webp",
+            "cover_sha256": "218bfe19d268008925825a9b47343579cd4637818ab6b2eddb0f795c90e6257f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cristancho Gómez, William",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 221,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128358",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Oxígeno fisiología, terapéutica, toxicidad - Cristancho Gómez, William.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6c6624b4dbb6c732.webp",
+            "cover_sha256": "218bfe19d268008925825a9b47343579cd4637818ab6b2eddb0f795c90e6257f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 221,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128358",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Oxígeno fisiología, terapéutica, toxicidad - Cristancho Gómez, William.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6c6624b4dbb6c732.webp",
+            "cover_sha256": "218bfe19d268008925825a9b47343579cd4637818ab6b2eddb0f795c90e6257f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 221,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/128358",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Oxígeno fisiología, terapéutica, toxicidad - Cristancho Gómez, William.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6c6624b4dbb6c732.webp",
+          "cover_sha256": "218bfe19d268008925825a9b47343579cd4637818ab6b2eddb0f795c90e6257f",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "181",
+        "imported_book_id": "180"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-ae42295f28b58397.webp",
+      "libro": {
+        "titulo": "Proceso de valoración semiológica de Chávez para el cuidado de enfermería",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Barragán Becerra, Julián Andrés",
+            "orden": 1
+          },
+          {
+            "nombre": "Moreno Mojica, Claudia María",
+            "orden": 2
+          },
+          {
+            "nombre": "Hernández Bernal, Nubia Esperanza",
+            "orden": 3
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UPTC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000243",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1149,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000243-096bd96eb56b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219236",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-ae42295f28b58397",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "181",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-46cffa72687554ca"
+        },
+        "author_bindings": [
+          {
+            "name": "Barragán Becerra, Julián Andrés",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Moreno Mojica, Claudia María",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Hernández Bernal, Nubia Esperanza",
+            "order": 3,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Barragán Becerra, Julián Andrés; Moreno Mojica, Claudia María; Hernández Bernal, Nubia Esperanza",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+            "sha256": "925c2c0ac96375306b2c8e6a19c26fd8ea6e1eb7110140ed26efb82fe7354299",
+            "observed_text": "Tunja : Editorial UPTC, 2021.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "925c2c0ac96375306b2c8e6a19c26fd8ea6e1eb7110140ed26efb82fe7354299",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ae42295f28b58397.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+            "sha256": "925c2c0ac96375306b2c8e6a19c26fd8ea6e1eb7110140ed26efb82fe7354299",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "925c2c0ac96375306b2c8e6a19c26fd8ea6e1eb7110140ed26efb82fe7354299",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-ae42295f28b58397.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB219236",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 222,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219236",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Proceso de valoración semiológica de Chávez para el cuidado de enfermería - Barragán Becerra, Julián Andrés; Moreno Mojica, Claudia María; Hernández Bernal, Nubia Esperanza.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ae42295f28b58397.webp",
+            "cover_sha256": "096bd96eb56bee922514360636144daa20fb6935c3b8b4a1d8d76e9b2675d625",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Barragán Becerra, Julián Andrés; Moreno Mojica, Claudia María; Hernández Bernal, Nubia Esperanza",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 222,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219236",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Proceso de valoración semiológica de Chávez para el cuidado de enfermería - Barragán Becerra, Julián Andrés; Moreno Mojica, Claudia María; Hernández Bernal, Nubia Esperanza.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ae42295f28b58397.webp",
+            "cover_sha256": "096bd96eb56bee922514360636144daa20fb6935c3b8b4a1d8d76e9b2675d625",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 222,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219236",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Proceso de valoración semiológica de Chávez para el cuidado de enfermería - Barragán Becerra, Julián Andrés; Moreno Mojica, Claudia María; Hernández Bernal, Nubia Esperanza.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ae42295f28b58397.webp",
+            "cover_sha256": "096bd96eb56bee922514360636144daa20fb6935c3b8b4a1d8d76e9b2675d625",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 222,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/219236",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Proceso de valoración semiológica de Chávez para el cuidado de enfermería - Barragán Becerra, Julián Andrés; Moreno Mojica, Claudia María; Hernández Bernal, Nubia Esperanza.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ae42295f28b58397.webp",
+          "cover_sha256": "096bd96eb56bee922514360636144daa20fb6935c3b8b4a1d8d76e9b2675d625",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "182",
+        "imported_book_id": "181"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-2a1df67176eecdd4.webp",
+      "libro": {
+        "titulo": "Semiología: sistema craneomandibular",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bustillo Verbel, Rosa Lia",
+            "orden": 1
+          },
+          {
+            "nombre": "Espitia Nieto, Sandra",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Unimagdalena",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "29.99",
+        "sku": "PLG-BK-000137",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4011,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000137-9dc4cc95d9ed.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/105476",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-2a1df67176eecdd4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "182",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5be6b36c3fa23a0f"
+        },
+        "author_bindings": [
+          {
+            "name": "Bustillo Verbel, Rosa Lia",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Espitia Nieto, Sandra",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bustillo Verbel, Rosa Lia; Espitia Nieto, Sandra",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+            "sha256": "80b9e2ce10be209d9c5096b58b1a76c8a573141b6ea0c701fbc6502b63573038",
+            "observed_text": "Santa Marta : Editorial Unimagdalena, 2018.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "80b9e2ce10be209d9c5096b58b1a76c8a573141b6ea0c701fbc6502b63573038",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a1df67176eecdd4.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+            "sha256": "80b9e2ce10be209d9c5096b58b1a76c8a573141b6ea0c701fbc6502b63573038",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "80b9e2ce10be209d9c5096b58b1a76c8a573141b6ea0c701fbc6502b63573038",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-2a1df67176eecdd4.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB105476",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 225,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/105476",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Semiología sistema craneomandibular - Bustillo Verbel, Rosa Lia; Espitia Nieto, Sandra.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2a1df67176eecdd4.webp",
+            "cover_sha256": "9dc4cc95d9ed637b931b35c8c85226f6ec97d92fc877810c36090f71d5d60087",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bustillo Verbel, Rosa Lia; Espitia Nieto, Sandra",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 225,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/105476",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Semiología sistema craneomandibular - Bustillo Verbel, Rosa Lia; Espitia Nieto, Sandra.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2a1df67176eecdd4.webp",
+            "cover_sha256": "9dc4cc95d9ed637b931b35c8c85226f6ec97d92fc877810c36090f71d5d60087",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 225,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/105476",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Semiología sistema craneomandibular - Bustillo Verbel, Rosa Lia; Espitia Nieto, Sandra.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2a1df67176eecdd4.webp",
+            "cover_sha256": "9dc4cc95d9ed637b931b35c8c85226f6ec97d92fc877810c36090f71d5d60087",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 225,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/105476",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Semiología sistema craneomandibular - Bustillo Verbel, Rosa Lia; Espitia Nieto, Sandra.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2a1df67176eecdd4.webp",
+          "cover_sha256": "9dc4cc95d9ed637b931b35c8c85226f6ec97d92fc877810c36090f71d5d60087",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "183",
+        "imported_book_id": "182"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/medicina/portadas/audiobook-8b4726e2a5b9d46d.webp",
+      "libro": {
+        "titulo": "Temas claves: neuroanatomía (4a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Fix, James D.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Medicina"
+        ]
+      },
+      "edicion": {
+        "editorial": "Wolters Kluwer Health : Lippincott Williams & Wilkins",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "25.99",
+        "sku": "PLG-BK-000197",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5633,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000197-433f0fa20eba.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124809",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-8b4726e2a5b9d46d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "183",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4d44c6c45249f2a5"
+        },
+        "author_bindings": [
+          {
+            "name": "Fix, James D.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Fix, James D.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+            "sha256": "b0dbc1c0570268cf68da03ed57fbf944c50b01ec418ae47ceb070119fa3f8814",
+            "observed_text": "Estados Unidos : Wolters Kluwer Health : Lippincott Williams & Wilkins, 2013.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "b0dbc1c0570268cf68da03ed57fbf944c50b01ec418ae47ceb070119fa3f8814",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8b4726e2a5b9d46d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+            "sha256": "b0dbc1c0570268cf68da03ed57fbf944c50b01ec418ae47ceb070119fa3f8814",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "b0dbc1c0570268cf68da03ed57fbf944c50b01ec418ae47ceb070119fa3f8814",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-8b4726e2a5b9d46d.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB124809",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 226,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124809",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Temas claves neuroanatomía (4a. ed.) - Fix, James D..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-8b4726e2a5b9d46d.webp",
+            "cover_sha256": "433f0fa20eba83ec31fa496649759c1255e30d543acba3c310d673ef2a0e389a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Fix, James D.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 226,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124809",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Temas claves neuroanatomía (4a. ed.) - Fix, James D..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-8b4726e2a5b9d46d.webp",
+            "cover_sha256": "433f0fa20eba83ec31fa496649759c1255e30d543acba3c310d673ef2a0e389a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 226,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124809",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Medicina/originales/Temas claves neuroanatomía (4a. ed.) - Fix, James D..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-8b4726e2a5b9d46d.webp",
+            "cover_sha256": "433f0fa20eba83ec31fa496649759c1255e30d543acba3c310d673ef2a0e389a",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 226,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/124809",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Medicina/originales/Temas claves neuroanatomía (4a. ed.) - Fix, James D..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-8b4726e2a5b9d46d.webp",
+          "cover_sha256": "433f0fa20eba83ec31fa496649759c1255e30d543acba3c310d673ef2a0e389a",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Medicina",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/medicina/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "184",
+        "imported_book_id": "183"
+      }
+    }
+  ]
+}

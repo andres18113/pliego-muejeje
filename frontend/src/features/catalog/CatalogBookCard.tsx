@@ -11,6 +11,6 @@ export function CatalogBookCard({ edition, detailHref, returnHref, isFavorite, f
   const [feedback, setFeedback] = useState<BookCardFeedback | null>(null);
   const book = toBookCardData(edition);
   const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback });
-  const cart = useCartControl({ editionId: book.id, available: book.available, returnHref, onFeedback: setFeedback });
+  const cart = useCartControl({ editionId: book.id, available: book.available, format: edition.format, returnHref, onFeedback: setFeedback });
   return <BookCard book={book} to={detailHref} navigationState={bookCardNavigationState(book, catalogReturn)} onNavigate={onOpen} favorite={favorite} cart={cart} feedback={feedback} />;
 }

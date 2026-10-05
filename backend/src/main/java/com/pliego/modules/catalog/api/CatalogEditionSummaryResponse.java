@@ -10,5 +10,5 @@ public record CatalogEditionSummaryResponse(String editionId, String bookId, Str
         @Schema(nullable = true) String coverLicense,
         @Schema(nullable = true) String coverAttribution,
         @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format, String language, boolean available, @Schema(nullable = true, allowableValues = {"EPUB", "PDF"}) String ebookFileFormat,
-        @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators) {
+        @Schema(nullable = true) Integer audioDurationSeconds, List<String> narrators, @Schema(nullable = true) CatalogOfferResponse offer) {
 }

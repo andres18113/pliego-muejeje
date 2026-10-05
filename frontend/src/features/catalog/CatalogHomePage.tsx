@@ -31,7 +31,7 @@ export function CatalogHomePage() {
       <main id="contenido-principal" tabIndex={-1} className={classes.home}>
         <HomeEditorial />
         <div className={classes.shell}>
-        <HomeNextReading categories={categories} categoriesPending={categoriesQuery.isPending} categoriesError={categoriesQuery.isError} onRetryCategories={() => void categoriesQuery.refetch()} />
+        <HomeNextReading />
         <HomeLiterature categories={categories} />
         <HomeCategories categories={categories} />
         {categoriesQuery.isError && <p className={classes.note} role="alert">No pudimos cargar las categorías. <HomeActionButton onClick={() => void categoriesQuery.refetch()}>Reintentar</HomeActionButton></p>}

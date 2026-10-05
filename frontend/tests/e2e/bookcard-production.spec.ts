@@ -48,8 +48,8 @@ for (const scheme of ["light", "dark"] as const) {
   test(`BookCard production ${scheme}: responsive grid, complete cover, identity and targets`, async ({ page }) => {
     test.setTimeout(120_000);
     await install(page, scheme);
-    // The Home presents books as reading scenes (see the Home specs); BookCard routes are the catalog and favorites.
-    for (const route of ["/catalog?que=lectura", "/favorites"]) {
+    // The Home presents books as reading scenes and Favoritos as a reading list; BookCard's route is the catalog.
+    for (const route of ["/catalog?que=lectura"]) {
       await page.goto(route);
       await expect(page.locator("[data-bookcard]")).toHaveCount(route === "/" ? 4 : 12);
       await page.evaluate(() => document.fonts.ready);
@@ -95,11 +95,11 @@ for (const scheme of ["light", "dark"] as const) {
           })),
         }));
         expect(metrics.overflow).toBe(0);
-        // Catalog: wide four-column shelf from 1024px (no sidebar); favorites keep the shared base grid.
+        // Catalog: library shelf, 5 columns from 1200px (no sidebar).
         expect(metrics.columns).toBe(route.startsWith("/catalog") ? width >= 1200 ? 5 : width >= 920 ? 4 : width >= 600 ? 3 : 2 : width >= 992 ? 4 : width >= 768 ? 3 : 2);
         expect(metrics.gap).toBe(route.startsWith("/catalog") ? width >= 920 ? 24 : width >= 600 ? 20 : width < 360 ? 12 : 16 : 16);
         if (width === 320) expect(metrics.cardWidth).toBe(route.startsWith("/catalog") ? 138 : 136);
-        for (const card of metrics.cards) { expect(card.favoriteBesideCart, `${route}, ${width}px, favorite placement`).toBe(true); expect(card.cartTextVisible).toBe(true); expect(card.cartNeutral).toBe(true); expect(card.cartText).toBe("Agregar"); expect(card.cartIcon).toBe(card.available ? "add_shopping_cart" : "shopping_cart_off"); expect(card.secondaryRows).toBe(0); expect(card.badge).toBe("text"); expect(card.stockOnCover).toBe(false); expect(card.identityBounded).toBe(true); expect(card.clipped).toBe(false); expect(card.commercialGap).toBeLessThanOrEqual(16); expect(card.links).toBe(1); expect(card.nestedButtons).toBe(false); expect(card.ratio).toBeCloseTo(2 / 3, 2); expect(card.fits).toBe(true); for (const target of card.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); } }
+        for (const card of metrics.cards) { expect(card.favoriteBesideCart, `${route}, ${width}px, favorite placement`).toBe(true); expect(card.cartTextVisible).toBe(true); expect(card.cartNeutral).toBe(true); expect(card.cartText).toBe("Agregar"); expect(card.cartIcon).toBe(card.available ? "add_shopping_cart" : "shopping_cart_off"); expect(card.secondaryRows).toBe(0); expect(card.badge).toBe("quiet"); expect(card.stockOnCover).toBe(false); expect(card.identityBounded).toBe(true); expect(card.clipped).toBe(false); expect(card.commercialGap).toBeLessThanOrEqual(16); expect(card.links).toBe(1); expect(card.nestedButtons).toBe(false); expect(card.ratio).toBeCloseTo(2 / 3, 2); expect(card.fits).toBe(true); for (const target of card.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); } }
         if ((route.startsWith("/catalog") || route === "/") && [320, 375, 768, 1024, 1200, 1440, 1920].includes(width)) {
           await page.locator(".edition-grid").screenshot({ path: `/tmp/pliego-${route === "/" ? "home" : "bookcard"}-${scheme}-${width}.png`, style: "header { visibility: hidden; }" });
         }
@@ -234,8 +234,8 @@ for (const scheme of ["light", "dark"] as const) {
     expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
     await card.locator("[data-bookcard-link]").tap();
     await expect(page).toHaveURL(/\/catalog\/editions\/9000003/);
-    await expect(page.locator(".detail-copy [data-stockstatus-label]")).toHaveText("No disponible");
-    await expect(page.locator(".detail-copy").getByText("Salamandra", { exact: true })).toBeVisible();
+    await expect(page.locator("main.detail-route [data-stockstatus-label]")).toHaveText("No disponible");
+    await expect(page.locator("main.detail-route").getByText("Salamandra", { exact: true })).toBeVisible();
     await context.close();
   });
 }
@@ -277,7 +277,7 @@ for (const scheme of ["light", "dark"] as const) {
     }
     await expect(touchScene.locator("[data-stockstatus-label]")).toHaveText("No disponible");
     await touchScene.locator("[data-reading-title]").tap();
-    await expect(touch.locator('.detail-copy [data-stockstatus-label]')).toHaveText("No disponible");
+    await expect(touch.locator('main.detail-route [data-stockstatus-label]')).toHaveText("No disponible");
     await context.close();
   });
 }

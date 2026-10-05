@@ -175,7 +175,8 @@ def _list_keys(client: Any, bucket: str, prefix: str) -> set[str]:
             raise UploadError("R2 object listing was truncated without a continuation token")
 
 
-def sync_assets(client: Any, bucket: str, assets: list[UploadAsset], prefix: str) -> dict[str, Any]:
+def sync_assets(client: Any, bucket: str, assets: list[UploadAsset], prefix: str,
+                allowed_existing_keys: set[str] | None = None) -> dict[str, Any]:
     errors: list[str] = []
     uploaded = 0
     skipped = 0
@@ -211,7 +212,7 @@ def sync_assets(client: Any, bucket: str, assets: list[UploadAsset], prefix: str
 
     try:
         remote_keys = _list_keys(client, bucket, prefix)
-        unexpected = sorted(remote_keys - expected_keys)
+        unexpected = sorted(remote_keys - expected_keys - (allowed_existing_keys or set()))
         missing = sorted(expected_keys - remote_keys)
         if unexpected:
             errors.append(

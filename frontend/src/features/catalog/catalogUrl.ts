@@ -73,7 +73,7 @@ export function safeCatalogReturnHref(candidate: string | null | undefined) {
   }
   try {
     const parsed = new URL(candidate, window.location.origin);
-    const isCatalogPath = parsed.pathname === "/" || parsed.pathname === "/catalog" || parsed.pathname === "/favorites"
+    const isCatalogPath = parsed.pathname === "/" || parsed.pathname === "/catalog" || parsed.pathname === "/ofertas" || parsed.pathname === "/favorites"
       || /^\/catalog\/editions\/[1-9][0-9]*\/?$/.test(parsed.pathname);
     return parsed.origin === window.location.origin && isCatalogPath
       ? `${parsed.pathname}${parsed.search}${parsed.hash}`
@@ -105,7 +105,7 @@ function normalizeCatalogCriteria(criteria: CatalogCriteria): CatalogCriteria {
     minPrice,
     maxPrice,
     language,
-    format: criteria.format === "PAPERBACK" || criteria.format === "HARDCOVER" ? criteria.format : "",
+    format: criteria.format === "PAPERBACK" || criteria.format === "HARDCOVER" || criteria.format === "EBOOK" || criteria.format === "AUDIOBOOK" ? criteria.format : "",
     sort: criteria.sort === "PRICE_ASC" || criteria.sort === "PRICE_DESC" ? criteria.sort : "TITLE_ASC",
     page: Number.isInteger(criteria.page) && criteria.page >= 0 && criteria.page <= 2_147_483_647
       ? criteria.page

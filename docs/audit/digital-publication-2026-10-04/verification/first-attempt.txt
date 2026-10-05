@@ -1,0 +1,43 @@
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/publish_digital_editions.py", line 258, in <module>
+    raise SystemExit(main())
+                     ~~~~^^
+  File "/home/andres18123/PLIEGO/scripts/publish_digital_editions.py", line 253, in main
+    execute(args.repo, private_env(args.admin_env), private_env(args.r2_env), args.repo / 'docs/audit/digital-publication-2026-10-04')
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/publish_digital_editions.py", line 165, in execute
+    public = verify_public_images(items)
+  File "/home/andres18123/PLIEGO/scripts/publish_digital_editions.py", line 138, in verify_public_images
+    return list(pool.map(check, items))
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 625, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 318, in _result_or_cancel
+    return fut.result(timeout)
+           ~~~~~~~~~~^^^^^^^^^
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 460, in result
+    return self.__get_result()
+           ~~~~~~~~~~~~~~~~~^^
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/concurrent/futures/_base.py", line 402, in __get_result
+    raise self._exception
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/concurrent/futures/thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/home/andres18123/PLIEGO/scripts/publish_digital_editions.py", line 128, in check
+    with urllib.request.urlopen(req, timeout=30) as response:
+         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/urllib/request.py", line 189, in urlopen
+    return opener.open(url, data, timeout)
+           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/urllib/request.py", line 495, in open
+    response = meth(req, response)
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/urllib/request.py", line 604, in http_response
+    response = self.parent.error(
+        'http', request, response, code, msg, hdrs)
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/urllib/request.py", line 533, in error
+    return self._call_chain(*args)
+           ~~~~~~~~~~~~~~~~^^^^^^^
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/urllib/request.py", line 466, in _call_chain
+    result = func(*args)
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/urllib/request.py", line 613, in http_error_default
+    raise HTTPError(req.full_url, code, msg, hdrs, fp)
+urllib.error.HTTPError: HTTP Error 403: Forbidden

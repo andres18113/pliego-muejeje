@@ -10,7 +10,14 @@ public final class CartResponses {
     private CartResponses() { }
 
     public record Cart(@Schema(nullable = true) String cartId, @Schema(nullable = true) String state,
-            List<Item> items, String totalCurrent) { }
+            List<Item> items, String totalCurrent, String subtotal, String taxRate, String taxAmount,
+            String shippingAmount, String total,
+            @Schema(nullable = true, format = "date", example = "2026-10-05",
+                    description = "Primer día de la ventana de entrega a domicilio en el calendario de Ecuador (America/Guayaquil); null si el carrito no incluye libros físicos.")
+            String estimatedDeliveryFrom,
+            @Schema(nullable = true, format = "date", example = "2026-10-07",
+                    description = "Último día de la ventana de entrega a domicilio: dos días después del primero; null si el carrito no incluye libros físicos.")
+            String estimatedDeliveryTo) { }
 
     @Schema(name = "CartItem")
     public record Item(String cartItemId, String editionId, String title, String authors, String sku,

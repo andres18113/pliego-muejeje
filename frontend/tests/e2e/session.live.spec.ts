@@ -17,17 +17,17 @@ test("restores CUSTOMER across reload and reopen, then keeps logout through relo
   await page.getByLabel("Contraseña").fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/account$/);
-  await expect(page.getByRole("heading", { level: 1, name: "Mi cuenta" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Mi perfil" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Menú de cuenta" })).toBeVisible();
   expect(await page.evaluate(() => [localStorage.length, sessionStorage.length])).toEqual([0, 0]);
 
   await page.reload();
-  await expect(page.getByRole("heading", { level: 1, name: "Mi cuenta" })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Mi perfil" })).toBeVisible();
   await expect(page.getByRole("button", { name: "Menú de cuenta" })).toBeVisible();
 
   const reopened = await context.newPage();
   await reopened.goto("/account");
-  await expect(reopened.getByRole("heading", { level: 1, name: "Mi cuenta" })).toBeVisible();
+  await expect(reopened.getByRole("heading", { level: 1, name: "Mi perfil" })).toBeVisible();
   await reopened.getByRole("button", { name: "Menú de cuenta" }).click();
   await reopened.getByRole("menuitem", { name: "Cerrar sesión" }).click();
   await expect(reopened.getByRole("navigation", { name: "Búsqueda, carrito y cuenta" })

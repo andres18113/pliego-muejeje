@@ -10,9 +10,10 @@ export default defineConfig({
     },
   },
   server: {
+    fs: { allow: [new URL(".", import.meta.url).pathname, new URL("../shared", import.meta.url).pathname] },
     proxy: {
       "/api": {
-        target: "http://localhost:8080",
+        target: process.env.PLIEGO_API_PROXY_TARGET || "http://localhost:8080",
         changeOrigin: true,
       },
     },

@@ -56,6 +56,7 @@ import com.nimbusds.jose.JWSObject;
 import com.nimbusds.jose.Payload;
 import com.nimbusds.jose.crypto.MACSigner;
 
+@org.springframework.test.context.TestPropertySource(properties = "pliego.mail.enabled=false")
 @SpringBootTest(properties = {
         "spring.datasource.url=jdbc:postgresql://localhost:5432/pliego_i2_test",
         "spring.datasource.username=pliego_test",
@@ -138,7 +139,7 @@ class AuthApiIntegrationTest {
 
     @Test
     void registerHashesPasswordBeforeCallingGatewayAndReturnsNoCredentialMaterial() throws Exception {
-        identityGateway.registrationResult = new RegistrationResult(100, 87, "ACTIVE");
+        identityGateway.registrationResult = new RegistrationResult(100, 87, "PENDING_VERIFICATION");
 
         var response = mvc.perform(post("/api/v1/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -147,7 +148,7 @@ class AuthApiIntegrationTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.userId").value("100"))
                 .andExpect(jsonPath("$.customerId").value("87"))
-                .andExpect(jsonPath("$.state").value("ACTIVE"))
+                .andExpect(jsonPath("$.state").value("PENDING_VERIFICATION"))
                 .andReturn();
 
         org.junit.jupiter.api.Assertions.assertEquals("ana@example.com", identityGateway.registeredEmail);
@@ -161,6 +162,39 @@ class AuthApiIntegrationTest {
         org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString()
                 .contains(identityGateway.registeredPasswordHash));
         org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString().contains("password"));
+        org.junit.jupiter.api.Assertions.assertTrue(identityGateway.verificationHash.matches("[0-9a-f]{64}"));
+        org.junit.jupiter.api.Assertions.assertFalse(response.getResponse().getContentAsString().contains(identityGateway.verificationNonce));
+    }
+
+    @Test
+    void unverifiedLoginRequiresCorrectPasswordBeforeReturningVerificationFeedback() throws Exception {
+        identityGateway.authData.put("ana@example.com", new UserAuthData(100,"ana@example.com",
+                passwordEncoder.encode("password-segura"),"CUSTOMER","UNVERIFIED"));
+        mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON).content(LOGIN_JSON))
+                .andExpect(status().isForbidden()).andExpect(jsonPath("$.code").value("EMAIL_NOT_VERIFIED"));
+        mvc.perform(post("/api/v1/auth/login").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"email\":\"ana@example.com\",\"password\":\"incorrecta\"}"))
+                .andExpect(status().isUnauthorized()).andExpect(jsonPath("$.code").value("AUTH_INVALID_CREDENTIALS"));
+    }
+
+    @Test
+    void emailActionEndpointsArePublicNeutralAndValidateTokensAndPasswords() throws Exception {
+        for(String path:List.of("resend-verification","forgot-password")) {
+            String known=mvc.perform(post("/api/v1/auth/"+path).contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"email\":\"ana@example.com\"}")).andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
+            String unknown=mvc.perform(post("/api/v1/auth/"+path).contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"email\":\"unknown@example.com\"}")).andExpect(status().isAccepted()).andReturn().getResponse().getContentAsString();
+            org.junit.jupiter.api.Assertions.assertEquals(known,unknown);
+        }
+        mvc.perform(post("/api/v1/auth/verify-email").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"token\":\""+"x".repeat(43)+"\"}"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("EMAIL_ACTION_INVALID"));
+        mvc.perform(post("/api/v1/auth/reset-password").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"token\":\""+"x".repeat(43)+"\",\"password\":\"Nueva-segura-2026\"}"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("EMAIL_ACTION_INVALID"));
+        mvc.perform(post("/api/v1/auth/reset-password").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"token\":\""+"x".repeat(43)+"\",\"password\":\"corta\"}"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
     }
 
     @Test
@@ -496,19 +530,37 @@ class AuthApiIntegrationTest {
         private String registeredFirstNames;
         private String registeredLastNames;
         private String registeredPhone;
+        private String verificationHash;
+        private String verificationNonce;
 
         @Override
         public RegistrationResult register(String email, String passwordHash, String firstNames, String lastNames,
-                String phone) {
+                String phone, String verificationHash, String verificationNonce) {
             registeredEmail = email;
             registeredPasswordHash = passwordHash;
             registeredFirstNames = firstNames;
             registeredLastNames = lastNames;
             registeredPhone = phone;
+            this.verificationHash = verificationHash;
+            this.verificationNonce = verificationNonce;
             if (registrationFailure != null) {
                 throw registrationFailure;
             }
             return registrationResult;
+        }
+
+        @Override
+        public boolean requestEmailAction(String email, String purpose, String hash, String nonce, String remoteHash) {
+            return false;
+        }
+
+        @Override
+        public boolean consumeEmailAction(String purpose, String hash, String passwordHash) {
+            return false;
+        }
+
+        @Override
+        public void enqueueEmailVerification(long userId, String hash, String nonce) {
         }
 
         @Override
@@ -517,10 +569,11 @@ class AuthApiIntegrationTest {
         }
 
         @Override
-        public void createSession(long userId, String refreshTokenHash, Instant expiresAt) {
+        public boolean createSession(long userId, String refreshTokenHash, Instant expiresAt, String expectedPasswordHash) {
             UserAuthData user = authData.values().stream().filter(candidate -> candidate.userId() == userId)
                     .findFirst().orElseThrow();
             sessions.put(refreshTokenHash, new UserSessionData(userId, user.email(), user.role(), expiresAt));
+            return true;
         }
 
         @Override

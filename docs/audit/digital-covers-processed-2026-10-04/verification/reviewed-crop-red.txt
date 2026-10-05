@@ -1,0 +1,558 @@
+..EFFFFFFFFFFFFFFFFFFFFFFFFFFEEEF.EE.EEFFFFFFFFEF.
+======================================================================
+ERROR: test_explicit_review_can_exceed_conservative_crop_without_changing_pixels (test_reviewed_crop.ReviewedCropTests.test_explicit_review_can_exceed_conservative_crop_without_changing_pixels)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 47, in test_explicit_review_can_exceed_conservative_crop_without_changing_pixels
+    output, result = normalize_image(source, self.reviewed(source, box))
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 233, in normalize_image
+    raise CoverRejected("REVISION_ENCUADRE", "La proporción requiere un recorte excesivo o contain; no se añadirá padding.", details)
+cover_images.CoverRejected: La proporción requiere un recorte excesivo o contain; no se añadirá padding.
+
+======================================================================
+ERROR: test_malformed_explicit_protections_are_not_ignored (test_reviewed_crop.ReviewedCropTests.test_malformed_explicit_protections_are_not_ignored) (options={'editorialBorders': [[]]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 136, in test_malformed_explicit_protections_are_not_ignored
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], **options))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 39, in reject
+    normalize_image(source, options)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 205, in normalize_image
+    if not isinstance(protected_sides, list) or any(s not in candidates for s in protected_sides):
+                                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 205, in <genexpr>
+    if not isinstance(protected_sides, list) or any(s not in candidates for s in protected_sides):
+                                                    ^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'list'
+
+======================================================================
+ERROR: test_malformed_explicit_protections_are_not_ignored (test_reviewed_crop.ReviewedCropTests.test_malformed_explicit_protections_are_not_ignored) (options={'editorialBorders': [{}]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 136, in test_malformed_explicit_protections_are_not_ignored
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], **options))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 39, in reject
+    normalize_image(source, options)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 205, in normalize_image
+    if not isinstance(protected_sides, list) or any(s not in candidates for s in protected_sides):
+                                                ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 205, in <genexpr>
+    if not isinstance(protected_sides, list) or any(s not in candidates for s in protected_sides):
+                                                    ^^^^^^^^^^^^^^^^^^^
+TypeError: unhashable type: 'dict'
+
+======================================================================
+ERROR: test_malformed_explicit_protections_are_not_ignored (test_reviewed_crop.ReviewedCropTests.test_malformed_explicit_protections_are_not_ignored) (options={'protectedRegions': [[0, 0, 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, 360]]})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 136, in test_malformed_explicit_protections_are_not_ignored
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], **options))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 39, in reject
+    normalize_image(source, options)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 197, in normalize_image
+    or any(type(v) not in {int,float} or not np.isfinite(v) for v in box)
+       ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 197, in <genexpr>
+    or any(type(v) not in {int,float} or not np.isfinite(v) for v in box)
+                                             ~~~~~~~~~~~^^^
+TypeError: ufunc 'isfinite' not supported for the input types, and the inputs could not be safely coerced to any supported types according to the casting rule ''safe''
+
+======================================================================
+ERROR: test_review_can_remove_an_external_margin_above_five_percent (test_reviewed_crop.ReviewedCropTests.test_review_can_remove_an_external_margin_above_five_percent)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 62, in test_review_can_remove_an_external_margin_above_five_percent
+    output, result = normalize_image(source, self.reviewed(source, [0, 24, 240, 384]))
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 216, in normalize_image
+    raise CoverRejected("REVISION_ENCUADRE", "El margen exterior supera 5 % por lado.", details)
+cover_images.CoverRejected: El margen exterior supera 5 % por lado.
+
+======================================================================
+ERROR: test_review_can_trim_transparent_exterior_but_cannot_add_matte (test_reviewed_crop.ReviewedCropTests.test_review_can_trim_transparent_exterior_but_cannot_add_matte)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 153, in test_review_can_trim_transparent_exterior_but_cannot_add_matte
+    output, result = normalize_image(source, self.reviewed(source, [20, 20, 260, 380]))
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 190, in normalize_image
+    raise CoverRejected("REVISION_ENCUADRE", "El exterior transparente supera 5 % por lado.", details)
+cover_images.CoverRejected: El exterior transparente supera 5 % por lado.
+
+======================================================================
+ERROR: test_review_does_not_override_explicit_editorial_borders (test_reviewed_crop.ReviewedCropTests.test_review_does_not_override_explicit_editorial_borders)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 126, in test_review_does_not_override_explicit_editorial_borders
+    output, _ = normalize_image(source, self.reviewed(source, [100, 0, 400, 450], editorialBorders=["top", "right", "bottom"]))
+                ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 233, in normalize_image
+    raise CoverRejected("REVISION_ENCUADRE", "La proporción requiere un recorte excesivo o contain; no se añadirá padding.", details)
+cover_images.CoverRejected: La proporción requiere un recorte excesivo o contain; no se añadirá padding.
+
+======================================================================
+ERROR: test_review_does_not_override_explicit_protected_regions (test_reviewed_crop.ReviewedCropTests.test_review_does_not_override_explicit_protected_regions)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 120, in test_review_does_not_override_explicit_protected_regions
+    output, _ = normalize_image(source, self.reviewed(source, [100, 0, 400, 450], protectedRegions=[[110, 10, 150, 30]]))
+                ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 233, in normalize_image
+    raise CoverRejected("REVISION_ENCUADRE", "La proporción requiere un recorte excesivo o contain; no se añadirá padding.", details)
+cover_images.CoverRejected: La proporción requiere un recorte excesivo o contain; no se añadirá padding.
+
+======================================================================
+ERROR: test_static_rgb_webp_size_hash_and_determinism_use_existing_encoder (test_reviewed_crop.ReviewedCropTests.test_static_rgb_webp_size_hash_and_determinism_use_existing_encoder)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 174, in test_static_rgb_webp_size_hash_and_determinism_use_existing_encoder
+    data, result = normalize_file(source, options)
+                   ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 278, in normalize_file
+    image, details = normalize_image(source, override)
+                     ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/cover_images.py", line 233, in normalize_image
+    raise CoverRejected("REVISION_ENCUADRE", "La proporción requiere un recorte excesivo o contain; no se añadirá padding.", details)
+cover_images.CoverRejected: La proporción requiere un recorte excesivo o contain; no se añadirá padding.
+
+======================================================================
+FAIL: test_fractional_source_coordinates_are_not_rounded_or_recentred (test_reviewed_crop.ReviewedCropTests.test_fractional_source_coordinates_are_not_rounded_or_recentred)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 71, in test_fractional_source_coordinates_are_not_rounded_or_recentred
+    self.assertTrue(np.array_equal(np.asarray(output), np.asarray(expected)))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes) (digest=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 97, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedSourceSha256=digest))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes) (digest='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 97, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedSourceSha256=digest))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes) (digest=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 97, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedSourceSha256=digest))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes) (digest=42)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 97, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedSourceSha256=digest))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes) (digest=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 97, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedSourceSha256=digest))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes) (digest='0000000000000000000000000000000000000000000000000000000000000000')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 97, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedSourceSha256=digest))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes) (digest='zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 97, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedSourceSha256=digest))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_hash_is_required_and_bound_to_exact_source_bytes (test_reviewed_crop.ReviewedCropTests.test_hash_is_required_and_bound_to_exact_source_bytes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 100, in test_hash_is_required_and_bound_to_exact_source_bytes
+    self.reject(source, options)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[0, 0, 240])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[0, 0, 240, 360, 0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box='[0,0,240,360]')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[False, 0, 240, 360])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=['0', 0, 240, 360])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[nan, 0, 240, 360])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[0, 0, inf, 360])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[-1, 0, 239, 360])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[0, 0, 241, 361.5])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[0, 0, 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000, 360])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[0, 0, 0, 0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[240, 360, 0, 0])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_invalid_boxes_fail_closed (test_reviewed_crop.ReviewedCropTests.test_invalid_boxes_fail_closed) (box=[0, 0, 240, 359])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 82, in test_invalid_boxes_fail_closed
+    self.reject(source, self.reviewed(source, box))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_inventory_passes_explicit_review_fields_and_blank_keeps_default (test_reviewed_crop.ReviewedCropTests.test_inventory_passes_explicit_review_fields_and_blank_keeps_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 205, in test_inventory_passes_explicit_review_fields_and_blank_keeps_default
+    self.assertEqual(jobs[0][3], {"protectedRegions": [], "editorialBorders": [],
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     "reviewedCropBox": [0, 0, 240, 360], "reviewedCropReason": "Revisión por archivo",
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     "reviewedSourceSha256": "a" * 64})
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'pro[37 chars]': []} != {'pro[37 chars]': [], 'reviewedCropBox': [0, 0, 240, 360], 'r[130 chars]aaa'}
+- {'editorialBorders': [], 'protectedRegions': []}
++ {'editorialBorders': [],
++  'protectedRegions': [],
++  'reviewedCropBox': [0, 0, 240, 360],
++  'reviewedCropReason': 'Revisión por archivo',
++  'reviewedSourceSha256': 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
+
+======================================================================
+FAIL: test_inventory_review_reaches_json_and_csv_reports (test_reviewed_crop.ReviewedCropTests.test_inventory_review_reaches_json_and_csv_reports)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 217, in test_inventory_review_reaches_json_and_csv_reports
+    self.assertEqual(report["summary"]["accepted"], 1)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 0 != 1
+
+======================================================================
+FAIL: test_orphan_review_metadata_does_not_silently_enable_default (test_reviewed_crop.ReviewedCropTests.test_orphan_review_metadata_does_not_silently_enable_default)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 107, in test_orphan_review_metadata_does_not_silently_enable_default
+    self.reject(source, {"reviewedCropReason": "Reviewed"})
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text) (reason=None)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 88, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedCropReason=reason))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text) (reason='')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 88, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedCropReason=reason))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text) (reason=' \n')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 88, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedCropReason=reason))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text) (reason=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 88, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedCropReason=reason))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text) (reason=42)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 88, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedCropReason=reason))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text) (reason=[])
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 88, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedCropReason=reason))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text) (reason={})
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 88, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, self.reviewed(source, [0, 0, 240, 360], reviewedCropReason=reason))
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_review_reason_is_required_and_must_be_nonempty_text (test_reviewed_crop.ReviewedCropTests.test_review_reason_is_required_and_must_be_nonempty_text)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 91, in test_review_reason_is_required_and_must_be_nonempty_text
+    self.reject(source, options)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 38, in reject
+    with self.assertRaises(CoverRejected) as error:
+         ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+AssertionError: CoverRejected not raised
+
+======================================================================
+FAIL: test_upscale_cap_still_applies_and_exactly_four_is_allowed (test_reviewed_crop.ReviewedCropTests.test_upscale_cap_still_applies_and_exactly_four_is_allowed)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tmp/pliego-processed-audit/extracted/scripts/test_reviewed_crop.py", line 114, in test_upscale_cap_still_applies_and_exactly_four_is_allowed
+    self.assertEqual(result["upscale_factor"], 4.0)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 3.0 != 4.0
+
+----------------------------------------------------------------------
+Ran 20 tests in 1.634s
+
+FAILED (failures=36, errors=9)

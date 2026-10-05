@@ -8,6 +8,11 @@ import {
 } from "./catalogUrl";
 
 describe("catalog URL helpers", () => {
+  it.each(["EBOOK", "AUDIOBOOK"])("preserves digital format %s through filters, links and reloads", (format) => {
+    const criteria = readCatalogCriteria(`?format=${format}&que=Libro`);
+    expect(criteria.format).toBe(format);
+    expect(readCatalogCriteria(writeCatalogCriteria(criteria).toString()).format).toBe(format);
+  });
   it("round-trips supported criteria using the existing zero-based page URL semantics", () => {
     const criteria = readCatalogCriteria(
       "?que=Julio+Verne&scope=author&category=ciencia-ficcion&minPrice=7.2&maxPrice=38&language=ES&format=HARDCOVER&sort=PRICE_DESC&page=2&pageSize=40",

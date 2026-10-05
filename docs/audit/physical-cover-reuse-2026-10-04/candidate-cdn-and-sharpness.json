@@ -1,0 +1,55 @@
+{
+  "records": [
+    {
+      "sku": "PLG-BK-000046",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000046-16e1f40ce870.webp",
+      "status": 200,
+      "content_type": "image/webp",
+      "cache_control": "public, max-age=31536000, immutable",
+      "sha256": "16e1f40ce870cec82ad24066d14e1fbd3cd5731e099f04babf0f21885fdf6171",
+      "bytes": 49410,
+      "matches_local_mirror": true,
+      "grayscale_laplacian_variance_at_600x900": {
+        "title": 1054.23,
+        "author": 1575.32,
+        "publisher": 1843.65
+      }
+    },
+    {
+      "sku": "PLG-BK-000063",
+      "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000063-e67d4964b228.webp",
+      "status": 200,
+      "content_type": "image/webp",
+      "cache_control": "public, max-age=31536000, immutable",
+      "sha256": "e67d4964b228d5d977646edaeea3a96fa94cd07a2305dec08aef94134feb5825",
+      "bytes": 37082,
+      "matches_local_mirror": true,
+      "grayscale_laplacian_variance_at_600x900": {
+        "title": 338.62,
+        "author": 175.19,
+        "publisher": 90.55
+      }
+    }
+  ],
+  "metric": "Grayscale variance of 4-center-neighbors Laplacian after resizing both images to 600x900 with LANCZOS. Supports visual inspection, not a standalone quality criterion.",
+  "regions_at_600x900": {
+    "title": [
+      100,
+      55,
+      470,
+      195
+    ],
+    "author": [
+      130,
+      680,
+      455,
+      755
+    ],
+    "publisher": [
+      155,
+      805,
+      455,
+      865
+    ]
+  }
+}

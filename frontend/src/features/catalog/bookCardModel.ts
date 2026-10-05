@@ -1,9 +1,11 @@
 import type { MouseEventHandler } from "react";
 import type { To } from "react-router-dom";
 import type { EditionSummary } from "@/shared/api/catalog";
+import { resolveStockStatus, type StockAvailability } from "./stockStatusModel";
 import { formatEdition, formatLanguage, formatUsd } from "./formatters";
+import { toOfferViewModel } from "./offersViewModel";
 
-export type BookCardEditionSource = Pick<EditionSummary, "editionId" | "title" | "authors" | "publisher" | "format" | "language" | "price" | "available" | "coverUrl" | "coverLicense" | "coverAttribution">;
+export type BookCardEditionSource = Pick<EditionSummary, "editionId" | "title" | "authors" | "publisher" | "format" | "language" | "price" | "available" | "coverUrl" | "coverLicense" | "coverAttribution" | "offer">;
 export interface BookCardData {
   id: string;
   title: string;
@@ -11,13 +13,17 @@ export interface BookCardData {
   publisher: string;
   editionLabel: string;
   priceLabel: string;
+  originalPriceLabel?: string;
+  discountLabel?: string;
+  offer?: ReturnType<typeof toOfferViewModel>;
   available: boolean;
   cover: { url: string | null; license: string | null; attribution: string | null };
 }
 export type FavoriteControl =
   | { state: "ready"; selected: boolean; onPress: () => void }
-  | { state: "pending"; selected: boolean }
-  | { state: "unconfirmed" | "restricted"; reason: string };
+  | { state: "pending"; selected?: boolean; label?: string }
+  | { state: "unconfirmed" | "restricted"; reason: string }
+  | { state: "uncertain"; reason: string; onPress: () => void };
 export type CartControl =
   | { state: "ready" | "success"; onPress: () => void }
   | { state: "pending" }
@@ -41,6 +47,7 @@ export function toBookCardData(edition: BookCardEditionSource): BookCardData {
   return { id: edition.editionId, title: edition.title, authors: edition.authors, publisher: edition.publisher,
     editionLabel: `${formatEdition(edition.format)} · ${formatLanguage(edition.language)}`,
     priceLabel: formatUsd(edition.price), available: edition.available,
+    ...(edition.offer ? { originalPriceLabel: formatUsd(edition.offer.originalPrice), discountLabel: formatUsd(edition.offer.savingsAmount), offer: toOfferViewModel(edition.offer) } : {}),
     cover: { url: edition.coverUrl, license: edition.coverLicense, attribution: edition.coverAttribution } };
 }
 
@@ -51,7 +58,25 @@ export function bookCardNavigationState(book: BookCardData, catalogReturn = fals
 }
 
 export function favoriteActionLabel(control: FavoriteControl) {
-  if (control.state === "pending") return "Guardando favorito…";
+  if (control.state === "uncertain") return "Consultar favorito";
+  if (control.state === "pending") return control.label ?? "Guardando favorito…";
   if (control.state === "unconfirmed") return "Favoritos sin confirmar";
   return control.state === "ready" && control.selected ? "Quitar de favoritos" : "Agregar a favoritos";
+}
+
+/** Presentation varies by surface; stock eligibility and action state are interpreted once. */
+export function resolveCartAction(availability: StockAvailability, cart: CartControl, appearance: "card" | "row" | "scene" = "card") {
+  const stock = resolveStockStatus(availability);
+  const unavailable = !stock.canAddToCart;
+  const idleText = appearance === "card" ? "Agregar" : "Agregar al carrito";
+  const text = unavailable ? (appearance === "row" ? stock.label : idleText)
+    : cart.state === "pending" ? "Agregando…"
+    : cart.state === "success" ? (appearance === "scene" ? "Agregado al carrito" : "Agregado")
+    : cart.state === "uncertain" ? (appearance === "scene" ? "Consulta el carrito" : "Sin confirmar") : idleText;
+  const label = unavailable ? (appearance === "row" ? stock.label : "Agregar al carrito")
+    : cart.state === "pending" ? text
+    : cart.state === "success" ? "Agregado al carrito. Agregar otra unidad"
+    : cart.state === "uncertain" ? `${text}. Consulta el carrito antes de reintentar` : "Agregar al carrito";
+  const icon = unavailable ? "shopping_cart_off" : cart.state === "success" ? "check" : cart.state === "pending" ? "schedule" : cart.state === "uncertain" ? "info" : "add_shopping_cart";
+  return { text, label, icon, unavailable, enabled: stock.canAddToCart && "onPress" in cart, busy: cart.state === "pending" } as const;
 }

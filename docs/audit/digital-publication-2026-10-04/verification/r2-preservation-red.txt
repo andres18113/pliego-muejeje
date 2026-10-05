@@ -1,0 +1,13 @@
+E...
+======================================================================
+ERROR: test_batch_sync_preserves_explicit_historical_objects_without_uploading_them (test_upload_r2_covers.UploadR2CoversTests.test_batch_sync_preserves_explicit_historical_objects_without_uploading_them)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/andres18123/PLIEGO/scripts/test_upload_r2_covers.py", line 58, in test_batch_sync_preserves_explicit_historical_objects_without_uploading_them
+    result = upload_module.sync_assets(client, 'bucket', assets, prefix, allowed_existing_keys={old_key})
+TypeError: sync_assets() got an unexpected keyword argument 'allowed_existing_keys'
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
+
+FAILED (errors=1)

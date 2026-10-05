@@ -1,0 +1,1755 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-815903ceb1052d80.webp",
+      "libro": {
+        "titulo": "Arduino práctico. Edición 2022",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Lozano Equisoain, Daniel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Anaya Multimedia",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "25.99",
+        "sku": "PLG-BK-000186",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1957,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000186-9739b5421e24.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/300709",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-815903ceb1052d80",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "199",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c32d28dd025f06a1"
+        },
+        "author_bindings": [
+          {
+            "name": "Lozano Equisoain, Daniel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Lozano Equisoain, Daniel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://www.anayamultimedia.es/libro/manuales-imprescindibles/arduino-practico-edicion-2022-daniel-lozano-equisoain-9788441544987/",
+            "observed_text": "Anaya Multimedia",
+            "basis": "Catálogo oficial del editor; título y autoría cotejados con portada original.",
+            "source": "https://www.anayamultimedia.es/libro/manuales-imprescindibles/arduino-practico-edicion-2022-daniel-lozano-equisoain-9788441544987/",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "INFERRED_UNEQUIVOCAL",
+            "source_url": "https://www.anayamultimedia.es/libro/manuales-imprescindibles/arduino-practico-edicion-2022-daniel-lozano-equisoain-9788441544987/",
+            "observed_text": "Índice: Cómo usar este libro. Destinatarios de este libro. Organización del libro. Convenios empleados. Ejemplos del libro. Introducción a Arduino.",
+            "basis": "Contenido o índice de la obra en español; inferencia inequívoca de lengua del contenido, no del título.",
+            "source": "https://www.anayamultimedia.es/libro/manuales-imprescindibles/arduino-practico-edicion-2022-daniel-lozano-equisoain-9788441544987/",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 152,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/300709",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Arduino práctico. Edición 2022 - Lozano Equisoain, Daniel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-815903ceb1052d80.webp",
+            "cover_sha256": "9739b5421e24fbc92197fad6f440fc0bc0f9194cae7f88541b7fafd9d0837e51",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Lozano Equisoain, Daniel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 152,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/300709",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Arduino práctico. Edición 2022 - Lozano Equisoain, Daniel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-815903ceb1052d80.webp",
+            "cover_sha256": "9739b5421e24fbc92197fad6f440fc0bc0f9194cae7f88541b7fafd9d0837e51",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 152,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/300709",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Arduino práctico. Edición 2022 - Lozano Equisoain, Daniel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-815903ceb1052d80.webp",
+            "cover_sha256": "9739b5421e24fbc92197fad6f440fc0bc0f9194cae7f88541b7fafd9d0837e51",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 152,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/300709",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Arduino práctico. Edición 2022 - Lozano Equisoain, Daniel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-815903ceb1052d80.webp",
+          "cover_sha256": "9739b5421e24fbc92197fad6f440fc0bc0f9194cae7f88541b7fafd9d0837e51",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "200",
+        "imported_book_id": "199"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-00ba28dbbd8adb65.webp",
+      "libro": {
+        "titulo": "Bases de datos avanzadas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Aramburu Cabo, María José",
+            "orden": 1
+          },
+          {
+            "nombre": "Sanz Blasco, Ismael",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universitat Jaume I. Servei de Comunicació i Publicacions",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "26.99",
+        "sku": "PLG-BK-000273",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5814,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000273-497e835cc887.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51741",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-00ba28dbbd8adb65",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "200",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-10509b49f0716890"
+        },
+        "author_bindings": [
+          {
+            "name": "Aramburu Cabo, María José",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Sanz Blasco, Ismael",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Aramburu Cabo, María José; Sanz Blasco, Ismael",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+            "sha256": "2d92e5d475bd6edf9e65be0a27c9202b23f7c8a1f3b706aee0a8ad3ae91eba35",
+            "observed_text": "Castelló de la Plana : Universitat Jaume I. Servei de Comunicació i Publicacions, [2013]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "2d92e5d475bd6edf9e65be0a27c9202b23f7c8a1f3b706aee0a8ad3ae91eba35",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-00ba28dbbd8adb65.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+            "sha256": "2d92e5d475bd6edf9e65be0a27c9202b23f7c8a1f3b706aee0a8ad3ae91eba35",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "2d92e5d475bd6edf9e65be0a27c9202b23f7c8a1f3b706aee0a8ad3ae91eba35",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-00ba28dbbd8adb65.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51741",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 155,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51741",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Bases de datos avanzadas - Aramburu Cabo, María José; Sanz Blasco, Ismael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-00ba28dbbd8adb65.webp",
+            "cover_sha256": "497e835cc88783362d9fccc932c2179423fbd14a1a974b22680bf5e8e6217a8f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Aramburu Cabo, María José; Sanz Blasco, Ismael",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 155,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51741",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Bases de datos avanzadas - Aramburu Cabo, María José; Sanz Blasco, Ismael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-00ba28dbbd8adb65.webp",
+            "cover_sha256": "497e835cc88783362d9fccc932c2179423fbd14a1a974b22680bf5e8e6217a8f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 155,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51741",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Bases de datos avanzadas - Aramburu Cabo, María José; Sanz Blasco, Ismael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-00ba28dbbd8adb65.webp",
+            "cover_sha256": "497e835cc88783362d9fccc932c2179423fbd14a1a974b22680bf5e8e6217a8f",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 155,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51741",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Bases de datos avanzadas - Aramburu Cabo, María José; Sanz Blasco, Ismael.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-00ba28dbbd8adb65.webp",
+          "cover_sha256": "497e835cc88783362d9fccc932c2179423fbd14a1a974b22680bf5e8e6217a8f",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "201",
+        "imported_book_id": "200"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-3a1c22b02c0a373c.webp",
+      "libro": {
+        "titulo": "El manual de Arduino",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Aliverti, Paolo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Marcombo",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000127",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4635,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000127-ffa793621bb8.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280056",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-3a1c22b02c0a373c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "201",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-852c228faefa714a"
+        },
+        "author_bindings": [
+          {
+            "name": "Aliverti, Paolo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Aliverti, Paolo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+            "sha256": "79544e60ab300720d2724d67b3ffc3863299249432d290f3686e0d51d4e0c6f6",
+            "observed_text": "Barcelona (España) : Marcombo, 2016.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "79544e60ab300720d2724d67b3ffc3863299249432d290f3686e0d51d4e0c6f6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3a1c22b02c0a373c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+            "sha256": "79544e60ab300720d2724d67b3ffc3863299249432d290f3686e0d51d4e0c6f6",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "79544e60ab300720d2724d67b3ffc3863299249432d290f3686e0d51d4e0c6f6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-3a1c22b02c0a373c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB280056",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 158,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280056",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/El manual de Arduino - Aliverti, Paolo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-3a1c22b02c0a373c.webp",
+            "cover_sha256": "ffa793621bb83e48384547d3f591843c2ec78f42121b17454c0857408c307552",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Aliverti, Paolo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 158,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280056",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/El manual de Arduino - Aliverti, Paolo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-3a1c22b02c0a373c.webp",
+            "cover_sha256": "ffa793621bb83e48384547d3f591843c2ec78f42121b17454c0857408c307552",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 158,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280056",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/El manual de Arduino - Aliverti, Paolo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-3a1c22b02c0a373c.webp",
+            "cover_sha256": "ffa793621bb83e48384547d3f591843c2ec78f42121b17454c0857408c307552",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 158,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/280056",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/El manual de Arduino - Aliverti, Paolo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-3a1c22b02c0a373c.webp",
+          "cover_sha256": "ffa793621bb83e48384547d3f591843c2ec78f42121b17454c0857408c307552",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "202",
+        "imported_book_id": "201"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-42b57ca3d9730e7e.webp",
+      "libro": {
+        "titulo": "Iniciación a JavaScript",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Jorge Mohedano",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ministerio de Educación de España",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000251",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3045,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000251-7f01ee48ea8d.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49349",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-42b57ca3d9730e7e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "202",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-665766b150520d91"
+        },
+        "author_bindings": [
+          {
+            "name": "Jorge Mohedano",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Jorge Mohedano",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+            "sha256": "970b0a8e578775ba0c37702ef79fb1ecb31206941e9e362cd5b7d3345e31e1fc",
+            "observed_text": "Madrid : Ministerio de Educación de España, 2012.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "970b0a8e578775ba0c37702ef79fb1ecb31206941e9e362cd5b7d3345e31e1fc",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-42b57ca3d9730e7e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+            "sha256": "970b0a8e578775ba0c37702ef79fb1ecb31206941e9e362cd5b7d3345e31e1fc",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "970b0a8e578775ba0c37702ef79fb1ecb31206941e9e362cd5b7d3345e31e1fc",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-42b57ca3d9730e7e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49349",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 159,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49349",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Iniciación a JavaScript - Jorge Mohedano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-42b57ca3d9730e7e.webp",
+            "cover_sha256": "7f01ee48ea8d43983720b06224cc3de5ada596e97429cc9b69e05f4c92ac832c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Jorge Mohedano",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 159,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49349",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Iniciación a JavaScript - Jorge Mohedano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-42b57ca3d9730e7e.webp",
+            "cover_sha256": "7f01ee48ea8d43983720b06224cc3de5ada596e97429cc9b69e05f4c92ac832c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 159,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49349",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Iniciación a JavaScript - Jorge Mohedano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-42b57ca3d9730e7e.webp",
+            "cover_sha256": "7f01ee48ea8d43983720b06224cc3de5ada596e97429cc9b69e05f4c92ac832c",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 159,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49349",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Iniciación a JavaScript - Jorge Mohedano.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-42b57ca3d9730e7e.webp",
+          "cover_sha256": "7f01ee48ea8d43983720b06224cc3de5ada596e97429cc9b69e05f4c92ac832c",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "203",
+        "imported_book_id": "202"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-28ed8585d496008a.webp",
+      "libro": {
+        "titulo": "Inteligencia artificial",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "López de Mántaras Badia, Ramón",
+            "orden": 1
+          },
+          {
+            "nombre": "Meseguer González, Pedro",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "CSIC : Los Libros de la Catarata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000234",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6832,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000234-62323918bca1.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233793",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-28ed8585d496008a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "203",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-61d45cc7397731f2"
+        },
+        "author_bindings": [
+          {
+            "name": "López de Mántaras Badia, Ramón",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Meseguer González, Pedro",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "López de Mántaras Badia, Ramón; Meseguer González, Pedro",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+            "sha256": "30b17684ee5cc6d9d8fac51965ba0dc9c0bbe01ccb672110c12531ea75d56e2e",
+            "observed_text": "Madrid : CSIC : Los Libros de la Catarata, [2017]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "30b17684ee5cc6d9d8fac51965ba0dc9c0bbe01ccb672110c12531ea75d56e2e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-28ed8585d496008a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+            "sha256": "30b17684ee5cc6d9d8fac51965ba0dc9c0bbe01ccb672110c12531ea75d56e2e",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "30b17684ee5cc6d9d8fac51965ba0dc9c0bbe01ccb672110c12531ea75d56e2e",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-28ed8585d496008a.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB233793",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 160,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233793",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Inteligencia artificial - López de Mántaras Badia, Ramón; Meseguer González, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-28ed8585d496008a.webp",
+            "cover_sha256": "62323918bca12e3d4c7f05f00500b7cde4eb11ba1d4511ce0ebd88456fbd2a22",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "López de Mántaras Badia, Ramón; Meseguer González, Pedro",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 160,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233793",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Inteligencia artificial - López de Mántaras Badia, Ramón; Meseguer González, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-28ed8585d496008a.webp",
+            "cover_sha256": "62323918bca12e3d4c7f05f00500b7cde4eb11ba1d4511ce0ebd88456fbd2a22",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 160,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233793",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Inteligencia artificial - López de Mántaras Badia, Ramón; Meseguer González, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-28ed8585d496008a.webp",
+            "cover_sha256": "62323918bca12e3d4c7f05f00500b7cde4eb11ba1d4511ce0ebd88456fbd2a22",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 160,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/233793",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Inteligencia artificial - López de Mántaras Badia, Ramón; Meseguer González, Pedro.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-28ed8585d496008a.webp",
+          "cover_sha256": "62323918bca12e3d4c7f05f00500b7cde4eb11ba1d4511ce0ebd88456fbd2a22",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "204",
+        "imported_book_id": "203"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-b031fc1cca8cb329.webp",
+      "libro": {
+        "titulo": "Linux para usuarios",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Francisco Torres Escobar",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ministerio de Educación, Cultura y Deporte",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000305",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6435,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000305-2a2f8a7c99a5.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49377",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-b031fc1cca8cb329",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "204",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-f7bc996b9ca449f5"
+        },
+        "author_bindings": [
+          {
+            "name": "Francisco Torres Escobar",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Francisco Torres Escobar",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+            "sha256": "9b96c1b0ebc122b855bf62733c336318c7a975d26ab2981930ddccf5d53785f0",
+            "observed_text": "Madrid : Ministerio de Educación, Cultura y Deporte, [2014]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "9b96c1b0ebc122b855bf62733c336318c7a975d26ab2981930ddccf5d53785f0",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b031fc1cca8cb329.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+            "sha256": "9b96c1b0ebc122b855bf62733c336318c7a975d26ab2981930ddccf5d53785f0",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "9b96c1b0ebc122b855bf62733c336318c7a975d26ab2981930ddccf5d53785f0",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-b031fc1cca8cb329.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49377",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 166,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49377",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Linux para usuarios - Francisco Torres Escobar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-b031fc1cca8cb329.webp",
+            "cover_sha256": "2a2f8a7c99a59e843436516b1fbbf6b6f54d4d393ab9cd985cc0a79a20cca5eb",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Francisco Torres Escobar",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 166,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49377",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Linux para usuarios - Francisco Torres Escobar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-b031fc1cca8cb329.webp",
+            "cover_sha256": "2a2f8a7c99a59e843436516b1fbbf6b6f54d4d393ab9cd985cc0a79a20cca5eb",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 166,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49377",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Linux para usuarios - Francisco Torres Escobar.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-b031fc1cca8cb329.webp",
+            "cover_sha256": "2a2f8a7c99a59e843436516b1fbbf6b6f54d4d393ab9cd985cc0a79a20cca5eb",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 166,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49377",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Linux para usuarios - Francisco Torres Escobar.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-b031fc1cca8cb329.webp",
+          "cover_sha256": "2a2f8a7c99a59e843436516b1fbbf6b6f54d4d393ab9cd985cc0a79a20cca5eb",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "205",
+        "imported_book_id": "204"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-eae0b77aee05260e.webp",
+      "libro": {
+        "titulo": "Programación web en java",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "José Miguel Ordax Cassá",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ministerio de Educación de España",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "28.99",
+        "sku": "PLG-BK-000207",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4672,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000207-63a1f77b776f.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49347",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-eae0b77aee05260e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "205",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-fdec886c86ebdf6f"
+        },
+        "author_bindings": [
+          {
+            "name": "José Miguel Ordax Cassá",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "José Miguel Ordax Cassá",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+            "sha256": "f886c5a5d0f44e8748a530fbf23b15a0f5d319197729603eb3cbc437272cb2e6",
+            "observed_text": "Madrid : Ministerio de Educación de España, 2012.",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "f886c5a5d0f44e8748a530fbf23b15a0f5d319197729603eb3cbc437272cb2e6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-eae0b77aee05260e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+            "sha256": "f886c5a5d0f44e8748a530fbf23b15a0f5d319197729603eb3cbc437272cb2e6",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "f886c5a5d0f44e8748a530fbf23b15a0f5d319197729603eb3cbc437272cb2e6",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-eae0b77aee05260e.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49347",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 170,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49347",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Programación web en java - José Miguel Ordax Cassá.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-eae0b77aee05260e.webp",
+            "cover_sha256": "63a1f77b776fa5abdf5337732d4832c4f83c2e3df2906b5f4de77a9b3c6d9003",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "José Miguel Ordax Cassá",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 170,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49347",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Programación web en java - José Miguel Ordax Cassá.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-eae0b77aee05260e.webp",
+            "cover_sha256": "63a1f77b776fa5abdf5337732d4832c4f83c2e3df2906b5f4de77a9b3c6d9003",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 170,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49347",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Programación web en java - José Miguel Ordax Cassá.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-eae0b77aee05260e.webp",
+            "cover_sha256": "63a1f77b776fa5abdf5337732d4832c4f83c2e3df2906b5f4de77a9b3c6d9003",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 170,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49347",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Programación web en java - José Miguel Ordax Cassá.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-eae0b77aee05260e.webp",
+          "cover_sha256": "63a1f77b776fa5abdf5337732d4832c4f83c2e3df2906b5f4de77a9b3c6d9003",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "206",
+        "imported_book_id": "205"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-88143ffe0f91701c.webp",
+      "libro": {
+        "titulo": "Redes locales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Molina Robles, Francisco José",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "RA-MA Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "34.99",
+        "sku": "PLG-BK-000162",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3264,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000162-872499629629.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62450",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-88143ffe0f91701c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "206",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7ce2f2bca2032ae2"
+        },
+        "author_bindings": [
+          {
+            "name": "Molina Robles, Francisco José",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Molina Robles, Francisco José",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+            "sha256": "2bc9a0392b7092facd3c95a0c6a7b6ee5248ccf323918325b6e38446df967f76",
+            "observed_text": "Madrid : RA-MA Editorial, [2014]",
+            "basis": "Catálogo público primario de Universidad Nacional del Sur; registro enlaza el mismo identificador eLibro de la fuente candidata. Título y autoría cotejados con portada original.",
+            "capture_sha256": "2bc9a0392b7092facd3c95a0c6a7b6ee5248ccf323918325b6e38446df967f76",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-88143ffe0f91701c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+            "sha256": "2bc9a0392b7092facd3c95a0c6a7b6ee5248ccf323918325b6e38446df967f76",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito; registro vincula el mismo título eLibro por identificador exacto.",
+            "capture_sha256": "2bc9a0392b7092facd3c95a0c6a7b6ee5248ccf323918325b6e38446df967f76",
+            "capture_path": "/tmp/pliego-digital-completion/science/uns/audiobook-88143ffe0f91701c.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62450",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 172,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62450",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Redes locales - Molina Robles, Francisco José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-88143ffe0f91701c.webp",
+            "cover_sha256": "87249962962943adf8c9d1aee60f3dccdccfe2fb434adbd032ff50cfbbe5a3c7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Molina Robles, Francisco José",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 172,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62450",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Redes locales - Molina Robles, Francisco José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-88143ffe0f91701c.webp",
+            "cover_sha256": "87249962962943adf8c9d1aee60f3dccdccfe2fb434adbd032ff50cfbbe5a3c7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 172,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62450",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Redes locales - Molina Robles, Francisco José.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-88143ffe0f91701c.webp",
+            "cover_sha256": "87249962962943adf8c9d1aee60f3dccdccfe2fb434adbd032ff50cfbbe5a3c7",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 172,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62450",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Redes locales - Molina Robles, Francisco José.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-88143ffe0f91701c.webp",
+          "cover_sha256": "87249962962943adf8c9d1aee60f3dccdccfe2fb434adbd032ff50cfbbe5a3c7",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "207",
+        "imported_book_id": "206"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-6d5627bd599950a8.webp",
+      "libro": {
+        "titulo": "Revolución artificial: aplicaciones basadas en inteligencia artificial",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Entenova Gnosis",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Tecnología e Informática"
+        ]
+      },
+      "edicion": {
+        "editorial": "Orbe Formación",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "17.99",
+        "sku": "PLG-BK-000311",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 6218,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000311-85ebfef37037.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/298017",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-6d5627bd599950a8",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "207",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d8ffba3f8e6fa8b7"
+        },
+        "author_bindings": [
+          {
+            "name": "Entenova Gnosis",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Entenova Gnosis",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://biblioteca-apps.uces.edu.ar/rv/knowledgebase.php?article=478",
+            "observed_text": "Gnosis, E. (2026). Revolución artificial: aplicaciones basadas en inteligencia artificial. Orbe Formación. https://elibro.net/es/lc/uces/titulos/298017",
+            "basis": "Catálogo primario de novedades de biblioteca Universidad de Ciencias Empresariales y Sociales; título, autor y mismo identificador eLibro exacto.",
+            "sha256": "f250f749faf4587f9b14a2e0cdcdf8c005679d71060f1953e852fe9cf546ac9a",
+            "capture_sha256": "f250f749faf4587f9b14a2e0cdcdf8c005679d71060f1953e852fe9cf546ac9a",
+            "capture_path": "/tmp/pliego-digital-completion/science/primary-17c764bb83d656f8.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://biblioteca-apps.uces.edu.ar/rv/knowledgebase.php?article=478",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://nodovox.com/record.php?id=730228",
+            "source_sha256": "c698409e9b5175dbf660519f4ab96c0da99902290db70a157fd61482ef4ff81a",
+            "observed_text": "Autor / responsable Entenova Gnosis Editorial Orbe Formación Año 2026 Idioma Español",
+            "basis": "Ficha pública específica NODOVOX 730228 declara Español y enlaza al identificador eLibro 298017 de la fuente original; autor y editorial coinciden con UCES y portada.",
+            "capture_sha256": "c698409e9b5175dbf660519f4ab96c0da99902290db70a157fd61482ef4ff81a",
+            "capture_path": "/tmp/pliego-digital-completion/literature/artificial/nodovox-exact730228.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://nodovox.com/record.php?id=730228",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 174,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/298017",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Revolución artificial aplicaciones basadas en inteligencia artificial - Entenova Gnosis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-6d5627bd599950a8.webp",
+            "cover_sha256": "85ebfef3703793e6372f2859ca1795c1e819449ef478c6a13184d8c28e0e47b1",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Entenova Gnosis",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 174,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/298017",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Revolución artificial aplicaciones basadas en inteligencia artificial - Entenova Gnosis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-6d5627bd599950a8.webp",
+            "cover_sha256": "85ebfef3703793e6372f2859ca1795c1e819449ef478c6a13184d8c28e0e47b1",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 174,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/298017",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Tecnología e Informática/originales/Revolución artificial aplicaciones basadas en inteligencia artificial - Entenova Gnosis.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-6d5627bd599950a8.webp",
+            "cover_sha256": "85ebfef3703793e6372f2859ca1795c1e819449ef478c6a13184d8c28e0e47b1",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 174,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/298017",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Tecnología e Informática/originales/Revolución artificial aplicaciones basadas en inteligencia artificial - Entenova Gnosis.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-6d5627bd599950a8.webp",
+          "cover_sha256": "85ebfef3703793e6372f2859ca1795c1e819449ef478c6a13184d8c28e0e47b1",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Tecnología e Informática",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/tecnologia-e-informatica/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "208",
+        "imported_book_id": "207"
+      }
+    }
+  ]
+}

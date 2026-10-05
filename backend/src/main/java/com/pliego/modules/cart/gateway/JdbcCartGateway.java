@@ -19,6 +19,8 @@ import com.pliego.foundation.database.JdbcGatewaySupport;
 import com.pliego.modules.cart.application.CartModels.Cart;
 import com.pliego.modules.cart.application.CartModels.CartItem;
 import com.pliego.modules.cart.application.CartModels.CartItemResult;
+import com.pliego.modules.cart.application.CartModels.DeliveryWindow;
+import java.time.LocalDate;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -27,8 +29,9 @@ import tools.jackson.databind.ObjectMapper;
 @Repository
 public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
 
-    private static final String CART_GET = "SELECT cart_id,state,items::text AS items,total_current "
-            + "FROM pliego.fn_cart_get(?)";
+    private static final String CART_GET = "SELECT q.cart_id,q.state,q.items::text AS items,q.total_current,q.subtotal,q.tax_rate,q.tax_amount,"
+            + "q.shipping_amount,q.total,w.estimated_from,w.estimated_to "
+            + "FROM pliego.fn_cart_quote(?) q CROSS JOIN pliego.fn_cart_delivery_window(?) w";
     private static final String CART_ADD_ITEM = "CALL pliego.sp_cart_add_item(?,?,?,?,?,?)";
     private static final String CART_UPDATE_ITEM = "CALL pliego.sp_cart_update_item(?,?,?,?,?,?)";
     private static final String CART_REMOVE_ITEM = "CALL pliego.sp_cart_remove_item(?,?)";
@@ -45,7 +48,7 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
 
     @Override
     public Cart get(long actorId) {
-        return withDatabaseErrorTranslation(() -> jdbcTemplate.queryForObject(CART_GET, CART_ROW_MAPPER, actorId));
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.queryForObject(CART_GET, CART_ROW_MAPPER, actorId, actorId));
     }
 
     @Override
@@ -100,8 +103,14 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
 
     private final RowMapper<Cart> CART_ROW_MAPPER = (rs, row) -> {
         return new Cart(nullableId(rs, "cart_id"), rs.getString("state"), parseItems(rs.getString("items")),
-                rs.getBigDecimal("total_current"));
+                rs.getBigDecimal("total_current"),new com.pliego.foundation.money.MonetaryAmounts(rs.getBigDecimal("subtotal"),
+                        rs.getBigDecimal("tax_rate"),rs.getBigDecimal("tax_amount"),rs.getBigDecimal("shipping_amount"),rs.getBigDecimal("total")),
+                deliveryWindow(rs.getObject("estimated_from", LocalDate.class), rs.getObject("estimated_to", LocalDate.class)));
     };
+
+    private static DeliveryWindow deliveryWindow(LocalDate from, LocalDate to) {
+        return from == null || to == null ? null : new DeliveryWindow(from, to);
+    }
 
     private List<CartItem> parseItems(String json) throws SQLException {
         JsonNode items;

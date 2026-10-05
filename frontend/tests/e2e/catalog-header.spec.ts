@@ -104,7 +104,7 @@ async function mockCustomerLogin(page: import("@playwright/test").Page) {
       firstNames: "Ana María",
       lastNames: "López",
       phone: null,
-      state: "ACTIVE",
+      state: "ACTIVE", version: "0",
     }),
   }));
 }
@@ -123,7 +123,7 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await page.emulateMedia({ colorScheme }); await page.setViewportSize({ width, height: 900 });
     await mockPublicCatalog(page); await page.goto("/");
     const header = page.getByTestId("site-header"); await expect(header).toBeVisible();
-    if (width >= 1280) await expect(header.getByRole("link", { name: "Catálogo", exact: true })).toHaveAttribute("href", "/catalog");
+    if (width >= 960) await expect(header.getByRole("link", { name: "Libros", exact: true })).toHaveAttribute("href", "/catalog");
     else await expect(header.getByRole("button", { name: "Abrir navegación" })).toBeVisible();
     await expect(header.getByRole("button", { name: "Categorías" })).toHaveCount(0);
     const initial = (await header.boundingBox())!;
@@ -135,7 +135,7 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await expect.poll(async () => (await header.boundingBox())!.height).toBeLessThan(initial.height);
     await expect.poll(contentTop).toBe(contentBefore);
     expect((await header.boundingBox())!.y).toBe(0);
-    const trigger = header.getByRole("button", { name: "Buscar en el catálogo" });
+    const trigger = header.getByRole("button", { name: "Buscar libros en el catálogo" });
     await trigger.click();
     const dialog = page.getByRole("dialog", { name: "Buscar en el catálogo" });
     const field = dialog.getByRole("searchbox", { name: "Buscar en el catálogo" });
@@ -144,15 +144,24 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await page.keyboard.press("ArrowDown"); await expect(dialog.getByRole("link", { name: /Cien años de soledad/ })).toBeFocused();
     await page.keyboard.press("Escape"); await expect(trigger).toBeFocused();
     await header.evaluate((node) => { (window as unknown as { headerNode: Element }).headerNode = node; });
-    if (width < 1280) {
+    if (width < 960) {
       await header.getByRole("button", { name: "Abrir navegación" }).click();
-      await page.getByRole("dialog", { name: "Categorías", exact: true }).getByRole("link", { name: "Todos los libros", exact: true }).click();
-    } else await header.getByRole("link", { name: "Catálogo", exact: true }).click();
+      await page.getByRole("dialog", { name: "Navegación", exact: true }).getByRole("link", { name: "Libros", exact: true }).click();
+    } else await header.getByRole("link", { name: "Libros", exact: true }).click();
     await expect(page).toHaveURL(/\/catalog$/);
     expect(await header.evaluate((node) => node === (window as unknown as { headerNode: Element }).headerNode)).toBe(true);
     for (const route of ["/sign-in", "/register", "/account", "/cart", "/checkout", "/orders", "/favorites", "/missing"]) {
-      await page.goto(route); await expect(page.getByTestId("site-header")).toHaveCount(1);
-      await expect(page.getByTestId("site-header").getByRole(width >= 1280 ? "link" : "button", { name: width >= 1280 ? "Catálogo" : "Abrir navegación", exact: true })).toBeVisible();
+      await page.goto(route);
+      // The approved purchase flow replaces catalog navigation with the focused PurchaseHeader.
+      if (route === "/cart" || route === "/checkout") {
+        await expect(page.getByTestId("site-header")).toHaveCount(0);
+        await expect(page.getByRole("banner")).toHaveCount(1);
+        await expect(page.getByRole("banner")).toContainText(route === "/cart" ? "Carrito" : "Finalizar Compra");
+        await expect(page.getByRole("banner").getByRole("button", { name: /Buscar libros/ })).toHaveCount(0);
+        continue;
+      }
+      await expect(page.getByTestId("site-header")).toHaveCount(1);
+      await expect(page.getByTestId("site-header").getByRole(width >= 960 ? "link" : "button", { name: width >= 960 ? "Libros" : "Abrir navegación", exact: true })).toBeVisible();
     }
   });
 }
@@ -162,60 +171,48 @@ test("account keyboard menu and cart remain coherent after navigation and logout
   await expect(header.getByRole("link", { name: "Carrito, 3 unidades" })).toBeVisible();
   const account = header.getByRole("button", { name: "Menú de cuenta" });
   await account.focus(); await page.keyboard.press("ArrowDown");
-  await expect(page.getByRole("menuitem", { name: "Mi cuenta" })).toBeFocused();
+  await expect(page.getByRole("menuitem", { name: "Perfil", exact: true })).toBeFocused();
   await page.keyboard.press("Escape"); await expect(account).toBeFocused();
   await account.click(); await page.getByRole("menuitem", { name: "Cerrar sesión" }).click();
   await expect(header.getByRole("link", { name: "Iniciar sesión" })).toBeVisible();
 });
 test("global suggestions carry the unfiltered search destination", async ({ page }) => {
   await mockPublicCatalog(page); await page.goto("/catalog?category=historia&minPrice=50.00");
-  await page.getByRole("button", { name: "Buscar en el catálogo" }).click();
+  await page.getByRole("button", { name: "Buscar libros en el catálogo" }).click();
   await page.getByRole("searchbox", { name: "Buscar en el catálogo" }).fill("Cien años");
   await page.getByRole("dialog").getByRole("link", { name: /Cien años de soledad/ }).click();
   await expect(page).toHaveURL(/\/catalog\/editions\/42\?/);
   expect(new URL(page.url()).searchParams.get("from")).toBe("/catalog?que=Cien+a%C3%B1os");
 });
 
-test("desktop categories open on hover without moving focus and support keyboard recovery", async ({ page }) => {
+test("desktop navigation is centered and contains only the four primary destinations", async ({ page }) => {
   await mockPublicCatalog(page);
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  const search = page.getByRole("button", { name: "Buscar en el catálogo", exact: true });
-  const literature = page.getByTestId("site-header").getByRole("button", { name: "Literatura", exact: true });
-  await search.focus();
-  await literature.hover();
-  await expect(page.locator("#categorias-escritorio")).toBeVisible();
-  await expect(search).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(page.locator("#categorias-escritorio")).toHaveCount(0);
-  await page.mouse.move(0, 900);
-  await literature.focus();
-  await page.keyboard.press("ArrowDown");
-  await expect(page.getByRole("link", { name: "Ver todos los libros de Literatura" })).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(literature).toBeFocused();
-  await page.keyboard.press("Enter");
-  await page.getByRole("button", { name: "Cerrar categorías", exact: true }).click({ position: { x: 10, y: 850 } });
-  await expect(literature).toBeFocused();
+  const header = page.getByTestId("site-header");
+  const navigation = header.getByRole("navigation", { name: "Navegación principal" });
+  await expect(navigation.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas"]);
+  await expect(navigation.getByRole("button", { name: "Literatura" })).toHaveCount(0);
+  const box = (await navigation.boundingBox())!;
+  expect(Math.abs(box.x + box.width / 2 - 720)).toBeLessThan(2);
+  await navigation.getByRole("link", { name: "Ofertas" }).click();
+  await expect(page).toHaveURL(/\/ofertas$/);
+  await expect(page.getByText("No hay ofertas disponibles por ahora.")).toBeVisible();
 });
 
-test("compact navigation has a back level and yields exclusively to global search", async ({ page }) => {
+test("compact navigation keeps the same four destinations with keyboard recovery", async ({ page }) => {
   await mockPublicCatalog(page);
   await page.setViewportSize({ width: 320, height: 844 });
   await page.goto("/");
   const trigger = page.getByRole("button", { name: "Abrir navegación" });
   await trigger.click();
-  const menu = page.getByRole("dialog", { name: "Categorías", exact: true });
-  await menu.getByRole("button", { name: "Literatura", exact: true }).click();
-  await expect(menu.getByRole("link", { name: "Ver todos los libros de Literatura" })).toBeVisible();
-  await menu.getByRole("button", { name: "Categorías", exact: true }).click();
-  await expect(menu.getByRole("link", { name: "Todos los libros", exact: true })).toBeVisible();
+  const menu = page.getByRole("dialog", { name: "Navegación", exact: true });
+  await expect(menu.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas"]);
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
   await trigger.click();
-  await menu.getByRole("button", { name: "Buscar en el catálogo", exact: true }).click();
+  await menu.getByRole("link", { name: "eBooks" }).click();
+  await expect(page).toHaveURL(/format=EBOOK/);
   await expect(menu).toHaveCount(0);
-  await expect(page.getByRole("dialog", { name: "Buscar en el catálogo" }).getByRole("searchbox")).toBeFocused();
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("button", { name: "Buscar en el catálogo", exact: true })).toBeFocused();
+  await expect(page.getByTestId("site-header").getByRole("button", { name: "Buscar libros en el catálogo" })).toBeVisible();
 });

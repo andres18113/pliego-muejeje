@@ -19,6 +19,7 @@ interface SessionContextValue {
   expired: boolean;
   restoreState: RestoreState;
   establish: (session: AuthSession) => void;
+  updateEmailForSession: (expected: AuthSession, email: string) => boolean;
   clear: (reason?: "expired") => void;
   logout: () => Promise<void>;
   retryRestore: () => Promise<void>;
@@ -40,11 +41,13 @@ export function SessionProvider({ children, restoreOnMount = true }: {
 }) {
   const queryClient = useQueryClient();
   const [session, setSession] = useState<AuthSession | null>(null);
+  const currentSession = useRef<AuthSession | null>(null);
   const wasAuthenticated = useRef(false);
   const [expired, setExpired] = useState(false);
   const [restoreState, setRestoreState] = useState<RestoreState>(restoreOnMount ? "restoring" : "ready");
 
   const forgetSession = useCallback((reason?: "expired") => {
+    currentSession.current = null;
     setApiAccessToken(null);
     queryClient.removeQueries({ predicate: (query) => query.meta?.authRequired === true });
     setExpired(reason === "expired");
@@ -54,11 +57,22 @@ export function SessionProvider({ children, restoreOnMount = true }: {
   }, [queryClient]);
 
   const establish = useCallback((next: AuthSession) => {
+    currentSession.current = next;
     setApiAccessToken(next.accessToken);
     wasAuthenticated.current = true;
     setExpired(false);
     setSession(next);
     setRestoreState("ready");
+  }, []);
+
+  const updateEmailForSession = useCallback((expected: AuthSession, email: string) => {
+    // Compare the exact accepted session generation, including token and identity, atomically.
+    // An async account command must never restore a logged-out or replaced session.
+    if (currentSession.current !== expected) return false;
+    const next = { ...expected, user: { ...expected.user, email } };
+    currentSession.current = next;
+    setSession(next);
+    return true;
   }, []);
 
   const acceptRestoredSession = useCallback((response: Required<LoginResponse> | null) => {
@@ -158,10 +172,11 @@ export function SessionProvider({ children, restoreOnMount = true }: {
     expired,
     restoreState,
     establish,
+    updateEmailForSession,
     clear,
     logout,
     retryRestore,
-  }), [clear, establish, expired, logout, restoreState, retryRestore, session]);
+  }), [clear, establish, expired, logout, restoreState, retryRestore, session, updateEmailForSession]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }

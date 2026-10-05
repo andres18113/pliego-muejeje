@@ -8,11 +8,11 @@ describe("customer API", () => {
 
   it("sends only the profile fields supported by PUT /me", async () => {
     const fetchMock = vi.fn(async (request: Request) => {
-      expect(await request.json()).toEqual({ firstNames: "Ana", lastNames: "Pérez", phone: null });
+      expect(await request.json()).toEqual({ firstNames: "Ana", lastNames: "Pérez", phone: null, expectedVersion: "0" });
       return new Response(null, { status: 204 });
     });
     vi.stubGlobal("fetch", fetchMock);
-    await updateProfile({ firstNames: "Ana", lastNames: "Pérez", phone: null });
+    await updateProfile({ firstNames: "Ana", lastNames: "Pérez", phone: null, expectedVersion: "0" });
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 

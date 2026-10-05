@@ -1,0 +1,1534 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-3d0d136ef42177f4.webp",
+      "libro": {
+        "titulo": "Antropología de la religión",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Duch, Lluís",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Herder Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "29.99",
+        "sku": "PLG-BK-000177",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 4556,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000177-681c86f70122.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45819",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-3d0d136ef42177f4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "140",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c1cdd63720583b11"
+        },
+        "author_bindings": [
+          {
+            "name": "Duch, Lluís",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Duch, Lluís",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+            "observed_text": "Barcelona : Herder Editorial, [2001]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "c595ed5389a1dfbb88ae87cb201373c51730f415ea84511592912dccab5f4b25",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/45819.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "c595ed5389a1dfbb88ae87cb201373c51730f415ea84511592912dccab5f4b25",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/45819.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45819",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 106,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45819",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Antropología de la religión - Duch, Lluís.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-3d0d136ef42177f4.webp",
+            "cover_sha256": "681c86f7012239f5e8226ce8c4364f27d7f002687e94ee89a314667fb074c82b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Duch, Lluís",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 106,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45819",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Antropología de la religión - Duch, Lluís.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-3d0d136ef42177f4.webp",
+            "cover_sha256": "681c86f7012239f5e8226ce8c4364f27d7f002687e94ee89a314667fb074c82b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 106,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45819",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Antropología de la religión - Duch, Lluís.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-3d0d136ef42177f4.webp",
+            "cover_sha256": "681c86f7012239f5e8226ce8c4364f27d7f002687e94ee89a314667fb074c82b",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 106,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45819",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Antropología de la religión - Duch, Lluís.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-3d0d136ef42177f4.webp",
+          "cover_sha256": "681c86f7012239f5e8226ce8c4364f27d7f002687e94ee89a314667fb074c82b",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "141",
+        "imported_book_id": "140"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-73771c507c8407af.webp",
+      "libro": {
+        "titulo": "Antropología de la sexualidad (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Choza, Jacinto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Thémata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "28.99",
+        "sku": "PLG-BK-000312",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2349,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000312-d2eccebff072.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59981",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-73771c507c8407af",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "141",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d7246a0f95caf06e"
+        },
+        "author_bindings": [
+          {
+            "name": "Choza, Jacinto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Choza, Jacinto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+            "observed_text": "Sevilla : Editorial Thémata, 2017.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "ff0ebcd82e17c2ffee4f23a71573a2b4606b8f894ba2a7a29f89ea62f7aa2005",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/59981.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "ff0ebcd82e17c2ffee4f23a71573a2b4606b8f894ba2a7a29f89ea62f7aa2005",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/59981.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59981",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 107,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59981",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Antropología de la sexualidad (2a. ed.) - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-73771c507c8407af.webp",
+            "cover_sha256": "d2eccebff0721ebe3f3a5ccdcb0d290abe08a36910c9fbb48c204aba11b92dc4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Choza, Jacinto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 107,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59981",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Antropología de la sexualidad (2a. ed.) - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-73771c507c8407af.webp",
+            "cover_sha256": "d2eccebff0721ebe3f3a5ccdcb0d290abe08a36910c9fbb48c204aba11b92dc4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 107,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59981",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Antropología de la sexualidad (2a. ed.) - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-73771c507c8407af.webp",
+            "cover_sha256": "d2eccebff0721ebe3f3a5ccdcb0d290abe08a36910c9fbb48c204aba11b92dc4",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 107,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59981",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Antropología de la sexualidad (2a. ed.) - Choza, Jacinto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-73771c507c8407af.webp",
+          "cover_sha256": "d2eccebff0721ebe3f3a5ccdcb0d290abe08a36910c9fbb48c204aba11b92dc4",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "142",
+        "imported_book_id": "141"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-7f4d556e0ebc44b3.webp",
+      "libro": {
+        "titulo": "Cultura, antropología y otras tonterías",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ángel Díaz de Rada",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Trotta",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000224",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 5624,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000224-6426eb226d4c.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61258",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-7f4d556e0ebc44b3",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "142",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-fcce26a2e2a70031"
+        },
+        "author_bindings": [
+          {
+            "name": "Ángel Díaz de Rada",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ángel Díaz de Rada",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+            "observed_text": "Madrid : Trotta, 2010.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "ee53f421e7b08371579e78d4989c9266e01372d69ad116ee72f2beaa2b6f9290",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61258.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "ee53f421e7b08371579e78d4989c9266e01372d69ad116ee72f2beaa2b6f9290",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61258.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61258",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 110,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61258",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Cultura, antropología y otras tonterías - Ángel Díaz de Rada.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-7f4d556e0ebc44b3.webp",
+            "cover_sha256": "6426eb226d4cdc174e1e6cb306d6aa459651855f04a9b001269a556e8e6815b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ángel Díaz de Rada",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 110,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61258",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Cultura, antropología y otras tonterías - Ángel Díaz de Rada.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-7f4d556e0ebc44b3.webp",
+            "cover_sha256": "6426eb226d4cdc174e1e6cb306d6aa459651855f04a9b001269a556e8e6815b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 110,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61258",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Cultura, antropología y otras tonterías - Ángel Díaz de Rada.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-7f4d556e0ebc44b3.webp",
+            "cover_sha256": "6426eb226d4cdc174e1e6cb306d6aa459651855f04a9b001269a556e8e6815b8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 110,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61258",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Cultura, antropología y otras tonterías - Ángel Díaz de Rada.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-7f4d556e0ebc44b3.webp",
+          "cover_sha256": "6426eb226d4cdc174e1e6cb306d6aa459651855f04a9b001269a556e8e6815b8",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "143",
+        "imported_book_id": "142"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-f14fc023b95afe6b.webp",
+      "libro": {
+        "titulo": "Diccionario básico de antropología",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Campo A., A. Lorena",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Abya-Yala",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "28.99",
+        "sku": "PLG-BK-000058",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2278,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000058-7c38a4a76226.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79954",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-f14fc023b95afe6b",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "143",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-6c0ae9d20ec56c69"
+        },
+        "author_bindings": [
+          {
+            "name": "Campo A., A. Lorena",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Campo A., A. Lorena",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+            "observed_text": "Quito : Ediciones Abya-Yala, 2008.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "242dc6e8fbe113d57215e8d7fda5989e20d3206cf99a8a062c91071cf21b33f4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79954.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "242dc6e8fbe113d57215e8d7fda5989e20d3206cf99a8a062c91071cf21b33f4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79954.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79954",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 111,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79954",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Diccionario básico de antropología - Campo A., A. Lorena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-f14fc023b95afe6b.webp",
+            "cover_sha256": "7c38a4a76226a50e9eb87bf9ae9f67f216ca18c47ac40b7345f1bb408b41e9c8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Campo A., A. Lorena",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 111,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79954",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Diccionario básico de antropología - Campo A., A. Lorena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-f14fc023b95afe6b.webp",
+            "cover_sha256": "7c38a4a76226a50e9eb87bf9ae9f67f216ca18c47ac40b7345f1bb408b41e9c8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 111,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79954",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Diccionario básico de antropología - Campo A., A. Lorena.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-f14fc023b95afe6b.webp",
+            "cover_sha256": "7c38a4a76226a50e9eb87bf9ae9f67f216ca18c47ac40b7345f1bb408b41e9c8",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 111,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79954",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Diccionario básico de antropología - Campo A., A. Lorena.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-f14fc023b95afe6b.webp",
+          "cover_sha256": "7c38a4a76226a50e9eb87bf9ae9f67f216ca18c47ac40b7345f1bb408b41e9c8",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "144",
+        "imported_book_id": "143"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-066ff6da2eef4a7c.webp",
+      "libro": {
+        "titulo": "Manual de Sociología de la Familia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Donati, Pierpaolo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "EUNSA, Ediciones Universidad de Navarra",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "7.99",
+        "sku": "PLG-BK-000190",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2737,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000190-b801a08072fc.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47451",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-066ff6da2eef4a7c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "144",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-80d60f1a449c1719"
+        },
+        "author_bindings": [
+          {
+            "name": "Donati, Pierpaolo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Donati, Pierpaolo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+            "observed_text": "Pamplona : EUNSA, Ediciones Universidad de Navarra, c2003.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "12af456be7d6e3aa87c1e788fdd5db65f60bb84e45eeefd03c97abe2276d4853",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/47451.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "12af456be7d6e3aa87c1e788fdd5db65f60bb84e45eeefd03c97abe2276d4853",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/47451.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47451",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 113,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47451",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Manual de Sociología de la Familia - Donati, Pierpaolo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-066ff6da2eef4a7c.webp",
+            "cover_sha256": "b801a08072fc861ef156ce2b7983a0822021a0af8290e663f750c302578705db",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Donati, Pierpaolo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 113,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47451",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Manual de Sociología de la Familia - Donati, Pierpaolo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-066ff6da2eef4a7c.webp",
+            "cover_sha256": "b801a08072fc861ef156ce2b7983a0822021a0af8290e663f750c302578705db",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 113,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47451",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Manual de Sociología de la Familia - Donati, Pierpaolo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-066ff6da2eef4a7c.webp",
+            "cover_sha256": "b801a08072fc861ef156ce2b7983a0822021a0af8290e663f750c302578705db",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 113,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47451",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Manual de Sociología de la Familia - Donati, Pierpaolo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-066ff6da2eef4a7c.webp",
+          "cover_sha256": "b801a08072fc861ef156ce2b7983a0822021a0af8290e663f750c302578705db",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "145",
+        "imported_book_id": "144"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-37860ea43ea9c32a.webp",
+      "libro": {
+        "titulo": "Paisajes de antropología urbana",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cátedra, María",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Genueve Ediciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000314",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 2170,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000314-6a218fbec916.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59734",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-37860ea43ea9c32a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "145",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-de20e635ade0865e"
+        },
+        "author_bindings": [
+          {
+            "name": "Cátedra, María",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cátedra, María",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+            "observed_text": "[Cuenca] : Genueve Ediciones, [2012]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "0520836c74f2a4949acf9668513116959149ed88857666a7bb2abe82123108c2",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/59734.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "0520836c74f2a4949acf9668513116959149ed88857666a7bb2abe82123108c2",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/59734.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59734",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 114,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59734",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Paisajes de antropología urbana - Cátedra, María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-37860ea43ea9c32a.webp",
+            "cover_sha256": "6a218fbec916705c6501141990370a1e7686ac227a3ae366447bd9e4efb9fc60",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cátedra, María",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 114,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59734",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Paisajes de antropología urbana - Cátedra, María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-37860ea43ea9c32a.webp",
+            "cover_sha256": "6a218fbec916705c6501141990370a1e7686ac227a3ae366447bd9e4efb9fc60",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 114,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59734",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Paisajes de antropología urbana - Cátedra, María.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-37860ea43ea9c32a.webp",
+            "cover_sha256": "6a218fbec916705c6501141990370a1e7686ac227a3ae366447bd9e4efb9fc60",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 114,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59734",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Paisajes de antropología urbana - Cátedra, María.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-37860ea43ea9c32a.webp",
+          "cover_sha256": "6a218fbec916705c6501141990370a1e7686ac227a3ae366447bd9e4efb9fc60",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "146",
+        "imported_book_id": "145"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-da60551f03495d38.webp",
+      "libro": {
+        "titulo": "Sociología criminal",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ferri, Enrico",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Olejnik",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "25.99",
+        "sku": "PLG-BK-000135",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 1206,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000135-0fde21aafefb.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/251021",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-da60551f03495d38",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "146",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c359e3d4d72921de"
+        },
+        "author_bindings": [
+          {
+            "name": "Ferri, Enrico",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ferri, Enrico",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+            "observed_text": "Argentina : Ediciones Olejnik, 2022.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "ba328f99a374b2fc7db53a52b708e195e0fb151a4b889ec83bed0a4333e715fb",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/251021.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "ba328f99a374b2fc7db53a52b708e195e0fb151a4b889ec83bed0a4333e715fb",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/251021.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB251021",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 119,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/251021",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología criminal - Ferri, Enrico.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-da60551f03495d38.webp",
+            "cover_sha256": "0fde21aafefbb915f3311adb73cbc6e078861d70a05e50cfd2671e30ecaa0577",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ferri, Enrico",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 119,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/251021",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología criminal - Ferri, Enrico.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-da60551f03495d38.webp",
+            "cover_sha256": "0fde21aafefbb915f3311adb73cbc6e078861d70a05e50cfd2671e30ecaa0577",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 119,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/251021",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología criminal - Ferri, Enrico.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-da60551f03495d38.webp",
+            "cover_sha256": "0fde21aafefbb915f3311adb73cbc6e078861d70a05e50cfd2671e30ecaa0577",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 119,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/251021",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociología criminal - Ferri, Enrico.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-da60551f03495d38.webp",
+          "cover_sha256": "0fde21aafefbb915f3311adb73cbc6e078861d70a05e50cfd2671e30ecaa0577",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "147",
+        "imported_book_id": "146"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-6e184162cc357663.webp",
+      "libro": {
+        "titulo": "Sociología del Renacimiento",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Martín, Alfred von",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "AUDIOBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000266",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": 3725,
+        "narrators": [
+          "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+        ],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000266-79c8593fef38.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110396",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "audiobook-6e184162cc357663",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "147",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-dedf8ed177098471"
+        },
+        "author_bindings": [
+          {
+            "name": "Martín, Alfred von",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Martín, Alfred von",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+            "observed_text": "México : Fondo de Cultura Económica, 1946.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "87aaf5171cc89370966fabc1a3971fc54563c3288a55814cee8ed81f6b468df4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/110396.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "87aaf5171cc89370966fabc1a3971fc54563c3288a55814cee8ed81f6b468df4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/110396.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110396",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "edicion.narrators": {
+            "kind": "SIMULATED/DEMO",
+            "source": "Academic demonstration explicitly authorized by user",
+            "algorithm": "v1; seed = UTF-8 of PLIEGO-DEMO-AUDIO-v1, newline, candidate_id; seconds = 900 + int(SHA256(seed).hexdigest()[:8], 16) % 6301; fixed labelled DEMO narrator",
+            "real_source_claim": false,
+            "limitation": "No real value was available in consulted inventories; institutional sources could not be read."
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 124,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110396",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del Renacimiento - Martín, Alfred von.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-6e184162cc357663.webp",
+            "cover_sha256": "79c8593fef38e7465d63cfdb3bb99f8ea99d4bf7abea53c7db0e06f761156788",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Martín, Alfred von",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 124,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110396",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del Renacimiento - Martín, Alfred von.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-6e184162cc357663.webp",
+            "cover_sha256": "79c8593fef38e7465d63cfdb3bb99f8ea99d4bf7abea53c7db0e06f761156788",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Audiolibros/inventario.csv",
+            "row": 124,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110396",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del Renacimiento - Martín, Alfred von.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-6e184162cc357663.webp",
+            "cover_sha256": "79c8593fef38e7465d63cfdb3bb99f8ea99d4bf7abea53c7db0e06f761156788",
+            "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Audiolibros/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "SIMULATED/DEMO",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Audiolibros/inventario.csv",
+          "row": 124,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110396",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociología del Renacimiento - Martín, Alfred von.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-6e184162cc357663.webp",
+          "cover_sha256": "79c8593fef38e7465d63cfdb3bb99f8ea99d4bf7abea53c7db0e06f761156788",
+          "inventory_sha256": "0ab7af883100df62d6513ab333602983f5832ca1f05bfc0efd223bb07e2a7615"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Audiolibros/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "148",
+        "imported_book_id": "147"
+      }
+    }
+  ]
+}

@@ -3,21 +3,20 @@ import { useEffect, useId, useMemo, useRef, useState, type CSSProperties, type P
 import { Link, useLocation, useNavigationType } from "react-router-dom";
 import { useSession } from "@/app/session";
 import { useFavoriteSessionFailure, useFavoriteStatuses } from "@/features/favorites/favoriteStatus";
-import type { PublicCategory } from "@/shared/api/catalog";
+import { useQueries } from "@tanstack/react-query";
+import { getPublicOffers, searchPublicEditions } from "@/shared/api/catalog";
+import { storefrontDestinations } from "@/shared/navigation/storefrontDestinations";
 import { describeApiError } from "@/shared/api/errors";
 import { favoriteStatusQueryKey } from "@/shared/api/favorites";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { HomeActionButton } from "./HomeActions";
 import { HomeReadingScene } from "./HomeReadingScene";
-import { categoryGroups } from "./catalogCategories";
 import { rememberCatalogReturnPosition } from "./catalogScrollRestoration";
-import { catalogHref, readCatalogCriteria } from "./catalogUrl";
-import { useCategoryPreviews } from "./useCategoryPreviews";
+import { readCatalogCriteria } from "./catalogUrl";
 import classes from "./homeNextReading.module.css";
 
 const criteria = readCatalogCriteria("");
-const countFormat = new Intl.NumberFormat("es-EC");
 interface SavedState { slug: string; index: number }
 const readSaved = (): SavedState | null => {
   const saved = window.history.state?.pliegoHomeNextReading;
@@ -28,11 +27,15 @@ const readSaved = (): SavedState | null => {
  * "Tu próxima lectura": a topic chooses the set, one scene shows one real book, and the
  * centered controls move through that set. Nothing moves unless the reader asks.
  */
-export function HomeNextReading({ categories, categoriesPending, categoriesError, onRetryCategories }: {
-  categories: PublicCategory[]; categoriesPending: boolean; categoriesError: boolean; onRetryCategories: () => void;
-}) {
-  const roots = categoryGroups(categories).map(({ category }) => category);
-  const previews = useCategoryPreviews(roots);
+export function HomeNextReading() {
+  const roots = storefrontDestinations.map((item) => ({ ...item, slug: item.id, name: item.label }));
+  const previews = useQueries({ queries: roots.map((item) => ({
+    queryKey: ["public-catalog", "reading-preview", item.slug],
+    queryFn: ({ signal }: { signal: AbortSignal }) => item.slug === "offers" ? getPublicOffers(0, 4, signal) : searchPublicEditions({ ...criteria, format: item.format, pageSize: 4 }, signal),
+    staleTime: item.slug === "offers" ? 0 : 60_000,
+    refetchInterval: item.slug === "offers" ? 30_000 : false,
+    refetchOnWindowFocus: true,
+  })) });
   const location = useLocation();
   const navigationType = useNavigationType();
   const { session, clear } = useSession();
@@ -47,9 +50,8 @@ export function HomeNextReading({ categories, categoriesPending, categoriesError
   const category = roots[selectedIndex];
   const preview = previews[selectedIndex];
   const books = useMemo(() => preview?.data?.items ?? [], [preview?.data]);
-  const total = preview?.data ? Number(preview.data.totalCount) : 0;
   const active = Math.min(index, Math.max(0, books.length - 1));
-  const pending = categoriesPending || Boolean(preview?.isPending);
+  const pending = Boolean(preview?.isPending);
   const showPending = useDelayedPending(pending);
 
   const customerId = session?.user.role === "CUSTOMER" ? session.user.userId : null;
@@ -89,16 +91,16 @@ export function HomeNextReading({ categories, categoriesPending, categoriesError
   const previewError = preview?.error && !preview.data
     ? describeApiError(preview.error, "No pudimos cargar estos libros", "Revisa tu conexión e inténtalo otra vez.")
     : undefined;
-  const ready = !pending && !previewError && category && books.length > 0;
+  const ready = !pending && !previewError && books.length > 0;
 
   return <section className={classes.section} aria-labelledby="discovery-heading" aria-busy={pending}>
     <h2 id="discovery-heading" className={classes.heading}>Tu próxima lectura.</h2>
     <div className={classes.bar}>
-      {roots.length > 1 && <div className={classes.topics} role="group" aria-label="Elige un tema">
+      <div className={classes.topics} role="group" aria-label="Elige qué leer">
         {roots.map((root) => <UnstyledButton key={root.slug} className={classes.topic} aria-pressed={root.slug === category?.slug} aria-controls={viewportId} onClick={() => choose(root.slug, root.name)}>{root.name}</UnstyledButton>)}
-      </div>}
-      {ready && <Link to={catalogHref({ ...criteria, category: category.slug })} className={classes.link}>
-        {total > books.length ? `Ver los ${countFormat.format(total)} libros de ${category.name}` : `Ver ${category.name} en el catálogo`}
+      </div>
+      {ready && <Link to={category.href} className={classes.link}>
+        {`Ver ${category.name} en el catálogo`}
       </Link>}
     </div>
     <p className="visually-hidden" role="status" aria-live="polite" aria-atomic="true">{pending ? "Cargando libros…" : announcement}</p>
@@ -106,10 +108,10 @@ export function HomeNextReading({ categories, categoriesPending, categoriesError
     {pending ? <div className={classes.loading}>
       <p className={classes.note} hidden={!showPending}>Cargando libros…</p>
       <div className={classes.placeholder} aria-hidden="true"><Skeleton className={classes.placeholderCover} animate={false} /><div><Skeleton height={20} width="35%" animate={false} /><Skeleton height={56} width="85%" mt={18} animate={false} /><Skeleton height={32} width="30%" mt={44} animate={false} /></div></div>
-    </div> : categoriesError && !category ? <div className={classes.notice} role="alert">
-      <p className={classes.noticeTitle}>No pudimos cargar los temas del catálogo.</p>
-      <p>Revisa tu conexión e inténtalo otra vez.</p>
-      <HomeActionButton onClick={onRetryCategories}>Volver a intentar</HomeActionButton>
+    </div> : category.slug === "offers" && !previewError && books.length === 0 ? <div className={classes.notice}>
+      <h3 className={classes.noticeTitle}>No hay ofertas disponibles por ahora.</h3>
+      <p>Cuando tengamos promociones, podrás consultarlas aquí.</p>
+      <Link to="/catalog" className={classes.link}>Explorar libros</Link>
     </div> : previewError ? <div className={classes.notice} role="alert">
       <p className={classes.noticeTitle}>{previewError.title}</p>
       <p>{previewError.detail}</p>
@@ -139,7 +141,7 @@ export function HomeNextReading({ categories, categoriesPending, categoriesError
       </div>
       {books.length > 1 && <div className={classes.controls}>
         <ActionIcon variant="default" size={48} className={classes.arrow} aria-label="Libro anterior" aria-controls={viewportId} aria-disabled={active === 0} onClick={() => goTo(active - 1)}><MaterialSymbol name="arrow_back" size={22} /></ActionIcon>
-        <div className={classes.dots} role="group" aria-label={`Libros de ${category.name}`}>
+        <div className={classes.dots} role="group" aria-label={`Lecturas disponibles: ${category.name}`}>
           {books.map((book, position) => <button type="button" key={book.editionId} className={classes.dot} aria-label={`Libro ${position + 1} de ${books.length}: ${book.title}`}
             aria-current={position === active || undefined} aria-controls={viewportId} onClick={() => goTo(position)}><span /></button>)}
         </div>

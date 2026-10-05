@@ -108,7 +108,7 @@ BEGIN
     CALL pliego.sp_book_set_status(a,book,'ACTIVE');
     -- Digital-only checkout: no stock or movement, retained format snapshot, cancellation restores zero.
     CALL pliego.sp_checkout(user_id,address,'TRANSFER','APPROVED',order_id,order_state,payment_state,total,reference);
-    IF total<>10.00 OR order_state<>'CONFIRMED' OR EXISTS(SELECT 1 FROM pliego.movimiento_inventario WHERE pedido_id=order_id)
+    IF total<>11.50 OR order_state<>'CONFIRMED' OR EXISTS(SELECT 1 FROM pliego.movimiento_inventario WHERE pedido_id=order_id)
         OR NOT EXISTS(SELECT 1 FROM pliego.pedido_item WHERE pedido_id=order_id AND formato_snapshot='EBOOK') THEN
         RAISE EXCEPTION 'Digital-only checkout wrong'; END IF;
     CALL pliego.sp_order_cancel(user_id,order_id,order_id,previous_state,order_state,payment_state,restored);
@@ -122,7 +122,7 @@ BEGIN
     IF jsonb_array_length(items)<>3 OR EXISTS(SELECT 1 FROM jsonb_array_elements(items)x WHERE (x->>'available')::BOOLEAN IS NOT TRUE) THEN
         RAISE EXCEPTION 'Mixed cart unavailable'; END IF;
     CALL pliego.sp_checkout(user_id,address,'TRANSFER','APPROVED',order_id,order_state,payment_state,total,reference);
-    IF total<>49.00 OR (SELECT stock_actual FROM pliego.inventario WHERE edicion_id=physical)<>3
+    IF total<>56.35 OR (SELECT stock_actual FROM pliego.inventario WHERE edicion_id=physical)<>3
         OR (SELECT count(*) FROM pliego.movimiento_inventario WHERE pedido_id=order_id)<>1 THEN
         RAISE EXCEPTION 'Mixed checkout touched digital stock'; END IF;
     CALL pliego.sp_order_cancel(a,order_id,order_id,previous_state,order_state,payment_state,restored);

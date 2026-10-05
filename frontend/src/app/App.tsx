@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
 import { CatalogHomePage } from "@/features/catalog/CatalogHomePage";
 import { SiteHeader } from "./navigation/SiteHeader";
+import { PurchaseHeader } from "./navigation/PurchaseHeader";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
@@ -47,6 +48,13 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: "ofertas",
+        lazy: async () => {
+          const { OffersPage } = await import("@/features/catalog/OffersPage");
+          return { Component: OffersPage };
+        },
+      },
+      {
         path: "catalog/editions/:editionId",
         lazy: async () => {
           const { EditionDetailPage } = await import("@/features/catalog/EditionDetailPage");
@@ -65,6 +73,34 @@ export const router = createBrowserRouter([
         lazy: async () => {
           const { RegisterPage } = await import("@/features/auth/AuthPages");
           return { Component: RegisterPage };
+        },
+      },
+      {
+        path: "verificar-correo",
+        lazy: async () => {
+          const { VerifyEmailPage } = await import("@/features/auth/EmailActionPages");
+          return { Component: VerifyEmailPage };
+        },
+      },
+      {
+        path: "reenviar-verificacion",
+        lazy: async () => {
+          const { ResendVerificationPage } = await import("@/features/auth/EmailActionPages");
+          return { Component: ResendVerificationPage };
+        },
+      },
+      {
+        path: "recuperar-contrasena",
+        lazy: async () => {
+          const { ForgotPasswordPage } = await import("@/features/auth/EmailActionPages");
+          return { Component: ForgotPasswordPage };
+        },
+      },
+      {
+        path: "restablecer-contrasena",
+        lazy: async () => {
+          const { ResetPasswordPage } = await import("@/features/auth/EmailActionPages");
+          return { Component: ResetPasswordPage };
         },
       },
       {
@@ -158,12 +194,15 @@ function ApplicationLayout() {
   const navigation = useNavigation();
   const showRoutePending = useDelayedPending(navigation.state !== "idle");
   const target = navigation.location?.pathname;
+  // Cart and checkout are the focused purchase flow: their own header, without catalog navigation or search.
+  const pathname = useLocation().pathname;
+  const purchaseFocused = pathname === "/cart" || pathname === "/checkout";
   const label = target === "/cart" ? "Abriendo carrito…" : target?.startsWith("/account") ? "Abriendo tu cuenta…" : target?.startsWith("/orders") ? "Abriendo tus pedidos…" : target === "/checkout" ? "Preparando la compra…" : "Cargando página…";
 
   return (
     <>
       {showRoutePending && <div className="route-pending" role="status" aria-live="polite">{label}</div>}
-      <SiteHeader />
+      {purchaseFocused ? <PurchaseHeader /> : <SiteHeader />}
       <Outlet />
       <ScrollRestoration />
     </>

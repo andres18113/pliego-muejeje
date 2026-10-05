@@ -1,0 +1,2337 @@
+{
+  "schema": "pliego-cover-manifest-v1",
+  "publication_status": "PUBLISHED",
+  "records": [
+    {
+      "isbn13": null,
+      "title": "Historia de historias",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d901c48cf0708fb8.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000178",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000178-787489c9d123.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000178-787489c9d123.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La era victoriana en literatura",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-152fc74e8097c3b1.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000185",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000185-48d1658c6ccd.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000185-48d1658c6ccd.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La literatura",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-5c51985965164200.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000283",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000283-b557443a890a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000283-b557443a890a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La literatura dramática",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-be4f33f6d94229e7.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000229",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000229-72508ec17e22.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000229-72508ec17e22.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La literatura española",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-404c350b49f8d484.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000085",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000085-468d68de2243.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000085-468d68de2243.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura clásica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-6fb37f2956809505.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000122",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000122-71eb30d75bb6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000122-71eb30d75bb6.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura española",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-b6e98eacfdbf3d38.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000208",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000208-4d567317e96b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000208-4d567317e96b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura Oriental",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-a310ba6cc9128e79.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000160",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000160-6ad93478f274.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000160-6ad93478f274.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura universal",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-0762786d97e31d89.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000089",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000089-32dd5cb64b3f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000089-32dd5cb64b3f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literatura y cine",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-09c6216e91ce8a01.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000159",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000159-58e37f41bc49.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000159-58e37f41bc49.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Literaturas compartidas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-d7c3927d622d4808.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000079",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000079-816d46cebf7b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000079-816d46cebf7b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Páginas de historia",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-de8cba7332b1dd7d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000163",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000163-71dccfe55039.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000163-71dccfe55039.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Romancero gitano",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Literatura/portadas/ebook-cef7824007532bb5.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000095",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000095-c1fc97a5fb10.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000095-c1fc97a5fb10.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía antigua",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4f88eff5a246dfab.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000228",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000228-8507b04ffd87.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000228-8507b04ffd87.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía como metanoética",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-039e638e77cb6360.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000193",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000193-e2f0422878b8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000193-e2f0422878b8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía contemporánea",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-7c9ecb657fb9f797.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000277",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000277-b15a169548a7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000277-b15a169548a7.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía de la ciencia (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00ba74890bbeded4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000106",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000106-9ecfb3b6390c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000106-9ecfb3b6390c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía de la cultura (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a0a42f8e10e65611.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000090",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000090-c55041c65552.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000090-c55041c65552.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía de la religión",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-34ce7fb4dbe3d5ea.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000214",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000214-78187b088c4d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000214-78187b088c4d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía del conocimiento (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-c740fdc211f952d1.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000057",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000057-be83a24f55ad.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000057-be83a24f55ad.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía del lenguaje",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00fe541f8e191ee1.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000134",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000134-9268b1a4c117.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000134-9268b1a4c117.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía del renacimiento",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bd71367cdab1060c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000123",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000123-c33004170d08.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000123-c33004170d08.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía fundamental",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-9acec40ecdb659ec.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000168",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000168-25a3be237af1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000168-25a3be237af1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía general",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bbedcd4f008dc1f8.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000247",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000247-1a7dfbc68d41.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000247-1a7dfbc68d41.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía medieval",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0ac02126c2eb936a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000304",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000304-c03b700f5169.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000304-c03b700f5169.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía moderna",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a452742cfae417a9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000296",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000296-af243b6bf32e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000296-af243b6bf32e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía para Irene",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-6866fe06c580051a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000100",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000100-6784c3d88265.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000100-6784c3d88265.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía política",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-32ea66d0a615db40.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000270",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000270-57ef6068224d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000270-57ef6068224d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Filosofía y palomitas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0072a41519535ed6.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000107",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000107-c2d4399eb827.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000107-c2d4399eb827.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La filosofía de la tecnología",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4de59f9ea9c0380f.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000239",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000239-2b125333d4e2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000239-2b125333d4e2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las tareas de la filosofía",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-216488251242cf20.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000062",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000062-e88a08f37c2b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000062-e88a08f37c2b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "¿Qué es Filosofía?",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-14fff49a1571571a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000221",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000221-05fdbc3220b2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000221-05fdbc3220b2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "¿Qué es la filosofía?",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-697837145d693b86.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000315",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000315-f3e62e45c613.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000315-f3e62e45c613.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El mundo de la psicología",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-0fe3847a7ff875c7.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000129",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000129-89e8e2be2475.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000129-89e8e2be2475.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Estadística en psicología",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-13fe5aaddb7931dd.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000145",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000145-776fbe3ab216.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000145-776fbe3ab216.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Homosexualidad y psicología (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-7f4b1c3b4d2275b4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000148",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000148-6a53d3493ec1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000148-6a53d3493ec1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La psicología y su pluralidad",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-9e5abbbd2405e7b5.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000271",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000271-033a945e5bac.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000271-033a945e5bac.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología clínica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a6d0ccd57418264c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000249",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000249-a4b0aae242ac.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000249-a4b0aae242ac.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología de la competición",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-a1526abacd1bdb70.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000072",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000072-65f7f9daff19.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000072-65f7f9daff19.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología de la personalidad",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-d690a764a51c9691.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000218",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000218-a18f342c9986.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000218-a18f342c9986.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología de las masas (6a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-8a486f9b57ac9316.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000165",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000165-0ed89dde2b9c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000165-0ed89dde2b9c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología del niño (18a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-e509af1fb945cdd3.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000136",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000136-f138f4adccd1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000136-f138f4adccd1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología diferencial",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-81d10bac39520b9d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000199",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000199-1b9a67187d35.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000199-1b9a67187d35.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología general (3a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-555c90c48e9c9991.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000144",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000144-ce836530b65f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000144-ce836530b65f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología médica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-67511892222078e9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000220",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000220-47a264509afa.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000220-47a264509afa.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología social",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-ba2dc1c5b664546f.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000204",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000204-fc3b28c3f665.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000204-fc3b28c3f665.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología. Lo inconsciente",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-5a67a4b7881c5a5f.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000290",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000290-19da60012154.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000290-19da60012154.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología: polimodal",
+      "original_file": "generated/digital-batch/pending-images/Ebook/psicologia/portadas/ebook-f8e97f4f26b71ec3.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000303",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000303-37c9e031cb0e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000303-37c9e031cb0e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-18f389fa1ff99dbe.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000081",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000081-241155985f6b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000081-241155985f6b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de América",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-2b56751b895caee6.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000259",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000259-613a6d7ef62e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000259-613a6d7ef62e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Cádiz",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4867fc8ce98b175b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000173",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000173-538c62787067.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000173-538c62787067.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Córdoba",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b668bfd19c2b596c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000241",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000241-36ef6cfb95a2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000241-36ef6cfb95a2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Francia",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-15ff99c2d2fa9523.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000114",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000114-fcd19dc85651.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000114-fcd19dc85651.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Irlanda (3a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-962e5b8ad3725942.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000082",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000082-6653afc2da7a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000082-6653afc2da7a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Italia (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-af6ad49654985125.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000302",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000302-18b9dbb8d3c3.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000302-18b9dbb8d3c3.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de la cultura en la América hispánica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-842788ea6c161a3d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000255",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000255-b0c1e98ca45e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000255-b0c1e98ca45e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de la India (3a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4e24ef789a1c76b5.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000167",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000167-d70e0f473f32.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000167-d70e0f473f32.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de los Estados Unidos de América",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e804e1bc6a8c36cb.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000170",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000170-7a3e08eac676.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000170-7a3e08eac676.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de México",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-feb8d575cc7258a0.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000250",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000250-732a7fe04b7d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000250-732a7fe04b7d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Rusia",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-7f0c6a2a50f028d5.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000211",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000211-d31b45eeb5ec.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000211-d31b45eeb5ec.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Tlaxcala",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e252c4f94c85fd0a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000201",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000201-3e670b0ab789.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000201-3e670b0ab789.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de Yucatán",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-1fb792ea40eb7626.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000194",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000194-7d7e478237e7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000194-7d7e478237e7.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia económica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-02b1d39c9908dbf0.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000068",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000068-0bae1dbd2d29.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000068-0bae1dbd2d29.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Estados Unidos de América",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-de34d5542d024bc3.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000256",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000256-eb340eda0916.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000256-eb340eda0916.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de los feminismos en América Latina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b379868c14ca7b31.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000093",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000093-81deaded1284.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000093-81deaded1284.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima del constitucionalismo en América Latina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-148c1de0d90004d4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000246",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000246-1cf6d7c511c0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000246-1cf6d7c511c0.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima del indigenismo en América Latina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-12ce3edbc4487ab6.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000238",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000238-a32e3471545b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000238-a32e3471545b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La mujer en la historia",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-ef32a36cd03793a4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000065",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000065-83b6d2fb5000.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000065-83b6d2fb5000.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Otra historia de Córdoba",
+      "original_file": "generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-0f5000c8bc3a8ecf.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000223",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000223-b97d0b7a925e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000223-b97d0b7a925e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Aproximación a la sociología contemporánea",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-d0cf3f3fed782a4e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000115",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000115-57f2d1b6ea0b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000115-57f2d1b6ea0b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El rombo de las investigaciones de las ciencias sociales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-711fb68a9d1c1939.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000155",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000155-8384029381f6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000155-8384029381f6.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El uso de la encuesta en las ciencias sociales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-4ac8547af589f7e1.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000216",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000216-65b4347a7cee.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000216-65b4347a7cee.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de las ciencias sociales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-541429bc6acffd71.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000274",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000274-c0445dc61963.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000274-c0445dc61963.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Hackear la ciencia social: una invitación a la investigación social en entornos digitales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-0d78e2440f6ba335.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000133",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000133-6a01a754c671.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000133-6a01a754c671.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Invitación a la sociología de la comunicación",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-997e260c21f258bd.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000071",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000071-ed7c865479a4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000071-ed7c865479a4.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La explicación del comportamiento social: más tuercas y tornillos para las ciencias sociales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-af244eb94493ca89.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000280",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000280-14035be61c6a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000280-14035be61c6a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La sociología como vocación",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-1a25892f70337822.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000267",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000267-c12642555b78.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000267-c12642555b78.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las ciencias sociales en discusión",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a4d5f0e830d96d37.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000226",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000226-ae97df848a1b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000226-ae97df848a1b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Proyectos de investigación en ciencias sociales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a5e19a50f4c71684.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000102",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000102-53ec33644484.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000102-53ec33644484.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociología de la religión",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-016c49e894bee2b6.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000112",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000112-5eb032eac09e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000112-5eb032eac09e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociología de las organizaciones complejas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-cc9f19126ca42ad8.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000257",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000257-a5497ba8f5f5.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000257-a5497ba8f5f5.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociología del mal",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-06e3cbfc2797ff27.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000103",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000103-079083fdb362.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000103-079083fdb362.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociología del saber",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-bae0fd5cba9e0efe.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000252",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000252-70351687a006.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000252-70351687a006.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociología jurídica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-51253acb06094152.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000069",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000069-3977629513e6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000069-3977629513e6.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociologías de la moda",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000244",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Tragedia y sociología",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-abf41cf48407b627.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000182",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000182-e20f67a9a1e0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000182-e20f67a9a1e0.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Biología cuántica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a5f63174410bc51e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000308",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000308-2377abf961da.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000308-2377abf961da.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Biología de hongos",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9e0170ed63685c45.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000104",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000104-0483d9221173.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000104-0483d9221173.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Biología para ciencias ambientales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-8598c47d271fd83e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000179",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000179-1f00d4d34440.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000179-1f00d4d34440.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ecología química",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-9fd94e585e52923a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000116",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000116-c88b07e0857a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000116-c88b07e0857a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Física de la música",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-406219fdd9361588.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000278",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000278-6f4e1379b685.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000278-6f4e1379b685.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Física del estado sólido",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-afdd523836273442.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000206",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000206-7966b219bf65.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000206-7966b219bf65.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Física experimental",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-a9dc9b16ce0ee11b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000222",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000222-45d8513c57dc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000222-45d8513c57dc.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Física fundamental",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-4f4ad6da3cd6e43c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000258",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000258-beda915bf876.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000258-beda915bf876.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Física y programación",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-ffd0c6ebbc7e8688.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000295",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000295-618a75c8351b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000295-618a75c8351b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Introducción a la física",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-197928bfdeb8ee42.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000198",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000198-ef3829174e0c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000198-ef3829174e0c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Problemas de Física (27a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-80b87603433ba1ab.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000219",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000219-956214e1f8b4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000219-956214e1f8b4.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Química experimental (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-d2d6d2bdfba7e8fe.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000078",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000078-80788f22e0b2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000078-80788f22e0b2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Química orgánica",
+      "original_file": "generated/digital-batch/pending-images/Ebook/ciencias/portadas/ebook-39051a640e5a8148.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000300",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000300-d64be50e7abe.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000300-d64be50e7abe.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Administración de proyectos de informática",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-b421ab6f24f50249.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000183",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000183-f4d194dabae6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000183-f4d194dabae6.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cómo y cuándo aplicar un robot industrial",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-0657617b175f64ec.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000309",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000309-9f8667bcf95e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000309-9f8667bcf95e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Desarrollo de microservicios con Python",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-df981df71d5c210c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000156",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000156-e1d5bedd237a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000156-e1d5bedd237a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de informática",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-9a7f987260e27217.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000099",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000099-35be0191f4c1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000099-35be0191f4c1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de robótica (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-f21784d4bc1ea6cb.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000272",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000272-9378ba8d9f88.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000272-9378ba8d9f88.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Informática forense",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-97a48b16ae9ae001.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000299",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000299-2a036cbc00f9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000299-2a036cbc00f9.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Mantenimiento de equipos informáticos",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-ad439734605ce67e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000233",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000233-04d5f3c2e0af.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000233-04d5f3c2e0af.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Tkinter. Desarrollo de interfaces gráficas con Python (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-61d7de82ee40a320.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000191",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000191-142199180447.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000191-142199180447.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Técnicas de la auditoría informática",
+      "original_file": "generated/digital-batch/pending-images/Ebook/tecnologia-e-informatica/portadas/ebook-72ebb91eb6d24946.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000262",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000262-6feefd6a527d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000262-6feefd6a527d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Análisis matemático",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-a0afc19150ca51a9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000171",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000171-58dd5140a39b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000171-58dd5140a39b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Análisis matemático",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-714897609843648e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000200",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000200-a635647e9da1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000200-a635647e9da1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Estadística matemática",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-4c43b7b6b2f7d801.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000286",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000286-dd71e85f0e2b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000286-dd71e85f0e2b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de matemáticas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-e7ad27a2d7986fb8.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000064",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000064-2dda50c069e4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000064-2dda50c069e4.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Iniciación a las matemáticas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-47d0e535b02ad600.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000268",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000268-ec90efc8b0dc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000268-ec90efc8b0dc.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Introducción a las matemáticas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-0bb555fed263f27e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000092",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000092-b990f4163170.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000092-b990f4163170.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las matemáticas de la luz",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-130f04b7f33dfe76.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000131",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000131-12169133b04c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000131-12169133b04c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las matemáticas de los cristales",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-eca4b568c194b9d0.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000313",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000313-89dfe0bb7b00.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000313-89dfe0bb7b00.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las matemáticas de nuestra vida",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f8eb2117edbe4873.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000176",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000176-43612a5f46cc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000176-43612a5f46cc.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las matemáticas ocultas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-dc02b5a84a5bfb29.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000128",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000128-ce33116a7386.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000128-ce33116a7386.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Lo imposible en matemáticas",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-d3d40c615e3ed52f.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000105",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000105-fdb50b221f87.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000105-fdb50b221f87.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemática en espiral",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-f92c6a802890688d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000152",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000152-602d19f2051a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000152-602d19f2051a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemática estructural",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-ecb575e0c500e089.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000063",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000063-e67d4964b228.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000063-e67d4964b228.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Matemáticas básicas (4a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-b2ba6d8bffd99663.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000240",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000240-b171e32573ef.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000240-b171e32573ef.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Pensar en la matemática",
+      "original_file": "generated/digital-batch/pending-images/Ebook/Matematicas/portadas/ebook-c2773c7db8f50e89.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000289",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000289-5b39c0f5ef04.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000289-5b39c0f5ef04.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Anatomía general",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-36d210b116c5c9e4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000094",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000094-9e3687e0be51.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000094-9e3687e0be51.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Bioquímica para Medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8bacb70c2a10b291.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000150",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000150-37d3bf68f548.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000150-37d3bf68f548.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Biotecnología aplicada a la medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-1013c1955d12bfac.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000083",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000083-0fbeab76ed9d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000083-0fbeab76ed9d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Diccionario etimológico de medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-732305bbd6f1cb11.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000237",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000237-92bef533d43e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000237-92bef533d43e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El ABC de la medicina interna",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-3adc3af0416192dc.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000212",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000212-4a54fe4ac78f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000212-4a54fe4ac78f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El lenguaje de la medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-02ab3e1a2d1bf720.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000091",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000091-9a62dd0758d8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000091-9a62dd0758d8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Electrocardiografía en medicina prehospitalaria",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a9d3e8cac852073e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000217",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000217-9c429e51343b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000217-9c429e51343b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de la medicina forense",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-83015172611403ff.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000265",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000265-293ad579ad84.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000265-293ad579ad84.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Hacia la medicina del futuro",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c62fc0afaeebeef1.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000073",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000073-b44e6508e334.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000073-b44e6508e334.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia y filosofía de la medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8538d91358940113.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000254",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000254-f9472c6d9b88.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000254-f9472c6d9b88.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Introducción a la Medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-8cc0d0f6ab2cc224.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000169",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000169-09f84dc38bd6.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000169-09f84dc38bd6.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La física en la medicina (3a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fd0821640112f205.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000121",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000121-9bf6533fec2a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000121-9bf6533fec2a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La mujer en el ejercicio de la medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-35f5ee7cd1dbd914.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000215",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000215-638adbd97519.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000215-638adbd97519.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Láser en medicina",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-c2dfe127dab4c883.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000154",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000154-40eeed0d457a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000154-40eeed0d457a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Medicina de bolsillo (5a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-a53be3387773971a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000119",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000119-4ab919a3a5c5.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000119-4ab919a3a5c5.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Medicina humanitaria",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-26949727c7f52ee9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000298",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000298-fe522c3f4340.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000298-fe522c3f4340.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Medicina intensiva",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-7eb366f26ec5faeb.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000061",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000061-f57236bb6f98.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000061-f57236bb6f98.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Medicina Legal (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-fb9ab4ccfe851ce8.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000140",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000140-ab0b39e4a661.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000140-ab0b39e4a661.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Síndromes en medicina interna",
+      "original_file": "generated/digital-batch/pending-images/Ebook/medicina/portadas/ebook-24ff9f953ed9a282.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000210",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000210-4dc172de7701.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000210-4dc172de7701.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cómo comportarse en la multitud: una novela",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-8a40bb278ab30a3b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000279",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000279-b796105c841a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000279-b796105c841a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cómo se hace una novela",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-91b68a3cdb70cf6c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000213",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000213-853ef54ef269.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000213-853ef54ef269.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Discurso y conflicto en la novela",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-3ce2558363ac8234.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000149",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000149-0ed92a8415bd.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000149-0ed92a8415bd.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El retorno de los desplazados: novela",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-4058fa136c5702ee.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000293",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000293-f71e1ed0b221.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000293-f71e1ed0b221.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Está temblando. Novela",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-227ccd7c091f9040.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000261",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000261-69f79ed9bb60.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000261-69f79ed9bb60.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La confesión: novela",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2de821b1482db906.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000074",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000074-ee028ef97b6f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000074-ee028ef97b6f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La novela rosa",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d660454291ad5fa3.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000209",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000209-b8d36d2f4bac.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000209-b8d36d2f4bac.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Lady Susan y otras novelas",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-98a1a860b5649584.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000174",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000174-b1c667819ae2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000174-b1c667819ae2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Las novelas de Torquemada",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-2b8c1c97bbc86318.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000147",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000147-30f48d3d61d3.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000147-30f48d3d61d3.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Novela negra con argentinos",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-d4d96850c4ea25cb.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000130",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000130-2c8e064eb148.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000130-2c8e064eb148.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Novelas amorosas y ejemplares",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-b917d2622c19f5b7.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000111",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000111-870e7e1508c4.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000111-870e7e1508c4.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Valentín: novela histórica",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Literatura/portadas/audiobook-524d4e31cdfd7fd8.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000138",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000138-3fff7a27405c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000138-3fff7a27405c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Escritos sobre ética",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c7c794efb03c3148.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000110",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000110-ac9f914c84ec.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000110-ac9f914c84ec.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La responsividad ética",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-43dc30b23ed17e4e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000276",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000276-e9bdb93ec6a2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000276-e9bdb93ec6a2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La ética en la era de la tecnociencia",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-724a798ecab60e86.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000142",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000142-935a58d015ec.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000142-935a58d015ec.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La ética explorada",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2d0a07a10e6b0b80.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000297",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000297-d53a94099b73.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000297-d53a94099b73.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Metafísica de la web",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-2e27906c918a7d2d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000264",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000264-433fd5eb0390.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000264-433fd5eb0390.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "¿Hay que desconstruir la metafísica?",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-f1fae131a4859d4d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000203",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000203-25cff4a036eb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000203-25cff4a036eb.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "¿Qué es eso llamado metafísica?",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1b8619eae91a6a97.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000245",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000245-92907d30e20f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000245-92907d30e20f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética básica (3a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-1ec4175129c2f6f9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000060",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000060-16d2c0d9c6d8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000060-16d2c0d9c6d8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética de la comunicación",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c922336fdf5b1257.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000235",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000235-2a2079e80066.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000235-2a2079e80066.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética de la sexualidad",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7c148898de839f87.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000076",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000076-64cdab670767.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000076-64cdab670767.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética de las nanotecnologías",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-7af4d1003a034ea7.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000225",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000225-dffd36793130.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000225-dffd36793130.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética general (6a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-54322882e821818c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000077",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000077-bcbed14ca4b3.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000077-bcbed14ca4b3.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética y cultura",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-c1b41020fd3c464c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000126",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000126-bd4320bb20ca.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000126-bd4320bb20ca.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética y libertad",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-d6813d23c882b658.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000125",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000125-f32d987659b8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000125-f32d987659b8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética y política",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e13bdd919ce475f6.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000118",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000118-a04a3956529a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000118-a04a3956529a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ética y psicoanálisis",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Filosofia/portadas/audiobook-e9c64ba5698c0cc9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000157",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000157-22d3b5098413.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000157-22d3b5098413.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "24 ideas para una psicoterapia breve (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-55c9e35ac75d34cf.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000196",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000196-6611a0c58763.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000196-6611a0c58763.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Constructivismo y psicoterapia (3a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-4a795b65bdfd9ca1.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000242",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000242-00cff5b9af71.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000242-00cff5b9af71.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Crítica de la psicoterapia integrativa",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-6e39f5b1f9e5f84f.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000172",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000172-2748cac3f392.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000172-2748cac3f392.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Escritos de psicoterapia cognitiva",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b2d3df9243256b1b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000117",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000117-ebd90f80a420.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000117-ebd90f80a420.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de la psicología",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-37f13fad292b679a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000227",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000227-2d968ef9c5ce.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000227-2d968ef9c5ce.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia de la psicología en Colombia",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-515007baa9e819ef.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000096",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000096-0514e5a68d10.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000096-0514e5a68d10.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Lecciones de psicología cognitiva",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-c66b08fc14cb351c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000253",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000253-0efaea019901.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000253-0efaea019901.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Principios de una psicoterapia de la psicosis",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-688c3a28f1d3c7da.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000180",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000180-ea23342e2f9f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000180-ea23342e2f9f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología de la música",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-75d305b10d871ee4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000307",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000307-31d3bd8f7f5e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000307-31d3bd8f7f5e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología del crecimiento interior",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-392b2831c54b8b36.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000248",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000248-d2c57fec7558.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000248-d2c57fec7558.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología del delincuente",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-bc5d121d338cba2f.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000288",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000288-7ef8d42c7ece.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000288-7ef8d42c7ece.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicología del Poder",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-2958ef439959c6b6.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000139",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000139-0577aa4a63da.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000139-0577aa4a63da.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Psicoterapia, asesoramiento y consejería (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fc7e8871dd33f964.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000306",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000306-1de08b400baa.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000306-1de08b400baa.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Temas de psicología práctica",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-b3f705160d54dbfe.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000181",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000181-dc3388e7233f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000181-dc3388e7233f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Teoría y técnica de la psicoterapia psicoanalítica",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/psicologia/portadas/audiobook-fcd4ee9a90e733d4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000301",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000301-b4d903c8565a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000301-b4d903c8565a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cleopatra: una vida",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-5ffda6c39b6efed0.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000109",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000109-353e0c91e77e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000109-353e0c91e77e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Brasil",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-c010fe1dc07ad8d9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000101",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000101-a4799f49d644.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000101-a4799f49d644.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Centroamérica",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-c5aaef0d8aa67d63.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000141",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000141-e9e58003fe2e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000141-e9e58003fe2e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Chile",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-93b9e1556ed1909c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000184",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000184-1d927443fb51.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000184-1d927443fb51.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Cuba",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-8353ef125b47830b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000067",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000067-32b4139c5145.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000067-32b4139c5145.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Filipinas",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-5ce7895763a94ba2.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000059",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000059-b983d1e8997c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000059-b983d1e8997c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Israel",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-3e4cdaec6f0f53ba.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000075",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000075-af92c3c98a60.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000075-af92c3c98a60.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de la deuda externa de Latinoamérica",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-4fe7602af2ff65e0.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000282",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000282-54fbe7390903.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000282-54fbe7390903.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de la eugenesia en América Latina",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-c43379ed1e172b68.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000066",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000066-7f29f1be1dba.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000066-7f29f1be1dba.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de la globalización temprana",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-8a8026589089416b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000192",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000192-9b1865917a87.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000192-9b1865917a87.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de la Inquisición",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-176d5792f8d5303e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000097",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000097-252735602ded.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000097-252735602ded.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de la Revolución cubana",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-f3621ba9427d736d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000291",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000291-6198efed4b8a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000291-6198efed4b8a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de la transición democrática en México",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-2882f30b93bec4e1.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000263",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000263-07bf4e5269f8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000263-07bf4e5269f8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de las constituciones en México",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-8bfa074835747bda.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000166",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000166-67ab06f44893.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000166-67ab06f44893.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de las izquierdas en México",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-68e899b54c542016.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000285",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000285-da4d8fcb7da8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000285-da4d8fcb7da8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de los judíos en la antigüedad",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-cf1f2cbe3ef1e9db.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000113",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000113-21854e1958e2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000113-21854e1958e2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Perú",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-659960efe616ad92.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000187",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000187-b8c006b332ef.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000187-b8c006b332ef.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Rusia",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-3df916b31d9a1795.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000120",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000120-c48bb14e87e9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000120-c48bb14e87e9.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima de Uruguay",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-b86df2c25680b773.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000188",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000188-b87a9677da54.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000188-b87a9677da54.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima del PRI",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-7411ad44a2e96d63.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000084",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000084-97fdee242717.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000084-97fdee242717.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Historia mínima del Tequila",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-0387aad921ca05d3.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000294",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000294-acc75ef16ee0.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000294-acc75ef16ee0.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Los hombres del faraón: el ejército a finales del Reino Nuevo en el Antiguo Egipto",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-d29c2b72f2da902e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000161",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000161-488c35a2b7c5.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000161-488c35a2b7c5.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Pirámides, templos y estrellas: astronomía y arqueología en el Egipto antiguo",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/historia/portadas/audiobook-be5cb4237d0c750c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000108",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000108-00a4ab0116ed.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000108-00a4ab0116ed.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Antropología de la religión",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-3d0d136ef42177f4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000177",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000177-681c86f70122.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000177-681c86f70122.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Antropología de la sexualidad (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-73771c507c8407af.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000312",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000312-d2eccebff072.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000312-d2eccebff072.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cultura, antropología y otras tonterías",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-7f4d556e0ebc44b3.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000224",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000224-6426eb226d4c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000224-6426eb226d4c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Diccionario básico de antropología",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-f14fc023b95afe6b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000058",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000058-7c38a4a76226.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000058-7c38a4a76226.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Manual de Sociología de la Familia",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-066ff6da2eef4a7c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000190",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000190-b801a08072fc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000190-b801a08072fc.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Paisajes de antropología urbana",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-37860ea43ea9c32a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000314",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000314-6a218fbec916.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000314-6a218fbec916.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociología criminal",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-da60551f03495d38.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000135",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000135-0fde21aafefb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000135-0fde21aafefb.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Sociología del Renacimiento",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias-sociales/portadas/audiobook-6e184162cc357663.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000266",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000266-79c8593fef38.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000266-79c8593fef38.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Apuntes de ecología microbiana",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-e8a8d5d56c6bbdae.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000143",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000143-bd1bcd21e34f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000143-bd1bcd21e34f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Astronomía: de la tierra al cosmos",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-2a754808d8c97445.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000080",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000080-9b4680698e44.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000080-9b4680698e44.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Botánica aplicada",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f8ceb3a2ee2a1163.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000231",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000231-f6b7c7b69ea9.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000231-f6b7c7b69ea9.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Colapso: cuando el clima lo cambia todo",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-ea66d96a5be19bc6.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000158",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000158-81a4e74c8cc7.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000158-81a4e74c8cc7.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Ecología del Paisaje",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b734e320648e8926.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000310",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000310-14670e5cb004.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000310-14670e5cb004.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Glosario botánico ilustrado",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-9ce9ae3a37f15e8d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000153",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000153-79bf819e2014.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000153-79bf819e2014.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Introducción a la geología (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-b57cdac6c1c6043b.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000151",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000151-7f1bd2431a36.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000151-7f1bd2431a36.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La astronomía es fácil",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-f4e93bafe1053b4c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000292",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000292-948278f0422d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000292-948278f0422d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Magnetismo en Geología y la prospección magnética terrestre",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-09f707889516a345.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000146",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000146-59ffc760b61c.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000146-59ffc760b61c.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Manual de zoología",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/ciencias/portadas/audiobook-6a94e01622f5eda9.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000230",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000230-141504459915.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000230-141504459915.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Arduino práctico. Edición 2022",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-815903ceb1052d80.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000186",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000186-9739b5421e24.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000186-9739b5421e24.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Bases de datos avanzadas",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-00ba28dbbd8adb65.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000273",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000273-497e835cc887.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000273-497e835cc887.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El manual de Arduino",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-3a1c22b02c0a373c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000127",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000127-ffa793621bb8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000127-ffa793621bb8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Iniciación a JavaScript",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-42b57ca3d9730e7e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000251",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000251-7f01ee48ea8d.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000251-7f01ee48ea8d.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Inteligencia artificial",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-28ed8585d496008a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000234",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000234-62323918bca1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000234-62323918bca1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Linux para usuarios",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-b031fc1cca8cb329.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000305",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000305-2a2f8a7c99a5.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000305-2a2f8a7c99a5.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Programación web en java",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-eae0b77aee05260e.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000207",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000207-63a1f77b776f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000207-63a1f77b776f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Redes locales",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-88143ffe0f91701c.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000162",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000162-872499629629.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000162-872499629629.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Revolución artificial: aplicaciones basadas en inteligencia artificial",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/tecnologia-e-informatica/portadas/audiobook-6d5627bd599950a8.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000311",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000311-85ebfef37037.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000311-85ebfef37037.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Cálculo avanzado: introducción",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-2e70a2bb71e8dfd5.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000236",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000236-18ee9ca1bac5.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000236-18ee9ca1bac5.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Estadística aplicada básica (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-6193d7218a6f349d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000281",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000281-f0010914a82a.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000281-f0010914a82a.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Estadística Inferencial",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-84c02787a4bc623d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000189",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000189-6c3078d525c8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000189-6c3078d525c8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Estadística y muestreo (14a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-3fdc91d85e14cdbc.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000232",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000232-12ee27948af1.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000232-12ee27948af1.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de estadística",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-d5e1e8df5d591fa7.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000275",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000275-5fab167f30ea.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000275-5fab167f30ea.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Geometría elemental",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-41593a3c01bb3bb5.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000098",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000098-21037a93cc95.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000098-21037a93cc95.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Geometría riemanniana",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e802891e2e2bf310.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000124",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000124-e833b5aaa786.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000124-e833b5aaa786.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Inferencia estadística",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-e7e528202ac4b259.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000205",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000205-24ac0fa65c3e.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000205-24ac0fa65c3e.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La geometría de las ciudades",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-98a184bad47674ce.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000070",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000070-2a66cdd32506.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000070-2a66cdd32506.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "La geometría del universo",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-a73c8fe399446f23.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000269",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000269-249cbac036bc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000269-249cbac036bc.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Una introducción a la geometría fractal",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/Matematicas/portadas/audiobook-8af061372fbf6a49.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000202",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000202-890d7fda61bc.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000202-890d7fda61bc.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Anatomía y fisiología básicas en el niño",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ccecc542047c16dd.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000086",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000086-5edf32cd1df2.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000086-5edf32cd1df2.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Anatomía y fisiología del sistema nervioso central",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7716c6d896d5a7b7.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000260",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000260-5281d2d3194f.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000260-5281d2d3194f.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "El médico en casa: manual de consulta",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-60f254fb894b8c6a.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000132",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000132-5683a3d9c137.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000132-5683a3d9c137.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fisiología respiratoria (8a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6aa70e9b3495e853.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000087",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000087-63870356e278.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000087-63870356e278.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fisiología y fisiopatología pulmonar: estudios de casos (2a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-da20f31c48dae892.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000287",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000287-722365f7ef94.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000287-722365f7ef94.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Fundamentos de farmacología oncológica",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-dc33785bd60e4578.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000284",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000284-eda150b61f88.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000284-eda150b61f88.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Manual de fisiología articular",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-c8a5563777e61d13.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000175",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000175-6c0130a2bcbb.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000175-6c0130a2bcbb.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Manual de práctica de semiología clínica",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-7c90703dd5f5bc7d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000088",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000088-2b7be887c7c8.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000088-2b7be887c7c8.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Neuroanatomía, funcional y clínica (5a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2d193ee8f693ac3d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000164",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000164-ade7eef81da3.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000164-ade7eef81da3.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Oxígeno: fisiología, terapéutica, toxicidad",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-6c6624b4dbb6c732.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000195",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000195-218bfe19d268.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000195-218bfe19d268.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Proceso de valoración semiológica de Chávez para el cuidado de enfermería",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-ae42295f28b58397.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000243",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000243-096bd96eb56b.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000243-096bd96eb56b.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Semiología: sistema craneomandibular",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-2a1df67176eecdd4.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000137",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000137-9dc4cc95d9ed.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000137-9dc4cc95d9ed.webp"
+    },
+    {
+      "isbn13": null,
+      "title": "Temas claves: neuroanatomía (4a. ed.)",
+      "original_file": "generated/digital-batch/pending-images/Audiolibros/medicina/portadas/audiobook-8b4726e2a5b9d46d.webp",
+      "old_sku": null,
+      "permanent_sku": "PLG-BK-000197",
+      "r2_object_key": "covers/editions/v2/PLG-BK-000197-433f0fa20eba.webp",
+      "cover_url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000197-433f0fa20eba.webp"
+    }
+  ]
+}

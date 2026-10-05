@@ -44,13 +44,17 @@ for (const scheme of ["Light", "Dark"] as const) {
           cardWidth: grid.firstElementChild!.getBoundingClientRect().width,
           statuses: statuses.map((status) => {
             const label = status.querySelector<HTMLElement>("[data-stockstatus-label]")!;
-            const icon = status.querySelector<HTMLElement>(".material-symbol")!;
+            const icon = status.querySelector<HTMLElement>(".material-symbol");
+            const mark = status.querySelector<HTMLElement>("[data-stockstatus-mark]");
             const explanation = status.querySelector<HTMLElement>("[data-stockstatus-explanation]");
             const box = status.getBoundingClientRect();
             return {
-              size: status.dataset.size, label: label.textContent, font: getComputedStyle(label).fontSize,
-              lineHeight: getComputedStyle(label).lineHeight, icon: icon.textContent,
-              iconWidth: icon.getBoundingClientRect().width, iconHeight: icon.getBoundingClientRect().height,
+              variant: status.dataset.variant, size: status.dataset.size, label: label.textContent, font: getComputedStyle(label).fontSize,
+              lineHeight: getComputedStyle(label).lineHeight, icon: icon?.textContent,
+              iconWidth: icon?.getBoundingClientRect().width, iconHeight: icon?.getBoundingClientRect().height,
+              markWidth: mark?.getBoundingClientRect().width, markHeight: mark?.getBoundingClientRect().height,
+              markOutline: mark ? getComputedStyle(mark).boxShadow : null,
+              markBackground: mark ? getComputedStyle(mark).backgroundColor : null,
               contrast: contrast(label), explanationContrast: explanation ? contrast(explanation) : null,
               overflow: status.scrollWidth > status.clientWidth + 1 || label.getBoundingClientRect().right > box.right + 1,
               explanationClamped: explanation ? getComputedStyle(explanation).webkitLineClamp !== "none" : false,
@@ -69,9 +73,17 @@ for (const scheme of ["Light", "Dark"] as const) {
         expect(status.explanationClamped).toBe(false);
         expect(status.font).toBe(status.size === "compact" ? "12px" : "14px");
         expect(status.lineHeight).toBe(status.size === "compact" ? "16px" : "20px");
-        expect(status.iconWidth).toBe(status.size === "compact" ? 16 : 20);
-        expect(status.iconHeight).toBe(status.iconWidth);
-        expect(status.icon).toBe(status.label === "Disponible" ? "check_circle" : "block");
+        if (status.variant === "quiet") {
+          expect(status.icon).toBeUndefined();
+          expect(status.markWidth).toBe(7); expect(status.markHeight).toBe(7);
+          if (status.label === "Disponible") expect(status.markOutline).toBe("none");
+          else { expect(status.markOutline).toContain("inset"); expect(status.markOutline).toContain("1.5px"); }
+          if (status.label === "No disponible") expect(status.markBackground).toBe("rgba(0, 0, 0, 0)");
+        } else {
+          expect(status.iconWidth).toBe(status.size === "compact" ? 16 : 20);
+          expect(status.iconHeight).toBe(status.iconWidth);
+          expect(status.icon).toBe(status.label === "Disponible" ? "check_circle" : "block");
+        }
       }
     }
     const cases = section.locator("[data-stockstatus-case]");

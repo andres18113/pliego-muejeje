@@ -1,0 +1,3839 @@
+{
+  "schema": "pliego-pending-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-18f389fa1ff99dbe.webp",
+      "libro": {
+        "titulo": "Historia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Javier Gálvez S.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Javier Gálvez",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000081",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000081-241155985f6b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79196",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-18f389fa1ff99dbe",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "285",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-3293162027a45ff0"
+        },
+        "author_bindings": [
+          {
+            "name": "Javier Gálvez S.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Javier Gálvez S.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+            "observed_text": "Ecuador : Editorial Javier Gálvez, 2012.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "f66d3bcdb75ba932a24371e03ca99b0b45dbf26af9ee3742400532c9f2c70a6e",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79196.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "f66d3bcdb75ba932a24371e03ca99b0b45dbf26af9ee3742400532c9f2c70a6e",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79196.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79196",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 77,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79196",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia - Javier Gálvez S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-18f389fa1ff99dbe.webp",
+            "cover_sha256": "241155985f6b82b372dd3081bc6d5e01fd086471e53dc316ebf49b7c84cf6d73",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Javier Gálvez S.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 77,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79196",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia - Javier Gálvez S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-18f389fa1ff99dbe.webp",
+            "cover_sha256": "241155985f6b82b372dd3081bc6d5e01fd086471e53dc316ebf49b7c84cf6d73",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 77,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79196",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia - Javier Gálvez S..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-18f389fa1ff99dbe.webp",
+            "cover_sha256": "241155985f6b82b372dd3081bc6d5e01fd086471e53dc316ebf49b7c84cf6d73",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 77,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79196",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia - Javier Gálvez S..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-18f389fa1ff99dbe.webp",
+          "cover_sha256": "241155985f6b82b372dd3081bc6d5e01fd086471e53dc316ebf49b7c84cf6d73",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "287",
+        "imported_book_id": "285"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-2b56751b895caee6.webp",
+      "libro": {
+        "titulo": "Historia de América",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Malamud, Carlos",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Alianza Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000259",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000259-613a6d7ef62e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/304769",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-2b56751b895caee6",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "286",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c5f2f30c4afe56f4"
+        },
+        "author_bindings": [
+          {
+            "name": "Malamud, Carlos",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Malamud, Carlos",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_path": "covers/Ebook/Historia/originales/Historia de América - Malamud, Carlos.jpg",
+            "observed_text": "Alianza Editorial",
+            "basis": "Imprint editorial visible en la portada original suministrada; título y autor de la misma portada coinciden. Los logotipos inequívocos FCE se normalizan a Fondo de Cultura Económica.",
+            "capture_sha256": "571dec33e92cce527942095758597624950732a671c1222c0cd9467a0be52232",
+            "source": "covers/Ebook/Historia/originales/Historia de América - Malamud, Carlos.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://opac.um.edu.uy/index.php?id=8689&lvl=author_see",
+            "observed_text": "Historia de América / Carlos Malamud; Idioma : Español",
+            "basis": "Campo de idioma explícito del catálogo primario; título y autor coinciden con el candidato y la portada original.",
+            "source": "https://opac.um.edu.uy/index.php?id=8689&lvl=author_see",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 78,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/304769",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de América - Malamud, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-2b56751b895caee6.webp",
+            "cover_sha256": "613a6d7ef62ed16ca20ec0ae92bd588517903cb535ccda04d6ebbe8c272dfc6d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Malamud, Carlos",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 78,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/304769",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de América - Malamud, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-2b56751b895caee6.webp",
+            "cover_sha256": "613a6d7ef62ed16ca20ec0ae92bd588517903cb535ccda04d6ebbe8c272dfc6d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 78,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/304769",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de América - Malamud, Carlos.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-2b56751b895caee6.webp",
+            "cover_sha256": "613a6d7ef62ed16ca20ec0ae92bd588517903cb535ccda04d6ebbe8c272dfc6d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 78,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/304769",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de América - Malamud, Carlos.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-2b56751b895caee6.webp",
+          "cover_sha256": "613a6d7ef62ed16ca20ec0ae92bd588517903cb535ccda04d6ebbe8c272dfc6d",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "288",
+        "imported_book_id": "286"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-4867fc8ce98b175b.webp",
+      "libro": {
+        "titulo": "Historia de Cádiz",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Horozco, Agustín de",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Cádiz, Servicio de Publicaciones",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "24.99",
+        "sku": "PLG-BK-000173",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000173-538c62787067.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/33935",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-4867fc8ce98b175b",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "287",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-bcd692176eb01639"
+        },
+        "author_bindings": [
+          {
+            "name": "Horozco, Agustín de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Horozco, Agustín de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+            "observed_text": "Cádiz : Universidad de Cádiz, Servicio de Publicaciones, 2017.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "563888a71ec45735223cd90475029c19d306e00654519c58ca667d8e77b7596e",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/33935.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "563888a71ec45735223cd90475029c19d306e00654519c58ca667d8e77b7596e",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/33935.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB33935",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 79,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/33935",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Cádiz - Horozco, Agustín de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4867fc8ce98b175b.webp",
+            "cover_sha256": "538c62787067f7ea0d6d222e703e813d7c2ed40036ae2329baa85f449d2ec3fd",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Horozco, Agustín de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 79,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/33935",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Cádiz - Horozco, Agustín de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4867fc8ce98b175b.webp",
+            "cover_sha256": "538c62787067f7ea0d6d222e703e813d7c2ed40036ae2329baa85f449d2ec3fd",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 79,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/33935",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Cádiz - Horozco, Agustín de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4867fc8ce98b175b.webp",
+            "cover_sha256": "538c62787067f7ea0d6d222e703e813d7c2ed40036ae2329baa85f449d2ec3fd",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 79,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/33935",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Cádiz - Horozco, Agustín de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4867fc8ce98b175b.webp",
+          "cover_sha256": "538c62787067f7ea0d6d222e703e813d7c2ed40036ae2329baa85f449d2ec3fd",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "289",
+        "imported_book_id": "287"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-b668bfd19c2b596c.webp",
+      "libro": {
+        "titulo": "Historia de Córdoba",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Aguilar Gavilán, Enrique",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Sílex",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000241",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000241-36ef6cfb95a2.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52407",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-b668bfd19c2b596c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "288",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-acf80d345c31ab25"
+        },
+        "author_bindings": [
+          {
+            "name": "Aguilar Gavilán, Enrique",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Aguilar Gavilán, Enrique",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+            "observed_text": "Madrid : Ediciones Sílex, [1995]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "799ffce6c79ae720ab818ec5c60e6bf98f73b7adbf7a663dcf19602bf15d8d21",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/52407.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "799ffce6c79ae720ab818ec5c60e6bf98f73b7adbf7a663dcf19602bf15d8d21",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/52407.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52407",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 80,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52407",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Córdoba - Aguilar Gavilán, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b668bfd19c2b596c.webp",
+            "cover_sha256": "36ef6cfb95a23c57f4d4037c4f7202de94f986e67599dd41fe6a04bd4a7e5699",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Aguilar Gavilán, Enrique",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 80,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52407",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Córdoba - Aguilar Gavilán, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b668bfd19c2b596c.webp",
+            "cover_sha256": "36ef6cfb95a23c57f4d4037c4f7202de94f986e67599dd41fe6a04bd4a7e5699",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 80,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52407",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Córdoba - Aguilar Gavilán, Enrique.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b668bfd19c2b596c.webp",
+            "cover_sha256": "36ef6cfb95a23c57f4d4037c4f7202de94f986e67599dd41fe6a04bd4a7e5699",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 80,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52407",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Córdoba - Aguilar Gavilán, Enrique.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b668bfd19c2b596c.webp",
+          "cover_sha256": "36ef6cfb95a23c57f4d4037c4f7202de94f986e67599dd41fe6a04bd4a7e5699",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "290",
+        "imported_book_id": "288"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-15ff99c2d2fa9523.webp",
+      "libro": {
+        "titulo": "Historia de Francia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Price, Roger",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Akal",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000114",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000114-fcd19dc85651.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49779",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-15ff99c2d2fa9523",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "289",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2afcbeacbd65b5d4"
+        },
+        "author_bindings": [
+          {
+            "name": "Price, Roger",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Price, Roger",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+            "observed_text": "Madrid : Ediciones Akal, 2016.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "1f74efc9dd4c91fcd6b472b99c434075207afdd0319eb8532f5d6ddd9a5955a6",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49779.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "1f74efc9dd4c91fcd6b472b99c434075207afdd0319eb8532f5d6ddd9a5955a6",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49779.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49779",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 81,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49779",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Francia - Price, Roger.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-15ff99c2d2fa9523.webp",
+            "cover_sha256": "fcd19dc8565150a38b5b0918ea6b2e584d2953b09360b5a396dd9d87b0240cd3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Price, Roger",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 81,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49779",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Francia - Price, Roger.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-15ff99c2d2fa9523.webp",
+            "cover_sha256": "fcd19dc8565150a38b5b0918ea6b2e584d2953b09360b5a396dd9d87b0240cd3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 81,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49779",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Francia - Price, Roger.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-15ff99c2d2fa9523.webp",
+            "cover_sha256": "fcd19dc8565150a38b5b0918ea6b2e584d2953b09360b5a396dd9d87b0240cd3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 81,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49779",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Francia - Price, Roger.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-15ff99c2d2fa9523.webp",
+          "cover_sha256": "fcd19dc8565150a38b5b0918ea6b2e584d2953b09360b5a396dd9d87b0240cd3",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "291",
+        "imported_book_id": "289"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-962e5b8ad3725942.webp",
+      "libro": {
+        "titulo": "Historia de Irlanda (3a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "O’Beirne Ranelagh, John",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Akal",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000082",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000082-6653afc2da7a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49812",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-962e5b8ad3725942",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "290",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-e2802d0dbf8e1c95"
+        },
+        "author_bindings": [
+          {
+            "name": "O’Beirne Ranelagh, John",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "O’Beirne Ranelagh, John",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+            "observed_text": "Madrid : Ediciones Akal, [2014]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "bb55ca4b151caaf4593b89eccd870716b1aeec36115eddaedd04e685d3787cd0",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49812.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "bb55ca4b151caaf4593b89eccd870716b1aeec36115eddaedd04e685d3787cd0",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49812.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49812",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 82,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49812",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Irlanda (3a. ed.) - O’Beirne Ranelagh, John.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-962e5b8ad3725942.webp",
+            "cover_sha256": "6653afc2da7a7f9ab54b944ecb158fcdf97d70cd8771f9f007695b1013fc75dc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "O’Beirne Ranelagh, John",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 82,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49812",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Irlanda (3a. ed.) - O’Beirne Ranelagh, John.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-962e5b8ad3725942.webp",
+            "cover_sha256": "6653afc2da7a7f9ab54b944ecb158fcdf97d70cd8771f9f007695b1013fc75dc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 82,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49812",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Irlanda (3a. ed.) - O’Beirne Ranelagh, John.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-962e5b8ad3725942.webp",
+            "cover_sha256": "6653afc2da7a7f9ab54b944ecb158fcdf97d70cd8771f9f007695b1013fc75dc",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 82,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49812",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Irlanda (3a. ed.) - O’Beirne Ranelagh, John.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-962e5b8ad3725942.webp",
+          "cover_sha256": "6653afc2da7a7f9ab54b944ecb158fcdf97d70cd8771f9f007695b1013fc75dc",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "292",
+        "imported_book_id": "290"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-af6ad49654985125.webp",
+      "libro": {
+        "titulo": "Historia de Italia (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Duggan, Christopher",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Akal",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000302",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000302-18b9dbb8d3c3.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49780",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-af6ad49654985125",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "291",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7d37fc66000044af"
+        },
+        "author_bindings": [
+          {
+            "name": "Duggan, Christopher",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Duggan, Christopher",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+            "observed_text": "Madrid : Ediciones Akal, [2017]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "a47e9eb6bd93255ad5e2461a7edd5df7c27d93c0c45dd985cb3fc097a7376282",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49780.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "a47e9eb6bd93255ad5e2461a7edd5df7c27d93c0c45dd985cb3fc097a7376282",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49780.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49780",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 83,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49780",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Italia (2a. ed.) - Duggan, Christopher.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-af6ad49654985125.webp",
+            "cover_sha256": "18b9dbb8d3c393896d807bb0b7b670022c5a1ff2f8309a7c13dedcfb56218534",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Duggan, Christopher",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 83,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49780",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Italia (2a. ed.) - Duggan, Christopher.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-af6ad49654985125.webp",
+            "cover_sha256": "18b9dbb8d3c393896d807bb0b7b670022c5a1ff2f8309a7c13dedcfb56218534",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 83,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49780",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Italia (2a. ed.) - Duggan, Christopher.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-af6ad49654985125.webp",
+            "cover_sha256": "18b9dbb8d3c393896d807bb0b7b670022c5a1ff2f8309a7c13dedcfb56218534",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 83,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49780",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Italia (2a. ed.) - Duggan, Christopher.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-af6ad49654985125.webp",
+          "cover_sha256": "18b9dbb8d3c393896d807bb0b7b670022c5a1ff2f8309a7c13dedcfb56218534",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "293",
+        "imported_book_id": "291"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-842788ea6c161a3d.webp",
+      "libro": {
+        "titulo": "Historia de la cultura en la América hispánica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Henríquez Ureña, Pedro",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "FCE - Fondo de Cultura Económica",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000255",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000255-b0c1e98ca45e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110160",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-842788ea6c161a3d",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "292",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-eca6dc83f6f6ee54"
+        },
+        "author_bindings": [
+          {
+            "name": "Henríquez Ureña, Pedro",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Henríquez Ureña, Pedro",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+            "observed_text": "México D.F. : FCE - Fondo de Cultura Económica, 2014.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "2bfd7d51b27a3222bd48a4c3a108cd8356e149ccfe3bbffa7e5b23f0a20d1b09",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/110160.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "2bfd7d51b27a3222bd48a4c3a108cd8356e149ccfe3bbffa7e5b23f0a20d1b09",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/110160.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB110160",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 84,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110160",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de la cultura en la América hispánica - Henríquez Ureña, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-842788ea6c161a3d.webp",
+            "cover_sha256": "b0c1e98ca45e5b6234871714037890d6765ebc9755e9ee6d2b39055944331c14",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Henríquez Ureña, Pedro",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 84,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110160",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de la cultura en la América hispánica - Henríquez Ureña, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-842788ea6c161a3d.webp",
+            "cover_sha256": "b0c1e98ca45e5b6234871714037890d6765ebc9755e9ee6d2b39055944331c14",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 84,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110160",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de la cultura en la América hispánica - Henríquez Ureña, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-842788ea6c161a3d.webp",
+            "cover_sha256": "b0c1e98ca45e5b6234871714037890d6765ebc9755e9ee6d2b39055944331c14",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 84,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/110160",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de la cultura en la América hispánica - Henríquez Ureña, Pedro.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-842788ea6c161a3d.webp",
+          "cover_sha256": "b0c1e98ca45e5b6234871714037890d6765ebc9755e9ee6d2b39055944331c14",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "294",
+        "imported_book_id": "292"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-4e24ef789a1c76b5.webp",
+      "libro": {
+        "titulo": "Historia de la India (3a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Metcalf, Barbara D. - Metcalf, Thomas R.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Akal",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "11.99",
+        "sku": "PLG-BK-000167",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000167-d70e0f473f32.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49813",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-4e24ef789a1c76b5",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "293",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-22365d9ec4e3816f"
+        },
+        "author_bindings": [
+          {
+            "name": "Metcalf, Barbara D. - Metcalf, Thomas R.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Metcalf, Barbara D. - Metcalf, Thomas R.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+            "observed_text": "Madrid : Ediciones Akal, [2014]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "683d80573c4497d8a9bb455181a7fa58bdcc6e3c03070a566b9716a3aacdfc13",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49813.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "683d80573c4497d8a9bb455181a7fa58bdcc6e3c03070a566b9716a3aacdfc13",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49813.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49813",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 85,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49813",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de la India (3a. ed.) - Metcalf, Barbara D. - Metcalf, Thomas R..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4e24ef789a1c76b5.webp",
+            "cover_sha256": "d70e0f473f32f16eaa3c3f8f19bf30aa74c70ecb3ade521837ff77df3dd17d71",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Metcalf, Barbara D. - Metcalf, Thomas R.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 85,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49813",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de la India (3a. ed.) - Metcalf, Barbara D. - Metcalf, Thomas R..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4e24ef789a1c76b5.webp",
+            "cover_sha256": "d70e0f473f32f16eaa3c3f8f19bf30aa74c70ecb3ade521837ff77df3dd17d71",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 85,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49813",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de la India (3a. ed.) - Metcalf, Barbara D. - Metcalf, Thomas R..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4e24ef789a1c76b5.webp",
+            "cover_sha256": "d70e0f473f32f16eaa3c3f8f19bf30aa74c70ecb3ade521837ff77df3dd17d71",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 85,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49813",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de la India (3a. ed.) - Metcalf, Barbara D. - Metcalf, Thomas R..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-4e24ef789a1c76b5.webp",
+          "cover_sha256": "d70e0f473f32f16eaa3c3f8f19bf30aa74c70ecb3ade521837ff77df3dd17d71",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "295",
+        "imported_book_id": "293"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-e804e1bc6a8c36cb.webp",
+      "libro": {
+        "titulo": "Historia de los Estados Unidos de América",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Grant, Susan-Mary",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Akal",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000170",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000170-7a3e08eac676.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49811",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-e804e1bc6a8c36cb",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "294",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-053fc9b60d0279c8"
+        },
+        "author_bindings": [
+          {
+            "name": "Grant, Susan-Mary",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Grant, Susan-Mary",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+            "observed_text": "Madrid : Ediciones Akal, 2014.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "10b8ada7cf016bbba12aa33d801ea6a4d999809721920fd2777590e750521ccb",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49811.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "10b8ada7cf016bbba12aa33d801ea6a4d999809721920fd2777590e750521ccb",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49811.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49811",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 86,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49811",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de los Estados Unidos de América - Grant, Susan-Mary.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e804e1bc6a8c36cb.webp",
+            "cover_sha256": "7a3e08eac67603efa6eff1215ed036553bf874c1d89db02a35741f36d64f957c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Grant, Susan-Mary",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 86,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49811",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de los Estados Unidos de América - Grant, Susan-Mary.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e804e1bc6a8c36cb.webp",
+            "cover_sha256": "7a3e08eac67603efa6eff1215ed036553bf874c1d89db02a35741f36d64f957c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 86,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49811",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de los Estados Unidos de América - Grant, Susan-Mary.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e804e1bc6a8c36cb.webp",
+            "cover_sha256": "7a3e08eac67603efa6eff1215ed036553bf874c1d89db02a35741f36d64f957c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 86,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49811",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de los Estados Unidos de América - Grant, Susan-Mary.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e804e1bc6a8c36cb.webp",
+          "cover_sha256": "7a3e08eac67603efa6eff1215ed036553bf874c1d89db02a35741f36d64f957c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "296",
+        "imported_book_id": "294"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-feb8d575cc7258a0.webp",
+      "libro": {
+        "titulo": "Historia de México",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cavo, Andrés",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional Autónoma de México",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000250",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000250-732a7fe04b7d.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37244",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-feb8d575cc7258a0",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "295",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-e26bada3f6401ffc"
+        },
+        "author_bindings": [
+          {
+            "name": "Cavo, Andrés",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cavo, Andrés",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+            "observed_text": "México D.F. : Universidad Nacional Autónoma de México, 2013.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "5d3a98739460feae67fb900e2617d649628b84d743c93b9911fa281863e3ee2b",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/37244.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "5d3a98739460feae67fb900e2617d649628b84d743c93b9911fa281863e3ee2b",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/37244.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB37244",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 87,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37244",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de México - Cavo, Andrés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-feb8d575cc7258a0.webp",
+            "cover_sha256": "732a7fe04b7daf1ad33803750056908a68799cad1cd32f85a26a737a01594c3f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cavo, Andrés",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 87,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37244",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de México - Cavo, Andrés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-feb8d575cc7258a0.webp",
+            "cover_sha256": "732a7fe04b7daf1ad33803750056908a68799cad1cd32f85a26a737a01594c3f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 87,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37244",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de México - Cavo, Andrés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-feb8d575cc7258a0.webp",
+            "cover_sha256": "732a7fe04b7daf1ad33803750056908a68799cad1cd32f85a26a737a01594c3f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 87,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/37244",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de México - Cavo, Andrés.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-feb8d575cc7258a0.webp",
+          "cover_sha256": "732a7fe04b7daf1ad33803750056908a68799cad1cd32f85a26a737a01594c3f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "297",
+        "imported_book_id": "295"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-7f0c6a2a50f028d5.webp",
+      "libro": {
+        "titulo": "Historia de Rusia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bushkovitch, Paul",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Akal",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000211",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000211-d31b45eeb5ec.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49810",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-7f0c6a2a50f028d5",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "296",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-468ff79b7e739e05"
+        },
+        "author_bindings": [
+          {
+            "name": "Bushkovitch, Paul",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bushkovitch, Paul",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+            "observed_text": "Madrid : Ediciones Akal, 2013.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "777e3c7b0525402042cfddea83b6cc25a06d64fe325fbd89402a54088ea3f11a",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49810.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "777e3c7b0525402042cfddea83b6cc25a06d64fe325fbd89402a54088ea3f11a",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/49810.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB49810",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 89,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49810",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Rusia - Bushkovitch, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-7f0c6a2a50f028d5.webp",
+            "cover_sha256": "d31b45eeb5ec991dcb6a0e9d7c8001357b1c9b2f68ec95b978571b2d23384f3f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bushkovitch, Paul",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 89,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49810",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Rusia - Bushkovitch, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-7f0c6a2a50f028d5.webp",
+            "cover_sha256": "d31b45eeb5ec991dcb6a0e9d7c8001357b1c9b2f68ec95b978571b2d23384f3f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 89,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49810",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Rusia - Bushkovitch, Paul.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-7f0c6a2a50f028d5.webp",
+            "cover_sha256": "d31b45eeb5ec991dcb6a0e9d7c8001357b1c9b2f68ec95b978571b2d23384f3f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 89,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/49810",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Rusia - Bushkovitch, Paul.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-7f0c6a2a50f028d5.webp",
+          "cover_sha256": "d31b45eeb5ec991dcb6a0e9d7c8001357b1c9b2f68ec95b978571b2d23384f3f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "298",
+        "imported_book_id": "296"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-e252c4f94c85fd0a.webp",
+      "libro": {
+        "titulo": "Historia de Tlaxcala",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Muñoz y Camargo, Diego",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Linkgua",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "5.99",
+        "sku": "PLG-BK-000201",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000201-3e670b0ab789.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62415",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-e252c4f94c85fd0a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "297",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-28b0fe674bc0b824"
+        },
+        "author_bindings": [
+          {
+            "name": "Muñoz y Camargo, Diego",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Muñoz y Camargo, Diego",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+            "observed_text": "[Barcelona] : [Editorial Linkgua], 2011.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "68230be6fef05aa8826c887e7115be633031fe89ce257b39a1a679f1df83fce4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/62415.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "68230be6fef05aa8826c887e7115be633031fe89ce257b39a1a679f1df83fce4",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/62415.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62415",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 90,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62415",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Tlaxcala - Muñoz y Camargo, Diego.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e252c4f94c85fd0a.webp",
+            "cover_sha256": "3e670b0ab789be87b1ef5bbf1c4860881f02f6533df4cca8b75d412651de5b9a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Muñoz y Camargo, Diego",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 90,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62415",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Tlaxcala - Muñoz y Camargo, Diego.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e252c4f94c85fd0a.webp",
+            "cover_sha256": "3e670b0ab789be87b1ef5bbf1c4860881f02f6533df4cca8b75d412651de5b9a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 90,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62415",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Tlaxcala - Muñoz y Camargo, Diego.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e252c4f94c85fd0a.webp",
+            "cover_sha256": "3e670b0ab789be87b1ef5bbf1c4860881f02f6533df4cca8b75d412651de5b9a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 90,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62415",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Tlaxcala - Muñoz y Camargo, Diego.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-e252c4f94c85fd0a.webp",
+          "cover_sha256": "3e670b0ab789be87b1ef5bbf1c4860881f02f6533df4cca8b75d412651de5b9a",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "299",
+        "imported_book_id": "297"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-1fb792ea40eb7626.webp",
+      "libro": {
+        "titulo": "Historia de Yucatán",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cogolludo, Diego López de",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Linkgua",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000194",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000194-7d7e478237e7.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61593",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-1fb792ea40eb7626",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "298",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5335d870a0abf5db"
+        },
+        "author_bindings": [
+          {
+            "name": "Cogolludo, Diego López de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cogolludo, Diego López de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+            "observed_text": "[Barcelona] : [Editorial Linkgua], 2011.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "0b8fc3f93831a8d1ab0d890b45c76e491991fdc67cdeb7b2f9982ccf6b3778d0",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61593.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "0b8fc3f93831a8d1ab0d890b45c76e491991fdc67cdeb7b2f9982ccf6b3778d0",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61593.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61593",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 91,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61593",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Yucatán - Cogolludo, Diego López de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-1fb792ea40eb7626.webp",
+            "cover_sha256": "7d7e478237e74558a54a4af3bfc3c7bfa38126830d05e7b25ec8d13050c2ed43",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cogolludo, Diego López de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 91,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61593",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Yucatán - Cogolludo, Diego López de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-1fb792ea40eb7626.webp",
+            "cover_sha256": "7d7e478237e74558a54a4af3bfc3c7bfa38126830d05e7b25ec8d13050c2ed43",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 91,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61593",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia de Yucatán - Cogolludo, Diego López de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-1fb792ea40eb7626.webp",
+            "cover_sha256": "7d7e478237e74558a54a4af3bfc3c7bfa38126830d05e7b25ec8d13050c2ed43",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 91,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61593",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia de Yucatán - Cogolludo, Diego López de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-1fb792ea40eb7626.webp",
+          "cover_sha256": "7d7e478237e74558a54a4af3bfc3c7bfa38126830d05e7b25ec8d13050c2ed43",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "300",
+        "imported_book_id": "298"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-02b1d39c9908dbf0.webp",
+      "libro": {
+        "titulo": "Historia económica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Nacional de Educación a Distancia",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000068",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000068-0bae1dbd2d29.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48793",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-02b1d39c9908dbf0",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "299",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-275b591b6e614ec4"
+        },
+        "author_bindings": [
+          {
+            "name": "José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+            "observed_text": "Madrid : Universidad Nacional de Educación a Distancia, 2014.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "f0cb350d3c87a57ab7efbab7f4b7b51e01dbd4c4d4cad950eb81f1101c43d931",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/48793.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "f0cb350d3c87a57ab7efbab7f4b7b51e01dbd4c4d4cad950eb81f1101c43d931",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/48793.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48793",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 92,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48793",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia económica - José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-02b1d39c9908dbf0.webp",
+            "cover_sha256": "0bae1dbd2d293c17eb37ebe02be71b3cd548f648f991b2833e32f2af221131a8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 92,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48793",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia económica - José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-02b1d39c9908dbf0.webp",
+            "cover_sha256": "0bae1dbd2d293c17eb37ebe02be71b3cd548f648f991b2833e32f2af221131a8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 92,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48793",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia económica - José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-02b1d39c9908dbf0.webp",
+            "cover_sha256": "0bae1dbd2d293c17eb37ebe02be71b3cd548f648f991b2833e32f2af221131a8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 92,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48793",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia económica - José U. Bernardos Sanz - Mauro Hernández - Miguel Santamaría Lancho.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-02b1d39c9908dbf0.webp",
+          "cover_sha256": "0bae1dbd2d293c17eb37ebe02be71b3cd548f648f991b2833e32f2af221131a8",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "301",
+        "imported_book_id": "299"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-de34d5542d024bc3.webp",
+      "libro": {
+        "titulo": "Historia mínima de Estados Unidos de América",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pani, Erika",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Colegio de México, Centro de Estudios Históricos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000256",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000256-eb340eda0916.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194936",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-de34d5542d024bc3",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "300",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-20ad12876bca19fc"
+        },
+        "author_bindings": [
+          {
+            "name": "Pani, Erika",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pani, Erika",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+            "observed_text": "Ciudad de México : El Colegio de México, Centro de Estudios Históricos, 2016.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "0fdaa7ce0e70bfe59773eef2e5858b872448caf271530fc819666dd953d6e4bd",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/194936.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "0fdaa7ce0e70bfe59773eef2e5858b872448caf271530fc819666dd953d6e4bd",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/194936.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194936",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 94,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194936",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima de Estados Unidos de América - Pani, Erika.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-de34d5542d024bc3.webp",
+            "cover_sha256": "eb340eda0916639883ac79874e09f0b27c88a0b39f781894379d59126cee7983",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pani, Erika",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 94,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194936",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima de Estados Unidos de América - Pani, Erika.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-de34d5542d024bc3.webp",
+            "cover_sha256": "eb340eda0916639883ac79874e09f0b27c88a0b39f781894379d59126cee7983",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 94,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194936",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima de Estados Unidos de América - Pani, Erika.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-de34d5542d024bc3.webp",
+            "cover_sha256": "eb340eda0916639883ac79874e09f0b27c88a0b39f781894379d59126cee7983",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 94,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194936",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia mínima de Estados Unidos de América - Pani, Erika.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-de34d5542d024bc3.webp",
+          "cover_sha256": "eb340eda0916639883ac79874e09f0b27c88a0b39f781894379d59126cee7983",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "302",
+        "imported_book_id": "300"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-b379868c14ca7b31.webp",
+      "libro": {
+        "titulo": "Historia mínima de los feminismos en América Latina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Barrancos, Dora",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Colegio de México",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "16.99",
+        "sku": "PLG-BK-000093",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000093-81deaded1284.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194902",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-b379868c14ca7b31",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "301",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-dbc08920ec90ac13"
+        },
+        "author_bindings": [
+          {
+            "name": "Barrancos, Dora",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Barrancos, Dora",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_path": "covers/Ebook/Historia/originales/Historia mínima de los feminismos en América Latina - Barrancos, Dora.jpg",
+            "observed_text": "El Colegio de México",
+            "basis": "Imprint editorial visible en la portada original suministrada; título y autor de la misma portada coinciden. Los logotipos inequívocos FCE se normalizan a Fondo de Cultura Económica.",
+            "capture_sha256": "13de8d78a1363455a31b6bf20249c0fa6358be6ab0aed20a7e7b983f8e525ab8",
+            "source": "covers/Ebook/Historia/originales/Historia mínima de los feminismos en América Latina - Barrancos, Dora.jpg",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://repositorio.colmex.mx/concern/books/tt44pr14s?locale=en",
+            "observed_text": "Creator: Barrancos, Dora; Publisher: El Colegio de México; Language: Español",
+            "basis": "Registro institucional del libro y autora correctos, sin transferir metadata del registro audiovisual con título parecido.",
+            "source": "https://repositorio.colmex.mx/concern/books/tt44pr14s?locale=en",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 95,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194902",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima de los feminismos en América Latina - Barrancos, Dora.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b379868c14ca7b31.webp",
+            "cover_sha256": "81deaded12840c56c96df2ab3193dedbd58e36dc2bf9d23a3722ca0fb48e819c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Barrancos, Dora",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 95,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194902",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima de los feminismos en América Latina - Barrancos, Dora.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b379868c14ca7b31.webp",
+            "cover_sha256": "81deaded12840c56c96df2ab3193dedbd58e36dc2bf9d23a3722ca0fb48e819c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 95,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194902",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima de los feminismos en América Latina - Barrancos, Dora.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b379868c14ca7b31.webp",
+            "cover_sha256": "81deaded12840c56c96df2ab3193dedbd58e36dc2bf9d23a3722ca0fb48e819c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 95,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194902",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia mínima de los feminismos en América Latina - Barrancos, Dora.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-b379868c14ca7b31.webp",
+          "cover_sha256": "81deaded12840c56c96df2ab3193dedbd58e36dc2bf9d23a3722ca0fb48e819c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "303",
+        "imported_book_id": "301"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-148c1de0d90004d4.webp",
+      "libro": {
+        "titulo": "Historia mínima del constitucionalismo en América Latina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Portillo Valdés, José M.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Colegio de México",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000246",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000246-1cf6d7c511c0.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194943",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-148c1de0d90004d4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "302",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-2cbe83ac41029f3d"
+        },
+        "author_bindings": [
+          {
+            "name": "Portillo Valdés, José M.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Portillo Valdés, José M.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+            "observed_text": "México, D.F. : El Colegio de México, 2016.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "b64955530b899e0d4d9cf48649d400e1b385200ed8cd76a23030475a60ff8b69",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/194943.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "b64955530b899e0d4d9cf48649d400e1b385200ed8cd76a23030475a60ff8b69",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/194943.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB194943",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 96,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194943",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima del constitucionalismo en América Latina - Portillo Valdés, José M..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-148c1de0d90004d4.webp",
+            "cover_sha256": "1cf6d7c511c035da21b3f9cd5fb874be203024c9ed0621164556ac87d14c68aa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Portillo Valdés, José M.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 96,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194943",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima del constitucionalismo en América Latina - Portillo Valdés, José M..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-148c1de0d90004d4.webp",
+            "cover_sha256": "1cf6d7c511c035da21b3f9cd5fb874be203024c9ed0621164556ac87d14c68aa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 96,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194943",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima del constitucionalismo en América Latina - Portillo Valdés, José M..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-148c1de0d90004d4.webp",
+            "cover_sha256": "1cf6d7c511c035da21b3f9cd5fb874be203024c9ed0621164556ac87d14c68aa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 96,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/194943",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia mínima del constitucionalismo en América Latina - Portillo Valdés, José M..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-148c1de0d90004d4.webp",
+          "cover_sha256": "1cf6d7c511c035da21b3f9cd5fb874be203024c9ed0621164556ac87d14c68aa",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "304",
+        "imported_book_id": "302"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-12ce3edbc4487ab6.webp",
+      "libro": {
+        "titulo": "Historia mínima del indigenismo en América Latina",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Fábregas Puig, Andrés A.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Colegio de México",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000238",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000238-a32e3471545b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216374",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-12ce3edbc4487ab6",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "303",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-bcce50f650d606d3"
+        },
+        "author_bindings": [
+          {
+            "name": "Fábregas Puig, Andrés A.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Fábregas Puig, Andrés A.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+            "observed_text": "Ciudad de México, México : El Colegio de México, 2022.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "3f42e8d35811d2a9ea5814dca6be98efcd9425ea67a148db52603f8a69e3edbf",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/216374.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "3f42e8d35811d2a9ea5814dca6be98efcd9425ea67a148db52603f8a69e3edbf",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/216374.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB216374",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 97,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216374",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima del indigenismo en América Latina - Fábregas Puig, Andrés A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-12ce3edbc4487ab6.webp",
+            "cover_sha256": "a32e3471545b6db52f480dcaf681bca57b01b92a8256f1e39383f3a6bce5f177",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Fábregas Puig, Andrés A.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 97,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216374",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima del indigenismo en América Latina - Fábregas Puig, Andrés A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-12ce3edbc4487ab6.webp",
+            "cover_sha256": "a32e3471545b6db52f480dcaf681bca57b01b92a8256f1e39383f3a6bce5f177",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 97,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216374",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Historia mínima del indigenismo en América Latina - Fábregas Puig, Andrés A..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-12ce3edbc4487ab6.webp",
+            "cover_sha256": "a32e3471545b6db52f480dcaf681bca57b01b92a8256f1e39383f3a6bce5f177",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 97,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/216374",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Historia mínima del indigenismo en América Latina - Fábregas Puig, Andrés A..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-12ce3edbc4487ab6.webp",
+          "cover_sha256": "a32e3471545b6db52f480dcaf681bca57b01b92a8256f1e39383f3a6bce5f177",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "305",
+        "imported_book_id": "303"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-ef32a36cd03793a4.webp",
+      "libro": {
+        "titulo": "La mujer en la historia",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bel Bravo, María Antonia",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Encuentro, S.A",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000065",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000065-83b6d2fb5000.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61616",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-ef32a36cd03793a4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "304",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-bb3231a5eca41976"
+        },
+        "author_bindings": [
+          {
+            "name": "Bel Bravo, María Antonia",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bel Bravo, María Antonia",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+            "observed_text": "Madrid : Ediciones Encuentro, S.A., 1998.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "e964748b069d5b8af5783ceecdc25bc6b6d71f051c923b3c0ab448e7de0fabd3",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61616.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "e964748b069d5b8af5783ceecdc25bc6b6d71f051c923b3c0ab448e7de0fabd3",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61616.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61616",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 99,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61616",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/La mujer en la historia - Bel Bravo, María Antonia.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-ef32a36cd03793a4.webp",
+            "cover_sha256": "83b6d2fb500092fdc78394500ac89c24aea9423ba59e93ac0bb45545216c984c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bel Bravo, María Antonia",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 99,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61616",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/La mujer en la historia - Bel Bravo, María Antonia.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-ef32a36cd03793a4.webp",
+            "cover_sha256": "83b6d2fb500092fdc78394500ac89c24aea9423ba59e93ac0bb45545216c984c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 99,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61616",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/La mujer en la historia - Bel Bravo, María Antonia.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-ef32a36cd03793a4.webp",
+            "cover_sha256": "83b6d2fb500092fdc78394500ac89c24aea9423ba59e93ac0bb45545216c984c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 99,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61616",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/La mujer en la historia - Bel Bravo, María Antonia.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-ef32a36cd03793a4.webp",
+          "cover_sha256": "83b6d2fb500092fdc78394500ac89c24aea9423ba59e93ac0bb45545216c984c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "306",
+        "imported_book_id": "304"
+      }
+    },
+    {
+      "portadaArchivo": "../../../../pending-images/Ebook/historia/portadas/ebook-0f5000c8bc3a8ecf.webp",
+      "libro": {
+        "titulo": "Otra historia de Córdoba",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Galisteo, Roger",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Historia"
+        ]
+      },
+      "edicion": {
+        "editorial": "Bubok Publishing",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "9.99",
+        "sku": "PLG-BK-000223",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000223-b97d0b7a925e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51298",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0f5000c8bc3a8ecf",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "305",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-52f056bf3a19f17c"
+        },
+        "author_bindings": [
+          {
+            "name": "Galisteo, Roger",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Galisteo, Roger",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+            "observed_text": "Madrid : Bubok Publishing, 2012.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "2960721ef085c1652d88790b8f219a5199e3d9ed71d9d975350ab0abfc1efa30",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/51298.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "2960721ef085c1652d88790b8f219a5199e3d9ed71d9d975350ab0abfc1efa30",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/51298.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB51298",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 100,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51298",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Otra historia de Córdoba - Galisteo, Roger.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-0f5000c8bc3a8ecf.webp",
+            "cover_sha256": "b97d0b7a925eb67c4a986dcb39c1c36ecb1a1a8f5e2d728f5249dbb92ffefbed",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Galisteo, Roger",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 100,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51298",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Otra historia de Córdoba - Galisteo, Roger.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-0f5000c8bc3a8ecf.webp",
+            "cover_sha256": "b97d0b7a925eb67c4a986dcb39c1c36ecb1a1a8f5e2d728f5249dbb92ffefbed",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 100,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51298",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Historia/originales/Otra historia de Córdoba - Galisteo, Roger.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-0f5000c8bc3a8ecf.webp",
+            "cover_sha256": "b97d0b7a925eb67c4a986dcb39c1c36ecb1a1a8f5e2d728f5249dbb92ffefbed",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 100,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/51298",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Historia/originales/Otra historia de Córdoba - Galisteo, Roger.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/historia/portadas/ebook-0f5000c8bc3a8ecf.webp",
+          "cover_sha256": "b97d0b7a925eb67c4a986dcb39c1c36ecb1a1a8f5e2d728f5249dbb92ffefbed",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Historia",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/historia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "307",
+        "imported_book_id": "305"
+      }
+    }
+  ]
+}

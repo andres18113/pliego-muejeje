@@ -16,6 +16,8 @@ describe("catalog formatters", () => {
   it("names unknown edition formats explicitly", () => {
     expect(formatEdition("PAPERBACK")).toBe("Rústica");
     expect(formatEdition("HARDCOVER")).toBe("Tapa dura");
+    expect(formatEdition("EBOOK")).toBe("Ebook");
+    expect(formatEdition("AUDIOBOOK")).toBe("Audiolibro");
     expect(formatEdition("EDITION_FORMAT_ADDED_LATER")).toBe("Formato no reconocido");
     expect(formatEdition(null)).toBe("No especificado");
   });

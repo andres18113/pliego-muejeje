@@ -22,6 +22,8 @@ export function formatUsd(amount: string) {
 export function formatEdition(format: string | null | undefined) {
   if (format === "PAPERBACK") return "Rústica";
   if (format === "HARDCOVER") return "Tapa dura";
+  if (format === "EBOOK") return "Ebook";
+  if (format === "AUDIOBOOK") return "Audiolibro";
   return format ? "Formato no reconocido" : "No especificado";
 }
 
@@ -56,4 +58,14 @@ export function formatPublicationDate(value: string) {
 
 export function formatPageCount(value: number) {
   return new Intl.NumberFormat("es-EC", { maximumFractionDigits: 0 }).format(value);
+}
+
+/** Formats the exact duration supplied by the API without inventing playback availability. */
+export function formatAudioDuration(seconds: number) {
+  if (!Number.isSafeInteger(seconds) || seconds <= 0) return null;
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainder = seconds % 60;
+  return [hours ? `${hours} h` : null, minutes ? `${minutes} min` : null, remainder ? `${remainder} s` : null]
+    .filter(Boolean).join(" ");
 }

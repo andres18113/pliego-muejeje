@@ -1,0 +1,3137 @@
+{
+  "schema": "pliego-published-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "portadas/ebook-d0cf3f3fed782a4e.webp",
+      "libro": {
+        "titulo": "Aproximación a la sociología contemporánea",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Tardivo, Giuliano",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "8.99",
+        "sku": "PLG-BK-000115",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000115-57f2d1b6ea0b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58619",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-d0cf3f3fed782a4e",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "268",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-b018bfce81863ba0"
+        },
+        "author_bindings": [
+          {
+            "name": "Tardivo, Giuliano",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Tardivo, Giuliano",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+            "observed_text": "Barcelona : Editorial UOC, 2016.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "8baa21c25e08b77ba9dce8fbc6dde0b57a13e0b1bbe225abb05bb90899410708",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/58619.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "8baa21c25e08b77ba9dce8fbc6dde0b57a13e0b1bbe225abb05bb90899410708",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/58619.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB58619",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 102,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58619",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Aproximación a la sociología contemporánea - Tardivo, Giuliano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-d0cf3f3fed782a4e.webp",
+            "cover_sha256": "57f2d1b6ea0ba5fba670613288354493fc6b5fe34a0fdbbc3cd0c12bd0ba7298",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Tardivo, Giuliano",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 102,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58619",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Aproximación a la sociología contemporánea - Tardivo, Giuliano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-d0cf3f3fed782a4e.webp",
+            "cover_sha256": "57f2d1b6ea0ba5fba670613288354493fc6b5fe34a0fdbbc3cd0c12bd0ba7298",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 102,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58619",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Aproximación a la sociología contemporánea - Tardivo, Giuliano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-d0cf3f3fed782a4e.webp",
+            "cover_sha256": "57f2d1b6ea0ba5fba670613288354493fc6b5fe34a0fdbbc3cd0c12bd0ba7298",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 102,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/58619",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Aproximación a la sociología contemporánea - Tardivo, Giuliano.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-d0cf3f3fed782a4e.webp",
+          "cover_sha256": "57f2d1b6ea0ba5fba670613288354493fc6b5fe34a0fdbbc3cd0c12bd0ba7298",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "270",
+        "imported_book_id": "268"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-711fb68a9d1c1939.webp",
+      "libro": {
+        "titulo": "El rombo de las investigaciones de las ciencias sociales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Zayas Agüero, Pedro Manuel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "eumed.net",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000155",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000155-8384029381f6.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34517",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-711fb68a9d1c1939",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "269",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5e4fb988de777b15"
+        },
+        "author_bindings": [
+          {
+            "name": "Zayas Agüero, Pedro Manuel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Zayas Agüero, Pedro Manuel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+            "observed_text": "S.l. : eumed.net, [2010]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "59766f3b0c59e0dde9402eda2db5a0bddc8e3cf471c1c4a9867995532da366f5",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/34517.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "59766f3b0c59e0dde9402eda2db5a0bddc8e3cf471c1c4a9867995532da366f5",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/34517.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34517",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 104,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34517",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/El rombo de las investigaciones de las ciencias sociales - Zayas Agüero, Pedro Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-711fb68a9d1c1939.webp",
+            "cover_sha256": "8384029381f609a7284dc7721a90140667e7e25fdd5ddd790ff82e6203d2627c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Zayas Agüero, Pedro Manuel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 104,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34517",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/El rombo de las investigaciones de las ciencias sociales - Zayas Agüero, Pedro Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-711fb68a9d1c1939.webp",
+            "cover_sha256": "8384029381f609a7284dc7721a90140667e7e25fdd5ddd790ff82e6203d2627c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 104,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34517",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/El rombo de las investigaciones de las ciencias sociales - Zayas Agüero, Pedro Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-711fb68a9d1c1939.webp",
+            "cover_sha256": "8384029381f609a7284dc7721a90140667e7e25fdd5ddd790ff82e6203d2627c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 104,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34517",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/El rombo de las investigaciones de las ciencias sociales - Zayas Agüero, Pedro Manuel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-711fb68a9d1c1939.webp",
+          "cover_sha256": "8384029381f609a7284dc7721a90140667e7e25fdd5ddd790ff82e6203d2627c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "271",
+        "imported_book_id": "269"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-4ac8547af589f7e1.webp",
+      "libro": {
+        "titulo": "El uso de la encuesta en las ciencias sociales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Aníbal Quispe Limaylla",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Díaz de Santos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000216",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000216-65b4347a7cee.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62860",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-4ac8547af589f7e1",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "270",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-a3d6cb93ad3b7870"
+        },
+        "author_bindings": [
+          {
+            "name": "Aníbal Quispe Limaylla",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Aníbal Quispe Limaylla",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+            "observed_text": "Madrid : Ediciones Díaz de Santos, 2013.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "0be6e30a0b0b16cc01fd4d643ced90b6026626081390c037b0f2d4e9cc440825",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/62860.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "0be6e30a0b0b16cc01fd4d643ced90b6026626081390c037b0f2d4e9cc440825",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/62860.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB62860",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 106,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62860",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/El uso de la encuesta en las ciencias sociales - Aníbal Quispe Limaylla.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-4ac8547af589f7e1.webp",
+            "cover_sha256": "65b4347a7cee2f04d33a2189bcdbd75f9306231c721a3ba6688474067805d2c3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Aníbal Quispe Limaylla",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 106,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62860",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/El uso de la encuesta en las ciencias sociales - Aníbal Quispe Limaylla.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-4ac8547af589f7e1.webp",
+            "cover_sha256": "65b4347a7cee2f04d33a2189bcdbd75f9306231c721a3ba6688474067805d2c3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 106,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62860",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/El uso de la encuesta en las ciencias sociales - Aníbal Quispe Limaylla.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-4ac8547af589f7e1.webp",
+            "cover_sha256": "65b4347a7cee2f04d33a2189bcdbd75f9306231c721a3ba6688474067805d2c3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 106,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/62860",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/El uso de la encuesta en las ciencias sociales - Aníbal Quispe Limaylla.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-4ac8547af589f7e1.webp",
+          "cover_sha256": "65b4347a7cee2f04d33a2189bcdbd75f9306231c721a3ba6688474067805d2c3",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "272",
+        "imported_book_id": "270"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-541429bc6acffd71.webp",
+      "libro": {
+        "titulo": "Fundamentos de las ciencias sociales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Neurath, Otto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Olejnik",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "20.99",
+        "sku": "PLG-BK-000274",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000274-c0445dc61963.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247167",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-541429bc6acffd71",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "271",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-18025e9b6cfd2401"
+        },
+        "author_bindings": [
+          {
+            "name": "Neurath, Otto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Neurath, Otto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+            "observed_text": "Santiago de Chile : Ediciones Olejnik, 2019.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "da2305aa9187387ebe18409055da45dba8d940b73e32467ee905744b288a9073",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/247167.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "da2305aa9187387ebe18409055da45dba8d940b73e32467ee905744b288a9073",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/247167.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB247167",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 107,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247167",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Fundamentos de las ciencias sociales - Neurath, Otto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-541429bc6acffd71.webp",
+            "cover_sha256": "c0445dc619639df480f7189c88123d24817005215024d43f01232247c84ccba8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Neurath, Otto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 107,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247167",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Fundamentos de las ciencias sociales - Neurath, Otto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-541429bc6acffd71.webp",
+            "cover_sha256": "c0445dc619639df480f7189c88123d24817005215024d43f01232247c84ccba8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 107,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247167",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Fundamentos de las ciencias sociales - Neurath, Otto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-541429bc6acffd71.webp",
+            "cover_sha256": "c0445dc619639df480f7189c88123d24817005215024d43f01232247c84ccba8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 107,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/247167",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Fundamentos de las ciencias sociales - Neurath, Otto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-541429bc6acffd71.webp",
+          "cover_sha256": "c0445dc619639df480f7189c88123d24817005215024d43f01232247c84ccba8",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "273",
+        "imported_book_id": "271"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-0d78e2440f6ba335.webp",
+      "libro": {
+        "titulo": "Hackear la ciencia social: una invitación a la investigación social en entornos digitales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Morales i Gras, Jordi",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000133",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000133-6a01a754c671.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/213815",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0d78e2440f6ba335",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "272",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4b74500c17b4c573"
+        },
+        "author_bindings": [
+          {
+            "name": "Morales i Gras, Jordi",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Morales i Gras, Jordi",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+            "observed_text": "Barcelona : Editorial UOC, 2022.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "59d5c7c3a0bb403f90dfda2cca75cfa88c152b7b65ecf025f6f20030283aece8",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/213815.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "59d5c7c3a0bb403f90dfda2cca75cfa88c152b7b65ecf025f6f20030283aece8",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/213815.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB213815",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 108,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/213815",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Hackear la ciencia social una invitación a la investigación social en entornos digitales - Morales i Gras, Jordi.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-0d78e2440f6ba335.webp",
+            "cover_sha256": "6a01a754c671299e18cd960b85c603358972a70646354bbba4033a0018cb415c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Morales i Gras, Jordi",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 108,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/213815",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Hackear la ciencia social una invitación a la investigación social en entornos digitales - Morales i Gras, Jordi.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-0d78e2440f6ba335.webp",
+            "cover_sha256": "6a01a754c671299e18cd960b85c603358972a70646354bbba4033a0018cb415c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 108,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/213815",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Hackear la ciencia social una invitación a la investigación social en entornos digitales - Morales i Gras, Jordi.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-0d78e2440f6ba335.webp",
+            "cover_sha256": "6a01a754c671299e18cd960b85c603358972a70646354bbba4033a0018cb415c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 108,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/213815",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Hackear la ciencia social una invitación a la investigación social en entornos digitales - Morales i Gras, Jordi.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-0d78e2440f6ba335.webp",
+          "cover_sha256": "6a01a754c671299e18cd960b85c603358972a70646354bbba4033a0018cb415c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "274",
+        "imported_book_id": "272"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-997e260c21f258bd.webp",
+      "libro": {
+        "titulo": "Invitación a la sociología de la comunicación",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Busquet Duran, Jordi",
+            "orden": 1
+          },
+          {
+            "nombre": "Medina Cambrón, Alfons",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000071",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000071-ed7c865479a4.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57712",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-997e260c21f258bd",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "273",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7cbe8003eb507964"
+        },
+        "author_bindings": [
+          {
+            "name": "Busquet Duran, Jordi",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Medina Cambrón, Alfons",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Busquet Duran, Jordi; Medina Cambrón, Alfons",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+            "observed_text": "Barcelona : Editorial UOC, 2014.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "38b07b6a84a9d922f4cd7bf1b7e354c64e94d85ac14db347998b3ea4f4c7f922",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/57712.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "38b07b6a84a9d922f4cd7bf1b7e354c64e94d85ac14db347998b3ea4f4c7f922",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/57712.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57712",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 111,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57712",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Invitación a la sociología de la comunicación - Busquet Duran, Jordi; Medina Cambrón, Alfons.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-997e260c21f258bd.webp",
+            "cover_sha256": "ed7c865479a485c5ff91182ac9bce0d2334e6406f7ea8b4ee053a1137f435955",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Busquet Duran, Jordi; Medina Cambrón, Alfons",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 111,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57712",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Invitación a la sociología de la comunicación - Busquet Duran, Jordi; Medina Cambrón, Alfons.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-997e260c21f258bd.webp",
+            "cover_sha256": "ed7c865479a485c5ff91182ac9bce0d2334e6406f7ea8b4ee053a1137f435955",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 111,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57712",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Invitación a la sociología de la comunicación - Busquet Duran, Jordi; Medina Cambrón, Alfons.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-997e260c21f258bd.webp",
+            "cover_sha256": "ed7c865479a485c5ff91182ac9bce0d2334e6406f7ea8b4ee053a1137f435955",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 111,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57712",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Invitación a la sociología de la comunicación - Busquet Duran, Jordi; Medina Cambrón, Alfons.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-997e260c21f258bd.webp",
+          "cover_sha256": "ed7c865479a485c5ff91182ac9bce0d2334e6406f7ea8b4ee053a1137f435955",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "275",
+        "imported_book_id": "273"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-af244eb94493ca89.webp",
+      "libro": {
+        "titulo": "La explicación del comportamiento social: más tuercas y tornillos para las ciencias sociales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Elster, Jon",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Gedisa",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "17.99",
+        "sku": "PLG-BK-000280",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000280-14035be61c6a.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61137",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-af244eb94493ca89",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "274",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-59089c531f092a62"
+        },
+        "author_bindings": [
+          {
+            "name": "Elster, Jon",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Elster, Jon",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+            "observed_text": "Barcelona : Editorial Gedisa, 2010.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "154141cdb34f72e4509e617c1c58589e44ff2c3be92ea5c6e46e0a7064e03d7f",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61137.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "154141cdb34f72e4509e617c1c58589e44ff2c3be92ea5c6e46e0a7064e03d7f",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/61137.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB61137",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 113,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61137",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/La explicación del comportamiento social más tuercas y tornillos para las ciencias sociales - Elster, Jon.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-af244eb94493ca89.webp",
+            "cover_sha256": "14035be61c6aad58f14748d32d0f7a13ba5cbe600d4e480b817fdf800eacab66",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Elster, Jon",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 113,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61137",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/La explicación del comportamiento social más tuercas y tornillos para las ciencias sociales - Elster, Jon.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-af244eb94493ca89.webp",
+            "cover_sha256": "14035be61c6aad58f14748d32d0f7a13ba5cbe600d4e480b817fdf800eacab66",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 113,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61137",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/La explicación del comportamiento social más tuercas y tornillos para las ciencias sociales - Elster, Jon.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-af244eb94493ca89.webp",
+            "cover_sha256": "14035be61c6aad58f14748d32d0f7a13ba5cbe600d4e480b817fdf800eacab66",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 113,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/61137",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/La explicación del comportamiento social más tuercas y tornillos para las ciencias sociales - Elster, Jon.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-af244eb94493ca89.webp",
+          "cover_sha256": "14035be61c6aad58f14748d32d0f7a13ba5cbe600d4e480b817fdf800eacab66",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "276",
+        "imported_book_id": "274"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-1a25892f70337822.webp",
+      "libro": {
+        "titulo": "La sociología como vocación",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Alberdi Alonso, Inés",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Centro de Investigaciones Sociológicas",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000267",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000267-c12642555b78.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/170159",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-1a25892f70337822",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "275",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-cb2adc790778939c"
+        },
+        "author_bindings": [
+          {
+            "name": "Alberdi Alonso, Inés",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Alberdi Alonso, Inés",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+            "observed_text": "Madrid : Centro de Investigaciones Sociológicas, 2020.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "c5fa4c6cf98fca457ee09a557bfaf3a309af0c14ec41780d8f33a57d07336064",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/170159.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "c5fa4c6cf98fca457ee09a557bfaf3a309af0c14ec41780d8f33a57d07336064",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/170159.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB170159",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 114,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/170159",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/La sociología como vocación - Alberdi Alonso, Inés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-1a25892f70337822.webp",
+            "cover_sha256": "c12642555b78792c796027ef05beb767284a19d81bce8e0dded180ed94138be5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Alberdi Alonso, Inés",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 114,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/170159",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/La sociología como vocación - Alberdi Alonso, Inés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-1a25892f70337822.webp",
+            "cover_sha256": "c12642555b78792c796027ef05beb767284a19d81bce8e0dded180ed94138be5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 114,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/170159",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/La sociología como vocación - Alberdi Alonso, Inés.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-1a25892f70337822.webp",
+            "cover_sha256": "c12642555b78792c796027ef05beb767284a19d81bce8e0dded180ed94138be5",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 114,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/170159",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/La sociología como vocación - Alberdi Alonso, Inés.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-1a25892f70337822.webp",
+          "cover_sha256": "c12642555b78792c796027ef05beb767284a19d81bce8e0dded180ed94138be5",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "277",
+        "imported_book_id": "275"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a4d5f0e830d96d37.webp",
+      "libro": {
+        "titulo": "Las ciencias sociales en discusión",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bunge, Mario",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Sudamericana",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000226",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000226-ae97df848a1b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35499",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a4d5f0e830d96d37",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "276",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-ec2ded87d5d715cf"
+        },
+        "author_bindings": [
+          {
+            "name": "Bunge, Mario",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bunge, Mario",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+            "observed_text": "Buenos Aires, Argentina : Sudamericana, c1999.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "252feb0ce19235eb728eae6b578460124e437f2ab0c3290361d6861253e0db43",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/35499.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "252feb0ce19235eb728eae6b578460124e437f2ab0c3290361d6861253e0db43",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/35499.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB35499",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 115,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35499",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Las ciencias sociales en discusión - Bunge, Mario.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a4d5f0e830d96d37.webp",
+            "cover_sha256": "ae97df848a1ba4092afe3c61a2d982e96e31ba0febdaf33b643b0039091377e1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bunge, Mario",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 115,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35499",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Las ciencias sociales en discusión - Bunge, Mario.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a4d5f0e830d96d37.webp",
+            "cover_sha256": "ae97df848a1ba4092afe3c61a2d982e96e31ba0febdaf33b643b0039091377e1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 115,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35499",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Las ciencias sociales en discusión - Bunge, Mario.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a4d5f0e830d96d37.webp",
+            "cover_sha256": "ae97df848a1ba4092afe3c61a2d982e96e31ba0febdaf33b643b0039091377e1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 115,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/35499",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Las ciencias sociales en discusión - Bunge, Mario.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a4d5f0e830d96d37.webp",
+          "cover_sha256": "ae97df848a1ba4092afe3c61a2d982e96e31ba0febdaf33b643b0039091377e1",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "278",
+        "imported_book_id": "276"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a5e19a50f4c71684.webp",
+      "libro": {
+        "titulo": "Proyectos de investigación en ciencias sociales",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Marisa D’Aquino",
+            "orden": 1
+          },
+          {
+            "nombre": "Rodríguez, Ethel",
+            "orden": 2
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Maipue",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "7.99",
+        "sku": "PLG-BK-000102",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000102-53ec33644484.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79012",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a5e19a50f4c71684",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "277",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d3b6ebcf1db3971f"
+        },
+        "author_bindings": [
+          {
+            "name": "Marisa D’Aquino",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          },
+          {
+            "name": "Rodríguez, Ethel",
+            "order": 2,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Marisa D’Aquino; Rodríguez, Ethel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+            "observed_text": "Buenos Aires : Editorial Maipue, 2013.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "f3ff73aae2cf06aea3ed905e974fcd1b56aeb12fff4616c898af9187073db482",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79012.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "f3ff73aae2cf06aea3ed905e974fcd1b56aeb12fff4616c898af9187073db482",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/79012.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB79012",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 117,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79012",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Proyectos de investigación en ciencias sociales - Marisa D’Aquino; Rodríguez, Ethel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a5e19a50f4c71684.webp",
+            "cover_sha256": "53ec3364448494cdfd9b71738c7109ca28e6dd7469a31e7cce403cd50430fde8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Marisa D’Aquino; Rodríguez, Ethel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 117,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79012",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Proyectos de investigación en ciencias sociales - Marisa D’Aquino; Rodríguez, Ethel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a5e19a50f4c71684.webp",
+            "cover_sha256": "53ec3364448494cdfd9b71738c7109ca28e6dd7469a31e7cce403cd50430fde8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 117,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79012",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Proyectos de investigación en ciencias sociales - Marisa D’Aquino; Rodríguez, Ethel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a5e19a50f4c71684.webp",
+            "cover_sha256": "53ec3364448494cdfd9b71738c7109ca28e6dd7469a31e7cce403cd50430fde8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 117,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/79012",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Proyectos de investigación en ciencias sociales - Marisa D’Aquino; Rodríguez, Ethel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a5e19a50f4c71684.webp",
+          "cover_sha256": "53ec3364448494cdfd9b71738c7109ca28e6dd7469a31e7cce403cd50430fde8",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "279",
+        "imported_book_id": "277"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-016c49e894bee2b6.webp",
+      "libro": {
+        "titulo": "Sociología de la religión",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Weber, Max",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Akal",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000112",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000112-5eb032eac09e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/169287",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-016c49e894bee2b6",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "278",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-cef50cb3bc304988"
+        },
+        "author_bindings": [
+          {
+            "name": "Weber, Max",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Weber, Max",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+            "observed_text": "Tres Cantos, Madrid : Akal, 2012.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "e900ea1b444cdbaf1b5f9a9489920b5b8a8a7407e34c7203191a259c0ec53de6",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/169287.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "e900ea1b444cdbaf1b5f9a9489920b5b8a8a7407e34c7203191a259c0ec53de6",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/169287.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB169287",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 118,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/169287",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología de la religión - Weber, Max.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-016c49e894bee2b6.webp",
+            "cover_sha256": "5eb032eac09e42fb68cd3d354606c0569ad258dfac1ed5a08a45890e01b3676d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Weber, Max",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 118,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/169287",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología de la religión - Weber, Max.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-016c49e894bee2b6.webp",
+            "cover_sha256": "5eb032eac09e42fb68cd3d354606c0569ad258dfac1ed5a08a45890e01b3676d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 118,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/169287",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología de la religión - Weber, Max.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-016c49e894bee2b6.webp",
+            "cover_sha256": "5eb032eac09e42fb68cd3d354606c0569ad258dfac1ed5a08a45890e01b3676d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 118,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/169287",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociología de la religión - Weber, Max.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-016c49e894bee2b6.webp",
+          "cover_sha256": "5eb032eac09e42fb68cd3d354606c0569ad258dfac1ed5a08a45890e01b3676d",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "280",
+        "imported_book_id": "278"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-cc9f19126ca42ad8.webp",
+      "libro": {
+        "titulo": "Sociología de las organizaciones complejas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ruiz Olabuénaga, José Ignacio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad de Deusto",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000257",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000257-a5497ba8f5f5.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34008",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-cc9f19126ca42ad8",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "279",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7dcc5d3213ca16fb"
+        },
+        "author_bindings": [
+          {
+            "name": "Ruiz Olabuénaga, José Ignacio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ruiz Olabuénaga, José Ignacio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+            "observed_text": "Bilbao : Universidad de Deusto, 2007.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "f45db3e55438fd5ad003e7872df2c17429c79bde9fb7e4042e3c6699139e848a",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/34008.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "f45db3e55438fd5ad003e7872df2c17429c79bde9fb7e4042e3c6699139e848a",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/34008.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34008",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 119,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34008",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología de las organizaciones complejas - Ruiz Olabuénaga, José Ignacio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-cc9f19126ca42ad8.webp",
+            "cover_sha256": "a5497ba8f5f5c41dcb691d6c6a81faea26a866fa6d3ced08013dc02190aace0b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ruiz Olabuénaga, José Ignacio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 119,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34008",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología de las organizaciones complejas - Ruiz Olabuénaga, José Ignacio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-cc9f19126ca42ad8.webp",
+            "cover_sha256": "a5497ba8f5f5c41dcb691d6c6a81faea26a866fa6d3ced08013dc02190aace0b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 119,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34008",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología de las organizaciones complejas - Ruiz Olabuénaga, José Ignacio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-cc9f19126ca42ad8.webp",
+            "cover_sha256": "a5497ba8f5f5c41dcb691d6c6a81faea26a866fa6d3ced08013dc02190aace0b",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 119,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34008",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociología de las organizaciones complejas - Ruiz Olabuénaga, José Ignacio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-cc9f19126ca42ad8.webp",
+          "cover_sha256": "a5497ba8f5f5c41dcb691d6c6a81faea26a866fa6d3ced08013dc02190aace0b",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "281",
+        "imported_book_id": "279"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-06e3cbfc2797ff27.webp",
+      "libro": {
+        "titulo": "Sociología del mal",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Giner de San Julián, Salvador",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Los libros de la Catarata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000103",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000103-079083fdb362.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/235194",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-06e3cbfc2797ff27",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "280",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-0a82ebfabf7f4363"
+        },
+        "author_bindings": [
+          {
+            "name": "Giner de San Julián, Salvador",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Giner de San Julián, Salvador",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+            "observed_text": "Madrid : Los libros de la Catarata, 2015.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "1c1d99b5fe8a44e15f86d70e13ec8d8b63637d6ce3974808d49d77d2258f0d13",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/235194.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "1c1d99b5fe8a44e15f86d70e13ec8d8b63637d6ce3974808d49d77d2258f0d13",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/235194.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB235194",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 121,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/235194",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del mal - Giner de San Julián, Salvador.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-06e3cbfc2797ff27.webp",
+            "cover_sha256": "079083fdb362443aa11c80a8c1eb591702dc302ed071288ea7d014973a321dd1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Giner de San Julián, Salvador",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 121,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/235194",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del mal - Giner de San Julián, Salvador.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-06e3cbfc2797ff27.webp",
+            "cover_sha256": "079083fdb362443aa11c80a8c1eb591702dc302ed071288ea7d014973a321dd1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 121,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/235194",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del mal - Giner de San Julián, Salvador.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-06e3cbfc2797ff27.webp",
+            "cover_sha256": "079083fdb362443aa11c80a8c1eb591702dc302ed071288ea7d014973a321dd1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 121,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/235194",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociología del mal - Giner de San Julián, Salvador.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-06e3cbfc2797ff27.webp",
+          "cover_sha256": "079083fdb362443aa11c80a8c1eb591702dc302ed071288ea7d014973a321dd1",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "282",
+        "imported_book_id": "280"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-bae0fd5cba9e0efe.webp",
+      "libro": {
+        "titulo": "Sociología del saber",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Max Scheler",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "El Cid Editor",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000252",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000252-70351687a006.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36197",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-bae0fd5cba9e0efe",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "281",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-25b9ff7015a37c4f"
+        },
+        "author_bindings": [
+          {
+            "name": "Max Scheler",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Max Scheler",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+            "observed_text": "Santa Fe : El Cid Editor, [2004]",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "6436eb36d2a5dc21dbcbe7210218b370260073af5634a9a2425069055bf04a06",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/36197.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "6436eb36d2a5dc21dbcbe7210218b370260073af5634a9a2425069055bf04a06",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/36197.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36197",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 123,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36197",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del saber - Max Scheler.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-bae0fd5cba9e0efe.webp",
+            "cover_sha256": "70351687a006be9716a67cd80d55aa2e858ad0eb336a35846a8294759c240521",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Max Scheler",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 123,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36197",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del saber - Max Scheler.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-bae0fd5cba9e0efe.webp",
+            "cover_sha256": "70351687a006be9716a67cd80d55aa2e858ad0eb336a35846a8294759c240521",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 123,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36197",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología del saber - Max Scheler.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-bae0fd5cba9e0efe.webp",
+            "cover_sha256": "70351687a006be9716a67cd80d55aa2e858ad0eb336a35846a8294759c240521",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 123,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36197",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociología del saber - Max Scheler.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-bae0fd5cba9e0efe.webp",
+          "cover_sha256": "70351687a006be9716a67cd80d55aa2e858ad0eb336a35846a8294759c240521",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "283",
+        "imported_book_id": "281"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-51253acb06094152.webp",
+      "libro": {
+        "titulo": "Sociología jurídica",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Hernández, Pedro Pablo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Universidad Abierta para Adultos",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "6.99",
+        "sku": "PLG-BK-000069",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000069-3977629513e6.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175607",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-51253acb06094152",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "282",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c5c5594375526b5d"
+        },
+        "author_bindings": [
+          {
+            "name": "Hernández, Pedro Pablo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Hernández, Pedro Pablo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+            "observed_text": "Santiago de los Caballeros : Universidad Abierta para Adultos, 2018.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "35d04e9d81f3c7cbcc8e8113681b880c0ff2934a57740dfc0683ad0e34df9817",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/175607.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "35d04e9d81f3c7cbcc8e8113681b880c0ff2934a57740dfc0683ad0e34df9817",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/175607.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB175607",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 124,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175607",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología jurídica - Hernández, Pedro Pablo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-51253acb06094152.webp",
+            "cover_sha256": "3977629513e6888b3c9f763e840b5cfbb380aae9cdadc91fb225f78c587169ff",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Hernández, Pedro Pablo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 124,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175607",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología jurídica - Hernández, Pedro Pablo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-51253acb06094152.webp",
+            "cover_sha256": "3977629513e6888b3c9f763e840b5cfbb380aae9cdadc91fb225f78c587169ff",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 124,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175607",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociología jurídica - Hernández, Pedro Pablo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-51253acb06094152.webp",
+            "cover_sha256": "3977629513e6888b3c9f763e840b5cfbb380aae9cdadc91fb225f78c587169ff",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 124,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/175607",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociología jurídica - Hernández, Pedro Pablo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-51253acb06094152.webp",
+          "cover_sha256": "3977629513e6888b3c9f763e840b5cfbb380aae9cdadc91fb225f78c587169ff",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "284",
+        "imported_book_id": "282"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a028e089a115927a.webp",
+      "libro": {
+        "titulo": "Sociologías de la moda",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Mansilla Viedma, Pedro",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Los libros de la Catarata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "4.99",
+        "sku": "PLG-BK-000244",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000244-cca6a04b0e57.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a028e089a115927a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "283",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4cd21985cbb520c0"
+        },
+        "author_bindings": [
+          {
+            "name": "Mansilla Viedma, Pedro",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Mansilla Viedma, Pedro",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+            "observed_text": "Madrid : Los libros de la Catarata, 2025.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "3e73d6d7ed5f69a4d026cabe6979d6735ff9a76928d74470d614283d1168da06",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/283021.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "3e73d6d7ed5f69a4d026cabe6979d6735ff9a76928d74470d614283d1168da06",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/283021.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB283021",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 125,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+            "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Mansilla Viedma, Pedro",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 125,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+            "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 125,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+            "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 125,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/283021",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Sociologías de la moda - Mansilla Viedma, Pedro.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-a028e089a115927a.webp",
+          "cover_sha256": "cca6a04b0e5739a499ed270b6891b0023ab63719b418137c0624bfa80064d13f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "285",
+        "imported_book_id": "283"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-abf41cf48407b627.webp",
+      "libro": {
+        "titulo": "Tragedia y sociología",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Ramos Torre, Ramón",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Ciencias Sociales"
+        ]
+      },
+      "edicion": {
+        "editorial": "Centro de Investigaciones Sociológicas",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000182",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000182-e20f67a9a1e0.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52118",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-abf41cf48407b627",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "284",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-79d0129529ca375b"
+        },
+        "author_bindings": [
+          {
+            "name": "Ramos Torre, Ramón",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Ramos Torre, Ramón",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+            "observed_text": "Madrid : Centro de Investigaciones Sociológicas, 2018.",
+            "basis": "Campo Publicado de catálogo institucional UNS. El identificador ELB coincide exactamente con el ID de eLibro de la fuente original; título y autor contrastados con portada y registro.",
+            "capture_sha256": "2b22944ab3b9cef2536ba1d426288d1efa3becccc90fa291829dbcf531172092",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/52118.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Campo bibliográfico explícito Idioma del catálogo UNS correspondiente al identificador exacto de eLibro.",
+            "capture_sha256": "2b22944ab3b9cef2536ba1d426288d1efa3becccc90fa291829dbcf531172092",
+            "capture_path": "/tmp/pliego-digital-completion/social/uns/52118.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52118",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 126,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52118",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Tragedia y sociología - Ramos Torre, Ramón.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-abf41cf48407b627.webp",
+            "cover_sha256": "e20f67a9a1e0e64a7ba53bf9eff375afacf3f3fd23d118a66283d7b98cf8e42c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Ramos Torre, Ramón",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 126,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52118",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Tragedia y sociología - Ramos Torre, Ramón.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-abf41cf48407b627.webp",
+            "cover_sha256": "e20f67a9a1e0e64a7ba53bf9eff375afacf3f3fd23d118a66283d7b98cf8e42c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 126,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52118",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Ciencias Sociales/originales/Tragedia y sociología - Ramos Torre, Ramón.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-abf41cf48407b627.webp",
+            "cover_sha256": "e20f67a9a1e0e64a7ba53bf9eff375afacf3f3fd23d118a66283d7b98cf8e42c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 126,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52118",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Ciencias Sociales/originales/Tragedia y sociología - Ramos Torre, Ramón.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/ciencias-sociales/portadas/ebook-abf41cf48407b627.webp",
+          "cover_sha256": "e20f67a9a1e0e64a7ba53bf9eff375afacf3f3fd23d118a66283d7b98cf8e42c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Ciencias Sociales",
+          "categoryId": null,
+          "action": "PROPOSE_CATEGORY_FROM_INVENTORY"
+        },
+        "planned_staging": "Ebook/ciencias-sociales/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "286",
+        "imported_book_id": "284"
+      }
+    }
+  ]
+}

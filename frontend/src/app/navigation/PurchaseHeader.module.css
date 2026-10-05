@@ -1,0 +1,14 @@
+/* Purchase header: the site header's surface, tokens and wordmark, reduced to brand · place · account.
+   The title sits on the page's centre whatever the side columns measure. */
+.header { box-shadow: 0 1px 0 var(--pliego-border); }
+.bar { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: 16px; width: 100%; max-width: 1824px; height: 100%; margin-inline: auto; padding: 0 48px; }
+.bar > :first-child { justify-self: start; }
+.title { min-width: 0; margin: 0; color: var(--pliego-text); font-size: clamp(1.0625rem, 1rem + .4vw, 1.375rem); font-weight: 600; line-height: 1.2; letter-spacing: -.012em; text-align: center; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.title span { color: var(--pliego-text-muted); font-weight: 500; }
+.account { justify-self: end; }
+@media (max-width: 1023px) { .bar { padding-inline: 24px; } }
+@media (max-width: 599px) {
+  .header { height: auto; min-height: 64px; }
+  .bar { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr); min-height: 64px; gap: 8px; padding: 6px 16px; }
+  .title span { display: block; font-size: .8125rem; }
+}

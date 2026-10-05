@@ -1,3 +1,4 @@
+import { useAvailabilityFocus } from "./useAvailabilityFocus";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useParams } from "react-router-dom";
@@ -5,6 +6,7 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { addEditionToCart, getActiveCart } from "@/shared/api/cart";
 import { ApiRequestError, describeApiError } from "@/shared/api/errors";
 import { getPublicEdition } from "@/shared/api/catalog";
+import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { authLocation } from "@/features/auth/authLocation";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { BackToCatalogLink, CatalogReturnLink } from "@/shared/ui/BackToCatalogLink";
@@ -15,9 +17,10 @@ import { FavoriteButton } from "./FavoriteButton";
 import { favoriteStatusQueryKey } from "@/shared/api/favorites";
 import { BookCover } from "./BookCover";
 import { StockStatus } from "./StockStatus";
-import { availabilityConflictMessage } from "./stockStatusModel";
+import { availabilityConflictMessage, resolveStockStatus, stockReadOptions } from "./stockStatusModel";
 import surface from "./availabilitySurface.module.css";
-import { formatEdition, formatLanguage, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
+import classes from "./editionDetail.module.css";
+import { formatAudioDuration, formatEdition, formatLanguage, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
 import { catalogHref, readCatalogCriteria, safeCatalogReturnHref, safeExternalHttpHref } from "./catalogUrl";
 
 type PurchaseFeedback = {
@@ -77,6 +80,7 @@ export function EditionDetailPage() {
   useFavoriteSessionFailure(favoriteQuery.error, clearSession);
   const detailQuery = useQuery({
     queryKey: ["public-catalog", "edition", editionId],
+    ...stockReadOptions,
     queryFn: ({ signal }) => getPublicEdition(editionId, signal),
     enabled: isValidEditionId,
     staleTime: 30_000,
@@ -89,16 +93,19 @@ export function EditionDetailPage() {
       const cart = await getActiveCart();
       quantityBeforeAttempt.current = cart.items.find((item) => item.editionId === editionId)?.quantity ?? 0;
       cartPreflightComplete.current = true;
-      return addEditionToCart(editionId);
+      if (isDigitalFormat(detailQuery.data?.format) && quantityBeforeAttempt.current >= 1) {
+        return { quantity: quantityBeforeAttempt.current, alreadyInCart: true };
+      }
+      return { ...await addEditionToCart(editionId), alreadyInCart: false };
     },
     retry: false,
-    onSuccess: async ({ quantity }) => {
+    onSuccess: async ({ quantity, alreadyInCart }) => {
       await queryClient.invalidateQueries({ queryKey: ["customer-cart"] });
       await keepAddFeedbackVisible(addAttemptStartedAt.current);
       setAddedPulse(true);
       if (addedPulseTimer.current !== null) window.clearTimeout(addedPulseTimer.current);
       addedPulseTimer.current = window.setTimeout(() => setAddedPulse(false), 1_100);
-      setPurchaseFeedback({ kind: "success", message: addedQuantityMessage(quantity) });
+      setPurchaseFeedback({ kind: "success", message: alreadyInCart ? "Esta edición digital ya está en tu carrito." : addedQuantityMessage(quantity) });
     },
     onError: async (error: Error) => {
       await keepAddFeedbackVisible(addAttemptStartedAt.current);
@@ -184,6 +191,7 @@ export function EditionDetailPage() {
       });
     },
   });
+  const stockFocus = useAvailabilityFocus(!detailQuery.error && Boolean(detailQuery.data?.available), () => document.getElementById("detail-error-heading") ?? detailHeadingRef.current, () => detailHeadingRef.current);
   const detail = detailQuery.data;
 
   useEffect(() => {
@@ -259,14 +267,13 @@ export function EditionDetailPage() {
   const title = detail.title || "Edición";
   const authors = detail.authors?.map((author) => author.name).filter(Boolean).join(", ") || "";
   const publisher = detail.publisher?.name || "";
-  const purchasingAvailable = detail.available
-    && Boolean(detail.price)
-    && purchaseFeedback?.kind !== "unavailable";
+  const stock = resolveStockStatus(detail);
+  const purchasingAvailable = stock.canAddToCart && Boolean(detail.price);
   const customerSession = session?.user.role === "CUSTOMER";
   const adminSession = session?.user.role === "ADMIN";
 
   function addToCart() {
-    if (addLock.current || addToCartMutation.isPending || cartCheckMutation.isPending || purchaseFeedback?.kind === "unknown") return;
+    if (!purchasingAvailable || addLock.current || addToCartMutation.isPending || cartCheckMutation.isPending || purchaseFeedback?.kind === "unknown") return;
     addLock.current = true;
     addAttemptStartedAt.current = Date.now();
     setAddedPulse(false);
@@ -280,53 +287,19 @@ export function EditionDetailPage() {
     cartCheckMutation.mutate();
   }
 
-  return (
-    <>
-
-      <main className="detail-route page-frame" id="contenido-principal" tabIndex={-1}>
-        <nav className="detail-breadcrumb" aria-label="Ruta de navegación">
-          <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
-          <span aria-hidden="true">/</span>
-          <span aria-current="page">{title}</span>
-        </nav>
-
-        <article className="edition-detail">
-          <div className="detail-cover-column">
-            <BookCover
-              url={detail.coverUrl ?? null}
-              license={detail.coverLicense ?? null}
-              attribution={detail.coverAttribution ?? null}
-              title={title}
-              size="detail"
-              loading="eager"
-            />
-            {safeCoverSourceHref && (
-              <a className="cover-source" href={safeCoverSourceHref} target="_blank" rel="noopener noreferrer">
-                Consultar fuente de la portada <span>(abre en pestaña nueva)</span>
-              </a>
-            )}
-          </div>
-
-          <div className={`detail-copy ${surface.surface}`}>
-            <h1 ref={detailHeadingRef} tabIndex={-1}>{title}</h1>
-            {detail.subtitle && <p className="detail-subtitle">{detail.subtitle}</p>}
-            {authors && <p className="detail-authors">{authors}</p>}
-            {publisher && <p className="detail-publisher">{publisher}</p>}
-
-            {detail.price && <p className="detail-price">{formatUsd(detail.price)}</p>}
-            <StockStatus available={detail.available} className={surface.status} />
-
-            <div className="detail-purchase">
-              <FavoriteButton
+  const physical = !isDigitalFormat(detail.format);
+  const favorite = (
+    <FavoriteButton
                 editionId={editionId}
                 title={title}
                 isFavorite={favoriteQuery.statusByEdition.get(editionId) ?? false}
                 ready={!customerId || Boolean(favoriteQuery.data)}
                 queryKey={favoriteStatusQueryKey(customerId ?? "guest", favoriteQuery.stableIds)}
                 returnHref={currentIntent}
-                className="detail-favorite-button"
+                className={physical ? classes.favorite : "detail-favorite-button"}
               />
-              {!purchasingAvailable ? (
+  );
+  const purchase = !purchasingAvailable ? (
                 <p
                   className={`detail-purchase-feedback${purchaseFeedback?.kind === "unavailable" || !detail.available ? " detail-purchase-feedback--unavailable" : ""}`}
                   role="status"
@@ -354,6 +327,8 @@ export function EditionDetailPage() {
                     variant="primary"
                     type="button"
                     onClick={addToCart}
+                    {...stockFocus}
+                    aria-describedby="edition-stock"
                     aria-disabled={addToCartMutation.isPending || cartCheckMutation.isPending || purchaseFeedback?.kind === "unknown"}
                     aria-busy={addToCartMutation.isPending}
                   >
@@ -413,11 +388,136 @@ export function EditionDetailPage() {
                     <Link to={authLocation("/register", currentIntent)}>Crear cuenta</Link>
                   </div>
                 </>
+              );
+
+  if (physical) {
+    const secondary = [publisher, formatEdition(detail.format), detail.language ? formatLanguage(detail.language) : ""].filter(Boolean);
+    const facts = [
+      detail.isbn13 ? ["ISBN-13", detail.isbn13] : null,
+      detail.pageCount ? ["Páginas", formatPageCount(detail.pageCount)] : null,
+      detail.publicationDate ? ["Publicación", formatPublicationDate(detail.publicationDate)] : null,
+    ].filter((fact): fact is [string, string] => fact !== null);
+    return (
+      <>
+        <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1}>
+          <nav className={classes.trail} aria-label="Ruta de navegación">
+            <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
+            <span aria-current="page">{title}</span>
+          </nav>
+
+          <article className={classes.edition} data-available={detail.available}>
+            <div className={classes.cover}>
+              <BookCover
+                url={detail.coverUrl ?? null}
+                license={detail.coverLicense ?? null}
+                attribution={detail.coverAttribution ?? null}
+                title={title}
+                size="detail"
+                loading="eager"
+              />
+              {safeCoverSourceHref && (
+                <a className={classes.coverSource} href={safeCoverSourceHref} target="_blank" rel="noopener noreferrer">
+                  Consultar fuente de la portada <span>(abre en pestaña nueva)</span>
+                </a>
               )}
+            </div>
+
+            <header className={classes.identity}>
+              <h1 ref={detailHeadingRef} tabIndex={-1} aria-describedby="edition-stock" data-long={title.length > 56 || undefined}>{title}</h1>
+              {detail.subtitle && <p className={classes.subtitle}>{detail.subtitle}</p>}
+              {authors && <p className={classes.authors}>{authors}</p>}
+              {secondary.length > 0 && <p className={classes.secondary}>{secondary.map((fact) => <span key={fact}>{fact}</span>)}</p>}
+            </header>
+
+            <section className={classes.buy} aria-label="Compra">
+              <div className={classes.offer}>
+                {detail.price && <p className={classes.price}>{formatUsd(detail.price)}</p>}
+                {detail.offer && <div aria-label="Oferta vigente"><p>Precio anterior: <s>{formatUsd(detail.offer.originalPrice!)}</s></p><p>Descuento: {formatUsd(detail.offer.discountAmount!)}</p></div>}
+                <StockStatus id="edition-stock" available={detail.available} variant="quiet" className={classes.stock} />
+              </div>
+              <div className={classes.actions}>
+                {purchase}
+                {favorite}
+              </div>
+            </section>
+
+            {facts.length > 0 && (
+              <dl className={classes.facts}>
+                {facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
+              </dl>
+            )}
+
+            {detail.synopsis && <Synopsis text={detail.synopsis} />}
+
+            {detail.categories && detail.categories.length > 0 && (
+              <section className={classes.categories} aria-labelledby="detail-categories-heading">
+                <h2 id="detail-categories-heading">Categorías</h2>
+                <ul>
+                  {detail.categories.map((category) => (
+                    <li key={category.slug || category.name}>
+                      {category.slug && category.name
+                        ? <Link to={catalogHref({ ...criteria, category: category.slug, page: 0 })}>{category.name}</Link>
+                        : category.name}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+          </article>
+        </main>
+        <SiteFooter returnHref={returnHref} historyBack={returnWithHistory} />
+      </>
+    );
+  }
+
+  // eBooks and audiobooks keep the previous presentation until their page is designed.
+  return (
+    <>
+
+      <main className="detail-route page-frame" id="contenido-principal" tabIndex={-1}>
+        <nav className="detail-breadcrumb" aria-label="Ruta de navegación">
+          <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
+          <span aria-hidden="true">/</span>
+          <span aria-current="page">{title}</span>
+        </nav>
+
+        <article className="edition-detail">
+          <div className="detail-cover-column">
+            <BookCover
+              url={detail.coverUrl ?? null}
+              license={detail.coverLicense ?? null}
+              attribution={detail.coverAttribution ?? null}
+              title={title}
+              size="detail"
+              loading="eager"
+            />
+            {safeCoverSourceHref && (
+              <a className="cover-source" href={safeCoverSourceHref} target="_blank" rel="noopener noreferrer">
+                Consultar fuente de la portada <span>(abre en pestaña nueva)</span>
+              </a>
+            )}
+          </div>
+
+          <div className={`detail-copy ${surface.surface}`}>
+            <h1 ref={detailHeadingRef} tabIndex={-1} aria-describedby="edition-stock">{title}</h1>
+            {detail.subtitle && <p className="detail-subtitle">{detail.subtitle}</p>}
+            {authors && <p className="detail-authors">{authors}</p>}
+            {publisher && <p className="detail-publisher">{publisher}</p>}
+
+            {detail.price && <p className="detail-price">{formatUsd(detail.price)}</p>}
+            {detail.offer && <div aria-label="Oferta vigente"><p>Precio anterior: <s>{formatUsd(detail.offer.originalPrice!)}</s></p><p>Descuento: {formatUsd(detail.offer.discountAmount!)}</p></div>}
+            <StockStatus id="edition-stock" available={detail.available} className={surface.status} />
+
+            <div className="detail-purchase">
+              {favorite}
+              {purchase}
             </div>
 
             <dl className="edition-facts">
               <div><dt>Formato</dt><dd>{formatEdition(detail.format)}</dd></div>
+              {detail.format === "EBOOK" && detail.ebookFileFormat && <div><dt>Formato de archivo</dt><dd>{detail.ebookFileFormat}</dd></div>}
+              {detail.format === "AUDIOBOOK" && detail.audioDurationSeconds && <div><dt>Duración</dt><dd>{formatAudioDuration(detail.audioDurationSeconds)}</dd></div>}
+              {detail.format === "AUDIOBOOK" && Boolean(detail.narrators?.length) && <div><dt>Narración</dt><dd>{detail.narrators!.join(", ")}</dd></div>}
               {detail.language && <div><dt>Idioma</dt><dd>{formatLanguage(detail.language)}</dd></div>}
               {detail.isbn13 && <div><dt>ISBN-13</dt><dd>{detail.isbn13}</dd></div>}
               {detail.pageCount && <div><dt>Páginas</dt><dd>{formatPageCount(detail.pageCount)}</dd></div>}
@@ -450,6 +550,26 @@ export function EditionDetailPage() {
       </main>
       <SiteFooter returnHref={returnHref} historyBack={returnWithHistory} />
     </>
+  );
+}
+
+/** The synopsis reads after the purchase decision: a comfortable column, opened in full only on request when long. */
+function Synopsis({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  const long = text.length > 560;
+  const paragraphs = text.split(/\n\s*\n/).map((paragraph) => paragraph.trim()).filter(Boolean);
+  return (
+    <section className={classes.synopsis} aria-labelledby="synopsis-heading">
+      <h2 id="synopsis-heading">Sinopsis</h2>
+      <div id="synopsis-text" className={classes.synopsisText} data-clamped={long && !open ? true : undefined}>
+        {paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+      </div>
+      {long && (
+        <button type="button" className={classes.more} aria-expanded={open} aria-controls="synopsis-text" onClick={() => setOpen(!open)}>
+          {open ? "Mostrar menos" : "Leer la sinopsis completa"}
+        </button>
+      )}
+    </section>
   );
 }
 
@@ -492,7 +612,7 @@ function DetailErrorPage({
       <main className="detail-route page-frame" id="contenido-principal" tabIndex={-1}>
         <BackToCatalogLink to={returnHref} historyBack={historyBack} />
         <section className="detail-error" role="alert" aria-labelledby="detail-error-heading">
-          <h1 id="detail-error-heading">{title}</h1>
+          <h1 id="detail-error-heading" tabIndex={-1}>{title}</h1>
           <p>{detail}</p>
           {onRetry && (
             <Button variant="secondary" type="button" onClick={onRetry}>

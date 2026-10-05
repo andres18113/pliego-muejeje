@@ -26,9 +26,12 @@ class OpenApiCoverageTest {
 
     private static final List<Class<?>> CONTROLLERS = List.of(
             com.pliego.modules.identity.api.AuthController.class,
+            com.pliego.modules.identity.api.EmailActionController.class,
+            com.pliego.modules.sales.api.PickupLocationController.class,
+            com.pliego.modules.sales.api.AdminPickupController.class,
             com.pliego.modules.customer.api.CustomerController.class,
             com.pliego.modules.customer.api.AdminCustomerController.class,
-            com.pliego.modules.catalog.api.CatalogController.class,
+            com.pliego.modules.catalog.api.CatalogController.class, EditionOfferController.class,
             com.pliego.modules.catalog.api.AdminCatalogController.class,
             com.pliego.modules.inventory.api.AdminInventoryController.class,
             com.pliego.modules.cart.api.CartController.class,
@@ -57,8 +60,8 @@ class OpenApiCoverageTest {
                 }
             }
         }
-        assertThat(endpoints).as("REST total including public catalog, customer favorites and post-purchase routes")
-                .isEqualTo(62);
+        assertThat(endpoints).as("REST total including public catalog, customer favorites, post-purchase routes and email change")
+                .isEqualTo(76);
     }
 
     @Test
@@ -75,7 +78,7 @@ class OpenApiCoverageTest {
         for (Class<?> controller : CONTROLLERS) {
             boolean secured = controller.isAnnotationPresent(SecurityRequirement.class);
             String name = controller.getSimpleName();
-            if (name.equals("AuthController") || name.equals("CatalogController")) {
+            if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("PickupLocationController")) {
                 assertThat(secured).as("%s must stay public", name).isFalse();
             } else {
                 assertThat(secured).as("%s must require bearerJwt", name).isTrue();

@@ -1,0 +1,32 @@
+[
+  {
+    "antipattern": "border-accent-on-rounded",
+    "name": "Border accent on rounded element",
+    "description": "Thick accent border on a rounded card — the border clashes with the rounded corners. Remove the border or the border-radius.",
+    "severity": "warning",
+    "category": "slop",
+    "file": "/home/andres18123/PLIEGO/frontend/src/app/navigation/SiteHeader.module.css",
+    "line": 105,
+    "snippet": "border-bottom: 4px solid"
+  },
+  {
+    "antipattern": "layout-transition",
+    "name": "Layout property animation",
+    "description": "Animating width, height, padding, or margin causes layout thrash and janky performance. Use transform and opacity instead, or grid-template-rows for height animations.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/home/andres18123/PLIEGO/frontend/src/app/navigation/SiteHeader.module.css",
+    "line": 9,
+    "snippet": "transition: height, margin-bottom"
+  },
+  {
+    "antipattern": "layout-transition",
+    "name": "Layout property animation",
+    "description": "Animating width, height, padding, or margin causes layout thrash and janky performance. Use transform and opacity instead, or grid-template-rows for height animations.",
+    "severity": "warning",
+    "category": "quality",
+    "file": "/home/andres18123/PLIEGO/frontend/src/features/catalog/homeNextReading.module.css",
+    "line": 64,
+    "snippet": "transition: width"
+  }
+]

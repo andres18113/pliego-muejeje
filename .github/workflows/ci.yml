@@ -114,3 +114,17 @@ jobs:
             | grep -qx t
       - name: Run live SQL, concurrency, HTTP, and Flyway gates
         run: bash backend/src/test/postgres18/run_ci_gates.sh
+      - name: Verify transactional email with local Mailtrap stub
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_mail_delivery_ci
+          PGDATABASE=pliego_mail_delivery_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_mail_delivery_ci \
+            timeout 180s python3 backend/src/test/postgres18/transactional_email_http_gate.py
+      - name: Verify historical monetary snapshots across Flyway upgrade
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_monetary_upgrade_ci
+          PGDATABASE=pliego_monetary_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_monetary_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/monetary_upgrade_gate.py

@@ -102,6 +102,8 @@ def main() -> None:
         "lastNames": "Sesión",
     })
     assert status == 201, f"registration returned HTTP {status}: {body}"
+    from email_verification_fixture import verify_registered_email
+    verify_registered_email(email, base_url)
 
     access_token, cookie = assert_live_login(base_url, email, password)
     status, _, profile = request(base_url, "/api/v1/me", "GET", access_token=access_token)

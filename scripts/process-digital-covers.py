@@ -80,7 +80,11 @@ def inventory_records(root: Path, inventory: Path):
                 "observacionesStaging": []}
             options = _array(row,"protectedRegions")
             borders = _array(row,"editorialBorders")
-            yield root / family / folder / "staging.json", record, source, {"protectedRegions": options, "editorialBorders": borders}, {
+            normalization = {"protectedRegions": options, "editorialBorders": borders}
+            for field in ("reviewedCropBox", "reviewedCropReason", "reviewedSourceSha256"):
+                if _value(row, field) is not None:
+                    normalization[field] = _array(row, field) if field == "reviewedCropBox" else _value(row, field)
+            yield root / family / folder / "staging.json", record, source, normalization, {
                 "inventory": inventory.relative_to(root).as_posix(), "row": index, "original_file": original, "source_label": source_label}
 
 
@@ -253,7 +257,7 @@ def _process_batch(root: Path, inventories: list[Path], staging_files: list[Path
         plan[report_path] = (json.dumps(report,ensure_ascii=False,indent=2) + "\n").encode("utf-8")
         stream = io.StringIO(newline="")
         columns = ["staging_file","sku","format","title","original_file","original_size","oriented_size",
-                   "clean_size","trim","crop","upscale_factor","normalized_size","quality","bytes","sha256","status","reason"]
+                   "clean_size","trim","crop","upscale_factor","normalized_size","quality","bytes","sha256","status","reason","reviewed_crop"]
         writer = csv.DictWriter(stream,fieldnames=columns)
         writer.writeheader()
         for item in reports:

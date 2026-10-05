@@ -19,3 +19,11 @@
 | [0015](0015-google-store-public-storefront.md) | Rebuild public storefront from measured Google Store evidence | Accepted for authorized visual replacement | 2026-10-02 |
 | [0016](0016-digital-editions-and-stockless-availability.md) | Typed digital editions and availability without physical inventory | Accepted for digital-format extension | 2026-10-03 |
 | [0017](0017-post-purchase-lifecycle-and-documents.md) | Separate fulfillment/shipment and immutable commercial invoice/credit-note records | Accepted for post-purchase backend extension | 2026-10-03 |
+| [0018](0018-command-outcomes-and-profile-concurrency.md) | Durable command receipts, transaction-safe outcome resolution and optimistic profile writes | Accepted for confirmed P1 integrity corrections | 2026-10-04 |
+| [0019](0019-shared-person-validation-and-safe-numeric-input.md) | Shared Unicode/phone validation, compatible recipients and exact numeric boundaries | Accepted for confirmed validation/error-handling corrections | 2026-10-04 |
+| [0020](0020-transactional-email-and-account-verification.md) | PostgreSQL email outbox, account verification and password recovery through Mailtrap | Accepted for requested implementation | 2026-10-04 |
+| [0021](0021-basic-store-pickup.md) | Extend existing fulfillment with typed pickup locations, snapshots and collection | Accepted for requested implementation | 2026-10-04 |
+| [0022](0022-authoritative-ecuador-monetary-projections.md) | Database-owned 15% IVA pricing and coherent order/payment/invoice snapshots | Accepted for requested implementation | 2026-10-04 |
+| [0023](0023-pending-digital-edition-preparation.md) | Pending digital staging, exact work identity and non-mutating SKU proposals | Accepted for local preparation only | 2026-10-04 |
+| [0024](0024-authoritative-home-delivery-simulation.md) | Database-owned home delivery simulation, persisted deadlines and idempotent catch-up | Accepted for requested backend implementation | 2026-10-04 |
+| [0025](0025-edition-offers.md) | Edition offers with database-owned pricing, calendar timing, filtering and monetary snapshots | Accepted for functional integration | 2026-10-05 |

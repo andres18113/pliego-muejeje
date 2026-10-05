@@ -1,0 +1,32 @@
+{
+  "names": [
+    { "input": "Ana María", "valid": true, "normalized": "Ana María" },
+    { "input": "Ána", "valid": true, "normalized": "Ána" },
+    { "input": "O’Connor-Pérez", "valid": true, "normalized": "O’Connor-Pérez" },
+    { "input": "李", "valid": true, "normalized": "李" },
+    { "input": "محمد", "valid": true, "normalized": "محمد" },
+    { "input": "नंदिनी", "valid": true, "normalized": "नंदिनी" },
+    { "input": "Jean‐Luc", "valid": true, "normalized": "Jean‐Luc" },
+    { "input": "Gat1n", "valid": false },
+    { "input": "Ana_ María", "valid": false },
+    { "input": "Ana🙂", "valid": false },
+    { "input": "123", "valid": false },
+    { "input": "́Ana", "valid": false },
+    { "input": "Ana/María", "valid": false }
+  ],
+  "phones": [
+    { "input": "+593 (99) 123-4567", "valid": true, "normalized": "+593991234567" },
+    { "input": "+59325550134", "valid": true, "normalized": "+59325550134" },
+    { "input": "+44 20 7946 0018", "valid": true, "normalized": "+442079460018" },
+    { "input": "+39 02 36618 300", "valid": true, "normalized": "+390236618300" },
+    { "input": "0991234567", "valid": false },
+    { "input": "+5930991234567", "valid": false },
+    { "input": "+44 020 7946 0018", "valid": false },
+    { "input": "+593991234567 ext 5", "valid": false },
+    { "input": "+593+991234567", "valid": false },
+    { "input": "+999991234567", "valid": false },
+    { "input": "+593123", "valid": false },
+    { "input": "()", "valid": false },
+    { "input": "...", "valid": false }
+  ]
+}

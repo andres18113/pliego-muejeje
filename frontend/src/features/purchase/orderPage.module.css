@@ -1,0 +1,140 @@
+/* Detalle del pedido: one composition for every state. The order's identity sits in one row; below,
+   the fulfillment panel (state, what happens next, progress, destination, purchased books) stands
+   beside a compact payment card. Both are sheets with a hairline; the state heading carries the
+   tone — ultramar while the order is in motion, ink once it arrived, muted when it is closed. */
+.back { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--acc-ink); font-weight: 600; text-decoration: none; }
+.back :global(.material-symbol) { text-decoration: none; }
+.back > span:last-child { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.back:hover { color: var(--acc-blue); }
+.back:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 6px; }
+.missing h2 { margin: 0 0 8px; font: 650 1.75rem/1.1 var(--acc-display); letter-spacing: -.04em; }
+
+.order { display: grid; gap: 18px; width: 100%; max-width: 1000px; min-width: 0; margin-inline: auto; color: var(--acc-ink); }
+.facts { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 32px; margin: 0; font-size: 1.0625rem; line-height: 1.4; padding-inline: clamp(4px, 2.4vw, 24px); }
+.facts div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; min-width: 0; }
+.facts dt { font-weight: 650; }
+.facts dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(280px, 340px); align-items: start; gap: 20px; min-width: 0; }
+.main, .panel { min-width: 0; border: 1px solid var(--acc-line); border-radius: 24px; background: var(--acc-sheet); }
+.main { display: grid; gap: 18px; padding: clamp(20px, 2.6vw, 28px); }
+.aside { display: grid; gap: 16px; min-width: 0; }
+
+/* State */
+.status { display: grid; gap: 6px; min-width: 0; }
+.headline { margin: 0; color: var(--acc-blue); font: 650 clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem)/1.05 var(--acc-display); letter-spacing: -.045em; overflow-wrap: anywhere; }
+.main[data-tone="arrived"] .headline { color: var(--acc-ink); }
+.main[data-tone="closed"] .headline, .main[data-story="payment-rejected"] .headline { color: var(--acc-muted); }
+.lead { max-width: 34rem; margin: 0; line-height: 1.5; }
+.estimate { margin: 0; font-weight: 650; line-height: 1.45; }
+
+.cancel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; min-width: 0; }
+.cancel > p { flex: 1 1 18rem; margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; }
+.cancelConfirm { display: grid; gap: 12px; width: 100%; padding: 16px 18px; border-radius: 16px; background: var(--acc-mist); }
+.cancelConfirm p { margin: 0; font-weight: 600; }
+
+/* Progress: one bar in five parts, filled through the server-reported step; the full stop marks "here". */
+.track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin: 0; padding: 0; list-style: none; }
+.track li { display: grid; align-content: start; gap: 8px; min-width: 0; }
+.trackMark { position: relative; display: block; height: 8px; border-radius: 999px; background: var(--acc-lavender); }
+.trackMark :global(.material-symbol) { display: none; }
+.track li[data-state="done"] .trackMark, .track li[data-state="current"] .trackMark { background: var(--acc-blue); }
+.track li[data-state="current"] .trackMark::after {
+  content: ""; position: absolute; top: 50%; right: -2px; width: 16px; height: 16px; border-radius: 50%; translate: 0 -50%;
+  background: var(--acc-yellow); box-shadow: 0 0 0 2px var(--acc-blue);
+}
+.trackLabel { color: var(--acc-muted); font-size: .8125rem; line-height: 1.3; overflow-wrap: anywhere; }
+.track li[data-state="current"] .trackLabel { color: var(--acc-ink); font-weight: 650; }
+.trackTime { display: none; }
+
+.actionRow { display: flex; flex-wrap: wrap; gap: 10px 12px; }
+.inset { padding: 18px; border-radius: 16px; background: var(--acc-mist); }
+.tracking { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; min-width: 0; font-size: .9375rem; }
+.trackingCode { margin: 0; margin-right: auto; }
+.trackingCode span { color: var(--acc-muted); }
+.trackingCode strong { font-weight: 650; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.copy, .follow, .more { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--acc-blue); font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+.follow span:first-child, .more { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.copy:focus-visible, .follow:focus-visible, .more:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 6px; }
+
+.history { display: grid; justify-items: start; gap: 2px; min-width: 0; }
+.timeline { display: grid; gap: 8px; width: 100%; margin: 0; padding: 0; list-style: none; font-size: .9375rem; line-height: 1.4; }
+.timeline li { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 2px 20px; }
+.timeline time { color: var(--acc-muted); font-variant-numeric: tabular-nums; }
+.timeline li > span { display: grid; gap: 2px; min-width: 0; }
+.timeline strong { font-weight: 650; }
+.timeline li > span span { color: var(--acc-muted); font-size: .875rem; overflow-wrap: anywhere; }
+
+/* Destination */
+.destination { display: grid; grid-template-columns: 10.5rem minmax(0, 1fr); align-items: start; gap: 6px 20px; min-width: 0; }
+.destination h3 { margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.5; }
+.destination[data-kind="pickup"] { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+/* The shared pickup facts, set compactly: the point, then its facts in one wrapping row, then a shorter map. */
+.destination[data-kind="pickup"] > div { gap: 14px; font-size: .9375rem; }
+.destination[data-kind="pickup"] address { gap: 1px; }
+.destination[data-kind="pickup"] dl { grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: 12px 20px; }
+.destination[data-kind="pickup"] dt { font-size: .8125rem; }
+.destination[data-kind="pickup"] dd { margin-top: 2px; }
+.destination[data-kind="pickup"] p { margin: 0; color: var(--acc-muted); }
+.destination[data-kind="pickup"] iframe { height: 168px; }
+.address { display: grid; gap: 1px; font-style: normal; font-size: .9375rem; line-height: 1.5; overflow-wrap: anywhere; }
+.quiet { margin: 0; color: var(--acc-muted); line-height: 1.5; }
+
+/* Purchased books, inside the same panel */
+.books { min-width: 0; padding: 4px 18px; border-radius: 18px; background: var(--acc-mist); }
+.books ul { margin: 0; padding: 0; list-style: none; }
+.book { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 18px; padding: 14px 0; }
+.book + .book { border-top: 1px solid color-mix(in srgb, var(--acc-ink) 10%, transparent); }
+.bookCover { display: block; width: 56px; }
+.bookCover :global(.book-cover) { width: 100%; }
+.bookCopy { display: grid; gap: 2px; min-width: 0; }
+.bookCopy h4 { margin: 0; font: 650 1.125rem/1.2 var(--acc-display); letter-spacing: -.03em; overflow-wrap: anywhere; }
+.bookCopy p { margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.4; overflow-wrap: anywhere; }
+.bookPrice { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 14px; margin-top: 4px !important; font-variant-numeric: tabular-nums; }
+.bookPrice strong { color: var(--acc-ink); font-weight: 650; }
+.main[data-tone="closed"] .books, .main[data-story="payment-rejected"] .books { background: color-mix(in srgb, var(--acc-ink) 5%, transparent); }
+.main[data-tone="closed"] .bookCover, .main[data-story="payment-rejected"] .bookCover { opacity: .65; }
+
+/* Payment and documents */
+.panel { display: grid; gap: 14px; padding: 22px; }
+.panel > h2 { margin: 0; font: 650 1.375rem/1.1 var(--acc-display); letter-spacing: -.035em; }
+.paymentLine { display: flex; align-items: flex-start; gap: 10px; margin: 0; }
+.paymentLine > span { display: grid; gap: 1px; }
+.paymentLine strong { font-weight: 600; }
+.paymentState { color: var(--acc-muted); font-size: .875rem; }
+.totals { display: grid; gap: 6px; margin: 0; }
+.totals div { display: flex; justify-content: space-between; gap: 16px; }
+.totals dd { margin: 0; font-variant-numeric: tabular-nums; }
+.grandTotal dt, .grandTotal dd { font-weight: 700; }
+.refund dt, .refund dd { color: var(--acc-blue); font-weight: 600; }
+
+.document { display: grid; gap: 10px; min-width: 0; }
+.document + .document { padding-top: 14px; border-top: 1px solid var(--acc-line); }
+.document h3 { margin: 0; font-size: 1rem; font-weight: 650; overflow-wrap: anywhere; }
+.document dl { display: grid; gap: 6px; margin: 0; }
+.document dl div { display: grid; gap: 0; }
+.document dt { color: var(--acc-muted); font-size: .8125rem; }
+.document dd { display: grid; gap: 1px; margin: 0; font-size: .9375rem; overflow-wrap: anywhere; }
+.document dd span { color: var(--acc-muted); font-size: .875rem; }
+.snapshotNote { margin: 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.45; }
+
+@media (max-width: 899px) {
+  .layout { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 599px) {
+  .facts { display: grid; justify-content: stretch; padding-inline: 4px; }
+  .facts div { justify-content: space-between; }
+  .main, .panel { border-radius: 20px; }
+  .main { padding: 18px; }
+  .panel { padding: 18px; }
+  /* The heading already names the step; the bar keeps only its position. */
+  .trackLabel { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .destination { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+  .timeline li { grid-template-columns: minmax(0, 1fr); }
+  .books { padding-inline: 14px; }
+  .book { gap: 14px; }
+}
+@media (forced-colors: active) {
+  .trackMark { border: 1px solid CanvasText; }
+  .track li[data-state="done"] .trackMark, .track li[data-state="current"] .trackMark { background: CanvasText; }
+}

@@ -1,0 +1,3706 @@
+{
+  "schema": "pliego-published-digital-staging-v1",
+  "publication_status": "PUBLISHED",
+  "libros": [
+    {
+      "portadaArchivo": "portadas/ebook-4f88eff5a246dfab.webp",
+      "libro": {
+        "titulo": "Filosofía antigua",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pastor, W. F.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000228",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000228-8507b04ffd87.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36348",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-4f88eff5a246dfab",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "208",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-0449b39b05853271"
+        },
+        "author_bindings": [
+          {
+            "name": "Pastor, W. F.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pastor, W. F.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+            "source_sha256": "8cda1cd504e841fa77a2ca85d75ccc32efcb3f8e4ea6a6cbebb8d7d41a03399d",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36348.",
+            "capture_sha256": "8cda1cd504e841fa77a2ca85d75ccc32efcb3f8e4ea6a6cbebb8d7d41a03399d",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36348.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+            "source_sha256": "8cda1cd504e841fa77a2ca85d75ccc32efcb3f8e4ea6a6cbebb8d7d41a03399d",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36348.",
+            "capture_sha256": "8cda1cd504e841fa77a2ca85d75ccc32efcb3f8e4ea6a6cbebb8d7d41a03399d",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36348.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36348",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 28,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36348",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía antigua - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4f88eff5a246dfab.webp",
+            "cover_sha256": "8507b04ffd877f218b0b6215852b5b8d265c5dcc42561535410c24cd240b21c7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pastor, W. F.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 28,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36348",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía antigua - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4f88eff5a246dfab.webp",
+            "cover_sha256": "8507b04ffd877f218b0b6215852b5b8d265c5dcc42561535410c24cd240b21c7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 28,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36348",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía antigua - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4f88eff5a246dfab.webp",
+            "cover_sha256": "8507b04ffd877f218b0b6215852b5b8d265c5dcc42561535410c24cd240b21c7",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 28,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36348",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía antigua - Pastor, W. F..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4f88eff5a246dfab.webp",
+          "cover_sha256": "8507b04ffd877f218b0b6215852b5b8d265c5dcc42561535410c24cd240b21c7",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "209",
+        "imported_book_id": "208"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-039e638e77cb6360.webp",
+      "libro": {
+        "titulo": "Filosofía como metanoética",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Hajime, Tanabe",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Herder Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000193",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000193-e2f0422878b8.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45764",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-039e638e77cb6360",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "209",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-e3757b24443fc3e1"
+        },
+        "author_bindings": [
+          {
+            "name": "Hajime, Tanabe",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Hajime, Tanabe",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+            "source_sha256": "ca45dbc645d094c777ac44a3b43bb31b69534cb58ce1787406d6eaa5eb247307",
+            "observed_text": "Herder Editorial,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 45764.",
+            "capture_sha256": "ca45dbc645d094c777ac44a3b43bb31b69534cb58ce1787406d6eaa5eb247307",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45764.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+            "source_sha256": "ca45dbc645d094c777ac44a3b43bb31b69534cb58ce1787406d6eaa5eb247307",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 45764.",
+            "capture_sha256": "ca45dbc645d094c777ac44a3b43bb31b69534cb58ce1787406d6eaa5eb247307",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45764.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45764",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 29,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45764",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía como metanoética - Hajime, Tanabe.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-039e638e77cb6360.webp",
+            "cover_sha256": "e2f0422878b84c5031d7a5a36c2ff093e7010beada48deccecb79dbe4d6d0f1c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Hajime, Tanabe",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 29,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45764",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía como metanoética - Hajime, Tanabe.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-039e638e77cb6360.webp",
+            "cover_sha256": "e2f0422878b84c5031d7a5a36c2ff093e7010beada48deccecb79dbe4d6d0f1c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 29,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45764",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía como metanoética - Hajime, Tanabe.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-039e638e77cb6360.webp",
+            "cover_sha256": "e2f0422878b84c5031d7a5a36c2ff093e7010beada48deccecb79dbe4d6d0f1c",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 29,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45764",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía como metanoética - Hajime, Tanabe.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-039e638e77cb6360.webp",
+          "cover_sha256": "e2f0422878b84c5031d7a5a36c2ff093e7010beada48deccecb79dbe4d6d0f1c",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "210",
+        "imported_book_id": "209"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-7c9ecb657fb9f797.webp",
+      "libro": {
+        "titulo": "Filosofía contemporánea",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pastor, W. F.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "16.99",
+        "sku": "PLG-BK-000277",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000277-b15a169548a7.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36352",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-7c9ecb657fb9f797",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "210",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-e08110a90b691b71"
+        },
+        "author_bindings": [
+          {
+            "name": "Pastor, W. F.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pastor, W. F.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+            "source_sha256": "a4bd05b1f77451ccba2083782d55951eab9d62ac2349abc237cc9e5a2426b8cb",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36352.",
+            "capture_sha256": "a4bd05b1f77451ccba2083782d55951eab9d62ac2349abc237cc9e5a2426b8cb",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36352.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+            "source_sha256": "a4bd05b1f77451ccba2083782d55951eab9d62ac2349abc237cc9e5a2426b8cb",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36352.",
+            "capture_sha256": "a4bd05b1f77451ccba2083782d55951eab9d62ac2349abc237cc9e5a2426b8cb",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36352.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36352",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 30,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36352",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía contemporánea - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-7c9ecb657fb9f797.webp",
+            "cover_sha256": "b15a169548a76353585e592f8741f6c6e35f90947eb7dcc26f2a31ccef754eee",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pastor, W. F.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 30,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36352",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía contemporánea - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-7c9ecb657fb9f797.webp",
+            "cover_sha256": "b15a169548a76353585e592f8741f6c6e35f90947eb7dcc26f2a31ccef754eee",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 30,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36352",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía contemporánea - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-7c9ecb657fb9f797.webp",
+            "cover_sha256": "b15a169548a76353585e592f8741f6c6e35f90947eb7dcc26f2a31ccef754eee",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 30,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36352",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía contemporánea - Pastor, W. F..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-7c9ecb657fb9f797.webp",
+          "cover_sha256": "b15a169548a76353585e592f8741f6c6e35f90947eb7dcc26f2a31ccef754eee",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "211",
+        "imported_book_id": "210"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-00ba74890bbeded4.webp",
+      "libro": {
+        "titulo": "Filosofía de la ciencia (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Artigas, Mariano",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "EUNSA",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000106",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000106-9ecfb3b6390c.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46920",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-00ba74890bbeded4",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "211",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-91de51c86ad65da6"
+        },
+        "author_bindings": [
+          {
+            "name": "Artigas, Mariano",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Artigas, Mariano",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+            "source_sha256": "fcf6e25b71fb5c700e91a381609a49e8bcb5475814511f7aa3dbe476e8f9d51f",
+            "observed_text": "Ediciones Universidad de Navarra,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 46920.",
+            "capture_sha256": "fcf6e25b71fb5c700e91a381609a49e8bcb5475814511f7aa3dbe476e8f9d51f",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46920.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+            "source_sha256": "fcf6e25b71fb5c700e91a381609a49e8bcb5475814511f7aa3dbe476e8f9d51f",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 46920.",
+            "capture_sha256": "fcf6e25b71fb5c700e91a381609a49e8bcb5475814511f7aa3dbe476e8f9d51f",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46920.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46920",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 31,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46920",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la ciencia (2a. ed.) - Artigas, Mariano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00ba74890bbeded4.webp",
+            "cover_sha256": "9ecfb3b6390c61b9a68f81fd014bed276df05a2bfd101fb52767f4426b629c1a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Artigas, Mariano",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 31,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46920",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la ciencia (2a. ed.) - Artigas, Mariano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00ba74890bbeded4.webp",
+            "cover_sha256": "9ecfb3b6390c61b9a68f81fd014bed276df05a2bfd101fb52767f4426b629c1a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 31,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46920",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la ciencia (2a. ed.) - Artigas, Mariano.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00ba74890bbeded4.webp",
+            "cover_sha256": "9ecfb3b6390c61b9a68f81fd014bed276df05a2bfd101fb52767f4426b629c1a",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 31,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46920",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía de la ciencia (2a. ed.) - Artigas, Mariano.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00ba74890bbeded4.webp",
+          "cover_sha256": "9ecfb3b6390c61b9a68f81fd014bed276df05a2bfd101fb52767f4426b629c1a",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "212",
+        "imported_book_id": "211"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a0a42f8e10e65611.webp",
+      "libro": {
+        "titulo": "Filosofía de la cultura (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Choza, Jacinto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Thémata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "24.99",
+        "sku": "PLG-BK-000090",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000090-c55041c65552.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59773",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a0a42f8e10e65611",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "212",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-a465e925dfb1e42b"
+        },
+        "author_bindings": [
+          {
+            "name": "Choza, Jacinto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Choza, Jacinto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+            "source_sha256": "7d022c80bdf13f3904c191ed3ed25041fc51a9339ce49628d92648871fc19cf5",
+            "observed_text": "Editorial Thémata,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 59773.",
+            "capture_sha256": "7d022c80bdf13f3904c191ed3ed25041fc51a9339ce49628d92648871fc19cf5",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59773.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+            "source_sha256": "7d022c80bdf13f3904c191ed3ed25041fc51a9339ce49628d92648871fc19cf5",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 59773.",
+            "capture_sha256": "7d022c80bdf13f3904c191ed3ed25041fc51a9339ce49628d92648871fc19cf5",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59773.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59773",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 32,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59773",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la cultura (2a. ed.) - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a0a42f8e10e65611.webp",
+            "cover_sha256": "c55041c6555209718d061416f57f1ea2175ae6ce78541bbc9b218af43ad28cee",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Choza, Jacinto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 32,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59773",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la cultura (2a. ed.) - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a0a42f8e10e65611.webp",
+            "cover_sha256": "c55041c6555209718d061416f57f1ea2175ae6ce78541bbc9b218af43ad28cee",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 32,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59773",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la cultura (2a. ed.) - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a0a42f8e10e65611.webp",
+            "cover_sha256": "c55041c6555209718d061416f57f1ea2175ae6ce78541bbc9b218af43ad28cee",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 32,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59773",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía de la cultura (2a. ed.) - Choza, Jacinto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a0a42f8e10e65611.webp",
+          "cover_sha256": "c55041c6555209718d061416f57f1ea2175ae6ce78541bbc9b218af43ad28cee",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "213",
+        "imported_book_id": "212"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-34ce7fb4dbe3d5ea.webp",
+      "libro": {
+        "titulo": "Filosofía de la religión",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Beuchot Puente, Mauricio",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "ITESO - Instituto Tecnológico y de Estudios Superiores de Occidente",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "17.99",
+        "sku": "PLG-BK-000214",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000214-78187b088c4d.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40946",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-34ce7fb4dbe3d5ea",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "213",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-d5e5b613904f3f1a"
+        },
+        "author_bindings": [
+          {
+            "name": "Beuchot Puente, Mauricio",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Beuchot Puente, Mauricio",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+            "source_sha256": "b9efb2514344ee53217b0713986df318a85515e202d96dc0bdade291c867d4df",
+            "observed_text": "ITESO - Instituto Tecnológico y de Estudios Superiores de Occidente,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 40946.",
+            "capture_sha256": "b9efb2514344ee53217b0713986df318a85515e202d96dc0bdade291c867d4df",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns40946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+            "source_sha256": "b9efb2514344ee53217b0713986df318a85515e202d96dc0bdade291c867d4df",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 40946.",
+            "capture_sha256": "b9efb2514344ee53217b0713986df318a85515e202d96dc0bdade291c867d4df",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns40946.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB40946",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 34,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la religión - Beuchot Puente, Mauricio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-34ce7fb4dbe3d5ea.webp",
+            "cover_sha256": "78187b088c4d385c7556542dc0947af7f1afde3612c41698330cb02ad7a8b2aa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Beuchot Puente, Mauricio",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 34,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la religión - Beuchot Puente, Mauricio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-34ce7fb4dbe3d5ea.webp",
+            "cover_sha256": "78187b088c4d385c7556542dc0947af7f1afde3612c41698330cb02ad7a8b2aa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 34,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40946",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía de la religión - Beuchot Puente, Mauricio.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-34ce7fb4dbe3d5ea.webp",
+            "cover_sha256": "78187b088c4d385c7556542dc0947af7f1afde3612c41698330cb02ad7a8b2aa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 34,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/40946",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía de la religión - Beuchot Puente, Mauricio.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-34ce7fb4dbe3d5ea.webp",
+          "cover_sha256": "78187b088c4d385c7556542dc0947af7f1afde3612c41698330cb02ad7a8b2aa",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "214",
+        "imported_book_id": "213"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-c740fdc211f952d1.webp",
+      "libro": {
+        "titulo": "Filosofía del conocimiento (2a. ed.)",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Corazón González, Rafael",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "EUNSA",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "15.99",
+        "sku": "PLG-BK-000057",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000057-be83a24f55ad.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46926",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-c740fdc211f952d1",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "214",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-bd526f6cc2770124"
+        },
+        "author_bindings": [
+          {
+            "name": "Corazón González, Rafael",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Corazón González, Rafael",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+            "source_sha256": "bffc490cee90c8a39d35419b485b41852daeda3e985426aab6306c7bda863832",
+            "observed_text": "Eunsa,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 46926.",
+            "capture_sha256": "bffc490cee90c8a39d35419b485b41852daeda3e985426aab6306c7bda863832",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46926.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+            "source_sha256": "bffc490cee90c8a39d35419b485b41852daeda3e985426aab6306c7bda863832",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 46926.",
+            "capture_sha256": "bffc490cee90c8a39d35419b485b41852daeda3e985426aab6306c7bda863832",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns46926.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB46926",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 35,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46926",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del conocimiento (2a. ed.) - Corazón González, Rafael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-c740fdc211f952d1.webp",
+            "cover_sha256": "be83a24f55ad7454b20c6a57cebcb5a5bab027571fb51c57534256fbe676f4b9",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Corazón González, Rafael",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 35,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46926",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del conocimiento (2a. ed.) - Corazón González, Rafael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-c740fdc211f952d1.webp",
+            "cover_sha256": "be83a24f55ad7454b20c6a57cebcb5a5bab027571fb51c57534256fbe676f4b9",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 35,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46926",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del conocimiento (2a. ed.) - Corazón González, Rafael.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-c740fdc211f952d1.webp",
+            "cover_sha256": "be83a24f55ad7454b20c6a57cebcb5a5bab027571fb51c57534256fbe676f4b9",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 35,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/46926",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía del conocimiento (2a. ed.) - Corazón González, Rafael.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-c740fdc211f952d1.webp",
+          "cover_sha256": "be83a24f55ad7454b20c6a57cebcb5a5bab027571fb51c57534256fbe676f4b9",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "215",
+        "imported_book_id": "214"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-00fe541f8e191ee1.webp",
+      "libro": {
+        "titulo": "Filosofía del lenguaje",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Bustos Guadaño, Eduardo de",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "UNED - Universidad Nacional de Educación a Distancia",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "12.99",
+        "sku": "PLG-BK-000134",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000134-9268b1a4c117.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48712",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-00fe541f8e191ee1",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "215",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5e0953265eee0af1"
+        },
+        "author_bindings": [
+          {
+            "name": "Bustos Guadaño, Eduardo de",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Bustos Guadaño, Eduardo de",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+            "source_sha256": "ea9e7555b04358dfcf295edb5c9dba523c2479b0f7b3ecd887bb52e43b384018",
+            "observed_text": "UNED - Universidad Nacional de Educación a Distancia,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 48712.",
+            "capture_sha256": "ea9e7555b04358dfcf295edb5c9dba523c2479b0f7b3ecd887bb52e43b384018",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48712.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+            "source_sha256": "ea9e7555b04358dfcf295edb5c9dba523c2479b0f7b3ecd887bb52e43b384018",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 48712.",
+            "capture_sha256": "ea9e7555b04358dfcf295edb5c9dba523c2479b0f7b3ecd887bb52e43b384018",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns48712.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB48712",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 36,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48712",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del lenguaje - Bustos Guadaño, Eduardo de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00fe541f8e191ee1.webp",
+            "cover_sha256": "9268b1a4c117b29ccf6d5f0293cb03c36f121d6b54e4747b04108d9ef1eb49a8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Bustos Guadaño, Eduardo de",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 36,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48712",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del lenguaje - Bustos Guadaño, Eduardo de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00fe541f8e191ee1.webp",
+            "cover_sha256": "9268b1a4c117b29ccf6d5f0293cb03c36f121d6b54e4747b04108d9ef1eb49a8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 36,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48712",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del lenguaje - Bustos Guadaño, Eduardo de.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00fe541f8e191ee1.webp",
+            "cover_sha256": "9268b1a4c117b29ccf6d5f0293cb03c36f121d6b54e4747b04108d9ef1eb49a8",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 36,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/48712",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía del lenguaje - Bustos Guadaño, Eduardo de.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-00fe541f8e191ee1.webp",
+          "cover_sha256": "9268b1a4c117b29ccf6d5f0293cb03c36f121d6b54e4747b04108d9ef1eb49a8",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "216",
+        "imported_book_id": "215"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-bd71367cdab1060c.webp",
+      "libro": {
+        "titulo": "Filosofía del renacimiento",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pastor, W. F.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "22.99",
+        "sku": "PLG-BK-000123",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000123-c33004170d08.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36350",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-bd71367cdab1060c",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "216",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-b703439df0615ecb"
+        },
+        "author_bindings": [
+          {
+            "name": "Pastor, W. F.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pastor, W. F.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+            "source_sha256": "46382552b360dd99f5534e51ced64cc4cd6624ba9edf6c0fcd74d977cf9d41d5",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36350.",
+            "capture_sha256": "46382552b360dd99f5534e51ced64cc4cd6624ba9edf6c0fcd74d977cf9d41d5",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36350.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+            "source_sha256": "46382552b360dd99f5534e51ced64cc4cd6624ba9edf6c0fcd74d977cf9d41d5",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36350.",
+            "capture_sha256": "46382552b360dd99f5534e51ced64cc4cd6624ba9edf6c0fcd74d977cf9d41d5",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36350.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36350",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 37,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36350",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del renacimiento - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bd71367cdab1060c.webp",
+            "cover_sha256": "c33004170d083872700d0bda53a2e6b2751bff3cc737f5ec7f75e02f42c81bda",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pastor, W. F.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 37,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36350",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del renacimiento - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bd71367cdab1060c.webp",
+            "cover_sha256": "c33004170d083872700d0bda53a2e6b2751bff3cc737f5ec7f75e02f42c81bda",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 37,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36350",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía del renacimiento - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bd71367cdab1060c.webp",
+            "cover_sha256": "c33004170d083872700d0bda53a2e6b2751bff3cc737f5ec7f75e02f42c81bda",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 37,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36350",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía del renacimiento - Pastor, W. F..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bd71367cdab1060c.webp",
+          "cover_sha256": "c33004170d083872700d0bda53a2e6b2751bff3cc737f5ec7f75e02f42c81bda",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "217",
+        "imported_book_id": "216"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-9acec40ecdb659ec.webp",
+      "libro": {
+        "titulo": "Filosofía fundamental",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Balmes, Jaime",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Linkgua",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000168",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000168-25a3be237af1.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34402",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-9acec40ecdb659ec",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "217",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-19aae365f263502c"
+        },
+        "author_bindings": [
+          {
+            "name": "Balmes, Jaime",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Balmes, Jaime",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+            "source_sha256": "160ad59341f854c6a712e4623f8a1db224a0cfbbde7623eecdb37f168c26470b",
+            "observed_text": "[Editorial Linkgua],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 34402.",
+            "capture_sha256": "160ad59341f854c6a712e4623f8a1db224a0cfbbde7623eecdb37f168c26470b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34402.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+            "source_sha256": "160ad59341f854c6a712e4623f8a1db224a0cfbbde7623eecdb37f168c26470b",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 34402.",
+            "capture_sha256": "160ad59341f854c6a712e4623f8a1db224a0cfbbde7623eecdb37f168c26470b",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns34402.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB34402",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 38,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34402",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía fundamental - Balmes, Jaime.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-9acec40ecdb659ec.webp",
+            "cover_sha256": "25a3be237af16d2ab022c3c647260a554bbf00837e07d61414eeab4183595b1f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Balmes, Jaime",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 38,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34402",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía fundamental - Balmes, Jaime.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-9acec40ecdb659ec.webp",
+            "cover_sha256": "25a3be237af16d2ab022c3c647260a554bbf00837e07d61414eeab4183595b1f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 38,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34402",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía fundamental - Balmes, Jaime.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-9acec40ecdb659ec.webp",
+            "cover_sha256": "25a3be237af16d2ab022c3c647260a554bbf00837e07d61414eeab4183595b1f",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 38,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/34402",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía fundamental - Balmes, Jaime.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-9acec40ecdb659ec.webp",
+          "cover_sha256": "25a3be237af16d2ab022c3c647260a554bbf00837e07d61414eeab4183595b1f",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "218",
+        "imported_book_id": "217"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-bbedcd4f008dc1f8.webp",
+      "libro": {
+        "titulo": "Filosofía general",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pastor, W. F.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "21.99",
+        "sku": "PLG-BK-000247",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000247-1a7dfbc68d41.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36347",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-bbedcd4f008dc1f8",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "218",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-4e16702a83752abf"
+        },
+        "author_bindings": [
+          {
+            "name": "Pastor, W. F.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pastor, W. F.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+            "source_sha256": "9f97e9dc0446dde18c768441edf39ded6b9016847237dd6874ed2c63c9951003",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36347.",
+            "capture_sha256": "9f97e9dc0446dde18c768441edf39ded6b9016847237dd6874ed2c63c9951003",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36347.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+            "source_sha256": "9f97e9dc0446dde18c768441edf39ded6b9016847237dd6874ed2c63c9951003",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36347.",
+            "capture_sha256": "9f97e9dc0446dde18c768441edf39ded6b9016847237dd6874ed2c63c9951003",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36347.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36347",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 39,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36347",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía general - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bbedcd4f008dc1f8.webp",
+            "cover_sha256": "1a7dfbc68d414197fd8d675fa32fc5ba24a7b7be489f019db9ce7f929b07d2f6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pastor, W. F.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 39,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36347",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía general - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bbedcd4f008dc1f8.webp",
+            "cover_sha256": "1a7dfbc68d414197fd8d675fa32fc5ba24a7b7be489f019db9ce7f929b07d2f6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 39,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36347",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía general - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bbedcd4f008dc1f8.webp",
+            "cover_sha256": "1a7dfbc68d414197fd8d675fa32fc5ba24a7b7be489f019db9ce7f929b07d2f6",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 39,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36347",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía general - Pastor, W. F..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-bbedcd4f008dc1f8.webp",
+          "cover_sha256": "1a7dfbc68d414197fd8d675fa32fc5ba24a7b7be489f019db9ce7f929b07d2f6",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "219",
+        "imported_book_id": "218"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-0ac02126c2eb936a.webp",
+      "libro": {
+        "titulo": "Filosofía medieval",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pastor, W. F.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000304",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000304-c03b700f5169.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36349",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0ac02126c2eb936a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "219",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-5a84e9d1f79346e5"
+        },
+        "author_bindings": [
+          {
+            "name": "Pastor, W. F.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pastor, W. F.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+            "source_sha256": "eb9e6b5a2e194cc3488cd9504d29ea7179e9bacbf4a19dd209efc8c3715e8b08",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36349.",
+            "capture_sha256": "eb9e6b5a2e194cc3488cd9504d29ea7179e9bacbf4a19dd209efc8c3715e8b08",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36349.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+            "source_sha256": "eb9e6b5a2e194cc3488cd9504d29ea7179e9bacbf4a19dd209efc8c3715e8b08",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36349.",
+            "capture_sha256": "eb9e6b5a2e194cc3488cd9504d29ea7179e9bacbf4a19dd209efc8c3715e8b08",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36349.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36349",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 40,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36349",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía medieval - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0ac02126c2eb936a.webp",
+            "cover_sha256": "c03b700f516974727795c88ebea6e91f5c5e95007d71293bb7cf15a428d0c1a1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pastor, W. F.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 40,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36349",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía medieval - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0ac02126c2eb936a.webp",
+            "cover_sha256": "c03b700f516974727795c88ebea6e91f5c5e95007d71293bb7cf15a428d0c1a1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 40,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36349",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía medieval - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0ac02126c2eb936a.webp",
+            "cover_sha256": "c03b700f516974727795c88ebea6e91f5c5e95007d71293bb7cf15a428d0c1a1",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 40,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36349",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía medieval - Pastor, W. F..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0ac02126c2eb936a.webp",
+          "cover_sha256": "c03b700f516974727795c88ebea6e91f5c5e95007d71293bb7cf15a428d0c1a1",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "220",
+        "imported_book_id": "219"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-a452742cfae417a9.webp",
+      "libro": {
+        "titulo": "Filosofía moderna",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Pastor, W. F.",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Firmas Press",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "14.99",
+        "sku": "PLG-BK-000296",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000296-af243b6bf32e.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36351",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-a452742cfae417a9",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "220",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-94acb4db4623ae97"
+        },
+        "author_bindings": [
+          {
+            "name": "Pastor, W. F.",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Pastor, W. F.",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+            "source_sha256": "a9c3bd2dc04c45ea3f850843a775892d449c1d33a0cded7631790808df64978d",
+            "observed_text": "[Firmas Press],",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36351.",
+            "capture_sha256": "a9c3bd2dc04c45ea3f850843a775892d449c1d33a0cded7631790808df64978d",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36351.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+            "source_sha256": "a9c3bd2dc04c45ea3f850843a775892d449c1d33a0cded7631790808df64978d",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 36351.",
+            "capture_sha256": "a9c3bd2dc04c45ea3f850843a775892d449c1d33a0cded7631790808df64978d",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns36351.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB36351",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 41,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36351",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía moderna - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a452742cfae417a9.webp",
+            "cover_sha256": "af243b6bf32ee20db54a67568cb3a33a82c648353700a8a6642e979096ffdf9d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Pastor, W. F.",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 41,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36351",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía moderna - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a452742cfae417a9.webp",
+            "cover_sha256": "af243b6bf32ee20db54a67568cb3a33a82c648353700a8a6642e979096ffdf9d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 41,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36351",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía moderna - Pastor, W. F..jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a452742cfae417a9.webp",
+            "cover_sha256": "af243b6bf32ee20db54a67568cb3a33a82c648353700a8a6642e979096ffdf9d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 41,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/36351",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía moderna - Pastor, W. F..jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-a452742cfae417a9.webp",
+          "cover_sha256": "af243b6bf32ee20db54a67568cb3a33a82c648353700a8a6642e979096ffdf9d",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "221",
+        "imported_book_id": "220"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-6866fe06c580051a.webp",
+      "libro": {
+        "titulo": "Filosofía para Irene",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Choza, Jacinto",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial Thémata",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "18.99",
+        "sku": "PLG-BK-000100",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000100-6784c3d88265.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59774",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-6866fe06c580051a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "221",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-7a3b02da5553a4aa"
+        },
+        "author_bindings": [
+          {
+            "name": "Choza, Jacinto",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Choza, Jacinto",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59774",
+            "source_sha256": "da36adf843e5e745af729edb44e364ce99dc7741b8f578ec90f7701d3a7d8ab1",
+            "observed_text": "Editorial Thémata,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 59774.",
+            "capture_sha256": "da36adf843e5e745af729edb44e364ce99dc7741b8f578ec90f7701d3a7d8ab1",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59774.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59774",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59774",
+            "source_sha256": "da36adf843e5e745af729edb44e364ce99dc7741b8f578ec90f7701d3a7d8ab1",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 59774.",
+            "capture_sha256": "da36adf843e5e745af729edb44e364ce99dc7741b8f578ec90f7701d3a7d8ab1",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns59774.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB59774",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 42,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59774",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía para Irene - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-6866fe06c580051a.webp",
+            "cover_sha256": "6784c3d88265a9fbfea21e21cba4e886b59038265cff76171c386c9d7d47fb64",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Choza, Jacinto",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 42,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59774",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía para Irene - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-6866fe06c580051a.webp",
+            "cover_sha256": "6784c3d88265a9fbfea21e21cba4e886b59038265cff76171c386c9d7d47fb64",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 42,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59774",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía para Irene - Choza, Jacinto.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-6866fe06c580051a.webp",
+            "cover_sha256": "6784c3d88265a9fbfea21e21cba4e886b59038265cff76171c386c9d7d47fb64",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 42,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/59774",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía para Irene - Choza, Jacinto.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-6866fe06c580051a.webp",
+          "cover_sha256": "6784c3d88265a9fbfea21e21cba4e886b59038265cff76171c386c9d7d47fb64",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "222",
+        "imported_book_id": "221"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-32ea66d0a615db40.webp",
+      "libro": {
+        "titulo": "Filosofía política",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cruz Prados, Alfredo",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "EUNSA",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "10.99",
+        "sku": "PLG-BK-000270",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000270-57ef6068224d.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47080",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-32ea66d0a615db40",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "222",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-df8b813c7ed3be29"
+        },
+        "author_bindings": [
+          {
+            "name": "Cruz Prados, Alfredo",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cruz Prados, Alfredo",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+            "source_sha256": "658fa238b949678c8db060feda6a2b02f959f612d5ce86b50bbf9060c793e771",
+            "observed_text": "EUNSA,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 47080.",
+            "capture_sha256": "658fa238b949678c8db060feda6a2b02f959f612d5ce86b50bbf9060c793e771",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47080.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+            "source_sha256": "658fa238b949678c8db060feda6a2b02f959f612d5ce86b50bbf9060c793e771",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 47080.",
+            "capture_sha256": "658fa238b949678c8db060feda6a2b02f959f612d5ce86b50bbf9060c793e771",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns47080.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB47080",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 43,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47080",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía política - Cruz Prados, Alfredo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-32ea66d0a615db40.webp",
+            "cover_sha256": "57ef6068224d8ffafb111a1c8196b67df0833758cdcfea55ee293778ee22085d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cruz Prados, Alfredo",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 43,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47080",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía política - Cruz Prados, Alfredo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-32ea66d0a615db40.webp",
+            "cover_sha256": "57ef6068224d8ffafb111a1c8196b67df0833758cdcfea55ee293778ee22085d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 43,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47080",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía política - Cruz Prados, Alfredo.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-32ea66d0a615db40.webp",
+            "cover_sha256": "57ef6068224d8ffafb111a1c8196b67df0833758cdcfea55ee293778ee22085d",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 43,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/47080",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía política - Cruz Prados, Alfredo.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-32ea66d0a615db40.webp",
+          "cover_sha256": "57ef6068224d8ffafb111a1c8196b67df0833758cdcfea55ee293778ee22085d",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "223",
+        "imported_book_id": "222"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-0072a41519535ed6.webp",
+      "libro": {
+        "titulo": "Filosofía y palomitas",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Reina Garnacho, José Manuel",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Ediciones Alfar",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "17.99",
+        "sku": "PLG-BK-000107",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000107-c2d4399eb827.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52635",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-0072a41519535ed6",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "223",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-065d2f0d8545081a"
+        },
+        "author_bindings": [
+          {
+            "name": "Reina Garnacho, José Manuel",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Reina Garnacho, José Manuel",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+            "source_sha256": "fa080947867fe4cb122b4e8be7dd5aa5c2bb5884da7d722d6295159387abfa74",
+            "observed_text": "Ediciones Alfar,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 52635.",
+            "capture_sha256": "fa080947867fe4cb122b4e8be7dd5aa5c2bb5884da7d722d6295159387abfa74",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns52635.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+            "source_sha256": "fa080947867fe4cb122b4e8be7dd5aa5c2bb5884da7d722d6295159387abfa74",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 52635.",
+            "capture_sha256": "fa080947867fe4cb122b4e8be7dd5aa5c2bb5884da7d722d6295159387abfa74",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns52635.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB52635",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 44,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52635",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía y palomitas - Reina Garnacho, José Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0072a41519535ed6.webp",
+            "cover_sha256": "c2d4399eb82790446daf01b8dad531ef1c14795c104c2f1e1ccc7f8307b71722",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Reina Garnacho, José Manuel",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 44,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52635",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía y palomitas - Reina Garnacho, José Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0072a41519535ed6.webp",
+            "cover_sha256": "c2d4399eb82790446daf01b8dad531ef1c14795c104c2f1e1ccc7f8307b71722",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 44,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52635",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Filosofía y palomitas - Reina Garnacho, José Manuel.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0072a41519535ed6.webp",
+            "cover_sha256": "c2d4399eb82790446daf01b8dad531ef1c14795c104c2f1e1ccc7f8307b71722",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 44,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/52635",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Filosofía y palomitas - Reina Garnacho, José Manuel.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-0072a41519535ed6.webp",
+          "cover_sha256": "c2d4399eb82790446daf01b8dad531ef1c14795c104c2f1e1ccc7f8307b71722",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "224",
+        "imported_book_id": "223"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-4de59f9ea9c0380f.webp",
+      "libro": {
+        "titulo": "La filosofía de la tecnología",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Sarsanedas, Anna",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial UOC",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000239",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000239-2b125333d4e2.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57841",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-4de59f9ea9c0380f",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "224",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-819f8a68ec213bf2"
+        },
+        "author_bindings": [
+          {
+            "name": "Sarsanedas, Anna",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Sarsanedas, Anna",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+            "source_sha256": "422a465424c5d397be3ef4b250a8e196a5a239472a5f07a660e769cf1e9bdc55",
+            "observed_text": "Editorial UOC,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 57841.",
+            "capture_sha256": "422a465424c5d397be3ef4b250a8e196a5a239472a5f07a660e769cf1e9bdc55",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns57841.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+            "source_sha256": "422a465424c5d397be3ef4b250a8e196a5a239472a5f07a660e769cf1e9bdc55",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 57841.",
+            "capture_sha256": "422a465424c5d397be3ef4b250a8e196a5a239472a5f07a660e769cf1e9bdc55",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns57841.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB57841",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 47,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La filosofía de la tecnología - Sarsanedas, Anna.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4de59f9ea9c0380f.webp",
+            "cover_sha256": "2b125333d4e25cca05f066c0cd89faf9655861e63f22be3a6d3858d6b2efd747",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Sarsanedas, Anna",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 47,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La filosofía de la tecnología - Sarsanedas, Anna.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4de59f9ea9c0380f.webp",
+            "cover_sha256": "2b125333d4e25cca05f066c0cd89faf9655861e63f22be3a6d3858d6b2efd747",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 47,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57841",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/La filosofía de la tecnología - Sarsanedas, Anna.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4de59f9ea9c0380f.webp",
+            "cover_sha256": "2b125333d4e25cca05f066c0cd89faf9655861e63f22be3a6d3858d6b2efd747",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 47,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/57841",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/La filosofía de la tecnología - Sarsanedas, Anna.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-4de59f9ea9c0380f.webp",
+          "cover_sha256": "2b125333d4e25cca05f066c0cd89faf9655861e63f22be3a6d3858d6b2efd747",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "225",
+        "imported_book_id": "224"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-216488251242cf20.webp",
+      "libro": {
+        "titulo": "Las tareas de la filosofía",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Cuartango, Román",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Editorial de la Universidad de Cantabria",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "13.99",
+        "sku": "PLG-BK-000062",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000062-e88a08f37c2b.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53385",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-216488251242cf20",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "225",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-af66dfaa891bf0f7"
+        },
+        "author_bindings": [
+          {
+            "name": "Cuartango, Román",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Cuartango, Román",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+            "source_sha256": "eeb7e9efe6925e74afd9785327438c1e65a2ee3be34f20ab195125725c1cd9c2",
+            "observed_text": "Editorial de la Universidad de Cantabria,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 53385.",
+            "capture_sha256": "eeb7e9efe6925e74afd9785327438c1e65a2ee3be34f20ab195125725c1cd9c2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns53385.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+            "source_sha256": "eeb7e9efe6925e74afd9785327438c1e65a2ee3be34f20ab195125725c1cd9c2",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 53385.",
+            "capture_sha256": "eeb7e9efe6925e74afd9785327438c1e65a2ee3be34f20ab195125725c1cd9c2",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns53385.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB53385",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 48,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53385",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Las tareas de la filosofía - Cuartango, Román.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-216488251242cf20.webp",
+            "cover_sha256": "e88a08f37c2b1feabb1d19ffafad9ca71766b395345f21a01dd9c6d7a53c70fa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Cuartango, Román",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 48,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53385",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Las tareas de la filosofía - Cuartango, Román.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-216488251242cf20.webp",
+            "cover_sha256": "e88a08f37c2b1feabb1d19ffafad9ca71766b395345f21a01dd9c6d7a53c70fa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 48,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53385",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/Las tareas de la filosofía - Cuartango, Román.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-216488251242cf20.webp",
+            "cover_sha256": "e88a08f37c2b1feabb1d19ffafad9ca71766b395345f21a01dd9c6d7a53c70fa",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 48,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/53385",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/Las tareas de la filosofía - Cuartango, Román.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-216488251242cf20.webp",
+          "cover_sha256": "e88a08f37c2b1feabb1d19ffafad9ca71766b395345f21a01dd9c6d7a53c70fa",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "226",
+        "imported_book_id": "225"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-14fff49a1571571a.webp",
+      "libro": {
+        "titulo": "¿Qué es Filosofía?",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Betancourt Delgado, William",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Programa Editorial Universidad del Valle",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "19.99",
+        "sku": "PLG-BK-000221",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000221-05fdbc3220b2.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/221757",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-14fff49a1571571a",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "226",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-8258e5f1fb5e018a"
+        },
+        "author_bindings": [
+          {
+            "name": "Betancourt Delgado, William",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Betancourt Delgado, William",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+            "source_sha256": "526676eb87d9073c8d67bea0db91fa2b2f980e92ee8808bb9ca3123900885d99",
+            "observed_text": "Programa Editorial Universidad del Valle,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 221757.",
+            "capture_sha256": "526676eb87d9073c8d67bea0db91fa2b2f980e92ee8808bb9ca3123900885d99",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns221757.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+            "source_sha256": "526676eb87d9073c8d67bea0db91fa2b2f980e92ee8808bb9ca3123900885d99",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 221757.",
+            "capture_sha256": "526676eb87d9073c8d67bea0db91fa2b2f980e92ee8808bb9ca3123900885d99",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns221757.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB221757",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 49,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/221757",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es Filosofía - Betancourt Delgado, William.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-14fff49a1571571a.webp",
+            "cover_sha256": "05fdbc3220b2a44f3c986adff87f6a3f66603f355dc4946e386fe13088ed82f3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Betancourt Delgado, William",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 49,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/221757",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es Filosofía - Betancourt Delgado, William.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-14fff49a1571571a.webp",
+            "cover_sha256": "05fdbc3220b2a44f3c986adff87f6a3f66603f355dc4946e386fe13088ed82f3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 49,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/221757",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es Filosofía - Betancourt Delgado, William.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-14fff49a1571571a.webp",
+            "cover_sha256": "05fdbc3220b2a44f3c986adff87f6a3f66603f355dc4946e386fe13088ed82f3",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 49,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/221757",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/¿Qué es Filosofía - Betancourt Delgado, William.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-14fff49a1571571a.webp",
+          "cover_sha256": "05fdbc3220b2a44f3c986adff87f6a3f66603f355dc4946e386fe13088ed82f3",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "227",
+        "imported_book_id": "226"
+      }
+    },
+    {
+      "portadaArchivo": "portadas/ebook-697837145d693b86.webp",
+      "libro": {
+        "titulo": "¿Qué es la filosofía?",
+        "subtitulo": null,
+        "sinopsis": null,
+        "autores": [
+          {
+            "nombre": "Heidegger, Martin",
+            "orden": 1
+          }
+        ],
+        "categorias": [
+          "Filosofía"
+        ]
+      },
+      "edicion": {
+        "editorial": "Herder Editorial",
+        "isbn13": null,
+        "idioma": "es",
+        "formato": "EBOOK",
+        "paginas": null,
+        "anioPublicacion": null,
+        "fechaPublicacion": null,
+        "precio": "23.99",
+        "sku": "PLG-BK-000315",
+        "inventarioInicial": null,
+        "ebookFileFormat": null,
+        "audioDurationSeconds": null,
+        "narrators": [],
+        "portada": {
+          "url": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000315-f3e62e45c613.webp",
+          "licencia": null,
+          "fuente": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45723",
+          "atribucion": null
+        }
+      },
+      "observacionesStaging": [],
+      "preparacion": {
+        "schema": "pliego-digital-edition-preparation-v1",
+        "candidate_id": "ebook-697837145d693b86",
+        "publication_status": "PUBLISHED",
+        "work": {
+          "action": "CREATE_NEW_WORK",
+          "bookId": "227",
+          "status": "CREATED_VERIFIED",
+          "reason": "Título ausente en el catálogo completo; autoría literal conservada. Revalidar la instantánea antes de crear.",
+          "evidence": {
+            "catalog_search_scope": "ALL_STATES",
+            "snapshot_book_count": 63,
+            "rule": "Exact NFC/case/whitespace title, subtitle and ordered authors; only literal surname-comma-name inversion",
+            "same_title_book_ids": []
+          },
+          "proposal_key": "work-c76690671ed2e520"
+        },
+        "author_bindings": [
+          {
+            "name": "Heidegger, Martin",
+            "order": 1,
+            "authorId": null,
+            "action": "PROPOSE_AUTHOR_FROM_INVENTORY"
+          }
+        ],
+        "raw_authorship": "Heidegger, Martin",
+        "field_provenance": {
+          "edicion.editorial": {
+            "kind": "REAL_SOURCE",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+            "source_sha256": "5651d770bec6fca829a3b4cf18b5fadda0d8b46d6fd39bf03fc154984158f455",
+            "observed_text": "Herder Editorial,",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 45723.",
+            "capture_sha256": "5651d770bec6fca829a3b4cf18b5fadda0d8b46d6fd39bf03fc154984158f455",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45723.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+            "real_source_claim": true
+          },
+          "edicion.idioma": {
+            "kind": "VERIFIED",
+            "source_url": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+            "source_sha256": "5651d770bec6fca829a3b4cf18b5fadda0d8b46d6fd39bf03fc154984158f455",
+            "observed_text": "Idioma: Spanish",
+            "basis": "Registro universitario público de la edición electrónica; mismo identificador eLibro 45723.",
+            "capture_sha256": "5651d770bec6fca829a3b4cf18b5fadda0d8b46d6fd39bf03fc154984158f455",
+            "capture_path": "/tmp/pliego-digital-completion/literature/logs/uns45723.html",
+            "capture_format": "SOURCE_RESPONSE",
+            "source": "https://catalogo.uns.edu.ar/vufind/Record/elibro.ELB45723",
+            "real_source_claim": true
+          },
+          "edicion.precio": {
+            "kind": "SIMULATED/DEMO",
+            "source": "User-authorized academic demonstration pricing",
+            "currency": "USD",
+            "algorithm": "v1; UTF8(PLIEGO-DEMO-PRICE-v1,newline,format,newline,candidate_id); first 8 SHA256 hex digits mod 21/28; EBOOK 4.99+bucket, AUDIOBOOK 7.99+bucket USD",
+            "real_source_claim": false,
+            "commercial_price_claim": false,
+            "authorization": "docs/audit/digital-editions-preparation-2026-10-04/demo-price-authorization.json"
+          },
+          "edicion.isbn13": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.ebookFileFormat": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.audioDurationSeconds": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "edicion.narrators": {
+            "kind": "MISSING",
+            "source": null
+          },
+          "libro.titulo": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 51,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45723",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es la filosofía - Heidegger, Martin.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-697837145d693b86.webp",
+            "cover_sha256": "f3e62e45c613644ae0d63c03f6d94c9cf7a10e98b5d937ce75718064fe49f571",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.autores": {
+            "kind": "REAL_FROM_INVENTORY",
+            "raw_value": "Heidegger, Martin",
+            "transform": "Literal semicolon separation; matched catalogue spelling only for exact existing author/work identity",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 51,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45723",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es la filosofía - Heidegger, Martin.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-697837145d693b86.webp",
+            "cover_sha256": "f3e62e45c613644ae0d63c03f6d94c9cf7a10e98b5d937ce75718064fe49f571",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "libro.categorias": {
+            "kind": "REAL_FROM_INVENTORY",
+            "inventory": "covers/Ebook/inventario.csv",
+            "row": 51,
+            "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45723",
+            "source_access": "AUTH_REQUIRED",
+            "original_file": "Filosofía/originales/¿Qué es la filosofía - Heidegger, Martin.jpg",
+            "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-697837145d693b86.webp",
+            "cover_sha256": "f3e62e45c613644ae0d63c03f6d94c9cf7a10e98b5d937ce75718064fe49f571",
+            "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+          },
+          "edicion.formato": {
+            "kind": "BATCH_CLASSIFICATION",
+            "source": "covers/Ebook/inventario.csv"
+          }
+        },
+        "stock_action": "NONE_DIGITAL",
+        "sku_status": "PROPOSED_NOT_RESERVED",
+        "audio_metadata_type": "NOT_APPLICABLE",
+        "demo_public_label_required": true,
+        "demo_price_authorized": true,
+        "price_metadata_type": "SIMULATED/DEMO",
+        "metadata_blockers": [],
+        "metadata_evidence_sha256": "0cbdb29056a0ced423aebdea98ee936d519ec9280aedfce15979845acdbfadc3",
+        "source": {
+          "inventory": "covers/Ebook/inventario.csv",
+          "row": 51,
+          "source_url": "https://elibro.puce.elogim.com/es/lc/puce/titulos/45723",
+          "source_access": "AUTH_REQUIRED",
+          "original_file": "Filosofía/originales/¿Qué es la filosofía - Heidegger, Martin.jpg",
+          "cover_file": "covers/generated/digital-batch/pending-images/Ebook/Filosofia/portadas/ebook-697837145d693b86.webp",
+          "cover_sha256": "f3e62e45c613644ae0d63c03f6d94c9cf7a10e98b5d937ce75718064fe49f571",
+          "inventory_sha256": "b02724c5c80d6bacd9f5a461aa5beaad7f717b6cce51c86d75d9f0f4a984d76d"
+        },
+        "category_binding": {
+          "name": "Filosofía",
+          "categoryId": "36",
+          "action": "REUSE_EXISTING_CATEGORY"
+        },
+        "planned_staging": "Ebook/Filosofia/staging.json",
+        "snapshot_sha256": "9b28e3c55aa66efe6ff3232f879f3b266d29dd78e187c95673c8c38a59b4b4f7",
+        "readiness_errors": [],
+        "ready_for_future_publication": true,
+        "imported_edition_id": "228",
+        "imported_book_id": "227"
+      }
+    }
+  ]
+}

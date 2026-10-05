@@ -37,7 +37,7 @@ def fixture():
                 'es','PAPERBACK',100,NULL,7.25,NULL,NULL,NULL,NULL,v_edition);
             CALL pliego.sp_inventory_entry(v_admin,v_edition,2,'fixture',v_movement,v_before,v_after);
             CALL pliego.sp_customer_register('i10-conc-customer-{suffix}@pliego.local','fixture-hash',
-                'Cliente','I10',NULL,v_user,v_customer,v_state);
+                'Cliente','Prueba',NULL,v_user,v_customer,v_state);
             CALL pliego.sp_address_create(v_user,'Casa','Cliente I10','Calle I10',NULL,
                 'Quito','Pichincha','EC',NULL,NULL,'+59325550134',TRUE,v_address);
             CALL pliego.sp_cart_add_item(v_user,v_edition,1,v_cart,v_item,v_quantity);
@@ -84,7 +84,7 @@ def compete_call(winner_name, loser_name, sql, expected_sqlstate, label):
             _, loser_error = second.communicate(timeout=12)
             if first_process.returncode != 0:
                 raise AssertionError(f"winning {label} failed: {winner_error}")
-            if second.returncode == 0 or expected_sqlstate not in loser_error:
+            if (expected_sqlstate is None and second.returncode != 0) or (expected_sqlstate is not None and (second.returncode == 0 or expected_sqlstate not in loser_error)):
                 raise AssertionError(f"losing {label} did not receive {expected_sqlstate}: {loser_error}")
         finally:
             if second.poll() is None:
@@ -103,7 +103,7 @@ def main():
 
     transition = f"CALL pliego.sp_order_change_status({admin},{transition_order},'PREPARING',NULL,NULL,NULL)"
     compete_call("i10_transition_a", "i10_transition_b",
-                 transition, "P5002", "competing admin transition")
+                 transition, None, "idempotent admin shipment reconciliation")
     result = query(f"""
         SELECT p.estado,
             (SELECT count(*) FROM pliego.pedido_estado_historial h
@@ -112,7 +112,7 @@ def main():
             (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=p.pedido_id)
         FROM pliego.pedido p WHERE p.pedido_id={transition_order}
     """)
-    if result != "PREPARING|1|3":
+    if result != "CONFIRMED|0|2":
         raise AssertionError(f"competing transitions persisted invalid state/history: {result}")
 
     cancel = f"CALL pliego.sp_order_cancel({admin},{cancel_order},NULL,NULL,NULL,NULL,NULL)"

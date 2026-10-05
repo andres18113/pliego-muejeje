@@ -2,6 +2,7 @@ import { z } from "zod";
 import { stockUnavailabilityReasons } from "./availability";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
+import { editionFormatSchema } from "./editionFormats";
 
 const itemMutationSchema = z.object({
   cartItemId: z.string().min(1),
@@ -16,6 +17,7 @@ const activeCartSchema = z.object({
 });
 
 const moneySchema = z.string().regex(/^\d+\.\d{2}$/);
+const calendarDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 
 const cartDetailSchema = z.object({
   cartId: z.string().min(1).nullable(),
@@ -31,17 +33,34 @@ const cartDetailSchema = z.object({
     currentPrice: moneySchema,
     currentSubtotal: moneySchema,
     available: z.boolean(),
+    format: editionFormatSchema.optional(),
     unavailabilityReason: z.enum(stockUnavailabilityReasons).nullable().catch(null),
   })),
   totalCurrent: moneySchema,
+  /**
+   * Commercial breakdown computed by the Database API (V041): subtotal before tax, the IVA rate as a percentage
+   * ("15.00" is 15 %), the IVA amount, delivery when it applies, and the total. The cart never derives these:
+   * each row is shown only when the API sends it.
+   */
+  subtotal: moneySchema.nullish().catch(undefined),
+  taxRate: z.string().regex(/^\d+(\.\d+)?$/).nullish().catch(undefined),
+  taxAmount: moneySchema.nullish().catch(undefined),
+  shippingAmount: moneySchema.nullish().catch(undefined),
+  total: moneySchema.nullish().catch(undefined),
+  /**
+   * Home-delivery window computed by the Database API (V042) as calendar dates in Ecuador's time zone; absent
+   * when the cart has nothing to ship. The client only formats it.
+   */
+  estimatedDeliveryFrom: calendarDateSchema.nullish().catch(undefined),
+  estimatedDeliveryTo: calendarDateSchema.nullish().catch(undefined),
 });
 
 export type CartDetail = z.infer<typeof cartDetailSchema>;
 export type CartLine = CartDetail["items"][number];
 
-export async function addEditionToCart(editionId: string) {
+export async function addEditionToCart(editionId: string, quantity = 1) {
   const { data, error, response } = await apiClient.POST("/api/v1/cart/items", {
-    body: { editionId, quantity: 1 },
+    body: { editionId, quantity },
   });
 
   if (error) {

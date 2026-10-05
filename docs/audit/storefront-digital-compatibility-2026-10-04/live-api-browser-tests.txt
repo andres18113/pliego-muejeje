@@ -1,0 +1,11 @@
+npm notice run pliego-frontend@1.0.0 npx
+npm notice run 'playwright' test tests/e2e/digital-physical-contract.live.spec.ts --project=chromium --workers=1 --output=/tmp/pliego-storefront-final-live
+
+Running 2 tests using 1 worker
+
+(node:244162) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/digital-physical-contract.live.spec.ts:18:1 › live Home, navigation, physical/digital catalog, detail, search and offers (3.8s)
+  ✓  2 [chromium] › tests/e2e/digital-physical-contract.live.spec.ts:47:1 › live physical and digital purchase controls keep cart quantities and clean the fixture (8.4s)
+
+  2 passed (12.6s)

@@ -1,0 +1,22 @@
+E
+======================================================================
+ERROR: test_prepare_digital_editions (unittest.loader._FailedTest.test_prepare_digital_editions)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_prepare_digital_editions
+Traceback (most recent call last):
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/unittest/loader.py", line 403, in _find_test_path
+    module = self._get_module_from_name(name)
+  File "/home/andres18123/.local/share/uv/python/cpython-3.13.15-linux-x86_64-gnu/lib/python3.13/unittest/loader.py", line 346, in _get_module_from_name
+    __import__(name)
+    ~~~~~~~~~~^^^^^^
+  File "/home/andres18123/PLIEGO/scripts/test_prepare_digital_editions.py", line 10, in <module>
+    from prepare_digital_editions import (
+        resolve_work, prepare_record, propose_skus, readiness_errors, validate_snapshot,
+    )
+ModuleNotFoundError: No module named 'prepare_digital_editions'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)

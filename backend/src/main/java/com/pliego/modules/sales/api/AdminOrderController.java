@@ -89,7 +89,7 @@ public class AdminOrderController {
                         item.editionId(), item.sku(), item.isbn(), item.title(), item.authors(), item.publisher(),
                         item.format(), item.language(), money(item.unitPrice()), item.quantity(),
                         money(item.subtotal()))).toList(),
-                new Address(address.recipient(), address.line1(), address.line2(), address.city(),
+                address==null ? null : new Address(address.recipient(), address.line1(), address.line2(), address.city(),
                         address.province(), address.countryCode(), address.postalCode(), address.reference(),
                         address.phone()),
                 new Payment(payment.paymentId(), payment.method(), payment.state(), money(payment.amount()),
@@ -101,7 +101,8 @@ public class AdminOrderController {
                         movement.movementId(), movement.editionId(), movement.orderId(), movement.actorUserId(),
                         movement.type(), movement.quantity(), movement.stockBefore(), movement.stockAfter(),
                         movement.reason(), movement.eventAt())).toList(),post.purchaseState(),post.fulfillment(),post.shipment(),
-                PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions());
+                PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions(),
+                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()));
     }
 
     @PostMapping(path = "/{orderId}/transitions", consumes = MediaType.APPLICATION_JSON_VALUE)

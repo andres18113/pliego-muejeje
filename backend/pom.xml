@@ -24,6 +24,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>9.0.40</version>
+        </dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webmvc</artifactId>
         </dependency>
@@ -73,8 +78,17 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
     <build>
+        <resources>
+            <resource><directory>src/main/resources</directory></resource>
+            <resource><directory>../shared/validation</directory><targetPath>validation</targetPath>
+                <includes><include>person-rules.json</include></includes></resource>
+        </resources>
+        <testResources>
+            <testResource><directory>src/test/resources</directory></testResource>
+            <testResource><directory>../shared/validation</directory><targetPath>validation</targetPath>
+                <includes><include>person-cases.json</include></includes></testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

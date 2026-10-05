@@ -1,3 +1,4 @@
+import { stockReadOptions } from "@/features/catalog/stockStatusModel";
 import { useQueries } from "@tanstack/react-query";
 import type { PublicCategory } from "@/shared/api/catalog";
 import { searchPublicEditions } from "@/shared/api/catalog";
@@ -7,6 +8,7 @@ import { readCatalogCriteria } from "./catalogUrl";
 export function useCategoryPreviews(categories: PublicCategory[], enabled = true) {
   return useQueries({ queries: categories.map((category) => ({
     queryKey: ["public-catalog", "category-preview", category.slug],
+    ...stockReadOptions,
     queryFn: ({ signal }: { signal: AbortSignal }) => searchPublicEditions({ ...readCatalogCriteria(""), category: category.slug, pageSize: 4 }, signal),
     enabled,
     staleTime: 60_000,

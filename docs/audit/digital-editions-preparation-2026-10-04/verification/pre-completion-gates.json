@@ -1,0 +1,120 @@
+{
+  "status": "PASS_WITH_PENDING",
+  "suite": {
+    "tests": 83,
+    "exit": 0
+  },
+  "artifacts": {
+    "status": "PASS_WITH_PENDING",
+    "staging_records": 259,
+    "staging_groups": 18,
+    "image_paths_and_hashes_verified": 259,
+    "native_sku_proposals": 259,
+    "protected_active_registry_assignments": 56,
+    "historical_manifest_records_preserved": 55,
+    "framing_cases_separate_and_unchanged": 191,
+    "legacy_discovery_records": 56,
+    "pending_import_refused": true,
+    "prepared_price_missing_csv_rows": 259,
+    "audio_demo_csv_rows": 117,
+    "ready_for_future_publication": 0,
+    "previous_files_unchanged": 923,
+    "previous_files_total": 924,
+    "allowed_changed_paths": [
+      "covers/generated/digital-batch/batch-manifest.json"
+    ]
+  },
+  "v032_readonly": {
+    "staged_records_checked": 259,
+    "ebook_structurally_valid": 142,
+    "audiobook_structurally_valid": 117,
+    "invalid_format_metadata": 0,
+    "demo_values_used": true,
+    "audio_real_duration_and_narrators_unavailable": 117,
+    "all_checks_read_only": true
+  },
+  "catalog_preservation": {
+    "books": 63,
+    "editions": 65,
+    "publishers": 38,
+    "authors": 62,
+    "categories": 11,
+    "identity_and_bibliographic_values_unchanged": true,
+    "physical_inventory_projection_changes_observed": {
+      "65": {
+        "stock_actual": {
+          "before": 4,
+          "after": 3
+        }
+      },
+      "36": {
+        "stock_actual": {
+          "before": 4,
+          "after": 1
+        }
+      }
+    },
+    "all_preparation_queries_read_only": true
+  },
+  "sources": {
+    "queried": 259,
+    "authentication_required": 259,
+    "extra_source_available_user_answer": false
+  },
+  "sku_proposal_stability": {
+    "same_map_after_updates": true,
+    "count": 259
+  },
+  "generator_exit": {
+    "code": 2,
+    "expected_pending": true
+  },
+  "diff_check": {
+    "exit": 0
+  },
+  "operations": {
+    "database_writes": false,
+    "seed_cli": false,
+    "r2_upload": false,
+    "publish": false,
+    "commit": false,
+    "push": false,
+    "deploy": false
+  },
+  "independent_review": {
+    "critical": 0,
+    "important": 0,
+    "minor_fixed": "Work proposal key now includes subtitle; regression RED then GREEN; full suite 83/83",
+    "current_batch_consistent": true
+  },
+  "final_check": {
+    "sku_mapping_stable": true,
+    "new_work_keys_unique": 256,
+    "old_protected_files_unchanged_except_pending_batch_registration": true,
+    "staging_image_hashes_valid": true,
+    "all_links_valid": true,
+    "diff_check_exit": 0
+  },
+  "before_demo_v032_readonly": {
+    "staged_records_checked": 259,
+    "ebook_structurally_valid": 142,
+    "audiobook_structurally_valid": 0,
+    "audiobook_missing_real_duration_narrators": 117,
+    "demo_contract_positive_fixture_valid": true,
+    "live_digital_stock_rows": 0
+  },
+  "demo_authorization_update": {
+    "user_explicitly_accepted_inaccessible_source_limitation": true,
+    "candidates": 117,
+    "fields_per_candidate": 2,
+    "classification": "SIMULATED/DEMO",
+    "real_source_claim": false,
+    "determinism_verified": true,
+    "sku_map_preserved": 259,
+    "protected_files_preserved": 801,
+    "ebook_audio_fields_untouched": 142,
+    "publication_ready": 0,
+    "suite_tests": 83,
+    "suite_exit": 0
+  }
+}
