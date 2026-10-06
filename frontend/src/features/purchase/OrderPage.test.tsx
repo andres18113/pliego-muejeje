@@ -25,7 +25,7 @@ function order(overrides: Record<string, unknown> = {}) {
     updatedAt: "2026-09-27T21:50:06Z",
     items: [{
       orderItemId: "1", editionId: "42", sku: "PLG-1", isbn: "9780306406157", title: "Cien años de soledad",
-      authors: "Gabriel García Márquez", publisher: "Editorial Sur", format: "PAPERBACK", language: "es",
+      authors: "Gabriel García Márquez", publisher: "Editorial Sur", requiresPhysicalFulfillment: true, format: "PAPERBACK", language: "es",
       unitPrice: "18.50", quantity: 2, subtotal: "37.00",
     }],
     address: {

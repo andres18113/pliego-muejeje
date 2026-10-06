@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { CartPreviewProvider } from "@/features/purchase/CartPreview";
 import { Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
 import { CatalogHomePage } from "@/features/catalog/CatalogHomePage";
 import { SiteHeader } from "./navigation/SiteHeader";
@@ -219,7 +220,7 @@ function ApplicationLayout() {
     <>
       {showRoutePending && <div className="route-pending" role="status" aria-live="polite">{label}</div>}
       {purchaseFocused ? <PurchaseHeader /> : <SiteHeader />}
-      <Outlet />
+      <CartPreviewProvider><Outlet /></CartPreviewProvider>
       <ScrollRestoration />
     </>
   );

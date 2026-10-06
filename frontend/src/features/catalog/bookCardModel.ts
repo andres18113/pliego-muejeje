@@ -2,7 +2,8 @@ import type { MouseEventHandler } from "react";
 import type { To } from "react-router-dom";
 import type { EditionSummary } from "@/shared/api/catalog";
 import { resolveStockStatus, type StockAvailability } from "./stockStatusModel";
-import { formatEdition, formatLanguage, formatUsd } from "./formatters";
+import { formatAuthorNames, formatEdition, formatLanguage, formatUsd } from "./formatters";
+import type { CatalogMedia } from "./catalogMedia";
 import { toOfferViewModel } from "./offersViewModel";
 
 export type BookCardEditionSource = Pick<EditionSummary, "editionId" | "title" | "authors" | "publisher" | "format" | "language" | "price" | "available" | "coverUrl" | "coverLicense" | "coverAttribution" | "offer">;
@@ -37,14 +38,23 @@ export interface BookCardProps {
   navigationState?: { catalogReturn?: boolean; coverPreview?: CoverPreview };
   onNavigate?: MouseEventHandler<HTMLAnchorElement>;
   favorite: FavoriteControl;
-  cart: CartControl;
+  /** Omitted on the catalog's browse card: buying happens on the edition page. */
+  cart?: CartControl;
   feedback?: BookCardFeedback | null;
   headingOrder?: 3 | 4;
+  /** Shows the edition line (format and language) under the authors, where the media type is part of the reading. */
+  showEdition?: boolean;
+  /**
+   * The commerce presentation (catalog shelves): the cover stands on a stage in its medium's color and
+   * the identity, price and stock read on the page below it. Without it the card keeps the bounded
+   * scene used by Ofertas and the diagnostics.
+   */
+  media?: CatalogMedia;
   className?: string;
 }
 
 export function toBookCardData(edition: BookCardEditionSource): BookCardData {
-  return { id: edition.editionId, title: edition.title, authors: edition.authors, publisher: edition.publisher,
+  return { id: edition.editionId, title: edition.title, authors: formatAuthorNames(edition.authors), publisher: edition.publisher,
     editionLabel: `${formatEdition(edition.format)} · ${formatLanguage(edition.language)}`,
     priceLabel: formatUsd(edition.price), available: edition.available,
     ...(edition.offer ? { originalPriceLabel: formatUsd(edition.offer.originalPrice), discountLabel: formatUsd(edition.offer.savingsAmount), offer: toOfferViewModel(edition.offer) } : {}),

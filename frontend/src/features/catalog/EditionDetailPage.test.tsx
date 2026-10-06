@@ -1,7 +1,8 @@
+import { storefrontNavigationFixture } from "@/test/storefrontFixture";
 import { SiteHeader } from "@/app/navigation/SiteHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -9,6 +10,13 @@ import { SessionProvider } from "@/app/session";
 import { EditionDetailPage } from "./EditionDetailPage";
 
 function renderDetail(initialEntry = "/catalog/editions/42?from=%2Fcatalog%3Fq%3DCien", state: unknown = null) {
+  const fetchEdition = window.fetch;
+  vi.stubGlobal("fetch", (input: RequestInfo | URL, init?: RequestInit) => {
+    const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
+    return url.pathname.endsWith("/storefront/navigation")
+      ? Promise.resolve(new Response(JSON.stringify(storefrontNavigationFixture), { headers: { "Content-Type": "application/json" } }))
+      : fetchEdition(input, init);
+  });
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const initialUrl = new URL(initialEntry, "http://localhost");
   const router = createMemoryRouter(
@@ -107,7 +115,7 @@ describe("EditionDetailPage", () => {
     renderDetail();
 
     expectSharedChrome();
-    expect(screen.getByRole("status")).toHaveTextContent("Consultando la edición");
+    expect(within(screen.getByRole("main")).getByRole("status")).toHaveTextContent("Consultando la edición");
     releaseRequest?.(editionResponse());
     await screen.findByRole("heading", { name: "Cien años de soledad" });
 
@@ -138,7 +146,7 @@ describe("EditionDetailPage", () => {
     expect(await screen.findByRole("img", { name: "Portada de Cien años de soledad" }))
       .toHaveAttribute("src", coverUrl);
     expect(screen.getByRole("heading", { name: "Cien años de soledad" })).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("Consultando la edición");
+    expect(within(screen.getByRole("main")).getByRole("status")).toHaveTextContent("Consultando la edición");
     releaseRequest?.(editionResponse(true, { coverUrl }));
     await screen.findByRole("heading", { name: "Cien años de soledad" });
     expect(screen.getByRole("img", { name: "Portada de Cien años de soledad" }))
@@ -190,7 +198,7 @@ describe("EditionDetailPage", () => {
     renderDetail();
 
     await screen.findByRole("heading", { name: "Cien años de soledad" });
-    expect(screen.getByRole("status")).toHaveTextContent("no está disponible para agregar al carrito");
+    expect(within(screen.getByRole("main")).getByRole("status")).toHaveTextContent("no está disponible para agregar al carrito");
     expect(screen.queryByRole("button", { name: "Agregar al carrito" })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: "Iniciar sesión para agregar" })).not.toBeInTheDocument();
   });

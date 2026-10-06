@@ -135,11 +135,13 @@ class CartApiIntegrationTest {
 
         gateway.cart = new Cart("40", "ACTIVE", List.of(
                 new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 3,
-                        new BigDecimal("19.90"), new BigDecimal("59.70"), true, null, "PAPERBACK")),
+                        new BigDecimal("19.90"), new BigDecimal("59.70"), true, null, "PAPERBACK", true, true)),
                 new BigDecimal("59.70"));
         String body = mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.cartId").value("40"))
                 .andExpect(jsonPath("$.items[0].quantity").value(3))
+                .andExpect(jsonPath("$.items[0].requiresPhysicalFulfillment").value(true))
+                .andExpect(jsonPath("$.items[0].quantityEditable").value(true))
                 .andReturn().getResponse().getContentAsString();
         assertTrue(body.contains("\"cartId\":\"40\""));
         assertFalse(body.contains("\"cartId\":40"));
@@ -152,7 +154,7 @@ class CartApiIntegrationTest {
         var amounts = new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("19.90"), new BigDecimal("15.00"),
                 new BigDecimal("2.99"), new BigDecimal("0.00"), new BigDecimal("22.89"));
         var items = List.of(new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 1,
-                new BigDecimal("19.90"), new BigDecimal("19.90"), true, null, "PAPERBACK"));
+                new BigDecimal("19.90"), new BigDecimal("19.90"), true, null, "PAPERBACK", true, true));
         gateway.cart = new Cart("40", "ACTIVE", items, new BigDecimal("22.89"), amounts,
                 new com.pliego.modules.cart.application.CartModels.DeliveryWindow(
                         java.time.LocalDate.of(2026, 12, 31), java.time.LocalDate.of(2027, 1, 2)));
@@ -172,9 +174,9 @@ class CartApiIntegrationTest {
     void currentPricesSubtotalsAndTotalUseExactDecimalStringsAndUnavailableItemsRemainVisible() throws Exception {
         gateway.cart = new Cart("40", "ACTIVE", List.of(
                 new CartItem("100", "250", "1984", "George Orwell", "PLG-LIT-001", null, 2,
-                        new BigDecimal("19.90"), new BigDecimal("39.80"), true, null, "PAPERBACK"),
+                        new BigDecimal("19.90"), new BigDecimal("39.80"), true, null, "PAPERBACK", true, true),
                 new CartItem("101", "251", "Animal Farm", "George Orwell", "PLG-LIT-002", null, 1,
-                        new BigDecimal("12.35"), new BigDecimal("12.35"), false, "P2042", "PAPERBACK")),
+                        new BigDecimal("12.35"), new BigDecimal("12.35"), false, "P2042", "PAPERBACK", true, true)),
                 new BigDecimal("52.15"));
 
         String body = mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))

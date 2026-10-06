@@ -10,8 +10,8 @@ async function customerChrome(page: Page) {
     contentType: "application/json", body: JSON.stringify({ accessToken: "visual-fixture", tokenType: "Bearer", expiresInSeconds: 3600, user: { userId: "100", email: "visual@example.test", role: "CUSTOMER" } }),
   }));
   await page.route("**/api/v1/cart", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({
-    cartId: "visual-cart", state: "ACTIVE", totalCurrent: "2500.00",
-    items: [50, 50, 25].map((quantity, index) => ({ cartItemId: String(index + 1), editionId: String(index + 42), title: "Edición de prueba", authors: "Autor", sku: `VISUAL-${index}`, coverUrl: null, quantity, currentPrice: "20.00", currentSubtotal: `${quantity * 20}.00`, available: true, unavailabilityReason: null })),
+    cartId: "visual-cart", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 3, digitalItemCount: 0, totalCurrent: "2500.00",
+    items: [50, 50, 25].map((quantity, index) => ({ cartItemId: String(index + 1), editionId: String(index + 42), title: "Edición de prueba", authors: "Autor", sku: `VISUAL-${index}`, coverUrl: null, requiresPhysicalFulfillment: true, quantityEditable: true, quantity, currentPrice: "20.00", currentSubtotal: `${quantity * 20}.00`, available: true, unavailabilityReason: null })),
   }) }));
   await page.route("**/api/v1/me/favorites/status**", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(new URL(route.request().url()).searchParams.getAll("editionIds").map((editionId) => ({ editionId, favorite: false }))) }));
   await page.route("**/api/v1/catalog/**", (route) => {

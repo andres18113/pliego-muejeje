@@ -1,0 +1,53 @@
+/* 3 · Ofertas and Ayuda: two large fields of equal height. Text above, one drawn idea below. Decorative sizes follow
+   the card's own width, so they hold their proportions at any text size. */
+.destinations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; max-width: 1280px; margin: 0 auto; padding: 8px 0 104px; }
+.destinations[data-count="1"] { grid-template-columns: minmax(0, 720px); justify-content: center; }
+.card { position: relative; container-type: inline-size; display: grid; grid-template-rows: auto 1fr; min-height: 620px; overflow: hidden; border-radius: var(--home-panel-radius, 24px); }
+.copy { display: grid; justify-items: center; align-content: start; min-width: 0; padding: 56px 40px 0; text-align: center; }
+.eyebrow { margin: 0 0 14px; font-size: 1rem; font-weight: 600; line-height: 1.4; }
+.copy h2 { max-width: 16ch; margin: 0; font: 650 clamp(2rem, 3.1vw, 2.75rem)/1.06 var(--store-display); letter-spacing: -.04em; text-wrap: balance; overflow-wrap: anywhere; }
+.line { max-width: 34ch; margin: 16px 0 0; font-size: 1.125rem; line-height: 1.5; text-wrap: balance; }
+.action { display: inline-flex; align-items: center; gap: 10px; min-height: 48px; margin-top: 28px; padding: 10px 24px; border-radius: 8px; font-size: 1.0625rem; font-weight: 600; line-height: 1.3; text-decoration: none; overflow-wrap: anywhere; transition: background-color 150ms cubic-bezier(.32, .94, .6, 1); }
+.action > :global(.material-symbol) { transition: translate 150ms cubic-bezier(.32, .94, .6, 1); }
+.card:hover .action > :global(.material-symbol) { translate: 3px 0; }
+/* One link per card; its hit area is the whole card. */
+.action::after { content: ""; position: absolute; inset: 0; border-radius: var(--home-panel-radius, 24px); }
+.card .action.action:focus-visible { outline: none; }
+.card .action.action:focus-visible::after { outline: 3px solid var(--focus-ring); outline-offset: -7px; }
+/* The art keeps the room its drawing needs, so longer or larger text pushes the card taller instead of running under it. */
+/* Drawings never take the pointer: an oversized glyph's box reaches far beyond its ink and would cover the action. */
+.art { position: relative; min-height: 48cqw; margin-top: 24px; pointer-events: none; }
+.card[data-destination="HELP"] .art { min-height: min(48cqw, 290px); }
+
+/* Ofertas · the page's one ultramar field. A single percent sign, far too big for the card, says "prices" without one. */
+.card[data-destination="OFFERS"] { --focus-ring: var(--store-yellow); background: var(--store-blue); color: white; }
+.card[data-destination="OFFERS"] .eyebrow { color: var(--store-yellow); }
+.card[data-destination="OFFERS"] .line { color: #dedcf5; }
+.card[data-destination="OFFERS"] .action { background: var(--store-yellow); color: var(--store-ink); }
+.card[data-destination="OFFERS"] .action:hover { background: #fbefb5; color: var(--store-ink); }
+.card[data-destination="OFFERS"] ::selection { background: var(--store-yellow); color: var(--store-ink); }
+.percent { position: absolute; left: 50%; bottom: -17cqw; display: block; color: var(--store-yellow); font: 800 76cqw/.8 var(--store-display); letter-spacing: -.06em; translate: -50% 0; rotate: -8deg; user-select: none; transition: rotate 520ms cubic-bezier(.32, .94, .6, 1); }
+@media (hover: hover) { .card[data-destination="OFFERS"]:hover .percent { rotate: -3deg; } }
+
+/* Ayuda · a light lavender field in both schemes, so it carries its own ink. The character stands whole in the middle
+   of the lower half, close under the action, with a question on its shoulder. */
+.card[data-destination="HELP"] { --focus-ring: var(--store-blue); --pliego-text: var(--store-ink); background: var(--store-lavender); color: var(--store-ink); }
+.card[data-destination="HELP"] .eyebrow { color: var(--store-blue); }
+.card[data-destination="HELP"] .line { color: #45435c; }
+.card[data-destination="HELP"] .action { background: var(--store-blue); color: white; }
+.card[data-destination="HELP"] .action:hover { background: #1d2c86; color: white; }
+.card[data-destination="HELP"] .art { display: grid; place-items: center; padding: 0 0 min(7cqw, 44px); }
+.helper { position: relative; display: block; width: min(40cqw, 236px); translate: -8% 0; }
+.mascot.mascot { position: static; width: 100%; }
+/* The question is the character's own: a paper disc with an ultramar mark and a small tail toward it. */
+.question { position: absolute; left: 86%; bottom: 62%; display: grid; place-items: center; width: 42%; aspect-ratio: 1; border-radius: 50% 50% 50% 12%; background: #fbfaf6; color: var(--store-blue); font: 800 min(11cqw, 64px)/1 var(--store-display); user-select: none; }
+
+@media (max-width: 1199px) { .destinations { gap: 16px; } .card { min-height: 560px; } .copy { padding: 48px 28px 0; } }
+@media (max-width: 899px) {
+  /* One card per row; the fields get shorter because the art needs less room than two columns gave it. */
+  .destinations { grid-template-columns: minmax(0, 1fr); max-width: 640px; padding-bottom: 88px; }
+  .card { min-height: 0; }
+}
+@media (max-width: 679px) { .destinations { padding: 0 0 72px; } .card { border-radius: 20px; } .copy { padding: 40px 20px 0; } .line { font-size: 1.0625rem; } .action::after { border-radius: 20px; } }
+@media (prefers-reduced-motion: reduce) { .action, .action > :global(.material-symbol), .percent { transition: none; } }
+@media (forced-colors: active) { .card { border: 2px solid CanvasText; } }

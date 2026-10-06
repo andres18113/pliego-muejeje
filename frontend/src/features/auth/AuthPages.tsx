@@ -14,6 +14,7 @@ import { personNameSchema, optionalPhoneSchema } from "@/shared/validation/perso
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { stateAfterRegistration, stateAfterSignIn } from "@/features/favorites/favoriteIntent";
+import { AuthState, authFlowClasses as flow } from "./AuthFlow";
 
 const MAX_PASSWORD_UTF8_BYTES = 72;
 
@@ -58,6 +59,8 @@ export function SignInPage() {
   const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
   const from = safeCatalogReturnHref(intent);
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
+  // The server refuses the sign-in until the address is verified; the address typed goes on to the resend page.
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const {
     register: registerField,
@@ -84,6 +87,7 @@ export function SignInPage() {
   const submit = handleSubmit(async (values) => {
     setServerError(null);
     try {
+      setUnverifiedEmail(null);
       const response = await login(values);
       if (!response.user) throw new Error("La respuesta de inicio de sesión está incompleta.");
       session.establish({
@@ -102,6 +106,7 @@ export function SignInPage() {
         return Boolean(message);
       });
       if(fields.length) { setFocus(fields[0]); setFeedback({state:"error",message:"Revisa los campos señalados."}); return; }
+      setUnverifiedEmail(error instanceof ApiRequestError && error.code === "EMAIL_NOT_VERIFIED" ? values.email : null);
       setServerError(authFailure(error, "No se pudo iniciar sesión", "Comprueba tu conexión e inténtalo otra vez.", true));
       setFeedback({ state: "error", message: "No se pudo iniciar sesión." });
     }
@@ -127,7 +132,7 @@ export function SignInPage() {
   return (
     <>
 
-      <main className="auth-page page-frame" id="contenido-principal" tabIndex={-1}>
+      <main className={`auth-page page-frame ${flow.page}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
         <div className="auth-content" data-auth-state={activeFeedback.state}>
           <BackToCatalogLink to={from} />
           <h1>Iniciar sesión</h1>
@@ -135,9 +140,10 @@ export function SignInPage() {
 
           <form className="auth-form" onSubmit={onSubmit} onChangeCapture={() => clearErrorFeedback(feedback, serverError, setFeedback, setServerError)} noValidate aria-busy={isSubmitting || isValidating}>
             {serverError && (
-              <div className="auth-error" role="alert" tabIndex={-1} ref={errorRef}>
+              <div className="auth-error" role="alert" tabIndex={-1} ref={errorRef} data-tone={unverifiedEmail ? "info" : undefined}>
                 <h2>{serverError.title}</h2>
                 <p>{serverError.detail}</p>
+                {unverifiedEmail && <Link to="/reenviar-verificacion" state={{ email: unverifiedEmail }}>Solicitar enlace de verificación</Link>}
               </div>
             )}
 
@@ -186,8 +192,7 @@ export function SignInPage() {
             </Button>
           </form>
 
-          <p><Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link></p>
-          <p><Link to="/reenviar-verificacion">Reenviar verificación</Link></p>
+          <p className={flow.links}><Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link><Link to="/reenviar-verificacion">Reenviar verificación</Link></p>
 
           <p className="auth-switch">
             ¿Todavía no tienes una cuenta? <Link to={authLocation("/register", intent)} state={location.state}>Crear cuenta</Link>
@@ -229,7 +234,7 @@ export function RegisterPage() {
   });
 
   useEffect(() => {
-    document.title = registered ? "Cuenta creada · PLIEGO" : "Crear cuenta · PLIEGO";
+    document.title = registered ? "Revisa tu correo · PLIEGO" : "Crear cuenta · PLIEGO";
   }, [registered]);
 
   useEffect(() => {
@@ -287,15 +292,17 @@ export function RegisterPage() {
   return (
     <>
 
-      <main className="auth-page page-frame" id="contenido-principal" tabIndex={-1}>
+      <main className={`auth-page page-frame ${flow.page}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
         <div className="auth-content" data-auth-state={registered ? "success" : activeFeedback.state}>
           <BackToCatalogLink to={from} />
           {registered ? (
-            <section className="auth-success" aria-labelledby="register-success-heading">
-              <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Cuenta creada</h1>
-              <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong className="auth-success-email">{registeredEmail}</strong>. Verifica tu correo con el enlace enviado antes de iniciar sesión. Revisa también el correo no deseado.</p>
-              <p><Link to="/reenviar-verificacion" state={{ email: registeredEmail }}>Reenviar verificación</Link></p>
-              <ButtonLink variant="primary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink>
+            <section aria-labelledby="register-success-heading">
+              <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Revisa tu correo</h1>
+              <AuthState tone="waiting" scene title="Falta un paso: verificar tu correo"
+                actions={<><ButtonLink variant="secondary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink><Link to="/reenviar-verificacion" state={{ email: registeredEmail }}>Reenviar verificación</Link></>}>
+                <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong>{registeredEmail}</strong>. Verifica tu correo con el enlace enviado antes de iniciar sesión.</p>
+                <p>Si no lo ves, mira en la carpeta de correo no deseado.</p>
+              </AuthState>
             </section>
           ) : (
             <>

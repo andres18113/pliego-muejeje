@@ -1,7 +1,39 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { getPublicCatalogFilterOptions, getPublicEdition, parseTotalCount, searchPublicEditions, type EditionSearch } from "./catalog";
+import { getPublicCategories, getPublicCatalogFilterOptions, getPublicEdition, parseTotalCount, searchPublicEditions, type EditionSearch } from "./catalog";
+import openApi from "../../../openapi/openapi.json";
 
 afterEach(() => vi.unstubAllGlobals());
+
+describe("scoped catalog discovery", () => {
+  it.each(["GLOBAL", "PHYSICAL", "EBOOK", "AUDIOBOOK"] as const)("sends %s to both discovery reads and preserves the signal", async (scope) => {
+    const requests: Request[] = [];
+    const controller = new AbortController();
+    vi.stubGlobal("fetch", vi.fn(async (request: Request) => {
+      requests.push(request);
+      const body = new URL(request.url).pathname.endsWith("/categories")
+        ? { items: [] } : { languages: [], formats: [], minimumPrice: null, maximumPrice: null };
+      return new Response(JSON.stringify(body), { headers: { "Content-Type": "application/json" } });
+    }));
+    await getPublicCategories(controller.signal, scope);
+    await getPublicCatalogFilterOptions(controller.signal, scope);
+    expect(requests.map(request => new URL(request.url).searchParams.get("scope"))).toEqual([scope, scope]);
+    controller.abort();
+    expect(requests.every(request => request.signal.aborted)).toBe(true);
+  });
+
+  it("keeps signal-first callers compatible with GLOBAL discovery", async () => {
+    const requests: Request[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (request: Request) => {
+      requests.push(request);
+      const body = new URL(request.url).pathname.endsWith("/categories")
+        ? { items: [] } : { languages: [], formats: [], minimumPrice: null, maximumPrice: null };
+      return new Response(JSON.stringify(body), { headers: { "Content-Type": "application/json" } });
+    }));
+    await getPublicCategories();
+    await getPublicCatalogFilterOptions();
+    expect(requests.map(request => new URL(request.url).searchParams.get("scope"))).toEqual(["GLOBAL", "GLOBAL"]);
+  });
+});
 
 describe("edition availability boundary", () => {
   it.each([true, false])("preserves a confirmed availability of %s", async (available) => {
@@ -31,6 +63,28 @@ describe("parseTotalCount", () => {
 });
 
 describe("searchPublicEditions", () => {
+  it("keeps the frontend sort choices aligned with the OpenAPI pattern", () => {
+    const sorts = ["TITLE_ASC", "PRICE_ASC", "PRICE_DESC", "BEST_SELLING"] satisfies EditionSearch["sort"][];
+    const sortParameter = openApi.paths["/api/v1/catalog/editions"].get.parameters.find(parameter => parameter.name === "sort");
+    expect(sortParameter?.schema.pattern?.split("|")).toEqual(sorts);
+  });
+
+  it.each(["PHYSICAL", "EBOOK", "AUDIOBOOK"] as const)("sends BEST_SELLING unchanged with the %s media filter", async (productType) => {
+    const requests: Request[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (request: Request) => {
+      requests.push(request);
+      return new Response(JSON.stringify({ items: [], page: 0, pageSize: 20, totalCount: "0" }), {
+        status: 200, headers: { "Content-Type": "application/json" },
+      });
+    }));
+
+    await searchPublicEditions({ query: "", category: "", minPrice: "", maxPrice: "", language: "", format: "", productType, sort: "BEST_SELLING", page: 0, pageSize: 20 });
+
+    const query = new URL(requests[0].url).searchParams;
+    expect(query.get("sort")).toBe("BEST_SELLING");
+    expect(query.get("productType")).toBe(productType);
+  });
+
   it("keeps decimal money values as URL strings", async () => {
     const requests: Request[] = [];
     vi.stubGlobal("fetch", vi.fn(async (request: Request) => {

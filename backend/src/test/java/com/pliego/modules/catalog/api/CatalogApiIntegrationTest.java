@@ -331,6 +331,50 @@ class CatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.maximumPrice").value("38.00"));
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {"GLOBAL", "PHYSICAL", "EBOOK", "AUDIOBOOK"})
+    void discoveryPassesRequestedScopeToTheDatabaseGateway(String scope) throws Exception {
+        mvc.perform(get("/api/v1/catalog/categories").param("scope", scope))
+                .andExpect(status().isOk());
+        assertEquals(scope, gateway.lastCategoryScope);
+        mvc.perform(get("/api/v1/catalog/filter-options").param("scope", scope))
+                .andExpect(status().isOk());
+        assertEquals(scope, gateway.lastFacetScope);
+    }
+
+    @Test
+    void omittedDiscoveryScopeRemainsGlobal() throws Exception {
+        mvc.perform(get("/api/v1/catalog/categories")).andExpect(status().isOk());
+        mvc.perform(get("/api/v1/catalog/filter-options")).andExpect(status().isOk());
+        assertEquals("GLOBAL", gateway.lastCategoryScope);
+        assertEquals("GLOBAL", gateway.lastFacetScope);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"DIGITAL", "physical", "", " GLOBAL "})
+    void invalidDiscoveryScopeReturnsSpanishValidationWithoutDatabaseRead(String scope) throws Exception {
+        for (String endpoint : List.of("categories", "filter-options")) {
+            mvc.perform(get("/api/v1/catalog/" + endpoint).param("scope", scope))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.detail").value("Revisa los datos enviados e intenta nuevamente."));
+        }
+        assertNull(gateway.lastCategoryScope);
+        assertNull(gateway.lastFacetScope);
+    }
+
+    @Test
+    void openApiDocumentsDiscoveryScopeAndGlobalDefault() throws Exception {
+        for (String endpoint : List.of("categories", "filter-options")) {
+            mvc.perform(get("/v3/api-docs"))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.paths['/api/v1/catalog/" + endpoint + "'].get.parameters[0].name").value("scope"))
+                    .andExpect(jsonPath("$.paths['/api/v1/catalog/" + endpoint + "'].get.parameters[0].required").value(false))
+                    .andExpect(jsonPath("$.paths['/api/v1/catalog/" + endpoint + "'].get.parameters[0].schema.default").value("GLOBAL"))
+                    .andExpect(jsonPath("$.paths['/api/v1/catalog/" + endpoint + "'].get.parameters[0].schema.enum")
+                            .value(org.hamcrest.Matchers.contains("GLOBAL", "PHYSICAL", "EBOOK", "AUDIOBOOK")));
+        }
+    }
+
     @Test
     void generatedOpenApiIncludesPublicCategoryDiscoveryAndFilterConflict() throws Exception {
         mvc.perform(get("/v3/api-docs"))
@@ -472,6 +516,8 @@ class CatalogApiIntegrationTest {
         private final DatabaseExceptionTranslator translator;
         private CatalogQuery lastQuery;
         private long lastEditionId;
+        private String lastCategoryScope;
+        private String lastFacetScope;
         private CatalogSearchPage searchPage = new CatalogSearchPage(List.of(SUMMARY), 1);
         private List<PublicCatalogCategory> publicCategories = List.of();
         private PublicCatalogFilterOptions publicFilterOptions = new PublicCatalogFilterOptions(List.of(), List.of(), null, null);
@@ -485,6 +531,8 @@ class CatalogApiIntegrationTest {
         void reset() {
             lastQuery = null;
             lastEditionId = 0;
+            lastCategoryScope = null;
+            lastFacetScope = null;
             searchPage = new CatalogSearchPage(List.of(SUMMARY), 1);
             publicCategories = List.of();
             publicFilterOptions = new PublicCatalogFilterOptions(List.of(), List.of(), null, null);
@@ -500,13 +548,15 @@ class CatalogApiIntegrationTest {
         }
 
         @Override
-        public List<PublicCatalogCategory> findPublicCategories() {
+        public List<PublicCatalogCategory> findPublicCategories(String scope) {
+            lastCategoryScope = scope;
             if (failure != null) throw failure;
             return publicCategories;
         }
 
         @Override
-        public PublicCatalogFilterOptions findPublicFilterOptions() {
+        public PublicCatalogFilterOptions findPublicFilterOptions(String scope) {
+            lastFacetScope = scope;
             if (failure != null) throw failure;
             return publicFilterOptions;
         }

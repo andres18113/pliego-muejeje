@@ -78,7 +78,7 @@ public class CustomerOrderController {
                 order.createdAt().toString(), order.updatedAt().toString(),
                 order.items().stream().map(item -> new Item(item.orderItemId(), item.editionId(), item.sku(),
                         item.isbn(), item.title(), item.authors(), item.publisher(), item.format(),
-                        item.language(), money(item.unitPrice()), item.quantity(), money(item.subtotal()))).toList(),
+                        item.language(), money(item.unitPrice()), item.quantity(), money(item.subtotal()), item.requiresPhysicalFulfillment())).toList(),
                 address==null ? null : new Address(address.recipient(), address.line1(), address.line2(), address.city(),
                         address.province(), address.countryCode(), address.postalCode(), address.reference(),
                         address.phone()),

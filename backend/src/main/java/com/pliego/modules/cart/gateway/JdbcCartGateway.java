@@ -29,7 +29,7 @@ import tools.jackson.databind.ObjectMapper;
 @Repository
 public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
 
-    private static final String CART_GET = "SELECT q.cart_id,q.state,q.items::text AS items,q.total_current,q.subtotal,q.tax_rate,q.tax_amount,"
+    private static final String CART_GET = "SELECT q.cart_id,q.state,pliego.fn_purchase_item_capabilities(q.items)::text AS items,q.total_current,q.subtotal,q.tax_rate,q.tax_amount,"
             + "q.shipping_amount,q.total,w.estimated_from,w.estimated_to,r.requires_physical_fulfillment,r.physical_item_count,r.digital_item_count "
             + "FROM pliego.fn_cart_quote(?) q CROSS JOIN pliego.fn_cart_delivery_window(?) w CROSS JOIN pliego.fn_cart_checkout_requirements(?) r";
     private static final String CART_ADD_ITEM = "CALL pliego.sp_cart_add_item(?,?,?,?,?,?)";
@@ -129,7 +129,8 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
                     text(item, "authors"), text(item, "sku"), nullableText(item, "coverUrl"),
                     item.path("quantity").intValue(), decimal(item, "currentPrice"),
                     decimal(item, "currentSubtotal"), item.path("available").booleanValue(),
-                    nullableText(item, "unavailabilityReason"), text(item, "format")));
+                    nullableText(item, "unavailabilityReason"), text(item, "format"), item.path("requiresPhysicalFulfillment").booleanValue(),
+                    item.path("quantityEditable").booleanValue()));
         }
         return List.copyOf(result);
     }

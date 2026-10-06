@@ -28,7 +28,7 @@ test("real purchase ownership supports list, media filters, detail, purchase and
   await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
   await expect(page).toHaveURL(/\/biblioteca$/);
   await expect(page.getByRole("heading", { name: "Mi biblioteca", exact: true })).toBeVisible();
-  await page.getByLabel("Mostrar").selectOption("EBOOK");
+  await page.getByRole("group", { name: "Mostrar" }).getByRole("button", { name: "eBooks" }).click();
   await expect(page.locator(`a[href="/biblioteca/${fixture.ebookOwnedItemId}"]`)).toBeVisible();
   await expect(page.locator(`a[href="/biblioteca/${fixture.audioOwnedItemId}"]`)).toHaveCount(0);
   await page.locator(`a[href="/biblioteca/${fixture.ebookOwnedItemId}"]`).click();
@@ -36,8 +36,8 @@ test("real purchase ownership supports list, media filters, detail, purchase and
   await expect(page.getByText("EPUB", { exact: true })).toBeVisible();
   await expect(page.getByRole("region", { name: "Información de compra" })).toContainText(fixture.mixedOrderId);
   await expect(page.getByRole("link", { name: /^(Leer|Escuchar|Continuar leyendo|Continuar escuchando|Descargar)$/ })).toHaveCount(0);
-  await page.getByRole("link", { name: "Mi biblioteca", exact: true }).last().click();
-  await page.getByLabel("Mostrar").selectOption("AUDIOBOOK");
+  await page.getByRole("link", { name: "Volver a Mi biblioteca" }).click();
+  await page.getByRole("group", { name: "Mostrar" }).getByRole("button", { name: "Audiolibros" }).click();
   await page.locator(`a[href="/biblioteca/${fixture.audioOwnedItemId}"]`).click();
   await expect(page.getByText("Voz Biblioteca", { exact: true })).toBeVisible();
   await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();

@@ -13,10 +13,9 @@ import { addEditionToCart, removeCartItem, updateCartItemQuantity, type CartLine
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { addCustomerFavorite } from "@/shared/api/favorites";
 import { QuantityPicker } from "@/shared/ui/QuantityPicker";
-import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { UndoToast, type UndoToastMessage } from "@/shared/ui/UndoToast";
 import { SavedForLater } from "./SavedForLater";
-import { useCustomerCart } from "./cartQuery";
+import { cartQuantityChoices, useCustomerCart } from "./cartQuery";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import { ivaLabel, unitsLabel } from "./purchaseText";
 import { PurchaseFlow, PurchaseLayout, PurchaseSummary } from "./PurchaseFlow";
@@ -32,8 +31,6 @@ type CartCommand =
 type Departed = { editionId: string; title: string; quantity: number };
 type CartToast = Omit<UndoToastMessage, "action"> & { departed?: Departed; retry?: boolean };
 
-/** The compact selector offers 1–10; the server still decides whether the stock covers the choice. */
-const QUANTITY_CHOICES = 10;
 
 export function CartPage() {
   return (
@@ -256,11 +253,7 @@ function CartLineItem({ line, busy, locked, feedback, onQuantity, onSave, onRemo
   const stock = resolveStockStatus(line);
   const stockId = `cart-line-stock-${line.cartItemId}`;
   const statusId = `cart-line-status-${line.cartItemId}`;
-  const digital = isDigitalFormat(line.format);
-  // When the server reports the quantity cannot grow, the selector stops at the current one.
-  const highest = digital ? 1 : stock.canIncreaseQuantity ? QUANTITY_CHOICES : Math.min(line.quantity, QUANTITY_CHOICES);
-  const choices = Array.from({ length: highest }, (_, index) => index + 1);
-  if (!choices.includes(line.quantity)) choices.push(line.quantity);
+  const choices = cartQuantityChoices(line);
 
   return (
     <article className={cart.item} data-cart-line data-unavailable={stock.canAddToCart ? undefined : ""} aria-busy={busy}>
@@ -275,7 +268,7 @@ function CartLineItem({ line, busy, locked, feedback, onQuantity, onSave, onRemo
       {/* Quantity beside what it costs; the amount drops below when the line is too narrow for both. */}
       <div className={cart.buy}>
         <div className={cart.quantity}>
-          {stock.canChangeQuantity && (!digital || line.quantity !== 1) ? (
+          {stock.canChangeQuantity && line.quantityEditable ? (
             <QuantityPicker
               label={`Cantidad de ${line.title}`}
               describedBy={stock.canAddToCart ? statusId : `${stockId} ${statusId}`}

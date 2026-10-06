@@ -1,7 +1,7 @@
 import { SiteHeader } from "@/app/navigation/SiteHeader";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -12,13 +12,14 @@ function renderCatalog(initialEntry = "/catalog") {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const router = createMemoryRouter([{ path: "/catalog", element: <><SiteHeader /><CatalogPage /></> }], { initialEntries: [initialEntry] });
 
-  return render(
+  const rendered = render(
     <PliegoThemeProvider><QueryClientProvider client={queryClient}>
       <SessionProvider restoreOnMount={false}>
         <RouterProvider router={router} />
       </SessionProvider>
     </QueryClientProvider></PliegoThemeProvider>,
   );
+  return { ...rendered, router, queryClient };
 }
 
 function jsonResponse(payload: unknown, status = 200) {
@@ -36,6 +37,51 @@ afterEach(() => {
 });
 
 describe("CatalogPage", () => {
+  it("isolates scope metadata through all four scopes and browser history", async () => {
+    const requests: URL[] = [];
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
+      const url = new URL(requestUrl(input));
+      requests.push(url);
+      const scope = url.searchParams.get("scope") || "GLOBAL";
+      if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [{ slug: scope.toLowerCase(), name: `Tema ${scope}`, parentSlug: null }] });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: ["es"], formats: scope === "PHYSICAL" ? ["HARDCOVER", "PAPERBACK"] : scope === "GLOBAL" ? ["PAPERBACK", "EBOOK", "AUDIOBOOK"] : [scope], minimumPrice: "10.00", maximumPrice: "40.00" });
+      if (url.pathname.endsWith("/catalog/editions")) return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
+      return jsonResponse({}, 404);
+    }));
+    const { router, queryClient } = renderCatalog();
+    for (const scope of ["GLOBAL", "PHYSICAL", "EBOOK", "AUDIOBOOK"] as const) {
+      if (scope !== "GLOBAL") await act(() => router.navigate(`/catalog?productType=${scope}&sort=BEST_SELLING`));
+      await waitFor(() => {
+        for (const endpoint of ["categories", "filter-options"]) {
+          expect(requests.some(url => url.pathname.endsWith(`/catalog/${endpoint}`) && url.searchParams.get("scope") === scope)).toBe(true);
+          expect(queryClient.getQueryData(["public-catalog", endpoint, scope])).toBeDefined();
+        }
+      });
+      expect(queryClient.getQueryData<{ items: { slug: string }[] }>(["public-catalog", "categories", scope])?.items[0].slug).toBe(scope.toLowerCase());
+    }
+    await act(() => router.navigate(-1));
+    await waitFor(() => expect(router.state.location.search).toBe("?productType=EBOOK&sort=BEST_SELLING"));
+    expect(queryClient.getQueryData<{ formats: string[] }>(["public-catalog", "filter-options", "EBOOK"])?.formats).toEqual(["EBOOK"]);
+  });
+  it("preserves selected absent criteria when switching scope to an empty collection", async () => {
+    vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
+      const url = new URL(requestUrl(input));
+      if (url.pathname.endsWith("/catalog/categories")) return jsonResponse({ items: [] });
+      if (url.pathname.endsWith("/catalog/filter-options")) return jsonResponse({ languages: [], formats: [], minimumPrice: null, maximumPrice: null });
+      if (url.pathname.endsWith("/catalog/editions")) return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
+      return jsonResponse({}, 404);
+    }));
+    const destination = "/catalog?productType=PHYSICAL&category=tema-antiguo&language=en&format=HARDCOVER&minPrice=10&maxPrice=40&sort=BEST_SELLING";
+    const { router } = renderCatalog(destination);
+    await screen.findByRole("link", { name: "Limpiar filtros" });
+    await act(() => router.navigate(destination.replace("PHYSICAL", "EBOOK")));
+    await userEvent.click(await screen.findByRole("button", { name: /^Filtros,/ }));
+    const panel = await screen.findByRole("dialog", { name: "Filtros" });
+    expect(within(panel).getByRole("radio", { name: "tema-antiguo" })).toBeChecked();
+    expect(within(panel).getByRole("radio", { name: "Tapa dura" })).toBeChecked();
+    expect(within(panel).getByRole("radio", { name: "Inglés" })).toBeChecked();
+    expect(Object.fromEntries(new URLSearchParams(router.state.location.search))).toMatchObject({ productType: "EBOOK", category: "tema-antiguo", language: "en", format: "HARDCOVER", minPrice: "10", maxPrice: "40", sort: "BEST_SELLING" });
+  });
   it("normalizes malformed URL criteria before making the catalog request", async () => {
     let requestedUrl: URL | undefined;
     vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
@@ -220,17 +266,17 @@ describe("CatalogPage", () => {
   });
 });
 
-it("shows media scope as a removable criterion instead of retaining an invisible filter", async () => {
+it("keeps the collection and bestseller order when clearing filters in an empty scoped catalog", async () => {
   const requested: string[] = [];
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL) => {
     const url = new URL(requestUrl(input));
-    if (url.pathname.endsWith("/categories")) return jsonResponse([]);
+    if (url.pathname.endsWith("/categories")) return jsonResponse({ items: [] });
     if (url.pathname.endsWith("/filter-options")) return jsonResponse({ languages: [], formats: [], minimumPrice: null, maximumPrice: null });
     requested.push(url.search);
     return jsonResponse({ items: [], page: 0, pageSize: 20, totalCount: "0" });
   }));
   const user = userEvent.setup();
-  renderCatalog("/catalog?productType=EBOOK&sort=BEST_SELLING");
-  await user.click(await screen.findByRole("button", { name: "Quitar eBooks" }));
-  await waitFor(() => expect(requested).toContain("?sort=BEST_SELLING&page=0&pageSize=20"));
+  renderCatalog("/catalog?productType=EBOOK&category=tema-antiguo&language=en&sort=BEST_SELLING");
+  await user.click(await screen.findByRole("link", { name: "Limpiar filtros" }));
+  await waitFor(() => expect(requested).toContain("?productType=EBOOK&sort=BEST_SELLING&page=0&pageSize=20"));
 });

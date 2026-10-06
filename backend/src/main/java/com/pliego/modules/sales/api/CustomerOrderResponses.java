@@ -24,9 +24,11 @@ public final class CustomerOrderResponses {
             PostPurchaseResponses.Invoice invoice, List<PostPurchaseResponses.CreditNote> creditNotes,
             PostPurchaseModels.Actions availableActions, String taxRate, String taxAmount, String shippingAmount) { }
 
+    @Schema(name="CustomerOrderItem")
     public record Item(String orderItemId, String editionId, String sku, String isbn,
             String title, String authors, String publisher, String format, String language,
-            String unitPrice, int quantity, String subtotal) { }
+            String unitPrice, int quantity, String subtotal,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED) boolean requiresPhysicalFulfillment) { }
 
     public record Address(String recipient, String line1, String line2, String city,
             String province, String countryCode, String postalCode, String reference, String phone) { }

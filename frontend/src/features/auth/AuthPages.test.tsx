@@ -62,6 +62,31 @@ afterEach(() => {
 });
 
 describe("authentication forms", () => {
+  it("turns an unverified sign-in into direction, carrying the address to the resend page", async () => {
+    mockLogin.mockRejectedValueOnce(new ApiRequestError(403, "EMAIL_NOT_VERIFIED", "Verifica tu correo", "Abre el enlace que enviamos antes de iniciar sesión."));
+    renderAuth("/sign-in");
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("Correo electrónico"), "ana@example.com");
+    await user.type(screen.getByLabelText("Contraseña"), "segura123");
+    await user.click(screen.getByRole("button", { name: "Iniciar sesión" }));
+    const notice = await screen.findByRole("alert");
+    expect(notice).toHaveTextContent("Verifica tu correo");
+    expect(notice).toHaveAttribute("data-tone", "info");
+    expect(within(notice).getByRole("link", { name: "Solicitar enlace de verificación" })).toHaveAttribute("href", "/reenviar-verificacion");
+  });
+
+  it("does not offer a verification link for wrong credentials", async () => {
+    mockLogin.mockRejectedValueOnce(new ApiRequestError(401, "AUTH_INVALID_CREDENTIALS", "No autorizado", "Credenciales inválidas."));
+    renderAuth("/sign-in");
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("Correo electrónico"), "ana@example.com");
+    await user.type(screen.getByLabelText("Contraseña"), "segura123");
+    await user.click(screen.getByRole("button", { name: "Iniciar sesión" }));
+    const notice = await screen.findByRole("alert");
+    expect(notice).not.toHaveAttribute("data-tone");
+    expect(within(notice).queryByRole("link")).not.toBeInTheDocument();
+  });
+
   it("offers password recovery and verification resend without an account-existence claim", () => {
     renderAuth("/sign-in");
     expect(screen.getByRole("link", { name: "¿Olvidaste tu contraseña?" })).toHaveAttribute("href", "/recuperar-contrasena");
@@ -74,7 +99,7 @@ describe("authentication forms", () => {
     const user = userEvent.setup();
     await completeRegistration(user);
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
-    expect(await screen.findByRole("heading", { name: "Cuenta creada" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("Verifica tu correo");
     expect(screen.getByRole("link", { name: "Reenviar verificación" })).toHaveAttribute("href", "/reenviar-verificacion");
   });
@@ -125,7 +150,7 @@ describe("authentication forms", () => {
       password: "lecturaSegura123",
       phone: undefined,
     }));
-    expect(await screen.findByRole("heading", { name: "Cuenta creada" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
   });
 
   it("accepts names exactly 120 characters long", async () => {
@@ -203,7 +228,7 @@ describe("authentication forms", () => {
       password: "lecturaSegura123",
       phone: "+59325550134",
     }));
-    expect(await screen.findByRole("heading", { name: "Cuenta creada" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
     expect(screen.getByRole("status")).toHaveTextContent("La cuenta se creó correctamente");
 
     await user.click(within(screen.getByRole("main")).getByRole("link", { name: "Iniciar sesión" }));

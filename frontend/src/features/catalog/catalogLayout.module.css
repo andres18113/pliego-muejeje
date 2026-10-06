@@ -24,3 +24,18 @@
 @media (min-width: 920px) { .storeGrid.storeGrid { --shelf-space: 28px; grid-template-columns: repeat(4, minmax(0, 1fr)); column-gap: 24px; } }
 @media (min-width: 1200px) { .storeGrid.storeGrid { --shelf-space: 32px; grid-template-columns: repeat(5, minmax(0, 1fr)); } }
 @media (max-width: 359px) { .storeGrid.storeGrid { column-gap: 12px; } }
+
+/* Offers: the same shelf with one card fewer per row from tablets up, because each card also carries the
+   saving, the offer message and when it ends: 2 on phones, 3 from 680px, 4 from 1080px. */
+@media (min-width: 600px) { .offerGrid.offerGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 680px) { .offerGrid.offerGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .offerGrid.offerGrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* Commerce shelf (the catalog): fewer, larger books, so covers and titles can be compared at a glance.
+   2 on phones, 3 from 600px — and still 3 beside the persistent filters on desktop, where each card is
+   ≈220px at 1024px and ≈320px at 1440px. Never five compressed cards. */
+.storeGrid.commerceGrid { --shelf-space: 32px; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+@media (min-width: 600px) { .storeGrid.commerceGrid { --shelf-space: 40px; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 20px; } }
+@media (min-width: 920px) { .storeGrid.commerceGrid { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 24px; } }
+@media (min-width: 1200px) { .storeGrid.commerceGrid { --shelf-space: 48px; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 32px; } }
+@media (max-width: 359px) { .storeGrid.commerceGrid { column-gap: 12px; } }

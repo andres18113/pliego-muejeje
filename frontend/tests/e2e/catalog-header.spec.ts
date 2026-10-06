@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
 const customerEmail = "ana@example.com";
 const publicCategories = [
@@ -17,13 +18,16 @@ const publicCategories = [
 ];
 
 async function mockPublicCatalog(page: import("@playwright/test").Page, categories = publicCategories) {
+  await page.route("**/api/v1/storefront/navigation", route => route.fulfill({ contentType: "application/json", body: JSON.stringify(storefrontNavigationFixture) }));
   await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
-  await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
+  await page.route("**/api/v1/help/categories", route => route.fulfill({ contentType: "application/json", body: JSON.stringify({ items: [] }) }));
+  await page.route("**/api/v1/help/articles**", route => route.fulfill({ contentType: "application/json", body: JSON.stringify({ items: [], page: 0, pageSize: 20, totalCount: "0" }) }));
+  await page.route("**/api/v1/catalog/categories**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ items: categories }),
   }));
-  await page.route("**/api/v1/catalog/filter-options", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/filter-options**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ languages: ["es"], minimumPrice: null, maximumPrice: null }),
@@ -79,6 +83,9 @@ async function mockCustomerLogin(page: import("@playwright/test").Page) {
     body: JSON.stringify({
       cartId: "200",
       state: "ACTIVE",
+      requiresPhysicalFulfillment: true,
+      physicalItemCount: 1,
+      digitalItemCount: 0,
       items: [{
         cartItemId: "300",
         editionId: "42",
@@ -90,6 +97,8 @@ async function mockCustomerLogin(page: import("@playwright/test").Page) {
         currentPrice: "20.00",
         currentSubtotal: "60.00",
         available: true,
+        requiresPhysicalFulfillment: true,
+        quantityEditable: true,
         unavailabilityReason: null,
       }],
       totalCurrent: "60.00",
@@ -123,7 +132,7 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await page.emulateMedia({ colorScheme }); await page.setViewportSize({ width, height: 900 });
     await mockPublicCatalog(page); await page.goto("/");
     const header = page.getByTestId("site-header"); await expect(header).toBeVisible();
-    if (width >= 960) await expect(header.getByRole("link", { name: "Libros", exact: true })).toHaveAttribute("href", "/catalog");
+    if (width >= 960) await expect(header.getByRole("link", { name: "Libros", exact: true })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
     else await expect(header.getByRole("button", { name: "Abrir navegación" })).toBeVisible();
     await expect(header.getByRole("button", { name: "Categorías" })).toHaveCount(0);
     const initial = (await header.boundingBox())!;
@@ -148,7 +157,7 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
       await header.getByRole("button", { name: "Abrir navegación" }).click();
       await page.getByRole("dialog", { name: "Navegación", exact: true }).getByRole("link", { name: "Libros", exact: true }).click();
     } else await header.getByRole("link", { name: "Libros", exact: true }).click();
-    await expect(page).toHaveURL(/\/catalog$/);
+    await expect(page).toHaveURL("/catalog?productType=PHYSICAL");
     expect(await header.evaluate((node) => node === (window as unknown as { headerNode: Element }).headerNode)).toBe(true);
     for (const route of ["/sign-in", "/register", "/account", "/cart", "/checkout", "/orders", "/favorites", "/missing"]) {
       await page.goto(route);
@@ -185,34 +194,43 @@ test("global suggestions carry the unfiltered search destination", async ({ page
   expect(new URL(page.url()).searchParams.get("from")).toBe("/catalog?que=Cien+a%C3%B1os");
 });
 
-test("desktop navigation is centered and contains only the four primary destinations", async ({ page }) => {
+test("desktop navigation is centered and contains the server destinations including Help", async ({ page }) => {
   await mockPublicCatalog(page);
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   const header = page.getByTestId("site-header");
   const navigation = header.getByRole("navigation", { name: "Navegación principal" });
-  await expect(navigation.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas"]);
+  await expect(navigation.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas", "Ayuda"]);
   await expect(navigation.getByRole("button", { name: "Literatura" })).toHaveCount(0);
+  await expect(navigation.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda");
   const box = (await navigation.boundingBox())!;
   expect(Math.abs(box.x + box.width / 2 - 720)).toBeLessThan(2);
   await navigation.getByRole("link", { name: "Ofertas" }).click();
   await expect(page).toHaveURL(/\/ofertas$/);
   await expect(page.getByText("No hay ofertas disponibles por ahora.")).toBeVisible();
+  await navigation.getByRole("link", { name: "Ayuda" }).click();
+  await expect(page).toHaveURL(/\/ayuda$/);
+  await expect(page.getByRole("heading", { name: "Ayuda", exact: true })).toBeVisible();
 });
 
-test("compact navigation keeps the same four destinations with keyboard recovery", async ({ page }) => {
+test("compact navigation keeps the same server destinations with keyboard recovery", async ({ page }) => {
   await mockPublicCatalog(page);
   await page.setViewportSize({ width: 320, height: 844 });
   await page.goto("/");
   const trigger = page.getByRole("button", { name: "Abrir navegación" });
   await trigger.click();
   const menu = page.getByRole("dialog", { name: "Navegación", exact: true });
-  await expect(menu.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas"]);
+  await expect(menu.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas", "Ayuda"]);
+  await expect(menu.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda");
   await page.keyboard.press("Escape");
   await expect(trigger).toBeFocused();
   await trigger.click();
   await menu.getByRole("link", { name: "eBooks" }).click();
-  await expect(page).toHaveURL(/format=EBOOK/);
+  await expect(page).toHaveURL(/productType=EBOOK/);
   await expect(menu).toHaveCount(0);
   await expect(page.getByTestId("site-header").getByRole("button", { name: "Buscar libros en el catálogo" })).toBeVisible();
+  await trigger.click();
+  await menu.getByRole("link", { name: "Ayuda" }).click();
+  await expect(page).toHaveURL(/\/ayuda$/);
+  await expect(page.getByRole("heading", { name: "Ayuda", exact: true })).toBeVisible();
 });

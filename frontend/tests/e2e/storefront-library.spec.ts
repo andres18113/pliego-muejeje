@@ -15,7 +15,7 @@ async function install(page: Page, mixed = false) {
     const json = (body: unknown, status = 200) => route.fulfill({ status, json: body });
     if (path === "/api/v1/auth/refresh") return json({ accessToken: "test-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "2", email: "ana@example.com", role: "CUSTOMER" } });
     if (path === "/api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
-    if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: mixed, physicalItemCount: mixed ? 1 : 0, digitalItemCount: 1, totalCurrent: mixed ? "37.00" : "18.50", items: formats.map((format, index) => ({ cartItemId: String(index + 1), editionId: String(42 + index), title: format === "EBOOK" ? "Libro propio" : "Libro físico", authors: "Autora", sku: "TEST", coverUrl: null, quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, format, unavailabilityReason: null })) });
+    if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: mixed, physicalItemCount: mixed ? 1 : 0, digitalItemCount: 1, totalCurrent: mixed ? "37.00" : "18.50", items: formats.map((format, index) => ({ cartItemId: String(index + 1), editionId: String(42 + index), title: format === "EBOOK" ? "Libro propio" : "Libro físico", authors: "Autora", sku: "TEST", coverUrl: null, quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, format, requiresPhysicalFulfillment: format === "PAPERBACK", quantityEditable: format === "PAPERBACK", unavailabilityReason: null })) });
     if (path === "/api/v1/me/addresses") { physicalReads.push(path); return json([{ addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]); }
     if (path === "/api/v1/pickup-locations") { physicalReads.push(path); return json([]); }
     if (path === "/api/v1/reference/transfer-details") return json({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
@@ -25,7 +25,7 @@ async function install(page: Page, mixed = false) {
     if (path === "/api/v1/help/articles") return json({ items: [help], page: 0, pageSize: 20, totalCount: "1" });
     if (path === "/api/v1/help/articles/ebooks") return json(help);
     if (path === "/api/v1/checkout") { checkout.push(request.postDataJSON()); return json({ orderId: "700", orderState: "CONFIRMED", paymentState: "APPROVED", total: mixed ? "37.00" : "18.50", paymentReference: "SIM-1", fulfillment: mixed ? { method: "HOME_DELIVERY" } : null }, 201); }
-    if (path === "/api/v1/orders/700") return json(orderDetailFixture("PREPARING", { fulfillment: mixed ? { method: "HOME_DELIVERY" } : null, shipment: mixed ? orderDetailFixture().shipment : null, items: formats.map((format, index) => ({ orderItemId: String(index + 1), editionId: String(42 + index), title: format === "EBOOK" ? "Libro propio" : "Libro físico", authors: "Autora", publisher: "Editorial", format, unitPrice: "18.50", quantity: 1, subtotal: "18.50" })) }));
+    if (path === "/api/v1/orders/700") return json(orderDetailFixture("PREPARING", { fulfillment: mixed ? { method: "HOME_DELIVERY" } : null, shipment: mixed ? orderDetailFixture().shipment : null, items: formats.map((format, index) => ({ orderItemId: String(index + 1), editionId: String(42 + index), title: format === "EBOOK" ? "Libro propio" : "Libro físico", authors: "Autora", publisher: "Editorial", format, requiresPhysicalFulfillment: format === "PAPERBACK", unitPrice: "18.50", quantity: 1, subtotal: "18.50" })) }));
     if (/^\/api\/v1\/catalog\/editions\//.test(path)) return json({ editionId: "42", available: true });
     return json({ items: [], page: 0, pageSize: 20, totalCount: "0" });
   });
@@ -35,9 +35,10 @@ async function install(page: Page, mixed = false) {
 test("owned title filters open detail with only genuine purchase and Help actions", async ({ page }) => {
   await install(page); await page.goto("/biblioteca");
   await expect(page.getByRole("heading", { name: "Mi biblioteca", exact: true })).toBeVisible();
-  await page.getByLabel("Mostrar").selectOption("AUDIOBOOK");
-  await expect(page.getByRole("heading", { name: "Aún no tienes títulos en esta vista." })).toBeVisible();
-  await page.getByLabel("Mostrar").selectOption("EBOOK");
+  const filters = page.getByRole("group", { name: "Mostrar" });
+  await filters.getByRole("button", { name: "Audiolibros" }).click();
+  await expect(page.getByRole("heading", { name: "Aún no tienes audiolibros." })).toBeVisible();
+  await filters.getByRole("button", { name: "eBooks" }).click();
   await page.getByRole("link", { name: "Libro propio", exact: true }).click();
   await expect(page).toHaveURL(/\/biblioteca\/8$/);
   await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();

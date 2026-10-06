@@ -46,10 +46,10 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
             + "s.price, cover_url, cover_license, cover_source_url, cover_attribution, available, ebook_file_format, audio_duration_seconds, narrators, "
             + "o.offer_id, o.original_price, o.discount_amount, o.starts_at, o.ends_at, o.days_remaining, o.ending_soon, o.offer_copy, o.terms, o.savings_percent FROM pliego.fn_edition_detail(?) AS s LEFT JOIN LATERAL pliego.fn_edition_offer(s.edition_id) o ON true";
     private static final String PUBLIC_CATEGORY_LIST_QUERY = "SELECT category_slug, category_name, "
-            + "parent_category_slug FROM pliego.fn_public_category_list()";
+            + "parent_category_slug FROM pliego.fn_public_category_list(?)";
     private static final String PUBLIC_FILTER_OPTIONS_QUERY = "SELECT languages::text AS languages_json, "
             + "formats::text AS formats_json, minimum_price, maximum_price "
-            + "FROM pliego.fn_public_catalog_filter_facets()";
+            + "FROM pliego.fn_public_catalog_filter_facets(?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
@@ -81,22 +81,23 @@ public class JdbcCatalogGateway extends JdbcGatewaySupport implements CatalogGat
     }
 
     @Override
-    public List<PublicCatalogCategory> findPublicCategories() {
+    public List<PublicCatalogCategory> findPublicCategories(String scope) {
         return withDatabaseErrorTranslation(() -> jdbcTemplate.query(PUBLIC_CATEGORY_LIST_QUERY,
+                statement -> statement.setString(1, scope),
                 (results, rowNumber) -> new PublicCatalogCategory(results.getString("category_slug"),
                         results.getString("category_name"), results.getString("parent_category_slug"))));
     }
 
     @Override
-    public PublicCatalogFilterOptions findPublicFilterOptions() {
+    public PublicCatalogFilterOptions findPublicFilterOptions(String scope) {
         return withDatabaseErrorTranslation(() -> {
-            return jdbcTemplate.queryForObject(PUBLIC_FILTER_OPTIONS_QUERY, (results, rowNumber) ->
+            return jdbcTemplate.query(PUBLIC_FILTER_OPTIONS_QUERY, statement -> statement.setString(1, scope), (results, rowNumber) ->
                     new PublicCatalogFilterOptions(
                             parseJsonArray(results.getString("languages_json"), "languages_json")
                                     .valueStream().map(JsonNode::asText).toList(),
                             parseJsonArray(results.getString("formats_json"), "formats_json")
                                     .valueStream().map(JsonNode::asText).toList(),
-                            results.getBigDecimal("minimum_price"), results.getBigDecimal("maximum_price")));
+                            results.getBigDecimal("minimum_price"), results.getBigDecimal("maximum_price"))).getFirst();
         });
     }
 

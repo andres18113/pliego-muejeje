@@ -1182,7 +1182,7 @@ export interface paths {
         };
         /**
          * Consultar opciones de filtros del catálogo público
-         * @description Devuelve idiomas, formatos y límites de precio de todas las ediciones publicables actuales.
+         * @description Devuelve idiomas, formatos y límites de precio efectivo de las ediciones publicables del ámbito solicitado. Sin scope usa GLOBAL.
          */
         get: operations["filterOptions"];
         put?: never;
@@ -1239,7 +1239,7 @@ export interface paths {
         };
         /**
          * Listar categorías del catálogo público
-         * @description Devuelve categorías activas con ediciones publicables y su jerarquía de hasta dos niveles.
+         * @description Devuelve categorías activas con ediciones publicables del ámbito solicitado y su jerarquía de hasta dos niveles. Sin scope usa GLOBAL.
          */
         get: operations["listCategories"];
         put?: never;
@@ -1984,7 +1984,7 @@ export interface components {
             total?: string;
             createdAt?: string;
             updatedAt?: string;
-            items?: components["schemas"]["Item"][];
+            items?: components["schemas"]["CustomerOrderItem"][];
             address?: components["schemas"]["Address"];
             payment?: components["schemas"]["Payment"];
             stateHistory?: components["schemas"]["History"][];
@@ -1997,6 +1997,22 @@ export interface components {
             taxRate?: string;
             taxAmount?: string;
             shippingAmount?: string;
+        };
+        CustomerOrderItem: {
+            orderItemId?: string;
+            editionId?: string;
+            sku?: string;
+            isbn?: string;
+            title?: string;
+            authors?: string;
+            publisher?: string;
+            format?: string;
+            language?: string;
+            unitPrice?: string;
+            /** Format: int32 */
+            quantity?: number;
+            subtotal?: string;
+            requiresPhysicalFulfillment: boolean;
         };
         ElectronicIssuance: {
             provider?: string;
@@ -2012,21 +2028,6 @@ export interface components {
             previousState?: string;
             newState?: string;
             at?: string;
-        };
-        Item: {
-            orderItemId?: string;
-            editionId?: string;
-            sku?: string;
-            isbn?: string;
-            title?: string;
-            authors?: string;
-            publisher?: string;
-            format?: string;
-            language?: string;
-            unitPrice?: string;
-            /** Format: int32 */
-            quantity?: number;
-            subtotal?: string;
         };
         OrderCreditNote: {
             creditNoteId?: string;
@@ -2390,11 +2391,11 @@ export interface components {
              * @example 2026-10-07
              */
             estimatedDeliveryTo?: string | null;
-            requiresPhysicalFulfillment?: boolean;
+            requiresPhysicalFulfillment: boolean;
             /** Format: int32 */
-            physicalItemCount?: number;
+            physicalItemCount: number;
             /** Format: int32 */
-            digitalItemCount?: number;
+            digitalItemCount: number;
         };
         CartItem: {
             cartItemId?: string;
@@ -2416,6 +2417,8 @@ export interface components {
             unavailabilityReason?: "P2043" | "P2042" | "P3002" | "P4004" | null;
             /** @enum {string} */
             format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
+            requiresPhysicalFulfillment: boolean;
+            quantityEditable: boolean;
         };
         PageResponsePublisher: {
             items?: components["schemas"]["Publisher"][];
@@ -2481,6 +2484,21 @@ export interface components {
             stockAfter?: number;
             reason?: string;
             eventAt?: string;
+        };
+        Item: {
+            orderItemId?: string;
+            editionId?: string;
+            sku?: string;
+            isbn?: string;
+            title?: string;
+            authors?: string;
+            publisher?: string;
+            format?: string;
+            language?: string;
+            unitPrice?: string;
+            /** Format: int32 */
+            quantity?: number;
+            subtotal?: string;
         };
         PageResponseItem: {
             items?: components["schemas"]["Item"][];
@@ -4809,7 +4827,10 @@ export interface operations {
     };
     filterOptions: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Ámbito de catálogo; GLOBAL incluye todos los tipos de producto. */
+                scope?: "GLOBAL" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4823,6 +4844,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PublicCatalogFilterOptionsResponse"];
+                };
+            };
+            /** @description Ámbito de catálogo inválido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
             };
         };
@@ -4915,7 +4945,10 @@ export interface operations {
     };
     listCategories: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Ámbito de catálogo; GLOBAL incluye todos los tipos de producto. */
+                scope?: "GLOBAL" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -4929,6 +4962,15 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CatalogCategoryListResponse"];
+                };
+            };
+            /** @description Ámbito de catálogo inválido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
             };
         };

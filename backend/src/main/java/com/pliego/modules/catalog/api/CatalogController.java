@@ -42,6 +42,8 @@ public class CatalogController {
 
     private static final DateTimeFormatter CONTRACT_DATE = DateTimeFormatter.ISO_LOCAL_DATE;
     private static final String CATEGORY_SLUG = "(?i)[a-z0-9]+(?:-[a-z0-9]+)*";
+    private static final String CATALOG_SCOPE = "GLOBAL|PHYSICAL|EBOOK|AUDIOBOOK";
+    private static final String INVALID_SCOPE = "El ámbito del catálogo debe ser GLOBAL, PHYSICAL, EBOOK o AUDIOBOOK.";
 
     private final CatalogService catalogService;
 
@@ -122,11 +124,15 @@ public class CatalogController {
 
     @GetMapping("/categories")
     @Operation(summary = "Listar categorías del catálogo público",
-            description = "Devuelve categorías activas con ediciones publicables y su jerarquía de hasta dos niveles.")
+            description = "Devuelve categorías activas con ediciones publicables del ámbito solicitado y su jerarquía de hasta dos niveles. Sin scope usa GLOBAL.")
     @ApiResponse(responseCode = "200", description = "Categorías disponibles para navegar el catálogo",
             content = @Content(schema = @Schema(implementation = CatalogCategoryListResponse.class)))
-    public CatalogCategoryListResponse listCategories() {
-        return new CatalogCategoryListResponse(catalogService.listPublicCategories().stream()
+    @ApiResponse(responseCode = "400", description = "Ámbito de catálogo inválido", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public CatalogCategoryListResponse listCategories(
+            @Parameter(description = "Ámbito de catálogo; GLOBAL incluye todos los tipos de producto.",
+                    schema = @Schema(allowableValues = {"GLOBAL", "PHYSICAL", "EBOOK", "AUDIOBOOK"}, defaultValue = "GLOBAL"))
+            @RequestParam(required = false) @Pattern(regexp = CATALOG_SCOPE, message = INVALID_SCOPE) String scope) {
+        return new CatalogCategoryListResponse(catalogService.listPublicCategories(scope == null ? "GLOBAL" : scope).stream()
                 .map(category -> new CatalogCategoryListResponse.Category(category.slug(), category.name(),
                         category.parentSlug()))
                 .toList());
@@ -134,11 +140,15 @@ public class CatalogController {
 
     @GetMapping("/filter-options")
     @Operation(summary = "Consultar opciones de filtros del catálogo público",
-            description = "Devuelve idiomas, formatos y límites de precio de todas las ediciones publicables actuales.")
+            description = "Devuelve idiomas, formatos y límites de precio efectivo de las ediciones publicables del ámbito solicitado. Sin scope usa GLOBAL.")
     @ApiResponse(responseCode = "200", description = "Opciones disponibles para los filtros del catálogo",
             content = @Content(schema = @Schema(implementation = PublicCatalogFilterOptionsResponse.class)))
-    public PublicCatalogFilterOptionsResponse filterOptions() {
-        PublicCatalogFilterOptions options = catalogService.getPublicFilterOptions();
+    @ApiResponse(responseCode = "400", description = "Ámbito de catálogo inválido", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public PublicCatalogFilterOptionsResponse filterOptions(
+            @Parameter(description = "Ámbito de catálogo; GLOBAL incluye todos los tipos de producto.",
+                    schema = @Schema(allowableValues = {"GLOBAL", "PHYSICAL", "EBOOK", "AUDIOBOOK"}, defaultValue = "GLOBAL"))
+            @RequestParam(required = false) @Pattern(regexp = CATALOG_SCOPE, message = INVALID_SCOPE) String scope) {
+        PublicCatalogFilterOptions options = catalogService.getPublicFilterOptions(scope == null ? "GLOBAL" : scope);
         return new PublicCatalogFilterOptionsResponse(options.languages(), options.formats(),
                 options.minimumPrice() == null ? null : money(options.minimumPrice()),
                 options.maximumPrice() == null ? null : money(options.maximumPrice()));

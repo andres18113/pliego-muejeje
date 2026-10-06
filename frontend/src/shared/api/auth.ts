@@ -17,9 +17,10 @@ export async function login(body: components["schemas"]["LoginRequest"]) {
 
 export async function refreshSession() {
   if (refreshInFlight) return refreshInFlight;
-  refreshInFlight = withAuthSessionLock(async () => {
+  refreshInFlight = withAuthSessionLock(async (signal) => {
     const { data, error, response } = await apiClient.POST("/api/v1/auth/refresh", {
       params: { header: { "X-PLIEGO-SESSION-REQUEST": "1" } },
+      signal,
     });
     if (response.status === 204) return null;
     if (error) {
@@ -33,9 +34,10 @@ export async function refreshSession() {
 }
 
 export async function logoutSession() {
-  await withAuthSessionLock(async () => {
+  await withAuthSessionLock(async (signal) => {
     const { error, response } = await apiClient.POST("/api/v1/auth/logout", {
       params: { header: { "X-PLIEGO-SESSION-REQUEST": "1" } },
+      signal,
     });
     if (error || !response.ok) {
       throw toApiRequestError(response.status, error, "No se pudo cerrar sesión", "Comprueba tu conexión e inténtalo otra vez.");
@@ -61,7 +63,18 @@ function requireLoginResponse(data: LoginResponse | undefined, title: string) {
   return data as Required<LoginResponse>;
 }
 
-async function withAuthSessionLock<T>(operation: () => Promise<T>): Promise<T> {
-  if (typeof navigator === "undefined" || !navigator.locks) return operation();
-  return navigator.locks.request("pliego-auth-session", { mode: "exclusive" }, operation);
+async function withAuthSessionLock<T>(operation: (signal: AbortSignal) => Promise<T>): Promise<T> {
+  const controller = new AbortController();
+  // Bound both cross-tab lock waiting and the request holding that lock.
+  const deadline = setTimeout(() => controller.abort(new DOMException(
+    "La operación de sesión tardó demasiado. Inténtalo otra vez.", "TimeoutError",
+  )), 10_000);
+  try {
+    if (typeof navigator === "undefined" || !navigator.locks) return await operation(controller.signal);
+    return await navigator.locks.request("pliego-auth-session", {
+      mode: "exclusive", signal: controller.signal,
+    }, () => operation(controller.signal));
+  } finally {
+    clearTimeout(deadline);
+  }
 }

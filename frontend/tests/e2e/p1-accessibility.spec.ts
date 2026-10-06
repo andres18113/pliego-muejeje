@@ -21,8 +21,8 @@ async function installApi(page: Page) {
       const body = request.postDataJSON(); quantity = body.quantity;
       writes.push({ path, body }); return json({ cartId: "40", cartItemId: "100", quantity });
     }
-    if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", items: [{ cartItemId: "100", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez", sku: "PLG-42", coverUrl: null,
-      quantity, currentPrice: "18.50", currentSubtotal: (quantity * 18.5).toFixed(2), available: true, unavailabilityReason: null }], totalCurrent: (quantity * 18.5).toFixed(2) });
+    if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 1, digitalItemCount: 0, items: [{ cartItemId: "100", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez", sku: "PLG-42", coverUrl: null,
+      requiresPhysicalFulfillment: true, quantityEditable: true, quantity, currentPrice: "18.50", currentSubtotal: (quantity * 18.5).toFixed(2), available: true, unavailabilityReason: null }], totalCurrent: (quantity * 18.5).toFixed(2) });
     return route.fulfill({ status: 404, contentType: "application/problem+json", body: JSON.stringify({ code: "NOT_FOUND", title: "Recurso no disponible" }) });
   });
   return writes;

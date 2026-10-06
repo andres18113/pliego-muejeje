@@ -17,7 +17,10 @@ public final class CartResponses {
             String estimatedDeliveryFrom,
             @Schema(nullable = true, format = "date", example = "2026-10-07",
                     description = "Último día de la ventana de entrega a domicilio: dos días después del primero; null si el carrito no incluye libros físicos.")
-            String estimatedDeliveryTo, boolean requiresPhysicalFulfillment, int physicalItemCount, int digitalItemCount) { }
+            String estimatedDeliveryTo,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED) boolean requiresPhysicalFulfillment,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED) int physicalItemCount,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED) int digitalItemCount) { }
 
     @Schema(name = "CartItem")
     public record Item(String cartItemId, String editionId, String title, String authors, String sku,
@@ -28,7 +31,9 @@ public final class CartResponses {
                     description = "SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, "
                             + "P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida; null si está disponible.")
             String unavailabilityReason,
-            @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format) { }
+            @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED) boolean requiresPhysicalFulfillment,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED) boolean quantityEditable) { }
 
     public record ItemMutation(String cartId, String cartItemId, int quantity) { }
 }

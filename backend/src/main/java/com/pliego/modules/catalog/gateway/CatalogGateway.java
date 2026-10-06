@@ -15,9 +15,9 @@ public interface CatalogGateway {
 
     com.pliego.modules.catalog.application.OffersFilterOptions findOffersFilterOptions();
 
-    List<PublicCatalogCategory> findPublicCategories();
+    List<PublicCatalogCategory> findPublicCategories(String scope);
 
-    PublicCatalogFilterOptions findPublicFilterOptions();
+    PublicCatalogFilterOptions findPublicFilterOptions(String scope);
 
     Optional<CatalogEditionDetail> findPublicEdition(long editionId);
 }

@@ -22,6 +22,10 @@ def checkout(token, body, key):
 
 
 def main():
+    schemas=ok('/v3/api-docs',None)['components']['schemas']
+    assert schemas['CustomerOrderDetail']['properties']['items']['items']['$ref'].endswith('/CustomerOrderItem')
+    assert 'requiresPhysicalFulfillment' in schemas['CustomerOrderItem']['required']
+    assert 'requiresPhysicalFulfillment' not in schemas['Item'].get('properties',{})
     suffix=uuid.uuid4().hex[:12]
     query(f"INSERT INTO pliego.usuario(email_normalizado,password_hash,rol,estado) VALUES('lib-admin-{suffix}@example.invalid','fixture','ADMIN','ACTIVE')")
     actor=int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='lib-admin-{suffix}@example.invalid'"))
@@ -53,12 +57,14 @@ def main():
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['EBOOK'],'quantity':1})
     cart=ok('/api/v1/cart',customer)
     assert cart['requiresPhysicalFulfillment'] is False and cart['physicalItemCount']==0 and cart['digitalItemCount']==1
+    assert cart['items'][0]['requiresPhysicalFulfillment'] is False and cart['items'][0]['quantityEditable'] is False
     body={'fulfillmentMethod':'DIGITAL_ONLY','paymentMethod':'TRANSFER','simulationOutcome':'APPROVED','expectedCartId':cart['cartId']}
     key=str(uuid.uuid4()); status,order=checkout(customer,body,key); assert status==201,(status,order)
     status,retry=checkout(customer,body,key); assert status==201 and retry==order
     status,conflict=checkout(customer,{**body,'simulationOutcome':'REJECTED'},key); assert status==409 and conflict['code']=='P1010'
     detail=ok('/api/v1/orders/'+order['orderId'],customer)
     assert detail['address'] is None and detail['fulfillment'] is None and detail['shipment'] is None
+    assert all(line['requiresPhysicalFulfillment'] is False for line in detail['items'])
     admin_detail=ok('/api/v1/admin/orders/'+order['orderId'],admin)
     assert admin_detail['address'] is None and admin_detail['fulfillment'] is None and admin_detail['shipment'] is None
     owned=ok('/api/v1/me/library?productType=EBOOK',customer)['items'][0]
@@ -82,12 +88,17 @@ def main():
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['AUDIOBOOK'],'quantity':1})
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['PAPERBACK'],'quantity':1})
     cart=ok('/api/v1/cart',customer); assert cart['requiresPhysicalFulfillment'] and cart['physicalItemCount']==1 and cart['digitalItemCount']==2
+    physical_cart=[line for line in cart['items'] if line['requiresPhysicalFulfillment']]
+    assert len(physical_cart)==1 and physical_cart[0]['editionId']==editions['PAPERBACK'] and physical_cart[0]['quantityEditable'] is True
+    assert all(line['quantityEditable'] is False for line in cart['items'] if not line['requiresPhysicalFulfillment'])
     address=ok('/api/v1/me/addresses',customer,'POST',{'alias':'Casa','recipient':'Cliente Biblioteca','line1':'Calle Biblioteca',
         'line2':None,'city':'Quito','province':'Pichincha','countryCode':'EC','postalCode':None,'reference':None,'phone':'+59325550134','makePrimary':True},201)['addressId']
     status,mixed=checkout(customer,{'fulfillmentMethod':'HOME_DELIVERY','addressId':address,'paymentMethod':'TRANSFER','simulationOutcome':'APPROVED'},str(uuid.uuid4()))
     assert status==201,(status,mixed)
     mixed_detail=ok('/api/v1/orders/'+mixed['orderId'],customer)
     assert len(mixed_detail['items'])==3 and mixed_detail['shipment'] is not None and mixed_detail['address'] is not None
+    physical_snapshot=[line for line in mixed_detail['items'] if line['requiresPhysicalFulfillment']]
+    assert len(physical_snapshot)==1 and physical_snapshot[0]['editionId']==editions['PAPERBACK']
     assert query(f"SELECT count(*) FROM pliego.movimiento_inventario WHERE pedido_id={mixed['orderId']} AND tipo='SALE'")=='1'
     library=ok('/api/v1/me/library',customer); assert library['totalCount']=='2' and all(i['ownershipState']=='OWNED' for i in library['items'])
     assert len(ok('/api/v1/me/library/'+owned['ownedItemId'],customer)['sourcePurchases'])==2

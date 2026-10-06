@@ -287,6 +287,7 @@ const orderDetailSchema = z.object({
     unitPrice: moneySchema,
     quantity: z.number().int().positive(),
     subtotal: moneySchema,
+    requiresPhysicalFulfillment: z.boolean(),
   })),
   address: z.object({
     recipient: z.string(),

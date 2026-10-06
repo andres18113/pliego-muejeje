@@ -15,7 +15,7 @@ export const pickupOrder = {
   subtotal: "18.50", taxRate: "15.00", taxAmount: "2.78", shippingAmount: "0.00", total: "21.28",
   createdAt: "2026-10-04T23:55:12Z", updatedAt: "2026-10-04T23:55:12Z",
   items: [{ orderItemId: "1", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez",
-    publisher: "Editorial", format: "PHYSICAL", unitPrice: "18.50", quantity: 1, subtotal: "18.50" }],
+    publisher: "Editorial", requiresPhysicalFulfillment: true, format: "PHYSICAL", unitPrice: "18.50", quantity: 1, subtotal: "18.50" }],
   address: null, shipment: null,
   payment: { method: "CARD", state: "APPROVED", amount: "21.28", reference: "SIM-PICKUP" },
   fulfillment: { method: "STORE_PICKUP", pickup: pickupSnapshot, state: "PENDING", collectedAt: null },

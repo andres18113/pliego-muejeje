@@ -83,19 +83,22 @@ export function renderPurchaseRoute(
 }
 
 export function cartBody(items: Partial<CartItemFixture>[] = [{}], total?: string) {
-  const lines = items.map((item, index) => ({ ...cartItem(index), ...item }));
+  const lines = items.map((item, index) => {
+    const requiresPhysicalFulfillment = item.requiresPhysicalFulfillment ?? (item.format !== "EBOOK" && item.format !== "AUDIOBOOK");
+    return { ...cartItem(index), requiresPhysicalFulfillment, quantityEditable: requiresPhysicalFulfillment || (item.quantity ?? 1) !== 1, ...item };
+  });
   return {
     cartId: lines.length ? "40" : null,
-    requiresPhysicalFulfillment: lines.some(line => line.format !== "EBOOK" && line.format !== "AUDIOBOOK"),
-    physicalItemCount: lines.filter(line => line.format !== "EBOOK" && line.format !== "AUDIOBOOK").length,
-    digitalItemCount: lines.filter(line => line.format === "EBOOK" || line.format === "AUDIOBOOK").length,
+    requiresPhysicalFulfillment: lines.some(line => line.requiresPhysicalFulfillment),
+    physicalItemCount: lines.filter(line => line.requiresPhysicalFulfillment).length,
+    digitalItemCount: lines.filter(line => !line.requiresPhysicalFulfillment).length,
     state: lines.length ? "ACTIVE" : null,
     items: lines,
     totalCurrent: total ?? lines.reduce((sum, line) => sum + Number(line.currentSubtotal), 0).toFixed(2),
   };
 }
 
-type CartItemFixture = ReturnType<typeof cartItem> & { format?: string };
+type CartItemFixture = ReturnType<typeof cartItem> & { format?: string; requiresPhysicalFulfillment?: boolean; quantityEditable?: boolean };
 
 function cartItem(index: number) {
   return {

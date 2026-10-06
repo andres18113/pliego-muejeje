@@ -1,5 +1,4 @@
 .mascot { display: block; width: 100%; height: auto; overflow: visible; }
-.stop { fill: var(--store-yellow); }
 .figure { transform-box: view-box; transform-origin: 160px 560px; transform: rotate(-4deg); }
 .body { fill: var(--store-blue); }
 .fold { fill: var(--store-yellow); }
@@ -9,11 +8,11 @@
 .cup { fill: var(--pliego-text, #252740); }
 .device { fill: #fbfaf6; }
 .line { fill: none; stroke: var(--store-lavender, #e4def4); stroke-width: 8; stroke-linecap: round; }
-/* One gentle settling lean and glance toward the full stop; never loops. */
+/* One gentle settling lean and glance; never loops. */
 @media (prefers-reduced-motion: no-preference) {
   .figure { animation: home-mascot-lean 1100ms cubic-bezier(.32, .94, .6, 1) 200ms both; }
   .face { animation: home-mascot-glance 900ms cubic-bezier(.32, .94, .6, 1) 600ms both; }
 }
 @keyframes home-mascot-lean { from { transform: rotate(0deg); } to { transform: rotate(-4deg); } }
 @keyframes home-mascot-glance { from { transform: translate(6px, 6px); } to { transform: none; } }
-@media (forced-colors: active) { .body { fill: CanvasText; } .mark { stroke: Canvas; } .stop, .fold, .cup { fill: CanvasText; } .band { stroke: CanvasText; } .device { fill: Canvas; } .line { stroke: CanvasText; } }
+@media (forced-colors: active) { .body { fill: CanvasText; } .mark { stroke: Canvas; } .fold, .cup { fill: CanvasText; } .band { stroke: CanvasText; } .device { fill: Canvas; } .line { stroke: CanvasText; } }

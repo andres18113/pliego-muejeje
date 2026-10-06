@@ -5,7 +5,7 @@ export function orderDetailFixture(state = "PREPARING", overrides: Partial<Order
     orderId: "700", createdAt: "2026-10-04T15:00:00Z", orderState: "CONFIRMED", purchaseState: "CONFIRMED",
     subtotal: "37.00", taxRate: "15.00", taxAmount: "5.55", shippingAmount: "0.00", total: "42.55",
     items: [{ orderItemId: "1", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez",
-      publisher: "Editorial", format: "PAPERBACK", unitPrice: "18.50", quantity: 2, subtotal: "37.00" }],
+      publisher: "Editorial", requiresPhysicalFulfillment: true, format: "PAPERBACK", unitPrice: "18.50", quantity: 2, subtotal: "37.00" }],
     address: null, payment: { method: "CARD", state: "APPROVED", amount: "42.55", reference: "SIM-1" },
     stateHistory: [], fulfillment: { method: "HOME_DELIVERY" },
     shipment: { shipmentId: "70", state, carrier: null, trackingCode: null, trackingUrl: null,

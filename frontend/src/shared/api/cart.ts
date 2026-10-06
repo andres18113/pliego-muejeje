@@ -22,8 +22,8 @@ const calendarDateSchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/);
 const cartDetailSchema = z.object({
   cartId: z.string().min(1).nullable(),
   requiresPhysicalFulfillment: z.boolean(),
-  physicalItemCount: z.number().int().nonnegative().optional(),
-  digitalItemCount: z.number().int().nonnegative().optional(),
+  physicalItemCount: z.number().int().nonnegative(),
+  digitalItemCount: z.number().int().nonnegative(),
   state: z.string().nullable(),
   items: z.array(z.object({
     cartItemId: z.string().min(1),
@@ -36,6 +36,8 @@ const cartDetailSchema = z.object({
     currentPrice: moneySchema,
     currentSubtotal: moneySchema,
     available: z.boolean(),
+    requiresPhysicalFulfillment: z.boolean(),
+    quantityEditable: z.boolean(),
     format: editionFormatSchema.optional(),
     unavailabilityReason: z.enum(stockUnavailabilityReasons).nullable().catch(null),
   })),

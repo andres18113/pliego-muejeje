@@ -13,7 +13,6 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { BookCover } from "@/features/catalog/BookCover";
 import { formatEdition, formatUsd } from "@/features/catalog/formatters";
-import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { getCartDetail, type CartDetail } from "@/shared/api/cart";
 import { addressesQueryKey, listAddresses, type CustomerAddress } from "@/shared/api/customer";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
@@ -640,7 +639,7 @@ function CheckoutContent() {
               <PickupLocationPicker query={pickupQuery} value={pickupLocationId} disabled={phase !== "idle"} error={errors.pickupLocationId?.message}
                 onChange={id => { setValue("pickupLocationId", id, { shouldValidate: true }); }}>
               <ul className={classes.shipmentItems} aria-label="Libros para retirar">
-                {cart.items.filter(item => !isDigitalFormat(item.format)).map(item => <li key={item.cartItemId}>
+                {cart.items.filter(item => item.requiresPhysicalFulfillment).map(item => <li key={item.cartItemId}>
                   <span className={classes.shipmentCover}><BookCover url={item.coverUrl} license={null} attribution={null} title={item.title} size="compact" decorative /></span>
                   <strong>{item.title}</strong>
                 </li>)}
@@ -714,7 +713,7 @@ function CheckoutContent() {
                     <p className={classes.panelRule}>{fulfillmentMethodLabel(fulfillmentMethod)}</p>
                     {deliveryWindow && <p className={classes.shipmentWindow}>Entrega {deliveryWindow}</p>}
                     <ul className={classes.shipmentItems} aria-label="Libros de esta entrega">
-                      {cart.items.filter(item => !isDigitalFormat(item.format)).map((item) => (
+                      {cart.items.filter(item => item.requiresPhysicalFulfillment).map((item) => (
                         <li key={item.cartItemId}>
                           <span className={classes.shipmentCover}><BookCover url={item.coverUrl} license={null} attribution={null} title={item.title} size="compact" decorative /></span>
                           <strong>{item.title}</strong>

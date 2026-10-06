@@ -69,3 +69,15 @@ export function formatAudioDuration(seconds: number) {
   return [hours ? `${hours} h` : null, minutes ? `${minutes} min` : null, remainder ? `${remainder} s` : null]
     .filter(Boolean).join(" ");
 }
+
+/**
+ * Editorial role abbreviations that catalog metadata appends to contributor names ("Rodríguez, Armando (coord.)").
+ * Shoppers read the names; the stored metadata keeps the roles. Only these explicit, lowercase role marks are
+ * removed, so parenthesized names such as institutions ("(UNAM)") stay intact.
+ */
+const contributorRoleMark = /\s*\((?:coords?|eds?|dirs?|comps?)\.\)/g;
+
+/** The author line for customer-facing product presentation: contributor names without editorial role marks. */
+export function formatAuthorNames(authors: string) {
+  return authors.replace(contributorRoleMark, "").replace(/\s+;/g, ";").trim();
+}

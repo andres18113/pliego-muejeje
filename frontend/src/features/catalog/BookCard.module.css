@@ -38,6 +38,24 @@
 /* Facts: price in display type (as in the Home scenes) with its stock directly beneath. */
 .commercial { display: var(--bookcard-layout, flex); flex-direction: column; grid-row: span 3; grid-template-rows: subgrid; row-gap: 0; min-width: 0; padding-top: 14px; }
 .price { min-width: 0; margin: 0; overflow-wrap: anywhere; color: var(--card-ink); font: 650 1.375rem/1.2 var(--store-display); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+/* An offer reads in buying order: today's price with the previous one struck beside it, the saving in
+   ultramar, the offer's own message, then how long it lasts. Only an offer about to end takes the yellow. */
+.pricing { min-width: 0; }
+.priceLine { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; min-width: 0; }
+.was { margin: 0; color: var(--pliego-text-muted); font-size: .9375rem; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.saving { margin: 2px 0 0; color: var(--card-brand); font-size: .875rem; font-weight: 600; line-height: 1.35; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.offer { display: grid; justify-items: start; gap: 4px; min-width: 0; margin: 10px 0 6px; font-size: .8125rem; line-height: 1.4; }
+.offer p { margin: 0; overflow-wrap: anywhere; }
+.offerCopy { display: -webkit-box; overflow: hidden; color: var(--card-ink); font-size: .875rem; font-weight: 500; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; }
+.offerTime { display: inline-flex; align-items: center; gap: 5px; color: var(--pliego-text-muted); }
+.offerTime[data-ending-soon] { margin: 2px 0 2px -2px; padding: 3px 10px 3px 7px; border-radius: 999px; background: var(--card-saved); color: var(--store-ink, #252740); font-weight: 600; }
+.offerEnds { color: var(--pliego-text-muted); font-variant-numeric: tabular-nums; }
+.terms { min-width: 0; }
+.terms summary { display: inline-flex; align-items: center; min-height: 32px; color: var(--card-ink); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; list-style: none; }
+.terms summary::-webkit-details-marker { display: none; }
+.terms summary:focus-visible { outline: 2px solid var(--card-brand); outline-offset: 2px; border-radius: 4px; }
+.terms p { padding: 2px 0 4px; color: var(--pliego-text-muted); }
+.edition.edition { margin-top: 4px; color: var(--pliego-text-muted); font-size: .8125rem; line-height: 1.4; overflow-wrap: anywhere; }
 .availability { min-width: 0; margin: 3px 0 14px; font-size: .8125rem; line-height: 1.4; }
 .availability { --stock-mark-color: var(--card-brand); }
 
@@ -84,6 +102,39 @@
   .card { --card-pad: 12px; border-radius: 16px; }
   .actions { gap: 6px; }
 }
+
+/* Commerce presentation (catalog shelves). One layout for every medium; the medium speaks through the
+   stage behind the jacket: Libros a warm paper gray, eBooks lavender, Audiolibros pale yellow. The card
+   itself has no field, border or shadow — identity, price and stock read on the page, so a row of
+   twelve books stays a bookstore shelf rather than a wall of boxes. It is a browse card: the product
+   link leads to the edition (where buying happens) and the favorite sits on the stage's corner. */
+.card[data-media] { --card-pad: 0px; padding: 0; border-radius: 0; background: transparent; }
+.card[data-media="physical"] { --card-stage: #ecebe4; }
+.card[data-media="ebook"] { --card-stage: color-mix(in srgb, var(--store-lavender, #e4def4) 72%, var(--store-paper, #f6f5f0)); }
+.card[data-media="audiobook"] { --card-stage: color-mix(in srgb, var(--store-yellow, #f3df83) 42%, var(--store-paper, #f6f5f0)); }
+:global([data-mantine-color-scheme="dark"]) .card[data-media] { --card-field: transparent; }
+:global([data-mantine-color-scheme="dark"]) .card[data-media="physical"] { --card-stage: color-mix(in srgb, #ffffff 7%, var(--pliego-surface)); }
+:global([data-mantine-color-scheme="dark"]) .card[data-media="ebook"] { --card-stage: #2e2b4d; }
+:global([data-mantine-color-scheme="dark"]) .card[data-media="audiobook"] { --card-stage: color-mix(in srgb, var(--store-yellow, #f3df83) 16%, var(--pliego-surface)); }
+
+/* The stage: a bounded field in the medium's color, the jacket centered on it with the Home cover shadow. */
+.card[data-media] .shelf { aspect-ratio: 1 / 1; place-items: center; padding: 0; border-radius: 10px; background: var(--card-stage); }
+.card[data-media] .shelf :global(.book-cover) { width: 56%; }
+.card[data-media][data-unavailable] .shelf :global(.book-cover) { opacity: .72; }
+.card[data-media] .identity { padding-top: 14px; }
+.card[data-media] .bookTitle { font-size: 1.1875rem; line-height: 1.2; }
+.card[data-media] .commercial { padding-top: 10px; }
+.card[data-media] .availability { margin: 2px 0 0; }
+
+/* Favorite: a quiet paper disc in the stage's top-right corner — a sibling of the product link, never
+   inside it — that takes the yellow "this one" fill with an ultramar heart when saved. */
+.favoriteCorner { position: absolute; top: 8px; right: 8px; z-index: 1; }
+.card[data-media] .favorite.favorite { background: color-mix(in srgb, var(--store-paper, #f6f5f0) 92%, transparent); color: var(--card-ink); box-shadow: 0 1px 2px rgb(37 39 64 / 10%); }
+.card[data-media] .favorite.favorite[aria-pressed="true"] { background: var(--card-saved); color: var(--store-blue, #283da8); }
+:global([data-mantine-color-scheme="dark"]) .card[data-media] .favorite.favorite:not([aria-pressed="true"]) { background: color-mix(in srgb, var(--pliego-surface) 88%, transparent); }
+@media (hover: hover) { .card[data-media] .favorite.favorite:hover:not(:disabled):not([aria-pressed="true"]) { background: #fff; color: var(--card-brand); } }
+.card[data-media] .favorite.favorite:focus-visible { outline: 3px solid var(--card-brand); outline-offset: 2px; }
+@media (max-width: 599px) { .card[data-media] { --card-pad: 0px; border-radius: 0; } .card[data-media] .bookTitle { font-size: 1.0625rem; } }
 
 .loadingShelf { aspect-ratio: 2 / 3; width: 72%; justify-self: center; align-self: end; border-radius: 4px; }
 .loadingActions.loadingActions { height: 44px; }

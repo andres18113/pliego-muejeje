@@ -25,13 +25,13 @@ public class CatalogService {
     public OffersFilterOptions getOffersFilterOptions() { return catalogGateway.findOffersFilterOptions(); }
 
     @Transactional(readOnly = true)
-    public List<PublicCatalogCategory> listPublicCategories() {
-        return catalogGateway.findPublicCategories();
+    public List<PublicCatalogCategory> listPublicCategories(String scope) {
+        return catalogGateway.findPublicCategories(scope);
     }
 
     @Transactional(readOnly = true)
-    public PublicCatalogFilterOptions getPublicFilterOptions() {
-        return catalogGateway.findPublicFilterOptions();
+    public PublicCatalogFilterOptions getPublicFilterOptions(String scope) {
+        return catalogGateway.findPublicFilterOptions(scope);
     }
 
     @Transactional(readOnly = true)

@@ -1,7 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { cartBody, json } from "@/test/purchase";
 import { setApiAccessToken } from "./client";
 import { ApiRequestError } from "./errors";
-import { addEditionToCart, getActiveCart } from "./cart";
+import { addEditionToCart, getActiveCart, getCartDetail } from "./cart";
 
 describe("cart API", () => {
   beforeEach(() => setApiAccessToken("customer-token"));
@@ -62,4 +63,13 @@ describe("cart API", () => {
 
     await expect(getActiveCart()).resolves.toEqual({ items: [{ editionId: "42", quantity: 2 }] });
   });
+});
+
+it("rejects missing cart capabilities rather than inferring them from display formats", async () => {
+  const body = cartBody([{ format: "EBOOK" }]);
+  vi.stubGlobal("fetch", vi.fn(async () => json({ ...body, physicalItemCount: undefined })));
+  await expect(getCartDetail()).rejects.toMatchObject({ status: 502 });
+  vi.stubGlobal("fetch", vi.fn(async () => json({ ...body, items: body.items.map(item => ({ ...item, requiresPhysicalFulfillment: undefined })) })));
+  await expect(getCartDetail()).rejects.toMatchObject({ status: 502 });
+  vi.unstubAllGlobals();
 });

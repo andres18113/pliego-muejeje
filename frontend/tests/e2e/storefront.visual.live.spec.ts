@@ -13,8 +13,8 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 
     const measurements: unknown[] = [];
     for (const [name, route] of [["home", "/"], ["catalog", "/catalog"]]) {
       await page.goto(route);
-      await expect(page.locator("[data-bookcard]").first()).toBeVisible();
-      if (name === "home") await expect(page.getByRole("navigation", { name: "Explora por tema" }).getByRole("link").first()).toBeVisible();
+      if (name === "home") await expect(page.locator('section[aria-labelledby="popular-heading"] [data-media]').first()).toBeVisible();
+      else await expect(page.locator("[data-bookcard]").first()).toBeVisible();
       // Decode every real cover before the full-page capture, including lazy rows.
       await page.locator("img").evaluateAll((images) => images.forEach((image) => (image as HTMLImageElement).loading = "eager"));
       await page.evaluate(() => document.fonts.ready);

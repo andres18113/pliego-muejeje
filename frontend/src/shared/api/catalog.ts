@@ -100,6 +100,7 @@ export type EditionSummary = z.infer<typeof editionSummarySchema>;
 export type PublicCategory = z.infer<typeof publicCategorySchema> & Pick<components["schemas"]["Category"], "slug" | "name">;
 export type EditionDetail = components["schemas"]["CatalogEditionDetailResponse"] & { available: boolean };
 export type PublicCatalogFilterOptions = z.infer<typeof publicCatalogFilterOptionsSchema>;
+export type CatalogScope = NonNullable<NonNullable<paths["/api/v1/catalog/categories"]["get"]["parameters"]["query"]>["scope"]>;
 
 export type EditionSearch = {
   query: string;
@@ -109,6 +110,8 @@ export type EditionSearch = {
   language: string;
   format: "" | EditionFormat;
   productType?: "" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
+  // OpenAPI expresses these choices as a string pattern, so generated types use string.
+  // Keep the frontend's finite choices aligned with that pattern, including BEST_SELLING.
   sort: "TITLE_ASC" | "PRICE_ASC" | "PRICE_DESC" | "BEST_SELLING";
   page: number;
   pageSize: number;
@@ -134,8 +137,8 @@ export function parseTotalCount(value: unknown): bigint | null {
   }
 }
 
-export async function getPublicCategories(signal?: AbortSignal) {
-  const { data, error, response } = await apiClient.GET("/api/v1/catalog/categories", { signal });
+export async function getPublicCategories(signal?: AbortSignal, scope: CatalogScope = "GLOBAL") {
+  const { data, error, response } = await apiClient.GET("/api/v1/catalog/categories", { params: { query: { scope } }, signal });
   if (error) {
     throw toApiRequestError((response as Response).status, error, "No pudimos actualizar las categorías", "Revisa tu conexión e inténtalo otra vez.");
   }
@@ -148,8 +151,8 @@ export async function getPublicCategories(signal?: AbortSignal) {
   return { items: parsedItems.data };
 }
 
-export async function getPublicCatalogFilterOptions(signal?: AbortSignal): Promise<PublicCatalogFilterOptions> {
-  const { data, error, response } = await apiClient.GET("/api/v1/catalog/filter-options", { signal });
+export async function getPublicCatalogFilterOptions(signal?: AbortSignal, scope: CatalogScope = "GLOBAL"): Promise<PublicCatalogFilterOptions> {
+  const { data, error, response } = await apiClient.GET("/api/v1/catalog/filter-options", { params: { query: { scope } }, signal });
   if (error) {
     throw toApiRequestError((response as Response).status, error,
       "No pudimos actualizar los filtros del catálogo", "Revisa tu conexión e inténtalo otra vez.");

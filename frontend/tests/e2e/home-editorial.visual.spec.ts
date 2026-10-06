@@ -1,105 +1,95 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 const env = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env ?? {};
-const output = "../docs/audit/home-next-reading-2026-10-03/";
 test.skip(!env.PLIEGO_VISUAL_LIVE, "Set PLIEGO_VISUAL_LIVE=1 for the Home's real public catalog checks.");
+const popular = 'section[aria-labelledby="popular-heading"]';
 async function ready(page: Page) {
-  await expect(page.locator("[data-reading-scene]")).toHaveCount(4); await expect(page.locator("#literature-heading")).toBeVisible();
-  await page.locator("img").evaluateAll((images) => images.forEach((image) => (image as HTMLImageElement).loading = "eager"));
-  await page.evaluate(() => document.fonts.ready); await expect(page.locator(".cover-image--loading")).toHaveCount(0, { timeout: 45_000 });
+  await expect(page.locator(`${popular} [data-media]`).nth(5)).toBeAttached();
+  await page.evaluate(() => document.fonts.ready);
 }
 async function accessible(page: Page) {
   const audit = await new AxeBuilder({ page }).setLegacyMode().withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
   expect(audit.violations.map(({ id, nodes }) => ({ id, nodes: nodes.map(({ target, failureSummary }) => ({ target, failureSummary })) }))).toEqual([]);
 }
-for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 390, 768, 1024, 1440, 1920]) {
+for (const scheme of ["light", "dark"] as const) for (const width of [320, 390, 768, 1024, 1280, 1440, 1920]) {
   test.describe(`Home ${scheme} ${width}px`, () => {
-    test.use({ viewport: { width, height: width < 600 ? 844 : 1000 }, isMobile: width < 600, hasTouch: width <= 1024 });
-    test("complete Home: real editorial books, responsive composition, keyboard and commerce destinations", async ({ page }, testInfo) => {
-      test.setTimeout(150_000); await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
+    test.use({ viewport: { width, height: width < 600 ? 844 : width === 1280 ? 720 : 900 }, isMobile: width < 600, hasTouch: width <= 1024 });
+    test("complete Home: opening, popular row, footer, keyboard and real destinations", async ({ page }, testInfo) => {
+      test.setTimeout(120_000); await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
       await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
-      const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message)); await page.goto("/"); await ready(page);
+      const errors: string[] = []; page.on("pageerror", (error) => errors.push(error.message)); page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
+      await page.goto("/"); await ready(page);
+      // The Home is the opening, the popular row, the two ways onward, the four benefits and the closing card, then the footer.
+      const main = page.getByRole("main");
+      await expect(main.locator(":scope section")).toHaveCount(5);
       const hero = page.locator('section[aria-labelledby="page-title"]');
-      // The brand character carries the hero; product covers stay out of it.
-      await expect(hero.locator("img")).toHaveCount(0); await expect(hero.locator('svg[aria-hidden="true"]')).toHaveCount(1);
-      await expect(hero.getByRole("link")).toHaveCount(1);
-      const heroAction = hero.getByRole("link", { name: "Explorar libros", exact: true }); await heroAction.focus();
-      await expect(heroAction).toBeFocused(); expect(await heroAction.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe("none");
+      await expect(hero.getByRole("heading", { level: 1, name: "Descubre el mundo de PLIEGO." })).toBeVisible(); await expect(hero.locator("svg")).toHaveCount(0);
+      await expect(hero.getByRole("link")).toHaveText([/^Explorar libros/, /^Explorar eBooks/, /^Explorar audiolibros/]);
+      const heroAction = hero.getByRole("link", { name: "Explorar libros", exact: true }); await heroAction.focus(); await expect(heroAction).toBeFocused();
       await page.evaluate(() => { document.activeElement instanceof HTMLElement && document.activeElement.blur(); scrollTo(0, 0); });
       await expect(page.getByTestId("site-header")).toHaveAttribute("data-home", "true");
-      const track = page.locator("[data-reading-track]"); await expect(track).toHaveAttribute("data-active", "0");
+      // The next section starts below the first screen.
+      expect(await page.locator("#popular-heading").evaluate((node) => node.getBoundingClientRect().top)).toBeGreaterThanOrEqual(await page.evaluate(() => innerHeight));
       await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
-      await accessible(page); await page.evaluate(() => scrollTo(0, 0));
-      await page.screenshot({ path: `${output}home-${scheme}-${width}.png`, fullPage: true }); await page.screenshot({ path: `${output}hero-${scheme}-${width}.png` });
-      for (const section of ["discovery-heading", "explora-temas", "literature-heading"]) {
-        const target = section === "explora-temas" ? page.locator("#explora-temas") : page.locator(`#${section}`).locator("xpath=ancestor::section[1]");
-        await target.screenshot({ path: `${output}${section}-${scheme}-${width}.png`, style: "header { visibility: hidden; }" });
-      }
-      const geometry = await page.locator("[data-reading-scene] .book-cover").evaluateAll((covers) => covers.map((cover) => {
-        const rect = cover.getBoundingClientRect(); const img = cover.querySelector<HTMLImageElement>("img");
-        return { ratio: rect.width / rect.height, width: rect.width, height: rect.height, fit: img ? getComputedStyle(img).objectFit : null, decoded: Boolean(img?.naturalWidth) };
-      }));
-      for (const cover of geometry) { expect(cover.ratio).toBeCloseTo(2 / 3, 2); expect(cover.fit).toBe("contain"); expect(cover.decoded).toBe(true); }
-      const feature = page.locator('section[aria-labelledby="literature-heading"]');
-      const editionHref = await feature.getByRole("link", { name: "Ver esta edición", exact: true }).getAttribute("href"); const editionId = editionHref!.split("/editions/")[1].split("?")[0];
-      const response = await page.request.get(`/api/v1/catalog/editions/${editionId}`); expect(response.ok()).toBe(true);
-      const edition = await response.json(); await expect(page.locator("#literature-heading")).toHaveText(edition.title);
-      const first = page.locator("[data-reading-scene]:not([inert])"); const link = first.locator("[data-reading-title]");
-      await link.scrollIntoViewIfNeeded(); await link.focus(); await expect(link).toBeFocused(); expect(await link.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe("none");
-      await page.keyboard.press("Tab"); await expect(first.locator("[data-reading-cart]")).toBeFocused();
-      await page.keyboard.press("Tab"); await expect(first.locator("[data-reading-favorite]")).toBeFocused();
-      await first.locator("[data-reading-favorite]").click(); await expect(page).toHaveURL(/\/sign-in\?from=/); await page.goBack(); await ready(page);
-      // Topic chips choose the set; dots and arrows move inside it; nothing moves by itself.
-      const scene = page.locator('section[aria-labelledby="discovery-heading"]');
-      const topics = scene.getByRole("group", { name: "Elige un tema" });
-      for (const topic of ["Literatura", "Matemáticas", "Filosofía"]) {
-        await topics.getByRole("button", { name: topic, exact: true }).click();
-        await expect(topics.getByRole("button", { name: topic, exact: true })).toHaveAttribute("aria-pressed", "true");
-        await expect(scene.getByRole("group", { name: `Libros de ${topic}` })).toBeVisible(); await ready(page);
-        await expect(track).toHaveAttribute("data-active", "0");
-        await expect(scene.getByRole("button", { name: "Libro anterior" })).toHaveAttribute("aria-disabled", "true");
-        await scene.screenshot({ path: `${output}scene-${topic}-${scheme}-${width}.png`, style: "header { visibility: hidden; }" });
-      }
-      const dots = scene.getByRole("group", { name: "Libros de Filosofía" }).getByRole("button");
-      await dots.last().click(); await expect(dots.last()).toHaveAttribute("aria-current", "true");
-      await expect(scene.getByRole("button", { name: "Libro siguiente" })).toHaveAttribute("aria-disabled", "true");
-      await scene.screenshot({ path: `${output}scene-last-${scheme}-${width}.png`, style: "header { visibility: hidden; }" });
-      await dots.first().click(); await expect(dots.first()).toHaveAttribute("aria-current", "true");
-      const next = scene.getByRole("button", { name: "Libro siguiente", exact: true }); await next.scrollIntoViewIfNeeded(); if (width <= 1024) await next.tap(); else await next.click();
-      await expect(dots.nth(1)).toHaveAttribute("aria-current", "true");
-      await expect(track).toHaveAttribute("data-active", "1");
-      await first.locator("[data-reading-title]").click(); await expect(page).toHaveURL(/\/catalog\/editions\//); await page.goBack(); await ready(page);
-      await expect(track).toHaveAttribute("data-active", "1"); await expect(dots.nth(1)).toHaveAttribute("aria-current", "true");
-      await page.evaluate(() => { document.activeElement instanceof HTMLElement && document.activeElement.blur(); document.documentElement.style.fontSize = "32px"; });
-      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(width); await page.evaluate(() => scrollTo(0, 0));
-      await page.screenshot({ path: `${output}text200-${scheme}-${width}.png`, fullPage: true }); await page.evaluate(() => document.documentElement.style.fontSize = "");
-      await page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true }).click(); const search = page.getByRole("dialog", { name: "Buscar en el catálogo" });
-      await expect(search.getByRole("searchbox")).toBeFocused(); await search.getByRole("searchbox").fill("cien"); await expect(search.getByRole("link", { name: /Cien años de soledad/ })).toBeVisible(); await accessible(page);
-      await page.keyboard.press("Escape"); await expect(page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true })).toBeFocused();
-      await page.getByRole("navigation", { name: "Explora por tema" }).getByRole("link", { name: "Matemáticas", exact: true }).click();
-      await expect(page).toHaveURL(/\/catalog\?category=matematicas/); await expect(page.getByTestId("site-header")).not.toHaveAttribute("data-home"); expect(errors).toEqual([]);
-      await testInfo.attach("geometry", { body: JSON.stringify({ width, scheme, geometry, errors }, null, 2), contentType: "application/json" });
+      await accessible(page); await page.screenshot({ path: testInfo.outputPath(`home-${scheme}-${width}.png`), fullPage: true });
+      // Ofertas and Ayuda lead to the projection's destinations; the footer follows them directly.
+      const onward = page.getByRole("region", { name: "Ofertas y ayuda" });
+      await expect(onward.getByRole("link", { name: "Ver ofertas" })).toHaveAttribute("href", "/ofertas"); await expect(onward.getByRole("link", { name: "Ir a Ayuda" })).toHaveAttribute("href", "/ayuda");
+      await expect(onward.locator("img")).toHaveCount(0); await expect(onward.locator("svg")).toHaveCount(1);
+      const benefits = page.locator('section[aria-labelledby="benefits-heading"]');
+      await expect(benefits.getByRole("heading", { level: 3 })).toHaveText(["Todo en un solo lugar.", "Envío gratis.", "Ofertas que sí valen la pena.", "Ayuda cuando la necesites."]);
+      await expect(benefits.getByRole("link")).toHaveCount(4);
+      if (width >= 1000) expect(new Set(await benefits.locator("li").evaluateAll((cards) => cards.map((card) => Math.round(card.getBoundingClientRect().top)))).size).toBe(1);
+      const gap = await page.evaluate(() => document.querySelector("footer")!.getBoundingClientRect().top - document.querySelector('section[aria-labelledby="closing-heading"]')!.getBoundingClientRect().bottom);
+      await expect(page.getByRole("heading", { name: "Ya está. Ahora solo falta encontrar tu próxima historia." })).toBeVisible(); await expect(page.locator('section[aria-labelledby="closing-heading"]').getByText("¡Muchas gracias!")).toBeVisible();
+      // Ofertas opens by pointer on the action itself, inside the app, and the way back returns here.
+      await page.evaluate(() => { (window as unknown as { pliegoSameDocument?: boolean }).pliegoSameDocument = true; });
+      const offersAction = onward.getByRole("link", { name: "Ver ofertas" }); await offersAction.scrollIntoViewIfNeeded(); const actionBox = (await offersAction.boundingBox())!;
+      if (width > 1024) await page.mouse.click(actionBox.x + actionBox.width / 2, actionBox.y + actionBox.height / 2); else await page.touchscreen.tap(actionBox.x + actionBox.width / 2, actionBox.y + actionBox.height / 2);
+      await expect(page).toHaveURL(/\/ofertas$/); await expect(page.getByRole("heading", { level: 1, name: "Ofertas" })).toBeVisible();
+      expect(await page.evaluate(() => (window as unknown as { pliegoSameDocument?: boolean }).pliegoSameDocument)).toBe(true);
+      await page.goBack(); await expect(page).toHaveURL(/\/$/); await ready(page);
+      expect(gap).toBeGreaterThanOrEqual(0); expect(gap).toBeLessThan(8);
+      // Real titles, none repeated; the row moves by its controls and stops at its ends.
+      const track = page.locator("[data-popular-track]"); const links = track.locator("[data-media] a");
+      const hrefs = await links.evaluateAll((nodes) => nodes.map((node) => node.getAttribute("href"))); expect(new Set(hrefs).size).toBe(hrefs.length);
+      await expect(track.locator("[data-media]").first().locator("img")).toHaveCount(1);
+      const previous = page.getByRole("button", { name: "Títulos anteriores" }), next = page.getByRole("button", { name: "Más títulos" });
+      await expect(previous).toHaveAttribute("aria-disabled", "true"); await next.scrollIntoViewIfNeeded(); await next.click();
+      await expect(track).toHaveAttribute("data-page", "1"); await expect(previous).toHaveAttribute("aria-disabled", "false");
+      await previous.click(); await expect(track).toHaveAttribute("data-page", "0");
+      await page.evaluate(() => { document.documentElement.style.fontSize = "32px"; });
+      await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
+      await page.evaluate(() => { document.documentElement.style.fontSize = ""; });
+      const first = links.first(); const title = (await first.textContent())!; await first.click();
+      await expect(page).toHaveURL(/\/catalog\/editions\//); await expect(page.getByRole("heading", { level: 1, name: title, exact: true })).toBeVisible();
+      await page.goBack(); await ready(page);
+      // The footer: three short groups, the real payment methods and the legal line; no subject directory.
+      const footer = page.locator("footer"); const footerNav = page.getByRole("navigation", { name: "Navegación del pie de página" });
+      await expect(footerNav.getByRole("heading")).toHaveText(["Explorar", "Tu PLIEGO", "Ayuda"]);
+      expect(await footerNav.getByRole("link").count()).toBeLessThanOrEqual(13);
+      await expect(footer.getByRole("list", { name: "Métodos de pago" }).getByRole("img")).toHaveCount(4); await expect(footer.getByText("Transferencia bancaria")).toBeVisible();
+      await expect(footer.getByText("© 2026-2026 PLIEGO", { exact: true })).toBeVisible();
+      await footerNav.getByRole("link", { name: "Libros", exact: true }).click();
+      await expect(page).toHaveURL(/\/catalog\?productType=PHYSICAL$/); await expect(page.getByTestId("site-header")).not.toHaveAttribute("data-home"); expect(errors).toEqual([]);
     });
   });
 }
 
 for (const scheme of ["light", "dark"] as const) {
-  test(`Home recovery and empty catalog remain accessible at 320px / ${scheme}`, async ({ page }) => {
+  test(`Home recovery stays accessible at 320px / ${scheme}`, async ({ page }) => {
     await page.setViewportSize({ width: 320, height: 844 }); await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
     await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
     let failed = true;
-    const unavailable = { status: 503, contentType: "application/problem+json", body: JSON.stringify({ status: 503, title: "Servicio no disponible", detail: "Revisa tu conexión e inténtalo otra vez." }) };
-    await page.route("**/api/v1/catalog/categories", (route) => failed ? route.fulfill(unavailable) : route.fulfill({ contentType: "application/json", body: JSON.stringify({ items: [{ slug: "filosofia", name: "Filosofía", parentSlug: null }] }) }));
-    await page.route("**/api/v1/catalog/editions**", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify({ items: [], page: 0, pageSize: 4, totalCount: "0" }) }));
-    await page.goto("/"); const scene = page.locator('section[aria-labelledby="discovery-heading"]');
-    const retry = scene.getByRole("button", { name: "Volver a intentar", exact: true }); await expect(retry).toBeVisible();
+    await page.route("**/api/v1/storefront/navigation", (route) => failed ? route.fulfill({ status: 503, contentType: "application/problem+json", body: JSON.stringify({ status: 503, title: "Servicio no disponible", detail: "Revisa tu conexión e inténtalo otra vez." }) }) : route.continue());
+    await page.goto("/"); const hero = page.locator('section[aria-labelledby="page-title"]');
+    const retry = hero.getByRole("button", { name: "Reintentar", exact: true }); await expect(retry).toBeVisible({ timeout: 20_000 });
+    await expect(page.locator(popular)).toHaveCount(0);
     await page.evaluate(() => document.fonts.ready); await accessible(page);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
-    await page.screenshot({ path: `${output}recovery-${scheme}-320.png`, fullPage: true });
-    failed = false; await retry.click(); await expect(scene.getByRole("heading", { name: "Aún no hay libros publicados en Filosofía." })).toBeVisible();
-    await expect(scene.getByRole("link", { name: "Ver el catálogo" })).toHaveAttribute("href", "/catalog"); await accessible(page);
-    await page.evaluate(() => document.documentElement.style.fontSize = "32px");
+    failed = false; await retry.click();
+    await expect(hero.getByRole("link")).toHaveText([/^Explorar libros/, /^Explorar eBooks/, /^Explorar audiolibros/]); await ready(page); await accessible(page);
+    await page.evaluate(() => { document.documentElement.style.fontSize = "32px"; });
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
-    await page.screenshot({ path: `${output}empty-text200-${scheme}-320.png`, fullPage: true });
   });
 }

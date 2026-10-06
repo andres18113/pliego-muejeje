@@ -1,61 +1,81 @@
-import { Button, NativeSelect, UnstyledButton } from "@mantine/core";
+import { Button, UnstyledButton } from "@mantine/core";
 import type { RefObject } from "react";
+import { ChoicePicker } from "@/shared/ui/ChoicePicker";
 import type { PublicCategory, PublicCatalogFilterOptions } from "@/shared/api/catalog";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { catalogFacets, auxiliaryFilterCount } from "./catalogFacets";
+import { mediaOfProductType, mediaTitle } from "./catalogMedia";
 import { formatEdition, formatLanguage, formatUsd } from "./formatters";
 import type { CatalogCriteria } from "./catalogUrl";
 import classes from "./exploration.module.css";
 
 const countFormat = new Intl.NumberFormat("es-EC");
-type Removable = "query" | "category" | "minPrice" | "maxPrice" | "language" | "format" | "productType";
+export type RemovableCriterion = "query" | "category" | "minPrice" | "maxPrice" | "language" | "format";
+
+/** Orientation, not a banner: the collection's name in ink display type with its count beneath it. */
+export function CatalogHeading({ criteria, categories, pending, total }: {
+  criteria: CatalogCriteria; categories: PublicCategory[]; pending: boolean; total?: bigint;
+}) {
+  const categoryName = categories.find((category) => category.slug === criteria.category)?.name ?? criteria.category;
+  const title = criteria.query ? `Resultados para «${criteria.query}»` : criteria.category ? categoryName : mediaTitle(mediaOfProductType(criteria.productType));
+  return <header className={classes.heading}>
+    <h1 className={classes.pageTitle}>{title}</h1>
+    <p className={classes.resultCount}>{pending ? "Buscando…" : total !== undefined ? `${countFormat.format(total)} ${total === 1n ? "edición" : "ediciones"}` : " "}</p>
+  </header>;
+}
+
+type CriteriaProps = { criteria: CatalogCriteria; categories: PublicCategory[]; onRemove: (field: RemovableCriterion) => void; onClearAll: () => void };
 
 /**
- * Orientation first (which collection, how many editions), then the controls that refine it: the
- * sort order, the filter trigger and the criteria currently applied — removable, never navigation.
+ * What is applied: removable tokens, never navigation. The medium being browsed is the page itself,
+ * so it is never offered as a removable criterion. On desktop they head the filter sidebar; below it
+ * they join the toolbar above the shelf.
  */
-export function CatalogControls({ criteria, categories, options, optionsError, pending, total, filtersOpen, filterTrigger, onToggleFilters, onChange, onRemove, onClearAll }: {
-  criteria: CatalogCriteria; categories: PublicCategory[]; options?: PublicCatalogFilterOptions;
-  optionsError: string; pending: boolean; total?: bigint; filtersOpen: boolean;
-  filterTrigger: RefObject<HTMLButtonElement | null>; onToggleFilters: () => void;
-  onChange: (next: CatalogCriteria) => void; onRemove: (field: Removable) => void; onClearAll: () => void;
-}) {
-  const facets = catalogFacets(options, criteria);
-  const count = auxiliaryFilterCount(criteria) + Number(Boolean(criteria.category));
-  const canFilter = categories.length > 0 || facets.format || facets.language || facets.price || Boolean(optionsError) || count > 0;
+export function AppliedCriteria({ criteria, categories, onRemove, onClearAll }: CriteriaProps) {
   const categoryName = categories.find((category) => category.slug === criteria.category)?.name ?? criteria.category;
-  const mediaLabel = criteria.productType === "PHYSICAL" ? "Libros físicos" : criteria.productType === "EBOOK" ? "eBooks" : criteria.productType === "AUDIOBOOK" ? "Audiolibros" : null;
-  const applied: { field: Removable; label: string }[] = [];
-  if (mediaLabel) applied.push({ field: "productType", label: mediaLabel });
+  const applied: { field: RemovableCriterion; label: string }[] = [];
   if (criteria.query) applied.push({ field: "query", label: `«${criteria.query}»` });
   if (criteria.category) applied.push({ field: "category", label: categoryName });
   if (criteria.format) applied.push({ field: "format", label: formatEdition(criteria.format) });
   if (criteria.language) applied.push({ field: "language", label: formatLanguage(criteria.language) });
+  // Price ranges stay valid URL criteria (shared links, older bookmarks): shown and removable, never typed here.
   if (criteria.minPrice || criteria.maxPrice) applied.push({ field: "minPrice", label: criteria.minPrice && criteria.maxPrice ? `${formatUsd(criteria.minPrice)}–${formatUsd(criteria.maxPrice)}` : criteria.minPrice ? `Desde ${formatUsd(criteria.minPrice)}` : `Hasta ${formatUsd(criteria.maxPrice)}` });
-  const title = criteria.query ? `Resultados para «${criteria.query}»` : criteria.category ? categoryName : mediaLabel ?? "Todos los libros";
+  if (applied.length === 0) return null;
+  return <ul className={classes.applied} aria-label="Criterios aplicados">
+    {applied.map(({ field, label }) => <li key={field}>
+      <UnstyledButton className={classes.token} onClick={() => onRemove(field)} aria-label={`Quitar ${field === "query" ? `búsqueda ${label}` : label}`}>
+        <span className={classes.tokenPill}><span className={classes.tokenLabel}>{label}</span><MaterialSymbol name="close" size={16} /></span>
+      </UnstyledButton>
+    </li>)}
+    {applied.length > 1 && <li><UnstyledButton className={classes.clearAll} onClick={onClearAll}>Limpiar todo</UnstyledButton></li>}
+  </ul>;
+}
 
-  // One bounded lavender band: orientation (collection + count) beside the controls that refine it;
-  // applied criteria join it on a second line only when they exist.
-  return <div className={classes.intro}>
-    <header className={classes.heading}>
-      <h1 className={classes.pageTitle}>{title}<span className={classes.here} aria-hidden="true" /></h1>
-      <p className={classes.resultCount}>{pending ? "Buscando…" : total !== undefined ? `${countFormat.format(total)} ${total === 1n ? "edición" : "ediciones"}` : ""}</p>
-    </header>
-    <div className={classes.tools}>
-      {facets.priceSort && <label className={classes.sortLabel}><span>Ordenar</span><NativeSelect aria-label="Ordenar por" value={criteria.sort} onChange={(event) => onChange({ ...criteria, sort: event.currentTarget.value as CatalogCriteria["sort"], page: 0 })} data={[{ value: "BEST_SELLING", label: "Más vendidos" }, { value: "TITLE_ASC", label: "Título, A–Z" }, { value: "PRICE_ASC", label: "Precio: menor a mayor" }, { value: "PRICE_DESC", label: "Precio: mayor a menor" }]} rightSection={<MaterialSymbol name="expand_more" size={20} />} classNames={{ root: classes.sort, input: classes.sortInput }} /></label>}
-      {canFilter && <Button ref={filterTrigger} variant="outline" radius="xl" className={classes.filterButton} data-active={count > 0 || undefined}
-        leftSection={<MaterialSymbol name="filter_list" size={20} />} aria-label={count > 0 ? `Filtros, ${count} ${count === 1 ? "activo" : "activos"}` : undefined} aria-haspopup="dialog" aria-expanded={filtersOpen} onClick={onToggleFilters}
-        rightSection={count > 0 ? <span className={classes.filterCount} aria-hidden="true">{count}</span> : undefined}>
-        Filtros
-      </Button>}
-    </div>
-    {applied.length > 0 && <ul className={classes.applied} aria-label="Criterios aplicados">
-      {applied.map(({ field, label }) => <li key={field}>
-        <UnstyledButton className={classes.token} onClick={() => onRemove(field)} aria-label={`Quitar ${field === "query" ? `búsqueda ${label}` : label}`}>
-          <span className={classes.tokenPill}><span className={classes.tokenLabel}>{label}</span><MaterialSymbol name="close" size={16} /></span>
-        </UnstyledButton>
-      </li>)}
-      {applied.length > 1 && <li><UnstyledButton className={classes.clearAll} onClick={onClearAll}>Limpiar todo</UnstyledButton></li>}
-    </ul>}
+/** The sort order, exactly the search contract's choices, as PLIEGO's shared choice picker. */
+export function SortControl({ criteria, options, onChange }: { criteria: CatalogCriteria; options?: PublicCatalogFilterOptions; onChange: (next: CatalogCriteria) => void }) {
+  return <div className={classes.sortSlot}>
+    <ChoicePicker label="Ordenar por" caption="Ordenar por" value={criteria.sort} options={catalogFacets(options, criteria).sorts}
+      onChange={(sort) => onChange({ ...criteria, sort, page: 0 })} className={classes.sort} align="end" appearance="quiet" />
+  </div>;
+}
+
+/**
+ * Below desktop, the line directly above the shelf: the filter drawer's trigger, the sort order and the
+ * applied criteria. (Desktop sets the sort beside the heading and the criteria in the sidebar.)
+ */
+export function CatalogToolbar({ criteria, categories, options, canFilter, filtersOpen, filterTrigger, onToggleFilters, onChange, onRemove, onClearAll }: CriteriaProps & {
+  options?: PublicCatalogFilterOptions; canFilter: boolean;
+  filtersOpen: boolean; filterTrigger: RefObject<HTMLButtonElement | null>; onToggleFilters: () => void;
+  onChange: (next: CatalogCriteria) => void;
+}) {
+  const count = auxiliaryFilterCount(criteria) + Number(Boolean(criteria.category));
+  return <div className={classes.toolbar}>
+    {canFilter && <Button ref={filterTrigger} variant="default" className={classes.filterButton} data-active={count > 0 || undefined}
+      leftSection={<MaterialSymbol name="filter_list" size={20} />} aria-label={count > 0 ? `Filtros, ${count} ${count === 1 ? "activo" : "activos"}` : undefined} aria-haspopup="dialog" aria-expanded={filtersOpen} onClick={onToggleFilters}
+      rightSection={count > 0 ? <span className={classes.filterCount} aria-hidden="true">{count}</span> : undefined}>
+      Filtros
+    </Button>}
+    <AppliedCriteria criteria={criteria} categories={categories} onRemove={onRemove} onClearAll={onClearAll} />
+    <SortControl criteria={criteria} options={options} onChange={onChange} />
   </div>;
 }

@@ -1,0 +1,106 @@
+/* Storefront navigation. Desktop: the server's sections on the bar; a section with featured titles, subjects
+   or a bestseller destination opens one bounded paper panel under the header — its name and destinations,
+   up to three compact titles on mist, and its subjects as a quiet list. Phones: the same data as a list that
+   unfolds in place inside a sheet. Everything shown comes from the storefront projection. */
+.bar { display: flex; align-items: center; gap: inherit; margin: 0; padding: 0; list-style: none; }
+.bar > li { display: flex; }
+.trigger { gap: 2px; border: 0; background: none; font-family: inherit; cursor: pointer; }
+.chevron { margin-right: -4px; transition: rotate 160ms cubic-bezier(.32, .94, .6, 1); }
+.trigger[aria-expanded="true"] .chevron { rotate: 180deg; }
+
+.pending { display: flex; align-items: center; gap: 28px; min-height: 44px; padding-inline: 14px; opacity: .7; }
+.failure { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 2px 8px; color: var(--pliego-text-muted); font-size: .9375rem; line-height: 1.4; }
+.retry { min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--header-accent); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+
+/* The panel hangs from the bar (its positioned ancestor), centered and bounded: paper, 24px, one soft shadow. */
+.panel {
+  position: absolute; top: calc(100% + 4px); left: 50%; z-index: 3; translate: -50% 0; width: min(1120px, calc(100% - 48px)); max-height: calc(100dvh - 120px); overflow-y: auto;
+  border-radius: 24px; padding: 32px 36px 36px; background: var(--pliego-surface); color: var(--pliego-text);
+  box-shadow: 0 0 0 1px var(--pliego-border), 0 28px 56px -32px rgb(20 23 55 / 55%);
+  animation: open 140ms cubic-bezier(.32, .94, .6, 1);
+}
+/* A section with destinations only gets a panel its own size, not an empty wide one. */
+.panel:not(:has(.featured, .topics)) { width: min(360px, calc(100% - 48px)); padding: 26px 32px 24px; }
+@keyframes open { from { opacity: 0; translate: -50% -6px; } }
+/* A bridge over the 4px gap so moving the pointer from the bar into the panel never leaves the menu. */
+.panel::before { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 8px; }
+.panelInner { display: flex; align-items: flex-start; gap: clamp(28px, 4vw, 56px); min-width: 0; }
+.panel p { margin: 0; }
+.panel ul { margin: 0; padding: 0; list-style: none; }
+
+.lead { flex: 0 0 clamp(180px, 20vw, 220px); min-width: 0; }
+.panelTitle { color: var(--pliego-text); font: 650 1.75rem/1.1 var(--store-display); letter-spacing: -.04em; overflow-wrap: anywhere; }
+.primary { display: grid; gap: 2px; padding-top: 14px; }
+.primary a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--pliego-text); font-size: 1.0625rem; font-weight: 500; text-decoration: none; }
+.primary li:first-child a { color: var(--header-accent); font-weight: 600; }
+.primary a :global(.material-symbol) { opacity: 0; translate: -4px 0; transition: opacity 140ms, translate 140ms; }
+.primary a:hover, .primary a:focus-visible { color: var(--header-accent); }
+.primary a:hover :global(.material-symbol), .primary a:focus-visible :global(.material-symbol) { opacity: 1; translate: 0 0; }
+.count { color: var(--pliego-text-muted); font-size: .875rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+
+/* Featured: compact, navigation-sized. The jacket stands on a mist field; identity and price sit under it. */
+.featured.featured { flex: 1 1 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; min-width: 0; }
+.product { display: grid; align-content: start; gap: 3px; min-width: 0; border-radius: 16px; padding-bottom: 4px; color: var(--pliego-text); text-decoration: none; }
+.productCover { display: grid; place-items: end center; height: 148px; margin-bottom: 8px; padding: 16px 16px 14px; border-radius: 16px; background: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--pliego-surface)); transition: background-color 160ms; }
+.productCover :global(.book-cover) { width: 78px; }
+.productCover :global(.cover-frame) { background: transparent; }
+.productTitle { display: -webkit-box; overflow: hidden; font: 650 1rem/1.2 var(--store-display); letter-spacing: -.025em; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
+.productAuthors { overflow: hidden; color: var(--pliego-text-muted); font-size: .8125rem; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
+.price { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; font-size: .9375rem; font-weight: 600; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.price s { color: var(--pliego-text-muted); font-size: .8125rem; font-weight: 400; }
+.product:hover .productTitle, .product:focus-visible .productTitle { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+.product:hover .productCover { background: var(--store-lavender, #e4def4); }
+:global([data-mantine-color-scheme="dark"]) .productCover { background: #2e2b4d; }
+:global([data-mantine-color-scheme="dark"]) .product:hover .productCover { background: #3a3660; }
+
+/* Subjects: easy to scan, clearly subordinate. */
+.topics { flex: 0 1 220px; min-width: 0; }
+.panelInner:not(:has(.featured)) .topics { flex: 1 1 0; }
+.panelInner:not(:has(.featured)) .topics ul { columns: 3 160px; column-gap: 32px; }
+.topics p, .sheetTopics p { padding: 10px 0 6px; color: var(--pliego-text-muted); font-size: .8125rem; font-weight: 600; line-height: 1.4; }
+.topics a { display: flex; align-items: center; min-height: 36px; break-inside: avoid; color: var(--pliego-text); font-size: .9375rem; line-height: 1.35; text-decoration: none; overflow-wrap: anywhere; }
+.topics a:hover, .topics a:focus-visible { color: var(--header-accent); text-decoration: underline; text-underline-offset: 4px; }
+
+/* On narrower desktops the panel keeps its three parts by letting subjects drop under the destinations. */
+@media (max-width: 1239px) {
+  .panelInner { flex-wrap: wrap; }
+  .topics { flex-basis: 100%; }
+  .topics ul { columns: 4 150px; column-gap: 28px; }
+}
+
+/* Phone sheet */
+.sheet {
+  --pliego-surface: var(--store-paper); --pliego-text: var(--store-ink); --pliego-text-muted: #595a6e; --pliego-border: #d4d2dc; --pliego-surface-hover: var(--store-lavender);
+  --header-accent: var(--mantine-primary-color-filled); --header-focus: var(--mantine-color-pliego-8);
+}
+.sheet.sheet { background: var(--pliego-surface); color: var(--pliego-text); }
+:global([data-mantine-color-scheme="dark"]) .sheet { --pliego-surface: #22243b; --pliego-text: #f0edf8; --pliego-text-muted: #c5c1d5; --pliego-border: #4e506b; --pliego-surface-hover: #3c3e5a; --header-accent: var(--mantine-primary-color-light-color); --header-focus: var(--mantine-color-pliego-3); }
+.sheet :focus-visible { outline: 2px solid var(--header-focus); outline-offset: 2px; }
+.sheetHeader.sheetHeader { background: var(--pliego-surface); }
+.sheetTitle.sheetTitle { font: 650 1.375rem/1.2 var(--store-display); letter-spacing: -.035em; }
+.sheetNavigation { display: grid; gap: 8px; min-width: 0; padding-bottom: 24px; }
+.sheetNavigation ul { margin: 0; padding: 0; list-style: none; }
+.sheetNavigation p { margin: 0; }
+.sheetNavigation .pending { flex-direction: column; align-items: flex-start; gap: 22px; padding: 16px 0; }
+.sheetList > li { border-bottom: 1px solid var(--pliego-border); }
+.sheetRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 56px; padding: 8px 2px; border: 0; border-radius: 8px; background: none; color: var(--pliego-text); font-family: inherit; font-size: 1.125rem; font-weight: 600; line-height: 1.3; text-align: left; text-decoration: none; cursor: pointer; overflow-wrap: anywhere; }
+.sheetRow[aria-current="page"], .sheetRow[aria-expanded="true"] { color: var(--header-accent); }
+.sheetRow[aria-current="page"]::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; margin-right: -4px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
+.sheetRow :global(.material-symbol) { margin-left: auto; color: var(--pliego-text-muted); }
+.sheetSection { display: grid; gap: 14px; min-width: 0; padding: 0 2px 18px; }
+.sheetPrimary { display: flex; flex-wrap: wrap; gap: 8px; }
+.sheetPrimary a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 16px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--pliego-border); color: var(--pliego-text); font-size: .9375rem; font-weight: 500; text-decoration: none; }
+.sheetPrimary li:first-child a { background: var(--header-accent); box-shadow: none; color: var(--mantine-color-white); font-weight: 600; }
+:global([data-mantine-color-scheme="dark"]) .sheetPrimary li:first-child a { color: var(--store-ink, #252740); }
+.sheetPrimary li:first-child .count { color: inherit; }
+.sheetFeatured { display: grid; gap: 4px; }
+.sheetProduct { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: center; gap: 14px; min-height: 60px; padding: 6px 8px 6px 6px; border-radius: 14px; background: color-mix(in srgb, var(--store-lavender, #e4def4) 40%, var(--pliego-surface)); color: var(--pliego-text); text-decoration: none; }
+:global([data-mantine-color-scheme="dark"]) .sheetProduct { background: #2e2b4d; }
+.sheetCover :global(.book-cover) { width: 100%; }
+.sheetProductText { display: grid; gap: 1px; min-width: 0; }
+.sheetTopics ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
+.sheetTopics a { display: flex; align-items: center; min-height: 44px; color: var(--pliego-text); font-size: .9375rem; line-height: 1.35; text-decoration: none; overflow-wrap: anywhere; }
+@media (max-width: 339px) { .sheetTopics ul { grid-template-columns: minmax(0, 1fr); } }
+
+@media (prefers-reduced-motion: reduce) { .panel { animation: none; } .chevron, .primary a :global(.material-symbol), .productCover { transition: none; } }
+@media (forced-colors: active) { .panel { border: 1px solid CanvasText; } }

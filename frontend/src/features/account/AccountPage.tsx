@@ -49,7 +49,7 @@ function AccountContent() {
     {profileQuery.isPending ? <p className="purchase-loading" role="status">Consultando tus datos…</p> : !profileQuery.data ? <ReadFailure title="No pudimos consultar tus datos." onRetry={() => void profileQuery.refetch()} retrying={profileQuery.isFetching} /> : <>
       {profileQuery.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus datos. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void profileQuery.refetch()}>Actualizar</Button></p>}
       <Profile profile={profileQuery.data} readCurrent={!profileQuery.isError} refetch={profileQuery.refetch} onExpired={() => clear("expired")} />
-      <p><Link to="/reenviar-verificacion" state={{ email: profileQuery.data.email }}>Reenviar verificación de correo</Link></p>
+      <p className={classes.verification}>¿No encuentras el enlace para verificar tu correo? <Link to="/reenviar-verificacion" state={{ email: profileQuery.data.email }}>Reenviar verificación de correo</Link></p>
     </>}
   </AccountShell>;
 }

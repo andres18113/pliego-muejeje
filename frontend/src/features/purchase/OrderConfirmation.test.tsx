@@ -90,16 +90,27 @@ describe("successful order confirmation", () => {
 });
 
 it("confirms digital ownership without presenting any physical destination", async () => {
-  renderConfirmation({ ...homeOrder, fulfillment: null, address: null, shipment: null, items: [{ ...homeOrder.items[0], format: "EBOOK" }] });
+  renderConfirmation({ ...homeOrder, fulfillment: null, address: null, shipment: null, items: [{ ...homeOrder.items[0], format: "EBOOK", requiresPhysicalFulfillment: false }] });
   await screen.findByRole("heading", { name: "Es momento de celebrar" });
   expect(screen.queryByRole("region", { name: "Destino confirmado" })).not.toBeInTheDocument();
   expect(screen.getByRole("link", { name: "Ver Mi biblioteca" })).toHaveAttribute("href", "/biblioteca");
 });
 
 it("limits a mixed purchase's delivery section to physical snapshots", async () => {
-  renderConfirmation({ ...homeOrder, items: [{ ...homeOrder.items[0], format: "PAPERBACK" }, { ...homeOrder.items[0], orderItemId: "2", editionId: "43", title: "Libro digital", format: "EBOOK" }] });
+  renderConfirmation({ ...homeOrder, items: [{ ...homeOrder.items[0], format: "PAPERBACK" }, { ...homeOrder.items[0], orderItemId: "2", editionId: "43", title: "Libro digital", format: "EBOOK", requiresPhysicalFulfillment: false }] });
   const delivery = within(await screen.findByRole("region", { name: "Entrega" }));
   expect(delivery.getByText("Cien años de soledad")).toBeInTheDocument();
   expect(delivery.queryByText("Libro digital")).not.toBeInTheDocument();
   expect(screen.getByRole("region", { name: "Compras digitales" })).toHaveTextContent("Libro digital");
+});
+
+it("classifies confirmation items from server capabilities despite display formats", async () => {
+  renderConfirmation({ ...homeOrder, items: [
+    { ...homeOrder.items[0], format: "EBOOK", requiresPhysicalFulfillment: true },
+    { ...homeOrder.items[0], orderItemId: "2", title: "Compra digital autorizada", format: "PAPERBACK", requiresPhysicalFulfillment: false },
+  ] });
+  const delivery = within(await screen.findByRole("region", { name: "Entrega" }));
+  expect(delivery.getByText("Cien años de soledad")).toBeInTheDocument();
+  expect(delivery.queryByText("Compra digital autorizada")).not.toBeInTheDocument();
+  expect(screen.getByRole("region", { name: "Compras digitales" })).toHaveTextContent("Compra digital autorizada");
 });

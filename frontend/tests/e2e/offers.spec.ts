@@ -31,7 +31,7 @@ test("offers show recoverable errors and a real empty state", async ({ page }) =
     return route.fulfill({ status: failed ? 503 : 200, contentType: "application/json", body: JSON.stringify(failed ? {} : { items: [], page: 0, pageSize: 20, totalCount: "0" }) });
   });
   await page.goto("/ofertas");
-  await expect(page.getByRole("alert").filter({ hasText: "No pudimos" })).toBeVisible();
+  await expect(page.getByRole("alert").filter({ hasText: "No pudimos consultar las ofertas." })).toBeVisible();
   failed = false;
   await page.getByRole("button", { name: "Volver a intentar" }).click();
   await expect(page.getByText("No hay ofertas disponibles por ahora.")).toBeVisible();

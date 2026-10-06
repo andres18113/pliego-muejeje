@@ -63,6 +63,8 @@ class FakePliego {
       currentPrice: edition.price,
       currentSubtotal: (Number(edition.price) * line.quantity).toFixed(2),
       available: this.stock >= line.quantity,
+      requiresPhysicalFulfillment: true,
+      quantityEditable: true,
       unavailabilityReason: this.stock >= line.quantity ? null : "P3002",
     }));
     return {
@@ -188,7 +190,7 @@ class FakePliego {
         orderState: order.orderState,
         subtotal: order.total,
         total: order.total,
-        items: [{ orderItemId: "1", editionId: "42", title: edition.title, authors: "Gabriel García Márquez", publisher: "Editorial Sur", format: "PAPERBACK", unitPrice: edition.price, quantity: order.quantity, subtotal: order.total }],
+        items: [{ orderItemId: "1", editionId: "42", title: edition.title, authors: "Gabriel García Márquez", publisher: "Editorial Sur", format: "PAPERBACK", requiresPhysicalFulfillment: true, unitPrice: edition.price, quantity: order.quantity, subtotal: order.total }],
         address: { recipient: "Ana Pérez", line1: "Av. Amazonas 100", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567" },
         payment: { method: order.method, state: order.paymentState, amount: order.total, reference: order.reference },
         stateHistory: [],

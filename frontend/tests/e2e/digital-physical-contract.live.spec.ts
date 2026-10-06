@@ -18,7 +18,7 @@ async function sample(page: import("@playwright/test").Page, format: string): Pr
 test("live Home, navigation, physical/digital catalog, detail, search and offers", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Tu próxima lectura." })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Descubre el mundo de PLIEGO." })).toBeVisible();
   const header = page.getByTestId("site-header").getByRole("navigation", { name: "Navegación principal" });
   await expect(header.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas"]);
   for (const format of ["PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"]) {
@@ -38,18 +38,13 @@ test("live Home, navigation, physical/digital catalog, detail, search and offers
     await expect(page.getByRole("button", { name: /descargar|reproducir|escuchar/i })).toHaveCount(0);
     await expect(page.getByText("Recibimos una respuesta incompleta", { exact: false })).toHaveCount(0);
   }
+  // The Home's popular row shows every medium the projection features, each with its own label.
   await page.goto("/");
-  const reading = page.getByRole("heading", { name: "Tu próxima lectura." }).locator("..");
-  await reading.getByRole("button", { name: "eBooks", exact: true }).click();
-  await expect(reading.locator("[data-reading-scene]").first()).toBeVisible();
-  await reading.getByRole("button", { name: "Audiolibros", exact: true }).click();
-  await expect(reading.locator("[data-reading-scene]").first()).toBeVisible();
+  const popular = page.locator('section[aria-labelledby="popular-heading"]');
+  for (const medium of ["PHYSICAL", "EBOOK", "AUDIOBOOK"]) await expect(popular.locator(`[data-media="${medium}"]`).first()).toBeAttached();
   const offersResponse = await page.request.get("/api/v1/catalog/offers?page=0&pageSize=5");
   expect(offersResponse.ok()).toBeTruthy();
   const offers = await offersResponse.json();
-  await reading.getByRole("button", { name: "Ofertas", exact: true }).click();
-  if (offers.items.length) await expect(reading.locator(`a[href^="/catalog/editions/${offers.items[0].editionId}"]`).first()).toBeVisible();
-  else await expect(reading.getByText("No hay ofertas disponibles por ahora.")).toBeVisible();
   await header.getByRole("link", { name: "Ofertas" }).click();
   await expect(page.getByRole("heading", { name: "Ofertas", exact: true })).toBeVisible();
   if (offers.items.length) await expect(page.locator(`a[href^="/catalog/editions/${offers.items[0].editionId}"]`).first()).toBeVisible();

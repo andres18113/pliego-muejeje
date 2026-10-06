@@ -64,10 +64,10 @@ export async function mockFavoritesApi(page: Page, initialSaved: string[] = []) 
       phone: null, state: "ACTIVE", version: "0",
     });
     if (path === "/cart" && request.method() === "GET") return json({
-      cartId: "7", state: "ACTIVE",
+      cartId: "7", state: "ACTIVE", requiresPhysicalFulfillment: cartQuantity > 0, physicalItemCount: cartQuantity > 0 ? 1 : 0, digitalItemCount: 0,
       items: cartQuantity ? [{
         cartItemId: "501", editionId: "42", title: editions[0].title, authors: editions[0].authors,
-        sku: "PLG-LIT-042", coverUrl: null, quantity: cartQuantity, currentPrice: "18.50",
+        sku: "PLG-LIT-042", coverUrl: null, requiresPhysicalFulfillment: true, quantityEditable: true, quantity: cartQuantity, currentPrice: "18.50",
         currentSubtotal: `${(18.5 * cartQuantity).toFixed(2)}`, available: true, unavailabilityReason: null,
       }] : [],
       totalCurrent: (18.5 * cartQuantity).toFixed(2),

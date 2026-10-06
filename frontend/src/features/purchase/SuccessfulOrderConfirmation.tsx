@@ -21,7 +21,7 @@ const academicMapReference = { latitude: -.21, longitude: -78.4914 };
 export function SuccessfulOrderConfirmation({ order, headingRef }: { order: OrderDetail; headingRef: Ref<HTMLHeadingElement> }) {
   // The response reports no fulfillment for a digital-only purchase.
   const hasPhysicalFulfillment = order.fulfillment != null;
-  const digitalItems = order.items.filter(item => item.format === "EBOOK" || item.format === "AUDIOBOOK");
+  const digitalItems = order.items.filter(item => !item.requiresPhysicalFulfillment);
   const pickup = order.fulfillment?.method === "STORE_PICKUP" ? order.fulfillment.pickup : null;
   const method = fulfillmentMethodLabel(order.fulfillment?.method);
   const deliveryWindow = order.shipment ? deliveryWindowLabel(order.shipment.estimatedDeliveryFrom, order.shipment.estimatedDeliveryTo) : null;
@@ -106,7 +106,7 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
             <h2 id="confirmation-fulfillment-heading">{fulfillmentHeading}</h2>
             {location ? <p>Horario de atención: {openingHoursLabel(location)}</p> : deliveryWindow && <p>{deliveryWindow}</p>}
           </header>
-          <ul>{order.items.filter(item => item.format !== "EBOOK" && item.format !== "AUDIOBOOK").map((item) => {
+          <ul>{order.items.filter(item => item.requiresPhysicalFulfillment).map((item) => {
             const cover = coverQueries[order.items.indexOf(item)]?.data;
             return <li key={item.orderItemId}>
               <div className={classes.bookCover}><BookCover url={cover?.coverUrl ?? null} license={cover?.coverLicense ?? null} attribution={cover?.coverAttribution ?? null} title={item.title} size="compact" decorative /></div>

@@ -28,3 +28,4 @@
 | [0024](0024-authoritative-home-delivery-simulation.md) | Database-owned home delivery simulation, persisted deadlines and idempotent catch-up | Accepted for requested backend implementation | 2026-10-04 |
 | [0025](0025-edition-offers.md) | Edition offers with database-owned pricing, calendar timing, filtering and monetary snapshots | Accepted for functional integration | 2026-10-05 |
 | [0026](0026-storefront-help-and-digital-ownership.md) | Domain-owned storefront/Help projections and purchase-grant digital ownership with physical-only fulfillment | Accepted for requested architecture implementation | 2026-10-05 |
+| [0027](0027-scoped-public-catalog-filters.md) | Scope existing public categories and facets with PostgreSQL-owned product eligibility | Accepted for requested catalog integration | 2026-10-05 |

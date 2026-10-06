@@ -42,6 +42,8 @@ describe("customer email actions", () => {
     await userEvent.setup().click(screen.getByRole("button", { name: "Verificar correo" }));
     expect(await screen.findByRole("alert")).toHaveTextContent("El enlace venció o ya se utilizó.");
     expect(screen.queryByRole("button", { name: "Verificar correo" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Este enlace ya no está disponible" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Solicitar otro enlace" })).toHaveAttribute("href", "/reenviar-verificacion");
   });
 
   it("captures a fresh fragment on the same mounted route after a rejected token", async () => {

@@ -36,7 +36,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
             + "item_count,unit_count,item_summary::text,invoice_state,invoice_pdf_available,invoice_xml_available "
             + "FROM pliego.fn_customer_orders(?,?,?)";
     private static final String DETAIL = "SELECT order_id,order_state,subtotal,total,created_at,updated_at,"
-            + "items::text AS items,address::text AS address,payment::text AS payment,"
+            + "pliego.fn_purchase_item_capabilities(items)::text AS items,address::text AS address,payment::text AS payment,"
             + "state_history::text AS state_history,purchase_state,fulfillment::text,shipment::text,invoice::text,"
             + "credit_notes::text,available_actions::text,tax_rate,tax_amount,shipping_amount FROM pliego.fn_customer_order_detail_priced(?,?)";
     private static final String CANCEL = "CALL pliego.sp_order_cancel(?,?,?,?,?,?,?)";
@@ -152,7 +152,8 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
                     text(item, "sku"), text(item, "isbn"), text(item, "title"),
                     text(item, "authors"), text(item, "publisher"), text(item, "format"),
                     text(item, "language"), decimal(item, "unitPrice"),
-                    item.path("quantity").intValue(), decimal(item, "subtotal")));
+                    item.path("quantity").intValue(), decimal(item, "subtotal"),
+                    item.path("requiresPhysicalFulfillment").booleanValue()));
         }
         return List.copyOf(result);
     }

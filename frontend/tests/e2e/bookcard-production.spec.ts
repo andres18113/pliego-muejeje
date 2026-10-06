@@ -32,7 +32,7 @@ async function install(page: Page, scheme: "light" | "dark", outcome: "ok" | "un
     if (path === "/me/favorites") return ok({ items: editions.filter((book) => saved.has(book.editionId)).map((book) => ({ ...book, favoritedAt: "2026-10-01T12:00:00Z" })), page: 0, pageSize: 20, totalCount: String(saved.size) });
     if (path.startsWith("/me/favorites/") && method === "DELETE") { commands.push({ method, path, body }); saved.delete(path.split("/").at(-1)!); return route.fulfill({ status: 204 }); }
     if (path.startsWith("/me/favorites/") && method === "PUT") { commands.push({ method, path, body }); saved.add(path.split("/").at(-1)!); return route.fulfill({ status: 204 }); }
-    if (path === "/cart") return ok({ cartId: quantities.size ? "40" : null, state: quantities.size ? "ACTIVE" : null, items: [...quantities].map(([id, quantity]) => ({ cartItemId: id, editionId: id, title: editions.find((book) => book.editionId === id)!.title, authors: "Autor de prueba", sku: id, coverUrl: null, quantity, currentPrice: "20.00", currentSubtotal: "20.00", available: true, unavailabilityReason: null })), totalCurrent: quantities.size ? "20.00" : "0.00" });
+    if (path === "/cart") return ok({ cartId: quantities.size ? "40" : null, state: quantities.size ? "ACTIVE" : null, requiresPhysicalFulfillment: quantities.size > 0, physicalItemCount: quantities.size, digitalItemCount: 0, items: [...quantities].map(([id, quantity]) => ({ cartItemId: id, editionId: id, title: editions.find((book) => book.editionId === id)!.title, authors: "Autor de prueba", sku: id, coverUrl: null, requiresPhysicalFulfillment: true, quantityEditable: true, quantity, currentPrice: "20.00", currentSubtotal: "20.00", available: true, unavailabilityReason: null })), totalCurrent: quantities.size ? "20.00" : "0.00" });
     if (path === "/cart/items" && method === "POST") {
       commands.push({ method, path, body });
       if (outcome !== "unconfirmed") quantities.set(body.editionId, (quantities.get(body.editionId) ?? 0) + 1);
@@ -62,28 +62,20 @@ for (const scheme of ["light", "dark"] as const) {
           overflow: document.documentElement.scrollWidth - innerWidth,
           cards: [...grid.querySelectorAll<HTMLElement>("[data-bookcard]")].map((card) => ({
             ratio: card.querySelector("[data-bookcard-cover]")!.getBoundingClientRect().width / card.querySelector("[data-bookcard-cover]")!.getBoundingClientRect().height,
-            favoriteBesideCart: (() => {
+            // Browse card: the favorite sits on the cover stage's top-right corner, outside the product link; no cart action.
+            favoriteOnStage: (() => {
               const favorite = card.querySelector("[data-bookcard-favorite]")!.getBoundingClientRect();
-              const cart = card.querySelector("[data-bookcard-cart]")!.getBoundingClientRect();
-              // Very narrow action lines stack favorite under the cart by design.
-              if (getComputedStyle(card.querySelector("[data-bookcard-actions]")!).flexWrap === "wrap") return favorite.top >= cart.bottom;
-              return favorite.left >= cart.right && Math.abs(favorite.top + favorite.height / 2 - cart.top - cart.height / 2) < 1;
+              const stage = card.querySelector("[data-bookcard-shelf]")!.getBoundingClientRect();
+              return favorite.top >= stage.top && favorite.right <= stage.right && stage.right - favorite.right <= 12 && favorite.top - stage.top <= 12;
             })(),
-            cartTextVisible: getComputedStyle(card.querySelector('[data-bookcard-cart] .mantine-Button-label > span')!).display !== 'none',
-            // Unavailable carts use the approved dashed outline on a transparent ground; available ones stay solid.
-            cartNeutral: card.querySelector('[data-bookcard-cart]')!.hasAttribute('data-unavailable')
-              ? getComputedStyle(card.querySelector('[data-bookcard-cart]')!).outlineStyle === 'dashed' && getComputedStyle(card.querySelector('[data-bookcard-cart]')!).backgroundColor === 'rgba(0, 0, 0, 0)'
-              : getComputedStyle(card.querySelector('[data-bookcard-cart]')!).outlineStyle !== 'dashed',
-            cartText: card.querySelector('[data-bookcard-cart] .mantine-Button-label > span')!.textContent,
-            cartIcon: card.querySelector('[data-bookcard-cart] .material-symbol')!.textContent,
-            available: !card.querySelector('[data-bookcard-cart]')!.hasAttribute('data-unavailable'),
+            favoriteOutsideLink: card.querySelector("[data-bookcard-link] [data-bookcard-favorite]") === null,
+            cartActions: card.querySelectorAll("[data-bookcard-cart]").length,
             secondaryRows: card.querySelectorAll('[data-bookcard-detail-cue], [data-bookcard-credit]').length,
             badge: card.querySelector('[data-stockstatus]')!.getAttribute('data-variant'),
             stockOnCover: card.querySelector('[data-bookcard-cover] [data-stockstatus]') !== null,
             links: card.querySelectorAll("[data-bookcard-link]").length,
             titleTop: card.querySelector("[data-bookcard-title]")!.getBoundingClientRect().top,
             stockTop: card.querySelector("[data-bookcard-availability]")!.getBoundingClientRect().top,
-            actionTop: card.querySelector("[data-bookcard-actions]")!.getBoundingClientRect().top,
             height: card.getBoundingClientRect().height,
             priceTop: card.querySelector("[data-bookcard-price]")!.getBoundingClientRect().top,
             commercialGap: card.querySelector("[data-bookcard-price]")!.getBoundingClientRect().top - card.querySelector("[data-bookcard-identity]")!.getBoundingClientRect().bottom,
@@ -95,18 +87,18 @@ for (const scheme of ["light", "dark"] as const) {
           })),
         }));
         expect(metrics.overflow).toBe(0);
-        // Catalog: library shelf, 5 columns from 1200px (no sidebar).
-        expect(metrics.columns).toBe(route.startsWith("/catalog") ? width >= 1200 ? 5 : width >= 920 ? 4 : width >= 600 ? 3 : 2 : width >= 992 ? 4 : width >= 768 ? 3 : 2);
-        expect(metrics.gap).toBe(route.startsWith("/catalog") ? width >= 920 ? 24 : width >= 600 ? 20 : width < 360 ? 12 : 16 : 16);
+        // Catalog: the commerce shelf — 3 wide columns from 600px (beside the persistent filters on desktop), 2 on phones.
+        expect(metrics.columns).toBe(route.startsWith("/catalog") ? width >= 600 ? 3 : 2 : width >= 992 ? 4 : width >= 768 ? 3 : 2);
+        expect(metrics.gap).toBe(route.startsWith("/catalog") ? width >= 1200 ? 32 : width >= 920 ? 24 : width >= 600 ? 20 : width < 360 ? 12 : 16 : 16);
         if (width === 320) expect(metrics.cardWidth).toBe(route.startsWith("/catalog") ? 138 : 136);
-        for (const card of metrics.cards) { expect(card.favoriteBesideCart, `${route}, ${width}px, favorite placement`).toBe(true); expect(card.cartTextVisible).toBe(true); expect(card.cartNeutral).toBe(true); expect(card.cartText).toBe("Agregar"); expect(card.cartIcon).toBe(card.available ? "add_shopping_cart" : "shopping_cart_off"); expect(card.secondaryRows).toBe(0); expect(card.badge).toBe("quiet"); expect(card.stockOnCover).toBe(false); expect(card.identityBounded).toBe(true); expect(card.clipped).toBe(false); expect(card.commercialGap).toBeLessThanOrEqual(16); expect(card.links).toBe(1); expect(card.nestedButtons).toBe(false); expect(card.ratio).toBeCloseTo(2 / 3, 2); expect(card.fits).toBe(true); for (const target of card.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); } }
+        for (const card of metrics.cards) { expect(card.favoriteOnStage, `${route}, ${width}px, favorite placement`).toBe(true); expect(card.favoriteOutsideLink).toBe(true); expect(card.cartActions).toBe(0); expect(card.secondaryRows).toBe(0); expect(card.badge).toBe("quiet"); expect(card.stockOnCover).toBe(false); expect(card.identityBounded).toBe(true); expect(card.clipped).toBe(false); expect(card.commercialGap).toBeLessThanOrEqual(16); expect(card.links).toBe(1); expect(card.nestedButtons).toBe(false); expect(card.ratio).toBeCloseTo(2 / 3, 2); expect(card.fits).toBe(true); for (const target of card.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); } }
         if ((route.startsWith("/catalog") || route === "/") && [320, 375, 768, 1024, 1200, 1440, 1920].includes(width)) {
           await page.locator(".edition-grid").screenshot({ path: `/tmp/pliego-${route === "/" ? "home" : "bookcard"}-${scheme}-${width}.png`, style: "header { visibility: hidden; }" });
         }
         for (let index = 0; index < metrics.cards.length; index += metrics.columns) {
           const row = metrics.cards.slice(index, index + metrics.columns);
           expect(Math.max(...row.map((card) => card.titleTop)) - Math.min(...row.map((card) => card.titleTop))).toBeLessThan(1);
-          for (const key of ["height", "priceTop", "stockTop", "actionTop"] as const) {
+          for (const key of ["height", "priceTop", "stockTop"] as const) {
             expect(Math.max(...row.map((card) => card[key])) - Math.min(...row.map((card) => card[key])), `${route}, ${width}px, ${key}`).toBeLessThan(1);
           }
         }
@@ -115,32 +107,20 @@ for (const scheme of ["light", "dark"] as const) {
   });
 }
 
-test("BookCard: independent actions, confirmed add and an accessible single-link route", async ({ page }) => {
+test("BookCard: browse card — independent favorite on the stage and an accessible single-link route", async ({ page }) => {
   const api = await install(page, "dark");
   await page.goto("/catalog?que=lectura");
   const card = page.locator("[data-bookcard]").first();
   await expect(card.locator("[data-bookcard-favorite]")).toBeEnabled();
-  // Visual and focus order match the Home scenes: link → cart → favorite.
+  // Buying happens on the edition page: the catalog card carries no cart action.
+  await expect(card.locator("[data-bookcard-cart]")).toHaveCount(0);
+  // Focus order: the product link, then its favorite.
   await card.locator("[data-bookcard-link]").focus(); await page.keyboard.press("Tab");
-  await expect(card.locator("[data-bookcard-cart]")).toBeFocused();
-  await page.keyboard.press("Tab");
   await expect(card.locator("[data-bookcard-favorite]")).toBeFocused();
   await page.keyboard.press("Space");
   await expect(card.getByRole("status")).toHaveText("Quitado de favoritos.");
   await expect(page).toHaveURL(/\/catalog\?que=lectura$/);
-  await page.keyboard.press("Shift+Tab");
-  await expect(card.locator("[data-bookcard-cart]")).toBeFocused();
-  await page.keyboard.press("Space");
-  await expect(card.getByRole("status")).toHaveText("Agregado al carrito.");
-  await expect(card.locator("[data-bookcard-cart] .material-symbol")).toHaveText("check");
-  await expect(card.locator("[data-bookcard-cart]")).toHaveAccessibleName("Agregado al carrito. Agregar otra unidad: El extranjero");
-  await expect(card.locator("[data-bookcard-cart]")).toBeEnabled();
-  expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
-  await expect(card.locator("[data-bookcard-cart] .material-symbol")).toHaveText("add_shopping_cart");
-  await card.locator("[data-bookcard-cart]").focus();
-  await page.keyboard.press("Space");
-  await expect(card.getByRole("status")).toHaveText("El carrito ahora tiene 2 unidades de esta edición.");
-  expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(2);
+  expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(0);
   await card.locator("[data-bookcard-link]").click();
   await expect(page).toHaveURL(/\/catalog\/editions\/9000001\?from=/);
   await expect(page.getByRole("heading", { level: 1, name: "El extranjero" })).toBeVisible();
@@ -148,9 +128,10 @@ test("BookCard: independent actions, confirmed add and an accessible single-link
   await expect(page).toHaveURL(/\/catalog\?que=lectura$/);
 });
 
-test("BookCard blocks an unconfirmed add without locking favorites or retrying the command", async ({ page }) => {
+test("Card cart control (Favoritos) blocks an unconfirmed add without locking favorites or retrying the command", async ({ page }) => {
   const api = await install(page, "light", "unconfirmed");
-  await page.goto("/catalog"); const card = page.locator("[data-bookcard]").first();
+  // The catalog card is browse-only; the shared cart control still serves Favoritos rows.
+  await page.goto("/favorites"); const card = page.locator("[data-favorite-row]").first();
   await card.locator("[data-bookcard-cart]").click();
   await expect(card.getByRole("alert")).toHaveText("No pudimos confirmar el carrito. Consúltalo antes de volver a intentarlo.");
   await expect(card.locator("[data-bookcard-cart]")).toBeDisabled();
@@ -159,9 +140,10 @@ test("BookCard blocks an unconfirmed add without locking favorites or retrying t
   expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
 });
 
-test("BookCard reconciles a lost add response from the cart read without another POST", async ({ page }) => {
+test("Card cart control (Favoritos) reconciles a lost add response from the cart read without another POST", async ({ page }) => {
   const api = await install(page, "light", "confirmed-after-loss");
-  await page.goto("/catalog"); const card = page.locator("[data-bookcard]").first();
+  // The catalog card is browse-only; the shared cart control still serves Favoritos rows.
+  await page.goto("/favorites"); const card = page.locator("[data-favorite-row]").first();
   await card.locator("[data-bookcard-cart]").click();
   await expect(card.getByRole("status")).toHaveText("Agregado al carrito.");
   expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
@@ -182,7 +164,7 @@ for (const scheme of ["light", "dark"] as const) {
     await page.mouse.move(0, 0);
     await link.focus();
     await page.keyboard.press("Tab");
-    await expect(card.locator("[data-bookcard-cart]")).toBeFocused();
+    await expect(card.locator("[data-bookcard-favorite]")).toBeFocused();
     await page.keyboard.press("Shift+Tab");
     await expect(link).toBeFocused();
     expect(await link.evaluate((element) => ({ width: getComputedStyle(element).outlineWidth, offset: getComputedStyle(element).outlineOffset }))).toEqual({ width: "3px", offset: "4px" });
@@ -196,18 +178,18 @@ for (const scheme of ["light", "dark"] as const) {
         columns: grid.getAttribute("data-presentation") === "rail" ? grid.children.length : getComputedStyle(grid).gridTemplateColumns.split(" ").length,
         cards: [...grid.querySelectorAll<HTMLElement>("[data-bookcard]")].map((card) => ({
           height: card.getBoundingClientRect().height,
-          tops: ["price", "availability", "actions"].map((part) => card.querySelector(`[data-bookcard-${part}]`)!.getBoundingClientRect().top),
+          tops: ["price", "availability"].map((part) => card.querySelector(`[data-bookcard-${part}]`)!.getBoundingClientRect().top),
         })),
-        cartTextFits: [...grid.querySelectorAll<HTMLElement>('[data-bookcard-cart] .mantine-Button-label > span')].every((text) => text.scrollWidth <= text.clientWidth + 1 && text.scrollHeight <= text.clientHeight + 2),
+        favoriteFits: [...grid.querySelectorAll<HTMLElement>('[data-bookcard-favorite]')].every((button) => { const box = button.getBoundingClientRect(); const card = button.closest('[data-bookcard]')!.getBoundingClientRect(); return box.width >= 44 && box.height >= 44 && box.right <= card.right + 0.5 && box.left >= card.left - 0.5; }),
         targets: [...grid.querySelectorAll("a, button")].map((element) => ({ width: element.getBoundingClientRect().width, height: element.getBoundingClientRect().height })),
       }));
       expect(result.overflow, `200% text, ${width}px, horizontal overflow`).toBe(false);
       expect(result.clipped, `200% text, ${width}px, clipped commercial text`).toBe(false);
-      expect(result.cartTextFits).toBe(true);
+      expect(result.favoriteFits).toBe(true);
       for (let index = 0; index < result.cards.length; index += result.columns) {
         const row = result.cards.slice(index, index + result.columns);
         expect(Math.max(...row.map((card) => card.height)) - Math.min(...row.map((card) => card.height))).toBeLessThan(1);
-        for (let part = 0; part < 3; part++) expect(Math.max(...row.map((card) => card.tops[part])) - Math.min(...row.map((card) => card.tops[part])), `200% text, ${width}px, ${["price", "availability", "actions"][part]}`).toBeLessThan(1);
+        for (let part = 0; part < 2; part++) expect(Math.max(...row.map((card) => card.tops[part])) - Math.min(...row.map((card) => card.tops[part])), `200% text, ${width}px, ${["price", "availability"][part]}`).toBeLessThan(1);
       }
       for (const target of result.targets) { expect(target.width).toBeGreaterThanOrEqual(44); expect(target.height).toBeGreaterThanOrEqual(44); }
     }
@@ -222,16 +204,12 @@ for (const scheme of ["light", "dark"] as const) {
     await page.goto("/catalog");
     const card = page.locator("[data-bookcard]").nth(2);
     await expect(card.locator("[data-bookcard-title]")).toHaveCSS("text-decoration-line", "none");
-    await expect(card.locator("[data-bookcard-cart]")).toBeDisabled();
-    await expect(card.locator("[data-bookcard-cart]")).toHaveText("shopping_cart_offAgregar");
-    await expect(card.locator("[data-bookcard-cart]")).toHaveAccessibleDescription(/No disponible/);
-    await expect(card.locator("[data-bookcard-cart] .mantine-Button-label > span")).toBeVisible();
-    const availableCard = page.locator("[data-bookcard]").first();
-    await availableCard.locator("[data-bookcard-cart]").tap();
-    await expect(availableCard.getByRole("status")).toHaveText("Agregado al carrito.");
+    // Browse card: no cart action; an unavailable edition says so in its stock line and still opens its detail.
+    await expect(card.locator("[data-bookcard-cart]")).toHaveCount(0);
+    await expect(card.locator("[data-bookcard-availability]")).toContainText("No disponible");
     await card.locator("[data-bookcard-favorite]").tap();
     await expect(card.getByRole("status")).toHaveText("Quitado de favoritos.");
-    expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
+    expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(0);
     await card.locator("[data-bookcard-link]").tap();
     await expect(page).toHaveURL(/\/catalog\/editions\/9000003/);
     await expect(page.locator("main.detail-route [data-stockstatus-label]")).toHaveText("No disponible");
@@ -240,44 +218,3 @@ for (const scheme of ["light", "dark"] as const) {
   });
 }
 
-for (const scheme of ["light", "dark"] as const) {
-  test(`Home reading scene ${scheme}: independent keyboard and touch actions reach detail`, async ({ page, browser }) => {
-    const api = await install(page, scheme);
-    await page.goto("/");
-    await expect(page.locator("[data-reading-scene]")).toHaveCount(4);
-    const scene = page.locator("[data-reading-scene]:not([inert])");
-    await scene.locator("[data-reading-title]").focus();
-    await page.keyboard.press("Tab");
-    await expect(scene.locator("[data-reading-cart]")).toBeFocused();
-    await page.keyboard.press("Space");
-    await expect(scene.getByRole("status")).toHaveText("Agregado al carrito.");
-    await scene.locator("[data-reading-favorite]").focus();
-    await page.keyboard.press("Space");
-    await expect(scene.getByRole("status")).toHaveText("Quitado de favoritos.");
-    expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
-    await expect(page).toHaveURL(/\/$/);
-    await scene.locator("[data-reading-title]").focus();
-    await page.keyboard.press("Enter");
-    await expect(page.getByRole("heading", { level: 1, name: "El extranjero" })).toBeVisible();
-
-    const context = await browser.newContext({ viewport: { width: 375, height: 844 }, hasTouch: true, isMobile: true });
-    const touch = await context.newPage();
-    await install(touch, scheme);
-    await touch.goto("/");
-    await expect(touch.locator("[data-reading-scene]")).toHaveCount(4);
-    const touchScene = touch.locator("[data-reading-scene]:not([inert])");
-    await touchScene.locator("[data-reading-favorite]").tap();
-    await expect(touchScene.getByRole("status")).toHaveText("Quitado de favoritos.");
-    await touchScene.locator("[data-reading-cart]").tap();
-    await expect(touchScene.getByRole("status")).toHaveText("Agregado al carrito.");
-    const dots = touch.getByRole("group", { name: /^Libros de / }).getByRole("button");
-    for (let index = 0; index < 4; index++) {
-      await dots.nth(index).tap();
-      if (await touchScene.locator("[data-reading-cart]").isDisabled()) break;
-    }
-    await expect(touchScene.locator("[data-stockstatus-label]")).toHaveText("No disponible");
-    await touchScene.locator("[data-reading-title]").tap();
-    await expect(touch.locator('main.detail-route [data-stockstatus-label]')).toHaveText("No disponible");
-    await context.close();
-  });
-}

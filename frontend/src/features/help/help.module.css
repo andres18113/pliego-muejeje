@@ -1,0 +1,131 @@
+/* Ayuda: the calmest storefront page. Paper throughout; the name in ink display type, one search field,
+   the published topics as chips and the articles as a typographic index separated by rules — reading,
+   not merchandising. An article is one 62ch column that closes on the page's single mist scene: the way
+   back into Ayuda. Ultramar is kept for actions and the chosen topic; yellow only marks that topic. */
+.page {
+  --help-blue: var(--store-blue, #283da8); --help-blue-hover: #1d2c86; --help-on-blue: #fff;
+  --help-ink: var(--pliego-text, #252740); --help-muted: var(--pliego-text-muted, #595a6e);
+  --help-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0));
+  --help-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
+  --help-field: #fbfaf7; --help-ease: cubic-bezier(.32, .94, .6, 1);
+  display: grid; align-content: start; gap: 20px; max-width: 920px; min-width: 0; min-height: 58vh; padding-top: clamp(20px, 3.4vw, 44px); padding-bottom: 72px; color: var(--help-ink);
+}
+:global([data-mantine-color-scheme="dark"]) .page { --help-blue: var(--store-link, #c5bcff); --help-blue-hover: #d8d1ff; --help-on-blue: var(--store-ink, #252740); --help-mist: #2e2b4d; --help-line: #3d3964; --help-field: #26283f; }
+.page:focus { outline: none; }
+:global(html):has(.page), :global(body):has(.page) { background: #f6f5f0; }
+:global(html[data-mantine-color-scheme="dark"]):has(.page), :global([data-mantine-color-scheme="dark"] body):has(.page) { background: #22243b; }
+
+.masthead { display: grid; justify-items: center; gap: 8px; min-width: 0; text-align: center; }
+.title { margin: 0; color: var(--help-ink); font: 650 clamp(2.125rem, 1.6rem + 2.4vw, 3rem)/1.02 var(--store-display); letter-spacing: -.045em; }
+.title:focus { outline: none; }
+.title:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 8px; border-radius: 8px; }
+.intro { max-width: 52ch; margin: 0; color: var(--help-muted); font-size: 1.0625rem; line-height: 1.5; text-wrap: pretty; }
+
+/* Search is the page's one prominent control: a field-shaped pill with its action inside the same edge. */
+.search { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; justify-self: center; width: min(100%, 640px); min-width: 0; padding: 6px; border-radius: 30px; background: var(--help-field); box-shadow: inset 0 0 0 1.5px var(--help-line); transition: box-shadow 160ms var(--help-ease); }
+.search:focus-within { box-shadow: inset 0 0 0 2px var(--help-blue); }
+.searchField { display: flex; flex: 1 1 200px; align-items: center; gap: 10px; min-width: 0; padding-left: 14px; color: var(--help-muted); }
+.searchField input { flex: 1 1 auto; width: 100%; min-width: 0; min-height: 44px; border: 0; outline: 0; background: transparent; color: var(--help-ink); font: inherit; font-size: 1.0625rem; }
+.searchField input::placeholder { color: var(--help-muted); opacity: 1; }
+.searchField input::-webkit-search-cancel-button { cursor: pointer; }
+.searchSubmit { flex: 0 0 auto; min-height: 44px; padding: 8px 22px; border: 0; border-radius: 999px; background: var(--help-blue); color: var(--help-on-blue); font: inherit; font-size: .9375rem; font-weight: 600; cursor: pointer; transition: background-color 140ms; }
+.searchSubmit:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 3px; }
+@media (hover: hover) { .searchSubmit:hover { background: var(--help-blue-hover); } }
+
+.note { margin: 0; color: var(--help-muted); font-size: .9375rem; text-align: center; }
+.textAction { min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--help-blue); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.textAction:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
+
+/* Topics are the published categories; chosen = ultramar with the yellow "this one" dot. */
+.topics { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; min-width: 0; }
+.chip {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 16px; border: 0; border-radius: 999px;
+  background: transparent; box-shadow: inset 0 0 0 1.5px var(--help-line); color: var(--help-ink);
+  font: inherit; font-size: .9375rem; font-weight: 500; line-height: 1.3; text-align: left; cursor: pointer;
+  transition: background-color 160ms var(--help-ease), color 160ms var(--help-ease), box-shadow 160ms var(--help-ease);
+}
+.chip[aria-pressed="true"] { background: var(--help-blue); box-shadow: none; color: var(--help-on-blue); font-weight: 600; }
+.chip[aria-pressed="true"]::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
+.chip:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 3px; }
+@media (hover: hover) { .chip[aria-pressed="false"]:hover { background: var(--help-mist); box-shadow: inset 0 0 0 1.5px var(--help-blue); } }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; min-width: 0; padding-top: 8px; }
+.count { margin: 0; color: var(--help-muted); font-size: .9375rem; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.control { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; min-width: 0; color: var(--help-muted); font-size: .875rem; }
+.select { position: relative; display: inline-flex; align-items: center; min-width: 0; max-width: 100%; }
+.select select { appearance: none; min-width: 0; max-width: 100%; min-height: 44px; padding: 8px 40px 8px 16px; border: 0; border-radius: 999px; background: var(--help-mist); color: var(--help-ink); font: inherit; font-size: .9375rem; font-weight: 500; cursor: pointer; }
+.select select:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; }
+.select :global(.material-symbol) { position: absolute; right: 12px; pointer-events: none; }
+
+/* The index: one article per row between rules. The title is the link and its target is the whole row. */
+.index { min-width: 0; margin: -8px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--help-line); }
+.index li { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 16px; min-width: 0; padding: 20px 8px 20px 0; border-bottom: 1px solid var(--help-line); }
+.entry { display: grid; gap: 4px; min-width: 0; }
+.entry p, .entryTitle { margin: 0; }
+.entryTitle { font: 650 clamp(1.1875rem, 1.1rem + .4vw, 1.375rem)/1.2 var(--store-display); letter-spacing: -.03em; overflow-wrap: anywhere; }
+.entryTitle a { color: var(--help-ink); text-decoration: none; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+.entryTitle a::after { content: ""; position: absolute; inset: 0; }
+.entryTitle a:focus-visible { outline: none; }
+.entryTitle a:focus-visible::after { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 8px; }
+.entrySummary { max-width: 64ch; color: var(--help-muted); line-height: 1.5; overflow-wrap: anywhere; }
+.entryMeta { display: flex; flex-wrap: wrap; gap: 2px 14px; color: var(--help-muted); font-size: .8125rem; line-height: 1.4; }
+.entryMeta:empty { display: none; }
+.entryGo { color: var(--help-blue); transition: translate 160ms var(--help-ease); }
+@media (hover: hover) {
+  .index li:has(a:hover) .entryTitle a { color: var(--help-blue); text-decoration-line: underline; }
+  .index li:has(a:hover) .entryGo { translate: 4px 0; }
+}
+
+.pages { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; padding-top: 8px; }
+.pageStep { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 16px; border: 0; border-radius: 999px; background: transparent; box-shadow: inset 0 0 0 1.5px var(--help-blue); color: var(--help-blue); font: inherit; font-size: .9375rem; font-weight: 600; cursor: pointer; }
+.pageStep:disabled { box-shadow: inset 0 0 0 1.5px var(--help-line); color: var(--help-muted); cursor: default; }
+.pageStep:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 3px; }
+.pagePosition { color: var(--help-muted); font-size: .9375rem; font-variant-numeric: tabular-nums; }
+
+/* Empty, error and not-found: direction on the page axis. */
+.notice { display: grid; justify-items: center; gap: 10px; width: 100%; max-width: 560px; min-width: 0; margin-inline: auto; padding: clamp(28px, 5vw, 44px) clamp(18px, 4vw, 32px); text-align: center; }
+.notice[data-kind="empty"] { border: 1.5px dashed var(--help-line); border-radius: 24px; }
+.notice :is(h1, h2) { margin: 0; color: var(--help-ink); font: 650 clamp(1.375rem, 1.2rem + .8vw, 1.75rem)/1.15 var(--store-display); letter-spacing: -.04em; overflow-wrap: anywhere; text-wrap: balance; }
+.notice p { max-width: 44ch; margin: 0 0 8px; color: var(--help-muted); line-height: 1.5; text-wrap: pretty; }
+.action { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 8px 20px; border: 0; border-radius: 8px; background: var(--help-blue); color: var(--help-on-blue); font: inherit; font-size: .9375rem; font-weight: 600; text-decoration: none; cursor: pointer; transition: background-color 140ms; }
+.action:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 3px; }
+@media (hover: hover) { .action:hover { background: var(--help-blue-hover); } }
+
+/* Loading keeps the shape of what arrives; nothing moves. */
+.pending span { display: block; height: 14px; border-radius: 7px; background: var(--help-line); opacity: .55; }
+.index.pending li { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.index.pending li span:first-child { width: min(46%, 300px); height: 20px; }
+.index.pending li span:last-child { width: min(78%, 520px); }
+.article.pending { display: grid; gap: 16px; }
+.article.pending span:nth-child(1) { width: 22%; }
+.article.pending span:nth-child(2) { width: 70%; height: 34px; }
+.article.pending span:nth-child(3) { width: 92%; }
+.article.pending span:nth-child(4) { width: 84%; }
+
+/* Article: one reading column. */
+.reading { max-width: 720px; gap: 8px; }
+.back { display: inline-flex; align-items: center; gap: 8px; justify-self: start; min-height: 44px; color: var(--help-ink); font-size: .9375rem; font-weight: 500; text-decoration: none; }
+.back span:last-child { text-decoration: underline; text-underline-offset: 4px; }
+.back:hover { color: var(--help-blue); }
+.back:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
+.article { min-width: 0; padding-top: 8px; }
+.article p { margin: 0; }
+.context { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px; color: var(--help-muted); font-size: .9375rem; line-height: 1.5; }
+.context:empty { display: none; }
+.context a { display: inline-flex; align-items: center; min-height: 32px; color: var(--help-blue); font-weight: 600; text-decoration: none; }
+.context a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.context a:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
+.articleTitle { margin: 4px 0 0; color: var(--help-ink); font: 650 clamp(1.875rem, 1.4rem + 2.2vw, 2.75rem)/1.06 var(--store-display); letter-spacing: -.045em; overflow-wrap: anywhere; text-wrap: balance; }
+.article .lead { max-width: 56ch; margin-top: 14px; color: var(--help-muted); font-size: 1.1875rem; line-height: 1.5; overflow-wrap: anywhere; text-wrap: pretty; }
+.body { display: grid; gap: 1.1em; max-width: 62ch; margin-top: clamp(22px, 3vw, 32px); font-size: 1.0625rem; line-height: 1.7; }
+.body p { overflow-wrap: anywhere; white-space: pre-line; }
+
+/* The page's one supporting scene: where to go after reading. */
+.onward { display: grid; gap: 10px; min-width: 0; margin-top: clamp(32px, 5vw, 52px); padding: clamp(20px, 3vw, 28px); border-radius: 24px; background: var(--help-mist); }
+.onward h2 { margin: 0; font: 650 1.375rem/1.2 var(--store-display); letter-spacing: -.035em; }
+.onwardLinks { display: flex; flex-wrap: wrap; gap: 4px 24px; min-width: 0; }
+.onwardLinks a { display: inline-flex; align-items: center; min-height: 44px; color: var(--help-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+.onwardLinks a:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
+
+@media (max-width: 479px) { .searchSubmit { flex: 1 1 100%; } .searchField { flex-basis: 100%; } .search { border-radius: 24px; } }
+@media (prefers-reduced-motion: reduce) { .search, .chip, .entryGo, .action, .searchSubmit { transition: none; } .index li:has(a:hover) .entryGo { translate: none; } }

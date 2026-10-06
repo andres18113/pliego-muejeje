@@ -27,7 +27,7 @@ public final class OrderModels {
 
     public record Item(String orderItemId, String editionId, String sku, String isbn,
             String title, String authors, String publisher, String format, String language,
-            BigDecimal unitPrice, int quantity, BigDecimal subtotal) { }
+            BigDecimal unitPrice, int quantity, BigDecimal subtotal, boolean requiresPhysicalFulfillment) { }
 
     public record Address(String recipient, String line1, String line2, String city,
             String province, String countryCode, String postalCode, String reference, String phone) { }

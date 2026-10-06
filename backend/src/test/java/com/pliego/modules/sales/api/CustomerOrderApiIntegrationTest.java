@@ -119,6 +119,7 @@ class CustomerOrderApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].orderItemId").value("800"))
                 .andExpect(jsonPath("$.items[0].editionId").value("250"))
                 .andExpect(jsonPath("$.items[0].title").value("Título en compra"))
+                .andExpect(jsonPath("$.items[0].requiresPhysicalFulfillment").value(true))
                 .andExpect(jsonPath("$.items[0].authors").value("Autora en compra"))
                 .andExpect(jsonPath("$.items[0].publisher").value("Editorial en compra"))
                 .andExpect(jsonPath("$.items[0].unitPrice").value("19.90"))
@@ -297,7 +298,7 @@ class CustomerOrderApiIntegrationTest {
                     Instant.parse("2026-09-23T19:30:00Z"), Instant.parse("2026-09-23T19:31:00Z"),
                     List.of(new Item("800", "250", "SKU-AT-PURCHASE", "9780306406157",
                             "Título en compra", "Autora en compra", "Editorial en compra", "PAPERBACK", "es",
-                            new BigDecimal("19.90"), 2, new BigDecimal("39.80"))),
+                            new BigDecimal("19.90"), 2, new BigDecimal("39.80"), true)),
                     new Address("Cliente en compra", "Calle en compra", null, "Quito", "Pichincha",
                             "EC", null, "Referencia en compra", "+59325550134"),
                     new Payment("900", "CARD", "APPROVED", new BigDecimal("39.80"),

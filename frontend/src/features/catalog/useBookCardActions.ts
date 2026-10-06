@@ -144,7 +144,7 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
 }
 
 class CartAddOutcomeUnknown extends Error {}
-export function useCartControl({ editionId, available, format, returnHref, onFeedback }: { editionId: string; available: boolean; format?: string; returnHref: string; onFeedback: FeedbackSink }): CartControl {
+export function useCartControl({ editionId, available, format, returnHref, onFeedback, onAdded }: { editionId: string; available: boolean; format?: string; returnHref: string; onFeedback: FeedbackSink; onAdded?: (editionId: string) => void }): CartControl {
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -182,6 +182,8 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
       setAddedPulse(true);
       if (pulseTimer.current !== null) window.clearTimeout(pulseTimer.current);
       pulseTimer.current = window.setTimeout(() => setAddedPulse(false), 1_100);
+      // Only a confirmed add (the cart was re-read above) reaches the preview; failures never open it.
+      onAdded?.(editionId);
     },
     onError: async (error) => {
       if (error instanceof ApiRequestError && error.status === 401) {

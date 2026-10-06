@@ -3634,8 +3634,27 @@
           "Catálogo público"
         ],
         "summary": "Consultar opciones de filtros del catálogo público",
-        "description": "Devuelve idiomas, formatos y límites de precio de todas las ediciones publicables actuales.",
+        "description": "Devuelve idiomas, formatos y límites de precio efectivo de las ediciones publicables del ámbito solicitado. Sin scope usa GLOBAL.",
         "operationId": "filterOptions",
+        "parameters": [
+          {
+            "name": "scope",
+            "in": "query",
+            "description": "Ámbito de catálogo; GLOBAL incluye todos los tipos de producto.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "GLOBAL",
+              "enum": [
+                "GLOBAL",
+                "PHYSICAL",
+                "EBOOK",
+                "AUDIOBOOK"
+              ],
+              "pattern": "GLOBAL|PHYSICAL|EBOOK|AUDIOBOOK"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Opciones disponibles para los filtros del catálogo",
@@ -3643,6 +3662,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PublicCatalogFilterOptionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ámbito de catálogo inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
                 }
               }
             }
@@ -3870,8 +3899,27 @@
           "Catálogo público"
         ],
         "summary": "Listar categorías del catálogo público",
-        "description": "Devuelve categorías activas con ediciones publicables y su jerarquía de hasta dos niveles.",
+        "description": "Devuelve categorías activas con ediciones publicables del ámbito solicitado y su jerarquía de hasta dos niveles. Sin scope usa GLOBAL.",
         "operationId": "listCategories",
+        "parameters": [
+          {
+            "name": "scope",
+            "in": "query",
+            "description": "Ámbito de catálogo; GLOBAL incluye todos los tipos de producto.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "GLOBAL",
+              "enum": [
+                "GLOBAL",
+                "PHYSICAL",
+                "EBOOK",
+                "AUDIOBOOK"
+              ],
+              "pattern": "GLOBAL|PHYSICAL|EBOOK|AUDIOBOOK"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Categorías disponibles para navegar el catálogo",
@@ -3879,6 +3927,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CatalogCategoryListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Ámbito de catálogo inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
                 }
               }
             }
@@ -6211,7 +6269,7 @@
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Item"
+              "$ref": "#/components/schemas/CustomerOrderItem"
             }
           },
           "address": {
@@ -6261,6 +6319,54 @@
           }
         }
       },
+      "CustomerOrderItem": {
+        "type": "object",
+        "properties": {
+          "orderItemId": {
+            "type": "string"
+          },
+          "editionId": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "isbn": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "subtotal": {
+            "type": "string"
+          },
+          "requiresPhysicalFulfillment": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "requiresPhysicalFulfillment"
+        ]
+      },
       "ElectronicIssuance": {
         "type": "object",
         "properties": {
@@ -6300,48 +6406,6 @@
             "type": "string"
           },
           "at": {
-            "type": "string"
-          }
-        }
-      },
-      "Item": {
-        "type": "object",
-        "properties": {
-          "orderItemId": {
-            "type": "string"
-          },
-          "editionId": {
-            "type": "string"
-          },
-          "sku": {
-            "type": "string"
-          },
-          "isbn": {
-            "type": "string"
-          },
-          "title": {
-            "type": "string"
-          },
-          "authors": {
-            "type": "string"
-          },
-          "publisher": {
-            "type": "string"
-          },
-          "format": {
-            "type": "string"
-          },
-          "language": {
-            "type": "string"
-          },
-          "unitPrice": {
-            "type": "string"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "subtotal": {
             "type": "string"
           }
         }
@@ -7462,7 +7526,12 @@
             "type": "integer",
             "format": "int32"
           }
-        }
+        },
+        "required": [
+          "digitalItemCount",
+          "physicalItemCount",
+          "requiresPhysicalFulfillment"
+        ]
       },
       "CartItem": {
         "type": "object",
@@ -7523,8 +7592,18 @@
               "EBOOK",
               "AUDIOBOOK"
             ]
+          },
+          "requiresPhysicalFulfillment": {
+            "type": "boolean"
+          },
+          "quantityEditable": {
+            "type": "boolean"
           }
-        }
+        },
+        "required": [
+          "quantityEditable",
+          "requiresPhysicalFulfillment"
+        ]
       },
       "PageResponsePublisher": {
         "type": "object",
@@ -7719,6 +7798,48 @@
             "type": "string"
           },
           "eventAt": {
+            "type": "string"
+          }
+        }
+      },
+      "Item": {
+        "type": "object",
+        "properties": {
+          "orderItemId": {
+            "type": "string"
+          },
+          "editionId": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "isbn": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "format": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "unitPrice": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "subtotal": {
             "type": "string"
           }
         }

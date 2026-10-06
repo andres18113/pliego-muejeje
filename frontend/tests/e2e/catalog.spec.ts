@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
 const editionSummary = {
   editionId: "42",
@@ -54,11 +55,17 @@ const representativeCovers = [
   { title: "Moby Dick", coverUrl: "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000021-86bb100040cb.webp", source: "covers/Literatura/moby-dick.webp", width: 359, height: 500, fit: "cover" },
 ] as const;
 
+// The Home's popular row shows the projection's featured titles: one real edition gives the Home a product link.
+const homeNavigation = { sections: storefrontNavigationFixture.sections.map((section) => section.key === "PHYSICAL" ? { ...section, featured: [{
+  editionId: "42", bookId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez", coverUrl: null, format: "PAPERBACK", productType: "PHYSICAL", price: "20.00", offer: null, href: "/catalog/editions/42",
+}] } : section) };
+
 async function mockCatalogApi(
   page: import("@playwright/test").Page,
   detailOverrides: DetailOverrides = {},
   summaryOverrides: SummaryOverrides = {},
 ) {
+  await page.route("**/api/v1/storefront/navigation", route => route.fulfill({ contentType: "application/json", body: JSON.stringify(homeNavigation) }));
   await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
   await page.route("**/api/v1/me/favorites/status**", (route) => {
     const url = new URL(route.request().url());
@@ -68,12 +75,12 @@ async function mockCatalogApi(
       body: JSON.stringify(url.searchParams.getAll("editionIds").map((editionId) => ({ editionId, favorite: false }))),
     });
   });
-  await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/categories**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ items: [{ slug: "narrativa", name: "Narrativa", parentSlug: null }] }),
   }));
-  await page.route("**/api/v1/catalog/filter-options", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/filter-options**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ languages: ["en", "es"], minimumPrice: "7.25", maximumPrice: "38.00" }),
@@ -99,13 +106,14 @@ async function mockPaginatedCatalogApi(page: import("@playwright/test").Page) {
     title: index < 20 ? `Página 1 · Libro ${index + 1}` : `Página 2 · Libro ${index - 19}`,
   }));
 
+  await page.route("**/api/v1/storefront/navigation", route => route.fulfill({ contentType: "application/json", body: JSON.stringify(storefrontNavigationFixture) }));
   await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
-  await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/categories**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ items: [{ slug: "narrativa", name: "Narrativa", parentSlug: null }] }),
   }));
-  await page.route("**/api/v1/catalog/filter-options", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/filter-options**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ languages: ["en", "es"], minimumPrice: "7.25", maximumPrice: "38.00" }),
@@ -182,12 +190,12 @@ test("keeps the cover frame at 2:3 before and after load on catalog and detail",
 test("renders representative source covers in identical, non-distorting frames", async ({ page }, testInfo) => {
   await page.route("**/api/v1/auth/refresh", (route) => route.fulfill({ status: 204 }));
   await page.setViewportSize({ width: 1440, height: 1200 });
-  await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/categories**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ items: [{ slug: "narrativa", name: "Narrativa", parentSlug: null }] }),
   }));
-  await page.route("**/api/v1/catalog/filter-options", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/filter-options**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ languages: ["es"], minimumPrice: "7.25", maximumPrice: "38.00" }),
@@ -297,7 +305,7 @@ test("searches the public catalog, opens a real edition route, and returns to th
 test("moves focus to the page heading after route changes and from the skip link to main", async ({ page }) => {
   await mockCatalogApi(page);
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: /Abre un libro.*Mira más allá/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Descubre el mundo de PLIEGO." })).toBeVisible();
 
   let releaseDetail!: () => void;
   const detailResponseGate = new Promise<void>((resolve) => { releaseDetail = resolve; });
@@ -312,21 +320,25 @@ test("moves focus to the page heading after route changes and from the skip link
   await page.keyboard.press("Enter");
   await expect(page.locator("#contenido-principal")).toBeFocused();
 
-  await page.locator("[data-reading-title]", { hasText: "Cien años de soledad" }).click();
+  await page.getByRole("main").getByRole("link", { name: "Cien años de soledad", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Consultando la edición" })).toBeFocused();
   releaseDetail();
   await expect(page.getByRole("heading", { name: "Cien años de soledad" })).toBeFocused();
 });
 
-test("makes Home a discovery shelf with one catalog CTA and real topic destinations", async ({ page }) => {
+test("keeps Home free of legacy catalog CTAs and its footer leads to the storefront's sections", async ({ page }) => {
   await mockCatalogApi(page); await page.goto("/");
-  await expect(page.getByRole("heading", { name: /Abre un libro.*Mira más allá/ })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Descubre el mundo de PLIEGO." })).toBeVisible();
   const main = page.getByRole("main");
   await expect(main.getByRole("link", { name: "Explorar catálogo", exact: true })).toHaveCount(0);
   await expect(main.getByRole("link", { name: "Ver categorías" })).toHaveCount(0);
   await expect(main.getByRole("link", { name: "Explorar catálogo completo" })).toHaveCount(0);
-  await main.getByRole("link", { name: "Narrativa", exact: true }).click();
-  await expect(page).toHaveURL("/catalog?category=narrativa");
+  await expect(main.getByRole("heading", { name: "Tu próxima lectura." })).toHaveCount(0);
+  await expect(main.getByRole("navigation", { name: "Explora por tema" })).toHaveCount(0);
+  const footer = page.getByRole("navigation", { name: "Navegación del pie de página" });
+  await expect(footer.getByRole("link", { name: "Narrativa", exact: true })).toHaveCount(0);
+  await footer.getByRole("link", { name: "eBooks", exact: true }).click();
+  await expect(page).toHaveURL("/catalog?productType=EBOOK");
   await page.goto("/?que=Cien+años&category=narrativa&sort=PRICE_DESC&page=2");
   await expect(page).toHaveURL(/\/catalog\?que=Cien/);
   await expect(await openCatalogSearch(page)).toHaveValue("Cien años");
@@ -337,47 +349,47 @@ test("paginates to the results and restores catalog context after an edition det
   await page.goto("/");
 
   await page.getByTestId("site-header").getByRole("link", { name: "Libros", exact: true }).click();
-  await expect(page).toHaveURL("/catalog");
+  await expect(page).toHaveURL("/catalog?productType=PHYSICAL");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 1 de");
-  await expect(page.getByRole("heading", { name: /Abre un libro.*Mira más allá/ })).toHaveCount(0);
+  await expect(page.getByRole("heading", { name: "Descubre el mundo de PLIEGO." })).toHaveCount(0);
 
   await page.getByRole("link", { name: "Siguiente" }).click();
-  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page).toHaveURL("/catalog?productType=PHYSICAL&page=1");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
   const results = page.getByRole("region", { name: "Resultados", exact: true });
   await expect(results).toBeFocused();
   expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top - 104))).toBeLessThanOrEqual(1);
 
   await page.goBack();
-  await expect(page).toHaveURL("/catalog");
+  await expect(page).toHaveURL("/catalog?productType=PHYSICAL");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 1 de");
   await expect(results).toBeFocused();
   await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(104, 0);
 
   await page.goForward();
-  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page).toHaveURL("/catalog?productType=PHYSICAL&page=1");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
   await expect(results).toBeFocused();
   await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(104, 0);
 
   await page.getByRole("link", { name: "Anterior" }).click();
-  await expect(page).toHaveURL("/catalog");
+  await expect(page).toHaveURL("/catalog?productType=PHYSICAL");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 1 de");
   await expect(results).toBeFocused();
   await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(104, 0);
 
   await page.getByRole("link", { name: "Siguiente" }).click();
-  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page).toHaveURL("/catalog?productType=PHYSICAL&page=1");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
   await expect(results).toBeFocused();
   await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(104, 0);
 
   await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Página 2 · Libro 1", exact: true }) }).click();
-  await expect(page).toHaveURL(/\/catalog\/editions\/62\?from=%2Fcatalog%3Fpage%3D1/);
+  await expect(page).toHaveURL(/\/catalog\/editions\/62\?from=%2Fcatalog%3FproductType%3DPHYSICAL%26page%3D1/);
   await expect(page.getByRole("heading", { level: 1, name: "Página 2 · Libro 1" })).toBeVisible();
-  await expect(page.getByRole("link", { name: "Volver al catálogo" }).first()).toHaveAttribute("href", "/catalog?page=1");
+  await expect(page.getByRole("link", { name: "Volver al catálogo" }).first()).toHaveAttribute("href", "/catalog?productType=PHYSICAL&page=1");
   await page.getByRole("link", { name: "Volver al catálogo" }).first().click();
-  await expect(page).toHaveURL("/catalog?page=1");
+  await expect(page).toHaveURL("/catalog?productType=PHYSICAL&page=1");
   await expect(page.getByRole("navigation", { name: "Paginación del catálogo" })).toContainText("Página 2 de");
   await expect(results).toBeFocused();
   expect(Math.abs(await results.evaluate((element) => element.getBoundingClientRect().top - 104))).toBeLessThanOrEqual(1);
@@ -385,13 +397,14 @@ test("paginates to the results and restores catalog context after an edition det
 
 test("keeps the editorial Home and Bricolage heading hierarchy at all target widths", async ({ page }) => {
   await mockCatalogApi(page); await page.goto("/");
-  await expect(page.locator("[data-reading-scene]").first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Popular en PLIEGO" })).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
   for (const width of [320, 375, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     const title = page.getByRole("heading", { level: 1 });
     await expect(title).toBeVisible();
-    await expect(page.getByTestId("site-header").getByRole(width >= 960 ? "link" : "button", { name: width >= 960 ? "Libros" : "Abrir navegación", exact: true })).toBeVisible();
+    // Libros has a featured title in this mock, so the header shows it as a section menu.
+    await expect(page.getByTestId("site-header").getByRole("button", { name: width >= 960 ? "Libros" : "Abrir navegación", exact: true })).toBeVisible();
     expect(await title.evaluate((node) => getComputedStyle(node).fontFamily)).toContain("Bricolage Grotesque");
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }
@@ -506,7 +519,7 @@ test("does not expose customer purchasing to an authenticated administrator", as
   await expect(page).toHaveURL(/\/admin$/);
 
   await page.getByRole("link", { name: "PLIEGO, ir al inicio" }).click();
-  await page.locator("[data-reading-title]", { hasText: "Cien años de soledad" }).click();
+  await page.getByRole("main").getByRole("link", { name: "Cien años de soledad", exact: true }).click();
 
   await expect(page.getByText("El carrito está disponible únicamente para cuentas de cliente.")).toBeVisible();
   await expect(page.getByRole("button", { name: "Agregar al carrito" })).toHaveCount(0);
@@ -630,9 +643,11 @@ test("keeps mobile books visible while grouping filters in an accessible Drawer"
   await trigger.click();
   const drawer = page.getByRole("dialog", { name: "Filtros" });
   await expect(drawer).toBeVisible();
-  await drawer.getByLabel("Precio mínimo").fill("38");
-  await drawer.getByRole("button", { name: "Aplicar precio" }).click();
-  await expect(page).toHaveURL(/minPrice=38/);
+  // Price is browsed through the sort order: the drawer offers no typed range.
+  await expect(drawer.getByText("Precio mínimo")).toHaveCount(0);
+  await drawer.getByRole("button", { name: "Idioma" }).click();
+  await drawer.getByRole("radio", { name: "Inglés", exact: true }).click();
+  await expect(page).toHaveURL(/language=en/);
   // Criteria apply in place: the drawer stays open over the updated results until it is closed.
   await expect(drawer).toBeVisible();
   await expect(trigger).toHaveAccessibleName(/Filtros, 1 activo/);
@@ -642,13 +657,14 @@ test("keeps mobile books visible while grouping filters in an accessible Drawer"
   await expect(page.getByRole("list", { name: "Criterios aplicados" }).getByRole("button")).toHaveCount(1);
 });
 
-test("price filtering supports precise typed values without drag-only interaction", async ({ page }) => {
-  await mockCatalogApi(page); await page.goto("/catalog");
-  await page.getByRole("button", { name: /^Filtros/ }).click();
-  await page.getByLabel("Precio mínimo").fill("9.25");
-  await page.getByLabel("Precio máximo").fill("30.50");
-  await page.getByRole("button", { name: "Aplicar precio" }).click();
-  await expect(page).toHaveURL(/minPrice=9.25&maxPrice=30.50/);
+test("price is browsed by sorting; shared price-range URLs stay applied and removable", async ({ page }) => {
+  await mockCatalogApi(page); await page.goto("/catalog?minPrice=9.25&maxPrice=30.50");
+  await expect(page.getByText("Precio mínimo")).toHaveCount(0);
+  await page.getByRole("button", { name: /^Quitar .*9,25/ }).click();
+  await expect(page).not.toHaveURL(/minPrice=/);
+  await page.getByRole("combobox", { name: "Ordenar por" }).click();
+  await page.getByRole("option", { name: "Precio: menor a mayor" }).click();
+  await expect(page).toHaveURL(/sort=PRICE_ASC/);
 });
 
 test("keeps catalog search usable at the minimum 320px viewport", async ({ page }) => {
@@ -711,6 +727,7 @@ test("keeps the global search in browser history and shared filters usable", asy
   await page.goto("/catalog");
   await page.getByRole("button", { name: /^Filtros/ }).click();
   const drawer = page.getByRole("dialog", { name: "Filtros" });
+  await drawer.getByRole("button", { name: "Idioma" }).click();
   await drawer.getByRole("group", { name: "Idioma" }).getByText("Inglés", { exact: true }).click();
   await expect(page).toHaveURL(/language=en/);
   await expect(drawer.getByRole("radio", { name: "Inglés", exact: true })).toBeChecked();
@@ -723,7 +740,7 @@ test("sign-in returns to the storefront without exposing the email in its header
   await page.route("**/api/v1/auth/register", (route) => route.fulfill({
     status: 201,
     contentType: "application/json",
-    body: JSON.stringify({ userId: "100", customerId: "88", state: "ACTIVE" }),
+    body: JSON.stringify({ userId: "100", customerId: "88", state: "PENDING_VERIFICATION" }),
   }));
   await page.route("**/api/v1/auth/login", (route) => route.fulfill({
     status: 200,
@@ -745,7 +762,7 @@ test("sign-in returns to the storefront without exposing the email in its header
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
   await page.getByLabel("Contraseña").fill("lectura-segura");
   await page.getByRole("button", { name: "Crear cuenta" }).click();
-  await expect(page.getByRole("heading", { name: "Cuenta creada" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Revisa tu correo" })).toBeVisible();
 
   await page.getByRole("link", { name: "Iniciar sesión" }).last().click();
   await expect(page).toHaveURL(/\/sign-in\?/);
@@ -759,7 +776,7 @@ test("sign-in returns to the storefront without exposing the email in its header
 
 test("keeps open subcategory menus inside a 320px viewport", async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 740 });
-  await page.route("**/api/v1/catalog/categories", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/categories**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ items: [
@@ -772,7 +789,7 @@ test("keeps open subcategory menus inside a 320px viewport", async ({ page }) =>
       { slug: "ensayo", name: "Ensayo", parentSlug: null },
     ] }),
   }));
-  await page.route("**/api/v1/catalog/filter-options", (route) => route.fulfill({
+  await page.route("**/api/v1/catalog/filter-options**", (route) => route.fulfill({
     status: 200,
     contentType: "application/json",
     body: JSON.stringify({ languages: [], minimumPrice: null, maximumPrice: null }),

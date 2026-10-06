@@ -180,9 +180,17 @@
   .navigation { display: flex; }
   .menuTrigger.menuTrigger { display: none; }
 }
+/* Five sections with their menu marks share the bar with the search pill: mid widths tighten the links,
+   and the narrowest desktop band drops the marks (the open state still shows in the rule and aria-expanded). */
+@media (min-width: 960px) and (max-width: 1399px) { .navLink.navLink { padding-inline: 9px; } .navLink.navLink::after { left: 9px; right: 9px; } .navigation { margin-right: 12px; } }
+@media (min-width: 960px) and (max-width: 1099px) { .navLink.navLink { padding-inline: 7px; font-size: .875rem; } .navLink.navLink::after { left: 7px; right: 7px; } .navLink :global(.material-symbol) { display: none; } .navigation { gap: 0; } }
 @media (max-width: 959px) {
   .navigation { display: none; }
   .menuTrigger.menuTrigger { display: flex; }
 }
 /* PLIEGO's full stop: the same yellow mark as the hero and the selected topic. */
 .header .wordmark.wordmark::after { content: ""; flex: none; width: .19em; height: .19em; margin-left: .06em; align-self: center; transform: translateY(.26em); border-radius: 50%; background: var(--store-yellow); }
+
+/* Under an open section menu the page steps back behind a light ink veil; the bar and the panel stay above it. */
+.menuVeil { position: fixed; inset: 0; z-index: 1; background: rgb(37 39 64 / 22%); }
+:global([data-mantine-color-scheme="dark"]) .menuVeil { background: rgb(8 9 22 / 46%); }

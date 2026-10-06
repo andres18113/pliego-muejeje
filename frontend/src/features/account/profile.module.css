@@ -118,3 +118,8 @@
   .input, .phone :global(.international-phone) { border-color: CanvasText; }
   .save, .cancel { border: 1px solid ButtonText; }
 }
+
+/* The one email action outside the Correo row: a quiet line under the sheet, on the same axis. */
+.verification { justify-self: center; width: min(100%, 760px); margin: -8px 0 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.5; text-align: center; text-wrap: pretty; }
+.verification a { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.verification a:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }

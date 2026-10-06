@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatEdition, formatLanguage, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
+import { formatAuthorNames, formatEdition, formatLanguage, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
 
 describe("catalog formatters", () => {
   it("uses consistent es-EC labels for language and currency", () => {
@@ -20,5 +20,17 @@ describe("catalog formatters", () => {
     expect(formatEdition("AUDIOBOOK")).toBe("Audiolibro");
     expect(formatEdition("EDITION_FORMAT_ADDED_LATER")).toBe("Formato no reconocido");
     expect(formatEdition(null)).toBe("No especificado");
+  });
+});
+
+describe("formatAuthorNames", () => {
+  it("removes editorial role marks and keeps every contributor", () => {
+    expect(formatAuthorNames("Rodríguez, Armando (coord.); Morales Domínguez, José Francisco (coord.); Delgado Rodríguez, Naira (coord.); Betancort Rodríguez, Verónica (coord.)"))
+      .toBe("Rodríguez, Armando; Morales Domínguez, José Francisco; Delgado Rodríguez, Naira; Betancort Rodríguez, Verónica");
+    expect(formatAuthorNames("Pérez, Ana (ed.); Gómez, Luis (eds.)")).toBe("Pérez, Ana; Gómez, Luis");
+  });
+  it("leaves names and institutional parentheses untouched", () => {
+    expect(formatAuthorNames("Gabriel García Márquez")).toBe("Gabriel García Márquez");
+    expect(formatAuthorNames("Universidad Nacional Autónoma de México (UNAM)")).toBe("Universidad Nacional Autónoma de México (UNAM)");
   });
 });

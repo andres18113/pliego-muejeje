@@ -16,6 +16,18 @@ function api(formats: string[]) {
 
 describe("digital checkout", () => {
   afterEach(() => vi.unstubAllGlobals());
+  it("uses server line capabilities for mixed delivery lists despite display formats", async () => {
+    const current = cartBody([
+      { title: "Físico autorizado", format: "EBOOK", requiresPhysicalFulfillment: true, quantityEditable: true },
+      { title: "Digital autorizado", format: "PAPERBACK", requiresPhysicalFulfillment: false, quantityEditable: false },
+    ]);
+    stubApi({ "GET /api/v1/cart": () => json(current), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/);
+    const delivery = screen.getByRole("list", { name: "Libros de esta entrega" });
+    expect(delivery).toHaveTextContent("Físico autorizado");
+    expect(delivery).not.toHaveTextContent("Digital autorizado");
+  });
   it.each([["EBOOK"], ["AUDIOBOOK"], ["EBOOK", "AUDIOBOOK"]])("checks out digital titles without any physical destination for %j", async (...formats) => {
     const transport = api(formats as string[]);
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");

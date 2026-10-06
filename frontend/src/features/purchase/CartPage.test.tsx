@@ -19,6 +19,23 @@ describe("CartPage", () => {
     expect(screen.getByText(format === "EBOOK" ? "Ebook" : "Audiolibro")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Continuar con la compra" })).toBeInTheDocument();
   });
+  it("uses the server quantity capability when the display format disagrees", async () => {
+    stubApi({ "GET /api/v1/cart": () => json(cartBody([{ format: "PAPERBACK", requiresPhysicalFulfillment: false, quantityEditable: false }])) });
+    renderPurchaseRoute(routes, "/cart");
+    await screen.findByRole("link", { name: "Cien años de soledad" });
+    expect(screen.queryByRole("combobox", { name: "Cantidad de Cien años de soledad" })).not.toBeInTheDocument();
+    expect(screen.getByText("Cantidad: 1")).toBeInTheDocument();
+  });
+  it("keeps a malformed digital quantity repairable through the server capability", async () => {
+    stubApi({ "GET /api/v1/cart": () => json(cartBody([{
+      format: "EBOOK", quantity: 3, currentSubtotal: "55.50", available: false, unavailabilityReason: "P4004",
+      requiresPhysicalFulfillment: false, quantityEditable: true,
+    }])) });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/cart");
+    await user.click(await screen.findByRole("combobox", { name: "Cantidad de Cien años de soledad" }));
+    expect(screen.getAllByRole("option").map(option => option.firstElementChild?.textContent)).toEqual(["1", "3"]);
+  });
   afterEach(() => vi.unstubAllGlobals());
 
   const quantityOf = () => screen.findByRole("combobox", { name: "Cantidad de Cien años de soledad" });

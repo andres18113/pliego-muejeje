@@ -1,0 +1,5 @@
+.action.action { max-width: 100%; min-height: 56px; height: auto; padding: 14px 28px; border-radius: 8px; border: 0; font-size: 1.0625rem; font-weight: 600; color: white; background: var(--store-blue); transition: background-color 150ms cubic-bezier(.32, .94, .6, 1); }
+.action :global(.mantine-Button-inner) { height: auto; gap: 24px; }
+.action :global(.mantine-Button-label) { min-width: 0; overflow-wrap: anywhere; white-space: normal; text-align: left; height: auto; line-height: 1.4; }
+.action:hover { background: #1d2c86; color: white; }
+@media (prefers-reduced-motion: reduce) { .action { transition: none; } }

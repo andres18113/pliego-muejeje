@@ -30,7 +30,8 @@ public final class CartModels {
 
     public record CartItem(String cartItemId, String editionId, String title, String authors, String sku,
             String coverUrl, int quantity, BigDecimal currentPrice, BigDecimal currentSubtotal,
-            boolean available, String unavailabilityReason, String format) { }
+            boolean available, String unavailabilityReason, String format, boolean requiresPhysicalFulfillment,
+            boolean quantityEditable) { }
 
     public record CartItemResult(String cartId, String cartItemId, int quantity) { }
 }

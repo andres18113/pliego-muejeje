@@ -16,7 +16,7 @@ async function install(page: Page) {
       city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]);
     if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 1, digitalItemCount: 0, subtotal: "18.50", taxRate: "15.00", taxAmount: "2.78", shippingAmount: "0.00", total: "21.28", totalCurrent: "21.28",
       estimatedDeliveryFrom: "2026-10-05", estimatedDeliveryTo: "2026-10-07", items: [{ cartItemId: "1", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez", sku: "TEST-42", coverUrl: null,
-        quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, unavailabilityReason: null }] });
+        requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, unavailabilityReason: null }] });
     if (path === "/api/v1/pickup-locations") return locationState === "error"
       ? json({ code: "READ_FAILURE", title: "Error de consulta", detail: "Vuelve a consultar." }, 503)
       : json(locationState === "empty" ? [] : [pickupLocation, { ...pickupLocation, id: "9", name: "Otro punto de retiro", address: "Otra dirección" }]);

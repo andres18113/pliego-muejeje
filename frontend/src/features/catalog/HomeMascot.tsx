@@ -2,12 +2,11 @@ import classes from "./homeMascot.module.css";
 
 /**
  * PLIEGO's brand character: a soft, calm form with one gently folded corner,
- * looking toward a full stop. It wears headphones and reads from a small screen: PLIEGO is
+ * leaning a little. It wears headphones and reads from a small screen: PLIEGO is
  * books to hold, to read on a device and to listen to. Purely decorative — the hero's heading carries the message.
  */
 export function HomeMascot({ className }: { className?: string }) {
-  return <svg className={`${classes.mascot}${className ? ` ${className}` : ""}`} viewBox="0 0 600 562" aria-hidden="true" focusable="false">
-    <circle className={classes.stop} cx="118" cy="132" r="50" />
+  return <svg className={`${classes.mascot}${className ? ` ${className}` : ""}`} viewBox="88 130 460 432" aria-hidden="true" focusable="false">
     <g className={classes.figure}>
       {/* The band follows the head's own outline from behind, around the folded corner; only the ear cups sit in front. */}
       <path className={classes.band} d="M163.8 344.7C196.9 248.1 266.2 180.2 360 176C384 175 400 182 414 196L494 276C508 290 514 306 514 330V352" />

@@ -19,9 +19,8 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await cover.focus();
   const addFavorite = firstCard.getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" });
   await expect(addFavorite).toBeVisible();
-  // Focus follows the card's visual order: link → cart → favorite.
-  await page.keyboard.press("Tab");
-  await expect(firstCard.locator("[data-bookcard-cart]")).toBeFocused();
+  // Focus order: the product link, then its favorite on the cover stage (the catalog card has no cart action).
+  await expect(firstCard.locator("[data-bookcard-cart]")).toHaveCount(0);
   await page.keyboard.press("Tab");
   await expect(addFavorite).toBeFocused();
   await page.keyboard.press("Enter");
@@ -34,8 +33,8 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await expect(firstCard.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "true");
   await expect(firstCard.locator("[data-bookcard-feedback]")).toContainText("Agregado a favoritos.");
 
-  await firstCard.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
-  await expect(firstCard.locator("[data-bookcard-feedback]")).toContainText("Agregado al carrito.");
+  // Buying happens on the edition page; the catalog card never opens the cart.
+  await expect(page.getByRole("dialog", { name: "Tu carrito" })).toHaveCount(0);
 
   await openAccountSection(page, "Favoritos");
   await expect(page.getByRole("heading", { level: 1, name: "Favoritos" })).toBeVisible();
@@ -74,7 +73,7 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await expect(toast).toHaveCount(0);
 });
 
-test("touch layouts keep both cover actions visible without hover and without horizontal overflow", async ({ browser }) => {
+test("touch layouts keep the cover favorite visible without hover and without horizontal overflow", async ({ browser }) => {
   const context = await browser.newContext({
     baseURL: "http://127.0.0.1:5173",
     viewport: { width: 390, height: 844 },
@@ -86,13 +85,13 @@ test("touch layouts keep both cover actions visible without hover and without ho
   await page.goto("/catalog");
 
   const firstCard = page.locator(".edition-item").first();
-  const actions = firstCard.locator("[data-bookcard-actions]");
   await expect(firstCard).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
-  await expect(actions).toBeVisible();
-  await expect(firstCard.getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" })).toBeVisible();
-  await expect(firstCard.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" })).toBeVisible();
-  expect(await actions.evaluate((element) => getComputedStyle(element).position)).not.toBe("absolute");
+  // Touch has no hover: the favorite is always visible on the cover stage's corner, and there is no cart action.
+  const favorite = firstCard.getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" });
+  await expect(favorite).toBeVisible();
+  await expect(favorite).toBeInViewport();
+  await expect(firstCard.locator("[data-bookcard-cart]")).toHaveCount(0);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
   await context.close();
 });

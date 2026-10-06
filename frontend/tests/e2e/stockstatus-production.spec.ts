@@ -23,8 +23,8 @@ async function install(page: Page, scheme: "light" | "dark", quantityConflict = 
     }
     if (path === "/me/favorites/status") return ok(url.searchParams.getAll("editionIds").map((editionId) => ({ editionId, favorite: false })));
     if (path === "/me/favorites") return ok({ items: [{ ...editionRead(unavailable), favoritedAt: "2026-10-01T12:00:00Z" }], page: 0, pageSize: 20, totalCount: "1" });
-    if (path === "/cart") return ok({ cartId: "40", state: "ACTIVE", items: [null, "P3002", "P2042", "P2043"].map((reason, index) => ({
-      cartItemId: String(100 + index), editionId: String(42 + index), title: index === 0 ? summary.title : `${unavailable.title} ${index}`, authors: summary.authors, sku: `PLG-BK-${index}`, coverUrl: null, quantity: 2, currentPrice: "20.00", currentSubtotal: "40.00", available: stockOverride ?? (reason === null), unavailabilityReason: stockOverride === true ? null : stockOverride === false ? "P3002" : reason,
+    if (path === "/cart") return ok({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 4, digitalItemCount: 0, items: [null, "P3002", "P2042", "P2043"].map((reason, index) => ({
+      cartItemId: String(100 + index), editionId: String(42 + index), title: index === 0 ? summary.title : `${unavailable.title} ${index}`, authors: summary.authors, sku: `PLG-BK-${index}`, coverUrl: null, requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 2, currentPrice: "20.00", currentSubtotal: "40.00", available: stockOverride ?? (reason === null), unavailabilityReason: stockOverride === true ? null : stockOverride === false ? "P3002" : reason,
     })), totalCurrent: "160.00" });
     if (route.request().method() !== "GET" && path.startsWith("/cart/items")) writes++;
     if (path === "/cart/items" && quantityConflict) return route.fulfill({ status: 409, contentType: "application/problem+json", body: JSON.stringify({ type: "urn:pliego:problem:P3002", code: "P3002", status: 409, title: "Existencias insuficientes", detail: "La cantidad solicitada no está cubierta." }) });
@@ -81,9 +81,11 @@ for (const scheme of ["light", "dark"] as const) {
       await page.setViewportSize({ width, height: 1000 });
       await page.goto("/catalog"); await expect(page.locator("[data-bookcard]")).toHaveCount(2); await check(page, 2);
       await expect(page.locator("html")).toHaveAttribute("data-mantine-color-scheme", scheme);
-      await expect(page.locator('.edition-item [data-bookcard-cart][data-unavailable]')).toHaveText("shopping_cart_offAgregar");
+      // Catalog cards are browse cards: availability lives in the stock line; buying happens on the edition page.
+      await expect(page.locator('.edition-item [data-bookcard-cart]')).toHaveCount(0);
       await expect(page.locator('.edition-item [data-stockstatus]')).toHaveCount(2);
-      await page.goto("/"); await expect(page.locator("[data-reading-scene]")).toHaveCount(2); await expect(page.locator("main [data-stockstatus]")).toHaveCount(3); await check(page, 3);
+      // The Home identifies titles and sells none: it has no stock status of its own.
+      await page.goto("/"); await expect(page.getByRole("heading", { level: 1 })).toBeVisible(); await expect(page.locator("main [data-stockstatus]")).toHaveCount(0);
       await page.goto("/favorites"); await expect(page.locator("[data-favorite-row]")).toHaveCount(1); await check(page, 1);
       await page.goto("/catalog/editions/42"); await check(page, 1);
       await page.goto("/catalog/editions/43"); await check(page, 1);
@@ -129,7 +131,7 @@ async function refreshStock(page: Page) {
   await page.evaluate(() => window.dispatchEvent(new Event("visibilitychange")));
 }
 
-for (const route of ["/catalog", "/favorites", "/catalog/editions/42", "/", "/cart", "/checkout"] as const) {
+for (const route of ["/catalog", "/favorites", "/catalog/editions/42", "/cart", "/checkout"] as const) {
   test(`StockStatus authoritative read transitions preserve semantics and keyboard focus in ${route}`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.clock.install();
@@ -138,9 +140,9 @@ for (const route of ["/catalog", "/favorites", "/catalog/editions/42", "/", "/ca
       await page.setViewportSize({ width, height: 800 });
     api.setStock(true);
     await page.goto(route);
-    const action = route === "/catalog" ? page.locator('[data-bookcard-cart]').first()
+    // The catalog's browse card has no cart action: its product link carries the stock description.
+    const action = route === "/catalog" ? page.locator('[data-bookcard-link]').first()
       : route === "/favorites" ? page.locator('[data-favorite-row] [data-bookcard-cart]').first()
-      : route === "/" ? page.locator('[data-reading-scene]:not([inert]) [data-reading-cart]').first()
       : route === "/cart" ? page.getByRole("combobox", { name: "Cantidad de Cien años de soledad" })
       : route === "/checkout" ? page.getByRole("button", { name: "Hacer pedido" })
       : page.getByRole("button", { name: "Agregar al carrito", exact: true });
@@ -150,6 +152,8 @@ for (const route of ["/catalog", "/favorites", "/catalog/editions/42", "/", "/ca
     await action.focus();
     api.setStock(false); await refreshStock(page);
     if (route === "/catalog/editions/42") await expect(action).toHaveCount(0);
+    // The browse card's link stays where it is, so the reader keeps their place.
+    else if (route === "/catalog") await expect(action).toBeFocused();
     // The cart selector stays usable so the quantity can still be lowered; it stops offering more than the line holds.
     else if (route === "/cart") {
       await page.keyboard.press("ArrowDown");
@@ -161,8 +165,8 @@ for (const route of ["/catalog", "/favorites", "/catalog/editions/42", "/", "/ca
       expect(await action.evaluate((element: HTMLButtonElement) => element.disabled)).toBe(true);
     }
     if (route !== "/checkout") await expect(page.locator('main [data-stockstatus][data-state="unavailable"]').first()).toBeVisible();
-    const recoveredFocus = route === "/catalog" || route === "/favorites" ? page.locator('[data-bookcard-favorite]').first()
-      : route === "/" ? page.locator('[data-reading-scene]:not([inert]) [data-reading-favorite]').first()
+    const recoveredFocus = route === "/catalog" ? action
+      : route === "/favorites" ? page.locator('[data-bookcard-favorite]').first()
       : route === "/cart" ? action
       : route === "/checkout" ? page.locator('#checkout-stock-blocker')
       : page.getByRole("heading", { level: 1, name: summary.title });
@@ -170,7 +174,7 @@ for (const route of ["/catalog", "/favorites", "/catalog/editions/42", "/", "/ca
     await expect(recoveredFocus).toBeInViewport();
     await expect.poll(() => page.locator('main [data-stockstatus]').evaluateAll(elements => elements.length > 0 && elements.every(el => el.getAttribute("data-state") === "unavailable"))).toBe(true);
     const writes = api.writes();
-    if (route !== "/catalog/editions/42") await action.evaluate((element: HTMLElement) => element.click());
+    if (route !== "/catalog/editions/42" && route !== "/catalog") await action.evaluate((element: HTMLElement) => element.click());
     expect(api.writes()).toBe(writes);
     if (route === "/cart") await page.keyboard.press("Escape");
     api.setStock(true); await refreshStock(page);
@@ -189,20 +193,20 @@ for (const scheme of ["light", "dark"] as const) {
     await page.emulateMedia({ reducedMotion: "reduce" });
     for (const width of [320, 1280]) {
       await page.setViewportSize({ width, height: 1000 });
-      for (const [route, count] of [["/catalog", 2], ["/favorites", 1], ["/catalog/editions/42", 1], ["/catalog/editions/43", 1], ["/", 3], ["/cart", 4], ["/checkout", 3]] as const) {
+      for (const [route, count] of [["/catalog", 2], ["/favorites", 1], ["/catalog/editions/42", 1], ["/catalog/editions/43", 1], ["/cart", 4], ["/checkout", 3]] as const) {
         await page.goto(route);
         await expect(page.locator("main [data-stockstatus]")).toHaveCount(count);
         await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
         await check(page, count);
-        const unavailableActions = page.locator('[data-bookcard-cart][data-unavailable], [data-reading-cart][data-unavailable]');
+        const unavailableActions = page.locator('[data-bookcard-cart][data-unavailable]');
         for (const action of await unavailableActions.all()) {
           await expect(action).toBeDisabled();
           expect(await action.evaluate((element: HTMLButtonElement) => element.disabled)).toBe(true);
           await expect(action).toHaveAccessibleDescription(/No disponible/);
         }
         await expect(page.locator('[data-stockstatus] .material-symbol:not([aria-hidden="true"]), [data-stockstatus-mark]:not([aria-hidden="true"])')).toHaveCount(0);
-        if (route === "/catalog" || route === "/favorites" || route === "/") {
-          const favorite = page.locator('main [data-bookcard-favorite], [data-reading-scene]:not([inert]) [data-reading-favorite]').first();
+        if (route === "/catalog" || route === "/favorites") {
+          const favorite = page.locator('main [data-bookcard-favorite]').first();
           await favorite.focus(); await expect(favorite).toBeFocused();
         }
         if (route === "/favorites" || route === "/catalog/editions/43") await page.screenshot({ path: testInfo.outputPath(`${width}-${route.includes("favorites") ? "favorites" : "pdp"}.png`), fullPage: true });
@@ -214,8 +218,9 @@ for (const scheme of ["light", "dark"] as const) {
 test("stock refresh keeps focus when the reader has moved to another control", async ({ page }) => {
   await page.clock.install();
   const api = await install(page, "light"); api.setStock(true);
-  await page.goto("/catalog");
-  const cart = page.locator('[data-bookcard-cart]').first();
+  // The shared cart control now lives on Favoritos rows (catalog cards are browse cards).
+  await page.goto("/favorites");
+  const cart = page.locator('[data-favorite-row] [data-bookcard-cart]').first();
   await cart.focus();
   const search = page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true });
   await search.focus();
