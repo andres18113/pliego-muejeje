@@ -1,0 +1,16 @@
+/* The account's identity mark: initials (or Material person) on an ultramar disc. Sized by --monogram-size in
+   rem so it follows the reader's text size. */
+.monogram {
+  position: relative; display: inline-grid; flex: none; place-items: center; width: var(--monogram-size, 2.5rem); height: var(--monogram-size, 2.5rem);
+  border-radius: 50%; background: var(--store-action, #283da8); color: var(--store-on-action, #fff); user-select: none;
+}
+.letters { font: 650 calc(var(--monogram-size, 2.5rem) * .4)/1 var(--store-display); letter-spacing: -.02em; }
+/* PLIEGO's full stop, as on the wordmark: one small yellow dot at the mark's foot, ringed by the ground. */
+.monogram[data-stop]::after {
+  content: ""; position: absolute; right: 0; bottom: 0; width: 24%; height: 24%; border-radius: 50%;
+  background: var(--store-yellow, #f3df83); box-shadow: 0 0 0 3px var(--monogram-ground, var(--store-paper, #f6f5f0));
+}
+@media (forced-colors: active) {
+  .monogram { border: 1px solid CanvasText; background: Canvas; color: CanvasText; forced-color-adjust: none; }
+  .monogram[data-stop]::after { display: none; }
+}

@@ -1,3 +1,4 @@
+import type { MaterialSymbolName } from "@/shared/ui/MaterialSymbol";
 import type { CatalogCriteria } from "./catalogUrl";
 
 /**
@@ -19,3 +20,11 @@ export function mediaOfFormat(format: string | null | undefined): CatalogMedia {
 export function mediaTitle(media: CatalogMedia | null) {
   return media === "physical" ? "Libros" : media === "ebook" ? "eBooks" : media === "audiobook" ? "Audiolibros" : "Todos los libros";
 }
+
+/** How one edition says what it is, everywhere it is listed: the medium's Material symbol and its short name. */
+const mediaCues: Record<CatalogMedia, { label: string; symbol: MaterialSymbolName }> = {
+  physical: { label: "Libro", symbol: "book_2" },
+  ebook: { label: "eBook", symbol: "mobile" },
+  audiobook: { label: "Audiolibro", symbol: "headphones" },
+};
+export function mediaCue(media: CatalogMedia) { return mediaCues[media]; }

@@ -1,0 +1,4 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/shared/ui/ChoicePicker.test.tsx > exposes a collapsed combobox and keyboard-controlled listbox state
+ Test Files  1 failed (1)
+      Tests  1 failed (1)

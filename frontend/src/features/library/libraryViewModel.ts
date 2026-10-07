@@ -22,7 +22,6 @@ export function toOwnedItemViewModel(item: OwnedItem) {
   return {
     ...item, detailHref: libraryRoutes.detail(item.ownedItemId), mediaLabel: item.productType === "EBOOK" ? "eBook" : "Audiolibro",
     ownershipLabel: item.ownershipState === "OWNED" ? "Pertenece a tu cuenta" : "Titularidad revocada",
-    accessLabel: item.accessState === "OWNERSHIP_ONLY" ? "Registro de titularidad; acceso al contenido fuera de esta simulación" : "Titularidad revocada",
     sourcePurchases: item.sourcePurchases.map(toLibrarySourcePurchaseViewModel),
     bibliographicMetadata: [
       { label: "Editorial", value: metadata.publisher }, { label: "Idioma", value: metadata.language },

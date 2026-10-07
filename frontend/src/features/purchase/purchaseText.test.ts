@@ -31,12 +31,12 @@ describe("sign-in return intent", () => {
     expect(safeAuthReturnHref("/catalog/editions/42?from=%2Fcatalog")).toBe("/catalog/editions/42?from=%2Fcatalog");
   });
 
-  it("falls back to the catalog for anything else", () => {
-    expect(safeAuthReturnHref("//evil.example/cart")).toBe("/catalog");
-    expect(safeAuthReturnHref("https://evil.example/checkout")).toBe("/catalog");
-    expect(safeAuthReturnHref("/admin")).toBe("/catalog");
-    expect(safeAuthReturnHref("/orders/abc")).toBe("/catalog");
-    expect(safeAuthReturnHref(null)).toBe("/catalog");
+  it("falls back to the Home page for anything else", () => {
+    expect(safeAuthReturnHref("//evil.example/cart")).toBe("/");
+    expect(safeAuthReturnHref("https://evil.example/checkout")).toBe("/");
+    expect(safeAuthReturnHref("/admin")).toBe("/");
+    expect(safeAuthReturnHref("/orders/abc")).toBe("/");
+    expect(safeAuthReturnHref(null)).toBe("/");
   });
 });
 

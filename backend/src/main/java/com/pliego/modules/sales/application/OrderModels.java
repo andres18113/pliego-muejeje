@@ -27,7 +27,16 @@ public final class OrderModels {
 
     public record Item(String orderItemId, String editionId, String sku, String isbn,
             String title, String authors, String publisher, String format, String language,
-            BigDecimal unitPrice, int quantity, BigDecimal subtotal, boolean requiresPhysicalFulfillment) { }
+            BigDecimal unitPrice, int quantity, BigDecimal subtotal, boolean requiresPhysicalFulfillment,
+            BigDecimal originalPrice, BigDecimal unitSavings, BigDecimal originalSubtotal, BigDecimal lineSavings,
+            boolean pricingSnapshotAvailable) {
+        public Item(String orderItemId, String editionId, String sku, String isbn,
+                String title, String authors, String publisher, String format, String language,
+                BigDecimal unitPrice, int quantity, BigDecimal subtotal, boolean requiresPhysicalFulfillment) {
+            this(orderItemId, editionId, sku, isbn, title, authors, publisher, format, language,
+                    unitPrice, quantity, subtotal, requiresPhysicalFulfillment, null, null, null, null, false);
+        }
+    }
 
     public record Address(String recipient, String line1, String line2, String city,
             String province, String countryCode, String postalCode, String reference, String phone) { }

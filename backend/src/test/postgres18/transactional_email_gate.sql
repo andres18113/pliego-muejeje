@@ -64,7 +64,9 @@ BEGIN
  SELECT * INTO rec FROM pliego.fn_mail_outbox_claim();
  PERFORM pliego.fn_mail_outbox_complete(oid,uuidv4(),'SENT',NULL);
  IF (SELECT estado FROM pliego.correo_outbox WHERE correo_id=oid)<>'SENDING' THEN RAISE EXCEPTION 'foreign worker completed claim'; END IF;
- PERFORM pliego.fn_mail_outbox_complete(oid,rec.propietario,'SENT',NULL);
+ PERFORM pliego.fn_mail_outbox_complete(oid,rec.propietario,'SENT',NULL,'mailtrap-gate-message-id');
+ IF NOT EXISTS(SELECT FROM pliego.correo_outbox WHERE correo_id=oid AND estado='SENT'
+   AND id_mensaje_proveedor='mailtrap-gate-message-id') THEN RAISE EXCEPTION 'provider receipt was not correlated'; END IF;
  PERFORM pliego.fn_mail_outbox_complete(oid,rec.propietario,'RETRY','MAILTRAP_HTTP_503');
  IF (SELECT estado FROM pliego.correo_outbox WHERE correo_id=oid)<>'SENT' THEN RAISE EXCEPTION 'completion not idempotent'; END IF;
  INSERT INTO pliego.correo_outbox(evento_clave,tipo,usuario_id,destinatario,datos)

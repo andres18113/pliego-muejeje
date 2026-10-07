@@ -141,6 +141,152 @@ class CustomerOrderApiIntegrationTest {
     }
 
     @Test
+    void listAndDetailForwardImmutableOriginalPricesAndSavingsWithoutRecalculation() throws Exception {
+        var pricing = new PostPurchaseModels.OfferPricing(new BigDecimal("44.31"), new BigDecimal("4.51"),
+                new BigDecimal("39.80"), true);
+        var summary = summaryExtras("CONFIRMED");
+        gateway.page = new Page(List.of(new Summary("700", Instant.parse("2026-09-23T19:30:00Z"),
+                "CONFIRMED", new BigDecimal("39.80"), "APPROVED",
+                new PostPurchaseModels.SummaryExtras(summary.purchaseState(), summary.fulfillmentMethod(),
+                        summary.shipmentState(), summary.estimatedDeliveryFrom(), summary.estimatedDeliveryTo(),
+                        summary.itemCount(), summary.unitCount(), summary.itemSummary(), summary.invoiceState(),
+                        summary.invoicePdfAvailable(), summary.invoiceXmlAvailable(), pricing))), 1);
+        var detail = gateway.detail;
+        var post = detail.postPurchase();
+        // Deliberately distinct historical line amounts detect Java price/quantity reconstruction.
+        gateway.detail = new Detail(detail.orderId(), detail.orderState(), detail.subtotal(), detail.total(),
+                detail.createdAt(), detail.updatedAt(), List.of(new Item("800", "250", "SKU-AT-PURCHASE", "9780306406157",
+                        "Título en compra", "Autora en compra", "Editorial en compra", "PAPERBACK", "es",
+                        new BigDecimal("19.90"), 2, new BigDecimal("39.80"), true,
+                        new BigDecimal("22.15"), new BigDecimal("2.26"), new BigDecimal("44.31"), new BigDecimal("4.51"), true)),
+                detail.address(), detail.payment(), detail.stateHistory(),
+                new PostPurchaseModels.Extras(post.purchaseState(), post.fulfillment(), post.shipment(), post.invoice(),
+                        post.creditNotes(), post.availableActions(), post.amounts(), pricing));
+
+        mvc.perform(get("/api/v1/orders").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].originalSubtotal").value("44.31"))
+                .andExpect(jsonPath("$.items[0].savingsTotal").value("4.51"))
+                .andExpect(jsonPath("$.items[0].currentSubtotal").value("39.80"))
+                .andExpect(jsonPath("$.items[0].pricingSnapshotAvailable").value(true))
+                .andExpect(jsonPath("$.items[0].total").value("39.80"));
+        mvc.perform(get("/api/v1/orders/700").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.originalSubtotal").value("44.31"))
+                .andExpect(jsonPath("$.savingsTotal").value("4.51"))
+                .andExpect(jsonPath("$.currentSubtotal").value("39.80"))
+                .andExpect(jsonPath("$.pricingSnapshotAvailable").value(true))
+                .andExpect(jsonPath("$.subtotal").value("39.80"))
+                .andExpect(jsonPath("$.total").value("39.80"))
+                .andExpect(jsonPath("$.items[0].unitPrice").value("19.90"))
+                .andExpect(jsonPath("$.items[0].subtotal").value("39.80"))
+                .andExpect(jsonPath("$.items[0].originalPrice").value("22.15"))
+                .andExpect(jsonPath("$.items[0].unitSavings").value("2.26"))
+                .andExpect(jsonPath("$.items[0].originalSubtotal").value("44.31"))
+                .andExpect(jsonPath("$.items[0].lineSavings").value("4.51"))
+                .andExpect(jsonPath("$.items[0].pricingSnapshotAvailable").value(true));
+    }
+
+    @Test
+    void orderListForwardsPaidTaxAndShippingBreakdownForSnapshotAndLegacyOrders() throws Exception {
+        var amounts = new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("39.80"), new BigDecimal("15.00"),
+                new BigDecimal("5.97"), new BigDecimal("2.50"), new BigDecimal("48.27"));
+        var summary = summaryExtras("CONFIRMED");
+        var withSnapshot = new PostPurchaseModels.OfferPricing(new BigDecimal("44.31"), new BigDecimal("4.51"),
+                new BigDecimal("39.80"), true);
+        var withoutSnapshot = new PostPurchaseModels.OfferPricing(null, null, new BigDecimal("39.80"), false);
+        var items = new java.util.ArrayList<Summary>();
+        for (var pricing : List.of(withSnapshot, withoutSnapshot)) {
+            items.add(new Summary(pricing.pricingSnapshotAvailable() ? "700" : "701",
+                    Instant.parse("2026-09-23T19:30:00Z"), "CONFIRMED", new BigDecimal("48.27"), "APPROVED",
+                    new PostPurchaseModels.SummaryExtras(summary.purchaseState(), summary.fulfillmentMethod(),
+                            summary.shipmentState(), summary.estimatedDeliveryFrom(), summary.estimatedDeliveryTo(),
+                            summary.itemCount(), summary.unitCount(), summary.itemSummary(), summary.invoiceState(),
+                            summary.invoicePdfAvailable(), summary.invoiceXmlAvailable(), pricing, amounts)));
+        }
+        gateway.page = new Page(items, 2);
+
+        mvc.perform(get("/api/v1/orders").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].subtotal").value("39.80"))
+                .andExpect(jsonPath("$.items[0].taxRate").value("15.00"))
+                .andExpect(jsonPath("$.items[0].taxAmount").value("5.97"))
+                .andExpect(jsonPath("$.items[0].shippingAmount").value("2.50"))
+                .andExpect(jsonPath("$.items[0].total").value("48.27"))
+                .andExpect(jsonPath("$.items[0].originalSubtotal").value("44.31"))
+                .andExpect(jsonPath("$.items[0].savingsTotal").value("4.51"))
+                .andExpect(jsonPath("$.items[0].currentSubtotal").value("39.80"))
+                .andExpect(jsonPath("$.items[0].pricingSnapshotAvailable").value(true))
+                .andExpect(jsonPath("$.items[1].subtotal").value("39.80"))
+                .andExpect(jsonPath("$.items[1].taxRate").value("15.00"))
+                .andExpect(jsonPath("$.items[1].taxAmount").value("5.97"))
+                .andExpect(jsonPath("$.items[1].shippingAmount").value("2.50"))
+                .andExpect(jsonPath("$.items[1].total").value("48.27"))
+                .andExpect(jsonPath("$.items[1].currentSubtotal").value("39.80"))
+                .andExpect(jsonPath("$.items[1].pricingSnapshotAvailable").value(false))
+                .andExpect(jsonPath("$.items[1].originalSubtotal").doesNotExist())
+                .andExpect(jsonPath("$.items[1].savingsTotal").doesNotExist());
+    }
+
+    @Test
+    void historicalPricingSchemaDistinguishesUnknownSnapshotsFromPaidAmounts() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.components.schemas.CheckoutResponse.properties.originalSubtotal.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CheckoutResponse.properties.pricingSnapshotAvailable.type").value("boolean"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderSummary.properties.savingsTotal.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderSummary.properties.subtotal.type[0]").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderSummary.properties.taxRate.type[0]").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderSummary.properties.taxAmount.type[0]").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderSummary.properties.shippingAmount.type[0]").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderDetail.properties.currentSubtotal.type[0]").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.originalPrice.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.unitSavings.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.lineSavings.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.CustomerOrderItem.properties.pricingSnapshotAvailable.type").value("boolean"))
+                .andExpect(jsonPath("$.components.schemas.Actions.properties.canCancel.type").value("boolean"))
+                .andExpect(jsonPath("$.components.schemas.Actions.properties.cancellationDeadline.type[1]").value("null"))
+                .andExpect(jsonPath("$.components.schemas.Actions.properties.lifecycleState.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.Actions.properties.libraryAccessState.type").value("string"));
+    }
+
+    @Test
+    void orderDetailReturnsAuthoritativePurchaseLifecycleCapabilities() throws Exception {
+        var detail = gateway.detail;
+        var post = detail.postPurchase();
+        gateway.detail = new Detail(detail.orderId(), detail.orderState(), detail.subtotal(), detail.total(),
+                detail.createdAt(), detail.updatedAt(), detail.items(), detail.address(), detail.payment(),
+                detail.stateHistory(), new PostPurchaseModels.Extras("COMPLETED", post.fulfillment(), post.shipment(),
+                        post.invoice(), post.creditNotes(), new PostPurchaseModels.Actions(false, false, false,
+                                "2026-10-06T22:06:00Z", "COMPLETED", "OWNERSHIP_ONLY"), post.amounts()));
+
+        mvc.perform(get("/api/v1/orders/700").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.purchaseState").value("COMPLETED"))
+                .andExpect(jsonPath("$.availableActions.cancel").value(false))
+                .andExpect(jsonPath("$.availableActions.canCancel").value(false))
+                .andExpect(jsonPath("$.availableActions.cancellationDeadline").value("2026-10-06T22:06:00Z"))
+                .andExpect(jsonPath("$.availableActions.lifecycleState").value("COMPLETED"))
+                .andExpect(jsonPath("$.availableActions.libraryAccessState").value("OWNERSHIP_ONLY"));
+    }
+
+    @Test
+    void legacyOrderDoesNotInventOriginalPricesOrSavings() throws Exception {
+        mvc.perform(get("/api/v1/orders/700").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.pricingSnapshotAvailable").value(false))
+                .andExpect(jsonPath("$.originalSubtotal").doesNotExist())
+                .andExpect(jsonPath("$.savingsTotal").doesNotExist())
+                .andExpect(jsonPath("$.items[0].pricingSnapshotAvailable").value(false))
+                .andExpect(jsonPath("$.items[0].originalPrice").doesNotExist())
+                .andExpect(jsonPath("$.items[0].unitSavings").doesNotExist())
+                .andExpect(jsonPath("$.items[0].originalSubtotal").doesNotExist())
+                .andExpect(jsonPath("$.items[0].lineSavings").doesNotExist())
+                .andExpect(jsonPath("$.items[0].unitPrice").value("19.90"))
+                .andExpect(jsonPath("$.items[0].subtotal").value("39.80"));
+    }
+
+    @Test
     void foreignAndMissingOrdersHaveIdenticalSafe404ForDetailAndCancellation() throws Exception {
         gateway.failure = translator.translate(new SQLException("private SQL and customer ownership", "P5001"));
         for (long id : List.of(700L, 999999L)) {

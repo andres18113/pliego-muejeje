@@ -9,7 +9,16 @@
 .back:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 6px; }
 .missing h2 { margin: 0 0 8px; font: 650 1.75rem/1.1 var(--acc-display); letter-spacing: -.04em; }
 
-.order { display: grid; gap: 18px; width: 100%; max-width: 1000px; min-width: 0; margin-inline: auto; color: var(--acc-ink); }
+.order {
+  /* Purchased books sit on a white sheet (neutral in dark), never lavender; savings and delivery progress are green. */
+  --od-items: #fff; --od-items-edge: color-mix(in srgb, var(--acc-ink) 10%, transparent);
+  --od-progress: #34a853; --od-progress-end: #188038; --od-savings: #1e7a3c; --od-save-bg: #d7f1dc; --od-save-ink: #17522a;
+  display: grid; gap: 18px; width: 100%; max-width: 1000px; min-width: 0; margin-inline: auto; color: var(--acc-ink);
+}
+:global([data-mantine-color-scheme="dark"]) .order {
+  --od-items: #22243b; --od-items-edge: rgb(255 255 255 / 10%);
+  --od-progress: #5bb974; --od-progress-end: #81c995; --od-savings: #8fdca6; --od-save-bg: #1f3d29; --od-save-ink: #bdeec9;
+}
 .facts { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 32px; margin: 0; font-size: 1.0625rem; line-height: 1.4; padding-inline: clamp(4px, 2.4vw, 24px); }
 .facts div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; min-width: 0; }
 .facts dt { font-weight: 650; }
@@ -30,25 +39,30 @@
 
 .cancel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; min-width: 0; }
 .cancel > p { flex: 1 1 18rem; margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; }
-.cancelConfirm { display: grid; gap: 12px; width: 100%; padding: 16px 18px; border-radius: 16px; background: var(--acc-mist); }
-.cancelConfirm p { margin: 0; font-weight: 600; }
 
 /* Progress: one bar in five parts, filled through the server-reported step; the full stop marks "here". */
 .track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin: 0; padding: 0; list-style: none; }
 .track li { display: grid; align-content: start; gap: 8px; min-width: 0; }
 .trackMark { position: relative; display: block; height: 8px; border-radius: 999px; background: var(--acc-lavender); }
 .trackMark :global(.material-symbol) { display: none; }
-.track li[data-state="done"] .trackMark, .track li[data-state="current"] .trackMark { background: var(--acc-blue); }
+.track li[data-state="done"] .trackMark, .track li[data-state="current"] .trackMark { background: var(--od-progress); }
 .track li[data-state="current"] .trackMark::after {
   content: ""; position: absolute; top: 50%; right: -2px; width: 16px; height: 16px; border-radius: 50%; translate: 0 -50%;
-  background: var(--acc-yellow); box-shadow: 0 0 0 2px var(--acc-blue);
+  background: var(--od-progress-end); box-shadow: 0 0 0 2px var(--acc-sheet);
 }
+/* Delivered: one completed green bar ending in a darker dot, then "Entregado" and its recorded time. */
+.trackComplete { display: grid; gap: 10px; min-width: 0; }
+.trackBar { position: relative; display: block; height: 8px; border-radius: 999px; background: var(--od-progress); }
+.trackBar::after { content: ""; position: absolute; top: 50%; right: -2px; width: 16px; height: 16px; border-radius: 50%; translate: 0 -50%; background: var(--od-progress-end); }
+.trackCompleteLabel { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0; font-size: .9375rem; }
+.trackCompleteLabel :global(.material-symbol) { color: var(--od-progress-end); }
+.trackCompleteTime { color: var(--acc-muted); font-size: .875rem; }
 .trackLabel { color: var(--acc-muted); font-size: .8125rem; line-height: 1.3; overflow-wrap: anywhere; }
 .track li[data-state="current"] .trackLabel { color: var(--acc-ink); font-weight: 650; }
 .trackTime { display: none; }
 
 .actionRow { display: flex; flex-wrap: wrap; gap: 10px 12px; }
-.inset { padding: 18px; border-radius: 16px; background: var(--acc-mist); }
+.inset { padding: 18px; border-radius: 16px; background: var(--status-soft); }
 .tracking { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; min-width: 0; font-size: .9375rem; }
 .trackingCode { margin: 0; margin-right: auto; }
 .trackingCode span { color: var(--acc-muted); }
@@ -81,7 +95,7 @@
 .quiet { margin: 0; color: var(--acc-muted); line-height: 1.5; }
 
 /* Purchased books, inside the same panel */
-.books { min-width: 0; padding: 4px 18px; border-radius: 18px; background: var(--acc-mist); }
+.books { min-width: 0; padding: 4px 18px; border-radius: 18px; background: var(--od-items); box-shadow: inset 0 0 0 1px var(--od-items-edge); }
 .books ul { margin: 0; padding: 0; list-style: none; }
 .book { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 18px; padding: 14px 0; }
 .book + .book { border-top: 1px solid color-mix(in srgb, var(--acc-ink) 10%, transparent); }
@@ -92,6 +106,9 @@
 .bookCopy p { margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.4; overflow-wrap: anywhere; }
 .bookPrice { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 14px; margin-top: 4px !important; font-variant-numeric: tabular-nums; }
 .bookPrice strong { color: var(--acc-ink); font-weight: 650; }
+.bookWas { color: var(--acc-muted); font-size: .875rem; }
+.bookCopy .bookSaving { display: inline-flex; align-items: center; gap: 6px; justify-self: start; max-width: 100%; margin-top: 8px; padding: 5px 12px 5px 10px; border-radius: 8px; background: var(--od-save-bg); color: var(--od-save-ink); font-size: .875rem; font-weight: 500; line-height: 1.35; }
+.totals [data-tone="savings"] :is(dt, dd) { color: var(--od-savings); }
 .main[data-tone="closed"] .books, .main[data-story="payment-rejected"] .books { background: color-mix(in srgb, var(--acc-ink) 5%, transparent); }
 .main[data-tone="closed"] .bookCover, .main[data-story="payment-rejected"] .bookCover { opacity: .65; }
 
@@ -138,3 +155,6 @@
   .trackMark { border: 1px solid CanvasText; }
   .track li[data-state="done"] .trackMark, .track li[data-state="current"] .trackMark { background: CanvasText; }
 }
+
+/* Notices above the order sit on the order's own 1000px axis. */
+.onAxis { width: 100%; max-width: 1000px; margin-inline: auto; }

@@ -3,6 +3,9 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { cartBody, json, problem, renderPurchaseRoute, savedAddress, stubApi } from "@/test/purchase";
 import { CheckoutPage } from "./CheckoutPage";
+import { useSession } from "@/app/session";
+import * as cartApi from "@/shared/api/cart";
+import { cartQueryKey } from "./cartQuery";
 
 const routes = [
   { path: "/checkout", element: <CheckoutPage /> },
@@ -33,7 +36,111 @@ async function fillCheckout(user: ReturnType<typeof userEvent.setup>, method: "T
 }
 
 describe("CheckoutPage", () => {
+  it("discards A's delayed cart preflight instead of caching or submitting it after B signs in", async () => {
+    let release: (response: Response) => void = () => {};
+    let heldRead: Promise<cartApi.CartDetail> | undefined;
+    let reads=0;
+    const realRead=cartApi.getCartDetail;
+    const spy=vi.spyOn(cartApi,"getCartDetail").mockImplementation(signal => {
+      const pending=realRead(signal); if (++reads===2) heldRead=pending; return pending;
+    });
+    const cartA=cartBody(),cartB={...cartBody([{title:"Libro de Bea",cartItemId:"201"}]),cartId:"50"};
+    let actor="2",aReads=0;
+    const api=stubApi({
+      "GET /api/v1/cart": request => request.headers.get("Authorization")==="Bearer beta-token" ? json(cartB)
+        : ++aReads===1 ? json(cartA) : new Promise<Response>(done => { release=done; }),
+      "GET /api/v1/me/addresses": request => json([{...savedAddress,addressId:request.headers.get("Authorization")==="Bearer beta-token" ? "16":"15"}]),
+      "POST /api/v1/checkout":()=>json(approved,201),
+    });
+    function SwitchIdentity() {
+      const {establish}=useSession();
+      return <button onClick={()=>{actor="3";establish({accessToken:"beta-token",expiresAt:Date.now()+1_800_000,user:{userId:"3",email:"bea@example.com",role:"CUSTOMER"}});}}>Entrar como Bea</button>;
+    }
+    const user=userEvent.setup();
+    const view=renderPurchaseRoute([{path:"/checkout",element:<><SwitchIdentity/><CheckoutPage/></>},routes[1]],"/checkout");
+    const crossed: string[]=[];
+    const unsubscribe=view.queryClient.getQueryCache().subscribe(event => {
+      if(actor==="3" && event.type==="updated" && event.action.type==="success" && event.query.queryKey[0]===cartQueryKey[0]) crossed.push((event.query.state.data as cartApi.CartDetail).cartId!);
+    });
+    try {
+      await fillCheckout(user,"Transferencia"); await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+      await waitFor(()=>expect(heldRead).toBeDefined());
+      await user.click(screen.getByRole("button",{name:"Entrar como Bea"}));
+      await waitFor(()=>expect((view.queryClient.getQueryData(cartQueryKey) as cartApi.CartDetail)?.cartId).toBe("50"));
+      await act(async()=>{release(json(cartA));await heldRead;});
+      expect(crossed).not.toContain("40");
+      expect(api.count("POST","/api/v1/checkout")).toBe(0);
+      expect(view.router.state.location.pathname).toBe("/checkout");
+    } finally {
+      unsubscribe();spy.mockRestore();
+      // Let the pre-fix diagnostic's already-dispatched continuation finish before test cleanup.
+      await new Promise(done=>setTimeout(done,750));
+    }
+  });
   afterEach(() => vi.unstubAllGlobals());
+
+  it("validates each card field when it is left, keeps untouched fields quiet, and updates a touched field as it is corrected", async () => {
+    const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
+    const number = within(dialog).getByLabelText("Número de tarjeta");
+    const expiry = within(dialog).getByLabelText("Caducidad (MM/AA)");
+    const cvv = within(dialog).getByLabelText("Código de seguridad");
+    const holder = within(dialog).getByLabelText("Nombre en la tarjeta");
+    const errorOf = (input: HTMLElement) => input.getAttribute("aria-describedby")?.split(" ").map((id) => document.getElementById(id)?.textContent).filter((text) => text && !/dígitos (en|al)/.test(text)).join(" ") ?? "";
+
+    expect([number, expiry, cvv, holder].map((input) => input.getAttribute("aria-invalid"))).toEqual([null, null, null, null]);
+
+    await user.type(number, "4111111111111112"); await user.tab();
+    expect(number).toHaveAttribute("aria-invalid", "true");
+    expect(errorOf(number)).toBe("Este número de tarjeta no es válido. Revisa los dígitos.");
+    expect(expiry).toHaveFocus();
+    expect(expiry).not.toHaveAttribute("aria-invalid");
+
+    await user.type(expiry, "1399"); await user.tab();
+    expect(expiry).toHaveAttribute("aria-invalid", "true");
+    expect(errorOf(expiry)).toBe("Escribe la fecha de caducidad en formato MM/AA.");
+
+    await user.click(cvv); await user.type(cvv, "12"); await user.tab();
+    expect(cvv).toHaveAttribute("aria-invalid", "true");
+    expect(errorOf(cvv)).toBe("El código de seguridad debe tener 3 dígitos.");
+    expect(holder).toHaveFocus();
+
+    await user.tab();
+    expect(holder).toHaveAttribute("aria-invalid", "true");
+    expect(errorOf(holder)).toBe("Escribe el nombre del titular de la tarjeta.");
+    expect(screen.getByRole("button", { name: "Usar esta tarjeta" })).toHaveFocus();
+
+    // Touched fields update live as they are corrected.
+    await user.clear(number); await user.type(number, "4111111111111111");
+    await waitFor(() => expect(number).not.toHaveAttribute("aria-invalid"));
+    await user.clear(expiry); await user.type(expiry, "1230");
+    await waitFor(() => expect(expiry).not.toHaveAttribute("aria-invalid"));
+    await user.type(cvv, "3");
+    await waitFor(() => expect(cvv).not.toHaveAttribute("aria-invalid"));
+    await user.type(holder, "Ana Pérez");
+    await waitFor(() => expect(holder).not.toHaveAttribute("aria-invalid"));
+
+    // Submit still validates everything: breaking one field again keeps the dialog open.
+    await user.clear(holder);
+    await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
+    expect(screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" })).toBeInTheDocument();
+    expect(holder).toHaveAttribute("aria-invalid", "true");
+    expect(api.count("POST", "/api/v1/checkout")).toBe(0);
+  });
+
+  it("does not flag an empty field that focus only passed through", async () => {
+    stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
+    await user.type(within(dialog).getByLabelText("Número de tarjeta"), "4111111111111111");
+    await waitFor(() => expect(within(dialog).getByLabelText("Caducidad (MM/AA)")).toHaveFocus());
+    await user.click(within(dialog).getByLabelText("Nombre en la tarjeta"));
+    expect(within(dialog).getByLabelText("Caducidad (MM/AA)")).not.toHaveAttribute("aria-invalid");
+    expect(within(dialog).getByLabelText("Número de tarjeta")).not.toHaveAttribute("aria-invalid");
+  });
 
   it("opens concise CVV help with keyboard and returns focus without closing the card dialog", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
@@ -499,6 +606,54 @@ describe("CheckoutPage", () => {
     expect(screen.getByRole("button", { name: "Hacer pedido" })).not.toHaveAttribute("aria-disabled");
   });
 
+  it("shows the server's offer savings in the order summary without computing them or showing expiry", async () => {
+    stubApi({
+      "GET /api/v1/cart": () => json({
+        ...cartBody([
+          { quantity: 2, currentPrice: "63.96", currentSubtotal: "127.92", originalPrice: "79.95", unitSavings: "15.99", originalSubtotal: "159.90", lineSavings: "31.97" },
+          { cartItemId: "101", editionId: "43", title: "Rayuela", quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", originalPrice: "18.50", unitSavings: "0.00", originalSubtotal: "18.50", lineSavings: "0.00" },
+        ]),
+        originalSubtotal: "178.40", savingsTotal: "31.97", currentSubtotal: "146.42", subtotal: "146.42", taxRate: "15.00", taxAmount: "21.96", shippingAmount: "0.00", total: "168.38",
+      }),
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+    });
+    renderPurchaseRoute(routes, "/checkout");
+
+    const summary = await screen.findByRole("complementary", { name: "Resumen del pedido" });
+    const saving = await within(summary).findByText(/Ahorras \$\s*31,97/);
+    expect(saving.parentElement?.querySelector(".material-symbol")?.textContent).toBe("sell");
+    expect(within(summary).getAllByText(/Ahorras/)).toHaveLength(1);
+    expect([...summary.querySelectorAll("li s")].map((node) => node.textContent?.replace(/\s+/g, " "))).toEqual(["Precio anterior: $ 159,90"]);
+    const rows = [...summary.querySelectorAll("dl > div")].map((row) => [row.querySelector("dt")?.textContent, row.querySelector("dd")?.textContent?.replace(/\s+/g, " ")]);
+    expect(rows).toEqual([["Subtotal", "$ 178,40"], ["Ahorro total", "-$ 31,97"], ["IVA (15 %)", "$ 21,96"], ["Gastos de envío", "$ 0,00"], ["Total", "$ 168,38"]]);
+    expect(summary.textContent).not.toMatch(/Quedan|Queda |Termina/);
+  });
+
+  it.each([[403,/No tienes permiso/],[429,/Espera un momento/],[503,/servicio/]] as const)("explains a pre-confirmation HTTP %s failure without sending checkout", async (status,detail) => {
+    const api=stubApi({
+      "GET /api/v1/cart":[() => json(cartBody()),() => problem(status,"READ_FAILURE","Consulta no disponible","Detalle de transporte")],
+      "GET /api/v1/me/addresses":() => json([savedAddress]),
+    });
+    const user=userEvent.setup();renderPurchaseRoute(routes,"/checkout");
+    await fillCheckout(user,"Transferencia");
+    await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+    expect(await screen.findByRole("heading",{name:"No enviamos tu pedido."})).toBeInTheDocument();
+    expect(screen.getByText(detail)).toBeInTheDocument();
+    expect(api.count("POST","/api/v1/checkout")).toBe(0);
+  });
+
+  it("requires fresh acceptance when the pricing snapshot changes without changing the final amount", async () => {
+    const api=stubApi({
+      "GET /api/v1/cart":[() => json({...cartBody(),quoteFingerprint:"a".repeat(64)}),() => json({...cartBody(),quoteFingerprint:"b".repeat(64)})],
+      "GET /api/v1/me/addresses":() => json([savedAddress]),
+    });
+    const user=userEvent.setup();renderPurchaseRoute(routes,"/checkout");
+    await fillCheckout(user,"Transferencia");
+    await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+    expect(await screen.findByRole("heading",{name:"Tu carrito cambió."})).toBeInTheDocument();
+    expect(api.count("POST","/api/v1/checkout")).toBe(0);
+  });
+
   it("stops before submitting when the server cart changed since it was shown", async () => {
     const api = stubApi({
       "GET /api/v1/cart": [
@@ -519,6 +674,22 @@ describe("CheckoutPage", () => {
     expect(await screen.findByRole("heading", { name: "Tu carrito cambió." })).toBeInTheDocument();
     await waitFor(() => expect(within(summary).getByText("Total").nextSibling).toHaveTextContent("19,00"));
     expect(api.count("POST", "/api/v1/checkout")).toBe(0);
+  });
+
+  it("protects the accepted quote through confirmation and recovers an authoritative quote conflict", async () => {
+    const api = stubApi({
+      "GET /api/v1/cart": [() => json({ ...cartBody(), quoteFingerprint: "a".repeat(64) }), () => json({ ...cartBody(), quoteFingerprint: "a".repeat(64) }), () => json({ ...cartBody([{ currentPrice: "19.00", currentSubtotal: "19.00" }]), quoteFingerprint: "b".repeat(64) })],
+      "GET /api/v1/me/addresses": () => json([savedAddress]),
+      "POST /api/v1/checkout": () => problem(409,"P4005","El carrito cambió","Revisa el nuevo total."),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes,"/checkout");
+    await fillCheckout(user,"Transferencia");
+    await user.click(screen.getByRole("button",{ name: "Hacer pedido" }));
+    expect(await screen.findByRole("heading",{ name: "Tu carrito cambió y no se creó el pedido." })).toBeInTheDocument();
+    expect(api.calls.find(call => call.method === "POST" && call.path === "/api/v1/checkout")?.body).toMatchObject({ expectedQuoteFingerprint: "a".repeat(64) });
+    expect(screen.getByRole("button",{ name: "Hacer pedido" })).toBeEnabled();
+    expect(api.count("POST","/api/v1/checkout")).toBe(1);
   });
 
   it("explains a P3002 stock conflict, refreshes the cart, and creates no order", async () => {

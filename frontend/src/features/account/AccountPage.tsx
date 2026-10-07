@@ -11,12 +11,13 @@ import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { useCountries } from "@/shared/api/reference";
 import { FieldMessage } from "@/shared/ui/Field";
 import { ReadFailure } from "@/features/purchase/CartPage";
+import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
 import { AccountShell } from "./AccountShell";
-import { ProfileAvatar } from "./ProfileAvatar";
+import { AccountMonogram } from "@/shared/ui/AccountMonogram";
 import classes from "./profile.module.css";
 import { restoredProfileField, useProfileDraft, useProfileSaving } from "./profileDraft";
 
@@ -46,7 +47,7 @@ function AccountContent() {
   }, [clear, profileQuery.error]);
 
   return <AccountShell title="Mi perfil" trail="Mi perfil">
-    {profileQuery.isPending ? <p className="purchase-loading" role="status">Consultando tus datos…</p> : !profileQuery.data ? <ReadFailure title="No pudimos consultar tus datos." onRetry={() => void profileQuery.refetch()} retrying={profileQuery.isFetching} /> : <>
+    {profileQuery.isPending ? <p className="purchase-loading" role="status">Consultando tus datos…</p> : !profileQuery.data ? <ReadFailure error={profileQuery.error} title="No pudimos consultar tus datos." onRetry={() => void profileQuery.refetch()} retrying={profileQuery.isFetching} /> : <>
       {profileQuery.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus datos. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void profileQuery.refetch()}>Actualizar</Button></p>}
       <Profile profile={profileQuery.data} readCurrent={!profileQuery.isError} refetch={profileQuery.refetch} onExpired={() => clear("expired")} />
       <p className={classes.verification}>¿No encuentras el enlace para verificar tu correo? <Link to="/reenviar-verificacion" state={{ email: profileQuery.data.email }}>Reenviar verificación de correo</Link></p>
@@ -85,7 +86,7 @@ function Profile({ profile, readCurrent, refetch, onExpired }: { profile: Custom
 
   return <section className={classes.profile} aria-label="Perfil y datos personales">
     <header className={classes.identity}>
-      <ProfileAvatar />
+      <AccountMonogram firstNames={profile.firstNames} lastNames={profile.lastNames} size={76} stop />
       <div className={classes.identityCopy}>
         <h2 className={classes.name}>{fullName}</h2>
         <p className={classes.tagline}>Tus datos para comprar y recibir tus libros.</p>
@@ -148,27 +149,34 @@ function EditorFrame({ label, onSubmit, onCancel, saving, saved, children, error
 }
 
 /** Save only the edited field, conditional on the version seen when its editor opened. */
-async function saveProfileField(profile: CustomerProfile, field: ProfileField, value: string | null, refetch: Refetch, onExpired: () => void, savedMessage: string): Promise<{ done?: Result; error?: string; fieldError?: string; current?: CustomerProfile }> {
+async function saveProfileField(profile: CustomerProfile, field: ProfileField, value: string | null, refetch: Refetch, onExpired: () => void, savedMessage: string, scope: SessionOperationScope): Promise<{ done?: Result; error?: string; fieldError?: string; current?: CustomerProfile }> {
   try {
+    scope.assertCurrent();
     await patchProfile(field, value, profile.version);
+    if (!scope.isCurrent()) return {};
     const current = await refetch();
+    if (!scope.isCurrent()) return {};
     return { current: current.isError ? undefined : current.data, done: { message: current.isError ? `${savedMessage} No pudimos actualizar la vista; usa Actualizar para comprobarlo.` : savedMessage, error: current.isError } };
   } catch (error) {
+    if (!scope.isCurrent()) return {};
     if (error instanceof ApiRequestError && error.status === 401) { onExpired(); return {}; }
     if (error instanceof ApiRequestError && error.code === "P1104") {
       await refetch();
+      if (!scope.isCurrent()) return {};
       return { error: "Tu perfil cambió mientras editabas. Conservamos lo que escribiste. Cancela y vuelve a abrir el campo para revisar los datos actuales antes de guardar." };
     }
     const specific = fieldErrorMessages(error,field) ?? fieldErrorMessages(error,"value");
     if(specific) return {fieldError:specific};
     if (error instanceof ApiRequestError && error.status < 500) return { error: `${error.title}. ${error.detail}` };
     const current = await refetch();
+    if (!scope.isCurrent()) return {};
     const applied = !current.isError && current.data?.[field] === value && current.data.version !== profile.version;
     return applied ? { current: current.data, done: { message: savedMessage, error: false } } : { error: "No pudimos confirmar el cambio. Conservamos lo que escribiste; revisa el dato actual antes de volver a guardarlo." };
   }
 }
 
 function NameEditor({ field, label, profile, refetch, onExpired, onDone }: EditorProps & { field: "firstNames" | "lastNames"; label: "nombres" | "apellidos" }) {
+  const scope = useSessionOperationScope(`${profile.customerId}:${field}`);
   const inputId = useId();
   const draft = useProfileDraft(profile, field, profile[field]);
   const { value, setValue } = draft;
@@ -186,7 +194,8 @@ function NameEditor({ field, label, profile, refetch, onExpired, onDone }: Edito
     if (!parsed.success) { setInvalid(parsed.error.issues[0].message); inputRef.current?.focus(); return false; }
     setInvalid(null);
     if (parsed.data === original[field]) { draft.cancel(); onDone(); return false; }
-    const result = await saveProfileField(original, field, parsed.data, refetch, onExpired, `Guardamos tus ${label}.`);
+    const result = await saveProfileField(original, field, parsed.data, refetch, onExpired, `Guardamos tus ${label}.`, scope);
+    if (!scope.isCurrent()) return false;
     if (result.fieldError) { setInvalid(result.fieldError); inputRef.current?.focus(); return false; }
     if (result.error) { setError(result.error); return false; }
     if (result.done && draft.complete(submitted, result.current)) { onDone(result.done); return true; }
@@ -200,6 +209,7 @@ function NameEditor({ field, label, profile, refetch, onExpired, onDone }: Edito
 }
 
 function PhoneEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
+  const scope = useSessionOperationScope(`${profile.customerId}:phone`);
   const countries = useCountries();
   const draft = useProfileDraft(profile, "phone", profile.phone ?? "");
   const { value, setValue } = draft;
@@ -220,7 +230,8 @@ function PhoneEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     setInvalid(null);
     const next = trimmed ? normalizePhonePresentation(trimmed) : null;
     if (next === (original.phone ?? null)) { draft.cancel(); onDone(); return false; }
-    const result = await saveProfileField(original, "phone", next, refetch, onExpired, next ? "Guardamos tu teléfono." : "Quitamos tu teléfono.");
+    const result = await saveProfileField(original, "phone", next, refetch, onExpired, next ? "Guardamos tu teléfono." : "Quitamos tu teléfono.", scope);
+    if (!scope.isCurrent()) return false;
     if(result.fieldError) { setInvalid(result.fieldError); document.getElementById("profile-phone-input")?.focus(); return false; }
     if (result.error) { setError(result.error); return false; }
     if (result.done && draft.complete(submitted, result.current, Boolean(draft.country.current && draft.country.current !== submittedCountry))) { onDone(result.done); return true; }
@@ -249,6 +260,7 @@ function PhoneEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
  * normalization and uniqueness; a lost response is reconciled by reading the profile, never retried blindly.
  */
 function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
+  const scope = useSessionOperationScope(`${profile.customerId}:email`);
   const { session, updateEmailForSession } = useSession();
   const emailId = useId(), passwordId = useId();
   const draft = useProfileDraft(profile, "email", "");
@@ -279,14 +291,18 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     if (next.email || next.password || !parsed.success) { (next.email ? emailRef : passwordRef).current?.focus(); return false; }
     const requested = parsed.data;
     try {
+      scope.assertCurrent();
       const stored = await changeEmail(requested, password);
+      if (!scope.isCurrent()) return false;
       const current = await refetch();
+      if (!scope.isCurrent()) return false;
       const feedback = confirmed(stored);
       const passwordChanged = passwordRef.current?.value !== submittedPassword;
       setPassword(latest => latest === submittedPassword ? "" : latest);
       if (draft.complete(submitted, current.isError ? undefined : current.data, passwordChanged)) { onDone(feedback); return true; }
       return false;
     } catch (failure) {
+      if (!scope.isCurrent()) return false;
       if (failure instanceof ApiRequestError) {
         if (failure.status === 401) { onExpired(); return false; }
         if (failure.code === "CURRENT_PASSWORD_INVALID") { setErrors({ password: "La contraseña actual no es correcta." }); setPassword(""); passwordRef.current?.focus(); return false; }
@@ -301,6 +317,7 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
       }
       if (failure instanceof EmailChangeOutcomeUnknown) {
         const current = await refetch();
+        if (!scope.isCurrent()) return false;
         if (!current.isError && current.data && current.data.email.toLowerCase() === requested.toLowerCase()) {
           const feedback = confirmed(current.data.email);
           const passwordChanged = passwordRef.current?.value !== submittedPassword;

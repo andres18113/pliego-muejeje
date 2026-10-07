@@ -2,6 +2,14 @@ import type { components } from "./generated";
 
 export type ApiProblem = components["schemas"]["ProblemDetail"];
 
+/** The denied request used a bearer that has since been replaced. The current session remains valid. */
+export class SessionRenewedError extends Error {
+  constructor() {
+    super("Tu sesión se renovó durante la solicitud. Consulta el estado e inténtalo de nuevo.");
+    this.name = "SessionRenewedError";
+  }
+}
+
 export type ApiFieldViolation = {
   readonly field: string;
   readonly message: string;
@@ -38,6 +46,16 @@ export function toApiRequestError(
   );
 }
 
+/** Safe recovery copy for read failures, independent of arbitrary transport detail. */
+export function readRecoveryDetail(error: unknown): string {
+  const status = error instanceof ApiRequestError ? error.status : undefined;
+  return status === 403 ? "No tienes permiso para consultar esta información. Vuelve al catálogo o usa la cuenta correspondiente."
+    : status === 404 ? "Esta información ya no está disponible. Vuelve al catálogo para continuar."
+    : status === 429 ? "Espera un momento antes de volver a intentarlo; recibimos demasiadas solicitudes."
+    : status && status >= 500 ? "El servicio no está disponible temporalmente. Inténtalo de nuevo en unos momentos."
+    : "Comprueba tu conexión e inténtalo otra vez.";
+}
+
 export function fieldErrorMessages(error: unknown, field: string): string | undefined {
   if (!(error instanceof ApiRequestError)) return undefined;
 
@@ -52,6 +70,9 @@ export function describeApiError(
   fallbackTitle = "No pudimos completar la solicitud",
   fallbackDetail = "Comprueba tu conexión e inténtalo otra vez.",
 ) {
+  if (error instanceof SessionRenewedError) {
+    return { title: "La sesión se renovó", detail: error.message, code: undefined, status: undefined };
+  }
   if (error instanceof ApiRequestError) {
     return {
       title: error.title,

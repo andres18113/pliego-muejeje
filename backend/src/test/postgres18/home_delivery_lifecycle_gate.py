@@ -37,6 +37,10 @@ class HomeDeliveryLifecycle(unittest.TestCase):
     def state(self, order):
         return query(f'SELECT estado FROM pliego.envio WHERE pedido_id={order}')
 
+    def status_emails(self, order):
+        return query(f"""SELECT string_agg(datos->>'state',',' ORDER BY correo_id)
+            FROM pliego.correo_outbox WHERE evento_clave LIKE 'ORDER_STATUS:{order}:HOME_DELIVERY:%'""")
+
     def detail_state(self, order, admin=False):
         fn = 'fn_admin_order_detail_priced' if admin else 'fn_customer_order_detail_priced'
         actor = self.admin if admin else self.actor
@@ -45,6 +49,19 @@ class HomeDeliveryLifecycle(unittest.TestCase):
     def test_confirmed_home_starts_preparing_with_persisted_deadlines(self):
         order = self.order()
         self.assertEqual('PREPARING', self.state(order))
+        self.assertEqual('ORDER_CONFIRMED,ORDER_STATUS', query(f"""SELECT string_agg(tipo,',' ORDER BY correo_id)
+            FROM pliego.correo_outbox WHERE usuario_id=(SELECT usuario_id FROM pliego.pedido p
+             JOIN pliego.cliente c USING(cliente_id) WHERE p.pedido_id={order})
+             AND evento_clave IN ('ORDER_CONFIRMED:{order}','ORDER_STATUS:{order}:HOME_DELIVERY:PREPARING')"""))
+        self.assertEqual('PREPARING', self.status_emails(order))
+        self.assertEqual('HOME_DELIVERY|PREPARING|I8-CONC-', query(f"""SELECT (datos->>'method')||'|'||(datos->>'state')||'|'||
+            left(((datos->'items')->0)->>'sku',8) FROM pliego.correo_outbox
+            WHERE evento_clave='ORDER_STATUS:{order}:HOME_DELIVERY:PREPARING'"""))
+        self.assertEqual('t', query(f"""SELECT datos->>'customerName'='Cliente Conc'
+            AND datos->>'customerEmail'=(SELECT email_normalizado FROM pliego.usuario WHERE usuario_id={self.actor})
+            AND datos->>'actionPath'='/orders/{order}' AND ((datos->'items')->0) ? 'originalSubtotal'
+            AND ((datos->'items')->0) ? 'lineSavings' AND datos->>'fulfillmentState'='PREPARING'
+            FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:{order}:HOME_DELIVERY:PREPARING'"""))
         self.assertEqual('t', query(f"""SELECT fecha_preparacion=fecha_confirmacion
             AND transito_desde=fecha_confirmacion+INTERVAL '2 minutes'
             AND reparto_desde=fecha_confirmacion+INTERVAL '4 minutes'
@@ -63,11 +80,18 @@ class HomeDeliveryLifecycle(unittest.TestCase):
                     '2030-01-01 00:00:00Z'::timestamptz+make_interval(secs=>{seconds}))"""))
 
     def test_reconciliation_at_each_stage(self):
+        expected_events = {
+            'PREPARING': 'PREPARING',
+            'IN_TRANSIT': 'PREPARING,IN_TRANSIT',
+            'OUT_FOR_DELIVERY': 'PREPARING,IN_TRANSIT,OUT_FOR_DELIVERY',
+            'DELIVERED': 'PREPARING,IN_TRANSIT,OUT_FOR_DELIVERY,DELIVERED',
+        }
         for seconds, expected in [(119,'PREPARING'), (121,'IN_TRANSIT'), (241,'OUT_FOR_DELIVERY'), (361,'DELIVERED')]:
             with self.subTest(seconds=seconds):
                 order = self.order()
                 self.age(order, seconds)
                 self.assertEqual(expected, self.detail_state(order))
+                self.assertEqual(expected_events[expected], self.status_emails(order))
                 self.assertEqual('CONFIRMED|APPROVED', query(f"SELECT p.estado,pa.estado FROM pliego.pedido p JOIN pliego.pago pa USING(pedido_id) WHERE p.pedido_id={order}"))
 
     def test_cancellation_before_leaving_preparing(self):
@@ -79,9 +103,18 @@ class HomeDeliveryLifecycle(unittest.TestCase):
         query('CALL pliego.sp_home_delivery_advance_due(100)')
         self.assertEqual('CANCELLED',self.state(order))
         self.assertEqual(str(before+1),query(f'SELECT stock_actual FROM pliego.inventario WHERE edicion_id={self.edition}'))
+        self.assertEqual('1',query(f"SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:{order}' AND tipo='ORDER_CANCELLED'"))
+        self.assertEqual('t',query(f"""SELECT datos->>'paymentState'='REFUNDED'
+            AND datos->>'refundAmount'=datos->>'total'
+            AND ((datos->'items')->0)->>'originalSubtotal' IS NOT NULL
+            AND ((datos->'items')->0)->>'lineSavings' IS NOT NULL
+            AND NOT (datos ? 'inventory' OR datos ? 'grant' OR datos ? 'restoredUnits')
+            FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:{order}'"""))
 
     def test_overdue_cancel_rejected_without_prior_detail_or_scheduler(self):
-        for seconds in (121,241,361):
+        for seconds, expected_events in ((121,'PREPARING,IN_TRANSIT'),
+                (241,'PREPARING,IN_TRANSIT,OUT_FOR_DELIVERY'),
+                (361,'PREPARING,IN_TRANSIT,OUT_FOR_DELIVERY,DELIVERED')):
             with self.subTest(seconds=seconds):
                 order = self.order()
                 self.age(order,seconds)
@@ -92,6 +125,8 @@ class HomeDeliveryLifecycle(unittest.TestCase):
                 self.assertEqual(before,query(f'SELECT stock_actual FROM pliego.inventario WHERE edicion_id={self.edition}'))
                 self.assertEqual('APPROVED',query(f'SELECT estado FROM pliego.pago WHERE pedido_id={order}'))
                 self.assertEqual('false',query(f"SELECT available_actions->>'cancel' FROM pliego.fn_customer_order_detail({self.actor},{order})"))
+                self.assertEqual('0',query(f"SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:{order}'"))
+                self.assertEqual(expected_events,self.status_emails(order))
 
     def test_server_downtime_catches_up_with_once_only_history(self):
         order = self.order()
@@ -102,6 +137,8 @@ class HomeDeliveryLifecycle(unittest.TestCase):
             self.assertEqual('DELIVERED',self.detail_state(order))
         self.assertEqual('PREPARING,IN_TRANSIT,OUT_FOR_DELIVERY,DELIVERED',query(f"SELECT string_agg(estado_nuevo,',' ORDER BY envio_historial_id) FROM pliego.envio_historial WHERE envio_id=(SELECT envio_id FROM pliego.envio WHERE pedido_id={order}) AND tipo='STATUS'"))
         self.assertEqual('3',query(f"SELECT count(*) FROM pliego.envio_historial h JOIN pliego.envio e USING(envio_id) WHERE e.pedido_id={order} AND ((h.estado_nuevo='IN_TRANSIT' AND h.fecha=e.transito_desde) OR (h.estado_nuevo='OUT_FOR_DELIVERY' AND h.fecha=e.reparto_desde) OR (h.estado_nuevo='DELIVERED' AND h.fecha=e.entrega_desde))"))
+        self.assertEqual('PREPARING,IN_TRANSIT,OUT_FOR_DELIVERY,DELIVERED', self.status_emails(order))
+        self.assertEqual('4',query(f"SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave LIKE 'ORDER_STATUS:{order}:HOME_DELIVERY:%'"))
         self.assertEqual('t',query(f'SELECT fecha_envio=transito_desde AND fecha_en_reparto=reparto_desde AND fecha_entrega=entrega_desde FROM pliego.envio WHERE pedido_id={order}'))
 
     def test_repeated_scheduler_execution_is_idempotent(self):
@@ -111,6 +148,15 @@ class HomeDeliveryLifecycle(unittest.TestCase):
             query('CALL pliego.sp_home_delivery_advance_due(100)')
         self.assertEqual('OUT_FOR_DELIVERY',self.state(order))
         self.assertEqual('3',query(f'SELECT count(*) FROM pliego.envio_historial WHERE envio_id=(SELECT envio_id FROM pliego.envio WHERE pedido_id={order})'))
+        self.assertEqual('3',query(f"SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave LIKE 'ORDER_STATUS:{order}:HOME_DELIVERY:%'"))
+
+    def test_invalid_shipment_transition_does_not_enqueue_status_email(self):
+        order = self.order()
+        result = subprocess.run(PSQL+['-c',f"CALL pliego.sp_shipment_transition({self.admin},{order},'OUT_FOR_DELIVERY')"],
+            capture_output=True,text=True)
+        self.assertNotEqual(0,result.returncode)
+        self.assertIn('P5002',result.stderr)
+        self.assertEqual('PREPARING',self.status_emails(order))
 
     def test_concurrent_advancement_and_reconciliation_do_not_duplicate_events(self):
         order = self.order()

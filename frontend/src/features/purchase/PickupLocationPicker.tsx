@@ -28,7 +28,7 @@ export function PickupLocationPicker({ query, value, onChange, disabled, error, 
         aria-expanded={choosing} onClick={() => setChoosing(!choosing)}>{choosing ? "Cerrar" : "Cambiar punto"}</button>}
     </div>
     {query.isPending ? <p className={classes.status} role="status">Consultando puntos de retiro…</p>
-      : query.isError ? <ReadFailure title="No pudimos consultar los puntos de retiro." onRetry={() => { retryFocus.current = true; void query.refetch(); }} retrying={query.isFetching} />
+      : query.isError ? <ReadFailure error={query.error} title="No pudimos consultar los puntos de retiro." onRetry={() => { retryFocus.current = true; void query.refetch(); }} retrying={query.isFetching} />
       : query.data?.length === 0 ? <p className={classes.hint} role="status">No hay puntos de retiro disponibles. Puedes elegir Entrega o volver a consultar más tarde.</p>
       : <>
         {(!selected || choosing) && <fieldset className={classes.choices} disabled={disabled || query.isFetching} aria-describedby={error ? "pickup-location-error" : undefined} aria-invalid={Boolean(error) || undefined}>

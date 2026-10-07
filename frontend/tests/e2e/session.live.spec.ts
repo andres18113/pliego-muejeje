@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { verifyRegisteredEmail } from "./shared/verified-registration";
 
 const env = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env ?? {};
 test.skip(!env.PLIEGO_E2E_LIVE, "Set PLIEGO_E2E_LIVE=1 to run against PostgreSQL and the live API.");
@@ -11,6 +12,7 @@ test("restores CUSTOMER across reload and reopen, then keeps logout through relo
     data: { email, password, firstNames: "Ana", lastNames: "Sesión" },
   });
   expect(registration.status()).toBe(201);
+  verifyRegisteredEmail(email, api);
 
   await page.goto(`/sign-in?from=${encodeURIComponent("/account")}`);
   await page.getByLabel("Correo electrónico").fill(email);

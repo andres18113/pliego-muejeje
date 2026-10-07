@@ -69,9 +69,9 @@ export function safeExternalHttpHref(candidate: string | null | undefined) {
   }
 }
 
-export function safeCatalogReturnHref(candidate: string | null | undefined) {
+export function safeCatalogReturnHref(candidate: string | null | undefined, fallback = "/catalog") {
   if (!candidate || !candidate.startsWith("/") || candidate.startsWith("//") || candidate.includes("\\")) {
-    return "/catalog";
+    return fallback;
   }
   try {
     const parsed = new URL(candidate, window.location.origin);
@@ -79,9 +79,9 @@ export function safeCatalogReturnHref(candidate: string | null | undefined) {
       || /^\/catalog\/editions\/[1-9][0-9]*\/?$/.test(parsed.pathname);
     return parsed.origin === window.location.origin && isCatalogPath
       ? `${parsed.pathname}${parsed.search}${parsed.hash}`
-      : "/catalog";
+      : fallback;
   } catch {
-    return "/catalog";
+    return fallback;
   }
 }
 

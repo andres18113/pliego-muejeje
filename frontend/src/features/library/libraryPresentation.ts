@@ -6,7 +6,7 @@ import type { OwnedItemViewModel } from "./libraryViewModel";
 export const acquiredDateLabel = orderDateLabel;
 
 export function mediaSymbol(productType: OwnedItemViewModel["productType"]): MaterialSymbolName {
-  return productType === "EBOOK" ? "menu_book" : "headphones";
+  return productType === "EBOOK" ? "mobile" : "headphones";
 }
 
 export function durationLabel(seconds: number) {

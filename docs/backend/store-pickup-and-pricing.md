@@ -10,7 +10,7 @@ Checkout conserva firmas SQL/home y default fulfillmentMethod=HOME_DELIVERY. STO
 
 Snapshot propio de ubicación/código/horario/zona/preparación. estimatedAt usa reloj servidor; readyAt suma minutos efectivos y se expone UTC ISO, con timezone snapshot para representación local. No reconsulta ubicación editada. Referencia P- de seis a ocho caracteres base32 sin0/1/I/O, secuencia y UNIQUE; no es secreto de autorización.
 
-Retiro PENDING mientras compra CONFIRMED. POST admin orders/{id}/pickup/collect con pickupCode exige ADMIN y confirma DELIVERED/fecha_retiro/historial una sola vez. No fuerza espera hasta readyAt porque es una estimación. CANCELLED usa estado comercial existente; colección/cancelación comparten el lock del pedido. Rutas legacy de status/carrier/tracking rechazan pickup. No estado READY ni correo programado.
+Retiro PENDING mientras compra CONFIRMED. POST admin orders/{id}/pickup/collect con pickupCode exige ADMIN y confirma DELIVERED/fecha_retiro/historial una sola vez. No fuerza espera hasta readyAt porque es una estimación. CANCELLED usa estado comercial existente; colección/cancelación comparten el lock del pedido. Rutas legacy de status/carrier/tracking rechazan pickup. No hay estado READY; la outbox notifica PREPARING al terminar la ventana y COLLECTED al registrar la colección.
 
 Idempotencia mantiene advisory lock/fence/receipt y añade método/location al fingerprint. Replay devuelve mismo checkout incluso con ubicación inactiva/editada, carrito posterior o pedido recogido; fulfillment de confirmación solo contiene snapshot inmutable. Detalle añade estado/collectedAt actuales. Lista customer usa fulfillmentMethod existente y shipmentState=null; detail address=null. Factura mantiene dirección fiscal explícita, sin usar domicilio de tienda como dirección del cliente.
 
@@ -18,11 +18,11 @@ Idempotencia mantiene advisory lock/fence/receipt y añade método/location al f
 
 V041 conserva todos los importes históricos; pedidos anteriores siguen tasa/impuesto/envío cero. Precios actuales se consideran netos. Nuevas compras: IVA configurado15.00%, taxAmount=sum(round(lineSubtotal*rate/100,2)), shippingAmount0.00 y total=subtotal+taxAmount+shippingAmount. Carrito, executor, pedido/item, pago, receipt, invoice/items y crédito total coinciden. Catálogo/tasa futura no recalculan compras/documentos. Restricciones y triggers impiden editar snapshots financieros. Receipt usa NUMERIC30,2.
 
-REST cart/checkout/resolve/customer+admin detail exponen subtotal,taxRate,taxAmount,shippingAmount,total como strings decimales. taxRate porcentaje15.00, no fracción0.15. totalCurrent de cart se mantiene como alias de grand total; DB legacy fn_cart_get mantiene su contrato, JDBC usa fn_cart_quote. Empty cart cobra0.00. Invoice/credit conservan taxTotal y añaden taxRate/shippingAmount. El frontend recibe estos campos y no debe calcular IVA.
+REST cart/checkout/resolve/customer+admin detail exponen subtotal,taxRate,taxAmount,shippingAmount,total como strings decimales. taxRate porcentaje15.00, no fracción0.15. totalCurrent de cart se mantiene como alias de grand total; DB legacy fn_cart_get y fn_cart_quote mantienen sus contratos, JDBC usa fn_cart_offer_quote. El carrito añade originalSubtotal,savingsTotal,currentSubtotal; sus artículos añaden originalPrice,unitSavings,originalSubtotal,lineSavings, todos calculados por PostgreSQL. subtotal conserva el importe después de ofertas y antes de impuestos. Empty cart cobra0.00. Invoice/credit conservan taxTotal y añaden taxRate/shippingAmount. El frontend recibe estos campos y no debe calcular IVA.
 
 ## Correo
 
-Misma outbox V039, clave ORDER_CONFIRMED:{id}, mismos límites/retries/proveedor. Snapshot se publica tras completar fulfillment, en la transacción de checkout. Plantilla texto/HTML añade lugar/dirección, hora estimada en timezone del local, referencia e instrucción de presentar confirmación; desglose de IVA/envío autoritativo. Rechazados no generan confirmación. Ningún mensaje diferido ni sistema nuevo de email.
+Misma outbox V039, clave ORDER_CONFIRMED:{id}, mismos límites/retries/proveedor. V061 añade estados de fulfillment y cancellation/refund con claves únicas; los snapshots se leen de la compra persistida. Plantillas añaden lugar/dirección, hora estimada en timezone del local, referencia e instrucción de presentar confirmación; desglose de IVA/envío autoritativo. Rechazados no generan confirmación. No se añade un sistema de email separado ni notificación de listo.
 
 ## Archivos y rutinas
 

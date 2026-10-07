@@ -24,7 +24,9 @@ public record CheckoutRequest(
         @Pattern(regexp = "HOME_DELIVERY|STORE_PICKUP|DIGITAL_ONLY", message = "El método de entrega no es válido.")
         @Schema(defaultValue = "HOME_DELIVERY", allowableValues = {"HOME_DELIVERY", "STORE_PICKUP", "DIGITAL_ONLY"}) String fulfillmentMethod,
         @Pattern(regexp = "^[1-9][0-9]{0,18}$", message = "El punto de retiro debe ser un identificador positivo.")
-        @DecimalMax(value = "9223372036854775807", message = "El punto de retiro debe ser un identificador positivo.") String pickupLocationId) {
+        @DecimalMax(value = "9223372036854775807", message = "El punto de retiro debe ser un identificador positivo.") String pickupLocationId,
+        @Pattern(regexp = "^[0-9a-f]{64}$", message = "El resumen de compra no es válido. Consulta el carrito de nuevo.")
+        @Schema(description = "Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación.") String expectedQuoteFingerprint) {
 
     public CheckoutRequest {
         fulfillmentMethod = fulfillmentMethod == null ? "HOME_DELIVERY" : fulfillmentMethod;
@@ -41,6 +43,10 @@ public record CheckoutRequest(
 
     public CheckoutRequest(String addressId, String paymentMethod, String simulationOutcome, String cardNumber, String expectedCartId) {
         this(addressId, paymentMethod, simulationOutcome, cardNumber, expectedCartId, "HOME_DELIVERY", null);
+    }
+
+    public CheckoutRequest(String addressId, String paymentMethod, String simulationOutcome, String cardNumber, String expectedCartId, String fulfillmentMethod, String pickupLocationId) {
+        this(addressId, paymentMethod, simulationOutcome, cardNumber, expectedCartId, fulfillmentMethod, pickupLocationId, null);
     }
 
     public CheckoutRequest(String addressId, String paymentMethod, String simulationOutcome, String cardNumber) {

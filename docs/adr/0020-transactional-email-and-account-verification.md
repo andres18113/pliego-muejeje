@@ -24,7 +24,7 @@ Escoger recuperación de contraseña como único caso adicional: llena un vacío
 
 Solicitudes públicas neutras, límites persistentes por hash de email (5/hora) y dirección remota (20/hora), cooldown por cuenta/propósito de un minuto. Uso único, invalida tokens previos y correos pendientes. Restablecer revoca todas las sesiones refresh y ambos propósitos de tokens. JWT anteriores conservan su vida máxima actual de 30 minutos.
 
-El wrapper de `sp_checkout` captura al final el snapshot y crea un único evento ORDER_CONFIRMED por pedido, en la misma transacción, incluyendo checkout idempotente y llamadas SQL. No enviar para CANCELLED ni transiciones de fulfillment.
+El wrapper de `sp_checkout` captura al final el snapshot y crea un único evento ORDER_CONFIRMED por pedido, en la misma transacción, incluyendo checkout idempotente y llamadas SQL. La extensión V061 encola también las transiciones de fulfillment autoritativas, finalización digital y cancelación/reembolso del cliente en esa misma outbox; no genera notificaciones por una transición fallida ni por reconciliación repetida.
 
 Outbox PENDING → SENDING → SENT/FAILED con propietario UUID, lease, intentos, próximo intento, timestamps y error seguro. Claim usa FOR UPDATE SKIP LOCKED y transacción corta. HTTP ocurre después de commit, con timeouts. Máximo cinco intentos; backoff 30/60/120/240 segundos para 429/5xx. Fallos permanentes terminan FAILED. Timeout/IO incierto y leases abandonados terminan FAILED (AMBIGUOUS_DELIVERY), requieren reconciliar antes de reenviar. Esto evita duplicar automáticamente envíos cuya aceptación no conocemos; la API Mailtrap no documenta idempotency keys ni garantía exactly-once. SENT significa aceptado por proveedor, no entregado al buzón. MAIL_ENABLED=false conserva eventos, no los reclama ni envía.
 
@@ -38,6 +38,16 @@ SMTP requiere librería y expresa peor clasificación de errores; HTTP conserva 
 
 La revisión independiente reprodujo una carrera entre reset y reautenticación para cambio de correo. V039 reemplaza `fn_customer_password_hash` por una lectura VOLATILE con FOR UPDATE; Spring conserva el lock durante BCrypt y el cambio sensible. Una prueba PostgreSQL concurrente comprueba que reset no se confirma en medio de esa transacción. `fn_auth_session_create_checked` también serializa emisión de refresh con reset y revalida el hash usado por el login.
 
-Pruebas Java de token, plantillas, HTTP local stub, worker y endpoints. Gate PostgreSQL verifica registro, expiración, consumo/reenvío, límites, reset/sesiones, rollback, claim concurrente/idempotencia y checkout/outbox. Build Maven y gates existentes con fixtures explícitamente verificadas. Frontend pendiente: registro/verificación/reenvío, recuperación/reset y aviso tras cambiar email.
+Pruebas Java de token, plantillas, HTTP local stub, worker y endpoints. Gate PostgreSQL verifica registro, expiración, consumo/reenvío, límites, reset/sesiones, rollback, claim concurrente/idempotencia y checkout/outbox. Build Maven y gates existentes con fixtures explícitamente verificadas. Al aceptar esta decisión, el frontend aún estaba pendiente; las rutas de registro/verificación/reenvío/recuperación/reset están implementadas desde entonces.
 
 Fuentes: [Mailtrap OpenAPI oficial](https://github.com/mailtrap/mailtrap-openapi/blob/main/specs/email-sending-transactional.openapi.yml), [autenticación](https://docs.mailtrap.io/developers/authentication), [límites](https://docs.mailtrap.io/developers/rate-limits).
+
+## Actualización operativa — 2026-10-06
+
+Se conserva la integración con `java.net.http.HttpClient`: es el cliente HTTP reutilizable ya presente y cubre el endpoint único, Bearer, timeouts y clasificación de respuesta sin agregar dependencias. El entorno canónico para el secreto es `PLIEGO_MAILTRAP_API_TOKEN`; el remitente por defecto es `PLIEGO <no-reply@pliegolibros.com>`. Para correlación se envía `pliego_outbox_id` como variable personalizada y se persiste `message_ids[0]` en la outbox mediante V060. La aceptación HTTP queda separada de entrega final.
+
+El polling por defecto queda limitado a un mensaje cada 30 segundos por instancia ante el throughput inicial documentado de Mailtrap. El plan Free tiene una cuota diaria menor; el operador debe ajustar el plan y la configuración antes de aumentar el caudal. Webhooks de entrega/rebote quedan diferidos porque requieren endpoint público HTTPS, validación de firma HMAC, idempotencia de eventos y persistencia de estados posteriores.
+
+## Actualización de eventos de pedido — 2026-10-06
+
+V061 reusa `correo_outbox` para ORDER_STATUS y ORDER_CANCELLED. Los eventos HOME_DELIVERY salen del cambio de `envio.estado`, incluidos los pasos que recupera el scheduler; STORE_PICKUP emite PREPARING al finalizar la ventana existente y COLLECTED al registrar el retiro; los pedidos digitales emiten COMPLETED al persistir `finalizado_en`. No existe una transición READY de pickup. Las claves únicas incorporan pedido, método y estado; la cancelación usa una clave por pedido y solo se encola después de que la rutina existente completa el reembolso solicitado por el cliente. Los payloads se arman desde los snapshots de pedido/item/fulfillment y las proyecciones monetarias históricas.

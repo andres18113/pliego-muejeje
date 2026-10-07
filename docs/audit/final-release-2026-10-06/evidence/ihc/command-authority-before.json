@@ -1,0 +1,23 @@
+[
+  {
+    "posts": [
+      {
+        "path": "/api/v1/cart/items",
+        "bearer": "B"
+      }
+    ],
+    "actor": "3",
+    "feedback": "Agregado al carrito."
+  },
+  {
+    "stale401NavigatedToSignIn": true
+  },
+  {
+    "component": "CartPage",
+    "lateA401Actor": "guest"
+  },
+  {
+    "component": "OrderPage",
+    "lateA401Actor": "guest"
+  }
+]

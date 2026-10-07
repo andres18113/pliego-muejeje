@@ -1,0 +1,393 @@
+[
+  {
+    "editionId": "474",
+    "sku": "PLG-BK-000316",
+    "title": "Manual de medicina basada en evidencias",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "79.95",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "63.96",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "408",
+    "sku": "PLG-BK-000317",
+    "title": "Crónica matemática",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "14.95",
+    "discountPercentRequested": 10,
+    "durationDays": 15,
+    "request": {
+      "offerPrice": "13.46",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "437",
+    "sku": "PLG-BK-000318",
+    "title": "Goya en las literaturas",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "20.95",
+    "discountPercentRequested": 15,
+    "durationDays": 7,
+    "request": {
+      "offerPrice": "17.81",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "406",
+    "sku": "PLG-BK-000319",
+    "title": "De mano en mano",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "22.95",
+    "discountPercentRequested": 15,
+    "durationDays": 7,
+    "request": {
+      "offerPrice": "19.51",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "448",
+    "sku": "PLG-BK-000320",
+    "title": "Matemáticas en la vida cotidiana",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "23.95",
+    "discountPercentRequested": 15,
+    "durationDays": 7,
+    "request": {
+      "offerPrice": "20.36",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "393",
+    "sku": "PLG-BK-000321",
+    "title": "Lulu o la flauta mágica",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "15.95",
+    "discountPercentRequested": 15,
+    "durationDays": 7,
+    "request": {
+      "offerPrice": "13.56",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "471",
+    "sku": "PLG-BK-000322",
+    "title": "Matemáticas y deportes",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "32.95",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "26.36",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "401",
+    "sku": "PLG-BK-000323",
+    "title": "La oveja roja",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "20.95",
+    "discountPercentRequested": 15,
+    "durationDays": 7,
+    "request": {
+      "offerPrice": "17.81",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "520",
+    "sku": "PLG-BK-000324",
+    "title": "Psicopatología básica (5a. ed.)",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "34.95",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "27.96",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "402",
+    "sku": "PLG-BK-000325",
+    "title": "Cuentos de Panamá",
+    "format": "PAPERBACK",
+    "productType": "PHYSICAL",
+    "basePrice": "10.95",
+    "discountPercentRequested": 10,
+    "durationDays": 15,
+    "request": {
+      "offerPrice": "9.86",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "215",
+    "sku": "PLG-BK-000057",
+    "title": "Filosofía del conocimiento (2a. ed.)",
+    "format": "EBOOK",
+    "productType": "EBOOK",
+    "basePrice": "15.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "12.79",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "324",
+    "sku": "PLG-BK-000061",
+    "title": "Medicina intensiva",
+    "format": "EBOOK",
+    "productType": "EBOOK",
+    "basePrice": "13.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "11.19",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "226",
+    "sku": "PLG-BK-000062",
+    "title": "Las tareas de la filosofía",
+    "format": "EBOOK",
+    "productType": "EBOOK",
+    "basePrice": "13.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "11.19",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "254",
+    "sku": "PLG-BK-000063",
+    "title": "Matemática estructural",
+    "format": "EBOOK",
+    "productType": "EBOOK",
+    "basePrice": "11.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "9.59",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "245",
+    "sku": "PLG-BK-000064",
+    "title": "Fundamentos de matemáticas",
+    "format": "EBOOK",
+    "productType": "EBOOK",
+    "basePrice": "10.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "8.79",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "306",
+    "sku": "PLG-BK-000065",
+    "title": "La mujer en la historia",
+    "format": "EBOOK",
+    "productType": "EBOOK",
+    "basePrice": "18.99",
+    "discountPercentRequested": 25,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "14.24",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "144",
+    "sku": "PLG-BK-000058",
+    "title": "Diccionario básico de antropología",
+    "format": "AUDIOBOOK",
+    "productType": "AUDIOBOOK",
+    "basePrice": "28.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "23.19",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "154",
+    "sku": "PLG-BK-000059",
+    "title": "Historia mínima de Filipinas",
+    "format": "AUDIOBOOK",
+    "productType": "AUDIOBOOK",
+    "basePrice": "31.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "25.59",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "99",
+    "sku": "PLG-BK-000060",
+    "title": "Ética básica (3a. ed.)",
+    "format": "AUDIOBOOK",
+    "productType": "AUDIOBOOK",
+    "basePrice": "14.99",
+    "discountPercentRequested": 10,
+    "durationDays": 15,
+    "request": {
+      "offerPrice": "13.49",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "157",
+    "sku": "PLG-BK-000066",
+    "title": "Historia mínima de la eugenesia en América Latina",
+    "format": "AUDIOBOOK",
+    "productType": "AUDIOBOOK",
+    "basePrice": "10.99",
+    "discountPercentRequested": 10,
+    "durationDays": 15,
+    "request": {
+      "offerPrice": "9.89",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "153",
+    "sku": "PLG-BK-000067",
+    "title": "Historia mínima de Cuba",
+    "format": "AUDIOBOOK",
+    "productType": "AUDIOBOOK",
+    "basePrice": "21.99",
+    "discountPercentRequested": 15,
+    "durationDays": 7,
+    "request": {
+      "offerPrice": "18.69",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "128",
+    "sku": "PLG-BK-000070",
+    "title": "La geometría de las ciudades",
+    "format": "AUDIOBOOK",
+    "productType": "AUDIOBOOK",
+    "basePrice": "33.99",
+    "discountPercentRequested": 20,
+    "durationDays": 3,
+    "request": {
+      "offerPrice": "27.19",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  },
+  {
+    "editionId": "113",
+    "sku": "PLG-BK-000074",
+    "title": "La confesión: novela",
+    "format": "AUDIOBOOK",
+    "productType": "AUDIOBOOK",
+    "basePrice": "7.99",
+    "discountPercentRequested": 10,
+    "durationDays": 15,
+    "request": {
+      "offerPrice": "7.19",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "offerCopy": null,
+      "terms": null
+    }
+  }
+]

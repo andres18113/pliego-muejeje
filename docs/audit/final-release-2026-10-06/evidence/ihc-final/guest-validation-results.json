@@ -1,0 +1,50 @@
+[
+  {
+    "width": 375,
+    "businessWrites": [],
+    "guestIntentPreserved": true,
+    "emailInvalid": "true",
+    "passwordInvalid": "true",
+    "passwordMasked": true,
+    "fieldErrors": [
+      "Escribe tu correo electrónico.",
+      "Escribe tu contraseña."
+    ],
+    "describedErrors": [
+      "Escribe tu correo electrónico."
+    ],
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "businessWrites": [],
+    "guestIntentPreserved": true,
+    "emailInvalid": "true",
+    "passwordInvalid": "true",
+    "passwordMasked": true,
+    "fieldErrors": [
+      "Escribe tu correo electrónico.",
+      "Escribe tu contraseña."
+    ],
+    "describedErrors": [
+      "Escribe tu correo electrónico."
+    ],
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "businessWrites": [],
+    "guestIntentPreserved": true,
+    "emailInvalid": "true",
+    "passwordInvalid": "true",
+    "passwordMasked": true,
+    "fieldErrors": [
+      "Escribe tu correo electrónico.",
+      "Escribe tu contraseña."
+    ],
+    "describedErrors": [
+      "Escribe tu correo electrónico."
+    ],
+    "overflow": false
+  }
+]

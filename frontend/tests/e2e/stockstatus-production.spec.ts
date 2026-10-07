@@ -140,6 +140,10 @@ for (const route of ["/catalog", "/favorites", "/catalog/editions/42", "/cart", 
       await page.setViewportSize({ width, height: 800 });
     api.setStock(true);
     await page.goto(route);
+    if (route === "/checkout") {
+      // Availability is one prerequisite; confirm a valid payment choice first.
+      await page.getByRole("button", { name: "Transferencia bancaria" }).click();
+    }
     // The catalog's browse card has no cart action: its product link carries the stock description.
     const action = route === "/catalog" ? page.locator('[data-bookcard-link]').first()
       : route === "/favorites" ? page.locator('[data-favorite-row] [data-bookcard-cart]').first()

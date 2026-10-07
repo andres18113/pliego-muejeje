@@ -2,5 +2,5 @@ package com.pliego.modules.notifications.gateway;
 import com.pliego.modules.notifications.application.OutboxMail;
 public interface MailOutboxGateway {
  OutboxMail claim();
- void complete(OutboxMail mail,String outcome,String error);
+ boolean complete(OutboxMail mail,String outcome,String error,String providerMessageId);
 }

@@ -67,6 +67,7 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
   }
   function cancel() { write(profile.customerId, field, null); }
   function complete(submitted: string, current?: CustomerProfile, keepEditing = false) {
+    if (current && current.customerId !== profile.customerId) return false;
     // A route may have unmounted this editor and restored its draft in another instance.
     const stored = read(profile.customerId, field);
     if (!stored) return true; // The reader explicitly discarded the restored draft.

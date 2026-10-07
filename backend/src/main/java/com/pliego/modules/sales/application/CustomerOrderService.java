@@ -18,7 +18,8 @@ public class CustomerOrderService {
         this.gateway = gateway;
     }
 
-    @Transactional(readOnly = true)
+    // The PostgreSQL list Function reconciles overdue purchase windows before returning capabilities.
+    @Transactional
     public Page list(long actorUserId, int page, int pageSize) {
         return gateway.list(actorUserId, page, pageSize);
     }

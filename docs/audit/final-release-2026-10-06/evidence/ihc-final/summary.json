@@ -1,0 +1,38 @@
+[
+  {
+    "width": 375,
+    "publicStages": 14,
+    "actionableAxeFindings": [],
+    "inactivePaginationContrastExemptions": 1,
+    "incompleteAxeResults": 0,
+    "pageErrors": [],
+    "attemptedBusinessWrites": [],
+    "destinationHeadingFocus": true,
+    "quantityKeyboardPassed": true,
+    "guestValidationPassed": true
+  },
+  {
+    "width": 768,
+    "publicStages": 14,
+    "actionableAxeFindings": [],
+    "inactivePaginationContrastExemptions": 1,
+    "incompleteAxeResults": 0,
+    "pageErrors": [],
+    "attemptedBusinessWrites": [],
+    "destinationHeadingFocus": true,
+    "quantityKeyboardPassed": true,
+    "guestValidationPassed": true
+  },
+  {
+    "width": 1280,
+    "publicStages": 13,
+    "actionableAxeFindings": [],
+    "inactivePaginationContrastExemptions": 1,
+    "incompleteAxeResults": 0,
+    "pageErrors": [],
+    "attemptedBusinessWrites": [],
+    "destinationHeadingFocus": true,
+    "quantityKeyboardPassed": true,
+    "guestValidationPassed": true
+  }
+]

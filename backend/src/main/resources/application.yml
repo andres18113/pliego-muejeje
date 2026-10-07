@@ -30,17 +30,17 @@ pliego:
     batch-size: ${PLIEGO_HOME_DELIVERY_BATCH_SIZE:100}
   mail:
     enabled: ${PLIEGO_MAIL_ENABLED:false}
-    endpoint: ${PLIEGO_MAIL_ENDPOINT:}
-    token: ${PLIEGO_MAIL_TOKEN:}
-    from-address: ${PLIEGO_MAIL_FROM_ADDRESS:}
-    from-name: ${PLIEGO_MAIL_FROM_NAME:}
+    endpoint: ${PLIEGO_MAIL_ENDPOINT:https://send.api.mailtrap.io/api/send}
+    token: ${PLIEGO_MAILTRAP_API_TOKEN:${PLIEGO_MAIL_TOKEN:}}
+    from-address: ${PLIEGO_MAIL_FROM_ADDRESS:no-reply@pliegolibros.com}
+    from-name: ${PLIEGO_MAIL_FROM_NAME:PLIEGO}
     public-url: ${PLIEGO_APP_PUBLIC_URL:}
     token-secret: ${PLIEGO_MAIL_TOKEN_SECRET:${PLIEGO_JWT_SECRET}}
     allow-local-http: ${PLIEGO_MAIL_ALLOW_LOCAL_HTTP:false}
     connect-timeout: ${PLIEGO_MAIL_CONNECT_TIMEOUT:PT3S}
     request-timeout: ${PLIEGO_MAIL_REQUEST_TIMEOUT:PT10S}
-    poll-interval: ${PLIEGO_MAIL_POLL_INTERVAL:PT10S}
-    batch-size: ${PLIEGO_MAIL_BATCH_SIZE:5}
+    poll-interval: ${PLIEGO_MAIL_POLL_INTERVAL:PT30S}
+    batch-size: ${PLIEGO_MAIL_BATCH_SIZE:1}
   auth:
     cookie-secure: ${PLIEGO_AUTH_COOKIE_SECURE:true}
   checkout:

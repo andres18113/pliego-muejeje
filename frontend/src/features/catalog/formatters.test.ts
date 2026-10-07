@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatAuthorNames, formatEdition, formatLanguage, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
+import { formatAuthorNames, formatEdition, formatLanguage, formatNarrators, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
 
 describe("catalog formatters", () => {
   it("uses consistent es-EC labels for language and currency", () => {
@@ -32,5 +32,16 @@ describe("formatAuthorNames", () => {
   it("leaves names and institutional parentheses untouched", () => {
     expect(formatAuthorNames("Gabriel García Márquez")).toBe("Gabriel García Márquez");
     expect(formatAuthorNames("Universidad Nacional Autónoma de México (UNAM)")).toBe("Universidad Nacional Autónoma de México (UNAM)");
+  });
+
+  it("says demo narrators once in customer words and keeps real names", () => {
+    const demo = "Narrador DEMO PLIEGO (sin identidad bibliográfica)";
+    expect(formatNarrators([demo])).toBe("Voz de demostración");
+    expect(formatNarrators([demo, demo])).toBe("Voz de demostración");
+    expect(formatNarrators(["Ana Voz", demo])).toBe("Ana Voz, voz de demostración");
+    expect(formatNarrators(["Ana Voz", "Luis Voz"])).toBe("Ana Voz, Luis Voz");
+    expect(formatNarrators(["Demóstenes Ruiz"])).toBe("Demóstenes Ruiz");
+    expect(formatNarrators([])).toBeNull();
+    expect(formatNarrators(null)).toBeNull();
   });
 });

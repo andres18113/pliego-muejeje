@@ -1,0 +1,8 @@
+{
+  "existingHistoricalItemsPreserved": 138,
+  "legacyNewSnapshotFieldsNull": true,
+  "activeOffersPreserved": 23,
+  "flyway": 54,
+  "historicalItemsBeforeSha256": "de120fe31df7c803574dac628f2b4ee193456f7083e1cf9d2cb98dce0ef899b3",
+  "historicalItemsAfterLegacyFieldsSha256": "de120fe31df7c803574dac628f2b4ee193456f7083e1cf9d2cb98dce0ef899b3"
+}

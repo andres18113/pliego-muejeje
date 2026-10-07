@@ -18,7 +18,8 @@ if (!window.matchMedia) {
 if (!navigator.locks) {
   const queues = new Map<string, Promise<unknown>>();
   Object.defineProperty(navigator, "locks", { configurable: true, value: {
-    request: <T,>(name: string, callback: () => T | Promise<T>) => {
+    request: <T,>(name: string, optionsOrCallback: LockOptions | (() => T | Promise<T>), suppliedCallback?: () => T | Promise<T>) => {
+      const callback = typeof optionsOrCallback === "function" ? optionsOrCallback : suppliedCallback!;
       const result = (queues.get(name) ?? Promise.resolve()).catch(() => undefined).then(callback);
       queues.set(name, result);
       return result;

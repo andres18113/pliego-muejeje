@@ -1,29 +1,54 @@
 /* Physical edition detail, in reading order: the jacket and the book's identity, then the purchase
-   decision as the page's one mist scene (price, stock, the ultramar action, the favorite), then the
-   edition's facts, the synopsis in a reading column and its categories. One flat grid, recomposed
-   per width; no rules between parts — spacing and type carry the grouping. */
+   decision as the page's one quiet scene on the Libros warm paper gray (price, stock, the ultramar
+   action, the favorite) — never lavender, which is the eBook color — then the edition's facts as
+   one unit, the synopsis in a reading column and its categories. One flat grid, recomposed per width;
+   no rules between parts — spacing and type carry the grouping. */
 .page {
   composes: surface from "../../shared/ui/pliegoFormSurface.module.css";
   --ed-blue: var(--store-blue, #283da8);
-  --ed-blue-hover: #1d2c86;
-  --ed-on-blue: #fff;
+  --ed-action: var(--store-action, #283da8);
+  --ed-action-hover: var(--store-action-hover, #1d2c86);
+  --ed-on-action: var(--store-on-action, #fff);
   --ed-ink: var(--pliego-text, #252740);
   --ed-muted: var(--pliego-text-muted, #595a6e);
   --ed-yellow: var(--store-yellow, #f3df83);
-  --ed-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0));
+  --ed-mist: #ecebe4;
   --ed-disc: var(--store-paper, #f6f5f0);
-  --ed-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
+  --ed-line: color-mix(in srgb, var(--store-ink, #252740) 16%, var(--store-paper, #f6f5f0));
   --ed-ease: cubic-bezier(.32, .94, .6, 1);
   padding-top: 8px; color: var(--ed-ink);
 }
 :global([data-mantine-color-scheme="dark"]) .page {
   --ed-blue: var(--store-link, #c5bcff);
-  --ed-blue-hover: #d8d1ff;
-  --ed-on-blue: var(--store-ink, #252740);
+  --ed-mist: color-mix(in srgb, #ffffff 7%, #26283f);
+  --ed-disc: color-mix(in srgb, #ffffff 14%, #26283f);
+  --ed-line: color-mix(in srgb, #ffffff 20%, #26283f);
+}
+/* eBooks: the same page, with lavender — the eBook color — as its one supporting surface (purchase
+   scene, missing-cover placeholder). Controls stay ink and ultramar. */
+.page[data-media="ebook"] {
+  --ed-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 72%, var(--store-paper, #f6f5f0));
+  --ed-disc: var(--store-paper, #f6f5f0);
+  --ed-line: color-mix(in srgb, var(--store-ink, #252740) 16%, var(--store-lavender, #e4def4));
+}
+:global([data-mantine-color-scheme="dark"]) .page[data-media="ebook"] {
   --ed-mist: #2e2b4d;
   --ed-disc: #3a3660;
-  --ed-line: #3d3964;
+  --ed-line: #4a4578;
 }
+/* Audiobooks: the same page, with pale yellow — the audiobook color — as its one supporting surface.
+   The saved favorite keeps its full yellow and gains an ultramar edge so it still reads on that field. */
+.page[data-media="audiobook"] {
+  --ed-mist: color-mix(in srgb, var(--store-yellow, #f3df83) 42%, var(--store-paper, #f6f5f0));
+  --ed-disc: var(--store-paper, #f6f5f0);
+  --ed-line: color-mix(in srgb, var(--store-ink, #252740) 16%, var(--store-yellow, #f3df83));
+}
+:global([data-mantine-color-scheme="dark"]) .page[data-media="audiobook"] {
+  --ed-mist: color-mix(in srgb, var(--store-yellow, #f3df83) 26%, #26283f);
+  --ed-disc: color-mix(in srgb, #ffffff 12%, #26283f);
+  --ed-line: color-mix(in srgb, var(--store-yellow, #f3df83) 32%, #26283f);
+}
+.page[data-media="audiobook"] .favorite.favorite[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--store-blue, #283da8) 45%, transparent); }
 
 /* The page ground follows the scheme, as on Account pages. */
 :global(html[data-mantine-color-scheme="dark"]):has(.page), :global([data-mantine-color-scheme="dark"] body):has(.page) { background: #26283f; }
@@ -54,13 +79,13 @@
 .coverSource:hover { color: var(--ed-blue); }
 
 .identity { grid-area: identity; display: grid; gap: 8px; min-width: 0; }
+/* The medium, said once and quietly above the title (eBooks, audiobooks): Material glyph + name, ink, no chip. */
+.medium { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 2px; color: var(--ed-ink); font-size: .8125rem; font-weight: 600; line-height: 1.4; }
 .identity h1 { margin: 0; color: var(--ed-ink); font: 650 clamp(2rem, 1.4rem + 2.2vw, 3.25rem)/1.02 var(--store-display); letter-spacing: -.045em; text-wrap: balance; overflow-wrap: anywhere; }
 .identity h1[data-long] { font-size: clamp(1.625rem, 1.3rem + 1.2vw, 2.25rem); line-height: 1.08; letter-spacing: -.04em; }
 .identity h1:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 6px; border-radius: 6px; }
 .subtitle { margin: 0; color: var(--ed-muted); font-size: 1.125rem; line-height: 1.4; overflow-wrap: anywhere; }
 .authors { margin: 4px 0 0; font-size: 1.1875rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; }
-.secondary { display: flex; flex-wrap: wrap; margin: 0; color: var(--ed-muted); font-size: .9375rem; line-height: 1.5; }
-.secondary span:not(:last-child)::after { content: ","; margin-right: .35em; }
 
 /* The purchase decision */
 .buy { grid-area: buy; display: grid; gap: 16px; min-width: 0; margin-top: 24px; padding: clamp(18px, 2.2vw, 24px); border-radius: 18px; background: var(--ed-mist); }
@@ -70,12 +95,21 @@
 .offer { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; min-width: 0; }
 .price { margin: 0; font: 650 clamp(1.875rem, 1.6rem + 1vw, 2.375rem)/1.05 var(--store-display); letter-spacing: -.035em; font-variant-numeric: tabular-nums; }
 .stock { font-size: .9375rem; }
+.priceLine { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; min-width: 0; }
+.was { margin: 0; color: var(--ed-muted); font-size: 1.0625rem; font-variant-numeric: tabular-nums; }
+
+/* With an offer the scene reads in rows: today's price with the previous one struck; the shared Ofertas
+   chips (saving, then days left within five days) as one group; availability as its own quiet line. */
+.offer[data-offer] { display: grid; justify-content: start; justify-items: start; gap: 10px; }
+.offer[data-offer] .stock { margin-top: 2px; }
+.offerChips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; min-width: 0; }
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; min-width: 0; }
 .actions :global(.button) { min-width: 0; max-width: 100%; min-height: 48px; padding: 10px 22px; white-space: normal; text-align: center; overflow-wrap: anywhere; border-radius: 8px; font-size: 1rem; font-weight: 600; }
-.actions > :global(.button-primary), .actions :global(.detail-purchase-links) > :global(.button-primary) { flex: 1 1 14rem; background: var(--ed-blue); color: var(--ed-on-blue); }
-.actions > :global(.button-primary):hover, .actions :global(.detail-purchase-links) > :global(.button-primary):hover { background: var(--ed-blue-hover); color: var(--ed-on-blue); }
+.actions > :global(.button-primary), .actions :global(.detail-purchase-links) > :global(.button-primary) { flex: 1 1 14rem; background: var(--ed-action); color: var(--ed-on-action); }
+.actions > :global(.button-primary):hover, .actions :global(.detail-purchase-links) > :global(.button-primary):hover { background: var(--ed-action-hover); color: var(--ed-on-action); }
 /* Follow-ups ("Ver el carrito", "Comprobar…") take their own line below, so the primary action never moves or resizes. */
 .actions > :global(.button-secondary) { order: 1; flex: 1 1 100%; border-color: var(--ed-blue); color: var(--ed-blue); }
+.actions > :global(.button-secondary):hover { background: color-mix(in srgb, var(--ed-blue) 8%, transparent); border-color: var(--ed-blue); color: var(--ed-blue); }
 .actions :global(.button):focus-visible, .favorite:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 3px; }
 .actions :global(.detail-purchase-links) { display: flex; flex: 1 1 100%; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
 .actions :global(.detail-purchase-links) > a:not(:global(.button)) { display: inline-flex; align-items: center; min-height: 44px; color: var(--ed-ink); font-weight: 600; text-underline-offset: 4px; }
@@ -84,17 +118,22 @@
 
 /* Favorite: the secondary action. Saved = the yellow "this one" mark with an ultramar heart. */
 .favorite.favorite { flex: 0 1 auto; height: auto; min-height: 48px; padding: 8px 18px 8px 14px; border: 0; border-radius: 999px; background: var(--ed-disc); color: var(--ed-ink); font-size: .9375rem; font-weight: 600; transition: background-color 140ms var(--ed-ease), color 140ms var(--ed-ease); }
-.favorite.favorite:hover:not(:disabled) { background: color-mix(in srgb, var(--ed-disc) 70%, var(--store-lavender, #e4def4)); }
+.favorite.favorite:hover:not(:disabled) { background: color-mix(in srgb, var(--ed-disc) 88%, var(--ed-ink)); }
 .favorite.favorite[aria-pressed="true"] { background: var(--ed-yellow); color: var(--store-blue, #283da8); }
 .favorite.favorite:disabled { opacity: .6; }
 .favorite :global(.mantine-Button-inner) { height: auto; }
 .favorite :global(.mantine-Button-label) { height: auto; white-space: normal; overflow: visible; line-height: 1.3; text-align: left; }
 
-/* Edition facts: label over value, side by side; a record, not a table. */
-.facts { grid-area: facts; display: flex; flex-wrap: wrap; gap: 14px clamp(24px, 4vw, 48px); min-width: 0; margin: 28px 0 0; }
-.facts div { display: grid; gap: 2px; min-width: 0; }
+/* Datos de la edición: publisher, format, language, pages, date and ISBN as one small record —
+   label over value on a steady three-column rhythm (two on phones); a record, not a table. */
+.facts { grid-area: facts; display: grid; gap: 12px; min-width: 0; margin-top: 32px; }
+.facts h2 { margin: 0; font: 650 1.0625rem/1.25 var(--store-display); letter-spacing: -.02em; }
+.facts dl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px clamp(16px, 3vw, 32px); margin: 0; }
+/* Four facts read as two pairs, never three and an orphan. */
+.facts dl:has(> div:nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.facts dl div { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 2px; min-width: 0; }
 .facts dt { color: var(--ed-muted); font-size: .8125rem; line-height: 1.4; }
-.facts dd { margin: 0; font-size: .9375rem; font-weight: 500; line-height: 1.4; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.facts dd { margin: 0; font-size: .9375rem; font-weight: 500; line-height: 1.4; font-variant-numeric: tabular-nums; overflow-wrap: break-word; hyphens: auto; }
 
 .synopsis { grid-area: synopsis; display: grid; justify-items: start; gap: 10px; min-width: 0; max-width: 62ch; margin-top: 36px; }
 .synopsis h2 { margin: 0; font: 650 1.5rem/1.1 var(--store-display); letter-spacing: -.035em; }
@@ -112,6 +151,33 @@
 .categories a { display: inline-block; padding-block: 10px; margin-block: -10px; color: var(--ed-ink); text-decoration: underline; text-decoration-color: var(--ed-line); text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
 .categories a:hover { color: var(--ed-blue); text-decoration-color: currentColor; }
 .categories a:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 2px; border-radius: 4px; }
+
+/* Loading: the same composition with quiet bones sized to the type they stand for, so nothing moves when
+   the edition arrives. The purchase scene takes the medium's surface when the medium is known (the card's
+   edition, or the collection the reader came from); otherwise the skeleton stays neutral paper. */
+.page { --ed-bone: color-mix(in srgb, var(--ed-ink) 9%, transparent); }
+.page[data-loading]:not([data-media]) .buy { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ed-line); }
+.bone { display: block; max-width: 100%; border-radius: 6px; background: var(--ed-bone); animation: ed-bone 1.6s ease-in-out infinite; }
+.bone[data-bone="trail"] { display: inline-block; width: 12ch; height: 1em; vertical-align: -.12em; }
+.bone[data-bone="title"] { width: min(100%, 14ch); height: clamp(2rem, 1.4rem + 2.2vw, 3.25rem); font-size: clamp(2rem, 1.4rem + 2.2vw, 3.25rem); border-radius: 10px; }
+.page[data-loading] .identity { grid-template-columns: minmax(0, 1fr); }
+/* Each text bone is the glyph height of the line it stands for, with that line's half-leading as margin. */
+.bone[data-bone="author"] { width: 12rem; font-size: 1.1875rem; height: 1em; margin: calc(4px + .175em) 0 .175em; }
+.bone[data-bone="price"] { width: 7rem; height: calc(clamp(1.875rem, 1.6rem + 1vw, 2.375rem) * 1.05); border-radius: 8px; }
+.bone[data-bone="stock"] { width: 6rem; height: 1rem; }
+.bone[data-bone="action"] { flex: 1 1 14rem; height: 48px; border-radius: 8px; }
+.bone[data-bone="favorite"] { flex: 0 1 11rem; height: 48px; border-radius: 999px; }
+.bone[data-bone="heading"] { width: 9rem; font-size: 1.0625rem; height: 1em; margin-block: .125em; }
+.bone[data-bone="label"] { width: 4.5rem; font-size: .8125rem; height: 1em; margin-block: .2em; }
+.bone[data-bone="value"] { width: 80%; font-size: .9375rem; height: 1em; margin-block: .2em; }
+.bone[data-bone="synopsis-heading"] { width: 7rem; font-size: 1.5rem; height: 1em; margin-block: .05em; }
+.bone[data-bone="line"] { height: 1.0625rem; }
+.coverBone { display: block; width: 100%; aspect-ratio: 2 / 3; max-height: min(72vh, 560px); border-radius: 6px; background: var(--ed-mist); }
+.page[data-loading]:not([data-media]) .coverBone { background: var(--ed-bone); }
+.factsGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px clamp(16px, 3vw, 32px); }
+.factsGrid > div { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2px; }
+.synopsisBones { display: grid; gap: calc(1.0625rem * .65); width: min(100%, 62ch); padding-block: calc(1.0625rem * .325); }
+@keyframes ed-bone { 50% { opacity: .55; } }
 
 /* Tablet: jacket beside identity and purchase; the reading parts take the full width below. */
 @media (max-width: 899px) {
@@ -133,10 +199,12 @@
   .buy { margin-top: 18px; border-radius: 16px; }
   .actions > :global(.button), .favorite.favorite, .actions :global(.detail-purchase-links) > :global(.button) { flex: 1 1 100%; }
   .favorite :global(.mantine-Button-inner) { justify-content: center; }
-  .facts { margin-top: 24px; }
+  .facts { margin-top: 28px; }
+  .facts dl, .factsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .coverBone { width: min(58%, 240px); margin-inline: auto; max-height: 44vh; }
   .synopsis { margin-top: 28px; }
 }
-@media (prefers-reduced-motion: reduce) { .favorite.favorite { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .favorite.favorite { transition: none; } .bone { animation: none; } }
 @media (forced-colors: active) {
   .buy { border: 1px solid CanvasText; }
   .cover :global(.cover-image) { filter: none; }

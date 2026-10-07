@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -18,13 +18,31 @@ function mockOffers(handler: (request: Request) => Response | Promise<Response>)
 }
 afterEach(() => vi.unstubAllGlobals());
 describe("OffersPage", () => {
-  it("renders authoritative effective and original prices with existing edition actions", async () => {
+  it("renders the quiet offer card from the server's prices, saving and days left", async () => {
     mockOffers(async () => response([offerEdition]));
     renderOffers();
     expect(await screen.findByRole("heading", { name: "Libro en oferta" })).toBeInTheDocument();
     expect(screen.getByText(/\$\s*8,00/)).toBeInTheDocument();
-    expect(screen.getByText(/\$\s*10,00/)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /Agregar al carrito: Libro en oferta/ })).toBeInTheDocument();
+    expect(screen.getByText(/\$\s*10,00/).closest("s")).not.toBeNull();
+    const saving = screen.getByText(/Ahorras \$\s*2,00/).parentElement!;
+    expect(saving.querySelector(".material-symbol")?.textContent).toBe("sell");
+    expect(saving.textContent).not.toMatch(/%/);
+    expect(screen.getByText("Quedan 2 días")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Ver edición: Libro en oferta/ })).toHaveAttribute("href", expect.stringMatching(/^\/catalog\/editions\/42\?from=/));
+    expect(screen.getByRole("button", { name: "Agregar a favoritos: Libro en oferta" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Agregar al carrito/ })).toBeNull();
+    expect(screen.queryByText(/Disponible/)).toBeNull();
+    expect(screen.queryByText(/Termina el/)).toBeNull();
+    expect(screen.queryByText("Una lectura para ti")).toBeNull();
+    expect(screen.queryByText("Autora")).toBeNull();
+    expect(screen.getByText("Ver oferta").closest("[aria-hidden='true']")).not.toBeNull();
+    expect(screen.getAllByRole("link", { name: /Libro en oferta/ })).toHaveLength(1);
+  });
+  it.each([[1, "Queda 1 día"], [5, "Quedan 5 días"], [6, null], [12, null]])("shows the urgency chip only for five days or fewer (%i)", async (daysRemaining, label) => {
+    mockOffers(async () => response([{ ...offerEdition, offer: { ...offerEdition.offer, daysRemaining, endingSoon: daysRemaining <= 3 } }]));
+    const { container } = renderOffers();
+    await screen.findByRole("heading", { name: "Libro en oferta" });
+    expect(container.querySelector("[data-offer-urgency]")?.textContent ?? null).toBe(label);
   });
   it("shows loading then the true backend empty state", async () => {
     let finish!: (value: Response) => void;
@@ -44,10 +62,27 @@ describe("OffersPage", () => {
     await userEvent.click(retry);
     expect(await screen.findByText("No hay ofertas disponibles por ahora.")).toBeInTheDocument();
   });
-  it("keeps pagination in the offers route", async () => {
-    mockOffers(async () => response([offerEdition], "21"));
-    renderOffers();
-    expect(await screen.findByRole("link", { name: "Siguiente" })).toHaveAttribute("href", "/ofertas?page=1");
+  it("reads every page of the server's set and shows it on one shelf, without pages or a catalog link", async () => {
+    const requests: URL[] = [];
+    const edition = (id: number) => ({ ...offerEdition, editionId: String(id), title: `Oferta ${id}` });
+    mockOffers(async (request) => {
+      const url = new URL(request.url);
+      requests.push(url);
+      const page = Number(url.searchParams.get("page"));
+      // Page 1 repeats the last item of page 0, as if the set shifted between reads.
+      const items = page === 0 ? Array.from({ length: 50 }, (_, index) => edition(index + 1)) : [edition(50), edition(51), edition(52)];
+      return new Response(JSON.stringify({ items, page, pageSize: 50, totalCount: "52" }), { status: 200, headers: { "Content-Type": "application/json" } });
+    });
+    const { container } = renderOffers("/ofertas?page=3&sort=PRICE_ASC");
+    expect(await screen.findByRole("heading", { name: "Oferta 52" })).toBeInTheDocument();
+    expect(requests.map((url) => [url.searchParams.get("page"), url.searchParams.get("pageSize"), url.searchParams.get("sort")])).toEqual([["0", "50", "PRICE_ASC"], ["1", "50", "PRICE_ASC"]]);
+    expect(container.querySelectorAll("[data-offer-card]")).toHaveLength(52);
+    expect(screen.getByText("52 ofertas")).toBeInTheDocument();
+    expect(screen.queryByRole("navigation", { name: /Paginación/ })).toBeNull();
+    expect(screen.queryByText(/Página|Siguiente|Anterior/)).toBeNull();
+    expect(screen.queryByRole("link", { name: "Explorar libros" })).toBeNull();
+    const facts = screen.getByRole("region", { name: "Cómo funcionan las ofertas" });
+    expect(within(facts).getAllByRole("heading", { level: 3 }).map((heading) => heading.textContent)).toEqual(["Ofertas por tiempo limitado.", "Ahorra en cualquier formato.", "Precio siempre actualizado."]);
   });
   it("renders backend filter/sort options and sends them to the API without sorting locally", async () => {
     const requested: URL[] = [];
@@ -59,13 +94,14 @@ describe("OffersPage", () => {
     }));
     renderOffers();
     await userEvent.click(await screen.findByRole("button", { name: /Libros físicos/ }));
-    await userEvent.selectOptions(screen.getByLabelText("Categoría de ofertas"), "literatura");
-    await userEvent.selectOptions(screen.getByLabelText("Ordenar ofertas"), "ENDING_SOON");
+    await userEvent.click(screen.getByRole("combobox", { name: "Tema" }));
+    await userEvent.click(await screen.findByRole("option", { name: "Literatura (1)" }));
+    await userEvent.click(screen.getByRole("combobox", { name: "Ordenar por" }));
+    await userEvent.click(await screen.findByRole("option", { name: "Finalizan pronto" }));
     await waitFor(() => expect(requested.at(-1)?.searchParams.get("sort")).toBe("ENDING_SOON"));
     expect(requested.at(-1)?.searchParams.get("productType")).toBe("PHYSICAL");
     expect(requested.at(-1)?.searchParams.get("category")).toBe("literatura");
     expect(screen.getByText("Quedan 2 días")).toBeInTheDocument();
-    expect(screen.getByText("Una lectura para ti")).toBeInTheDocument();
     expect(screen.getByText("1 oferta")).toBeInTheDocument();
   });
   it("preserves a product chip when sorting immediately before navigation renders", async () => {
@@ -73,9 +109,11 @@ describe("OffersPage", () => {
     mockOffers(async request => { requests.push(new URL(request.url)); return response([offerEdition]); });
     renderOffers();
     const chip = await screen.findByRole("button", { name: /Libros físicos/ });
+    await userEvent.click(screen.getByRole("combobox", { name: "Ordenar por" }));
+    const endingSoon = await screen.findByRole("option", { name: "Finalizan pronto" });
     act(() => {
       fireEvent.click(chip);
-      fireEvent.change(screen.getByLabelText("Ordenar ofertas"), { target: { value: "ENDING_SOON" } });
+      fireEvent.click(endingSoon);
     });
     await waitFor(() => expect(requests.at(-1)?.searchParams.get("sort")).toBe("ENDING_SOON"));
     expect(requests.at(-1)?.searchParams.get("productType")).toBe("PHYSICAL");

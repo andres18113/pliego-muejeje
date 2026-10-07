@@ -1,0 +1,3 @@
+ FAIL  src/features/purchase/CheckoutPage.test.tsx > CheckoutPage > requires fresh acceptance when the pricing snapshot changes without changing the final amount
+ Test Files  1 failed (1)
+      Tests  1 failed | 34 skipped (35)

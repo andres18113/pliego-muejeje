@@ -32,9 +32,14 @@ def main():
     problem('/api/v1/catalog/editions?productType=VIDEO', 400, 'VALIDATION_ERROR')
     categories = ok('/api/v1/help/categories')['items']
     assert {'ebooks', 'audiolibros', 'pagos', 'compras'} <= {c['slug'] for c in categories}
-    for slug in ('ebooks', 'audiolibros'):
+    expected_help = {
+        'ebooks': 'Un eBook es una edición digital. Después de una compra con pago aprobado aparece en Mi biblioteca y puedes abrir su detalle para comprobar la propiedad.',
+        'audiolibros': 'Un audiolibro es una edición digital con duración y narradores cuando estos datos están disponibles. Después de un pago aprobado aparece en Mi biblioteca y puedes abrir su detalle para comprobar la propiedad.',
+    }
+    for slug, expected_body in expected_help.items():
         article = ok('/api/v1/help/articles/' + slug)
-        assert article['slug'] == slug and article['body'] and 'simulación académica' in article['body']
+        assert article['slug'] == slug and article['body'] == expected_body
+        assert 'simulación académica' not in article['body']
     suffix = uuid.uuid4().hex[:12]
     slug = 'http-help-' + suffix
     query(f"INSERT INTO pliego.ayuda_categoria(slug,titulo,estado) VALUES('{slug}','Ayuda {suffix}','PUBLISHED')")

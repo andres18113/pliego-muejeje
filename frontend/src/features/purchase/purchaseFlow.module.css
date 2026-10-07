@@ -57,6 +57,24 @@
 .summary :global(.button-primary), .empty :global(.button-primary) { color: var(--pf-on-blue); }
 .summary :global(.button-primary:hover), .empty :global(.button-primary:hover) { background: var(--pf-blue-hover); color: var(--pf-on-blue); }
 
+/* Cart (Google Store cart): a compact centred pair — the lines in white cards beside a white summary card — on
+   a warm grey ground one step deeper than the flow's sheet, so the white surfaces read as grouped objects. */
+:global(html):has(.flow[data-purchase-stage="cart"]), :global(body):has(.flow[data-purchase-stage="cart"]) { background: #f1f0eb; }
+:global(html[data-mantine-color-scheme="dark"]):has(.flow[data-purchase-stage="cart"]), :global([data-mantine-color-scheme="dark"] body):has(.flow[data-purchase-stage="cart"]) { background: #22243b; }
+/* The body's 14px is fixed; restating it in rem lets the cart's inherited text follow the reader's text size. */
+.flow[data-purchase-stage="cart"] { --pf-card: #fff; --pf-card-edge: color-mix(in srgb, var(--pf-ink) 8%, transparent); width: min(100%, 1120px); margin-inline: auto; font-size: .875rem; }
+:global([data-mantine-color-scheme="dark"]) .flow[data-purchase-stage="cart"] { --pf-card: #2b2d47; --pf-card-edge: rgb(255 255 255 / 8%); }
+@media (min-width: 960px) {
+  .flow[data-purchase-stage="cart"] .layout { grid-template-columns: minmax(0, 1fr) minmax(300px, 380px); gap: 24px; }
+}
+.flow[data-purchase-stage="cart"] .summary { gap: 18px; padding: 28px; border-radius: 20px; background: var(--pf-card); box-shadow: inset 0 0 0 1px var(--pf-card-edge); }
+.flow[data-purchase-stage="cart"] .summary > h2 { font-size: 1.375rem; }
+.flow[data-purchase-stage="cart"] .totals { gap: 10px; }
+.flow[data-purchase-stage="cart"] .totals dt { color: var(--pf-ink); }
+.flow[data-purchase-stage="cart"] .totals dd { font-weight: 500; }
+.flow[data-purchase-stage="cart"] .grandTotal dt, .flow[data-purchase-stage="cart"] .grandTotal dd { font-size: 1.375rem; font-weight: 650; }
+.flow[data-purchase-stage="cart"] .summaryAction :global(.button) { min-height: 52px; border-radius: 999px; }
+
 /* Checkout sits on the page's centre axis: two decisions beside the summary, never stretched to the edges. */
 .flow[data-purchase-stage="checkout"] { width: min(100%, 1160px); margin-inline: auto; padding-top: clamp(8px, 2.4vw, 32px); }
 @media (min-width: 960px) {
@@ -76,10 +94,20 @@
 .summaryLineMeta { grid-column: 1; color: var(--pf-muted); font-size: .875rem; }
 .summaryLineAmount { grid-column: 2; grid-row: 1; font-weight: 600; white-space: nowrap; }
 .summaryLines li > :global(.stock-status) { grid-column: 1 / -1; }
+/* An offer on a summary line: the previous amount struck under today's, and the server's saving as one quiet
+   green line with Material sell. */
+.summaryLineWas { grid-column: 2; grid-row: 2; justify-self: end; color: var(--pf-muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
+.summaryLineSaving { --pf-savings: #1e7a3c; grid-column: 1 / -1; display: inline-flex; align-items: center; gap: 4px; margin: 2px 0 0; color: var(--pf-savings); font-size: .8125rem; font-weight: 500; }
+:global([data-mantine-color-scheme="dark"]) .summaryLineSaving { --pf-savings: #8fdca6; }
 .totals { display: grid; gap: 8px; margin: 0; }
 .totals div { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2px 16px; }
 .totals dt { color: var(--pf-muted); }
 .totals dd { margin: 0; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+/* The offer saving row: a restrained green, label and amount alike. */
+.totals [data-tone="savings"] { --pf-savings: #1e7a3c; }
+:global([data-mantine-color-scheme="dark"]) .totals [data-tone="savings"] { --pf-savings: #8fdca6; }
+/* Doubled .flow so a stage's own row colours (cart and checkout set dt to ink, later in this file) never override the saving. */
+.flow.flow .totals [data-tone="savings"] :is(dt, dd) { color: var(--pf-savings); }
 .totals .grandTotal { padding-top: 12px; border-top: 1.5px solid color-mix(in srgb, var(--pf-ink) 12%, transparent); }
 .totals .grandTotal:first-child { padding-top: 0; border-top: 0; }
 .summaryLines + .totals .grandTotal { padding-top: 4px; border-top: 0; }
@@ -97,8 +125,8 @@
 .status { margin: 0; color: var(--pf-muted); }
 
 /* ---------- Messages ---------- */
-.notice { margin: 0; padding: 12px 16px; border-radius: 14px; background: var(--pf-mist); color: var(--pf-blue); font-weight: 600; line-height: 1.45; }
-.notice[data-tone="error"] { background: color-mix(in srgb, var(--error) 7%, var(--pf-sheet)); color: var(--error); }
+.notice { margin: 0; padding: 12px 16px; border-radius: 14px; background: var(--status-surface); box-shadow: inset 0 0 0 1px var(--status-edge); color: var(--pf-ink); font-weight: 600; line-height: 1.45; }
+.notice[data-tone="error"] { box-shadow: none; background: color-mix(in srgb, var(--error) 7%, var(--pf-sheet)); color: var(--error); }
 .notice:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 2px; }
 .problem { display: grid; gap: 6px; justify-items: start; max-width: 46rem; padding: 16px 18px; border-radius: 18px; background: color-mix(in srgb, var(--error) 6%, var(--pf-sheet)); box-shadow: inset 0 0 0 1.5px var(--error); }
 .problem h2 { margin: 0; color: var(--error); font-size: 1.0625rem; font-weight: 650; }
@@ -106,8 +134,8 @@
 .problem a { color: var(--pf-blue); font-weight: 600; }
 .problem :global(.button) { margin-top: 6px; }
 .problem:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 3px; }
-/* An unresolved attempt needs the customer, not an error colour: the lavender "attention" field. */
-.problem[data-kind="unknown"] { background: var(--pf-lavender); box-shadow: none; }
+/* An unresolved attempt needs the customer, not an error colour: a neutral soft-gray field. */
+.problem[data-kind="unknown"] { background: var(--status-soft); box-shadow: none; }
 .problem[data-kind="unknown"] h2 { color: var(--pf-ink); font: 650 1.375rem/1.15 var(--pf-display); letter-spacing: -.03em; }
 .problemDetail { color: var(--error); font-weight: 600; }
 
@@ -128,7 +156,7 @@
 .choices { display: grid; gap: 10px; min-width: 0; margin: 0; padding: 0; border: 0; }
 .choice { display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 14px; align-items: start; padding: 16px 18px; border-radius: 16px; background: var(--pf-sheet); box-shadow: inset 0 0 0 1.5px var(--pf-line); cursor: pointer; }
 .choice:hover { box-shadow: inset 0 0 0 1.5px var(--control-border); }
-.choice:has(input:checked) { background: var(--pf-mist); box-shadow: inset 0 0 0 2px var(--pf-blue); }
+.choice:has(input:checked) { background: var(--store-hover); box-shadow: inset 0 0 0 2px var(--pf-blue); }
 .choice:has(input:disabled) { cursor: progress; opacity: .72; }
 .choice:has(input:focus-visible) { outline: 3px solid var(--pf-blue); outline-offset: 3px; }
 .choice input { width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--pf-blue); }
@@ -162,24 +190,43 @@
 .linkAction:disabled { cursor: progress; opacity: .6; }
 .deliverTo { display: grid; gap: 2px; font-style: normal; line-height: 1.5; overflow-wrap: anywhere; }
 .deliverTo strong { font-weight: 650; }
-.checkoutDestination, .checkoutPayment { font-size: 1.25rem; }
-.checkoutDestination .panelHead h2, .checkoutPayment .panelHead h2 { font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem); font-weight: 500; line-height: 1.2; }
-.checkoutDestination .deliverTo strong { font-weight: 700; }
-.checkoutDestination .panelRule, .checkoutDestination .shipmentWindow { font-size: 1.25rem; font-weight: 700; }
-.checkoutDestination .shipmentItems strong { font-size: 1.25rem; font-weight: 700; }
-.checkoutPayment .panelSub { font-weight: 700; }
-.checkoutPayment .option { font-size: 1.25rem; font-weight: 500; }
-.flow[data-purchase-stage="checkout"] .summary > h2 { font-size: clamp(1.75rem, 1.35rem + 1.5vw, 2.5rem); font-weight: 500; line-height: 1.2; }
-.checkoutSummaryLine { display: block; }
-.flow[data-purchase-stage="checkout"] .summaryLineTitle { font-size: 1.25rem; font-weight: 700; line-height: 1.45; }
-.flow[data-purchase-stage="checkout"] .summaryLineMeta { font-size: 1rem; line-height: 1.5; }
-.flow[data-purchase-stage="checkout"] .summaryLineAmount { font-size: 1.25rem; font-weight: 400; }
-.flow[data-purchase-stage="checkout"] .totals { font-size: 1.25rem; }
+/* Checkout (Google Store checkout): white cards on the warm grey ground, section titles prominent but modest,
+   everything inside them one clear step smaller. Same tokens as the cart (--pf-card, --pf-card-edge). */
+:global(html):has(.flow[data-purchase-stage="checkout"]), :global(body):has(.flow[data-purchase-stage="checkout"]) { background: #f1f0eb; }
+:global(html[data-mantine-color-scheme="dark"]):has(.flow[data-purchase-stage="checkout"]), :global([data-mantine-color-scheme="dark"] body):has(.flow[data-purchase-stage="checkout"]) { background: #22243b; }
+.flow[data-purchase-stage="checkout"] { --pf-card: #fff; --pf-card-edge: color-mix(in srgb, var(--pf-ink) 8%, transparent); font-size: .9375rem; }
+:global([data-mantine-color-scheme="dark"]) .flow[data-purchase-stage="checkout"] { --pf-card: #2b2d47; --pf-card-edge: rgb(255 255 255 / 8%); }
+.flow[data-purchase-stage="checkout"] .panel { gap: 14px; padding: clamp(18px, 2.2vw, 26px); border-radius: 20px; background: var(--pf-card); box-shadow: inset 0 0 0 1px var(--pf-card-edge); }
+.checkoutDestination, .checkoutPayment { font-size: 1rem; }
+.checkoutDestination .panelHead h2, .checkoutPayment .panelHead h2 { font-size: 1.5rem; font-weight: 600; line-height: 1.2; letter-spacing: -.03em; }
+.checkoutDestination .panelHead :is(button, a), .checkoutPayment .panelHead :is(button, a) { font-size: .9375rem; }
+.checkoutDestination .deliverTo { gap: 0; line-height: 1.45; }
+.checkoutDestination .deliverTo strong { font-weight: 600; }
+.checkoutDestination .panelRule, .checkoutDestination .shipmentWindow { font-size: 1rem; font-weight: 600; }
+.checkoutDestination .shipment { gap: 8px; }
+.checkoutDestination .shipmentItems { gap: 8px; margin-top: 4px; }
+.checkoutDestination .shipmentItems strong { font-size: .9375rem; font-weight: 500; }
+.checkoutDestination .shipmentCover { width: 32px; }
+.checkoutPayment .panelSub { font-size: 1rem; font-weight: 600; }
+.checkoutPayment .options { gap: 8px; }
+.checkoutPayment .option { min-height: 56px; padding: 10px 14px; border-radius: 12px; background: var(--pf-card); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pf-ink) 16%, transparent); font-size: 1rem; font-weight: 500; }
+@media (hover: hover) { .checkoutPayment .option:hover:not(:disabled) { box-shadow: inset 0 0 0 1px var(--pf-blue); } }
+.checkoutPayment .option[aria-pressed="true"] { background: color-mix(in srgb, var(--pf-blue) 5%, var(--pf-card)); box-shadow: inset 0 0 0 1.5px var(--pf-blue); }
+.checkoutPayment .methodIcon { width: 36px; height: 36px; background: color-mix(in srgb, var(--pf-ink) 6%, transparent); color: var(--pf-ink); }
+.checkoutPayment .chosenCopy strong { font-size: 1rem; font-weight: 600; }
+.flow[data-purchase-stage="checkout"] .summary { gap: 16px; padding: clamp(20px, 2.2vw, 26px); border-radius: 20px; background: var(--pf-card); box-shadow: inset 0 0 0 1px var(--pf-card-edge); }
+.flow[data-purchase-stage="checkout"] .summary > h2 { font-size: 1.5rem; font-weight: 600; line-height: 1.2; letter-spacing: -.03em; }
+.flow[data-purchase-stage="checkout"] .summaryLines li { padding: 10px 0; }
+.flow[data-purchase-stage="checkout"] .summaryLineTitle { font-size: .9375rem; font-weight: 600; line-height: 1.35; }
+.flow[data-purchase-stage="checkout"] .summaryLineMeta { font-size: .8125rem; line-height: 1.45; }
+.flow[data-purchase-stage="checkout"] .summaryLineAmount { font-size: .9375rem; font-weight: 500; }
+.flow[data-purchase-stage="checkout"] .totals { gap: 8px; font-size: .9375rem; }
 .flow[data-purchase-stage="checkout"] .totals dt { color: var(--pf-ink); }
 .flow[data-purchase-stage="checkout"] .totals dd { font-weight: 500; }
-.flow[data-purchase-stage="checkout"] .grandTotal dt, .flow[data-purchase-stage="checkout"] .grandTotal dd { font-size: 1.5rem; }
-.flow[data-purchase-stage="checkout"] .summaryAction :global(.button) { font-size: 1.5rem; }
+.flow[data-purchase-stage="checkout"] .grandTotal dt, .flow[data-purchase-stage="checkout"] .grandTotal dd { font-size: 1.375rem; font-weight: 650; }
+.flow[data-purchase-stage="checkout"] .summaryAction :global(.button) { min-height: 52px; border-radius: 999px; font-size: 1.0625rem; }
 .summary .checkoutAction:disabled, .summary .checkoutAction:disabled:hover { background: var(--home-quiet, #ecebe4); border-color: transparent; color: var(--pf-muted); opacity: 1; box-shadow: none; cursor: not-allowed; pointer-events: auto; }
+:global([data-mantine-color-scheme="dark"]) .summary .checkoutAction:disabled, :global([data-mantine-color-scheme="dark"]) .summary .checkoutAction:disabled:hover { background: rgb(255 255 255 / 9%); color: var(--pf-muted); }
 /* One row, one action: adding an address, or a way to pay. */
 .addRow, .option { display: flex; align-items: center; gap: 14px; width: 100%; min-width: 0; min-height: 68px; padding: 12px 18px; border: 0; border-radius: 16px; background: var(--pf-sheet); box-shadow: inset 0 0 0 1.5px var(--pf-line); color: var(--pf-ink); font: inherit; font-size: 1.0625rem; font-weight: 600; text-align: left; cursor: pointer; transition: box-shadow 140ms var(--pf-ease), background-color 140ms var(--pf-ease); }
 .addRow:hover:not(:disabled), .option:hover:not(:disabled) { box-shadow: inset 0 0 0 1.5px var(--pf-blue); }
@@ -188,7 +235,7 @@
 .addRow > span { min-width: 0; overflow-wrap: anywhere; }
 .options { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; min-width: 0; }
 .optionName { flex: 1; min-width: 0; overflow-wrap: anywhere; }
-.option[aria-pressed="true"] { background: var(--pf-mist); box-shadow: inset 0 0 0 2px var(--pf-blue); }
+.option[aria-pressed="true"] { background: var(--store-hover); box-shadow: inset 0 0 0 2px var(--pf-blue); }
 .methodIcon { display: grid; flex: none; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--pf-lavender); color: var(--pf-blue); }
 .helper { margin: 0; color: var(--pf-muted); font-size: .9375rem; line-height: 1.5; }
 .helper a { color: var(--pf-blue); font-weight: 600; text-underline-offset: 4px; }
@@ -199,11 +246,21 @@
 .fieldHelp { margin: 0; color: var(--pf-muted); font-size: .8125rem; line-height: 1.4; }
 
 /* Card dialog: the Account editor's sheet (24px, light ink veil), holding only the card fields and its two answers. */
-.cardDialog.cardDialog { display: block; padding: 0; border-radius: 24px; background: var(--pf-sheet); color: var(--pf-ink); box-shadow: 0 24px 60px -24px rgb(20 23 55 / 45%); }
-.dialogHeader.dialogHeader { padding: clamp(20px, 4vw, 28px) clamp(20px, 4vw, 32px) 8px; background: var(--pf-sheet); }
+/* The card dialog is a white sheet (neutral in dark): its fields are white with a neutral edge and keep white when
+   focused — no lavender fills or tints. Ultramar stays for actions, focus and the title. */
+.cardDialog.cardDialog {
+  --pf-dialog: #fff; --pf-dialog-tint: color-mix(in srgb, var(--pf-ink) 6%, transparent);
+  --control-surface: #fff; --control-open-surface: #fff; --control-border: color-mix(in srgb, var(--pf-ink) 30%, #fff);
+  display: block; padding: 0; border-radius: 24px; background: var(--pf-dialog); color: var(--pf-ink); box-shadow: 0 24px 60px -24px rgb(20 23 55 / 45%);
+}
+:global([data-mantine-color-scheme="dark"]) .cardDialog.cardDialog {
+  --pf-dialog: #2b2d47; --pf-dialog-tint: rgb(255 255 255 / 8%);
+  --control-surface: #22243b; --control-open-surface: #22243b; --control-border: rgb(255 255 255 / 30%);
+}
+.dialogHeader.dialogHeader { padding: clamp(20px, 4vw, 28px) clamp(20px, 4vw, 32px) 8px; background: var(--pf-dialog, var(--pf-sheet)); }
 .dialogTitle.dialogTitle { color: var(--pf-blue); font: 650 clamp(1.5rem, 1.3rem + .8vw, 1.875rem)/1.1 var(--pf-display); letter-spacing: -.04em; }
 .dialogClose.dialogClose { width: 44px; height: 44px; border-radius: 999px; color: var(--pf-ink); }
-.dialogClose.dialogClose:hover { background: var(--pf-lavender); }
+.dialogClose.dialogClose:hover { background: var(--pf-dialog-tint, var(--store-hover)); }
 .dialogBody.dialogBody { padding: 4px clamp(20px, 4vw, 32px) clamp(20px, 4vw, 28px); }
 .cardDialog .cardFields { max-width: none; margin-top: 8px; }
 .dialogActions { display: flex; flex-wrap: wrap; flex-direction: row-reverse; justify-content: flex-start; align-items: center; gap: 10px 20px; margin-top: 22px; }
@@ -229,7 +286,24 @@
 .brand svg { display: block; max-width: 100%; max-height: 100%; }
 .brand[data-accepted] { position: relative; top: auto; right: auto; width: 52px; height: 32px; padding: 3px; border-radius: 6px; background: #fff; box-shadow: inset 0 0 0 1px var(--pf-line); transform: none; }
 
-.transfer { display: grid; gap: 18px; width: min(100%, 640px); margin-top: 16px; padding: clamp(16px, 2.4vw, 22px); border-radius: 20px; background: var(--pf-mist); }
+/* Bank transfer in checkout: a soft blue field derived from ultramar (the banking context) holding white datum
+   cards with ultramar icons and copy actions; never lavender, a solid ultramar fill or a gradient. The facts read
+   these tokens (--pf-sheet, --pf-line, --transfer-copy-hover), so only this panel changes. */
+.transfer {
+  --transfer-field: color-mix(in srgb, var(--store-blue, #283da8) 7%, #fff);
+  --pf-sheet: #fff; --pf-line: color-mix(in srgb, var(--store-blue, #283da8) 18%, #fff);
+  --transfer-copy-hover: color-mix(in srgb, var(--store-blue, #283da8) 8%, #fff);
+  display: grid; gap: 18px; width: min(100%, 640px); margin-top: 16px; padding: clamp(16px, 2.4vw, 22px); border-radius: 20px;
+  background: var(--transfer-field); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--store-blue, #283da8) 12%, transparent);
+}
+:global([data-mantine-color-scheme="dark"]) .transfer {
+  --transfer-field: color-mix(in srgb, #3a52d0 22%, #22243b);
+  --pf-sheet: #22243b; --pf-line: color-mix(in srgb, #8f9ef0 30%, #22243b);
+  --transfer-copy-hover: color-mix(in srgb, #8f9ef0 16%, #22243b);
+  /* A light ultramar for the copy actions here, not the scheme's lavender link colour. */
+  --pf-blue: #aab8ff;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, #8f9ef0 22%, transparent);
+}
 .transfer > p { margin: 0; max-width: 60ch; line-height: 1.5; }
 
 /* ---------- Confirmation ---------- */

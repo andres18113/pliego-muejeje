@@ -326,6 +326,60 @@ for (const viewport of [{ name: "desktop", width: 1280, height: 900 }, { name: "
   });
 }
 
+for (const name of ["Número de tarjeta", "Código de seguridad"] as const) {
+  test(`does not advance ${name} after a complete value is corrected before its focus frame`, async ({ page }) => {
+    const api = new FakePliego(); await api.install(page); await signInAndAdd(page, api);
+    await page.getByRole("link", { name: "Continuar con la compra" }).click(); await saveFirstAddress(page);
+    await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Tarjeta" }).click();
+    const input = page.getByLabel(name, { exact: true });
+    if (name === "Código de seguridad") {
+      await page.getByLabel("Número de tarjeta").fill("4111111111111111");
+      const expiry = page.getByLabel("Caducidad (MM/AA)"); await expect(expiry).toBeFocused();
+      await expiry.fill("1230"); await expect(input).toBeFocused();
+    }
+    await page.evaluate(() => {
+      const frames: FrameRequestCallback[] = [];
+      window.requestAnimationFrame = callback => { frames.push(callback); return frames.length; };
+      (window as Window & { flushCardFocus?: () => void }).flushCardFocus = () => frames.splice(0).forEach(callback => callback(performance.now()));
+    });
+    await input.fill(name === "Número de tarjeta" ? "4111111111111111" : "123");
+    await input.fill(name === "Número de tarjeta" ? "411111111111111" : "12");
+    await page.evaluate(() => (window as Window & { flushCardFocus?: () => void }).flushCardFocus!());
+    await expect(input).toBeFocused();
+  });
+}
+
+test("keeps rapid expiry input ordered when a prior caret frame runs between keystrokes", async ({ page }) => {
+  const api = new FakePliego();
+  await api.install(page);
+  await signInAndAdd(page, api);
+  await page.getByRole("link", { name: "Continuar con la compra" }).click();
+  await saveFirstAddress(page);
+  await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Tarjeta" }).click();
+  await page.getByLabel("Número de tarjeta").fill("4111111111111111");
+  const expiry = page.getByLabel("Caducidad (MM/AA)");
+  await expect(expiry).toBeFocused();
+  await page.evaluate(() => {
+    const pending = new Map<number, FrameRequestCallback>(); let next = 0;
+    const controls = window as Window & { flushExpiryFrame?: () => void; flushExpiryFrames?: () => void };
+    window.requestAnimationFrame = callback => { const id = ++next; pending.set(id, callback); return id; };
+    window.cancelAnimationFrame = id => { pending.delete(id); };
+    controls.flushExpiryFrame = () => {
+      const first = pending.entries().next().value;
+      if (first) { pending.delete(first[0]); first[1](performance.now()); }
+    };
+    controls.flushExpiryFrames = () => {
+      const frames = [...pending.values()]; pending.clear(); frames.forEach(frame => frame(performance.now()));
+    };
+  });
+  await expiry.pressSequentially("12");
+  await page.evaluate(() => (window as Window & { flushExpiryFrame?: () => void }).flushExpiryFrame!());
+  await expiry.pressSequentially("30");
+  await page.evaluate(() => (window as Window & { flushExpiryFrames?: () => void }).flushExpiryFrames!());
+  await expect(expiry).toHaveValue("12 / 30");
+  await expect(page.getByLabel("Código de seguridad", { exact: true })).toBeFocused();
+});
+
 test("advances valid card details as they are typed without moving focus for invalid values", async ({ page }) => {
   const api = new FakePliego();
   await api.install(page);

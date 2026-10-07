@@ -4,7 +4,7 @@ import { useMediaQuery, useReducedMotion } from "@mantine/hooks";
 import { AddressForm } from "@/features/purchase/AddressForm";
 import type { CustomerAddress } from "@/shared/api/customer";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import shellClasses from "./accountShell.module.css";
 import classes from "./addresses.module.css";
 

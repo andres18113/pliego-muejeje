@@ -70,6 +70,21 @@ export function formatAudioDuration(seconds: number) {
     .filter(Boolean).join(" ");
 }
 
+/** Placeholder narrators from the demo catalog ("Narrador DEMO PLIEGO (sin identidad bibliográfica)") name no person. */
+const demoNarrator = /^narrador(a)?\s+demo\b/i;
+
+/**
+ * Narrators as customers read them: real names joined in order; demo placeholders said once as
+ * "Voz de demostración" (it reads under the "Narración" label). The stored values are left as they are.
+ */
+export function formatNarrators(narrators: readonly string[] | null | undefined) {
+  const names = (narrators ?? []).map((name) => name.trim()).filter(Boolean);
+  const real = names.filter((name) => !demoNarrator.test(name));
+  const parts = [...new Set(real)];
+  if (real.length < names.length) parts.push(real.length ? "voz de demostración" : "Voz de demostración");
+  return parts.length ? parts.join(", ") : null;
+}
+
 /**
  * Editorial role abbreviations that catalog metadata appends to contributor names ("Rodríguez, Armando (coord.)").
  * Shoppers read the names; the stored metadata keeps the roles. Only these explicit, lowercase role marks are

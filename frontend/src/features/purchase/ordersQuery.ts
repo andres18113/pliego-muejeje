@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { queryOptions, useQueries, useQuery } from "@tanstack/react-query";
 import { ApiRequestError } from "@/shared/api/errors";
 import { getOrder, listOrders } from "@/shared/api/orders";
@@ -56,4 +57,31 @@ export function useCustomerOrders(page: number, pageSize = 10) {
       return result;
     },
   };
+}
+
+/** A little after the reported deadline, so a client clock slightly ahead of the server's does not read too early. */
+const DEADLINE_GRACE_MS = 1_000;
+/** setTimeout's ceiling (~24.8 days); a later deadline is simply re-armed when the data next changes. */
+const MAX_TIMER_MS = 2_147_483_647;
+
+/**
+ * Re-reads the server when a cancellation deadline it reported is reached (ADR 0029). The client clock only
+ * schedules the read: whether an order can still be cancelled, and its lifecycle, are whatever the refetched
+ * response says. Pass only the deadlines of orders the server currently marks cancelable. A deadline already in
+ * the past triggers an immediate read; the same deadline is never re-armed, so a server that still reports the
+ * window cannot cause a refetch loop (focus and reconnect refetches still apply as usual).
+ */
+export function useRefetchAtCancellationDeadline(deadlines: readonly (string | null | undefined)[], refetch: () => unknown) {
+  const refetchRef = useRef(refetch);
+  useEffect(() => { refetchRef.current = refetch; }, [refetch]);
+  const key = deadlines.filter((deadline): deadline is string => Boolean(deadline)).sort().join("|");
+  useEffect(() => {
+    const times = key ? key.split("|").map((deadline) => Date.parse(deadline)).filter(Number.isFinite) : [];
+    if (times.length === 0) return;
+    const next = Math.min(...times);
+    const now = Date.now();
+    const delay = next > now ? Math.min(next - now + DEADLINE_GRACE_MS, MAX_TIMER_MS) : 0;
+    const timer = window.setTimeout(() => { void refetchRef.current(); }, delay);
+    return () => window.clearTimeout(timer);
+  }, [key]);
 }

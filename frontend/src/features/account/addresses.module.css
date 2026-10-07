@@ -41,7 +41,7 @@
   color: var(--acc-ink); text-align: left; cursor: pointer; font: inherit;
   transition: border-color 160ms var(--acc-ease), background-color 160ms var(--acc-ease);
 }
-.addTile:hover:not(:disabled) { border-color: var(--acc-blue); background: var(--acc-mist); }
+.addTile:hover:not(:disabled) { border-color: var(--acc-blue); background: var(--acc-hover); }
 .addTile:disabled { cursor: not-allowed; opacity: .6; }
 .addIcon { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--acc-blue); color: var(--acc-on-blue); }
 .addCopy { display: grid; gap: 4px; min-width: 0; }
@@ -65,7 +65,7 @@
   background: var(--acc-sheet); color: var(--acc-ink); cursor: pointer; box-shadow: 0 0 0 6px var(--acc-sheet);
   transition: background-color 160ms var(--acc-ease);
 }
-.editorClose button:hover { background: var(--acc-lavender); }
+.editorClose button:hover { background: var(--acc-hover); }
 .editorClose button:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
 .editorBody { --editor-pad: clamp(20px, 4vw, 36px); padding: 0 var(--editor-pad); }
 .editor :global(.address-form) { margin: 0; padding: 0; border: 0; }

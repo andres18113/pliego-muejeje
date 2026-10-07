@@ -47,9 +47,10 @@ test("real purchase ownership supports list, media filters, detail, purchase and
   await expect(page).toHaveURL(/\/ayuda\/audiolibros$/);
   await expect(page.getByRole("heading", { name: "Audiolibros", exact: true })).toBeVisible();
   await page.goto("/ayuda");
-  await page.getByLabel("Buscar en Ayuda").fill("reembolsos");
-  await page.getByRole("button", { name: "Buscar", exact: true }).click();
+  // The approved resource index exposes articles directly; search is an API capability.
   await expect(page.getByRole("link", { name: "Cancelaciones y reembolsos", exact: true })).toBeVisible();
+  await page.getByRole("link", { name: "Cancelaciones y reembolsos", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Cancelaciones y reembolsos", exact: true })).toBeVisible();
 });
 
 test("real public navigation and catalog expose media-scoped bestseller contracts", async ({ request }) => {

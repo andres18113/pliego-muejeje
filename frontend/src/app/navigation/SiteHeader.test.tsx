@@ -25,7 +25,7 @@ it("uses the server's ordered destinations and product type links, including Hel
   await screen.findByRole("button", { name: "Libros impresos" });
   const navigation = within(screen.getByRole("navigation", { name: "Navegación principal" }));
   expect(within(navigation.getByRole("list")).getAllByRole("listitem").map((item) => item.textContent?.replace("expand_more", ""))).toEqual(["Ayuda", "Libros impresos", "eBooks", "Audiolibros", "Ofertas"]);
-  // A section with subjects opens a menu; its own destination is the menu's "Ver todos".
+  // A section with subjects opens a menu; its own destination is the menu's "Explorar todos".
   expect(navigation.getByRole("button", { name: "Libros impresos" })).toHaveAttribute("aria-expanded", "false");
   expect(navigation.getByRole("link", { name: "eBooks" })).toHaveAttribute("href", "/catalog?productType=EBOOK");
   expect(navigation.getByRole("link", { name: "Ofertas" })).toHaveAttribute("href", "/ofertas");
@@ -86,13 +86,13 @@ it("opens one section menu at a time with only the destinations the server suppl
   fireEvent.click(books);
   const menu = within(screen.getByRole("region", { name: "Menú de Libros" }));
   expect(books).toHaveAttribute("aria-expanded", "true");
-  expect(menu.getByRole("link", { name: "Ver todos: Libros" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
+  expect(menu.getByRole("link", { name: "Explorar todos los libros" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
   expect(menu.getByRole("link", { name: "Más vendidos: Libros" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL&sort=BEST_SELLING");
   expect(menu.getByRole("link", { name: "Ofertas: Libros" })).toHaveTextContent("3");
   expect(menu.getByRole("link", { name: /Rayuela/ })).toHaveAttribute("href", "/catalog/editions/42");
-  expect(menu.getByRole("link", { name: /Rayuela/ })).toHaveTextContent(/16,00.*20,00/);
-  expect(menu.getByRole("link", { name: "Literatura" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL&category=literatura");
-  expect(menu.queryByRole("link", { name: "Novela" })).not.toBeInTheDocument();
+  // Fast discovery, not a directory: no subject list in the panel.
+  expect(menu.queryByRole("link", { name: "Literatura" })).not.toBeInTheDocument();
+  expect(menu.queryByText("Temas")).not.toBeInTheDocument();
 
   fireEvent.click(screen.getByRole("button", { name: "eBooks" }));
   expect(screen.queryByRole("region", { name: "Menú de Libros" })).not.toBeInTheDocument();
@@ -108,7 +108,7 @@ it("closes a section menu with Escape, restoring focus, and on a press outside",
   renderHeader("/", richNavigation);
   const books = await screen.findByRole("button", { name: "Libros" });
   fireEvent.click(books);
-  const first = within(screen.getByRole("region", { name: "Menú de Libros" })).getByRole("link", { name: "Ver todos: Libros" });
+  const first = within(screen.getByRole("region", { name: "Menú de Libros" })).getByRole("link", { name: "Explorar todos los libros" });
   first.focus();
   fireEvent.keyDown(first, { key: "Escape" });
   expect(screen.queryByRole("region", { name: "Menú de Libros" })).not.toBeInTheDocument();
@@ -128,8 +128,8 @@ it("unfolds a section in place in the mobile sheet", async () => {
   const sheet = within(screen.getByRole("dialog", { name: "Navegación" }));
   expect(sheet.queryByRole("link", { name: "Literatura" })).not.toBeInTheDocument();
   fireEvent.click(sheet.getByRole("button", { name: "Libros" }));
-  expect(sheet.getByRole("link", { name: "Ver todos: Libros" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
+  expect(sheet.getByRole("link", { name: "Explorar todos los libros" })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
   expect(sheet.getByRole("link", { name: /Rayuela/ })).toHaveAttribute("href", "/catalog/editions/42");
-  expect(sheet.getByRole("link", { name: "Literatura" })).toBeInTheDocument();
+  expect(sheet.queryByRole("link", { name: "Literatura" })).not.toBeInTheDocument();
   expect(sheet.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda");
 });

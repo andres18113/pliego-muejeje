@@ -24,6 +24,12 @@ public class CheckoutService {
 
     // Resolution writes a terminal fence if execution never reached PostgreSQL.
     @Transactional
+    public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
+            Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint) {
+        return gateway.checkout(actorUserId,key,addressId,paymentMethod,paymentOutcome,cartId,fulfillmentMethod,pickupLocationId,quoteFingerprint);
+    }
+
+    @Transactional
     public CheckoutAttempt resolve(long actorUserId, UUID key) {
         return gateway.resolve(actorUserId, key);
     }

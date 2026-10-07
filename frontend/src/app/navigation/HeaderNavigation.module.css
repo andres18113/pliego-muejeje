@@ -1,7 +1,8 @@
 /* Storefront navigation. Desktop: the server's sections on the bar; a section with featured titles, subjects
-   or a bestseller destination opens one bounded paper panel under the header — its name and destinations,
-   up to three compact titles on mist, and its subjects as a quiet list. Phones: the same data as a list that
-   unfolds in place inside a sheet. Everything shown comes from the storefront projection. */
+   or a bestseller destination opens one bounded paper panel under the header on hover, click or ↓ — up to three
+   featured titles as compact cards on their medium's field, one wide "Explorar todos…", and "Explorar más"
+   with the section's own destinations. Phones: the same architecture unfolds in place inside a sheet.
+   Everything shown comes from the storefront projection. */
 .bar { display: flex; align-items: center; gap: inherit; margin: 0; padding: 0; list-style: none; }
 .bar > li { display: flex; }
 .trigger { gap: 2px; border: 0; background: none; font-family: inherit; cursor: pointer; }
@@ -15,63 +16,94 @@
 /* The panel hangs from the bar (its positioned ancestor), centered and bounded: paper, 24px, one soft shadow. */
 .panel {
   position: absolute; top: calc(100% + 4px); left: 50%; z-index: 3; translate: -50% 0; width: min(1120px, calc(100% - 48px)); max-height: calc(100dvh - 120px); overflow-y: auto;
-  border-radius: 24px; padding: 32px 36px 36px; background: var(--pliego-surface); color: var(--pliego-text);
+  border-radius: 24px; padding: 28px 32px 32px; background: var(--pliego-surface); color: var(--pliego-text);
   box-shadow: 0 0 0 1px var(--pliego-border), 0 28px 56px -32px rgb(20 23 55 / 55%);
   animation: open 140ms cubic-bezier(.32, .94, .6, 1);
 }
-/* A section with destinations only gets a panel its own size, not an empty wide one. */
-.panel:not(:has(.featured, .topics)) { width: min(360px, calc(100% - 48px)); padding: 26px 32px 24px; }
+/* A section without featured titles gets a panel its own size, not an empty wide one. */
+.panel:not(:has(.featured)) { width: min(720px, calc(100% - 48px)); }
 @keyframes open { from { opacity: 0; translate: -50% -6px; } }
 /* A bridge over the 4px gap so moving the pointer from the bar into the panel never leaves the menu. */
 .panel::before { content: ""; position: absolute; top: -8px; left: 0; right: 0; height: 8px; }
-.panelInner { display: flex; align-items: flex-start; gap: clamp(28px, 4vw, 56px); min-width: 0; }
+/* Google-Store composition: the featured titles and "Explorar todos" on the left, "Explorar más" on the right. */
+.panelInner { display: grid; grid-template-columns: minmax(0, 1.65fr) minmax(240px, 1fr); align-items: start; gap: clamp(24px, 3vw, 40px); min-width: 0; }
+.panelInner:not(:has(.more)) { grid-template-columns: minmax(0, 1fr); }
 .panel p { margin: 0; }
 .panel ul { margin: 0; padding: 0; list-style: none; }
 
-.lead { flex: 0 0 clamp(180px, 20vw, 220px); min-width: 0; }
-.panelTitle { color: var(--pliego-text); font: 650 1.75rem/1.1 var(--store-display); letter-spacing: -.04em; overflow-wrap: anywhere; }
-.primary { display: grid; gap: 2px; padding-top: 14px; }
-.primary a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--pliego-text); font-size: 1.0625rem; font-weight: 500; text-decoration: none; }
-.primary li:first-child a { color: var(--header-accent); font-weight: 600; }
-.primary a :global(.material-symbol) { opacity: 0; translate: -4px 0; transition: opacity 140ms, translate 140ms; }
-.primary a:hover, .primary a:focus-visible { color: var(--header-accent); }
-.primary a:hover :global(.material-symbol), .primary a:focus-visible :global(.material-symbol) { opacity: 1; translate: 0 0; }
-.count { color: var(--pliego-text-muted); font-size: .875rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+.main, .more { display: grid; gap: 8px; min-width: 0; }
+.eyebrow.eyebrow { margin: 0 0 4px; color: var(--pliego-text-muted); font-size: .8125rem; font-weight: 600; line-height: 1.4; }
+/* The section heading names its medium with the same glyph used elsewhere (book_2, mobile, headphones):
+   small, muted, on the text's line; the name stays dominant in ink. No chip. */
+.sectionHeading.sectionHeading { display: inline-flex; align-items: center; gap: 6px; color: var(--pliego-text); white-space: nowrap; }
+.sectionHeading :global(.material-symbol) { flex: none; color: var(--pliego-text-muted); }
+.count { margin-left: 8px; color: var(--pliego-text-muted); font-size: .875rem; font-weight: 400; font-variant-numeric: tabular-nums; }
 
-/* Featured: compact, navigation-sized. The jacket stands on a mist field; identity and price sit under it. */
-.featured.featured { flex: 1 1 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; min-width: 0; }
-.product { display: grid; align-content: start; gap: 3px; min-width: 0; border-radius: 16px; padding-bottom: 4px; color: var(--pliego-text); text-decoration: none; }
-.productCover { display: grid; place-items: end center; height: 148px; margin-bottom: 8px; padding: 16px 16px 14px; border-radius: 16px; background: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--pliego-surface)); transition: background-color 160ms; }
-.productCover :global(.book-cover) { width: 78px; }
+/* Featured: compact visual cards. Each card is its medium's field (see below) with the jacket over the title. */
+.featured.featured { display: grid; grid-template-columns: repeat(3, minmax(0, 9.375rem)); gap: 8px; min-width: 0; }
+.product { display: grid; align-content: start; height: 100%; min-width: 0; border-radius: 20px; background: var(--media-stage); color: var(--pliego-text); text-decoration: none; transition: background-color 160ms cubic-bezier(.32, .94, .6, 1); }
+.productCover { display: grid; place-items: end center; height: 100px; padding: 12px 12px 4px; }
+.productCover :global(.book-cover) { width: 54px; }
 .productCover :global(.cover-frame) { background: transparent; }
-.productTitle { display: -webkit-box; overflow: hidden; font: 650 1rem/1.2 var(--store-display); letter-spacing: -.025em; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
-.productAuthors { overflow: hidden; color: var(--pliego-text-muted); font-size: .8125rem; line-height: 1.4; text-overflow: ellipsis; white-space: nowrap; }
-.price { display: inline-flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; font-size: .9375rem; font-weight: 600; line-height: 1.4; font-variant-numeric: tabular-nums; }
-.price s { color: var(--pliego-text-muted); font-size: .8125rem; font-weight: 400; }
+/* The title area is reserved for three lines on every card, so the three cards share one height and a long
+   title never meets the card's edge; shorter titles sit centered in it. The clamp itself carries no padding
+   (padding would expose a fourth line below the ellipsis). The full title stays in the link's text. */
+.titleArea { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; min-height: calc(3 * 1.25 * .875rem); margin: 6px 10px 12px; font-size: .875rem; }
+.titleArea .productTitle { font-size: inherit; text-align: center; overflow-wrap: break-word; hyphens: auto; -webkit-line-clamp: 3; line-clamp: 3; }
+.productTitle { display: -webkit-box; overflow: hidden; font: 600 .9375rem/1.25 var(--store-display); letter-spacing: -.02em; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
 .product:hover .productTitle, .product:focus-visible .productTitle { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 3px; }
-.product:hover .productCover { background: var(--store-lavender, #e4def4); }
-:global([data-mantine-color-scheme="dark"]) .productCover { background: #2e2b4d; }
-:global([data-mantine-color-scheme="dark"]) .product:hover .productCover { background: #3a3660; }
-
-/* Subjects: easy to scan, clearly subordinate. */
-.topics { flex: 0 1 220px; min-width: 0; }
-.panelInner:not(:has(.featured)) .topics { flex: 1 1 0; }
-.panelInner:not(:has(.featured)) .topics ul { columns: 3 160px; column-gap: 32px; }
-.topics p, .sheetTopics p { padding: 10px 0 6px; color: var(--pliego-text-muted); font-size: .8125rem; font-weight: 600; line-height: 1.4; }
-.topics a { display: flex; align-items: center; min-height: 36px; break-inside: avoid; color: var(--pliego-text); font-size: .9375rem; line-height: 1.35; text-decoration: none; overflow-wrap: anywhere; }
-.topics a:hover, .topics a:focus-visible { color: var(--header-accent); text-decoration: underline; text-underline-offset: 4px; }
-
-/* On narrower desktops the panel keeps its three parts by letting subjects drop under the destinations. */
-@media (max-width: 1239px) {
-  .panelInner { flex-wrap: wrap; }
-  .topics { flex-basis: 100%; }
-  .topics ul { columns: 4 150px; column-gap: 28px; }
+.product:hover { background: var(--media-stage-hover); }
+/* Each featured title stands on its own medium's field, as on the catalog cards: Libros warm paper gray,
+   eBooks lavender, Audiolibros pale yellow. Only these surfaces carry the medium; the panel stays paper. */
+.product, .sheetProduct {
+  --media-stage: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--pliego-surface)); --media-stage-hover: var(--store-lavender, #e4def4);
+  --media-row: color-mix(in srgb, var(--store-lavender, #e4def4) 40%, var(--pliego-surface));
 }
+.product[data-media="PHYSICAL"], .sheetProduct[data-media="PHYSICAL"] {
+  --media-stage: #ecebe4; --media-stage-hover: color-mix(in srgb, #ecebe4 92%, var(--store-ink, #252740));
+  --media-row: #ecebe4;
+}
+.product[data-media="AUDIOBOOK"], .sheetProduct[data-media="AUDIOBOOK"] {
+  --media-stage: color-mix(in srgb, var(--store-yellow, #f3df83) 42%, var(--store-paper, #f6f5f0)); --media-stage-hover: color-mix(in srgb, var(--store-yellow, #f3df83) 62%, var(--store-paper, #f6f5f0));
+  --media-row: color-mix(in srgb, var(--store-yellow, #f3df83) 32%, var(--store-paper, #f6f5f0));
+}
+:global([data-mantine-color-scheme="dark"]) :is(.product, .sheetProduct) { --media-stage: #2e2b4d; --media-stage-hover: #3a3660; --media-row: #2e2b4d; }
+:global([data-mantine-color-scheme="dark"]) :is(.product, .sheetProduct)[data-media="PHYSICAL"] {
+  --media-stage: color-mix(in srgb, #ffffff 7%, var(--pliego-surface, #22243b)); --media-stage-hover: color-mix(in srgb, #ffffff 12%, var(--pliego-surface, #22243b));
+  --media-row: color-mix(in srgb, #ffffff 7%, var(--pliego-surface, #22243b));
+}
+:global([data-mantine-color-scheme="dark"]) :is(.product, .sheetProduct)[data-media="AUDIOBOOK"] {
+  --media-stage: color-mix(in srgb, var(--store-yellow, #f3df83) 16%, var(--pliego-surface, #22243b)); --media-stage-hover: color-mix(in srgb, var(--store-yellow, #f3df83) 24%, var(--pliego-surface, #22243b));
+  --media-row: color-mix(in srgb, var(--store-yellow, #f3df83) 16%, var(--pliego-surface, #22243b));
+}
+
+/* "Explorar todos…": a compact secondary destination under the cards — sized to its words, aligned with
+   them, label and arrow (on an ultramar disc) on one line. */
+.browseAll { display: inline-flex; justify-self: start; align-items: center; gap: 14px; max-width: 100%; min-height: 48px; padding: 6px 6px 6px 20px; border-radius: 999px; white-space: nowrap; background: color-mix(in srgb, var(--store-blue, #283da8) 9%, var(--pliego-surface)); color: var(--store-blue, #283da8); font-size: 1rem; font-weight: 600; line-height: 1.3; text-decoration: none; transition: background-color 160ms cubic-bezier(.32, .94, .6, 1); }
+.browseAll:hover { background: color-mix(in srgb, var(--store-blue, #283da8) 15%, var(--pliego-surface)); }
+.browseAll > span:first-child { overflow: hidden; text-overflow: ellipsis; }
+.browseArrow.browseArrow { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--store-action, #283da8); color: var(--store-on-action, #fff); transition: translate 160ms cubic-bezier(.32, .94, .6, 1); }
+.browseAll:hover .browseArrow { translate: 3px 0; }
+:global([data-mantine-color-scheme="dark"]) .browseAll { background: color-mix(in srgb, var(--store-action, #3a52d0) 26%, var(--pliego-surface, #22243b)); color: var(--pliego-text); }
+:global([data-mantine-color-scheme="dark"]) .browseAll:hover { background: color-mix(in srgb, var(--store-action, #3a52d0) 36%, var(--pliego-surface, #22243b)); }
+
+/* "Explorar más": compact rows grouped as one rounded block, as in the reference. Only server destinations. */
+.more ul { display: grid; gap: 4px; }
+.more a { display: flex; align-items: center; min-height: 64px; padding: 8px 14px 8px 24px; border-radius: 6px; background: color-mix(in srgb, var(--pliego-text) 4%, var(--pliego-surface)); color: var(--pliego-text); font-size: 1rem; font-weight: 500; line-height: 1.3; text-decoration: none; transition: background-color 160ms cubic-bezier(.32, .94, .6, 1); }
+.more li:first-child a { border-top-left-radius: 20px; border-top-right-radius: 20px; }
+.more li:last-child a { border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+.more a:hover { background: color-mix(in srgb, var(--pliego-text) 8%, var(--pliego-surface)); }
+.moreArrow.moreArrow { margin-left: auto; color: var(--pliego-text-muted); }
+:global([data-mantine-color-scheme="dark"]) .more a { background: color-mix(in srgb, #ffffff 6%, var(--pliego-surface, #22243b)); }
+:global([data-mantine-color-scheme="dark"]) .more a:hover { background: color-mix(in srgb, #ffffff 10%, var(--pliego-surface, #22243b)); }
+.product:focus-visible, .browseAll:focus-visible, .more a:focus-visible { outline: 3px solid var(--header-focus, var(--store-blue, #283da8)); outline-offset: 2px; }
 
 /* Phone sheet */
 .sheet {
-  --pliego-surface: var(--store-paper); --pliego-text: var(--store-ink); --pliego-text-muted: #595a6e; --pliego-border: #d4d2dc; --pliego-surface-hover: var(--store-lavender);
+  --pliego-surface: var(--store-paper); --pliego-text: var(--store-ink); --pliego-text-muted: #595a6e; --pliego-border: #d4d2dc; --pliego-surface-hover: var(--store-hover);
   --header-accent: var(--mantine-primary-color-filled); --header-focus: var(--mantine-color-pliego-8);
+  /* As in SiteHeader: the legacy green link/button tokens follow the header accent inside the phone sheet. */
+  --forest: var(--header-accent); --sage: color-mix(in srgb, var(--header-accent) 10%, transparent);
 }
 .sheet.sheet { background: var(--pliego-surface); color: var(--pliego-text); }
 :global([data-mantine-color-scheme="dark"]) .sheet { --pliego-surface: #22243b; --pliego-text: #f0edf8; --pliego-text-muted: #c5c1d5; --pliego-border: #4e506b; --pliego-surface-hover: #3c3e5a; --header-accent: var(--mantine-primary-color-light-color); --header-focus: var(--mantine-color-pliego-3); }
@@ -88,19 +120,10 @@
 .sheetRow[aria-current="page"]::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; margin-right: -4px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
 .sheetRow :global(.material-symbol) { margin-left: auto; color: var(--pliego-text-muted); }
 .sheetSection { display: grid; gap: 14px; min-width: 0; padding: 0 2px 18px; }
-.sheetPrimary { display: flex; flex-wrap: wrap; gap: 8px; }
-.sheetPrimary a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 16px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--pliego-border); color: var(--pliego-text); font-size: .9375rem; font-weight: 500; text-decoration: none; }
-.sheetPrimary li:first-child a { background: var(--header-accent); box-shadow: none; color: var(--mantine-color-white); font-weight: 600; }
-:global([data-mantine-color-scheme="dark"]) .sheetPrimary li:first-child a { color: var(--store-ink, #252740); }
-.sheetPrimary li:first-child .count { color: inherit; }
-.sheetFeatured { display: grid; gap: 4px; }
-.sheetProduct { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: center; gap: 14px; min-height: 60px; padding: 6px 8px 6px 6px; border-radius: 14px; background: color-mix(in srgb, var(--store-lavender, #e4def4) 40%, var(--pliego-surface)); color: var(--pliego-text); text-decoration: none; }
-:global([data-mantine-color-scheme="dark"]) .sheetProduct { background: #2e2b4d; }
+:global([data-mantine-color-scheme="dark"]) .sheetFeatured { display: grid; gap: 4px; }
+.sheetProduct { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: center; gap: 14px; min-height: 60px; padding: 6px 8px 6px 6px; border-radius: 14px; background: var(--media-row); color: var(--pliego-text); text-decoration: none; }
 .sheetCover :global(.book-cover) { width: 100%; }
-.sheetProductText { display: grid; gap: 1px; min-width: 0; }
-.sheetTopics ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 16px; }
-.sheetTopics a { display: flex; align-items: center; min-height: 44px; color: var(--pliego-text); font-size: .9375rem; line-height: 1.35; text-decoration: none; overflow-wrap: anywhere; }
-@media (max-width: 339px) { .sheetTopics ul { grid-template-columns: minmax(0, 1fr); } }
-
-@media (prefers-reduced-motion: reduce) { .panel { animation: none; } .chevron, .primary a :global(.material-symbol), .productCover { transition: none; } }
+.sheetSection .more a { min-height: 52px; padding-left: 18px; }
+.sheetSection .eyebrow { margin-top: 6px; }
+@media (prefers-reduced-motion: reduce) { .panel { animation: none; } .chevron, .product, .browseAll, .browseArrow, .more a { transition: none; } }
 @media (forced-colors: active) { .panel { border: 1px solid CanvasText; } }

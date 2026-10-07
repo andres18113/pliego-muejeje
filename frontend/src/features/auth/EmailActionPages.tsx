@@ -124,7 +124,7 @@ export function VerifyEmailPage() {
 
 export function ResetPasswordPage() {
   const { token, mutation } = useEmailTokenAction("recovery");
-  const { clear } = useSession();
+  const { session, captureAuthority, clear } = useSession();
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [validation, setValidation] = useState<string | null>(null);
@@ -138,7 +138,11 @@ export function ResetPasswordPage() {
     if (password !== confirmation) { setValidation("Las contraseñas no coinciden."); return; }
     setValidation(null);
     lock.current = true;
-    try { await mutation.mutateAsync({ token, password }); clear(); } catch { /* Mutation exposes the failure. */ }
+    const issued = captureAuthority(session);
+    try {
+      await mutation.mutateAsync({ token, password });
+      if (issued.isCurrent()) clear();
+    } catch { /* Mutation exposes the failure. */ }
     finally { setPassword(""); setConfirmation(""); lock.current = false; }
   }
   const another = <Link to="/recuperar-contrasena">Solicitar otro enlace</Link>;

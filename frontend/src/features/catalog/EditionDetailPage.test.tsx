@@ -73,23 +73,51 @@ function expectSharedChrome() {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("EditionDetailPage", () => {
-  it.each(["PAPERBACK", "EBOOK"])("shows the server offer and effective price for %s without recalculating it", async format => {
+  const serverOffer = { offerId: "4", originalPrice: "18.50", discountAmount: "5.00", effectivePrice: "13.50", savingsAmount: "5.00", savingsPercent: "27.03", daysRemaining: 2, endingSoon: true, startsAt: "2026-01-01T00:00:00-05:00", endsAt: "2026-10-09T23:59:59-05:00", offerCopy: "Una lectura para ti", terms: "Válida hasta agotar existencias." };
+  function stubOffer(overrides: Record<string, unknown>) {
     vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
       const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
       return Promise.resolve(url.pathname.endsWith("/categories")
         ? new Response(JSON.stringify({ items: [] }), { headers: { "Content-Type": "application/json" } })
-        : editionResponse(true, { format, price: "13.50", offer: { offerId: "4", originalPrice: "18.50", discountAmount: "5.00", effectivePrice: "13.50", savingsAmount: "5.00", savingsPercent: "27.03", daysRemaining: 2, endingSoon: true, startsAt: "2026-01-01T00:00:00Z", endsAt: "2027-01-01T00:00:00Z" } }));
+        : editionResponse(true, { price: "13.50", ...overrides }));
     }));
+  }
+  it.each([
+    { format: "PAPERBACK" },
+    { format: "EBOOK", ebookFileFormat: "EPUB" },
+    { format: "AUDIOBOOK", ebookFileFormat: null, audioDurationSeconds: 3661, narrators: ["Ana Voz"] },
+  ])("shows the server offer on the price line for $format without recalculating it", async (media) => {
+    stubOffer({ ...media, offer: serverOffer });
     renderDetail();
     await screen.findByRole("heading", { name: "Cien años de soledad" });
-    expect(screen.getByText(/Precio anterior/)).toHaveTextContent("18,50");
-    expect(screen.getByText(/Descuento/)).toHaveTextContent("5,00");
     expect(screen.getByText(/13,50/)).toBeInTheDocument();
+    expect(screen.getByText(/Precio anterior/).closest("p")?.querySelector("s")).toHaveTextContent("18,50");
+    const saving = screen.getByText(/Ahorras/);
+    expect(saving).toHaveTextContent("5,00");
+    expect(saving.parentElement?.querySelector(".material-symbol")?.textContent).toBe("sell");
+    expect(screen.getByText("Quedan 2 días")).toBeInTheDocument();
+    expect(screen.queryByText("Una lectura para ti")).toBeNull();
+    expect(screen.queryByText(/Términos/)).toBeNull();
+    expect(screen.queryByText(/Termina el|UTC/)).toBeNull();
+    expect(screen.queryByRole("region", { name: /Oferta/ })).toBeNull();
+  });
+  it("keeps the days left for the last five days only, and shows no offer without one", async () => {
+    stubOffer({ format: "PAPERBACK", offer: { ...serverOffer, daysRemaining: 9 } });
+    const first = renderDetail();
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    expect(screen.getByText(/Ahorras/)).toBeInTheDocument();
+    expect(screen.queryByText(/Quedan|Queda/)).toBeNull();
+    first.unmount();
+    stubOffer({ format: "PAPERBACK", offer: null });
+    renderDetail();
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    expect(screen.queryByText(/Ahorras|Precio anterior/)).toBeNull();
   });
 
   it.each([
-    { format: "EBOOK", ebookFileFormat: "EPUB", audioDurationSeconds: null, narrators: [], expected: ["EPUB"] },
-    { format: "AUDIOBOOK", ebookFileFormat: null, audioDurationSeconds: 3661, narrators: ["Ana Voz", "Luis Voz"], expected: ["1 h 1 min 1 s", "Ana Voz, Luis Voz"] },
+    { format: "EBOOK", ebookFileFormat: "EPUB", audioDurationSeconds: null, narrators: [], expected: ["eBook · EPUB"] },
+    { format: "AUDIOBOOK", ebookFileFormat: null, audioDurationSeconds: 3661, narrators: ["Ana Voz", "Luis Voz"], expected: ["Audiolibro · 1 h 1 min 1 s", "Ana Voz, Luis Voz"] },
+    { format: "AUDIOBOOK", ebookFileFormat: null, audioDurationSeconds: 3661, narrators: ["Narrador DEMO PLIEGO (sin identidad bibliográfica)"], expected: ["Voz de demostración"] },
   ])("shows only supplied $format technical metadata without unsupported access actions", async ({ expected, ...metadata }) => {
     vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
       const url = new URL(input instanceof Request ? input.url : String(input), "http://localhost");
@@ -100,6 +128,7 @@ describe("EditionDetailPage", () => {
     renderDetail();
     await screen.findByRole("heading", { name: "Cien años de soledad" });
     expected.forEach(value => expect(screen.getByText(value)).toBeInTheDocument());
+    expect(screen.queryByText(/DEMO|sin identidad/)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
   });

@@ -1,0 +1,5 @@
+  ✓  1 [chromium] › tests/e2e/purchase.spec.ts:330:3 › does not advance Número de tarjeta after a complete value is corrected before its focus frame (4.6s)
+  ✓  2 [chromium] › tests/e2e/purchase.spec.ts:330:3 › does not advance Código de seguridad after a complete value is corrected before its focus frame (4.7s)
+  ✓  3 [chromium] › tests/e2e/purchase.spec.ts:352:1 › keeps rapid expiry input ordered when a prior caret frame runs between keystrokes (4.6s)
+  ✓  4 [chromium] › tests/e2e/purchase.spec.ts:383:1 › advances valid card details as they are typed without moving focus for invalid values (5.1s)
+  4 passed (19.7s)

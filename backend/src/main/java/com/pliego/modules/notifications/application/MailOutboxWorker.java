@@ -19,21 +19,27 @@ public class MailOutboxWorker {
  public MailOutboxWorker(MailOutboxService outbox,TransactionalMailSender sender,MailTemplates templates,MailProperties properties,ObjectMapper json) {
   this.outbox=outbox;this.sender=sender;this.templates=templates;this.properties=properties;this.json=json;
  }
- @Scheduled(fixedDelayString="${pliego.mail.poll-interval:PT10S}",initialDelayString="${pliego.mail.poll-interval:PT10S}")
+ @Scheduled(fixedDelayString="${pliego.mail.poll-interval:PT30S}",initialDelayString="${pliego.mail.poll-interval:PT30S}")
  public void process() {
   for(int i=0;i<properties.batchSize();i++) {
    OutboxMail mail;
    try {mail=outbox.claim();} catch(RuntimeException e) {LOG.warn("mail_outbox state=CLAIM_FAILED code=DATABASE_ERROR");return;}
    if(mail==null)return;
-   String outcome="SENT";String error=null;
-   try { sender.send(mail.recipient(),templates.render(mail.type(),json.readTree(mail.data())),mail.type()); }
+   String outcome="SENT";String error=null;String providerMessageId=null;
+   try {
+    MailDeliveryReceipt receipt=sender.send(mail.recipient(),templates.render(mail.type(),json.readTree(mail.data())),mail.type(),mail.id());
+    providerMessageId=receipt.providerMessageId();
+   }
    catch(MailDeliveryException e) {outcome=e.outcome();error=e.getMessage();}
    catch(RuntimeException e) {outcome="FAILED";error="MAIL_RENDER_ERROR";}
    try {
-    outbox.complete(mail,outcome,error);
+    if(!outbox.complete(mail,outcome,error,providerMessageId)) {
+     LOG.warn("mail_outbox id={} type={} state=STALE_COMPLETION attempts={} provider_message_id={} code=LEASE_REPLACED",mail.id(),mail.type(),mail.attempts(),providerMessageId);
+     continue;
+    }
     String state="SENT".equals(outcome)?"SENT":("RETRY".equals(outcome)&&mail.attempts()<5?"PENDING":"FAILED");
-    LOG.info("mail_outbox id={} type={} state={} attempts={} code={}",mail.id(),mail.type(),state,mail.attempts(),error);
-   } catch(RuntimeException e) {LOG.warn("mail_outbox id={} type={} state=COMPLETION_FAILED attempts={} code=DATABASE_ERROR",mail.id(),mail.type(),mail.attempts());return;}
+    LOG.info("mail_outbox id={} type={} state={} attempts={} provider_message_id={} code={}",mail.id(),mail.type(),state,mail.attempts(),providerMessageId,error);
+   } catch(RuntimeException e) {LOG.warn("mail_outbox id={} type={} state=COMPLETION_FAILED attempts={} provider_message_id={} code=DATABASE_ERROR",mail.id(),mail.type(),mail.attempts(),providerMessageId);return;}
   }
  }
 }

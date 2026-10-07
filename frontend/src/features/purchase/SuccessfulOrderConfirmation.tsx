@@ -12,6 +12,8 @@ import { LocationMap } from "./LocationMap";
 import { openingHoursLabel } from "./PickupLocationPicker";
 import { PurchaseFlow } from "./PurchaseFlow";
 import { deliveryWindowLabel, ivaLabel, paymentMethodLabel } from "./purchaseText";
+import { hasSaving } from "./cartPricingViewModel";
+import { toOrderPricingViewModel, type OrderLinePricingViewModel } from "./orderPricingViewModel";
 import classes from "./confirmation.module.css";
 
 // PUCE reference from V040 and the academic demo brief. Never a customer's delivery coordinate.
@@ -46,6 +48,14 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
     {recipient ? <address><strong>{recipient}</strong><span>{street}</span><span>{city}{postalCode ? ` ${postalCode}` : ""}</span></address>
       : <p>Destino no registrado.</p>}
   </div>;
+  // The order's immutable pricing snapshot, worded for display: nothing is recalculated. Without a snapshot
+  // (older orders), the historical amounts read as before and no saving is shown.
+  const pricing = toOrderPricingViewModel(order);
+  const summarySaving = pricing.summary.pricingSnapshotAvailable && pricing.summary.savingsTotal && hasSaving(pricing.summary.savingsTotal.rawValue) ? pricing.summary.savingsTotal : null;
+  const lineSaving = (orderItemId: string) => {
+    const line = pricing.lines.find((candidate) => candidate.orderItemId === orderItemId);
+    return line?.pricingSnapshotAvailable && line.lineSavings && hasSaving(line.lineSavings.rawValue) ? line as OrderLinePricingViewModel & { lineSavings: NonNullable<OrderLinePricingViewModel["lineSavings"]> } : null;
+  };
   const fulfillmentHeading = pickup ? "Retiro" : order.fulfillment?.method === "HOME_DELIVERY" ? "Entrega" : "Artículos comprados";
 
   return <PurchaseFlow stage="confirmation">
@@ -61,7 +71,7 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
           <LocationMap latitude={mapCoordinates.latitude} longitude={mapCoordinates.longitude}
             label={location?.name ?? "referencia de PUCE"} callout={callout}
             linkLabel={location ? undefined : "Ver mapa de referencia"} />
-          {!location && <p className={classes.mapReference}>Referencia PUCE para esta demo; no ubica la dirección de entrega.</p>}
+          {!location && <p className={classes.mapReference}>Referencia PUCE en la entrada principal.</p>}
         </section>}
 
         <aside className={classes.immediate} aria-labelledby="confirmation-immediate-heading">
@@ -92,10 +102,13 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
               </section>}
             </div>
             <dl className={classes.totals}>
-              {order.subtotal != null && <div><dt>Subtotal</dt><dd>{formatUsd(order.subtotal)}</dd></div>}
+              {summarySaving && pricing.summary.originalSubtotal ? <>
+                <div><dt>Subtotal</dt><dd>{pricing.summary.originalSubtotal.formattedValue}</dd></div>
+                <div data-tone="savings"><dt>Ahorro total</dt><dd>-{summarySaving.formattedValue}</dd></div>
+              </> : order.subtotal != null && <div><dt>Subtotal</dt><dd>{formatUsd(order.subtotal)}</dd></div>}
               {order.taxAmount != null && <div><dt>{ivaLabel(order.taxRate)}</dt><dd>{formatUsd(order.taxAmount)}</dd></div>}
               {order.shippingAmount != null && <div><dt>Gastos de envío</dt><dd>{formatUsd(order.shippingAmount)}</dd></div>}
-              <div className={classes.total} data-purchase="total"><dt>Total</dt><dd>{formatUsd(order.total)}</dd></div>
+              <div className={classes.total} data-purchase="total"><dt>{summarySaving ? "Total pagado" : "Total"}</dt><dd>{formatUsd(order.total)}</dd></div>
             </dl>
           </div>
           <Link className={classes.orderAction} to={`/orders/${order.orderId}`} replace state={null}>Ver pedido completo</Link>
@@ -108,14 +121,23 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
           </header>
           <ul>{order.items.filter(item => item.requiresPhysicalFulfillment).map((item) => {
             const cover = coverQueries[order.items.indexOf(item)]?.data;
+            const saving = lineSaving(item.orderItemId);
             return <li key={item.orderItemId}>
               <div className={classes.bookCover}><BookCover url={cover?.coverUrl ?? null} license={cover?.coverLicense ?? null} attribution={cover?.coverAttribution ?? null} title={item.title} size="compact" decorative /></div>
               <strong className={classes.bookTitle}>{item.title}</strong>
-              <div className={classes.priceQuantity}><span>{formatUsd(item.unitPrice)}<span className="visually-hidden"> por unidad</span></span><span>Cantidad: {item.quantity}</span></div>
+              <div className={classes.priceQuantity}>
+                <span className={classes.unitPrice}>{formatUsd(item.unitPrice)}<span className="visually-hidden"> por unidad</span>
+                  {saving?.originalPrice && <s className={classes.was}><span className="visually-hidden">Precio anterior: </span>{saving.originalPrice.formattedValue}</s>}</span>
+                <span>Cantidad: {item.quantity}</span>
+                {saving && <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span>}
+              </div>
             </li>;
           })}</ul>
         </section>}
-        {digitalItems.length > 0 && <section aria-labelledby="confirmation-digital-heading"><h2 id="confirmation-digital-heading">Compras digitales</h2><ul>{digitalItems.map(item => <li key={item.orderItemId}>{item.title} · Cantidad: {item.quantity}</li>)}</ul><p>La titularidad se registra en tu cuenta después del pago aprobado.</p><ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca</ButtonLink></section>}
+        {digitalItems.length > 0 && <section className={classes.digital} aria-labelledby="confirmation-digital-heading"><h2 id="confirmation-digital-heading">Compras digitales</h2><ul>{digitalItems.map(item => {
+          const saving = lineSaving(item.orderItemId);
+          return <li key={item.orderItemId}>{item.title} · Cantidad: {item.quantity}{saving && <> <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span></>}</li>;
+        })}</ul><p>La titularidad se registra en tu cuenta después del pago aprobado.</p><ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca</ButtonLink></section>}
       </div>
       <Link className={classes.continue} to="/catalog">Seguir explorando el catálogo</Link>
     </div>

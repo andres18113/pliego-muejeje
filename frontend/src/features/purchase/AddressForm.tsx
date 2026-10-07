@@ -12,6 +12,7 @@ import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { useCountries } from "@/shared/api/reference";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { CountryPicker } from "@/shared/ui/CountryPicker";
+import { useSessionOperationScope } from "@/app/sessionOperation";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
 import { phoneError, normalizePhonePresentation, normalizePersonName, recipientError } from "@/shared/validation/person";
 import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
@@ -79,6 +80,7 @@ export function AddressForm({
 }) {
   const { session } = useSession();
   const actor = session!.user.userId;
+  const scope = useSessionOperationScope(address?.addressId ?? "new-address");
   const [recovery] = useState(() => {
     try { return { key: address ? null : readPendingAttempt("address", actor), error: null }; }
     catch (error) { return { key: null, error: (error as Error).message }; }
@@ -144,17 +146,19 @@ export function AddressForm({
   }, [actor, address]);
 
   async function consultResult() {
-    if (lock.current || externallyDisabled || !keyRef.current) return;
+    if (lock.current || externallyDisabled || !keyRef.current || !scope.isCurrent()) return;
     lock.current = true; setResolving(true);
     const key = keyRef.current;
     try {
       const result = await resolveAddress(key);
+      if (!scope.isCurrent()) return;
       if (result.state === "PENDING") { setProblem("La dirección sigue pendiente de confirmar. Consulta el resultado en unos momentos; no hace falta volver a guardarla."); return; }
       clearPendingAttempt("address", actor, key);
       keyRef.current = null; setPendingKey(null);
       if (result.state === "CREATED") { await onSaved(result.addressId); return; }
       setProblem("Confirmamos que este intento no guardó ninguna dirección y lo cerramos. Puedes revisar los datos y guardarla de nuevo.");
     } catch (error) {
+      if (!scope.isCurrent()) return;
       if (error instanceof ApiRequestError && error.status === 401) onSessionExpired();
       else setProblem("Todavía no pudimos confirmar si se guardó la dirección. Comprueba tu conexión y consulta el resultado otra vez.");
     } finally { lock.current = false; setResolving(false); }
@@ -162,7 +166,7 @@ export function AddressForm({
 
   // Rendered outside the checkout <form>, so it submits through its own handler.
   const save = handleSubmit(async (values) => {
-    if (lock.current || disabled) return;
+    if (lock.current || disabled || !scope.isCurrent()) return;
     const phoneProblem=phoneError(values.phone,true);
     if (phoneProblem) {
       setError("phone", { message: phoneProblem }, { shouldFocus: true });
@@ -199,16 +203,20 @@ export function AddressForm({
         const existing = readPendingAttempt("address", actor);
         if (existing) { keyRef.current = existing; setPendingKey(existing); setProblem("Consulta el resultado de la dirección pendiente antes de crear otra."); return; }
         keyRef.current = await beginPendingAttempt("address", actor);
+        scope.assertCurrent();
         setPendingKey(keyRef.current);
       }
       const addressId = address?.addressId ?? (await createAddress({ ...body, makePrimary: values.makePrimary }, keyRef.current!)).addressId;
+      if (!scope.isCurrent()) return;
       if (!address && keyRef.current) {
         clearPendingAttempt("address", actor, keyRef.current);
         keyRef.current = null; setPendingKey(null);
       }
       if (address) await updateAddress(addressId, body);
+      if (!scope.isCurrent()) return;
       await onSaved(addressId);
     } catch (error) {
+      if (!scope.isCurrent()) return;
       if (error instanceof ApiRequestError && error.status === 401) {
         onSessionExpired();
       } else if (error instanceof ApiRequestError && error.status < 500) {
@@ -237,10 +245,12 @@ export function AddressForm({
           return;
         }
         if (error.status === 404 || error.status === 409) await onUncertain();
+        if (!scope.isCurrent()) return;
         setProblem(`${error.title}. ${error.detail}`);
       } else {
         // Retain the persisted key; only the exact attempt resolver can confirm absence.
         await onUncertain();
+        if (!scope.isCurrent()) return;
         setProblem(error instanceof AddressOutcomeUnknown || keyRef.current
           ? "No pudimos confirmar si se guardó la dirección. Consulta el resultado antes de crear otra."
           : "No pudimos confirmar si se guardaron los cambios. Revisa la lista de direcciones antes de volver a enviarlos.");

@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
+const testFrontendOrigin = process.env.PLIEGO_E2E_BASE_URL || "http://127.0.0.1:5173";
 const categories = [
   { slug: "filosofia", name: "Filosofía", parentSlug: null },
   { slug: "literatura", name: "Literatura", parentSlug: null },
@@ -129,7 +130,7 @@ test("touch topic navigation, filter selection and search work at 320 and 375px"
   const context = await browser.newContext({ hasTouch: true, isMobile: true, viewport: { width: 375, height: 900 } });
   const page = await context.newPage(); await mock(page); await mockPopular(page);
   for (const width of [320, 375]) {
-    await page.setViewportSize({ width, height: 900 }); await page.goto("http://127.0.0.1:5173/");
+    await page.setViewportSize({ width, height: 900 }); await page.goto(`${testFrontendOrigin}/`);
     const track = page.locator("[data-popular-track]"); const rail = track.locator("xpath=..");
     await expect(track.locator("[data-media]")).toHaveCount(11);
     await expect(rail).toBeVisible();
@@ -139,7 +140,8 @@ test("touch topic navigation, filter selection and search work at 320 and 375px"
     await page.waitForTimeout(150);
     const box = (await rail.boundingBox())!;
     const session = await context.newCDPSession(page);
-    await session.send("Emulation.setTouchEmulationEnabled", { enabled: true, maxTouchPoints: 1 });
+    // hasTouch already owns emulation. Overriding it in this temporary session
+    // changes pointer media/maxTouchPoints when the session detaches.
     await page.waitForTimeout(50);
     const startX = box.x + box.width - 32, y = box.y + 80;
     const distance = Math.min(240, box.width - 60);
@@ -152,7 +154,7 @@ test("touch topic navigation, filter selection and search work at 320 and 375px"
     await expect(track).toHaveAttribute("data-page", "1");
     await expect(page).toHaveURL(/\/$/);
     await session.detach();
-    await page.goto("http://127.0.0.1:5173/catalog?category=literatura");
+    await page.goto(`${testFrontendOrigin}/catalog?category=literatura`);
     await expect(page.locator("[data-bookcard]").first()).toBeVisible();
     await page.getByRole("button", { name: /^Filtros/ }).tap();
     const filters = page.getByRole("dialog", { name: "Filtros" });

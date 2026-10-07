@@ -19,7 +19,7 @@ import java.util.UUID;
 @Repository
 public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutGateway {
 
-    private static final String CHECKOUT = "CALL pliego.sp_checkout_idempotent(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String CHECKOUT = "CALL pliego.sp_checkout_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final JdbcTemplate jdbcTemplate;
     private final tools.jackson.databind.ObjectMapper objectMapper;
 
@@ -33,6 +33,12 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
     @Override
     public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
             Long cartId, String fulfillmentMethod, Long pickupLocationId) {
+        return checkout(actorUserId,key,addressId,paymentMethod,paymentOutcome,cartId,fulfillmentMethod,pickupLocationId,null);
+    }
+
+    @Override
+    public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
+            Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint) {
         return withDatabaseErrorTranslation(() -> jdbcTemplate.execute((ConnectionCallback<CheckoutResult>) connection -> {
             try (PreparedStatement statement = connection.prepareStatement(CHECKOUT)) {
                 statement.setLong(1, actorUserId);
@@ -43,16 +49,17 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                 if (cartId == null) statement.setNull(6, Types.BIGINT); else statement.setLong(6, cartId);
                 statement.setString(7, fulfillmentMethod);
                 if (pickupLocationId == null) statement.setNull(8, Types.BIGINT); else statement.setLong(8, pickupLocationId);
-                statement.setNull(9, Types.BIGINT);
-                statement.setNull(10, Types.VARCHAR);
+                statement.setString(9, quoteFingerprint);
+                statement.setNull(10, Types.BIGINT);
                 statement.setNull(11, Types.VARCHAR);
-                statement.setNull(12, Types.NUMERIC);
-                statement.setNull(13, Types.VARCHAR);
+                statement.setNull(12, Types.VARCHAR);
+                statement.setNull(13, Types.NUMERIC);
+                statement.setNull(14, Types.VARCHAR);
                 try (ResultSet output = statement.executeQuery()) {
                     if (!output.next()) throw new SQLException("Checkout Procedure returned no output", "02000");
                     return new CheckoutResult(Long.toString(output.getLong("o_order_id")),
                             output.getString("o_order_state"), output.getString("o_payment_state"),
-                            output.getBigDecimal("o_total"), output.getString("o_payment_reference"), fulfillment(output.getLong("o_order_id")),amounts(output.getLong("o_order_id")));
+                            output.getBigDecimal("o_total"), output.getString("o_payment_reference"), fulfillment(output.getLong("o_order_id")),amounts(output.getLong("o_order_id")),offerPricing(output.getLong("o_order_id")));
                 }
             }
         }));
@@ -69,7 +76,7 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                     CheckoutResult order = "CREATED".equals(state) ? new CheckoutResult(
                             Long.toString(results.getLong("order_id")), results.getString("order_state"),
                             results.getString("payment_state"), results.getBigDecimal("total"),
-                            results.getString("payment_reference"), fulfillment(results.getLong("order_id")),amounts(results.getLong("order_id"))) : null;
+                            results.getString("payment_reference"), fulfillment(results.getLong("order_id")),amounts(results.getLong("order_id")),offerPricing(results.getLong("order_id"))) : null;
                     return new CheckoutAttempt(state, order);
                 }));
     }
@@ -82,5 +89,9 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
     private com.pliego.foundation.money.MonetaryAmounts amounts(long orderId) {
         return jdbcTemplate.queryForObject("SELECT * FROM pliego.fn_order_pricing(?)",(rs,n)->new com.pliego.foundation.money.MonetaryAmounts(
                 rs.getBigDecimal("subtotal"),rs.getBigDecimal("tax_rate"),rs.getBigDecimal("tax_amount"),rs.getBigDecimal("shipping_amount"),rs.getBigDecimal("total")),orderId);
+    }
+    private com.pliego.modules.sales.application.PostPurchaseModels.OfferPricing offerPricing(long orderId) {
+        return jdbcTemplate.queryForObject("SELECT * FROM pliego.fn_order_offer_pricing(?)",
+                (rs, n) -> PostPurchaseRowMapper.offerPricing(rs), orderId);
     }
 }

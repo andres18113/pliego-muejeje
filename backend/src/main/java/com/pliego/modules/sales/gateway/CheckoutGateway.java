@@ -8,4 +8,6 @@ public interface CheckoutGateway {
     CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
             Long cartId, String fulfillmentMethod, Long pickupLocationId);
     CheckoutAttempt resolve(long actorUserId, UUID key);
+    CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
+            Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint);
 }

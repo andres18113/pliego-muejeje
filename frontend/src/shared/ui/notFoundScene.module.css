@@ -1,0 +1,16 @@
+/* PLIEGO's missing-page scene: warm paper, a very large faint numeral behind, an ink statement and one ultramar
+   action. The numeral is decoration (aria-hidden). */
+.scene { position: relative; display: grid; place-items: center; width: 100%; min-height: clamp(360px, 56vh, 560px); padding-block: clamp(48px, 9vw, 104px); overflow: hidden; }
+.numeral {
+  position: absolute; inset: 0; display: grid; place-items: center; pointer-events: none; user-select: none; white-space: nowrap;
+  color: color-mix(in srgb, var(--pliego-text, var(--ink, #252740)) 7%, transparent);
+  font: 800 clamp(9rem, 38vw, 22rem)/1 var(--store-display); letter-spacing: -.06em;
+}
+.content { position: relative; display: grid; justify-items: center; gap: 14px; min-width: 0; text-align: center; }
+.title.title { max-width: 18ch; margin: 0; color: var(--pliego-text, var(--ink, #252740)); font: 650 clamp(1.875rem, 1.3rem + 2.6vw, 3rem)/1.06 var(--store-display); letter-spacing: -.045em; overflow-wrap: anywhere; }
+.title:focus { outline: none; }
+.detail.detail { max-width: 44ch; margin: 0 0 14px; color: var(--pliego-text-muted, var(--secondary-ink, #595a6e)); font-size: 1.0625rem; line-height: 1.5; text-wrap: pretty; }
+.home.home { min-height: 48px; padding-inline: 22px 26px; background: var(--store-action, #283da8); color: var(--store-on-action, #fff); font-weight: 600; }
+.home.home:hover { background: var(--store-action-hover, #1d2c86); }
+.home.home:focus-visible { outline: 3px solid var(--store-blue, #283da8); outline-offset: 3px; }
+@media (forced-colors: active) { .numeral { color: GrayText; } }

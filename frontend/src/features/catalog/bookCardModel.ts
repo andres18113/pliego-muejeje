@@ -31,7 +31,8 @@ export type CartControl =
   | { state: "restricted"; reason: string }
   | { state: "uncertain"; recoveryTo: To };
 export interface BookCardFeedback { kind: "success" | "error"; message: string }
-export interface CoverPreview { editionId: string; url: string | null; license: string | null; attribution: string | null; title: string }
+/** What the edition page can show at once while its record loads; `media` is the edition's own medium. */
+export interface CoverPreview { editionId: string; url: string | null; license: string | null; attribution: string | null; title: string; media?: CatalogMedia }
 export interface BookCardProps {
   book: BookCardData;
   to: To;
@@ -61,9 +62,10 @@ export function toBookCardData(edition: BookCardEditionSource): BookCardData {
     cover: { url: edition.coverUrl, license: edition.coverLicense, attribution: edition.coverAttribution } };
 }
 
-export function bookCardNavigationState(book: BookCardData, catalogReturn = false) {
+export function bookCardNavigationState(book: BookCardData, catalogReturn = false, media?: CatalogMedia) {
   return { ...(catalogReturn ? { catalogReturn: true } : {}), coverPreview: {
     editionId: book.id, url: book.cover.url, license: book.cover.license, attribution: book.cover.attribution, title: book.title,
+    ...(media ? { media } : {}),
   } };
 }
 

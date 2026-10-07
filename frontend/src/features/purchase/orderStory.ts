@@ -42,3 +42,18 @@ export const shipmentSteps = [
   { state: "OUT_FOR_DELIVERY", label: "En reparto", at: "outForDeliveryAt" },
   { state: "DELIVERED", label: "Entregado", at: "deliveredAt" },
 ] as const;
+
+/**
+ * Presentation of the server's six-minute purchase window (ADR 0029) for digital and pickup orders. It reads only the
+ * authoritative `availableActions.lifecycleState`; whether cancelling is allowed stays `availableActions.canCancel`.
+ * - "digital-window": a digital purchase still inside its window.
+ * - "digital-complete": a digital purchase the server finalized.
+ * - "pickup-window": a pickup order still inside its window (the pickup flow continues afterwards as before).
+ */
+export type PurchaseWindowView = "digital-window" | "digital-complete" | "pickup-window" | null;
+
+export function purchaseWindowView(lifecycleState: string | null | undefined, kind: { digitalOnly: boolean; pickup: boolean }): PurchaseWindowView {
+  if (lifecycleState === "CANCELLATION_WINDOW") return kind.digitalOnly ? "digital-window" : kind.pickup ? "pickup-window" : null;
+  if (lifecycleState === "COMPLETED" && kind.digitalOnly) return "digital-complete";
+  return null;
+}

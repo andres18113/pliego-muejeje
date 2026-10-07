@@ -22,6 +22,47 @@ function renderConfirmation(order: OrderDetail) {
 describe("successful order confirmation", () => {
   afterEach(() => vi.unstubAllGlobals());
 
+  it("shows the order's historical savings from its snapshot, with the PUCE reference line and no expiry", async () => {
+    const discounted: OrderDetail = {
+      ...homeOrder,
+      pricingSnapshotAvailable: true, originalSubtotal: "136.95", savingsTotal: "20.74", currentSubtotal: "116.21",
+      subtotal: "116.21", taxRate: "15.00", taxAmount: "17.43", shippingAmount: "0.00", total: "133.64",
+      items: [
+        { orderItemId: "1", editionId: "474", title: "Manual de medicina basada en evidencias", authors: "Autora", publisher: "Editorial", requiresPhysicalFulfillment: true, format: "PAPERBACK", unitPrice: "63.96", quantity: 1, subtotal: "63.96", pricingSnapshotAvailable: true, originalPrice: "79.95", unitSavings: "15.99", originalSubtotal: "79.95", lineSavings: "15.99" },
+        { orderItemId: "2", editionId: "42", title: "Cien años de soledad", authors: "Autora", publisher: "Editorial", requiresPhysicalFulfillment: true, format: "PAPERBACK", unitPrice: "19.00", quantity: 2, subtotal: "38.00", pricingSnapshotAvailable: true, originalPrice: "19.00", unitSavings: "0.00", originalSubtotal: "38.00", lineSavings: "0.00" },
+        { orderItemId: "3", editionId: "306", title: "La mujer en la historia", authors: "Autora", publisher: "Editorial", requiresPhysicalFulfillment: false, format: "EBOOK", unitPrice: "14.25", quantity: 1, subtotal: "14.25", pricingSnapshotAvailable: true, originalPrice: "19.00", unitSavings: "4.75", originalSubtotal: "19.00", lineSavings: "4.75" },
+      ],
+    };
+    renderConfirmation(discounted);
+    await screen.findByRole("heading", { level: 1, name: "Es momento de celebrar" });
+    const details = screen.getByRole("region", { name: "Tu pedido N.º 700" });
+    const rows = [...details.querySelectorAll("dl > div")].map((row) => [row.querySelector("dt")?.textContent, row.querySelector("dd")?.textContent?.replace(/\s+/g, " ")]);
+    expect(rows).toEqual([["Subtotal", "$ 136,95"], ["Ahorro total", "-$ 20,74"], ["IVA (15 %)", "$ 17,43"], ["Gastos de envío", "$ 0,00"], ["Total pagado", "$ 133,64"]]);
+    expect(details.querySelector("[data-tone='savings']")).not.toBeNull();
+
+    const fulfillment = screen.getByRole("region", { name: "Entrega" });
+    const items = [...fulfillment.querySelectorAll("li")];
+    expect(items[0].querySelector("s")?.textContent?.replace(/\s+/g, " ")).toBe("Precio anterior: $ 79,95");
+    expect(within(items[0]).getByText(/Ahorraste \$\s*15,99/).querySelector(".material-symbol")?.textContent).toBe("sell");
+    expect(items[1].querySelector("s")).toBeNull();
+    expect(within(items[1]).queryByText(/Ahorraste/)).toBeNull();
+    expect(within(screen.getByRole("region", { name: "Compras digitales" })).getByText(/Ahorraste \$\s*4,75/)).toBeInTheDocument();
+
+    expect(screen.getByText("Referencia PUCE en la entrada principal.")).toBeInTheDocument();
+    expect(screen.queryByText(/para esta demo/)).toBeNull();
+    expect(document.body.textContent).not.toMatch(/Quedan|Queda \d|Termina el/);
+  });
+
+  it("keeps an order without a pricing snapshot as it was: no savings are invented", async () => {
+    renderConfirmation({ ...homeOrder, pricingSnapshotAvailable: false, originalSubtotal: "99.00", savingsTotal: "10.00" });
+    await screen.findByRole("heading", { level: 1, name: "Es momento de celebrar" });
+    const details = screen.getByRole("region", { name: "Tu pedido N.º 700" });
+    expect(within(details).queryByText("Ahorro total")).toBeNull();
+    expect(within(details).getByText("Total")).toBeInTheDocument();
+    expect(screen.queryByText(/Ahorraste/)).toBeNull();
+    expect(document.querySelector("[data-confirmation='fulfillment'] s")).toBeNull();
+  });
+
   it("prioritizes pickup location, server readiness and code while moving commercial detail below", async () => {
     renderConfirmation(pickupOrder);
     expect(await screen.findByRole("heading", { level: 1, name: "Es momento de celebrar" })).toBeInTheDocument();
@@ -65,7 +106,7 @@ describe("successful order confirmation", () => {
     expect(immediate.queryByText("Código de retiro")).not.toBeInTheDocument();
     expect(screen.queryByText("P-ABC234")).not.toBeInTheDocument();
     expect(within(destination).getByTitle("Mapa de referencia de PUCE")).toHaveAttribute("src", expect.stringContaining("marker=-0.21%2C-78.4914"));
-    expect(within(destination).getByText(/no ubica la dirección de entrega/)).toBeInTheDocument();
+    expect(within(destination).getByText("Referencia PUCE en la entrada principal.")).toBeInTheDocument();
     expect(screen.queryByRole("list", { name: "Progreso del envío" })).not.toBeInTheDocument();
     expect(screen.getAllByText(/Av\. Principal 123/)).toHaveLength(1);
     expect(screen.getByRole("region", { name: "Entrega" })).toHaveTextContent("Cien años de soledad");

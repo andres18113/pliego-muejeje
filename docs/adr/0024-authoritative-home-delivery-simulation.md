@@ -30,6 +30,6 @@ Regresiones reales PostgreSQL 18: límites exactos 0/2/4/6, cancelación antes/d
 
 ## Límites
 
-Es simulación, no evidencia de entrega por transportista. El reloj PostgreSQL debe ser correcto. El scheduler limita carga por lote, por lo que puede haber backlog en listados; detalle y cancelación reconcilian individualmente. No se notifican nuevas etapas por correo. Los envíos históricos terminados/cancelados permanecen intactos; los activos necesitan un evento CONFIRMED para obtener deadlines. No se añade integración externa, frontend, deploy ni permisos nuevos.
+Es simulación, no evidencia de entrega por transportista. El reloj PostgreSQL debe ser correcto. El scheduler limita carga por lote, por lo que puede haber backlog en listados; detalle y cancelación reconcilian individualmente. Desde V061, cada etapa HOME_DELIVERY que se persiste produce su evento en la misma outbox; la reconciliación vencida emite los pasos alcanzados una sola vez. Los envíos históricos terminados/cancelados permanecen intactos; los activos necesitan un evento CONFIRMED para obtener deadlines. No se añade integración externa, frontend, deploy ni permisos nuevos.
 
 El mapping frontend existente `orderStory.ts` reconoce SHIPPED pero no IN_TRANSIT; sus textos/progreso necesitan un pase separado. Se conserva intacto por el alcance backend solicitado.

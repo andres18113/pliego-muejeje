@@ -9,6 +9,14 @@ export function ShipmentTrack({ shipment }: { shipment: OrderShipment }) {
   const state = shipment.state === "SHIPPED" ? "IN_TRANSIT" : shipment.state;
   const current = shipmentSteps.findIndex((step) => step.state === state);
   if (current < 0) return null;
+  // Delivered is one finished fact, not five stages: a full green bar and "Entregado" with its recorded time.
+  if (state === "DELIVERED") return <div className={classes.trackComplete} role="group" aria-label="Progreso del envío">
+    <span className={classes.trackBar} aria-hidden="true" />
+    <p className={classes.trackCompleteLabel}>
+      <MaterialSymbol name="check_circle" size={20} aria-hidden="true" /><strong>Entregado</strong>
+      {shipment.deliveredAt && <time className={classes.trackCompleteTime} dateTime={shipment.deliveredAt}>{orderMomentLabel(shipment.deliveredAt)}</time>}
+    </p>
+  </div>;
   return <ol className={classes.track} aria-label="Progreso del envío">
     {shipmentSteps.map((step, index) => {
       const at = shipment[step.at];

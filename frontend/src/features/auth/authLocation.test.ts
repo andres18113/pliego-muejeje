@@ -15,8 +15,8 @@ it.each(["/biblioteca", "/biblioteca?productType=EBOOK&page=1", "/biblioteca/123
   expect(safeAuthReturnHref(href)).toBe(href);
 });
 it.each(["/biblioteca/invalid", "/biblioteca/0", "/biblioteca/../admin", "//evil.test/biblioteca"])("rejects invalid library destination %s", (href) => {
-  expect(safeAuthReturnHref(href)).toBe("/catalog");
+  expect(safeAuthReturnHref(href)).toBe("/");
 });
 it.each(["//evil.test/account", "/account/unknown", "/account/../admin", "/account\\addresses", "https://evil.test/account", "/sign-in"])("rejects unsafe or unsupported destination %s", (href) => {
-  expect(safeAuthReturnHref(href)).toBe("/catalog");
+  expect(safeAuthReturnHref(href)).toBe("/");
 });

@@ -1,0 +1,30 @@
+{
+  "offersTotal": 23,
+  "productTypes": {
+    "PHYSICAL": 10,
+    "EBOOK": 6,
+    "AUDIOBOOK": 7
+  },
+  "discountPercentRequested": {
+    "20": 11,
+    "10": 5,
+    "15": 6,
+    "25": 1
+  },
+  "durationDays": {
+    "3": 12,
+    "15": 5,
+    "7": 6
+  },
+  "editionRowsUnchanged": true,
+  "inventoryUnchanged": true,
+  "inventoryMovementsUnchanged": true,
+  "allOffersPreservedAfterGates": true,
+  "editionCount": 504,
+  "beforeEditionSnapshotSha256": "617ff879698bef47021a20ce4cd488312a9bc67a92ed4bb88fd16a673b358140",
+  "afterEditionSnapshotSha256": "617ff879698bef47021a20ce4cd488312a9bc67a92ed4bb88fd16a673b358140",
+  "cartPricesVerified": 23,
+  "browserTestsPassed": 1,
+  "expirationChecksPassed": 23,
+  "noOrdersCreated": true
+}

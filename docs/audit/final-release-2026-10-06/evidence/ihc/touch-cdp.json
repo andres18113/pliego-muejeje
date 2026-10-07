@@ -1,0 +1,107 @@
+[
+  {
+    "stage": "context touch before manual session",
+    "maxTouchPoints": 1,
+    "coarse": true,
+    "events": [
+      {
+        "type": "pointerdown",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchstart"
+      },
+      {
+        "type": "pointerup",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchend"
+      },
+      {
+        "type": "click",
+        "pointerType": "touch"
+      }
+    ]
+  },
+  {
+    "stage": "manual touch enabled",
+    "maxTouchPoints": 1,
+    "coarse": true,
+    "events": [
+      {
+        "type": "pointerdown",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchstart"
+      },
+      {
+        "type": "pointerup",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchend"
+      },
+      {
+        "type": "click",
+        "pointerType": "touch"
+      }
+    ]
+  },
+  {
+    "stage": "manual session detached",
+    "maxTouchPoints": 0,
+    "coarse": false,
+    "events": [
+      {
+        "type": "pointerdown",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchstart"
+      },
+      {
+        "type": "pointerup",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchend"
+      },
+      {
+        "type": "click",
+        "pointerType": "touch"
+      }
+    ]
+  },
+  {
+    "stage": "new session touch restored",
+    "maxTouchPoints": 1,
+    "coarse": true,
+    "events": [
+      {
+        "type": "pointerdown",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchstart"
+      },
+      {
+        "type": "pointerup",
+        "pointerType": "touch"
+      },
+      {
+        "type": "touchend"
+      },
+      {
+        "type": "click",
+        "pointerType": "touch"
+      }
+    ]
+  },
+  {
+    "stage": "context touch with Input-only session detached",
+    "maxTouchPoints": 1,
+    "coarse": true
+  }
+]

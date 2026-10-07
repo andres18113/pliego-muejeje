@@ -21,14 +21,16 @@ export function PurchaseLayout({ children, summary }: { children: ReactNode; sum
   );
 }
 
-export interface SummaryLine { key: string; title: string; meta: string; amount: string; extra?: ReactNode }
+/** `was`: the line's amount before an offer (the server's original subtotal), shown struck under the amount. */
+export interface SummaryLine { key: string; title: string; meta: string; amount: string; was?: string; extra?: ReactNode }
 
 /** The stable sheet of the flow: what is being bought, the total, and the stage's final action together. */
 export function PurchaseSummary({ headingId, title, lines, totals, children }: {
   headingId: string;
   title: ReactNode;
   lines?: SummaryLine[];
-  totals: { label: string; value: ReactNode; total?: boolean }[];
+  /** `tone: "savings"` marks the offer saving row (restrained green). */
+  totals: { label: string; value: ReactNode; total?: boolean; tone?: "savings" }[];
   children?: ReactNode;
 }) {
   return (
@@ -41,6 +43,7 @@ export function PurchaseSummary({ headingId, title, lines, totals, children }: {
               <span className={classes.summaryLineTitle}>{line.title}</span>
               <span className={classes.summaryLineMeta}>{line.meta}</span>
               <span className={classes.summaryLineAmount}>{line.amount}</span>
+              {line.was && <s className={classes.summaryLineWas}><span className="visually-hidden">Precio anterior: </span>{line.was}</s>}
               {line.extra}
             </li>
           ))}
@@ -48,7 +51,7 @@ export function PurchaseSummary({ headingId, title, lines, totals, children }: {
       )}
       <dl className={classes.totals}>
         {totals.map((row) => (
-          <div key={row.label} className={row.total ? classes.grandTotal : undefined} data-purchase={row.total ? "total" : undefined}>
+          <div key={row.label} className={row.total ? classes.grandTotal : undefined} data-purchase={row.total ? "total" : undefined} data-tone={row.tone}>
             <dt>{row.label}</dt>
             <dd>{row.value}</dd>
           </div>

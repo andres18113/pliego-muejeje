@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { CartPreviewProvider } from "@/features/purchase/CartPreview";
-import { Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
+import { Link, Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
 import { CatalogHomePage } from "@/features/catalog/CatalogHomePage";
 import { SiteHeader } from "./navigation/SiteHeader";
 import { PurchaseHeader } from "./navigation/PurchaseHeader";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { Button, ButtonLink } from "@/components/ui/button";
+import { BrandLogo } from "@/shared/ui/BrandLogo";
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
+import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
 import { SessionProvider, useSession } from "./session";
 
@@ -193,7 +196,7 @@ function RootLayout() {
   if (restoreState === "unavailable") {
     return (
       <main className="initial-route-loading" role="alert">
-        <strong>PLIEGO</strong>
+        <BrandLogo />
         <span>No pudimos comprobar tu sesión. Tu cuenta sigue protegida.</span>
         <Button variant="primary" type="button" onClick={() => void retryRestore()}>Reintentar</Button>
       </main>
@@ -203,7 +206,7 @@ function RootLayout() {
 }
 
 function InitialRouteFallback({ label = "Abriendo tu página…" }: { label?: string }) {
-  return <div className="initial-route-loading" role="status"><strong>PLIEGO</strong><span>{label}</span></div>;
+  return <div className="initial-route-loading" role="status"><BrandLogo /><span>{label}</span></div>;
 }
 
 function ApplicationLayout() {
@@ -243,18 +246,19 @@ export function RouteErrorBoundary() {
     <>
       <SiteHeader />
 
-      <main className="route-fallback page-frame" id="contenido-principal" tabIndex={-1}>
-        <h1>{notFound ? "No encontramos esta página." : "No pudimos mostrar esta página."}</h1>
-        <p>
-          {notFound
-            ? "Vuelve a explorar el catálogo completo."
-            : "Ocurrió un problema al abrir esta página. Vuelve al catálogo e inténtalo otra vez."}
-        </p>
-      <ButtonLink variant="primary" to="/catalog">Ir al catálogo</ButtonLink>
-      </main>
+      <RouteRecovery notFound={notFound} />
       <SiteFooter />
     </>
   );
+}
+
+/** The one recovery for a missing page or a failed route: PLIEGO's shared scene, and the way home. */
+function RouteRecovery({ notFound }: { notFound: boolean }) {
+  return <main className="route-fallback page-frame" id="contenido-principal" tabIndex={-1} data-storefront-surface>
+    {notFound
+      ? <NotFoundScene />
+      : <NotFoundScene code={null} title="No pudimos mostrar esta página." detail="Ocurrió un problema al abrir esta página. Vuelve al inicio e inténtalo otra vez." />}
+  </main>;
 }
 
 function NotFoundPage() {
@@ -265,11 +269,7 @@ function NotFoundPage() {
   return (
     <>
 
-      <main className="not-found page-frame" id="contenido-principal" tabIndex={-1}>
-        <h1>No encontramos esta página.</h1>
-        <p>Vuelve a explorar el catálogo completo.</p>
-        <ButtonLink variant="primary" to="/catalog">Ir al catálogo</ButtonLink>
-      </main>
+      <RouteRecovery notFound />
       <SiteFooter />
     </>
   );
@@ -296,8 +296,8 @@ function AdminWorkspacePage() {
         ) : session.user.role !== "ADMIN" ? (
           <section role="alert">
             <h1>Esta área no está disponible para tu cuenta.</h1>
-            <p>Vuelve al catálogo para continuar.</p>
-            <ButtonLink variant="secondary" to="/catalog">Ir al catálogo</ButtonLink>
+            <p>Vuelve al inicio para continuar.</p>
+            <Link className="route-home" to="/"><MaterialSymbol name="arrow_back" aria-hidden="true" /><span>Ir al inicio</span></Link>
           </section>
         ) : (
           <section>
@@ -328,9 +328,27 @@ function usePageHeadingFocus() {
       if (pathname === "/catalog" && navigationType === "POP") return;
     }
 
-    const heading = document.querySelector<HTMLElement>("#contenido-principal h1");
-    if (!heading) return;
-    heading.tabIndex = -1;
-    heading.focus({ preventScroll: true });
+    const main = document.getElementById("contenido-principal");
+    if (!main) return;
+    const startingFocus = document.activeElement;
+    const focusHeading = () => {
+      const heading = main.querySelector<HTMLElement>("h1");
+      if (!heading) return false;
+      const active = document.activeElement;
+      // Late content supplies the reading position only while navigation still owns focus.
+      // A user who has moved to another connected control keeps that position.
+      if (active !== startingFocus && active !== document.body && active?.isConnected) return true;
+      heading.tabIndex = -1;
+    // The heading is only a reading position for assistive technology, never a control: mark this focus so
+    // it draws no ring (styles.css). The mark leaves with the focus; keyboard focus on controls is unchanged.
+      heading.setAttribute("data-route-focus", "");
+      heading.addEventListener("blur", () => heading.removeAttribute("data-route-focus"), { once: true });
+      heading.focus({ preventScroll: true });
+      return true;
+    };
+    if (focusHeading()) return;
+    const observer = new MutationObserver(() => { if (focusHeading()) observer.disconnect(); });
+    observer.observe(main, { childList: true, subtree: true });
+    return () => observer.disconnect();
   }, [navigationType, pathname]);
 }

@@ -10,7 +10,21 @@ public final class CartModels {
     private CartModels() { }
 
     public record Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
-            com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow, boolean requiresPhysicalFulfillment, int physicalItemCount, int digitalItemCount) {
+            com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow,
+            boolean requiresPhysicalFulfillment, int physicalItemCount, int digitalItemCount,
+            BigDecimal originalSubtotal, BigDecimal savingsTotal, BigDecimal currentSubtotal, String quoteFingerprint) {
+        public Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
+                com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow,
+                boolean requiresPhysicalFulfillment, int physicalItemCount, int digitalItemCount,
+                BigDecimal originalSubtotal, BigDecimal savingsTotal, BigDecimal currentSubtotal) {
+            this(cartId,state,items,totalCurrent,amounts,deliveryWindow,requiresPhysicalFulfillment,physicalItemCount,digitalItemCount,originalSubtotal,savingsTotal,currentSubtotal,null);
+        }
+        public Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
+                com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow,
+                boolean requiresPhysicalFulfillment, int physicalItemCount, int digitalItemCount) {
+            this(cartId, state, items, totalCurrent, amounts, deliveryWindow,
+                    requiresPhysicalFulfillment, physicalItemCount, digitalItemCount, null, null, null);
+        }
         public Cart(String cartId, String state, List<CartItem> items, BigDecimal totalCurrent,
                 com.pliego.foundation.money.MonetaryAmounts amounts, DeliveryWindow deliveryWindow) {
             this(cartId,state,items,totalCurrent,amounts,deliveryWindow,false,0,0);
@@ -31,7 +45,17 @@ public final class CartModels {
     public record CartItem(String cartItemId, String editionId, String title, String authors, String sku,
             String coverUrl, int quantity, BigDecimal currentPrice, BigDecimal currentSubtotal,
             boolean available, String unavailabilityReason, String format, boolean requiresPhysicalFulfillment,
-            boolean quantityEditable) { }
+            boolean quantityEditable, BigDecimal originalPrice, BigDecimal unitSavings,
+            BigDecimal originalSubtotal, BigDecimal lineSavings) {
+        public CartItem(String cartItemId, String editionId, String title, String authors, String sku,
+                String coverUrl, int quantity, BigDecimal currentPrice, BigDecimal currentSubtotal,
+                boolean available, String unavailabilityReason, String format, boolean requiresPhysicalFulfillment,
+                boolean quantityEditable) {
+            this(cartItemId, editionId, title, authors, sku, coverUrl, quantity, currentPrice,
+                    currentSubtotal, available, unavailabilityReason, format, requiresPhysicalFulfillment,
+                    quantityEditable, null, null, null, null);
+        }
+    }
 
     public record CartItemResult(String cartId, String cartItemId, int quantity) { }
 }

@@ -34,10 +34,11 @@ class MailtrapStub(http.server.BaseHTTPRequestHandler):
 
     def do_POST(self):
         payload = json.loads(self.rfile.read(int(self.headers['Content-Length'])))
-        self.deliveries.append((self.status, payload))
+        message_id = str(uuid.uuid4())
+        self.deliveries.append((self.status, payload, message_id))
         self.send_response(self.status)
         self.end_headers()
-        self.wfile.write(b'{"success":true,"message_ids":["local-test"]}')
+        self.wfile.write(json.dumps({'success': True, 'message_ids': [message_id]}).encode())
 
 
 def free_port():
@@ -79,13 +80,17 @@ def main():
     base = f'http://127.0.0.1:{free_port()}'
     env = {**os.environ, 'PLIEGO_MAIL_ENABLED': 'true', 'PLIEGO_MAIL_ALLOW_LOCAL_HTTP': 'true',
         'PLIEGO_MAIL_ENDPOINT': f'http://127.0.0.1:{provider.server_port}/api/send',
-        'PLIEGO_MAIL_TOKEN': 'local-stub-token', 'PLIEGO_MAIL_FROM_ADDRESS': 'pliego@example.invalid',
+        'PLIEGO_MAILTRAP_API_TOKEN': 'local-stub-token', 'PLIEGO_MAIL_FROM_ADDRESS': 'pliego@example.invalid',
         'PLIEGO_MAIL_FROM_NAME': 'PLIEGO', 'PLIEGO_APP_PUBLIC_URL': 'https://pliego.example',
         'PLIEGO_MAIL_POLL_INTERVAL': 'PT1S', 'PLIEGO_MAIL_BATCH_SIZE': '1'}
     jar = Path(__file__).resolve().parents[3] / 'target/pliego-backend-0.1.0-SNAPSHOT.jar'
     log_path = Path('/tmp/pliego-mail-http-backend.log')
     with log_path.open('w') as log:
-        backend = subprocess.Popen(['java', '-jar', str(jar), '--server.port=' + base.rsplit(':', 1)[1]], env=env, stdout=log, stderr=log)
+        def start_backend():
+            return subprocess.Popen(['java', '-jar', str(jar), '--server.port=' + base.rsplit(':', 1)[1]],
+                env=env, stdout=log, stderr=log)
+
+        backend = start_backend()
         try:
             def ready():
                 if backend.poll() is not None:
@@ -101,15 +106,31 @@ def main():
             assert status == 201 and registered['state'] == 'PENDING_VERIFICATION'
             uid = int(registered['userId'])
             assert query(f"SELECT count(*) FROM pliego.correo_outbox WHERE usuario_id={uid} AND tipo='VERIFY_EMAIL'") == '1'
-            wait_for(lambda: any(p['category'] == 'VERIFY_EMAIL' and p['to'][0]['email'] == email for _, p in MailtrapStub.deliveries))
+            wait_for(lambda: any(p['category'] == 'VERIFY_EMAIL' and p['to'][0]['email'] == email for _, p, _ in MailtrapStub.deliveries))
             assert query(f"SELECT estado||':'||intentos||':'||ultimo_error FROM pliego.correo_outbox WHERE usuario_id={uid}") == 'PENDING:1:MAILTRAP_HTTP_503'
+            verify_oid = query(f"SELECT correo_id FROM pliego.correo_outbox WHERE usuario_id={uid} AND tipo='VERIFY_EMAIL'")
+            assert query(f"SELECT destinatario||'|'||(datos ? 'nonce')||'|'||(datos ? 'expiresAt') FROM pliego.correo_outbox WHERE correo_id={verify_oid}") == f'{email}|true|true'
+            verification_raw = verification_token(email)
+            # A failed provider attempt remains durable while the backend process is stopped.
+            backend.terminate()
+            backend.wait(timeout=30)
+            MailtrapStub.status = 200
+            query(f"UPDATE pliego.correo_outbox SET proximo_intento=CURRENT_TIMESTAMP WHERE correo_id={verify_oid}")
+            backend = start_backend()
+            wait_for(ready, 60)
+            wait_for(lambda: query(f"SELECT estado FROM pliego.correo_outbox WHERE correo_id={verify_oid}") == 'SENT')
+            verify_message_id = query(f"SELECT id_mensaje_proveedor FROM pliego.correo_outbox WHERE correo_id={verify_oid}")
+            assert verify_message_id and query(f"SELECT intentos FROM pliego.correo_outbox WHERE correo_id={verify_oid}") == '2'
+            assert sum(1 for status, payload, _ in MailtrapStub.deliveries
+                       if status == 200 and payload.get('custom_variables', {}).get('pliego_outbox_id') == verify_oid) == 1
+            MailtrapStub.status = 503
             assert request(base, '/api/v1/auth/login', {'email': email, 'password': password})[0] == 403
             assert request(base, '/api/v1/auth/login', {'email': email, 'password': 'Incorrecta-2026'})[0] == 401
             status, _, known = request(base, '/api/v1/auth/resend-verification', {'email': email})
             assert status == 202 and query(f"SELECT count(*) FROM pliego.correo_outbox WHERE usuario_id={uid}") == '1'
             status, _, unknown = request(base, '/api/v1/auth/resend-verification', {'email': 'unknown@example.invalid'})
             assert status == 202 and known == unknown
-            raw = verification_token(email)
+            raw = verification_raw
             query(f"UPDATE pliego.correo_token SET fecha_expiracion=CURRENT_TIMESTAMP-INTERVAL '1 second' WHERE usuario_id={uid}")
             assert request(base, '/api/v1/auth/verify-email', {'token': raw})[0] == 400
             query(f"UPDATE pliego.correo_token SET fecha_expiracion=CURRENT_TIMESTAMP+INTERVAL '1 day' WHERE usuario_id={uid}")
@@ -121,7 +142,7 @@ def main():
             status, _, known = request(base, '/api/v1/auth/forgot-password', {'email': email})
             status2, _, unknown = request(base, '/api/v1/auth/forgot-password', {'email': 'unknown@example.invalid'})
             assert status == status2 == 202 and known == unknown
-            wait_for(lambda: any(p['category'] == 'RESET_PASSWORD' and p['to'][0]['email'] == email for _, p in MailtrapStub.deliveries))
+            wait_for(lambda: any(p['category'] == 'RESET_PASSWORD' and p['to'][0]['email'] == email for _, p, _ in MailtrapStub.deliveries))
             raw = action_token(uid, 'RESET_PASSWORD')
             assert query(f"SELECT extract(epoch from fecha_expiracion-fecha_creacion)::integer FROM pliego.correo_token WHERE usuario_id={uid} AND tipo='RESET_PASSWORD'") == '900'
             new_password = 'Nueva-fixture-2026'
@@ -146,13 +167,32 @@ def main():
             wait_for(lambda: query(f"SELECT intentos FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{oid}'") == '1')
             assert query(f"SELECT estado FROM pliego.pedido WHERE pedido_id={oid}") == 'CONFIRMED'
             assert query(f"SELECT estado FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{oid}'") == 'PENDING'
+            # A pending lifecycle event survives the application process going away; the restarted worker catches it.
+            backend.terminate()
+            backend.wait(timeout=30)
             MailtrapStub.status = 200
-            query(f"UPDATE pliego.correo_outbox SET proximo_intento=CURRENT_TIMESTAMP WHERE evento_clave='ORDER_CONFIRMED:{oid}'")
+            query(f"UPDATE pliego.correo_outbox SET proximo_intento=CURRENT_TIMESTAMP WHERE evento_clave LIKE 'ORDER_CONFIRMED:{oid}' OR evento_clave LIKE 'ORDER_STATUS:{oid}:%'")
+            backend = start_backend()
+            wait_for(ready, 60)
             wait_for(lambda: query(f"SELECT estado FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{oid}'") == 'SENT')
-            accepted = [p for status, p in MailtrapStub.deliveries if status == 200 and p['category'] == 'ORDER_CONFIRMED']
+            wait_for(lambda: query(f"SELECT estado FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:{oid}:HOME_DELIVERY:PREPARING'") == 'SENT')
+            accepted = [(p, message_id) for status, p, message_id in MailtrapStub.deliveries
+                        if status == 200 and p['category'] == 'ORDER_CONFIRMED']
             assert len(accepted) == 1
-            assert 'Cantidad: 1' in accepted[0]['text'] and 'Total: 8.34' in accepted[0]['text']
-            assert f'/orders/{oid}' in accepted[0]['html']
+            accepted_payload, provider_message_id = accepted[0]
+            outbox_id = query(f"SELECT correo_id FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{oid}'")
+            assert accepted_payload['custom_variables']['pliego_outbox_id'] == outbox_id
+            assert query(f"SELECT id_mensaje_proveedor FROM pliego.correo_outbox WHERE correo_id={outbox_id}") == provider_message_id
+            prep_id = query(f"SELECT correo_id FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:{oid}:HOME_DELIVERY:PREPARING'")
+            prep_mail = [(p, message_id) for status, p, message_id in MailtrapStub.deliveries
+                         if status == 200 and p.get('custom_variables', {}).get('pliego_outbox_id') == prep_id]
+            assert len(prep_mail) == 1
+            assert prep_mail[0][0]['category'] == 'ORDER_STATUS'
+            assert prep_mail[0][0]['subject'] == f'Pedido N.º {oid}: en preparación'
+            assert 'Estamos preparando tu pedido' in prep_mail[0][0]['text']
+            assert query(f"SELECT id_mensaje_proveedor FROM pliego.correo_outbox WHERE correo_id={prep_id}") == prep_mail[0][1]
+            assert 'Cantidad: 1' in accepted_payload['text'] and 'Total pagado: $ 8,34' in accepted_payload['text']
+            assert f'/orders/{oid}' in accepted_payload['html']
             assert query(f"SELECT intentos FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{oid}'") == '2'
             # Same sender/outbox and one ORDER_CONFIRMED event, adapted to real pickup snapshot.
             status, _, locations = request(base, '/api/v1/pickup-locations')
@@ -167,12 +207,12 @@ def main():
             assert status == 201 and pickup_order['total'] == '8.34'
             pickup_id = pickup_order['orderId']
             wait_for(lambda: query(f"SELECT estado FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{pickup_id}'") == 'SENT')
-            mails = [p for status, p in MailtrapStub.deliveries if status == 200 and f'Pedido #{pickup_id}' in p['subject']]
+            mails = [p for status, p, _ in MailtrapStub.deliveries if status == 200 and p['subject'] == f'Tu pedido N.º {pickup_id} está confirmado']
             assert len(mails) == 1
             assert location['name'] in mails[0]['text'] and location['address'] in mails[0]['text']
             assert pickup_order['fulfillment']['pickup']['pickupCode'] in mails[0]['text']
-            assert 'Presenta esta confirmación' in mails[0]['text'] and 'IVA (15.00%): 1.09' in mails[0]['text']
-            print('Transactional email HTTP gate passed: verification/reset/BCrypt/session revocation/concurrent single-use/checkout isolation/outbox retry/provider stub')
+            assert 'Presenta esta confirmación' in mails[0]['text'] and 'IVA (15 %): $ 1,09' in mails[0]['text']
+            print('Transactional email HTTP gate passed: verification/reset/BCrypt/session revocation/concurrent single-use/checkout isolation/outbox retry/provider stub/server restart catch-up/lifecycle status snapshot')
         finally:
             backend.terminate()
             backend.wait(timeout=30)

@@ -1,0 +1,22 @@
+PostgreSQL 18 last-unit gate passed: one checkout, one SALE, stock 0, no negative stock; loser P3002
+PostgreSQL 18 double-cancellation gate passed: one winner, loser P5003, two restorations once each
+PostgreSQL 18 address-primary gate passed: concurrent V020 calls serialized, one primary, idempotent
+PostgreSQL 18 admin concurrency gate passed: one transition, one cancellation, losing calls conflicted
+PostgreSQL 18 registration race gate passed: one customer, duplicate mapped to P1101
+Transactional email concurrency gate passed: two workers claim distinct events without blocking
+Transactional email concurrency gate passed: email reauthentication serializes password reset
+OK
+PostgreSQL 18 HTTP gate passed: CARD validation, APPROVED, REJECTED, Location, exact total, persisted effects
+PostgreSQL 18 HTTP orders gate passed: list/detail, safe 404, cancellation and recovery state
+PostgreSQL 18 ADMIN HTTP gate passed: access, filters, detail JSON mapping, logistics and cancellation
+PostgreSQL 18 ADMIN customer HTTP gate passed: search, ADMIN status changes, existing JWT block and reactivation
+PostgreSQL 18 full-journey gate passed: auth/profile/addresses/catalog/inventory/cart/checkout/snapshots/transitions/ownership/Spanish errors
+OK
+PASS accepted quote: stale quantities rejected before order/inventory effects
+PASS accepted quote: price changes, concurrent duplicate, lost response replay, payload conflict and actor isolation
+PASS accepted quote: equal-total edition substitution requires fresh acceptance
+PASS accepted quote: comparison reads committed prices after a contested master lock
+PASS accepted quote: real offer expiry requires fresh acceptance before inventory effects
+Offers HTTP gate passed: admin lifecycle, public metadata/filter/pagination, Spanish validation and authentication.
+PASS auth adversarial: 18 invalid-input requests (double @, missing/blank/long/format boundaries), zero accounts, 3 invalid private sessions
+PostgreSQL 18 SQL, concurrency, HTTP, and Flyway gates passed.

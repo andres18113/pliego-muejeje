@@ -155,7 +155,7 @@ describe("customer account", () => {
     await user.click(screen.getByRole("button", { name: "Cerrar sesión externa" }));
     expect(screen.getByLabelText("Estado de sesión")).toHaveTextContent("Sin sesión");
     await act(async () => { finishChange(json({ email: "nueva@example.com" })); await changeResponse; });
-    await waitFor(() => expect(api.count("GET", "/api/v1/me")).toBe(2));
+    expect(api.count("GET", "/api/v1/me")).toBe(1);
     expect(screen.getByLabelText("Estado de sesión")).toHaveTextContent("Sin sesión");
     expect(screen.getByRole("heading", { name: "Inicia sesión para ver tu cuenta." })).toBeInTheDocument();
   });

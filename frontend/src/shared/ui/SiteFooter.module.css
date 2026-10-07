@@ -1,16 +1,15 @@
-/* The shared closing of every page outside Home and Catalog (which end on the ultramar field): the
-   same wordmark, line and places, set quietly on the page's own ground under one soft edge. */
+/* The shared closing of every page outside Home and Catalog (which end on the full storefront footer): the
+   same wordmark, line and places, set quietly on a faint neutral ground under one soft edge. */
 .footer {
   --ft-accent: var(--store-blue, #283da8);
   margin-top: clamp(40px, 6vw, 72px); border-top: 1px solid color-mix(in srgb, currentColor 12%, transparent);
-  background: color-mix(in srgb, var(--store-lavender, #e4def4) 22%, transparent); color: var(--pliego-text, #252740);
+  background: color-mix(in srgb, var(--store-ink, #252740) 4%, transparent); color: var(--pliego-text, #252740);
 }
 :global([data-mantine-color-scheme="dark"]) .footer { --ft-accent: var(--store-link, #c5bcff); background: color-mix(in srgb, #fff 3%, transparent); }
 .content { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 40px; min-width: 0; padding-block: 28px; }
 .brand { display: grid; min-width: 0; }
 .brand p { margin: 0; color: var(--pliego-text-muted, #595a6e); font-size: .9375rem; line-height: 1.45; }
-.wordmark { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; color: var(--ft-accent); font: 800 1.625rem/1 var(--store-display); letter-spacing: -.055em; text-decoration: none; }
-.wordmark span { color: var(--store-yellow, #f3df83); }
+.wordmark { --brand-height: 34px; justify-self: start; display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
 .nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0 28px; min-width: 0; }
 .nav a { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--pliego-text, #252740); font-size: .9375rem; font-weight: 500; text-decoration: none; }
 .nav a:hover { color: var(--ft-accent); }

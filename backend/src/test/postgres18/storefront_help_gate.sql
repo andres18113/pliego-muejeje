@@ -97,10 +97,15 @@ BEGIN
   OR EXISTS(SELECT 1 FROM pliego.fn_help_search('Hidden',NULL,NULL,0,20))
   OR EXISTS(SELECT 1 FROM pliego.fn_help_article('draft-ebook'))
   OR EXISTS(SELECT 1 FROM pliego.fn_help_article('hidden-published')) THEN RAISE EXCEPTION 'Unpublished Help leaked'; END IF;
- IF NOT EXISTS(SELECT 1 FROM pliego.fn_help_search('simulación académica','ebooks','EBOOK',0,20) WHERE slug='ebooks')
+ IF NOT EXISTS(SELECT 1 FROM pliego.fn_help_search('edición digital','ebooks','EBOOK',0,20) WHERE slug='ebooks')
   OR NOT EXISTS(SELECT 1 FROM pliego.fn_help_search(NULL,NULL,'EBOOK',0,20) WHERE slug='pagos')
   OR EXISTS(SELECT 1 FROM pliego.fn_help_search(NULL,NULL,'EBOOK',0,20) WHERE applicability IN('PHYSICAL','AUDIOBOOK')) THEN
   RAISE EXCEPTION 'Help search/applicability incorrect'; END IF;
+ IF (SELECT cuerpo FROM pliego.ayuda_articulo WHERE slug='ebooks') IS DISTINCT FROM
+   'Un eBook es una edición digital. Después de una compra con pago aprobado aparece en Mi biblioteca y puedes abrir su detalle para comprobar la propiedad.'
+  OR (SELECT cuerpo FROM pliego.ayuda_articulo WHERE slug='audiolibros') IS DISTINCT FROM
+   'Un audiolibro es una edición digital con duración y narradores cuando estos datos están disponibles. Después de un pago aprobado aparece en Mi biblioteca y puedes abrir su detalle para comprobar la propiedad.'
+ THEN RAISE EXCEPTION 'Digital customer Help copy is not the persisted V062 content'; END IF;
  UPDATE pliego.ayuda_categoria SET estado='DRAFT' WHERE slug='ebooks';
  IF EXISTS(SELECT 1 FROM pliego.fn_help_article('ebooks')) THEN RAISE EXCEPTION 'Unpublished parent category leaked article'; END IF;
 END $gate$;

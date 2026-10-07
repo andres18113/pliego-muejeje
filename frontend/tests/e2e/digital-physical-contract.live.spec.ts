@@ -20,7 +20,10 @@ test("live Home, navigation, physical/digital catalog, detail, search and offers
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1, name: "Descubre el mundo de PLIEGO." })).toBeVisible();
   const header = page.getByTestId("site-header").getByRole("navigation", { name: "Navegación principal" });
-  await expect(header.getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas"]);
+  for (const name of ["Libros", "eBooks", "Audiolibros", "Ofertas", "Ayuda"]) {
+    // Categories make a section a disclosure; a section without a panel is a link.
+    await expect(header.getByRole("button", { name, exact: true }).or(header.getByRole("link", { name, exact: true }))).toBeVisible();
+  }
   for (const format of ["PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"]) {
     const edition = await sample(page, format);
     await page.goto(`/catalog?format=${format}`);
@@ -30,10 +33,11 @@ test("live Home, navigation, physical/digital catalog, detail, search and offers
     await page.locator(`a[href^="/catalog/editions/${edition.editionId}"]`).first().click();
     await expect(page.getByRole("heading", { name: edition.title, exact: true })).toBeVisible();
     const detail = await (await page.request.get(`/api/v1/catalog/editions/${edition.editionId}`)).json();
-    if (detail.format === "EBOOK" && detail.ebookFileFormat) await expect(page.getByText(detail.ebookFileFormat, { exact: true })).toBeVisible();
+    if (detail.format === "EBOOK" && detail.ebookFileFormat) await expect(page.getByRole("region", { name: "Datos de la edición" })).toContainText(detail.ebookFileFormat);
     if (detail.format === "AUDIOBOOK") {
-      await expect(page.getByText("Duración", { exact: true })).toBeVisible();
-      await expect(page.getByText(detail.narrators.join(", "), { exact: true })).toBeVisible();
+      const facts = page.getByRole("region", { name: "Datos de la edición" });
+      await expect(facts.locator("dt").filter({ hasText: /^Formato$/ }).locator("..").locator("dd")).toContainText(/Audiolibro.*\d/);
+      await expect(facts).toContainText(detail.narrators.join(", "));
     }
     await expect(page.getByRole("button", { name: /descargar|reproducir|escuchar/i })).toHaveCount(0);
     await expect(page.getByText("Recibimos una respuesta incompleta", { exact: false })).toHaveCount(0);
@@ -46,7 +50,7 @@ test("live Home, navigation, physical/digital catalog, detail, search and offers
   expect(offersResponse.ok()).toBeTruthy();
   const offers = await offersResponse.json();
   await header.getByRole("link", { name: "Ofertas" }).click();
-  await expect(page.getByRole("heading", { name: "Ofertas", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Descubre las últimas ofertas.", exact: true })).toBeVisible();
   if (offers.items.length) await expect(page.locator(`a[href^="/catalog/editions/${offers.items[0].editionId}"]`).first()).toBeVisible();
   else await expect(page.getByText("No hay ofertas disponibles por ahora.")).toBeVisible();
 });
@@ -88,7 +92,7 @@ test("live physical and digital purchase controls keep cart quantities and clean
       if (format === "PAPERBACK") await expect(page.getByRole("combobox", { name: `Cantidad de ${edition.title}` })).toBeVisible();
       else {
         await expect(page.getByRole("combobox", { name: `Cantidad de ${edition.title}` })).toHaveCount(0);
-        await expect(page.getByText("Cantidad: 1", { exact: true })).toBeVisible();
+        await expect(page.getByText("Cantidad: 1", { exact: true })).toHaveCount(1);
       }
       const response = await page.request.get("/api/v1/cart", { headers });
       const cart = await response.json();

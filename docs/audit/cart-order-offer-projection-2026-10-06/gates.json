@@ -1,0 +1,26 @@
+{
+  "flywayThrough": 54,
+  "nativePostgres": {
+    "exitCode": 0,
+    "gates": 53,
+    "sql": 25,
+    "http": 16,
+    "concurrencyAndLifecycle": 12
+  },
+  "backend": {
+    "fullPassed": 184,
+    "focusedPassed": 40,
+    "package": "PASS"
+  },
+  "frontend": {
+    "files": 61,
+    "passed": 562,
+    "typecheck": "PASS",
+    "build": "PASS",
+    "generatedApiTypes": "PASS"
+  },
+  "existingHistoricalItemsPreserved": 138,
+  "existingOffersPreserved": 23,
+  "cartAndOrderPagesRedesigned": false,
+  "remainingFunctionalBlockers": []
+}

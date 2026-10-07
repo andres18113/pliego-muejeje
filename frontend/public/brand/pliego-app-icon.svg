@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="PLIEGO">
+  <title>PLIEGO</title>
+  <rect width="48" height="48" rx="11" fill="#283da8"/>
+  <path fill="#fff" d="M11 5H29L41 17V21A12 12 0 0 1 29 33H18.2V42.5A2.5 2.5 0 0 1 15.7 45H11.5A2.5 2.5 0 0 1 9 42.5V7A2 2 0 0 1 11 5Z"/>
+  <path fill="#f3df83" d="M29 5L41 17H32A3 3 0 0 1 29 14Z"/>
+</svg>

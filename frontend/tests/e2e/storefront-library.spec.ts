@@ -32,6 +32,32 @@ async function install(page: Page, mixed = false) {
   return { checkout, physicalReads };
 }
 
+for (const width of [375, 768, 1280]) {
+  for (const movedFocus of [false, true]) {
+    test(`delayed library detail restores reading focus at ${width}px; user moved focus=${movedFocus}`, async ({ page }) => {
+      await page.setViewportSize({ width, height: 900 });
+      await install(page);
+      let finish: () => void = () => {};
+      const response = new Promise<void>(resolve => { finish = resolve; });
+      await page.route("**/api/v1/me/library/8", async route => { await response; await route.fulfill({ json: owned }); });
+      await page.goto("/biblioteca");
+      const title = page.getByRole("link", { name: "Libro propio", exact: true });
+      await title.focus();
+      await title.press("Enter");
+      await expect(page).toHaveURL(/\/biblioteca\/8$/);
+      await expect(page.getByRole("status").filter({ hasText: "Cargando adquisición…" })).toBeAttached();
+      const control = page.locator("header a").first();
+      if (movedFocus) await control.focus();
+      finish();
+      const heading = page.getByRole("heading", { name: "Libro propio", exact: true });
+      await expect(heading).toBeVisible();
+      if (movedFocus) await expect(control).toBeFocused();
+      else await expect(heading).toBeFocused();
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+    });
+  }
+}
+
 test("owned title filters open detail with only genuine purchase and Help actions", async ({ page }) => {
   await install(page); await page.goto("/biblioteca");
   await expect(page.getByRole("heading", { name: "Mi biblioteca", exact: true })).toBeVisible();
@@ -39,9 +65,27 @@ test("owned title filters open detail with only genuine purchase and Help action
   await filters.getByRole("button", { name: "Audiolibros" }).click();
   await expect(page.getByRole("heading", { name: "Aún no tienes audiolibros." })).toBeVisible();
   await filters.getByRole("button", { name: "eBooks" }).click();
+  // The filters are the thin chips approved on Ofertas: compact, the chosen one an ultramar outline and text on a
+  // faint wash — never a solid pill, never a dot.
+  const chosen = filters.getByRole("button", { name: "eBooks" });
+  await expect(chosen).toHaveAttribute("aria-pressed", "true");
+  await expect(chosen).toHaveCSS("color", "rgb(40, 61, 168)");
+  await expect(chosen).toHaveCSS("min-height", "36px");
+  expect(await chosen.evaluate((el) => getComputedStyle(el).backgroundColor)).not.toBe("rgb(40, 61, 168)");
+  expect(await chosen.evaluate((el) => getComputedStyle(el, "::before").content)).toBe("none");
+  // An owned title is a white card whatever its format; the small media cue names the format.
+  const card = page.locator("li", { has: page.getByRole("link", { name: "Libro propio", exact: true }) });
+  await expect(card).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(card.locator("p", { hasText: /^\s*mobile\s*eBook$|eBook/ }).first().locator(".material-symbol")).toHaveText("mobile");
+  await page.screenshot({ path: test.info().outputPath("library.png") });
   await page.getByRole("link", { name: "Libro propio", exact: true }).click();
   await expect(page).toHaveURL(/\/biblioteca\/8$/);
   await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();
+  await expect(page.getByText(/simulación|Registro de titularidad/)).toHaveCount(0);
+  await expect(page.locator('[class*="scene"]').first()).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(page.locator('[class*="purchase_"], [class*="_purchase"]').locator("visible=true").first()).toBeVisible();
+  await page.waitForTimeout(200);
+  await page.screenshot({ path: test.info().outputPath("library-detail.png"), fullPage: true });
   await expect(page.getByRole("navigation", { name: "Acciones de la adquisición" }).getByRole("link")).toHaveCount(2);
   await expect(page.getByRole("link", { name: /^Leer$|^Escuchar$|Continuar/ })).toHaveCount(0);
   await page.getByRole("navigation", { name: "Acciones de la adquisición" }).getByRole("link", { name: "Ayuda" }).click();
@@ -50,13 +94,29 @@ test("owned title filters open detail with only genuine purchase and Help action
 
 test("Help search keeps backend applicability and opens a published article", async ({ page }) => {
   await install(page); await page.goto("/ayuda");
-  await page.getByLabel("Buscar en Ayuda").fill("ebooks");
-  await page.getByRole("button", { name: "Buscar", exact: true }).click();
-  await expect(page).toHaveURL(/que=ebooks/);
-  await page.getByLabel("Tipo de compra").selectOption("EBOOK");
-  await expect(page).toHaveURL(/applicability=EBOOK/);
+  // Resources first: a calm opening and the published articles as white cards; no search, chips or filters.
+  await expect(page.getByRole("heading", { level: 1, name: "Estamos aquí para ayudarte." })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 2, name: "Echa un vistazo a estos recursos de asistencia" })).toBeVisible();
+  await expect(page.getByRole("search")).toHaveCount(0);
+  await expect(page.getByRole("main").getByRole("combobox")).toHaveCount(0);
+  await expect(page.getByRole("main").locator("button[aria-pressed]")).toHaveCount(0);
+  const card = page.locator("li", { has: page.getByRole("link", { name: "Cómo funcionan los eBooks" }) });
+  await expect(card).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(card.locator(".material-symbol").first()).toHaveText("mobile");
+  await page.screenshot({ path: test.info().outputPath("help.png"), fullPage: true });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  // Links that narrow the resources still work from the address alone.
+  await page.goto("/ayuda?category=digital&applicability=EBOOK");
+  await expect(page.getByText("Recursos sobre Digital, eBooks.")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Ver todos los recursos" })).toHaveAttribute("href", "/ayuda");
   await page.getByRole("link", { name: "Cómo funcionan los eBooks" }).click();
   await expect(page.getByText("Tu cuenta registra la titularidad del título adquirido.")).toBeVisible();
+  // The closing card is white, never lavender.
+  const onward = page.getByRole("complementary", { name: "Más ayuda" });
+  await expect(onward.getByRole("heading", { name: "¿Necesitas algo más?" })).toBeVisible();
+  await expect(onward).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  await expect(page.getByRole("link", { name: "Volver a Ayuda" })).toBeVisible();
+  await page.screenshot({ path: test.info().outputPath("help-article.png"), fullPage: true });
 });
 
 for (const mixed of [false, true]) test(`${mixed ? "mixed" : "digital-only"} checkout submits one commercial command with the proper destination`, async ({ page }) => {

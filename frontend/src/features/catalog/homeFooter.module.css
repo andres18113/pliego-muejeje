@@ -1,9 +1,10 @@
 /* The quiet close: a warm neutral ground, the wordmark with its line, three short link groups, how to pay, and one legal line. */
-.footer { padding: 72px 0 32px; background: var(--home-quiet, #ecebe4); color: var(--pliego-text); }
+.footer { --home-brand: var(--store-link, var(--store-blue, #283da8)); padding: 72px 0 32px; background: var(--home-quiet, #ecebe4); color: var(--pliego-text); }
+:global([data-mantine-color-scheme="dark"]) .footer { background: var(--home-quiet, var(--pliego-background, #2e3049)); }
 .inner { width: min(calc(100% - 96px), 1280px); margin-inline: auto; }
 .top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr); align-items: start; gap: 64px; padding-bottom: 48px; }
 .brand { min-width: 0; }
-.wordmark { color: var(--home-brand); font: 800 clamp(2.25rem, 3.6vw, 3.25rem)/1 var(--store-display); letter-spacing: -.06em; text-decoration: none; }
+.wordmark { --brand-height: 36px; display: inline-flex; text-decoration: none; }
 .brand p { max-width: 26ch; margin: 16px 0 0; color: var(--pliego-text-muted); font-size: 1rem; line-height: 1.5; }
 .navigation { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
 .navigation h2, .payments h2 { margin: 0; color: var(--pliego-text-muted); font-size: .9375rem; font-weight: 600; line-height: 1.4; }

@@ -1,0 +1,82 @@
+{
+  "productTypes": [
+    {
+      "code": "AUDIOBOOK",
+      "label": "Audiolibros",
+      "count": "7"
+    },
+    {
+      "code": "EBOOK",
+      "label": "eBooks",
+      "count": "6"
+    },
+    {
+      "code": "PHYSICAL",
+      "label": "Libros físicos",
+      "count": "10"
+    }
+  ],
+  "categories": [
+    {
+      "slug": "ciencias-sociales",
+      "name": "Ciencias Sociales",
+      "count": "1"
+    },
+    {
+      "slug": "filosofia",
+      "name": "Filosofía",
+      "count": "3"
+    },
+    {
+      "slug": "historia",
+      "name": "Historia",
+      "count": "4"
+    },
+    {
+      "slug": "infantil-y-juvenil",
+      "name": "Infantil y Juvenil",
+      "count": "5"
+    },
+    {
+      "slug": "literatura",
+      "name": "Literatura",
+      "count": "2"
+    },
+    {
+      "slug": "matematicas",
+      "name": "Matemáticas",
+      "count": "5"
+    },
+    {
+      "slug": "medicina",
+      "name": "Medicina",
+      "count": "2"
+    },
+    {
+      "slug": "psicologia",
+      "name": "Psicología",
+      "count": "1"
+    }
+  ],
+  "sorts": [
+    {
+      "code": "RELEVANCE",
+      "label": "Relevancia"
+    },
+    {
+      "code": "ENDING_SOON",
+      "label": "Próximas a terminar"
+    },
+    {
+      "code": "PRICE_ASC",
+      "label": "Precio: menor a mayor"
+    },
+    {
+      "code": "PRICE_DESC",
+      "label": "Precio: mayor a menor"
+    }
+  ],
+  "endingSoonDays": 3,
+  "timezone": "America/Guayaquil",
+  "totalCount": "23"
+}

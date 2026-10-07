@@ -93,7 +93,7 @@ for (const [fulfillment, payment, width] of [["STORE_PICKUP", "CARD", 1440], ["S
       expect(detail.fulfillment.method).toBe("HOME_DELIVERY"); expect(detail.address.line1).toBe("Calle de prueba 123");
       await expect(page.getByRole("region", { name: "Destino confirmado" }).getByText(detail.address.recipient, { exact: true })).toBeVisible();
       await expect(page.getByRole("region", { name: "Destino confirmado" }).getByTitle("Mapa de referencia de PUCE")).toHaveAttribute("src", /marker=-0\.21%2C-78\.4914/);
-      await expect(page.getByText(/no ubica la dirección de entrega/)).toBeVisible();
+      await expect(page.getByText("Referencia PUCE en la entrada principal.")).toBeVisible();
     }
     await expect(page.getByRole("heading", { name: "Es momento de celebrar" })).toBeVisible();
     await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/Subtotal|IVA|Total/);

@@ -4,6 +4,34 @@ import { pickupOrder } from "@/test/pickup";
 import { toMisPedidosOrder } from "./orderViewModel";
 
 describe("Mis pedidos view model", () => {
+  it("carries historical list totals without adding prices to item summaries", () => {
+    const model = toMisPedidosOrder(orderSummaryFixture({ originalSubtotal: "50.00", savingsTotal: "13.02", currentSubtotal: "36.98", pricingSnapshotAvailable: true }));
+    expect(model.historicalPricing?.summary.savingsTotal?.rawValue).toBe("13.02");
+    expect(model.historicalPricing?.summary.currentSubtotal?.rawValue).toBe("36.98");
+    expect(model.historicalPricing?.lines).toEqual([]);
+    expect(model.items[0]).toEqual({ orderItemId: "1", title: "Cien años de soledad", format: "PAPERBACK", quantity: 2 });
+  });
+
+  it("uses detail snapshots while preserving paid prices and the existing presentation contract", () => {
+    const detail = orderDetailFixture();
+    const model = toMisPedidosOrder(orderSummaryFixture(), {
+      ...detail, originalSubtotal: "50.00", savingsTotal: "13.02", currentSubtotal: "36.98", subtotal: "36.98", pricingSnapshotAvailable: true,
+      items: detail.items.map(item => ({ ...item, unitPrice: "18.49", subtotal: "36.98", originalPrice: "25.00", unitSavings: "6.51", originalSubtotal: "50.00", lineSavings: "13.02", pricingSnapshotAvailable: true })),
+    });
+    expect(model.pricing.subtotal).toBe("36.98");
+    expect(model.historicalPricing?.pricingSnapshotAvailable).toBe(true);
+    expect(model.historicalPricing?.lines[0].unitPrice.rawValue).toBe("18.49");
+    expect(model.historicalPricing?.lines[0].lineSavings?.rawValue).toBe("13.02");
+  });
+
+  it("respects unknown detail snapshots over list data without fabricating historical savings", () => {
+    const model = toMisPedidosOrder(orderSummaryFixture({ originalSubtotal: "50.00", savingsTotal: "13.02", currentSubtotal: "36.98", pricingSnapshotAvailable: true }),
+      orderDetailFixture("PREPARING", { originalSubtotal: null, savingsTotal: null, currentSubtotal: "37.00", pricingSnapshotAvailable: false }));
+    expect(model.historicalPricing?.pricingSnapshotAvailable).toBe(false);
+    expect(model.historicalPricing?.summary.savingsTotal).toBeNull();
+    expect(model.historicalPricing?.summary.currentSubtotal?.rawValue).toBe("37.00");
+  });
+
   it.each([
     ["PREPARING", "En preparación"], ["IN_TRANSIT", "En camino"],
     ["OUT_FOR_DELIVERY", "En reparto"], ["DELIVERED", "Entregado"],
@@ -20,6 +48,7 @@ describe("Mis pedidos view model", () => {
       items: [{ orderItemId: "1", title: "Cien años de soledad", format: "PAPERBACK", quantity: 2 }], units: 2,
       pricing: { subtotal: "37.00", tax: "5.55", shipping: "0.00", total: "42.55" }, fulfillmentType: "HOME_DELIVERY",
       availableActions: { cancel: true, changeShippingAddress: false },
+      canCancel: true, cancellationDeadline: null, lifecycleState: null, libraryAccessState: null,
     });
   });
 
@@ -63,5 +92,17 @@ describe("Mis pedidos view model", () => {
     expect(toMisPedidosOrder(orderSummaryFixture(),{ ...digital, purchaseState: "PENDING_PAYMENT" }).state.label).toBe("Pendiente de pago");
     expect(toMisPedidosOrder(orderSummaryFixture(),{ ...digital, purchaseState: "CANCELLED", payment: { ...digital.payment!, state: "REJECTED" } }).state.label).toBe("Pago no completado");
     expect(toMisPedidosOrder(orderSummaryFixture(),{ ...digital, purchaseState: "CANCELLED" }).state.label).toBe("Pedido cancelado");
+  });
+
+  it("passes database lifecycle capabilities and completed state through to Mis pedidos", () => {
+    const digital = orderDetailFixture("CONFIRMED", { fulfillment: null, shipment: null, purchaseState: "COMPLETED",
+      availableActions: { cancel: false, canCancel: false, changeShippingAddress: false,
+        cancellationDeadline: "2026-10-06T22:06:00Z", lifecycleState: "COMPLETED", libraryAccessState: "OWNERSHIP_ONLY" } });
+    const model = toMisPedidosOrder(orderSummaryFixture(), digital);
+    expect(model.canCancel).toBe(false);
+    expect(model.cancellationDeadline).toBe("2026-10-06T22:06:00Z");
+    expect(model.lifecycleState).toBe("COMPLETED");
+    expect(model.libraryAccessState).toBe("OWNERSHIP_ONLY");
+    expect(model.state).toMatchObject({ code: "COMPLETED", label: "Compra completada" });
   });
 });

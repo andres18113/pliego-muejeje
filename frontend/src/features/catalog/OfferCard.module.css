@@ -1,0 +1,64 @@
+/* Ofertas' merchandising card, after Google Store: a white stage where the jacket leads (the same white for
+   every medium — Ofertas is its own context, never the lavender/yellow/gray of the catalog), then title,
+   price line and one quiet "Ver oferta" on the paper. Rows: stage · identity · price · action ·
+   feedback, joined to the grid item's subgrid so prices line up across a row. */
+.card {
+  --oc-ink: var(--pliego-text, #252740); --oc-muted: var(--pliego-text-muted, #595a6e); --oc-blue: var(--store-blue, #283da8);
+  --oc-stage: #fff; --oc-tint: color-mix(in srgb, var(--store-ink, #252740) 6%, transparent);
+  position: relative; display: grid; grid-template-rows: auto auto auto auto auto; align-content: start; width: 100%; min-width: 0; color: var(--oc-ink);
+}
+:global([data-mantine-color-scheme="dark"]) .card {
+  --oc-blue: var(--store-link, #c5bcff); --oc-stage: color-mix(in srgb, #fff 6%, var(--pliego-surface, #22243b)); --oc-tint: rgb(255 255 255 / 8%);
+}
+@supports (grid-template-rows: subgrid) { .card { grid-row: 1 / -1; grid-template-rows: subgrid; } }
+
+/* The stage: the jacket centered with the Home cover shadow; chip top-left, heart top-right, medium cue bottom-left. */
+/* The jacket is sized from the room left between the chip's band and the cue's band, so neither ever touches it. */
+.stage { --oc-top: 52px; --oc-bottom: 40px; position: relative; display: grid; place-items: center; aspect-ratio: 1 / 1; padding: var(--oc-top) 0 var(--oc-bottom); border-radius: 20px; background: var(--oc-stage); overflow: hidden; container-type: inline-size; }
+.stage :global(.book-cover) { width: min(50cqi, calc((100cqi - var(--oc-top) - var(--oc-bottom)) * 2 / 3)); height: auto; aspect-ratio: 2 / 3; filter: drop-shadow(4px 10px 12px rgb(37 39 64 / 22%)); transition: translate 260ms cubic-bezier(.32, .94, .6, 1); }
+.stage :global(.cover-frame) { width: 100%; background: transparent; box-shadow: none; }
+.card[data-unavailable] .stage :global(.book-cover) { opacity: .7; }
+@media (hover: hover) { .card:has(.link:hover) .stage :global(.book-cover) { translate: 0 -4px; } }
+
+/* Position only: the chip itself is the shared OfferChips urgency chip. */
+.urgency { position: absolute; top: 14px; left: 14px; z-index: 1; }
+.cue { position: absolute; bottom: 12px; left: 16px; z-index: 1; margin: 0; color: var(--oc-muted); font-size: .8125rem; line-height: 1.3; }
+.favorite.favorite { position: absolute; top: 6px; right: 6px; z-index: 2; color: var(--oc-muted); background: transparent; }
+.favorite.favorite:hover { background: var(--oc-tint); color: var(--oc-ink); }
+.favorite.favorite[aria-pressed="true"] { color: var(--oc-blue); }
+.favorite.favorite:disabled { background: transparent; color: var(--oc-muted); opacity: .55; }
+.favorite.favorite:focus-visible { outline: 2px solid var(--oc-blue); outline-offset: 0; }
+
+.identity { min-width: 0; padding-top: 14px; }
+.title { margin: 0; font: 600 1.0625rem/1.25 var(--store-display); letter-spacing: -.02em; overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.link { display: block; color: inherit; text-decoration: none; }
+/* The link's hit area is the whole card; only the heart sits above it. */
+.link::after { content: ""; position: absolute; inset: 0; z-index: 0; border-radius: 20px; }
+.link:focus-visible { outline: none; }
+.link:focus-visible::after { outline: 3px solid var(--oc-blue); outline-offset: 4px; }
+@media (hover: hover) { .link:hover .title { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; } }
+
+/* Today's price strongest, the previous one smaller and struck, the saving as the shared green chip. */
+.pricing { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; min-width: 0; padding-top: 8px; }
+.price { margin: 0; font: 600 1.125rem/1.2 var(--store-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.was { margin: 0; color: var(--oc-muted); font-size: .9375rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.unavailable { flex-basis: 100%; margin: 0; color: var(--oc-muted); font-size: .8125rem; }
+
+.more { padding-top: 6px; }
+.action { display: inline-flex; align-items: center; gap: 4px; min-height: 32px; color: var(--oc-blue); font-size: .9375rem; font-weight: 500; }
+.action :global(.material-symbol) { transition: translate 160ms cubic-bezier(.32, .94, .6, 1); }
+@media (hover: hover) { .card:has(.link:hover) .action { text-decoration: underline; text-underline-offset: 4px; } .card:has(.link:hover) .action :global(.material-symbol) { translate: 2px 0; } }
+
+.feedbackRow { min-width: 0; }
+.feedback { position: relative; z-index: 1; margin: 4px 0 0; color: var(--oc-muted); font-size: .8125rem; line-height: 1.4; }
+
+@media (max-width: 599px) {
+  .stage { --oc-top: 36px; --oc-bottom: 26px; border-radius: 16px; }
+  .urgency.urgency { top: 10px; left: 10px; padding: 2px 8px; font-size: .75rem; }
+  .favorite.favorite { top: 2px; right: 2px; }
+  .cue { bottom: 6px; left: 10px; font-size: .75rem; }
+  .title { font-size: 1rem; }
+  .price { font-size: 1.0625rem; }
+}
+@media (prefers-reduced-motion: reduce) { .stage :global(.book-cover), .action :global(.material-symbol) { transition: none; } }
+@media (forced-colors: active) { .stage { border: 1px solid CanvasText; } }

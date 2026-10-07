@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { describeApiError } from "@/shared/api/errors";
 import type { OffersCriteria } from "@/shared/api/catalog";
+import { ChoicePicker } from "@/shared/ui/ChoicePicker";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { EditionGrid } from "./EditionGrid";
@@ -12,10 +13,29 @@ import { useOffers, useOffersFilterOptions } from "./offersQuery";
 import { offersHref, readOffersCriteria } from "./offersUrl";
 import classes from "./offers.module.css";
 
+/** The "every theme" choice; the URL keeps an empty category for it. */
+const ALL_THEMES = "todos";
+
 /**
- * Ofertas: the page name and one line on the paper, the product types as chips, then the count beside
- * theme and order, and the shelf. Types, themes, orders, counts, prices and validity are the server's.
+ * Ofertas: a small eyebrow over one headline on the paper, the product types as thin chips, then the count
+ * facing theme and order (PLIEGO's quiet choice pickers), every active offer on one shelf (no pages), and
+ * three plain facts about how offers work. Types, themes, orders, counts, prices and validity are the server's.
  */
+/**
+ * The page's calm close after the last offer: three plain facts about how PLIEGO offers work, each true of
+ * the current behavior (offers end at their own date, cover all three media, and the price returns on its own).
+ */
+function OffersPromise() {
+  return <section className={classes.promise} aria-labelledby="offers-promise-heading">
+    <h2 id="offers-promise-heading" className="visually-hidden">Cómo funcionan las ofertas</h2>
+    <ul>
+      <li><MaterialSymbol name="event" size={32} aria-hidden="true" /><h3>Ofertas por tiempo limitado.</h3><p>Cada oferta se mantiene hasta su fecha de cierre. Cuando le quedan pocos días, lo verás en la edición.</p></li>
+      <li><MaterialSymbol name="sell" size={32} aria-hidden="true" /><h3>Ahorra en cualquier formato.</h3><p>Encuentra ofertas en libros físicos, eBooks y audiolibros.</p></li>
+      <li><MaterialSymbol name="price_check" size={32} aria-hidden="true" /><h3>Precio siempre actualizado.</h3><p>Cuando una oferta termina, la edición vuelve automáticamente a su precio normal.</p></li>
+    </ul>
+  </section>;
+}
+
 export function OffersPage() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -25,10 +45,7 @@ export function OffersPage() {
   const offers = useOffers(criteria);
   const filters = useOffersFilterOptions();
   const page = offers.data;
-  const hasNext = page && BigInt(page.page + 1) * BigInt(page.pageSize) < page.totalCountValue;
-  const pageCount = page ? Math.max(1, Math.ceil(Number(page.totalCountValue) / page.pageSize)) : 1;
   const filtered = Boolean(criteria.productType || criteria.category);
-  const pageHref = (number: number) => offersHref({ ...criteria, page: number });
   const change = (update: Partial<OffersCriteria>) => {
     // Consecutive controls can run before router navigation renders the previous URL.
     const next = { ...pendingCriteria.current, ...update, page: 0 };
@@ -39,8 +56,8 @@ export function OffersPage() {
   return <>
     <main className={`page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
       <header className={classes.masthead}>
-        <h1 className={classes.title}>Ofertas</h1>
-        <p className={classes.intro}>Ediciones con precio rebajado por tiempo limitado. El carrito y la compra confirman el precio vigente de cada edición.</p>
+        <p className={classes.eyebrow}>Ofertas especiales</p>
+        <h1 className={classes.title}>Descubre las últimas ofertas.</h1>
       </header>
 
       {filters.isPending && <p className={classes.filtersNote} role="status">Consultando filtros…</p>}
@@ -53,17 +70,13 @@ export function OffersPage() {
       {(page || filters.data) && <div className={classes.toolbar}>
         <p className={classes.count} role="status">{page ? offersCountLabel(page.totalCount) : ""}</p>
         {filters.data && <div className={classes.controls}>
-          {(filters.data.categories.length > 0 || criteria.category) && <label className={classes.control}><span>Tema</span>
-            <span className={classes.select}><select aria-label="Categoría de ofertas" value={criteria.category} onChange={event => change({ category: event.target.value })}>
-              <option value="">Todas las categorías</option>
-              {filters.data.categories.map(category => <option key={category.slug} value={category.slug}>{category.name} ({category.count})</option>)}
-            </select><MaterialSymbol name="expand_more" size={20} /></span>
-          </label>}
-          <label className={classes.control}><span>Ordenar</span>
-            <span className={classes.select}><select aria-label="Ordenar ofertas" value={criteria.sort} onChange={event => change({ sort: event.target.value as OffersCriteria["sort"] })}>
-              {filters.data.sorts.map(sort => <option key={sort.code} value={sort.code}>{sort.label}</option>)}
-            </select><MaterialSymbol name="expand_more" size={20} /></span>
-          </label>
+          {(filters.data.categories.length > 0 || criteria.category) && <ChoicePicker label="Tema" caption="Tema" className={classes.picker} align="end" appearance="quiet"
+            value={criteria.category || ALL_THEMES}
+            options={[{ value: ALL_THEMES, label: "Todos los temas" }, ...filters.data.categories.map(category => ({ value: category.slug, label: `${category.name} (${category.count})` }))]}
+            onChange={category => change({ category: category === ALL_THEMES ? "" : category })} />}
+          <ChoicePicker label="Ordenar por" caption="Ordenar por" className={classes.picker} align="end" appearance="quiet"
+            value={criteria.sort} options={filters.data.sorts.map(sort => ({ value: sort.code, label: sort.label }))}
+            onChange={sort => change({ sort })} />
         </div>}
       </div>}
 
@@ -78,21 +91,14 @@ export function OffersPage() {
       </div>}
       {page && <section className={classes.results} aria-label="Ediciones en oferta" aria-busy={offers.isFetching}>
         {page.items.length > 0
-          ? <EditionGrid editions={page.items} criteria={{ ...readCatalogCriteria(""), page: criteria.page }} detailReturnHref={pageHref(criteria.page)} presentation="offers" />
+          ? <EditionGrid editions={page.items} criteria={{ ...readCatalogCriteria(""), page: criteria.page }} detailReturnHref={offersHref(criteria)} presentation="offers" />
           : <div className={classes.notice} data-kind="empty">
-            {page.totalCountValue !== 0n
-              ? <><h2>No hay ofertas en esta página.</h2><Link className={classes.action} to={pageHref(0)}>Ir a la primera página</Link></>
-              : filtered
+            {filtered
                 ? <><h2>No hay ofertas con estos filtros.</h2><p>Las ofertas cambian con frecuencia. Mira todo lo que está rebajado hoy.</p><button type="button" className={classes.action} onClick={() => change({ productType: "", category: "" })}>Ver todas las ofertas</button></>
                 : <><h2>No hay ofertas disponibles por ahora.</h2><p>Cuando una edición baje de precio aparecerá aquí.</p><Link className={classes.action} to="/catalog">Explorar libros</Link></>}
           </div>}
-        {(criteria.page > 0 || hasNext) && <nav className={classes.pages} aria-label="Paginación de ofertas">
-          {criteria.page > 0 && <Link className={classes.pageStep} to={pageHref(criteria.page - 1)}><MaterialSymbol name="arrow_back" />Anterior</Link>}
-          <span className={classes.pagePosition}>Página {criteria.page + 1} de {Math.max(pageCount, criteria.page + 1)}</span>
-          {hasNext && <Link className={classes.pageStep} to={pageHref(criteria.page + 1)}>Siguiente<MaterialSymbol name="arrow_forward" /></Link>}
-        </nav>}
       </section>}
-      {page && page.items.length > 0 && <p className={classes.onward}><Link to="/catalog">Explorar libros</Link></p>}
+      {page && page.items.length > 0 && <OffersPromise />}
     </main>
     <SiteFooter />
   </>;

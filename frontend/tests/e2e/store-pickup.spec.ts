@@ -63,11 +63,8 @@ for (const width of [1440, 1024, 768, 390, 320]) {
     await expect(page.getByRole("button", { name: "Hacer pedido" })).toBeDisabled();
     await expect(page.getByRole("banner")).toContainText("Finalizar Compra");
     expect(await page.getByRole("button", { name: "Hacer pedido" }).evaluate(button => getComputedStyle(button).cursor)).toBe("not-allowed");
-    const headingLines = summary.getByRole("heading", { name: "Resumen del pedido" }).locator("span");
-    await expect(headingLines).toHaveText(["Resumen", "del pedido"]);
-    const firstHeadingLine = (await headingLines.nth(0).boundingBox())!;
-    const secondHeadingLine = (await headingLines.nth(1).boundingBox())!;
-    expect(secondHeadingLine.y).toBeGreaterThan(firstHeadingLine.y);
+    // Google Store hierarchy: one compact summary title, never the old two-line display heading.
+    await expect(summary.getByRole("heading", { name: "Resumen del pedido" })).toBeVisible();
     const [tabsBox, destinationBox, summaryBox] = await Promise.all([tabs.boundingBox(), destination.boundingBox(), summary.boundingBox()]);
     expect(tabsBox!.y + tabsBox!.height).toBeLessThan(destinationBox!.y);
     if (width >= 960) { expect(summaryBox!.x).toBeGreaterThan(tabsBox!.x + tabsBox!.width); expect(Math.abs(summaryBox!.y - tabsBox!.y)).toBeLessThan(3); }

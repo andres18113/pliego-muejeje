@@ -25,7 +25,9 @@ class PostPurchaseHttpGate(unittest.TestCase):
         self.assertEqual("CONFIRMED", detail.get("purchaseState"))
         self.assertEqual("PREPARING", detail["shipment"]["state"])
         self.assertEqual("HOME_DELIVERY", detail["fulfillment"]["method"])
-        self.assertEqual({"cancel": True, "changeShippingAddress": False}, detail["availableActions"])
+        self.assertEqual({"cancel": True, "changeShippingAddress": False, "canCancel": True,
+                          "cancellationDeadline": None, "lifecycleState": "CONFIRMED",
+                          "libraryAccessState": "NOT_APPLICABLE"}, detail["availableActions"])
         self.assertIsNone(detail["invoice"])
         self.assertEqual([], detail["creditNotes"])
         status, page = request("/api/v1/orders", self.customer, "CUSTOMER")

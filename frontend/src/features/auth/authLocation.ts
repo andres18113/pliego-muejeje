@@ -8,7 +8,7 @@ const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkou
 
 /**
  * Validates the post-sign-in destination: catalog routes plus the CUSTOMER purchase
- * surfaces. Anything else, including other origins, falls back to the catalog.
+ * surfaces. Anything else, including other origins, falls back to the Home page.
  */
 export function safeAuthReturnHref(candidate: string | null | undefined) {
   if (candidate && candidate.startsWith("/") && !candidate.startsWith("//") && !candidate.includes("\\")) {
@@ -18,8 +18,8 @@ export function safeAuthReturnHref(candidate: string | null | undefined) {
         return `${parsed.pathname}${parsed.search}${parsed.hash}`;
       }
     } catch {
-      return "/catalog";
+      return "/";
     }
   }
-  return safeCatalogReturnHref(candidate);
+  return safeCatalogReturnHref(candidate, "/");
 }

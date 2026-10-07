@@ -1,0 +1,1 @@
+PASS: 19 approved migration files byte-identical to pliego-flyway-v1.0.zip.

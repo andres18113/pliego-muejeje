@@ -29,3 +29,7 @@
 | [0025](0025-edition-offers.md) | Edition offers with database-owned pricing, calendar timing, filtering and monetary snapshots | Accepted for functional integration | 2026-10-05 |
 | [0026](0026-storefront-help-and-digital-ownership.md) | Domain-owned storefront/Help projections and purchase-grant digital ownership with physical-only fulfillment | Accepted for requested architecture implementation | 2026-10-05 |
 | [0027](0027-scoped-public-catalog-filters.md) | Scope existing public categories and facets with PostgreSQL-owned product eligibility | Accepted for requested catalog integration | 2026-10-05 |
+| [0028](0028-authoritative-cart-offer-projection.md) | Additive live cart base/effective prices and savings owned by PostgreSQL | Accepted for requested cart projection | 2026-10-06 |
+| [0029](0029-digital-and-pickup-cancellation-window.md) | Persisted six-minute digital and pickup cancellation window with restart-safe finalization | Accepted for requested order-lifecycle adjustment | 2026-10-06 |
+| [0030](0030-accepted-checkout-quotes-and-mail-completion.md) | Accepted cart snapshot protection, immutable replay and observable fenced mail completion | Accepted for final robustness audit | 2026-10-06 |
+| [0031](0031-client-command-authority-and-view-lifetime.md) | Issuing authority, credential and view boundaries for asynchronous client commands | Accepted for final robustness audit | 2026-10-06 |

@@ -1,0 +1,3 @@
+  ✓  1 [chromium] › tests/e2e/purchase.spec.ts:329:1 › keeps rapid expiry input ordered when a prior caret frame runs between keystrokes (4.3s)
+  ✓  2 [chromium] › tests/e2e/purchase.spec.ts:360:1 › advances valid card details as they are typed without moving focus for invalid values (4.3s)
+  2 passed (9.1s)

@@ -196,6 +196,9 @@ test("global suggestions carry the unfiltered search destination", async ({ page
 
 test("desktop navigation is centered and contains the server destinations including Help", async ({ page }) => {
   await mockPublicCatalog(page);
+  // The Ofertas step asserts the empty state, so it must never read the local backend's offers.
+  await page.route("**/api/v1/catalog/offers/filter-options**", route => route.fulfill({ contentType: "application/json", body: JSON.stringify({ productTypes: [], categories: [], sorts: [{ code: "RELEVANCE", label: "Relevancia" }], totalCount: "0", endingSoonDays: 3, timezone: "America/Guayaquil" }) }));
+  await page.route(/\/api\/v1\/catalog\/offers(\?|$)/, route => route.fulfill({ contentType: "application/json", body: JSON.stringify({ items: [], page: 0, pageSize: 20, totalCount: "0" }) }));
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
   const header = page.getByTestId("site-header");
@@ -210,7 +213,7 @@ test("desktop navigation is centered and contains the server destinations includ
   await expect(page.getByText("No hay ofertas disponibles por ahora.")).toBeVisible();
   await navigation.getByRole("link", { name: "Ayuda" }).click();
   await expect(page).toHaveURL(/\/ayuda$/);
-  await expect(page.getByRole("heading", { name: "Ayuda", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Estamos aquí para ayudarte." })).toBeVisible();
 });
 
 test("compact navigation keeps the same server destinations with keyboard recovery", async ({ page }) => {
@@ -232,5 +235,51 @@ test("compact navigation keeps the same server destinations with keyboard recove
   await trigger.click();
   await menu.getByRole("link", { name: "Ayuda" }).click();
   await expect(page).toHaveURL(/\/ayuda$/);
-  await expect(page.getByRole("heading", { name: "Ayuda", exact: true })).toBeVisible();
+  await expect(page.getByRole("heading", { level: 1, name: "Estamos aquí para ayudarte." })).toBeVisible();
+});
+
+test("larger text collapses the desktop bar to the compact menu instead of overlapping", async ({ page }) => {
+  await mockPublicCatalog(page);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/catalog");
+  const header = page.getByTestId("site-header");
+  const sections = header.getByRole("navigation", { name: "Navegación principal" });
+  await expect(sections.getByRole("link", { name: "Ayuda" })).toBeVisible();
+  await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
+  await expect(sections).toBeHidden();
+  const trigger = header.getByRole("button", { name: "Abrir navegación" });
+  await expect(trigger).toBeVisible();
+  const search = (await header.getByRole("button", { name: "Buscar libros en el catálogo" }).boundingBox())!;
+  const wordmark = (await header.getByRole("link", { name: "PLIEGO, ir al inicio" }).boundingBox())!;
+  expect(wordmark.x + wordmark.width).toBeLessThan(search.x);
+  await trigger.click();
+  await expect(page.getByRole("dialog", { name: "Navegación", exact: true }).getByRole("link")).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas", "Ayuda"]);
+  await page.keyboard.press("Escape");
+  await header.getByRole("button", { name: "Buscar libros en el catálogo" }).click();
+  await expect(page.getByRole("searchbox", { name: "Buscar en el catálogo" })).toBeFocused();
+  await page.keyboard.press("Escape");
+  await page.addStyleTag({ content: "html { font-size: 100% !important; }" });
+  await expect(sections.getByRole("link", { name: "Ayuda" })).toBeVisible();
+  await expect(trigger).toBeHidden();
+});
+
+test("a route change focuses the page heading without a ring, while keyboard focus keeps one", async ({ page }) => {
+  await mockPublicCatalog(page);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto("/catalog");
+  await page.getByTestId("site-header").getByRole("navigation", { name: "Navegación principal" }).getByRole("link", { name: "Ayuda" }).click();
+  const heading = page.getByRole("heading", { level: 1, name: "Estamos aquí para ayudarte." });
+  await expect(heading).toBeFocused();
+  await expect(heading).toHaveCSS("outline-style", "none");
+  await page.keyboard.press("Tab");
+  await expect(heading).not.toBeFocused();
+  // Genuine keyboard focus still matches :focus-visible and draws its indicator (here the search field's edge).
+  const ring = await page.evaluate(() => {
+    const active = document.activeElement!;
+    const drawn = [active, active.parentElement, active.parentElement?.parentElement].some((element) => element
+      && (getComputedStyle(element).outlineStyle !== "none" || getComputedStyle(element).boxShadow !== "none"));
+    return { visible: active.matches(":focus-visible"), drawn };
+  });
+  expect(ring).toEqual({ visible: true, drawn: true });
+  await expect(heading).not.toHaveAttribute("data-route-focus");
 });

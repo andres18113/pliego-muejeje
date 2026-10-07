@@ -7,7 +7,7 @@ export type MaterialSymbolName =
   | "filter_list" | "lock" | "location_on" | "logout" | "format_paint" | "light_mode" | "dark_mode" | "brightness_auto" | "info"
   | "refresh" | "remove" | "search" | "shopping_bag" | "shopping_cart" | "shopping_cart_off"
   | "schedule" | "block" | "book_2" | "help" | "sell" | "error" | "mail" | "link_off"
-  | "inventory_2" | "visibility" | "home" | "local_shipping";
+  | "inventory_2" | "visibility" | "home" | "local_shipping" | "event" | "price_check" | "person" | "storefront" | "payments" | "currency_exchange";
 
 interface MaterialSymbolProps {
   name: MaterialSymbolName;

@@ -3,7 +3,7 @@ import type { QueryKey } from "@tanstack/react-query";
 import { BookCard } from "./BookCard";
 import { toBookCardData, bookCardNavigationState, type BookCardEditionSource, type BookCardFeedback } from "./bookCardModel";
 import { useFavoriteControl, useCartControl } from "./useBookCardActions";
-import type { CatalogMedia } from "./catalogMedia";
+import { mediaOfFormat, type CatalogMedia } from "./catalogMedia";
 
 type CatalogBookCardProps = {
   edition: BookCardEditionSource; detailHref: string; returnHref: string; isFavorite: boolean; favoriteReady: boolean;
@@ -21,7 +21,7 @@ function BrowseBookCard({ edition, detailHref, returnHref, isFavorite, favoriteR
   const [feedback, setFeedback] = useState<BookCardFeedback | null>(null);
   const book = toBookCardData(edition);
   const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback });
-  return <BookCard book={book} to={detailHref} navigationState={bookCardNavigationState(book, catalogReturn)} onNavigate={onOpen} favorite={favorite} feedback={feedback} showEdition={showEdition} media={media} />;
+  return <BookCard book={book} to={detailHref} navigationState={bookCardNavigationState(book, catalogReturn, mediaOfFormat(edition.format))} onNavigate={onOpen} favorite={favorite} feedback={feedback} showEdition={showEdition} media={media} />;
 }
 
 function PurchasableBookCard({ edition, detailHref, returnHref, isFavorite, favoriteReady, favoriteQueryKey, catalogReturn = false, showEdition = false, onOpen }: CatalogBookCardProps) {
@@ -29,5 +29,5 @@ function PurchasableBookCard({ edition, detailHref, returnHref, isFavorite, favo
   const book = toBookCardData(edition);
   const favorite = useFavoriteControl({ editionId: book.id, isFavorite, ready: favoriteReady, queryKey: favoriteQueryKey, returnHref, onFeedback: setFeedback });
   const cart = useCartControl({ editionId: book.id, available: book.available, format: edition.format, returnHref, onFeedback: setFeedback });
-  return <BookCard book={book} to={detailHref} navigationState={bookCardNavigationState(book, catalogReturn)} onNavigate={onOpen} favorite={favorite} cart={cart} feedback={feedback} showEdition={showEdition} />;
+  return <BookCard book={book} to={detailHref} navigationState={bookCardNavigationState(book, catalogReturn, mediaOfFormat(edition.format))} onNavigate={onOpen} favorite={favorite} cart={cart} feedback={feedback} showEdition={showEdition} />;
 }

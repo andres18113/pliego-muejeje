@@ -1,0 +1,4 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/app/sessionOperation.test.tsx > does not revive a departed operation when navigation returns to the same resource
+ Test Files  1 failed (1)
+      Tests  1 failed (1)

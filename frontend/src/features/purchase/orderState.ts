@@ -29,6 +29,7 @@ export function currentOrderState(input: OrderStateInput): CurrentOrderState {
   if (purchase === "CANCELLED" && input.paymentState === "REJECTED") {
     return { source: "PURCHASE", code: purchase, label: "Pago no completado" };
   }
+  if (purchase === "COMPLETED") return { source: "PURCHASE", code: purchase, label: "Compra completada" };
   if (input.fulfillmentMethod === "STORE_PICKUP") {
     const code = input.pickupState ?? null;
     return { source: "PICKUP", code, label: code ? pickupLabels[code] ?? "Estado de retiro no disponible" : "Estado de retiro no disponible" };

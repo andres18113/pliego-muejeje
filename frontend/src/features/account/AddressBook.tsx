@@ -4,13 +4,14 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
+import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { ReadFailure } from "@/features/purchase/CartPage";
 import { addressesQueryKey, deleteAddress, listAddresses, setPrimaryAddress, type CustomerAddress } from "@/shared/api/customer";
 import { ApiRequestError } from "@/shared/api/errors";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { AccountShell } from "./AccountShell";
 import { AddressEditorDialog } from "./AddressEditorDialog";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import classes from "./addresses.module.css";
 import { useCountries } from "@/shared/api/reference";
 
@@ -23,6 +24,7 @@ export function AddressBookPage() {
 }
 
 export function AddressBook() {
+  const scope = useSessionOperationScope("address-book");
   const { clear } = useSession();
   const countries = useCountries();
   const query = useQuery({
@@ -43,7 +45,8 @@ export function AddressBook() {
   // The editor outlives its own close animation: remember what it was showing and give every opening a fresh form.
   const shown = useRef<{ id: string | "new"; opening: number }>({ id: "new", opening: 0 });
   const mutation = useMutation({
-    mutationFn: ({ kind, addressId }: Action) => kind === "delete" ? deleteAddress(addressId) : setPrimaryAddress(addressId),
+    meta: { authRequired: true },
+    mutationFn: ({ kind, addressId, scope: issued }: Action & {scope:SessionOperationScope}) => { issued.assertCurrent(); return kind === "delete" ? deleteAddress(addressId) : setPrimaryAddress(addressId); },
     retry: false,
   });
 
@@ -53,19 +56,24 @@ export function AddressBook() {
   useEffect(() => { if (notice) noticeRef.current?.focus({ preventScroll: true }); }, [notice]);
 
   async function perform(action: Action) {
+    if (!scope.isCurrent()) return;
     if (mutation.isPending || query.isError || query.isFetching) return;
     setNotice(null);
     const wasPrimary = query.data?.find((address) => address.addressId === action.addressId)?.primary;
     try {
-      await mutation.mutateAsync(action);
+      await mutation.mutateAsync({...action,scope});
+      if (!scope.isCurrent()) return;
       const current = await query.refetch();
+      if (!scope.isCurrent()) return;
       setConfirmDeleteId(null);
       setNotice({ text: current.isError ? "Guardamos el cambio, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarlo." : action.kind === "primary"
         ? "Esta es ahora tu dirección principal."
         : wasPrimary && current.data?.length ? "Eliminamos la dirección. Elige otra como principal para tus próximas compras." : "Eliminamos la dirección.", error: current.isError });
     } catch (error) {
+      if (!scope.isCurrent()) return;
       if (error instanceof ApiRequestError && error.status === 401) { clear("expired"); return; }
       const current = await query.refetch();
+      if (!scope.isCurrent()) return;
       setConfirmDeleteId(null);
       const applied = !current.isError && (action.kind === "delete"
         ? !current.data?.some((address) => address.addressId === action.addressId)
@@ -120,7 +128,7 @@ export function AddressBook() {
   </button>;
   return <section className={`account-section account-addresses ${classes.section}`} id="direcciones" aria-labelledby="account-addresses-heading">
     <h2 id="account-addresses-heading" className="visually-hidden">Direcciones de entrega</h2>
-    {query.isPending ? <p className="purchase-loading" role="status">Consultando tus direcciones…</p> : !addresses ? <ReadFailure title="No pudimos consultar tus direcciones." onRetry={() => void query.refetch()} retrying={query.isFetching} /> : <>
+    {query.isPending ? <p className="purchase-loading" role="status">Consultando tus direcciones…</p> : !addresses ? <ReadFailure error={query.error} title="No pudimos consultar tus direcciones." onRetry={() => void query.refetch()} retrying={query.isFetching} /> : <>
       {query.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus direcciones. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void query.refetch()}>Actualizar</Button></p>}
       {notice && <p
         ref={noticeRef}
@@ -152,12 +160,14 @@ export function AddressBook() {
         disabled={query.isError || query.isFetching || mutation.isPending}
         onClose={closeEditor}
         onSaved={async () => {
+          if (!scope.isCurrent()) return;
           const current = await query.refetch();
+          if (!scope.isCurrent()) return;
           setFormAddressId(null);
           setNotice({ text: current.isError ? "Guardamos la dirección, pero no pudimos actualizar la lista. Pulsa Actualizar para comprobarla." : shownAddress ? "Guardamos los cambios de la dirección." : "Guardamos la dirección. Ya puedes elegirla al finalizar una compra.", error: current.isError });
         }}
-        onUncertain={async () => { await query.refetch(); }}
-        onSessionExpired={() => clear("expired")}
+        onUncertain={async () => { if (scope.isCurrent()) await query.refetch(); }}
+        onSessionExpired={() => { if (scope.isCurrent()) clear("expired"); }}
       />
       <ConfirmDialog opened={confirmDeleteId !== null} destructive title={`¿Eliminar «${deleteShown.current?.alias ?? ""}»?`}
         confirmLabel="Eliminar dirección" busyLabel="Eliminando…" keepLabel="Conservar dirección" busy={mutation.isPending}

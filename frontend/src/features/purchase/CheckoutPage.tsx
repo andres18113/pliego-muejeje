@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Modal } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { motion, useReducedMotion } from "motion/react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type FocusEvent } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +15,8 @@ import { BookCover } from "@/features/catalog/BookCover";
 import { formatEdition, formatUsd } from "@/features/catalog/formatters";
 import { getCartDetail, type CartDetail } from "@/shared/api/cart";
 import { addressesQueryKey, listAddresses, type CustomerAddress } from "@/shared/api/customer";
-import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
+import { ApiRequestError, fieldErrorMessages, readRecoveryDetail } from "@/shared/api/errors";
+import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import {
   CheckoutOutcomeUnknown,
   resolveCheckout,
@@ -37,6 +38,7 @@ import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import { fulfillmentMethodLabel, type CheckoutFulfillmentMethod, checkoutFulfillmentMethods } from "./fulfillment";
 import { deliveryDateRangeLabel, ivaLabel } from "./purchaseText";
 import { PurchaseFlow, PurchaseLayout, PurchaseSummary } from "./PurchaseFlow";
+import { hasSaving, toCartPricingViewModel } from "./cartPricingViewModel";
 import classes from "./purchaseFlow.module.css";
 import { detectCardBrand, formatCardNumber, isLuhnValid, normalizeCardNumber, unitsLabel, type CardBrand } from "./purchaseText";
 import { StockStatus } from "@/features/catalog/StockStatus";
@@ -106,6 +108,7 @@ export function CheckoutPage() {
 function CheckoutContent() {
   const { session, clear: clearSession } = useSession();
   const actor = session!.user.userId;
+  const scope = useSessionOperationScope("checkout");
   const [recovery] = useState(() => {
     try { return { key: readPendingAttempt("checkout", actor), error: null }; }
     catch (error) { return { key: null, error: (error as Error).message }; }
@@ -137,6 +140,11 @@ function CheckoutContent() {
   const [cardConfirmed, setCardConfirmed] = useState(false);
   const [cardWasCleared, setCardWasCleared] = useState(false);
   const [cardAutofocus, setCardAutofocus] = useState<CardFieldId>("checkout-card-number");
+  const expiryCaretFrame = useRef<number | null>(null);
+  useEffect(() => () => {
+    if (expiryCaretFrame.current !== null) cancelAnimationFrame(expiryCaretFrame.current);
+    expiryCaretFrame.current = null;
+  }, [cardDialog]);
   const cardTrigger = useRef<HTMLElement | null>(null);
   const cardRestore = useRef<{ method: CheckoutValues["paymentMethod"] | undefined; values: [string, string, string, string] | null }>({ method: undefined, values: null });
   const phone = useMediaQuery("(max-width: 599px)") ?? false;
@@ -164,6 +172,11 @@ function CheckoutContent() {
   });
   const cardNumberRegistration = register("cardNumber");
   const cvvRegistration = register("cvv");
+  const cardholderRegistration = register("cardholder");
+  /** True only while a pointer press inside the card dialog moves focus (cleared after that event turn). */
+  const cardPointerPress = useRef(false);
+  /** True only while a Tab press inside the card dialog moves focus (cleared after that event turn). */
+  const cardTabPress = useRef(false);
   const reduceMotion = useReducedMotion();
   const paymentMethod = watch("paymentMethod");
   const methodSettled = (paymentMethod === "CARD" && cardConfirmed) || paymentMethod === "TRANSFER";
@@ -229,9 +242,11 @@ function CheckoutContent() {
   }, [actor]);
 
   const reconcile = useMutation({
-    mutationFn: (key: string) => resolveCheckout(key),
+    meta: { authRequired: true },
+    mutationFn: ({ key, scope: issued }: { key: string; scope: SessionOperationScope }) => { issued.assertCurrent(); return resolveCheckout(key); },
     retry: false,
-    onSuccess: async (result, key) => {
+    onSuccess: async (result, {key,scope:issued}) => {
+      if (!issued.isCurrent()) return;
       if (pendingKey.current !== key) return;
       if (result.state === "PENDING") { setPhase("unknown"); return; }
       try { clearPendingAttempt("checkout", actor, key); }
@@ -239,15 +254,19 @@ function CheckoutContent() {
       pendingKey.current = null;
       if (result.state === "CREATED") {
         await queryClient.invalidateQueries({ queryKey: cartQueryKey });
+        if (!issued.isCurrent()) return;
         await queryClient.invalidateQueries({ queryKey: ["customer-library"] });
+        if (!issued.isCurrent()) return;
         navigate(`/orders/${result.order.orderId}`, { replace: true, state: { purchased: true } });
         return;
       }
       await cartQuery.refetch();
+      if (!issued.isCurrent()) return;
       setPhase("idle");
       setProblem({ title: "No se creó ningún pedido.", detail: "El servidor confirmó que este intento no creó un pedido y lo cerró. Revisa tu carrito antes de iniciar una nueva compra simulada." });
     },
-    onError: (error: Error, key) => {
+    onError: (error: Error, {key,scope:issued}) => {
+      if (!issued.isCurrent()) return;
       if (pendingKey.current !== key) return;
       if (error instanceof ApiRequestError && error.status === 401) { clearSession("expired"); return; }
       setPhase("unknown");
@@ -290,6 +309,25 @@ function CheckoutContent() {
     clearErrors("paymentMethod");
     setCardAutofocus(focus);
     setCardDialog(true);
+  }
+
+  /**
+   * Card fields validate with the checkout schema when the customer leaves them, and live as they are corrected
+   * once touched (or already in error). An empty field is checked only when the customer leaves it with Tab —
+   * focus that merely passed through it (the dialog's autofocus, the automatic advance after a complete number)
+   * never raises an error. A pointer press on "Usar esta tarjeta", "Cancelar" or the close button skips the blur
+   * check: those either validate everything or discard the card, and a message appearing mid-press would move the
+   * button away from the pointer. Tabbing onto them still validates.
+   */
+  function validateCardFieldOnBlur(name: (typeof cardFieldOrder)[number], event: FocusEvent<HTMLInputElement>) {
+    const next = event.relatedTarget instanceof HTMLElement ? event.relatedTarget : null;
+    if (cardPointerPress.current && next?.closest("[data-card-blur-skip]")) return;
+    if (!getValues(name) && !cardTabPress.current && !getFieldState(name).invalid) return;
+    void trigger(name);
+  }
+  function revalidateCardField(name: (typeof cardFieldOrder)[number]) {
+    const state = getFieldState(name);
+    if (state.isTouched || state.invalid) void trigger(name);
   }
 
   function cancelCard() {
@@ -347,6 +385,7 @@ function CheckoutContent() {
       try {
         fresh = await getCartDetail();
       } catch (error) {
+        if (!scope.isCurrent()) return;
         if (error instanceof ApiRequestError && error.status === 401) {
           clearSession("expired");
           return;
@@ -354,11 +393,12 @@ function CheckoutContent() {
         setPhase("idle");
         setProblem({
           title: "No enviamos tu pedido.",
-          detail: "No pudimos confirmar el estado de tu carrito. Comprueba tu conexión e inténtalo otra vez.",
+          detail: `No pudimos confirmar el estado de tu carrito. ${readRecoveryDetail(error)}`,
         });
         return;
       }
 
+      if (!scope.isCurrent()) return;
       queryClient.setQueryData(cartQueryKey, fresh);
       if (fresh.items.length === 0) {
         setPhase("idle");
@@ -393,6 +433,7 @@ function CheckoutContent() {
         return;
       }
       const transactionKey = pendingKey.current!;
+      if (!scope.isCurrent()) return;
       const transactionStartedAt = Date.now();
       setPhase("submitting");
       let result: CheckoutResult;
@@ -404,28 +445,33 @@ function CheckoutContent() {
             ? { fulfillmentMethod: "STORE_PICKUP", pickupLocationId: values.pickupLocationId } as const
             : { addressId: values.addressId }),
           expectedCartId: fresh.cartId!,
+          expectedQuoteFingerprint: fresh.quoteFingerprint,
           paymentMethod: values.paymentMethod,
           cardNumber: values.paymentMethod === "CARD" ? normalizeCardNumber(values.cardNumber) : undefined,
         }, transactionKey);
       } catch (error) {
         await holdTransactionFeedback(transactionStartedAt, reduceMotion);
+        if (!scope.isCurrent()) return;
         await handleCheckoutError(error, transactionKey);
         return;
       }
 
       await holdTransactionFeedback(transactionStartedAt, reduceMotion);
+      if (!scope.isCurrent()) return;
       try { clearPendingAttempt("checkout", actor, transactionKey); }
       catch { setPhase("unknown"); return; }
       pendingKey.current = null;
       await queryClient.invalidateQueries({ queryKey: cartQueryKey });
+      if (!scope.isCurrent()) return;
         await queryClient.invalidateQueries({ queryKey: ["customer-library"] });
+      if (!scope.isCurrent()) return;
       navigate(`/orders/${result.orderId}`, { replace: true, state: { purchased: true } });
     } finally {
       // Never keep the card number after an attempt, whatever the outcome.
       resetField("cardNumber", { defaultValue: "" });
       resetField("cvv", { defaultValue: "" });
       if (values.paymentMethod === "CARD") { setCardConfirmed(false); setCardWasCleared(true); }
-      if (cardNumberServerError.current) {
+      if (scope.isCurrent() && cardNumberServerError.current) {
         setError("cardNumber", { type: "server", message: cardNumberServerError.current });
         cardNumberServerError.current = null;
         openCardDialog("checkout-card-number");
@@ -435,6 +481,7 @@ function CheckoutContent() {
   }, focusFirstInvalid);
 
   async function handleCheckoutError(error: unknown, key: string) {
+    if (!scope.isCurrent()) return;
     if (pendingKey.current !== key) return;
     if (error instanceof CheckoutOutcomeUnknown || !(error instanceof ApiRequestError)) {
       setPhase("unknown");
@@ -468,6 +515,9 @@ function CheckoutContent() {
         detail: "Actualizamos tu carrito. Revisa los libros marcados antes de volver a intentarlo.",
         action: "cart",
       });
+    } else if (code === "P4005") {
+      await cartQuery.refetch();
+      setProblem({ title: "Tu carrito cambió y no se creó el pedido.", detail: "Actualizamos los productos, cantidades y precios. Revisa el nuevo resumen antes de confirmar otra vez." });
     } else if (code === "P4002" || code === "P4001") {
       await cartQuery.refetch();
       setProblem({ title: "Tu carrito ya no tiene libros para comprar.", detail: "No se creó ningún pedido." });
@@ -513,10 +563,14 @@ function CheckoutContent() {
     return (
       <PurchaseFlow stage="checkout">
         <CheckoutHeading />
-        <ReadFailure onRetry={() => void cartQuery.refetch()} retrying={cartQuery.isFetching} />
+        <ReadFailure error={cartQuery.error} onRetry={() => void cartQuery.refetch()} retrying={cartQuery.isFetching} />
       </PurchaseFlow>
     );
   }
+
+  // The server's offer pricing, worded for display: no discount, sum or tax is worked out here.
+  const pricing = toCartPricingViewModel(cart);
+  const summarySaving = pricing.summary.savingsTotal && hasSaving(pricing.summary.savingsTotal.rawValue) ? pricing.summary.savingsTotal : null;
 
   if (cart.items.length === 0 && phase === "idle" && !problem) {
     return (
@@ -569,7 +623,7 @@ function CheckoutContent() {
           onReconcile={() => {
             if (reconcile.isPending) return;
             setPhase("reconciling");
-            reconcile.mutate(pendingKey.current!);
+            reconcile.mutate({ key: pendingKey.current!, scope });
           }}
         />
       )}
@@ -577,18 +631,32 @@ function CheckoutContent() {
       <PurchaseLayout summary={
         <PurchaseSummary
           headingId="checkout-summary-heading"
-          title={<><span className={classes.checkoutSummaryLine}>Resumen</span>{" "}<span className={classes.checkoutSummaryLine}>del pedido</span></>}
-          lines={cart.items.map((item) => ({
-            key: item.cartItemId,
-            title: item.title,
-            meta: [item.format ? formatEdition(item.format) : null, `${unitsLabel(item.quantity)} × ${formatUsd(item.currentPrice)}`].filter(Boolean).join(" · "),
-            amount: formatUsd(item.currentSubtotal),
-            extra: !resolveStockStatus(item).canAddToCart
+          title="Resumen del pedido"
+          lines={cart.items.map((item) => {
+            // The server's line saving (already for its quantity); only a positive one is shown.
+            const linePricing = pricing.lines.find((line) => line.cartItemId === item.cartItemId);
+            const saving = linePricing?.lineSavings && hasSaving(linePricing.lineSavings.rawValue) ? linePricing.lineSavings : null;
+            const stock = !resolveStockStatus(item).canAddToCart
               ? <StockStatus available={item.available} unavailabilityReason={item.unavailabilityReason} size="compact" className={surface.summaryStatus} />
-              : undefined,
-          }))}
+              : null;
+            return {
+              key: item.cartItemId,
+              title: item.title,
+              meta: [item.format ? formatEdition(item.format) : null, `${unitsLabel(item.quantity)} × ${formatUsd(item.currentPrice)}`].filter(Boolean).join(" · "),
+              amount: formatUsd(item.currentSubtotal),
+              was: saving && linePricing?.originalSubtotal ? linePricing.originalSubtotal.formattedValue : undefined,
+              extra: saving || stock ? <>
+                {saving && <p className={classes.summaryLineSaving}><MaterialSymbol name="sell" size={16} aria-hidden="true" /><span>Ahorras {saving.formattedValue}</span></p>}
+                {stock}
+              </> : undefined,
+            };
+          })}
           totals={[
-            ...(cart.subtotal ? [{ label: "Subtotal", value: formatUsd(cart.subtotal) }] : []),
+            // With offers: the subtotal before them and the server's total saving; without, the plain subtotal.
+            ...(summarySaving && pricing.summary.originalSubtotal
+              ? [{ label: "Subtotal", value: pricing.summary.originalSubtotal.formattedValue },
+                { label: "Ahorro total", value: `-${summarySaving.formattedValue}`, tone: "savings" as const }]
+              : cart.subtotal ? [{ label: "Subtotal", value: formatUsd(cart.subtotal) }] : []),
             ...(cart.taxAmount ? [{ label: ivaLabel(cart.taxRate), value: formatUsd(cart.taxAmount) }] : []),
             ...(cart.shippingAmount ? [{ label: "Gastos de envío", value: formatUsd(cart.shippingAmount) }] : []),
             { label: "Total", value: formatUsd(cart.total ?? cart.totalCurrent), total: true },
@@ -658,6 +726,7 @@ function CheckoutContent() {
               <p className={classes.status} role="status">Consultando tus direcciones…</p>
             ) : !addresses ? (
               <ReadFailure
+                error={addressesQuery.error}
                 title="No pudimos consultar tus direcciones."
                 onRetry={() => void addressesQuery.refetch()}
                 retrying={addressesQuery.isFetching}
@@ -776,7 +845,7 @@ function CheckoutContent() {
                   <span className={classes.methodIcon}><MaterialSymbol name="account_balance" aria-hidden="true" size={22} /></span>
                   <span className={classes.chosenCopy}><strong>Transferencia bancaria</strong></span>
                 </div>
-                {transferDetails.isPending ? <p className={classes.status} role="status">Consultando datos bancarios…</p> : transferDetails.isError || !transferDetails.data ? <ReadFailure title="No pudimos consultar los datos bancarios." onRetry={() => void transferDetails.refetch()} retrying={transferDetails.isFetching} /> : <div className={classes.transfer} data-purchase="transfer"><TransferFacts details={transferDetails.data} amount={cart.totalCurrent} /></div>}
+                {transferDetails.isPending ? <p className={classes.status} role="status">Consultando datos bancarios…</p> : transferDetails.isError || !transferDetails.data ? <ReadFailure error={transferDetails.error} title="No pudimos consultar los datos bancarios." onRetry={() => void transferDetails.refetch()} retrying={transferDetails.isFetching} /> : <div className={classes.transfer} data-purchase="transfer"><TransferFacts details={transferDetails.data} amount={cart.totalCurrent} /></div>}
               </>
             )}
             {errors.paymentMethod && (
@@ -810,10 +879,11 @@ function CheckoutContent() {
         classNames={{ content: `storefront-panel ${classes.flow} ${classes.cardDialog}`, header: classes.dialogHeader, title: classes.dialogTitle, body: classes.dialogBody, close: classes.dialogClose }}
         transitionProps={{ transition: phone ? "slide-up" : "pop", duration: reduceMotion ? 0 : 200, timingFunction: "cubic-bezier(.32, .94, .6, 1)" }}>
         <Modal.Overlay backgroundOpacity={0.28} color="#252740" />
-        <Modal.Content inert={cvvHelpOpened || undefined}>
+        <Modal.Content inert={cvvHelpOpened || undefined} onPointerDownCapture={() => { cardPointerPress.current = true; window.setTimeout(() => { cardPointerPress.current = false; }, 0); }}
+          onKeyDownCapture={(event) => { if (event.key !== "Tab") return; cardTabPress.current = true; window.setTimeout(() => { cardTabPress.current = false; }, 0); }}>
           <Modal.Header role="presentation">
             <Modal.Title>Tarjeta de crédito o débito</Modal.Title>
-            <Modal.CloseButton aria-label="Cerrar sin usar la tarjeta" />
+            <Modal.CloseButton aria-label="Cerrar sin usar la tarjeta" data-card-blur-skip />
           </Modal.Header>
           <Modal.Body>
             <form noValidate aria-label="Datos de la tarjeta" onSubmit={(event) => { event.preventDefault(); void confirmCard(); }}>
@@ -839,6 +909,7 @@ function CheckoutContent() {
                         aria-invalid={Boolean(errors.cardNumber) || undefined}
                         aria-describedby={errors.cardNumber ? "card-number-error" : undefined}
                         {...cardNumberRegistration}
+                        onBlur={(event) => { void cardNumberRegistration.onBlur(event); validateCardFieldOnBlur("cardNumber", event); }}
                         onChange={(event) => {
                           const input = event.currentTarget;
                           const previousDigits = normalizeCardNumber(getValues("cardNumber"));
@@ -849,10 +920,17 @@ function CheckoutContent() {
                             && (caretIsAfterLastDigit(input) || appendedToIncompleteNumber);
                           const digitsBeforeCaret = input.value.slice(0, input.selectionStart ?? input.value.length).replace(/\D/g, "").length;
                           input.value = formatCardNumber(input.value);
-                          void cardNumberRegistration.onChange(event);
-                          if (errors.cardNumber) clearErrors("cardNumber");
+                          void Promise.resolve(cardNumberRegistration.onChange(event)).then(() => {
+                            revalidateCardField("cardNumber");
+                            // The brand decides the security code's length.
+                            if (getFieldState("cvv").isTouched) void trigger("cvv");
+                          });
                           const caret = positionAfterDigits(input.value, digitsBeforeCaret);
-                          if (moveForward) requestAnimationFrame(() => document.getElementById("checkout-expiration")?.focus());
+                          if (moveForward) requestAnimationFrame(() => {
+                            if (input.isConnected && document.activeElement === input && normalizeCardNumber(input.value) === nextDigits) {
+                              document.getElementById("checkout-expiration")?.focus();
+                            }
+                          });
                           else input.setSelectionRange(caret, caret);
                         }}
                       />
@@ -879,22 +957,27 @@ function CheckoutContent() {
                           disabled={busy}
                           aria-invalid={Boolean(errors.expiration) || undefined}
                           aria-describedby={errors.expiration ? "expiration-error" : undefined}
-                          onBlur={field.onBlur}
+                          onBlur={(event) => { field.onBlur(); validateCardFieldOnBlur("expiration", event); }}
                           onChange={(event) => {
                             const input = event.currentTarget;
                             const previousDigits = getValues("expiration").replace(/\D/g, "");
                             const nextDigits = input.value.replace(/\D/g, "");
+                            const formatted = formatCardExpiry(input.value);
                             const appendedToIncompleteExpiry = nextDigits.startsWith(previousDigits)
                               && nextDigits.length > previousDigits.length;
                             const moveForward = (caretIsAfterLastDigit(input) || appendedToIncompleteExpiry)
                               && nextDigits.length === 4
-                              && isCardExpiryCurrent(input.value);
+                              && isCardExpiryCurrent(formatted);
                             const digitsBeforeCaret = input.value.slice(0, input.selectionStart ?? input.value.length).replace(/\D/g, "").length;
-                            const formatted = formatCardExpiry(input.value);
                             field.onChange(formatted);
                             const caret = positionAfterDigits(formatted, digitsBeforeCaret);
-                            if (errors.expiration) clearErrors("expiration");
-                            requestAnimationFrame(() => {
+                            revalidateCardField("expiration");
+                            if (expiryCaretFrame.current !== null) cancelAnimationFrame(expiryCaretFrame.current);
+                            expiryCaretFrame.current = requestAnimationFrame(() => {
+                              expiryCaretFrame.current = null;
+                              // An older frame must never reposition a newer input or take focus
+                              // back from a control the customer deliberately moved to.
+                              if (!input.isConnected || document.activeElement !== input || input.value !== formatted) return;
                               if (moveForward) document.getElementById("checkout-cvv")?.focus();
                               else input.setSelectionRange(caret, caret);
                             });
@@ -918,26 +1001,32 @@ function CheckoutContent() {
                       aria-invalid={Boolean(errors.cvv) || undefined}
                       aria-describedby={errors.cvv ? "cvv-help cvv-error" : "cvv-help"}
                       {...cvvRegistration}
+                      onBlur={(event) => { void cvvRegistration.onBlur(event); validateCardFieldOnBlur("cvv", event); }}
                       onChange={(event) => {
                         const input = event.currentTarget;
                         const length = cardBrand === "amex" ? 4 : 3;
                         const moveForward = caretIsAfterLastDigit(input) && new RegExp(`^\\d{${length}}$`).test(input.value);
                         const caret = input.selectionStart ?? input.value.length;
                         input.value = input.value.replace(/\D/g, "").slice(0, length);
-                        void cvvRegistration.onChange(event);
-                        if (errors.cvv) clearErrors("cvv");
-                        if (moveForward) requestAnimationFrame(() => document.getElementById("checkout-cardholder")?.focus());
+                        void Promise.resolve(cvvRegistration.onChange(event)).then(() => revalidateCardField("cvv"));
+                        const acceptedCode = input.value;
+                        if (moveForward) requestAnimationFrame(() => {
+                          const currentLength = detectCardBrand(getValues("cardNumber")) === "amex" ? 4 : 3;
+                          if (input.isConnected && document.activeElement === input && input.value === acceptedCode && input.value.length === currentLength) {
+                            document.getElementById("checkout-cardholder")?.focus();
+                          }
+                        });
                         else input.setSelectionRange(Math.min(caret, input.value.length), Math.min(caret, input.value.length));
                       }}
                     />
                     {errors.cvv && <FieldMessage id="cvv-error" tone="error">{errors.cvv.message}</FieldMessage>}
                     <span id="cvv-help" className="visually-hidden">{cardBrand === "amex" ? "4 dígitos en el frente." : "3 dígitos al reverso."}</span>
                   </div>
-                  <div className={`form-field ${classes.wide}`}><label htmlFor="checkout-cardholder">Nombre en la tarjeta</label><input id="checkout-cardholder" data-autofocus={cardAutofocus === "checkout-cardholder" || undefined} autoComplete="off" maxLength={120} disabled={busy} aria-invalid={Boolean(errors.cardholder) || undefined} aria-describedby={errors.cardholder ? "cardholder-error" : undefined} {...register("cardholder")} />{errors.cardholder && <FieldMessage id="cardholder-error" tone="error">{errors.cardholder.message}</FieldMessage>}</div>
+                  <div className={`form-field ${classes.wide}`}><label htmlFor="checkout-cardholder">Nombre en la tarjeta</label><input id="checkout-cardholder" data-autofocus={cardAutofocus === "checkout-cardholder" || undefined} autoComplete="off" maxLength={120} disabled={busy} aria-invalid={Boolean(errors.cardholder) || undefined} aria-describedby={errors.cardholder ? "cardholder-error" : undefined} {...cardholderRegistration} onBlur={(event) => { void cardholderRegistration.onBlur(event); validateCardFieldOnBlur("cardholder", event); }} onChange={(event) => { void Promise.resolve(cardholderRegistration.onChange(event)).then(() => revalidateCardField("cardholder")); }} />{errors.cardholder && <FieldMessage id="cardholder-error" tone="error">{errors.cardholder.message}</FieldMessage>}</div>
                 </div>
               <div className={classes.dialogActions}>
-                <Button variant="primary" type="submit">Usar esta tarjeta</Button>
-                <Button variant="text" type="button" onClick={cancelCard}>Cancelar</Button>
+                <Button variant="primary" type="submit" data-card-blur-skip>Usar esta tarjeta</Button>
+                <Button variant="text" type="button" onClick={cancelCard} data-card-blur-skip>Cancelar</Button>
               </div>
             </form>
           </Modal.Body>
@@ -1071,6 +1160,8 @@ function AddressChoice({ address, disabled, onSelect, ...field }: {
 
 function cartSignature(cart: CartDetail) {
   return JSON.stringify([
+    cart.cartId,
+    cart.quoteFingerprint,
     cart.totalCurrent,
     cart.requiresPhysicalFulfillment,
     cart.items.map((item) => [item.cartItemId, item.quantity, item.currentPrice, item.available, item.format]),

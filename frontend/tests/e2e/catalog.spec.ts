@@ -222,7 +222,7 @@ test("renders representative source covers in identical, non-distorting frames",
     const cover = representativeCovers.find((item) => item.coverUrl === route.request().url());
     if (!cover) return route.abort();
     return route.fulfill({
-      path: decodeURIComponent(new URL(`../../../${cover.source}`, import.meta.url).pathname),
+      path: decodeURIComponent(new URL(`../../../covers/generated/retired/physical-baseline/source/${cover.source.replace(/^covers\//, "")}`, import.meta.url).pathname),
       contentType: "image/webp",
       headers: { "Cache-Control": "public, max-age=31536000, immutable" },
     });

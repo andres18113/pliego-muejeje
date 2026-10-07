@@ -1,5 +1,5 @@
 .tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; }
-.tabs button { min-height: 64px; padding: 16px 12px; border: 0; border-bottom: 2px solid var(--pf-line); background: transparent; color: var(--pf-muted); font: inherit; font-size: 1.25rem; cursor: pointer; }
+.tabs button { min-height: 52px; padding: 12px; border: 0; border-bottom: 2px solid var(--pf-line); background: transparent; color: var(--pf-muted); font: inherit; font-size: 1.0625rem; cursor: pointer; }
 .tabs button[aria-selected="true"] { color: var(--pf-blue); border-bottom-color: var(--pf-blue); font-weight: 600; }
 .tabs button:disabled { cursor: progress; }
 .destination:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 3px; }

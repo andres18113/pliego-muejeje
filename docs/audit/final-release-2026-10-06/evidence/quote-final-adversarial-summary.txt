@@ -1,0 +1,5 @@
+PASS accepted quote: stale quantities rejected before order/inventory effects
+PASS accepted quote: price changes, concurrent duplicate, lost response replay, payload conflict and actor isolation
+PASS accepted quote: equal-total edition substitution requires fresh acceptance
+PASS accepted quote: comparison reads committed prices after a contested master lock
+PASS accepted quote: real offer expiry requires fresh acceptance before inventory effects

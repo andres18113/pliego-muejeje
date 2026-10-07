@@ -5,7 +5,7 @@ import { ChoicePicker } from "./ChoicePicker";
  * without search — a quantity list is short). The caller decides which quantities are offered and validates
  * the choice; the picker only reports it.
  */
-export function QuantityPicker({ label, value, choices, onChange, busy = false, describedBy, visibleLabel = "Cant." }: {
+export function QuantityPicker({ label, value, choices, onChange, busy = false, describedBy, visibleLabel = "Cant.", appearance = "default" }: {
   /** Accessible name, e.g. "Cantidad de Cien años de soledad". */
   label: string;
   value: number;
@@ -15,6 +15,8 @@ export function QuantityPicker({ label, value, choices, onChange, busy = false, 
   busy?: boolean;
   describedBy?: string;
   visibleLabel?: string;
+  /** "quiet": the transparent trigger (caption, value, chevron) of commerce toolbars, e.g. the cart line. */
+  appearance?: "default" | "quiet";
 }) {
   return (
     <ChoicePicker
@@ -25,6 +27,7 @@ export function QuantityPicker({ label, value, choices, onChange, busy = false, 
       onChange={(next) => onChange(Number(next))}
       busy={busy}
       describedBy={describedBy}
+      appearance={appearance}
       triggerProps={{ "data-quantity": value }}
       panelProps={{ "data-quantity-panel": "" }}
     />

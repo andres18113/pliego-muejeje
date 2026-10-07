@@ -1,5 +1,7 @@
 import { expect, test, type Browser, type Page } from "@playwright/test";
+import { verifyRegisteredEmail } from "./shared/verified-registration";
 
+const testFrontendOrigin = process.env.PLIEGO_E2E_BASE_URL || "http://127.0.0.1:5173";
 /** Account pages are reached from the header's account menu. */
 async function openAccountSection(page: import("@playwright/test").Page, name: "Perfil" | "Direcciones" | "Favoritos" | "Pedidos") {
   await page.getByRole("button", { name: "Menú de cuenta" }).click();
@@ -30,7 +32,7 @@ async function openFavorites(page: Page) {
 
 async function saveStateFor(browser: Browser, page: Page) {
   return browser.newContext({
-    baseURL: "http://127.0.0.1:5173",
+    baseURL: testFrontendOrigin,
     storageState: await page.context().storageState(),
     viewport: { width: 1280, height: 900 },
   });
@@ -43,8 +45,9 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
     data: { email, password, firstNames: "Lectora", lastNames: "Favoritos" },
   });
   expect(registration.status()).toBe(201);
+  verifyRegisteredEmail(email, api);
 
-  const publicCatalogResponse = await request.get(`${api}/catalog/editions?page=0&pageSize=50`);
+  const publicCatalogResponse = await request.get(`${api}/catalog/editions?productType=PHYSICAL&page=0&pageSize=50`);
   expect(publicCatalogResponse.ok()).toBeTruthy();
   const publicCatalog = await publicCatalogResponse.json() as { items: Edition[] };
   const selected = publicCatalog.items.filter((edition) => edition.available).slice(0, 2);
@@ -78,10 +81,9 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
       await expect(unavailableCard.getByRole("button", { name: `Quitar de favoritos: ${unavailableEdition.title}` })).toHaveAttribute("aria-pressed", "true");
     }
 
-    await page.goto("/catalog");
-    const cartButton = cardFor(page, catalogEdition.editionId).getByRole("button", { name: `Agregar al carrito: ${catalogEdition.title}` });
-    await cartButton.click();
-    await expect(cardFor(page, catalogEdition.editionId).locator("[data-bookcard-feedback]")).toContainText("Agregado al carrito.");
+    await page.goto(`/catalog/editions/${catalogEdition.editionId}`);
+    await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
+    await expect(page.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
 
     await openFavorites(page);
     const favoriteCount = unavailableEdition ? 3 : 2;
@@ -103,20 +105,20 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
 
     await page.reload();
     await expect(page.locator("[data-favorite-row]")).toHaveCount(favoriteCount);
-    await expect(page.locator("[data-bookcard-title]", { hasText: catalogEdition.title })).toBeVisible();
+    await expect(cardFor(page, catalogEdition.editionId).locator("[data-bookcard-title]")).toBeVisible();
 
     const reopened = await saveStateFor(browser, page);
     const reopenedPage = await reopened.newPage();
     try {
       await reopenedPage.goto("/favorites");
       await expect(reopenedPage.locator("[data-favorite-row]")).toHaveCount(favoriteCount);
-      await expect(reopenedPage.locator("[data-bookcard-title]", { hasText: detailEdition.title })).toBeVisible();
+      await expect(cardFor(reopenedPage, detailEdition.editionId).locator("[data-bookcard-title]")).toBeVisible();
     } finally {
       await reopened.close();
     }
 
     const mobileContext = await browser.newContext({
-      baseURL: "http://127.0.0.1:5173",
+      baseURL: testFrontendOrigin,
       storageState: await page.context().storageState(),
       viewport: { width: 390, height: 844 },
       isMobile: true,
@@ -124,18 +126,17 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
     });
     const mobile = await mobileContext.newPage();
     try {
-      await mobile.goto("/catalog");
+      await mobile.goto(`/catalog?que=${encodeURIComponent(detailEdition.title)}`);
       const mobileCard = cardFor(mobile, detailEdition.editionId);
-      const mobileActions = mobileCard.locator("[data-bookcard-actions]");
-      await expect(mobileActions).toBeVisible();
-      expect(await mobileActions.evaluate((element) => getComputedStyle(element).position)).toBe("static");
+      await expect(mobileCard).toBeVisible();
+      await expect(mobileCard.getByRole("button", { name: `Quitar de favoritos: ${detailEdition.title}` })).toBeVisible();
       await mobileCard.getByRole("button", { name: `Quitar de favoritos: ${detailEdition.title}` }).tap();
       await expect(mobileCard.getByRole("button", { name: `Agregar a favoritos: ${detailEdition.title}` })).toHaveAttribute("aria-pressed", "false");
       await mobileCard.getByRole("button", { name: `Agregar a favoritos: ${detailEdition.title}` }).tap();
       await expect(mobileCard.getByRole("button", { name: `Quitar de favoritos: ${detailEdition.title}` })).toHaveAttribute("aria-pressed", "true");
-      await mobileCard.getByRole("button", { name: `Agregar al carrito: ${detailEdition.title}` }).tap();
-      await expect(mobileCard.locator("[data-bookcard-feedback]")).toContainText("Agregado al carrito.");
-      await expect(mobileCard.getByRole("button", { name: `Agregar al carrito: ${detailEdition.title}` })).toBeEnabled();
+      await mobile.goto(`/catalog/editions/${detailEdition.editionId}`);
+      await mobile.getByRole("button", { name: "Agregar al carrito", exact: true }).tap();
+      await expect(mobile.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
       await expect.poll(() => mobile.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
     } finally {
       await mobileContext.close();
@@ -159,6 +160,7 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
 test("reconciles a lost successful DELETE using the real authoritative favorite status", async ({ page, request }) => {
   const email = `favorite-loss-${Date.now()}@pliego.local`, password = "Lectura-segura-2026";
   expect((await request.post(`${api}/auth/register`, { data: { email, password, firstNames: "Lectora", lastNames: "Prueba" } })).status()).toBe(201);
+  verifyRegisteredEmail(email, api);
   const catalog = await (await request.get(`${api}/catalog/editions?page=0&pageSize=20`)).json();
   const edition = catalog.items[0] as Edition;
   expect(edition).toBeTruthy();

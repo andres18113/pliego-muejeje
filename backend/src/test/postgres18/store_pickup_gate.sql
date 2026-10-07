@@ -7,7 +7,7 @@ DECLARE
  cart BIGINT; item BIGINT; qty INTEGER; pickup BIGINT; other_location BIGINT;
  o BIGINT; replay BIGINT; home BIGINT; cancelled BIGINT; state VARCHAR; pay VARCHAR; total NUMERIC; ref VARCHAR;
  key UUID:=uuidv4(); invalid_key UUID:=uuidv4(); d RECORD; snapshot JSONB; confirmation JSONB;
- previous VARCHAR; restored BIGINT; code VARCHAR; first_code VARCHAR;
+ previous VARCHAR; restored BIGINT; code VARCHAR; first_code VARCHAR; deadline TIMESTAMPTZ; finalized TIMESTAMPTZ; window_payload JSONB;
 BEGIN
  SELECT pickup_location_id INTO pickup FROM pliego.fn_pickup_locations() WHERE name LIKE '%PUCE%';
  IF pickup IS NULL THEN RAISE EXCEPTION 'RED: active real pickup location not listed'; END IF;
@@ -55,6 +55,13 @@ BEGIN
  UPDATE pliego.ubicacion_retiro SET activo=TRUE WHERE ubicacion_retiro_id=pickup;
  CALL pliego.sp_checkout_idempotent(u,key,NULL,'TRANSFER','APPROVED',cart,'STORE_PICKUP',pickup,o,state,pay,total,ref);
  IF state<>'CONFIRMED' OR pay<>'APPROVED' THEN RAISE EXCEPTION 'valid pickup not confirmed'; END IF;
+ IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') THEN
+  RAISE EXCEPTION 'pickup got a status email before its real PREPARING/collection transition'; END IF;
+ SELECT p.cancelacion_hasta INTO deadline FROM pliego.pedido p WHERE pedido_id=o;
+ SELECT projection.available_actions INTO window_payload FROM pliego.fn_customer_order_detail(u,o) projection;
+ IF deadline IS NULL OR deadline<=clock_timestamp() OR deadline>clock_timestamp()+INTERVAL '6 minutes'
+    OR deadline<>(SELECT fecha_aprobacion+INTERVAL '6 minutes' FROM pliego.pago WHERE pedido_id=o)
+    OR window_payload->>'canCancel'<>'true' THEN RAISE EXCEPTION 'Pickup six-minute window not projected'; END IF;
  SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
  IF d.fulfillment->>'method'<>'STORE_PICKUP' OR d.shipment IS NOT NULL OR d.address IS NOT NULL
  OR EXISTS(SELECT FROM pliego.envio WHERE pedido_id=o) OR EXISTS(SELECT FROM pliego.pedido_direccion WHERE pedido_id=o)
@@ -96,12 +103,20 @@ BEGIN
   CALL pliego.sp_pickup_collect(a,o,'P-WRONG');
   RAISE EXCEPTION 'wrong code accepted';
  EXCEPTION WHEN SQLSTATE 'P5013' THEN NULL; END;
+ IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED')
+ THEN RAISE EXCEPTION 'invalid collection emitted a notification'; END IF;
  CALL pliego.sp_pickup_collect(a,o,code);
  CALL pliego.sp_pickup_collect(a,o,code);
  SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
  IF d.order_state<>'DELIVERED' OR d.fulfillment->>'state'<>'COLLECTED' OR d.fulfillment->>'collectedAt' IS NULL
  OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=o AND estado_nuevo='DELIVERED')<>1
  THEN RAISE EXCEPTION 'collection not idempotent or not terminal'; END IF;
+ IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') IS DISTINCT FROM 'COLLECTED'
+ OR (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED')<>1
+ OR EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED'
+      AND (((datos->'pickup') ? 'pickupCode') OR ((datos->'fulfillment'->'pickup') ? 'pickupCode')))
+ THEN RAISE EXCEPTION 'pickup collection email was not exactly once'; END IF;
  IF pliego.fn_order_fulfillment(o,TRUE) IS DISTINCT FROM confirmation THEN RAISE EXCEPTION 'collection changed checkout confirmation'; END IF;
  BEGIN
   CALL pliego.sp_order_cancel(u,o,replay,previous,state,pay,restored);
@@ -119,12 +134,18 @@ BEGIN
  CALL pliego.sp_checkout_idempotent(u,uuidv4(),NULL,'CARD','REJECTED',cart,'STORE_PICKUP',other_location,cancelled,state,pay,total,ref);
  SELECT * INTO d FROM pliego.fn_customer_order_detail(u,cancelled);
  IF state<>'CANCELLED' OR d.fulfillment->>'state'<>'CANCELLED' OR d.shipment IS NOT NULL THEN RAISE EXCEPTION 'rejected pickup not cancelled'; END IF;
- IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:'||cancelled) THEN RAISE EXCEPTION 'rejected pickup mailed'; END IF;
+ IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave IN ('ORDER_CONFIRMED:'||cancelled,'ORDER_CANCELLED:'||cancelled)
+   OR evento_clave LIKE 'ORDER_STATUS:'||cancelled||':%') THEN RAISE EXCEPTION 'rejected pickup mailed'; END IF;
  -- Rejected payment leaves cart active: same item can later succeed under a new key.
  CALL pliego.sp_checkout_idempotent(u,uuidv4(),NULL,'CARD','APPROVED',cart,'STORE_PICKUP',other_location,replay,state,pay,total,ref);
  IF (SELECT codigo FROM pliego.pedido_retiro WHERE pedido_id=replay)=first_code THEN RAISE EXCEPTION 'pickup code repeated'; END IF;
  CALL pliego.sp_order_cancel(u,replay,home,previous,state,pay,restored);
  IF pliego.fn_order_fulfillment(replay,FALSE)->>'state'<>'CANCELLED' THEN RAISE EXCEPTION 'pickup cancellation not projected'; END IF;
+ IF (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:'||replay AND tipo='ORDER_CANCELLED')<>1
+ OR (SELECT datos->>'paymentState' FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:'||replay)<>'REFUNDED'
+ OR EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:'||replay
+      AND (((datos->'pickup') ? 'pickupCode') OR ((datos->'fulfillment'->'pickup') ? 'pickupCode')))
+ THEN RAISE EXCEPTION 'customer pickup cancellation/refund email missing'; END IF;
  -- Digital-only cannot invent physical pickup; mixed cart can.
  CALL pliego.sp_edition_create(a,book,pub,'PICKUP-DIGITAL',NULL,'es','EBOOK',NULL,NULL,5.00,NULL,NULL,NULL,NULL,digital);
  CALL pliego.sp_cart_add_item(u,digital,1,cart,item,qty);
@@ -135,5 +156,38 @@ BEGIN
  CALL pliego.sp_cart_add_item(u,edition,1,cart,item,qty);
  CALL pliego.sp_checkout_idempotent(u,uuidv4(),NULL,'TRANSFER','APPROVED',cart,'STORE_PICKUP',other_location,replay,state,pay,total,ref);
  IF (SELECT count(*) FROM pliego.pedido_item WHERE pedido_id=replay)<>2 OR EXISTS(SELECT FROM pliego.envio WHERE pedido_id=replay) THEN RAISE EXCEPTION 'mixed pickup incorrect'; END IF;
+ -- Recovery after the process misses the deadline enters PLIEGO's existing PREPARING pickup state.
+ CALL pliego.sp_cart_add_item(u,edition,1,cart,item,qty);
+ CALL pliego.sp_checkout_idempotent(u,uuidv4(),NULL,'TRANSFER','APPROVED',cart,'STORE_PICKUP',other_location,replay,state,pay,total,ref);
+ UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id=replay;
+ CALL pliego.sp_home_delivery_advance_due(100);
+ SELECT finalizado_en INTO finalized FROM pliego.pedido WHERE pedido_id=replay;
+ SELECT * INTO d FROM pliego.fn_customer_order_detail(u,replay);
+ IF d.order_state<>'PREPARING' OR d.fulfillment->>'state'<>'PENDING' OR finalized IS NULL
+    OR d.available_actions->>'canCancel'<>'false' OR d.available_actions->>'lifecycleState'<>'PICKUP'
+    OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=replay AND origen='SYSTEM' AND estado_nuevo='PREPARING')<>1
+ THEN RAISE EXCEPTION 'Pickup did not advance into normal lifecycle'; END IF;
+ IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||replay||':%') IS DISTINCT FROM 'PREPARING'
+ OR (SELECT datos->'pickup'->>'pickupCode' FROM pliego.correo_outbox
+      WHERE evento_clave='ORDER_STATUS:'||replay||':STORE_PICKUP:PREPARING') IS DISTINCT FROM
+    (SELECT codigo FROM pliego.pedido_retiro WHERE pedido_id=replay)
+ THEN RAISE EXCEPTION 'pickup preparation email missing actual state/code'; END IF;
+ CALL pliego.sp_home_delivery_advance_due(100);
+ IF (SELECT finalizado_en FROM pliego.pedido WHERE pedido_id=replay) IS DISTINCT FROM finalized
+    OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=replay AND origen='SYSTEM' AND estado_nuevo='PREPARING')<>1
+ THEN RAISE EXCEPTION 'Pickup finalization retry was not idempotent'; END IF;
+ BEGIN CALL pliego.sp_order_cancel(u,replay,replay,previous,state,pay,restored);
+  RAISE EXCEPTION 'Pickup cancelled after deadline'; EXCEPTION WHEN SQLSTATE 'P5003' THEN NULL; END;
+ IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:'||replay)
+ THEN RAISE EXCEPTION 'rejected late cancellation emitted a notification'; END IF;
+ SELECT codigo INTO code FROM pliego.pedido_retiro WHERE pedido_id=replay;
+ CALL pliego.sp_pickup_collect(a,replay,code);
+ IF (SELECT estado FROM pliego.pedido WHERE pedido_id=replay)<>'DELIVERED'
+    OR pliego.fn_order_fulfillment(replay,FALSE)->>'state'<>'COLLECTED'
+ THEN RAISE EXCEPTION 'Pickup collection stopped after cancellation window'; END IF;
+ IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||replay||':%') IS DISTINCT FROM 'PREPARING,COLLECTED'
+ THEN RAISE EXCEPTION 'pickup preparation/collection emails were not caught up once'; END IF;
 END $gate$;
 ROLLBACK;

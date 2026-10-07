@@ -1,0 +1,3 @@
+  ✘  1 [chromium] › tests/e2e/purchase.spec.ts:330:3 › does not advance Número de tarjeta after a complete value is corrected before its focus frame (9.7s)
+  ✘  2 [chromium] › tests/e2e/purchase.spec.ts:330:3 › does not advance Código de seguridad after a complete value is corrected before its focus frame (9.7s)
+  2 failed

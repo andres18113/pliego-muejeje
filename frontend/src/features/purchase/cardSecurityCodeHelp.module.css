@@ -1,10 +1,12 @@
 .labelRow { display: flex; align-items: center; gap: 4px; min-width: 0; }
 .labelRow label { min-width: 0; margin: 0; line-height: 1.4; }
 .trigger { display: grid; flex: none; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 999px; background: transparent; color: var(--pf-blue, #283da8); cursor: pointer; }
-.trigger:hover { background: var(--pf-lavender, #e4def4); }
+.trigger:hover { background: color-mix(in srgb, var(--pf-ink, #252740) 6%, transparent); }
 .trigger:focus-visible { outline: 3px solid var(--pf-blue, #283da8); outline-offset: 2px; }
-.panel.panel { display: block; padding: 0; border-radius: 16px; background: var(--pf-sheet, #fbfaf7); color: var(--pf-ink, #252740); box-shadow: 0 8px 28px rgb(37 39 64 / 15%); }
-.header.header { padding: 24px 28px 10px; background: var(--pf-sheet, #fbfaf7); }
+/* A white sheet (neutral in dark), like the card dialog it explains — never lavender. */
+.panel.panel { --help-sheet: #fff; display: block; padding: 0; border-radius: 16px; background: var(--help-sheet); color: var(--pf-ink, #252740); box-shadow: 0 8px 28px rgb(37 39 64 / 15%); }
+.header.header { padding: 24px 28px 10px; background: var(--help-sheet, #fff); }
+:global([data-mantine-color-scheme="dark"]) .panel.panel { --help-sheet: #2b2d47; }
 .title.title { font: inherit; font-size: 1.25rem; font-weight: 600; line-height: 1.35; }
 .body.body { display: grid; gap: 18px; padding: 8px 28px 24px; }
 .body p { margin: 0; font-size: 1rem; line-height: 1.5; }

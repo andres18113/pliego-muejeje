@@ -31,14 +31,19 @@ import tools.jackson.databind.ObjectMapper;
 @Repository
 public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements CustomerOrderGateway {
 
-    private static final String LIST = "SELECT order_id,created_at,order_state,total,payment_state,total_count,"
+    private static final String LIST = "SELECT o.order_id,o.created_at,o.order_state,o.total,o.payment_state,o.total_count,"
             + "purchase_state,fulfillment_method,shipment_state,estimated_delivery_from,estimated_delivery_to,"
-            + "item_count,unit_count,item_summary::text,invoice_state,invoice_pdf_available,invoice_xml_available "
-            + "FROM pliego.fn_customer_orders(?,?,?)";
+            + "item_count,unit_count,item_summary::text,invoice_state,invoice_pdf_available,invoice_xml_available,"
+            + "p.original_subtotal,p.savings_total,p.current_subtotal,p.pricing_snapshot_available,"
+            + "m.subtotal,m.tax_rate,m.tax_amount,m.shipping_amount "
+            + "FROM pliego.fn_customer_orders(?,?,?) o CROSS JOIN LATERAL pliego.fn_order_offer_pricing(o.order_id) p "
+            + "CROSS JOIN LATERAL pliego.fn_order_pricing(o.order_id) m";
     private static final String DETAIL = "SELECT order_id,order_state,subtotal,total,created_at,updated_at,"
-            + "pliego.fn_purchase_item_capabilities(items)::text AS items,address::text AS address,payment::text AS payment,"
+            + "pliego.fn_order_item_offer_snapshots(pliego.fn_purchase_item_capabilities(items))::text AS items,address::text AS address,payment::text AS payment,"
             + "state_history::text AS state_history,purchase_state,fulfillment::text,shipment::text,invoice::text,"
-            + "credit_notes::text,available_actions::text,tax_rate,tax_amount,shipping_amount FROM pliego.fn_customer_order_detail_priced(?,?)";
+            + "credit_notes::text,available_actions::text,tax_rate,tax_amount,shipping_amount,"
+            + "p.original_subtotal,p.savings_total,p.current_subtotal,p.pricing_snapshot_available "
+            + "FROM pliego.fn_customer_order_detail_priced(?,?) o CROSS JOIN LATERAL pliego.fn_order_offer_pricing(o.order_id) p";
     private static final String CANCEL = "CALL pliego.sp_order_cancel(?,?,?,?,?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
@@ -78,7 +83,10 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
             statement.setInt(3, pageSize);
         }, (rs, row) -> new CountedSummary(new Summary(Long.toString(rs.getLong("order_id")),
                 rs.getObject("created_at", OffsetDateTime.class).toInstant(), rs.getString("order_state"),
-                rs.getBigDecimal("total"), rs.getString("payment_state"), postPurchase.summary(rs)), rs.getLong("total_count")));
+                rs.getBigDecimal("total"), rs.getString("payment_state"),
+                postPurchase.summary(rs, PostPurchaseRowMapper.offerPricing(rs), new com.pliego.foundation.money.MonetaryAmounts(
+                        rs.getBigDecimal("subtotal"), rs.getBigDecimal("tax_rate"), rs.getBigDecimal("tax_amount"),
+                        rs.getBigDecimal("shipping_amount"), rs.getBigDecimal("total")))), rs.getLong("total_count")));
     }
 
     @Override
@@ -114,7 +122,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
             JsonNode address = rs.getString("address") == null ? null : parseJson(rs.getString("address"), "address");
             JsonNode payment = parseJson(rs.getString("payment"), "payment");
             JsonNode history = parseJson(rs.getString("state_history"), "state history");
-            var extras=postPurchase.detail(rs);
+            var extras=postPurchase.detail(rs, PostPurchaseRowMapper.offerPricing(rs));
             boolean requiresDeliveryAddress=extras.fulfillment()!=null && "HOME_DELIVERY".equals(extras.fulfillment().method());
             if (!items.isArray() || (address==null ? requiresDeliveryAddress : !address.isObject()) || !payment.isObject() || !history.isArray()) {
                 throw new SQLException("Order detail Function returned incomplete JSON", "XX000");
@@ -153,7 +161,9 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
                     text(item, "authors"), text(item, "publisher"), text(item, "format"),
                     text(item, "language"), decimal(item, "unitPrice"),
                     item.path("quantity").intValue(), decimal(item, "subtotal"),
-                    item.path("requiresPhysicalFulfillment").booleanValue()));
+                    item.path("requiresPhysicalFulfillment").booleanValue(), decimal(item, "originalPrice"),
+                    decimal(item, "unitSavings"), decimal(item, "originalSubtotal"), decimal(item, "lineSavings"),
+                    item.path("pricingSnapshotAvailable").booleanValue()));
         }
         return List.copyOf(result);
     }

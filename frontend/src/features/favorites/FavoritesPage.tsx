@@ -46,7 +46,7 @@ function FavoritesContent() {
     document.title = "Favoritos · PLIEGO";
   }, []);
 
-  // Removing is immediate; the toast is where it can be taken back. Only the latest removal is on offer.
+  // Removing asks first (FavoriteRow's confirmRemoval); the toast is where it can still be taken back. Only the latest removal is on offer.
   const queryClient = useQueryClient();
   const toastKey = useRef(0);
   const [toast, setToast] = useState<(Omit<UndoToastMessage, "action"> & { removed?: { editionId: string; title: string }; retry?: boolean }) | null>(null);
@@ -132,6 +132,7 @@ function FavoritesContent() {
               returnHref={currentHref}
               queryKey={favoriteStatusQueryKey(userId, [edition.editionId])}
               onRemoved={() => offerUndo({ editionId: edition.editionId, title: edition.title })}
+              confirmRemoval
             /></li>;
           })}
         </ul>

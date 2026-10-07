@@ -1,15 +1,16 @@
 import { expect, test, type Page } from "@playwright/test";
-import manifest from "../../../covers/generated/manifest-normalized.json" with { type: "json" };
+import { existsSync } from "node:fs";
+const immutableCoverPath = (url: string) => decodeURIComponent(new URL(`../../../covers/generated/r2-normalized${new URL(url).pathname}`, import.meta.url).pathname);
 
 const widths = [320, 375, 390, 576, 767, 768, 991, 992, 1024, 1199, 1200, 1407, 1408, 1440, 1920];
 
 async function openDiagnostic(page: Page) {
   await page.route("https://covers.pliegolibros.com/**", async (route) => {
     const url = new URL(route.request().url());
-    const record = manifest.records.find((item) => item.cover_url === `${url.origin}${url.pathname}`);
-    if (!record) return route.abort();
+    const path = immutableCoverPath(route.request().url());
+    if (!existsSync(path)) return route.abort();
     if (url.searchParams.has("bookcard-diagnostic")) await new Promise((resolve) => setTimeout(resolve, 1000));
-    return route.fulfill({ path: decodeURIComponent(new URL(`../../../covers/${record.original_file}`, import.meta.url).pathname), contentType: "image/webp" });
+    return route.fulfill({ path: immutableCoverPath(route.request().url()), contentType: "image/webp" });
   });
   await page.goto("/dev/theme");
   await page.locator("[data-bookcard-diagnostic]").scrollIntoViewIfNeeded();
@@ -169,8 +170,7 @@ test("BookCard: delayed and failed real images keep their reserved geometry", as
   await page.route("https://covers.pliegolibros.com/**", async (route) => {
     if (route.request().url().includes("000002-")) await gate;
     if (route.request().url().includes("000014-")) return route.abort();
-    const record = manifest.records.find((item) => item.cover_url === route.request().url())!;
-    return route.fulfill({ path: decodeURIComponent(new URL(`../../../covers/${record.original_file}`, import.meta.url).pathname), contentType: "image/webp" });
+    return route.fulfill({ path: immutableCoverPath(route.request().url()), contentType: "image/webp" });
   });
   await page.goto("/dev/theme", { waitUntil: "domcontentloaded" });
   const first = page.locator("[data-bookcard]").first();

@@ -18,7 +18,7 @@ Snapshot de nombre, dirección, ciudad/provincia/país/código postal, coordenad
 
 Referencia humana corta P- + base32 sin 0/1/I/O, derivada de secuencia y constraint UNIQUE: referencia, no credencial de autenticación. Retiro pendiente mientras pedido CONFIRMED; comando ADMIN autenticado `pickup/collect` con código marca fecha_retiro y estado comercial existente DELIVERED, con historial; repetición idéntica es inocua. CANCELLED existente cancela retiro sin otra máquina de estados. No READY automático, carriers, tracking ni scheduler nuevo.
 
-GET público de ubicaciones activas devuelve datos estándar, sin proveedor de mapas. Detalle customer/admin amplía fulfillment con snapshot pickup y collectedAt/state. Listado existente ya representa STORE_PICKUP por fulfillmentMethod y shipmentState null. Confirmación checkout añade fulfillment inmutable; proyección de receipts siempre devuelve misma información aun después de colección. ORDER_CONFIRMED usa misma outbox/worker y plantilla: lugar/dirección, hora local estimada, código e instrucción de presentar confirmación. No correo diferido “listo”.
+GET público de ubicaciones activas devuelve datos estándar, sin proveedor de mapas. Detalle customer/admin amplía fulfillment con snapshot pickup y collectedAt/state. Listado existente ya representa STORE_PICKUP por fulfillmentMethod y shipmentState null. Confirmación checkout añade fulfillment inmutable; proyección de receipts siempre devuelve misma información aun después de colección. ORDER_CONFIRMED y las señales PREPARING/COLLECTED usan la misma outbox/worker y snapshots de ubicación/código/horario. No existe estado READY ni correo diferido “listo”.
 
 ## Validación y límites
 

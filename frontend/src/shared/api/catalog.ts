@@ -98,7 +98,8 @@ const pageEnvelopeSchema = z.object({
 
 export type EditionSummary = z.infer<typeof editionSummarySchema>;
 export type PublicCategory = z.infer<typeof publicCategorySchema> & Pick<components["schemas"]["Category"], "slug" | "name">;
-export type EditionDetail = components["schemas"]["CatalogEditionDetailResponse"] & { available: boolean };
+/** The offer is the validated `offerSchema` shape (`getPublicEdition` rejects anything else), not the looser generated one. */
+export type EditionDetail = Omit<components["schemas"]["CatalogEditionDetailResponse"], "offer"> & { available: boolean; offer?: OfferSummary | null };
 export type PublicCatalogFilterOptions = z.infer<typeof publicCatalogFilterOptionsSchema>;
 export type CatalogScope = NonNullable<NonNullable<paths["/api/v1/catalog/categories"]["get"]["parameters"]["query"]>["scope"]>;
 
@@ -188,6 +189,26 @@ export async function searchPublicEditions(search: EditionSearch, signal?: Abort
   return parseCatalogPage(data);
 }
 
+/** The offers endpoint's largest page; reading the whole set takes the fewest requests at this size. */
+const OFFERS_READ_PAGE_SIZE = 50;
+/** A guard against an endless read if the server's count were ever wrong (50 × 40 = 2000 offers). */
+const OFFERS_READ_MAX_PAGES = 40;
+
+/**
+ * Every active offer for these filters and this order, as one list: Ofertas shows the complete set with no
+ * customer-facing pages. Reads the server's own pages in its order and keeps each edition once, in case the
+ * set shifts between requests. Ranking, filters and the total stay the server's.
+ */
+export async function getAllPublicOffers(criteria: OffersCriteria, signal?: AbortSignal): Promise<CatalogPage> {
+  const first = await getPublicOffers(0, OFFERS_READ_PAGE_SIZE, signal, criteria);
+  const pageCount = Math.min(OFFERS_READ_MAX_PAGES, Math.ceil(Number(first.totalCountValue) / OFFERS_READ_PAGE_SIZE));
+  const rest = await Promise.all(Array.from({ length: Math.max(0, pageCount - 1) }, (_, index) =>
+    getPublicOffers(index + 1, OFFERS_READ_PAGE_SIZE, signal, criteria)));
+  const seen = new Set<string>();
+  const items = [first, ...rest].flatMap((page) => page.items).filter((item) => !seen.has(item.editionId) && Boolean(seen.add(item.editionId)));
+  return { ...first, items, page: 0, pageSize: OFFERS_READ_PAGE_SIZE };
+}
+
 export async function getPublicOffers(page: number, pageSize = 20, signal?: AbortSignal, criteria?: OffersCriteria): Promise<CatalogPage> {
   const { data, error, response } = await apiClient.GET("/api/v1/catalog/offers", {
     params: { query: { page, pageSize, ...(criteria?.productType ? { productType: criteria.productType } : {}), ...(criteria?.category ? { category: criteria.category } : {}), ...(criteria ? { sort: criteria.sort } : {}) } }, signal,
@@ -229,8 +250,9 @@ export async function getPublicEdition(editionId: string, signal?: AbortSignal):
     throw toApiRequestError(response.status, error, "No pudimos consultar la edición", "Revisa tu conexión e inténtalo otra vez.");
   }
   if (!data || typeof data.available !== "boolean") throw invalidCatalogResponse();
-  if (!editionDetailCompatibilitySchema.safeParse(data).success) throw invalidCatalogResponse();
-  return { ...data, available: data.available };
+  const parsed = editionDetailCompatibilitySchema.safeParse(data);
+  if (!parsed.success) throw invalidCatalogResponse();
+  return { ...data, available: data.available, offer: parsed.data.offer };
 }
 
 function invalidCatalogResponse() {

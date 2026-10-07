@@ -5,10 +5,20 @@ import { fulfillmentSchema } from "./pickup";
 
 const moneySchema = z.string().regex(/^\d+\.\d{2}$/);
 
+/** Immutable purchase snapshot; legacy orders have unknown originals/savings, represented by null or absence. */
+const orderPricingFields = {
+  originalSubtotal: moneySchema.nullish(),
+  savingsTotal: moneySchema.nullish(),
+  currentSubtotal: moneySchema.optional(),
+  pricingSnapshotAvailable: z.boolean().optional(),
+};
+
 export type HomeDeliveryState = "PREPARING" | "IN_TRANSIT" | "OUT_FOR_DELIVERY" | "DELIVERED";
 /** Legacy and terminal shipment values are still valid historical projections. */
 export type KnownShipmentState = HomeDeliveryState | "PENDING" | "SHIPPED" | "CANCELLED";
-const availableActionsSchema = z.object({ cancel: z.boolean(), changeShippingAddress: z.boolean() });
+const availableActionsSchema = z.object({ cancel: z.boolean(), changeShippingAddress: z.boolean(),
+  canCancel: z.boolean().optional(), cancellationDeadline: z.string().nullable().optional(),
+  lifecycleState: z.string().optional(), libraryAccessState: z.string().optional() });
 export type OrderAvailableActions = z.infer<typeof availableActionsSchema>;
 
 export type PaymentMethod = "CARD" | "TRANSFER";
@@ -17,6 +27,7 @@ export type CheckoutCommand = {
   /** Transient; sent only for CARD and never stored by the client. */
   cardNumber?: string;
   expectedCartId?: string;
+  expectedQuoteFingerprint?: string;
 } & (
   | { fulfillmentMethod?: "HOME_DELIVERY"; addressId: string; pickupLocationId?: never }
   | { fulfillmentMethod: "STORE_PICKUP"; pickupLocationId: string; addressId?: never }
@@ -24,6 +35,7 @@ export type CheckoutCommand = {
 );
 
 const checkoutResultSchema = z.object({
+  ...orderPricingFields,
   orderId: z.string().min(1),
   orderState: z.string().min(1),
   paymentState: z.string().min(1),
@@ -56,7 +68,7 @@ export async function submitCheckout(command: CheckoutCommand, key: string): Pro
     ? { fulfillmentMethod: command.fulfillmentMethod, pickupLocationId: command.pickupLocationId }
     : { addressId: command.addressId, fulfillmentMethod: "HOME_DELIVERY" as const };
   const body = {
-    ...destination, expectedCartId: command.expectedCartId, paymentMethod: command.paymentMethod,
+    ...destination, expectedCartId: command.expectedCartId, expectedQuoteFingerprint: command.expectedQuoteFingerprint, paymentMethod: command.paymentMethod,
     simulationOutcome: "APPROVED",
     ...(command.paymentMethod === "CARD" ? { cardNumber: command.cardNumber } : {}),
   };
@@ -89,7 +101,7 @@ export async function submitCheckout(command: CheckoutCommand, key: string): Pro
 function isConfirmedCheckoutRejection(problem: unknown) {
   const codes = ["VALIDATION_ERROR", "MALFORMED_JSON", "INVALID_CARD_NUMBER", "AUTH_REQUIRED", "AUTH_INVALID_TOKEN",
     "AUTH_INVALID_SESSION", "ACCESS_DENIED", "P1001", "P1002", "P1003", "P1004", "P1005", "P2042", "P2043",
-    "P3001", "P3002", "P4001", "P4002", "P5004", "P5005", "P5006", "P5007", "P5010", "P5011", "P5012", "P5013", "P1011"];
+    "P3001", "P3002", "P4001", "P4002", "P4005", "P5004", "P5005", "P5006", "P5007", "P5010", "P5011", "P5012", "P5013", "P1011"];
   return codes.some((code) => hasCode(problem, code));
 }
 
@@ -123,6 +135,7 @@ const orderItemSummarySchema = z.object({
 });
 
 const orderSummarySchema = z.object({
+  ...orderPricingFields,
   orderId: z.string().min(1),
   createdAt: z.string().optional(),
   orderState: z.string(),
@@ -139,8 +152,9 @@ const orderSummarySchema = z.object({
   invoiceState: nullableText,
   invoicePdfAvailable: z.boolean().optional().default(false),
   invoiceXmlAvailable: z.boolean().optional().default(false),
-  /** Current list responses omit these; detail enrichment supplies them without client calculations. */
+  /** Paid breakdown supplied by order snapshots; older list responses may omit it. */
   subtotal: moneySchema.nullish(),
+  taxRate: z.string().nullish(),
   taxAmount: moneySchema.nullish(),
   shippingAmount: moneySchema.nullish(),
   availableActions: availableActionsSchema.nullish(),
@@ -269,6 +283,7 @@ export type OrderInvoice = z.infer<typeof invoiceSchema>;
 export type OrderCreditNote = z.infer<typeof creditNoteSchema>;
 
 const orderDetailSchema = z.object({
+  ...orderPricingFields,
   orderId: z.string().min(1),
   orderState: z.string(),
   subtotal: moneySchema.optional(),
@@ -287,6 +302,11 @@ const orderDetailSchema = z.object({
     unitPrice: moneySchema,
     quantity: z.number().int().positive(),
     subtotal: moneySchema,
+    originalPrice: moneySchema.nullish(),
+    unitSavings: moneySchema.nullish(),
+    originalSubtotal: moneySchema.nullish(),
+    lineSavings: moneySchema.nullish(),
+    pricingSnapshotAvailable: z.boolean().optional(),
     requiresPhysicalFulfillment: z.boolean(),
   })),
   address: z.object({

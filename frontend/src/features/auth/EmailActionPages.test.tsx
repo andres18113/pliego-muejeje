@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { json, problem, renderPurchaseRoute, stubApi } from "@/test/purchase";
 import { VerifyEmailPage, ResendVerificationPage, ForgotPasswordPage, ResetPasswordPage } from "./EmailActionPages";
+import { useSession } from "@/app/session";
 
 const token = "a".repeat(43);
 const routes = [
@@ -15,6 +16,31 @@ const routes = [
 
 describe("customer email actions", () => {
   afterEach(() => vi.unstubAllGlobals());
+
+  it("keeps a newer account signed in when an earlier password reset finishes", async () => {
+    let finish!: (response: Response) => void;
+    const pending = new Promise<Response>(resolve => { finish = resolve; });
+    const api = stubApi({ "POST /api/v1/auth/reset-password": () => pending });
+    function IdentityReset() {
+      const { session, establish } = useSession();
+      return <>
+        <output aria-label="Cuenta actual">{session?.user.userId ?? "guest"}</output>
+        <button onClick={() => establish({ accessToken: "synthetic-B", expiresAt: Date.now() + 1_800_000,
+          user: { userId: "3", email: "b@example.invalid", role: "CUSTOMER" } })}>Cambiar cuenta</button>
+        <ResetPasswordPage />
+      </>;
+    }
+    renderPurchaseRoute([{ path: "/restablecer-contrasena", element: <IdentityReset /> }], `/restablecer-contrasena#token=${token}`);
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("Nueva contraseña"), "segura123");
+    await user.type(screen.getByLabelText("Confirma tu contraseña"), "segura123");
+    await user.click(screen.getByRole("button", { name: "Restablecer contraseña" }));
+    await waitFor(() => expect(api.count("POST", "/api/v1/auth/reset-password")).toBe(1));
+    await user.click(screen.getByRole("button", { name: "Cambiar cuenta" }));
+    await act(async () => { finish(new Response(null, { status: 204 })); });
+    await screen.findByText(/Tu contraseña cambió/);
+    expect(screen.getByLabelText("Cuenta actual")).toHaveTextContent("3");
+  });
 
   it("consumes a fragment token only after explicit confirmation and removes it from the URL", async () => {
     const api = stubApi({ "POST /api/v1/auth/verify-email": () => new Response(null, { status: 204 }) });

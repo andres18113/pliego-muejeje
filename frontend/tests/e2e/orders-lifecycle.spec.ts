@@ -37,7 +37,11 @@ for (const [state,label] of [["PREPARING","En preparación"],["IN_TRANSIT","En c
     await expect(row).toContainText("2 unidades");
     await row.click();
     await expect(page.getByRole("heading",{ level: 2,name: label })).toBeVisible();
-    await expect(page.getByRole("list",{ name: "Progreso del envío" }).locator('[aria-current="step"]')).toContainText(state === "PENDING" ? "Confirmado" : label);
+    if (state === "DELIVERED") {
+      // Delivered reads as one completed state, not the five stage labels.
+      await expect(page.getByRole("group",{ name: "Progreso del envío" })).toContainText("Entregado");
+      await expect(page.getByRole("list",{ name: "Progreso del envío" })).toHaveCount(0);
+    } else await expect(page.getByRole("list",{ name: "Progreso del envío" }).locator('[aria-current="step"]')).toContainText(state === "PENDING" ? "Confirmado" : label);
     await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(cancel ? 1 : 0);
     expect(reads.length).toBeGreaterThanOrEqual(1); // Shared cache may deduplicate a detail request already in flight.
   });

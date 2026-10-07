@@ -18,5 +18,7 @@ describe("BookCard edition presentation adapter", () => {
     const book = toBookCardData({ ...favorite, coverUrl: "https://covers.example.invalid/book.webp", coverLicense: "Licencia de prueba", coverAttribution: "Crédito técnico" });
     expect(bookCardNavigationState(book, true)).toEqual({ catalogReturn: true, coverPreview: { editionId: favorite.editionId, url: book.cover.url, license: "Licencia de prueba", attribution: "Crédito técnico", title: favorite.title } });
     expect(bookCardNavigationState(book)).not.toHaveProperty("catalogReturn");
+    expect(bookCardNavigationState(book, false, "audiobook").coverPreview).toMatchObject({ editionId: favorite.editionId, media: "audiobook" });
+    expect(bookCardNavigationState(book).coverPreview).not.toHaveProperty("media");
   });
 });

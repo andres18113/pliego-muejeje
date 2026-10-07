@@ -61,7 +61,13 @@ public class CustomerOrderController {
                 order.createdAt().toString(), order.orderState(), money(order.total()),
                 order.paymentState(),post.purchaseState(),post.fulfillmentMethod(),post.shipmentState(),
                 post.estimatedDeliveryFrom(),post.estimatedDeliveryTo(),post.itemCount(),post.unitCount(),
-                post.itemSummary(),post.invoiceState(),post.invoicePdfAvailable(),post.invoiceXmlAvailable());
+                post.itemSummary(),post.invoiceState(),post.invoicePdfAvailable(),post.invoiceXmlAvailable(),
+                money(post.offerPricing().originalSubtotal()), money(post.offerPricing().savingsTotal()),
+                money(post.offerPricing().currentSubtotal()), post.offerPricing().pricingSnapshotAvailable(),
+                post.amounts() == null ? null : money(post.amounts().subtotal()),
+                post.amounts() == null ? null : money(post.amounts().taxRate()),
+                post.amounts() == null ? null : money(post.amounts().taxAmount()),
+                post.amounts() == null ? null : money(post.amounts().shippingAmount()));
         }).toList(), page, pageSize, Long.toString(result.totalCount()));
     }
 
@@ -78,7 +84,9 @@ public class CustomerOrderController {
                 order.createdAt().toString(), order.updatedAt().toString(),
                 order.items().stream().map(item -> new Item(item.orderItemId(), item.editionId(), item.sku(),
                         item.isbn(), item.title(), item.authors(), item.publisher(), item.format(),
-                        item.language(), money(item.unitPrice()), item.quantity(), money(item.subtotal()), item.requiresPhysicalFulfillment())).toList(),
+                        item.language(), money(item.unitPrice()), item.quantity(), money(item.subtotal()), item.requiresPhysicalFulfillment(),
+                        money(item.originalPrice()), money(item.unitSavings()), money(item.originalSubtotal()), money(item.lineSavings()),
+                        item.pricingSnapshotAvailable())).toList(),
                 address==null ? null : new Address(address.recipient(), address.line1(), address.line2(), address.city(),
                         address.province(), address.countryCode(), address.postalCode(), address.reference(),
                         address.phone()),
@@ -88,7 +96,9 @@ public class CustomerOrderController {
                         history.actorUserId(), history.origin(), history.previousState(), history.newState(),
                         history.at())).toList(),post.purchaseState(),post.fulfillment(),post.shipment(),
                 PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions(),
-                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()));
+                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()),
+                money(post.offerPricing().originalSubtotal()), money(post.offerPricing().savingsTotal()),
+                money(post.offerPricing().currentSubtotal()), post.offerPricing().pricingSnapshotAvailable());
     }
 
     @PostMapping("/{orderId}/cancel")
@@ -103,7 +113,7 @@ public class CustomerOrderController {
     }
 
     private static String money(BigDecimal value) {
-        return value.setScale(2, RoundingMode.UNNECESSARY).toPlainString();
+        return value == null ? null : value.setScale(2, RoundingMode.UNNECESSARY).toPlainString();
     }
 
     private static long actorId(Jwt jwt) {

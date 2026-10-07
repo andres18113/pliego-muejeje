@@ -1,0 +1,1291 @@
+[
+  {
+    "editionId": "474",
+    "bookId": "470",
+    "title": "Manual de medicina basada en evidencias",
+    "subtitle": null,
+    "synopsis": "La medicina basada en evidencias propone apoyar las decisiones clínicas en una lectura crítica de la investigación. Este manual explica cómo localizar y valorar pruebas científicas, incluidas revisiones sistemáticas y metaanálisis, para utilizarlas en la atención de los pacientes. Ofrece a quienes estudian medicina una entrada al trabajo con información médica y a la evaluación de su confiabilidad.",
+    "authors": [
+      {
+        "authorId": "543",
+        "name": "Arceo Díaz, José Luis",
+        "order": 1
+      },
+      {
+        "authorId": "544",
+        "name": "Ornelas Aguirre, José Manuel",
+        "order": 2
+      },
+      {
+        "authorId": "545",
+        "name": "Domínguez Salcido, Susana",
+        "order": 3
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "42",
+        "name": "Medicina",
+        "slug": "medicina",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "119",
+      "name": "Editorial El Manual Moderno"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000316",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 271,
+    "publicationDate": null,
+    "price": "63.96",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000316-5814e110f94a.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "3",
+      "originalPrice": "79.95",
+      "discountAmount": "15.99",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "63.96",
+      "savingsAmount": "15.99",
+      "savingsPercent": "20.00"
+    }
+  },
+  {
+    "editionId": "408",
+    "bookId": "404",
+    "title": "Crónica matemática",
+    "subtitle": null,
+    "synopsis": "Selene Mejía relata la experiencia de Santiago Martínez, un estudiante guatemalteco que participó en una competencia de matemáticas en Indonesia en 2024 y obtuvo una medalla de plata. Esta crónica acerca al lector a su viaje y a su encuentro con las olimpiadas matemáticas. Una lectura para conocer una historia real donde la curiosidad por los números ocupa el centro.",
+    "authors": [
+      {
+        "authorId": "452",
+        "name": "Mejía, Selene",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "46",
+        "name": "Infantil y Juvenil",
+        "slug": "infantil-y-juvenil",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "200",
+      "name": "Editorial Cazam Ah"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000317",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 108,
+    "publicationDate": null,
+    "price": "13.46",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000317-b569eaa7c6e7.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "4",
+      "originalPrice": "14.95",
+      "discountAmount": "1.49",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "daysRemaining": 15,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "13.46",
+      "savingsAmount": "1.49",
+      "savingsPercent": "9.97"
+    }
+  },
+  {
+    "editionId": "437",
+    "bookId": "433",
+    "title": "Goya en las literaturas",
+    "subtitle": null,
+    "synopsis": "La figura de Francisco de Goya ha seguido inspirando obras mucho después de su tiempo. Leonardo Romero Tobar examina su presencia y la de sus imágenes en poesía, teatro, narrativa y cine de distintas lenguas. El libro permite seguir los encuentros entre pintura y creación literaria, y comprender cómo un artista se transforma también en personaje e interlocutor de otros creadores.",
+    "authors": [
+      {
+        "authorId": "497",
+        "name": "Romero Tobar, Leonardo",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "34",
+        "name": "Literatura",
+        "slug": "literatura",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "213",
+      "name": "Marcial Pons Ediciones de Historia"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000318",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 296,
+    "publicationDate": null,
+    "price": "17.81",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000318-d3973ec97236.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "5",
+      "originalPrice": "20.95",
+      "discountAmount": "3.14",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "daysRemaining": 7,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "17.81",
+      "savingsAmount": "3.14",
+      "savingsPercent": "14.99"
+    }
+  },
+  {
+    "editionId": "406",
+    "bookId": "402",
+    "title": "De mano en mano",
+    "subtitle": null,
+    "synopsis": "Un billete de doscientos pesos enlaza diez historias de niñas y niños con deseos muy diferentes. Unos esperan reencontrarse con su madre; otros sueñan con una mascota, unos tenis o una celebración. Alicia Molina sigue el recorrido de ese objeto cotidiano para acercarnos a vidas que se cruzan y a las pequeñas esperanzas que dan sentido a cada día.",
+    "authors": [
+      {
+        "authorId": "450",
+        "name": "Molina, Alicia",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "46",
+        "name": "Infantil y Juvenil",
+        "slug": "infantil-y-juvenil",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "168",
+      "name": "FCE - Fondo de Cultura Económica"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000319",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 514,
+    "publicationDate": null,
+    "price": "19.51",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000319-f2975e413c59.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "6",
+      "originalPrice": "22.95",
+      "discountAmount": "3.44",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "daysRemaining": 7,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "19.51",
+      "savingsAmount": "3.44",
+      "savingsPercent": "14.99"
+    }
+  },
+  {
+    "editionId": "448",
+    "bookId": "444",
+    "title": "Matemáticas en la vida cotidiana",
+    "subtitle": null,
+    "synopsis": "Las matemáticas están presentes en actividades que rara vez asociamos con ellas: comunicarnos por teléfono, consultar el tiempo o utilizar un cajero automático. Este volumen coordinado por José María Quesada Teruel acerca ese entramado de números, códigos y proporciones al lector. Una invitación a reconocer las ideas matemáticas que sostienen tecnologías y decisiones de nuestra vida cotidiana.",
+    "authors": [
+      {
+        "authorId": "510",
+        "name": "Quesada Teruel, José María (coord.)",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "35",
+        "name": "Matemáticas",
+        "slug": "matematicas",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "216",
+      "name": "Universidad de Jaén"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000320",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 383,
+    "publicationDate": null,
+    "price": "20.36",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000320-1773d8ed60d9.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "7",
+      "originalPrice": "23.95",
+      "discountAmount": "3.59",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "daysRemaining": 7,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "20.36",
+      "savingsAmount": "3.59",
+      "savingsPercent": "14.99"
+    }
+  },
+  {
+    "editionId": "393",
+    "bookId": "389",
+    "title": "Lulu o la flauta mágica",
+    "subtitle": null,
+    "synopsis": "El príncipe Lulu recibe de un hada una flauta encantada para liberar a su hija, prisionera de un poderoso hechicero. En este relato de August Jacob Liebeskind, la música acompaña una aventura de rescate y enfrenta fuerzas opuestas. La fantasía abre también una reflexión sobre la capacidad del arte para transformar la experiencia y crear nuevas posibilidades.",
+    "authors": [
+      {
+        "authorId": "438",
+        "name": "Liebeskind, August Jacob",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "46",
+        "name": "Infantil y Juvenil",
+        "slug": "infantil-y-juvenil",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "198",
+      "name": "Universidad Nacional Autónoma de México (UNAM)"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000321",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 551,
+    "publicationDate": null,
+    "price": "13.56",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000321-b1cce2adb804.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "8",
+      "originalPrice": "15.95",
+      "discountAmount": "2.39",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "daysRemaining": 7,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "13.56",
+      "savingsAmount": "2.39",
+      "savingsPercent": "14.98"
+    }
+  },
+  {
+    "editionId": "471",
+    "bookId": "467",
+    "title": "Matemáticas y deportes",
+    "subtitle": null,
+    "synopsis": "Las competiciones y los juegos ofrecen una forma cercana de entrar en las matemáticas. Este libro relaciona el deporte con la representación gráfica y la estadística, aprovechando ejemplos de ese ámbito para observar y comparar información. Una lectura para descubrir cómo el razonamiento matemático ayuda a interpretar situaciones deportivas y a mirar los resultados desde otra perspectiva.",
+    "authors": [
+      {
+        "authorId": "541",
+        "name": "Hernandez Garciadiego, Carlos",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "35",
+        "name": "Matemáticas",
+        "slug": "matematicas",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "225",
+      "name": "Grupo Editorial Terracota"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000322",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 307,
+    "publicationDate": null,
+    "price": "26.36",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000322-4136256898ff.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "9",
+      "originalPrice": "32.95",
+      "discountAmount": "6.59",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "26.36",
+      "savingsAmount": "6.59",
+      "savingsPercent": "20.00"
+    }
+  },
+  {
+    "editionId": "401",
+    "bookId": "397",
+    "title": "La oveja roja",
+    "subtitle": null,
+    "synopsis": "Una oveja roja ocupa el centro de este cuento infantil colombiano de María Luisa Bejarano Hernández. La narración ilustrada acerca a los pequeños lectores a un personaje animal cuyo color da nombre a la historia. Una lectura para compartir el encuentro entre palabras e imágenes y conversar sobre lo que hace reconocible y singular a un protagonista.",
+    "authors": [
+      {
+        "authorId": "446",
+        "name": "Bejarano Hernández, María Luisa",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "46",
+        "name": "Infantil y Juvenil",
+        "slug": "infantil-y-juvenil",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "151",
+      "name": "Editorial Politécnico Grancolombiano"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000323",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 154,
+    "publicationDate": null,
+    "price": "17.81",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000323-cd78d6159753.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "10",
+      "originalPrice": "20.95",
+      "discountAmount": "3.14",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "daysRemaining": 7,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "17.81",
+      "savingsAmount": "3.14",
+      "savingsPercent": "14.99"
+    }
+  },
+  {
+    "editionId": "520",
+    "bookId": "516",
+    "title": "Psicopatología básica (5a. ed.)",
+    "subtitle": null,
+    "synopsis": "Guillermo Hernández Bayona presenta la psicopatología como un estudio de la conducta y del funcionamiento psicológico humano en su complejidad. Esta quinta edición ofrece una exposición didáctica de sus conceptos, evitando reducir a la persona a un conjunto de síntomas aislados. Un acercamiento formativo para comprender el sentido de las manifestaciones clínicas dentro de una vida psíquica unitaria.",
+    "authors": [
+      {
+        "authorId": "625",
+        "name": "Hernández Bayona, Guillermo",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "43",
+        "name": "Psicología",
+        "slug": "psicologia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "233",
+      "name": "Editorial Pontificia Universidad Javeriana"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000324",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 243,
+    "publicationDate": null,
+    "price": "27.96",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000324-3627cef212b0.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "11",
+      "originalPrice": "34.95",
+      "discountAmount": "6.99",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "27.96",
+      "savingsAmount": "6.99",
+      "savingsPercent": "20.00"
+    }
+  },
+  {
+    "editionId": "402",
+    "bookId": "398",
+    "title": "Cuentos de Panamá",
+    "subtitle": null,
+    "synopsis": "Lugares, personajes e historia de Panamá dan forma a estos relatos para niños. El libro propone un recorrido imaginario por el país a través de la narración, acercando su mundo a los lectores pequeños. Una oportunidad para compartir cuentos y despertar interés por un territorio, sus habitantes y las historias que permiten conocerlo desde la literatura infantil.",
+    "authors": [
+      {
+        "authorId": "447",
+        "name": "Hackshaw, Yolanda",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "46",
+        "name": "Infantil y Juvenil",
+        "slug": "infantil-y-juvenil",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "201",
+      "name": "Ciudad Educativa"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000325",
+    "language": "es",
+    "format": "PAPERBACK",
+    "pageCount": 537,
+    "publicationDate": null,
+    "price": "9.86",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000325-da46a63d3d79.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "12",
+      "originalPrice": "10.95",
+      "discountAmount": "1.09",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "daysRemaining": 15,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "9.86",
+      "savingsAmount": "1.09",
+      "savingsPercent": "9.95"
+    }
+  },
+  {
+    "editionId": "215",
+    "bookId": "214",
+    "title": "Filosofía del conocimiento (2a. ed.)",
+    "subtitle": null,
+    "synopsis": "Una reflexión sobre el conocimiento humano y las preguntas que surgen al intentar comprender la realidad. La teoría del conocimiento constituye su eje y permite situar cuestiones como la relación entre quien conoce y aquello que puede conocer. Un acercamiento filosófico para lectores interesados en examinar los fundamentos de nuestras afirmaciones sobre el mundo.",
+    "authors": [
+      {
+        "authorId": "229",
+        "name": "Corazón González, Rafael",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "36",
+        "name": "Filosofía",
+        "slug": "filosofia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "69",
+      "name": "EUNSA"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000057",
+    "language": "es",
+    "format": "EBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "12.79",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000057-be83a24f55ad.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "13",
+      "originalPrice": "15.99",
+      "discountAmount": "3.20",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "12.79",
+      "savingsAmount": "3.20",
+      "savingsPercent": "20.01"
+    }
+  },
+  {
+    "editionId": "324",
+    "bookId": "322",
+    "title": "Medicina intensiva",
+    "subtitle": null,
+    "synopsis": "La medicina intensiva se ocupa de la atención de pacientes cuya condición exige una vigilancia especialmente estrecha. Esta obra se sitúa en ese campo clínico y ofrece una referencia para estudiar la asistencia al enfermo crítico. Su tema invita a relacionar el conocimiento médico con las exigencias de evaluación y cuidado propias de las situaciones de alta complejidad.",
+    "authors": [
+      {
+        "authorId": "360",
+        "name": "Lovesio, Carlos",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "42",
+        "name": "Medicina",
+        "slug": "medicina",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "177",
+      "name": "Corpus Editorial"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000061",
+    "language": "es",
+    "format": "EBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "11.19",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000061-f57236bb6f98.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "14",
+      "originalPrice": "13.99",
+      "discountAmount": "2.80",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "11.19",
+      "savingsAmount": "2.80",
+      "savingsPercent": "20.01"
+    }
+  },
+  {
+    "editionId": "226",
+    "bookId": "225",
+    "title": "Las tareas de la filosofía",
+    "subtitle": null,
+    "synopsis": "¿Qué tareas puede asumir la filosofía cuando interroga nuestra experiencia y nuestras formas de pensar? Román Cuartango sitúa esa pregunta en el centro de una obra dedicada a la actividad filosófica. La lectura invita a considerar el sentido de esta disciplina y el lugar que ocupa en la elaboración de preguntas sobre la realidad y la vida humana.",
+    "authors": [
+      {
+        "authorId": "235",
+        "name": "Cuartango, Román",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "36",
+        "name": "Filosofía",
+        "slug": "filosofia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "143",
+      "name": "Editorial de la Universidad de Cantabria"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000062",
+    "language": "es",
+    "format": "EBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "11.19",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000062-e88a08f37c2b.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "15",
+      "originalPrice": "13.99",
+      "discountAmount": "2.80",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "11.19",
+      "savingsAmount": "2.80",
+      "savingsPercent": "20.01"
+    }
+  },
+  {
+    "editionId": "254",
+    "bookId": "72",
+    "title": "Matemática estructural",
+    "subtitle": null,
+    "synopsis": "La matemática puede estudiarse atendiendo a las estructuras que organizan sus conceptos y relaciones. Andrés Forero Cuervo propone una entrada a ese horizonte de pensamiento, donde comprender cómo se vinculan las ideas resulta esencial. Una lectura orientada al razonamiento matemático y al interés por los fundamentos que dan unidad a problemas y objetos de estudio diferentes.",
+    "authors": [
+      {
+        "authorId": "74",
+        "name": "Andrés Forero Cuervo",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "35",
+        "name": "Matemáticas",
+        "slug": "matematicas",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "156",
+      "name": "Universidad de los Andes"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000063",
+    "language": "es",
+    "format": "EBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "9.59",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000063-e67d4964b228.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "16",
+      "originalPrice": "11.99",
+      "discountAmount": "2.40",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "9.59",
+      "savingsAmount": "2.40",
+      "savingsPercent": "20.02"
+    }
+  },
+  {
+    "editionId": "245",
+    "bookId": "244",
+    "title": "Fundamentos de matemáticas",
+    "subtitle": null,
+    "synopsis": "Los fundamentos matemáticos plantean preguntas acerca de los objetos, relaciones y principios sobre los que se construye la disciplina. Fernando Zalamea Traba aborda este ámbito, relacionado con la teoría de números y la teoría de conjuntos. La obra permite aproximarse a un nivel de reflexión que acompaña y sostiene el trabajo matemático.",
+    "authors": [
+      {
+        "authorId": "254",
+        "name": "Zalamea Traba, Fernando",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "35",
+        "name": "Matemáticas",
+        "slug": "matematicas",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "149",
+      "name": "Universidad Nacional de Colombia. Facultad de Ciencias. Departamento de Matemáticas"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000064",
+    "language": "es",
+    "format": "EBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "8.79",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000064-2dda50c069e4.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "17",
+      "originalPrice": "10.99",
+      "discountAmount": "2.20",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "8.79",
+      "savingsAmount": "2.20",
+      "savingsPercent": "20.02"
+    }
+  },
+  {
+    "editionId": "306",
+    "bookId": "304",
+    "title": "La mujer en la historia",
+    "subtitle": null,
+    "synopsis": "La presencia de las mujeres en la historia abre preguntas sobre su participación en la vida social y sobre las formas de recordarla. María Antonia Bel Bravo dedica esta obra a ese campo de estudio. Su lectura ofrece una aproximación a la relación entre mujeres e historia y al interés por reconocer experiencias que forman parte del pasado colectivo.",
+    "authors": [
+      {
+        "authorId": "331",
+        "name": "Bel Bravo, María Antonia",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "41",
+        "name": "Historia",
+        "slug": "historia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "170",
+      "name": "Ediciones Encuentro, S.A"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000065",
+    "language": "es",
+    "format": "EBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "14.24",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000065-83b6d2fb5000.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": null,
+    "narrators": [],
+    "offer": {
+      "offerId": "18",
+      "originalPrice": "18.99",
+      "discountAmount": "4.75",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "14.24",
+      "savingsAmount": "4.75",
+      "savingsPercent": "25.01"
+    }
+  },
+  {
+    "editionId": "144",
+    "bookId": "143",
+    "title": "Diccionario básico de antropología",
+    "subtitle": null,
+    "synopsis": "Un punto de entrada al vocabulario con el que la antropología estudia a las sociedades humanas y sus formas de vida. Su carácter de diccionario permite acercarse a la disciplina a través de sus términos, con una lectura de consulta que ayuda a situar conceptos y a comprender mejor el lenguaje de los estudios culturales y sociales.",
+    "authors": [
+      {
+        "authorId": "146",
+        "name": "Campo A., A. Lorena",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "40",
+        "name": "Ciencias Sociales",
+        "slug": "ciencias-sociales",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "103",
+      "name": "Ediciones Abya-Yala"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000058",
+    "language": "es",
+    "format": "AUDIOBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "23.19",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000058-7c38a4a76226.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": 2278,
+    "narrators": [
+      "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+    ],
+    "offer": {
+      "offerId": "19",
+      "originalPrice": "28.99",
+      "discountAmount": "5.80",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "23.19",
+      "savingsAmount": "5.80",
+      "savingsPercent": "20.01"
+    }
+  },
+  {
+    "editionId": "154",
+    "bookId": "153",
+    "title": "Historia mínima de Filipinas",
+    "subtitle": null,
+    "synopsis": "Filipinas ocupa el centro de esta aproximación breve a la historia de un archipiélago asiático. La obra invita a reconocer su trayectoria como un proceso propio y a situarla dentro de un marco histórico más amplio. Es una puerta de entrada para quienes desean conocer el pasado filipino antes de profundizar en estudios especializados.",
+    "authors": [
+      {
+        "authorId": "156",
+        "name": "Machuca Chávez, Paulina",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "41",
+        "name": "Historia",
+        "slug": "historia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "107",
+      "name": "El Colegio de México"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000059",
+    "language": "es",
+    "format": "AUDIOBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "25.59",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000059-b983d1e8997c.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": 2641,
+    "narrators": [
+      "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+    ],
+    "offer": {
+      "offerId": "20",
+      "originalPrice": "31.99",
+      "discountAmount": "6.40",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "25.59",
+      "savingsAmount": "6.40",
+      "savingsPercent": "20.01"
+    }
+  },
+  {
+    "editionId": "99",
+    "bookId": "98",
+    "title": "Ética básica (3a. ed.)",
+    "subtitle": null,
+    "synopsis": "Una aproximación a los fundamentos de la ética y a las preguntas que orientan la reflexión sobre la conducta humana. El énfasis en lo básico invita a distinguir el juicio moral de la mera opinión y a pensar qué razones sostienen nuestras decisiones. Una lectura para iniciar el estudio filosófico de la responsabilidad y la vida en común.",
+    "authors": [
+      {
+        "authorId": "97",
+        "name": "Etxeberria Mauleón, Xabier",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "36",
+        "name": "Filosofía",
+        "slug": "filosofia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "73",
+      "name": "Universidad de Deusto"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000060",
+    "language": "es",
+    "format": "AUDIOBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "13.49",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000060-16d2c0d9c6d8.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": 3328,
+    "narrators": [
+      "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+    ],
+    "offer": {
+      "offerId": "21",
+      "originalPrice": "14.99",
+      "discountAmount": "1.50",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "daysRemaining": 15,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "13.49",
+      "savingsAmount": "1.50",
+      "savingsPercent": "10.01"
+    }
+  },
+  {
+    "editionId": "157",
+    "bookId": "156",
+    "title": "Historia mínima de la eugenesia en América Latina",
+    "subtitle": null,
+    "synopsis": "La eugenesia en América Latina aparece aquí como un problema histórico y social relacionado con la población, el control de la natalidad y las políticas migratorias. El tema invita a examinar cómo ciertas ideas sobre la constitución humana se vincularon con decisiones públicas. Un acercamiento a una historia en la que ciencia, poder y clasificación social se entrecruzan.",
+    "authors": [
+      {
+        "authorId": "159",
+        "name": "Reggiani, Andrés Horacio",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "41",
+        "name": "Historia",
+        "slug": "historia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "107",
+      "name": "El Colegio de México"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000066",
+    "language": "es",
+    "format": "AUDIOBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "9.89",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000066-7f29f1be1dba.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": 1347,
+    "narrators": [
+      "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+    ],
+    "offer": {
+      "offerId": "22",
+      "originalPrice": "10.99",
+      "discountAmount": "1.10",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "daysRemaining": 15,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "9.89",
+      "savingsAmount": "1.10",
+      "savingsPercent": "10.01"
+    }
+  },
+  {
+    "editionId": "153",
+    "bookId": "152",
+    "title": "Historia mínima de Cuba",
+    "subtitle": null,
+    "synopsis": "Una entrada breve al pasado de Cuba que permite situar la isla como objeto de estudio histórico. Su alcance nacional ofrece un marco para pensar los cambios de la sociedad cubana y su trayectoria a través del tiempo. Resulta de interés para quien busca una primera orientación antes de abordar periodos o problemas concretos de su historia.",
+    "authors": [
+      {
+        "authorId": "155",
+        "name": "Zanetti Lecuona, Oscar",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "41",
+        "name": "Historia",
+        "slug": "historia",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "107",
+      "name": "El Colegio de México"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000067",
+    "language": "es",
+    "format": "AUDIOBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "18.69",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000067-32b4139c5145.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": 3109,
+    "narrators": [
+      "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+    ],
+    "offer": {
+      "offerId": "23",
+      "originalPrice": "21.99",
+      "discountAmount": "3.30",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-13T23:59:59-05:00",
+      "daysRemaining": 7,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "18.69",
+      "savingsAmount": "3.30",
+      "savingsPercent": "15.01"
+    }
+  },
+  {
+    "editionId": "128",
+    "bookId": "127",
+    "title": "La geometría de las ciudades",
+    "subtitle": null,
+    "synopsis": "La forma de las ciudades se convierte en una vía para pensar el desarrollo urbano y la ordenación del territorio. El cruce entre geometría y espacio habitado invita a mirar cómo se organiza una ciudad y qué preguntas plantea su configuración. Una lectura para acercarse al urbanismo desde la relación entre estructura espacial y crecimiento urbano.",
+    "authors": [
+      {
+        "authorId": "126",
+        "name": "Sorando Muzás, José María",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "35",
+        "name": "Matemáticas",
+        "slug": "matematicas",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "91",
+      "name": "Los libros de la Catarata"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000070",
+    "language": "es",
+    "format": "AUDIOBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "27.19",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000070-2a66cdd32506.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": 5538,
+    "narrators": [
+      "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+    ],
+    "offer": {
+      "offerId": "24",
+      "originalPrice": "33.99",
+      "discountAmount": "6.80",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-09T23:59:59-05:00",
+      "daysRemaining": 3,
+      "endingSoon": true,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "27.19",
+      "savingsAmount": "6.80",
+      "savingsPercent": "20.01"
+    }
+  },
+  {
+    "editionId": "113",
+    "bookId": "112",
+    "title": "La confesión: novela",
+    "subtitle": null,
+    "synopsis": "Tras el asesinato de un psiquiatra en Seúl, un profesor de filosofía es detenido y debe explicar su relación con el crimen. Su confesión reconstruye una vida marcada por pérdidas y conflictos, mientras las contradicciones vuelven incierta la frontera entre lo ocurrido y lo imaginado. Hailji plantea una historia de fragilidad humana en la que la confianza del lector se pone a prueba.",
+    "authors": [
+      {
+        "authorId": "111",
+        "name": "Hailji",
+        "order": 1
+      }
+    ],
+    "categories": [
+      {
+        "categoryId": "34",
+        "name": "Literatura",
+        "slug": "literatura",
+        "parentCategoryId": null
+      }
+    ],
+    "publisher": {
+      "publisherId": "36",
+      "name": "Editorial Verbum"
+    },
+    "isbn13": null,
+    "sku": "PLG-BK-000074",
+    "language": "es",
+    "format": "AUDIOBOOK",
+    "pageCount": null,
+    "publicationDate": null,
+    "price": "7.19",
+    "coverUrl": "https://covers.pliegolibros.com/covers/editions/v2/PLG-BK-000074-ee028ef97b6f.webp",
+    "coverLicense": null,
+    "coverSourceUrl": null,
+    "coverAttribution": null,
+    "available": true,
+    "ebookFileFormat": null,
+    "audioDurationSeconds": 4835,
+    "narrators": [
+      "Narrador DEMO PLIEGO (sin identidad bibliográfica)"
+    ],
+    "offer": {
+      "offerId": "25",
+      "originalPrice": "7.99",
+      "discountAmount": "0.80",
+      "startsAt": "2026-10-06T00:00:00-05:00",
+      "endsAt": "2026-10-21T23:59:59-05:00",
+      "daysRemaining": 15,
+      "endingSoon": false,
+      "offerCopy": null,
+      "terms": null,
+      "effectivePrice": "7.19",
+      "savingsAmount": "0.80",
+      "savingsPercent": "10.01"
+    }
+  }
+]

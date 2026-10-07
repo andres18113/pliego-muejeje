@@ -1,0 +1,68 @@
+/* PLIEGO's confirmation dialog. Portalled, so it carries its own tokens. One grammar for every confirmation:
+   white paper, a neutral veil, an ultramar outline for the answer that keeps things, and — for destructive
+   decisions — a dark red answer whose hover and press are darker reds. Nothing here turns lavender. */
+.dialog.dialog {
+  --cd-sheet: #fff;
+  --cd-ink: var(--store-ink, #252740);
+  --cd-muted: #595a6e;
+  --cd-keep: var(--store-blue, #283da8);
+  --cd-keep-hover: color-mix(in srgb, var(--store-blue, #283da8) 8%, transparent);
+  --cd-keep-press: color-mix(in srgb, var(--store-blue, #283da8) 15%, transparent);
+  --cd-decide: var(--store-action, #283da8);
+  --cd-decide-hover: var(--store-action-hover, #1d2c86);
+  --cd-decide-press: #172470;
+  --cd-on-fill: #fff;
+  --cd-danger: var(--error, #7e281f);
+  --cd-danger-hover: #651f18;
+  --cd-danger-press: #521812;
+  --cd-focus: var(--store-blue, #283da8);
+  display: block; padding: clamp(22px, 5vw, 30px); border-radius: 24px; background: var(--cd-sheet); color: var(--cd-ink);
+  box-shadow: 0 24px 60px -24px rgb(20 21 26 / .45);
+}
+:global([data-mantine-color-scheme="dark"]) .dialog.dialog {
+  --cd-sheet: #26283f;
+  --cd-ink: #f0edf8;
+  --cd-muted: #c5c1d5;
+  /* Neutral on dark: the ink itself outlines the keep answer; a pale ultramar draws focus. */
+  --cd-keep: #f0edf8;
+  --cd-keep-hover: rgb(255 255 255 / .08);
+  --cd-keep-press: rgb(255 255 255 / .14);
+  --cd-decide: var(--store-action, #3a52d0);
+  --cd-decide-hover: var(--store-action-hover, #4b63e0);
+  --cd-decide-press: #2f45b8;
+  --cd-danger: #9a3226;
+  --cd-danger-hover: #ad3b2d;
+  --cd-danger-press: #84291f;
+  --cd-focus: #9fb1ff;
+  box-shadow: 0 24px 60px -24px rgb(0 0 0 / .6);
+}
+.veil.veil { background: rgb(20 21 26 / .42); }
+:global([data-mantine-color-scheme="dark"]) .veil.veil { background: rgb(8 8 12 / .62); }
+
+.title.title { margin: 0; color: var(--cd-ink); font: 650 clamp(1.375rem, 1.2rem + .8vw, 1.625rem)/1.15 var(--store-display); letter-spacing: -.035em; overflow-wrap: anywhere; text-wrap: balance; }
+.body.body { margin: 0; padding: 12px 0 0; color: var(--cd-ink); line-height: 1.5; }
+.body p { margin: 0; }
+.body p + p { margin-top: 8px; color: var(--cd-muted); }
+/* The safe answer is first to receive focus; the decisive one closes the row, where the eye ends. */
+.actions { display: flex; flex-flow: row-reverse wrap; justify-content: flex-start; gap: 10px 12px; margin-top: 24px; }
+.actions > * { min-height: 44px; }
+
+/* Each answer owns all of its states, so the legacy button hover (a lavender fill) never reaches it. */
+.keep.keep { border-color: var(--cd-keep); background: transparent; color: var(--cd-keep); }
+.keep.keep:hover:not([aria-disabled="true"]) { border-color: var(--cd-keep); background: var(--cd-keep-hover); color: var(--cd-keep); }
+.keep.keep:active:not([aria-disabled="true"]) { background: var(--cd-keep-press); }
+.decide.decide { border-color: var(--cd-decide); background: var(--cd-decide); color: var(--cd-on-fill); }
+.decide.decide:hover:not([aria-disabled="true"]) { border-color: var(--cd-decide-hover); background: var(--cd-decide-hover); color: var(--cd-on-fill); }
+.decide.decide:active:not([aria-disabled="true"]) { border-color: var(--cd-decide-press); background: var(--cd-decide-press); }
+.destructive.destructive { border-color: var(--cd-danger); background: var(--cd-danger); color: var(--cd-on-fill); }
+.destructive.destructive:hover:not([aria-disabled="true"]) { border-color: var(--cd-danger-hover); background: var(--cd-danger-hover); color: var(--cd-on-fill); }
+.destructive.destructive:active:not([aria-disabled="true"]) { border-color: var(--cd-danger-press); background: var(--cd-danger-press); }
+.actions [aria-disabled="true"] { cursor: progress; opacity: .7; }
+/* Focus is a ring around the answer, never a new fill: the answer keeps its own colour. */
+.dialog :focus-visible { outline: 3px solid var(--cd-focus); outline-offset: 2px; box-shadow: none; }
+
+@media (max-width: 479px) { .actions > * { flex: 1 1 100%; } }
+@media (forced-colors: active) {
+  .dialog.dialog { border: 1px solid CanvasText; }
+  .dialog :focus-visible { outline-color: Highlight; }
+}

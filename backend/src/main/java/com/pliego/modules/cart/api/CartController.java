@@ -59,7 +59,8 @@ public class CartController {
                 money(cart.amounts().shippingAmount()),money(cart.amounts().total()),
                 cart.deliveryWindow() == null ? null : cart.deliveryWindow().from().toString(),
                 cart.deliveryWindow() == null ? null : cart.deliveryWindow().to().toString(),
-                cart.requiresPhysicalFulfillment(),cart.physicalItemCount(),cart.digitalItemCount());
+                cart.requiresPhysicalFulfillment(),cart.physicalItemCount(),cart.digitalItemCount(),
+                money(cart.originalSubtotal()), money(cart.savingsTotal()), money(cart.currentSubtotal()), cart.quoteFingerprint());
     }
 
     @PostMapping(path = "/items", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -93,7 +94,8 @@ public class CartController {
     private static Item item(CartItem item) {
         return new Item(item.cartItemId(), item.editionId(), item.title(), item.authors(), item.sku(), item.coverUrl(),
                 item.quantity(), money(item.currentPrice()), money(item.currentSubtotal()), item.available(),
-                item.unavailabilityReason(), item.format(), item.requiresPhysicalFulfillment(), item.quantityEditable());
+                item.unavailabilityReason(), item.format(), item.requiresPhysicalFulfillment(), item.quantityEditable(),
+                money(item.originalPrice()), money(item.unitSavings()), money(item.originalSubtotal()), money(item.lineSavings()));
     }
 
     private static ItemMutation mutation(CartItemResult result) {
@@ -101,7 +103,7 @@ public class CartController {
     }
 
     private static String money(BigDecimal value) {
-        return value.setScale(2, RoundingMode.UNNECESSARY).toPlainString();
+        return value == null ? null : value.setScale(2, RoundingMode.UNNECESSARY).toPlainString();
     }
 
     private static long actorId(Jwt jwt) {

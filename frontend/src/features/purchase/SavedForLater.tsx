@@ -16,7 +16,11 @@ const SHOWN = 4;
  * "Guardado para después" is the customer's Favoritos, not a second list: the same API, the same rows
  * (`FavoriteRow`: today's price and stock, add to cart, remove) and a way through to the full collection.
  */
-export function SavedForLater() {
+/**
+ * `savedQuantities`: the quantity each edition had when this visit saved it from the cart, so moving it back
+ * restores the same line; `onRestored` lets the cart forget it (and withdraw a stale undo) once it is back.
+ */
+export function SavedForLater({ savedQuantities, onRestored }: { savedQuantities?: ReadonlyMap<string, number>; onRestored?: (editionId: string) => void } = {}) {
   const { session, clear } = useSession();
   const queryClient = useQueryClient();
   const userId = session?.user.userId ?? "";
@@ -63,6 +67,8 @@ export function SavedForLater() {
                   returnHref="/cart"
                   queryKey={favoriteStatusQueryKey(userId, [edition.editionId])}
                   onRemoved={() => void queryClient.invalidateQueries({ queryKey: ["customer-favorites", userId] })}
+                  cartQuantity={savedQuantities?.get(edition.editionId)}
+                  onAddedToCart={onRestored}
                 />
               </li>
             ))}

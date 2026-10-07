@@ -135,7 +135,6 @@ function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
         <div className={classes.ownership}>
           <p className={classes.ownershipState}><MaterialSymbol name={owned ? "check_circle" : "block"} fill={owned} size={22} /><span>{item.ownershipLabel}</span></p>
           <p>Adquirido el <time dateTime={item.acquiredAt}>{acquiredDateLabel(item.acquiredAt)}</time></p>
-          {item.accessLabel !== item.ownershipLabel && <p>{item.accessLabel}</p>}
         </div>
         {item.availableActions.length > 0 && <nav className={classes.actions} aria-label="Acciones de la adquisición">
           {item.availableActions.map((action, index) => <Link key={`${action.type}-${index}`} to={action.href} className={classes.action} data-action={action.type}>{action.label}</Link>)}

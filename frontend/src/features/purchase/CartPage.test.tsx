@@ -75,6 +75,37 @@ describe("CartPage", () => {
     expect(within(summary).getByText("Total").nextSibling).toHaveTextContent("40,50");
   });
 
+  it("shows the server's offer saving per line and in the summary, without computing it", async () => {
+    // Quantity 2: the line saving is the server's own (deliberately not 2 × unitSavings, to prove it is not derived).
+    stubApi({ "GET /api/v1/cart": () => json({
+      ...cartBody([{ quantity: 2, currentPrice: "63.96", currentSubtotal: "127.92", originalPrice: "79.95", unitSavings: "15.99", originalSubtotal: "159.90", lineSavings: "31.97" }]),
+      originalSubtotal: "159.90", savingsTotal: "31.97", currentSubtotal: "127.92",
+      subtotal: "127.92", taxRate: "15.00", taxAmount: "19.19", shippingAmount: "0.00", total: "147.11",
+    }) });
+    const { container } = renderPurchaseRoute(routes, "/cart");
+
+    const line = await screen.findByText(/Ahorras \$\s*31,97 en este artículo/);
+    expect(line.parentElement?.querySelector(".material-symbol")?.textContent).toBe("sell");
+    expect(container.querySelector("[data-cart-line] s")).toHaveTextContent("159,90");
+    const summary = screen.getByRole("complementary", { name: "Resumen del pedido" });
+    const rows = [...summary.querySelectorAll("dl > div")].map((row) => [row.querySelector("dt")?.textContent, row.querySelector("dd")?.textContent?.replace(/\s+/g, " ")]);
+    expect(rows).toEqual([["Subtotal", "$ 159,90"], ["Ahorro total hoy", "-$ 31,97"], ["IVA (15 %)", "$ 19,19"], ["Envío", "$ 0,00"], ["Total", "$ 147,11"]]);
+    expect(summary.querySelector("[data-tone='savings']")).not.toBeNull();
+  });
+
+  it("renders no saving strip, struck price or savings row when the server reports no saving", async () => {
+    stubApi({ "GET /api/v1/cart": () => json({
+      ...cartBody([{ quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", originalPrice: "18.50", unitSavings: "0.00", originalSubtotal: "18.50", lineSavings: "0.00" }]),
+      originalSubtotal: "18.50", savingsTotal: "0.00", currentSubtotal: "18.50", subtotal: "18.50", taxRate: "15.00", taxAmount: "2.78", total: "21.28",
+    }) });
+    const { container } = renderPurchaseRoute(routes, "/cart");
+    const summary = await screen.findByRole("complementary", { name: "Resumen del pedido" });
+    expect(within(summary).queryByText("Ahorro total hoy")).toBeNull();
+    expect(within(summary).getByText("Subtotal").nextSibling).toHaveTextContent("18,50");
+    expect(screen.queryByText(/en este artículo/)).toBeNull();
+    expect(container.querySelector("[data-cart-line] s")).toBeNull();
+  });
+
   it("sets an absolute quantity with PUT and shows the refreshed server state", async () => {
     const api = stubApi({
       "GET /api/v1/cart": [
@@ -172,6 +203,26 @@ describe("CartPage", () => {
     await vi.waitFor(() => expect(screen.getByRole("link", { name: "Cien años de soledad" })).toHaveFocus());
   });
 
+  it("reconciles an unknown undo outcome with reads without repeating an additive write", async () => {
+    let removed = false, committed = false, readAvailable = false;
+    const api = stubApi({
+      "GET /api/v1/cart": () => committed && !readAvailable ? problem(503, "SERVICE_UNAVAILABLE", "Temporalmente no disponible", "Inténtalo más tarde.") : json(cartBody(removed && !committed ? [] : [{ quantity: 2, currentSubtotal: "37.00" }])),
+      "DELETE /api/v1/cart/items/100": () => { removed = true; return new Response(null, { status: 204 }); },
+      "POST /api/v1/cart/items": () => { committed = true; throw new TypeError("lost response"); },
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/cart");
+    await user.click(await screen.findByRole("button", { name: "Quitar Cien años de soledad del carrito" }));
+    await user.click(await screen.findByRole("button", { name: "Deshacer" }));
+    const recovery = await screen.findByRole("button", { name: "Consultar carrito" }, { timeout: 4000 });
+    readAvailable = true;
+    await user.click(recovery);
+    await screen.findByRole("link", { name: "Cien años de soledad" });
+    expect(api.count("POST", "/api/v1/cart/items")).toBe(1);
+    expect(screen.queryByRole("button", { name: "Deshacer" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Reintentar" })).not.toBeInTheDocument();
+  });
+
   it("saves an item for later in Favoritos before taking it out of the cart", async () => {
     const api = stubApi({
       "GET /api/v1/cart": [() => json(cartBody()), () => json(cartBody([]))],
@@ -186,6 +237,39 @@ describe("CartPage", () => {
     expect(await screen.findByText("Guardado en Favoritos")).toBeInTheDocument();
     const order = api.calls.filter((call) => call.method !== "GET").map((call) => call.method);
     expect(order).toEqual(["PUT", "DELETE"]);
+  });
+
+  it("moves a saved line back with the quantity it had, withdraws the stale undo, and keeps it a normal line", async () => {
+    const rayuela = { editionId: "42", bookId: "30", title: "Cien años de soledad", authors: "Gabriel García Márquez", publisher: "Editorial Sur", isbn13: null, price: "18.50", coverUrl: null, coverLicense: null, coverAttribution: null, format: "PAPERBACK", language: "es", available: true, favoritedAt: "2026-10-01T12:00:00Z" };
+    let line: { cartItemId: string; quantity: number } | null = { cartItemId: "100", quantity: 3 };
+    let saved = false;
+    const cart = () => json(cartBody(line ? [{ cartItemId: line.cartItemId, quantity: line.quantity, currentSubtotal: (18.5 * line.quantity).toFixed(2) }] : []));
+    const api = stubApi({
+      "GET /api/v1/cart": () => cart(),
+      "GET /api/v1/me/favorites": () => json({ items: saved ? [rayuela] : [], page: 0, pageSize: 4, totalCount: saved ? "1" : "0" }),
+      "GET /api/v1/me/favorites/status": () => json([{ editionId: "42", favorite: saved }]),
+      "PUT /api/v1/me/favorites/42": () => { saved = true; return new Response(null, { status: 204 }); },
+      "DELETE /api/v1/cart/items/100": () => { line = null; return new Response(null, { status: 204 }); },
+      "POST /api/v1/cart/items": async (request: Request) => { const body = await request.json() as { quantity: number }; line = { cartItemId: "101", quantity: body.quantity }; return json({ cartItemId: "101", quantity: body.quantity }, 201); },
+      "PUT /api/v1/cart/items/101": async (request: Request) => { const body = await request.json() as { quantity: number }; line = { cartItemId: "101", quantity: body.quantity }; return json({ cartItemId: "101", quantity: body.quantity }); },
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/cart");
+
+    await user.click(await screen.findByRole("button", { name: "Guardar Cien años de soledad para después" }));
+    expect(await screen.findByRole("button", { name: "Deshacer" })).toBeInTheDocument();
+    const savedRegion = await screen.findByRole("region", { name: "Guardado para después" });
+    await user.click(await within(savedRegion).findByRole("button", { name: /Agregar al carrito: Cien años de soledad/ }));
+
+    const trigger = await screen.findByRole("combobox", { name: "Cantidad de Cien años de soledad" });
+    expect(trigger).toHaveTextContent("3");
+    expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({ editionId: "42", quantity: 3 });
+    expect(screen.queryByRole("button", { name: "Deshacer" })).toBeNull();
+
+    await user.click(trigger);
+    await user.click(await screen.findByRole("option", { name: "5" }));
+    expect(await screen.findByText("Cantidad actualizada: 5 unidades.")).toBeInTheDocument();
+    expect(api.calls.filter((call) => call.method === "PUT" && call.path.startsWith("/api/v1/cart/items/101")).map((call) => call.body)).toEqual([{ quantity: 5 }]);
   });
 
   it("chooses a quantity from the keyboard without leaving the trigger", async () => {

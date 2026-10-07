@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSession } from "@/app/session";
 import { cartUnitCount, useCustomerCart } from "@/features/purchase/cartQuery";
+import { BrandLogo } from "@/shared/ui/BrandLogo";
 import { HeaderAccount } from "./HeaderAccount";
 import site from "./SiteHeader.module.css";
 import classes from "./PurchaseHeader.module.css";
@@ -26,7 +27,7 @@ export function PurchaseHeader() {
         event.preventDefault(); main.focus(); main.scrollIntoView({ block: "start", behavior: "instant" });
       }}>Saltar al contenido</a>
       <div className={classes.bar}>
-        <UnstyledButton component={Link} to="/" className={site.wordmark} aria-label="PLIEGO, ir al inicio">PLIEGO</UnstyledButton>
+        <UnstyledButton component={Link} to="/" className={site.wordmark} aria-label="PLIEGO, ir al inicio"><BrandLogo compact="phone" /></UnstyledButton>
         <p className={classes.title} aria-live="polite">
           {place}{units !== null && units > 0 && <span> ({units === 1 ? "1 artículo" : `${units} artículos`})</span>}
         </p>

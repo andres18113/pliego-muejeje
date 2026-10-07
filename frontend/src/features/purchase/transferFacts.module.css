@@ -14,7 +14,7 @@
 .fact dd { grid-area: value; min-width: 0; margin: 0; font-weight: 600; line-height: 1.3; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .fact[data-prominent] dd { font: 650 1.1875rem/1.2 var(--store-display); letter-spacing: -.01em; }
 .copy { grid-area: action; display: inline-flex; align-items: center; justify-content: center; gap: 7px; min-width: 104px; min-height: 44px; padding: 7px 12px; border: 1.5px solid var(--pf-line, var(--acc-line, #d9d5e6)); border-radius: 8px; background: transparent; color: var(--pf-blue, var(--acc-blue, #283da8)); font-size: .875rem; font-weight: 600; text-decoration: none; white-space: nowrap; cursor: pointer; }
-.copy:hover { border-color: currentColor; background: var(--store-lavender, #e4def4); color: var(--store-blue, #283da8); }
+.copy:hover { border-color: currentColor; background: var(--transfer-copy-hover, var(--store-hover)); color: var(--pf-blue, var(--store-blue, #283da8)); }
 .copy:focus-visible { outline: 3px solid var(--pf-blue, var(--acc-blue, #283da8)); outline-offset: 2px; }
 @media (max-width: 400px) {
   .fact { grid-template-columns: minmax(0, 1fr); grid-template-areas: "label" "value" "action"; }

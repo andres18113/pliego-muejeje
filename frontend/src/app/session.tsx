@@ -12,12 +12,15 @@ export interface AuthSession {
 }
 
 type RestoreState = "restoring" | "ready" | "unavailable";
+export interface SessionAuthority { version: number; isCurrent: () => boolean }
 
 interface SessionContextValue {
   session: AuthSession | null;
   /** True after the backend confirms that a previously active session is no longer valid. */
   expired: boolean;
   restoreState: RestoreState;
+  authorityVersion: number;
+  captureAuthority: (expected: AuthSession | null) => SessionAuthority;
   establish: (session: AuthSession) => void;
   updateEmailForSession: (expected: AuthSession, email: string) => boolean;
   clear: (reason?: "expired") => void;
@@ -28,13 +31,6 @@ interface SessionContextValue {
 const SessionContext = createContext<SessionContextValue | null>(null);
 const SESSION_CHANNEL = "pliego-auth-session";
 
-function notifyOtherTabs(reason: "logout" | "expired") {
-  if (typeof BroadcastChannel === "undefined") return;
-  const channel = new BroadcastChannel(SESSION_CHANNEL);
-  channel.postMessage(reason);
-  channel.close();
-}
-
 export function SessionProvider({ children, restoreOnMount = true }: {
   children: ReactNode;
   restoreOnMount?: boolean;
@@ -42,28 +38,69 @@ export function SessionProvider({ children, restoreOnMount = true }: {
   const queryClient = useQueryClient();
   const [session, setSession] = useState<AuthSession | null>(null);
   const currentSession = useRef<AuthSession | null>(null);
+  const generation = useRef(0);
+  const authorityGeneration = useRef(0);
+  const sessionChannel = useRef<BroadcastChannel | null>(null);
+  const notifyOtherTabs = useCallback((reason: "logout" | "expired" | "changed") => {
+    // Use the listening instance so BroadcastChannel never echoes a login back to this tab.
+    sessionChannel.current?.postMessage(reason);
+  }, []);
   const wasAuthenticated = useRef(false);
   const [expired, setExpired] = useState(false);
   const [restoreState, setRestoreState] = useState<RestoreState>(restoreOnMount ? "restoring" : "ready");
 
+  const captureAuthority = useCallback((expected: AuthSession | null): SessionAuthority => {
+    const version = authorityGeneration.current;
+    const userId = expected?.user.userId, role = expected?.user.role;
+    return { version, isCurrent: () => version === authorityGeneration.current && (expected === null
+      ? currentSession.current === null
+      : currentSession.current?.user.userId === userId && currentSession.current?.user.role === role) };
+  }, []);
+
+  const forgetPrivateData = useCallback(() => {
+    queryClient.removeQueries({ predicate: query => query.meta?.authRequired === true });
+    const mutations = queryClient.getMutationCache();
+    for (const mutation of mutations.getAll()) if (mutation.meta?.authRequired === true) mutations.remove(mutation);
+  }, [queryClient]);
+
+  useEffect(() => () => {
+    // A disposed provider cannot replace a newer provider's token or revive its timers.
+    generation.current += 1;
+    authorityGeneration.current += 1;
+  }, []);
+
   const forgetSession = useCallback((reason?: "expired") => {
+    generation.current += 1;
+    authorityGeneration.current += 1;
     currentSession.current = null;
     setApiAccessToken(null);
-    queryClient.removeQueries({ predicate: (query) => query.meta?.authRequired === true });
+    forgetPrivateData();
     setExpired(reason === "expired");
     wasAuthenticated.current = false;
     setSession(null);
     setRestoreState("ready");
-  }, [queryClient]);
+  }, [forgetPrivateData]);
 
   const establish = useCallback((next: AuthSession) => {
+    generation.current += 1;
+    if (currentSession.current?.user.userId !== next.user.userId || currentSession.current?.user.role !== next.user.role) {
+      authorityGeneration.current += 1;
+      forgetPrivateData();
+    }
     currentSession.current = next;
     setApiAccessToken(next.accessToken);
     wasAuthenticated.current = true;
     setExpired(false);
     setSession(next);
     setRestoreState("ready");
-  }, []);
+  }, [forgetPrivateData]);
+
+  const establishFromCredentials = useCallback((next: AuthSession) => {
+    authorityGeneration.current += 1;
+    establish(next);
+    // Broadcast no private data or token; other tabs restore the authoritative cookie.
+    notifyOtherTabs("changed");
+  }, [establish, notifyOtherTabs]);
 
   const updateEmailForSession = useCallback((expected: AuthSession, email: string) => {
     // Compare the exact accepted session generation, including token and identity, atomically.
@@ -88,14 +125,16 @@ export function SessionProvider({ children, restoreOnMount = true }: {
       user: response.user as AuthenticatedUser,
     });
     return true;
-  }, [establish, forgetSession]);
+  }, [establish, forgetSession, notifyOtherTabs]);
 
   const retryRestore = useCallback(async () => {
+    const expectedGeneration = generation.current;
     setRestoreState("restoring");
     try {
-      acceptRestoredSession(await refreshSession());
+      const response = await refreshSession();
+      if (generation.current === expectedGeneration) acceptRestoredSession(response);
     } catch {
-      setRestoreState("unavailable");
+      if (generation.current === expectedGeneration) setRestoreState("unavailable");
     }
   }, [acceptRestoredSession]);
 
@@ -106,13 +145,17 @@ export function SessionProvider({ children, restoreOnMount = true }: {
   useEffect(() => {
     if (typeof BroadcastChannel === "undefined") return;
     const channel = new BroadcastChannel(SESSION_CHANNEL);
+    sessionChannel.current = channel;
     channel.onmessage = (event: MessageEvent<unknown>) => {
       if (event.data === "logout" || event.data === "expired") {
         forgetSession(event.data === "expired" ? "expired" : undefined);
+      } else if (event.data === "changed") {
+        forgetSession();
+        void retryRestore();
       }
     };
-    return () => channel.close();
-  }, [forgetSession]);
+    return () => { sessionChannel.current = null; channel.close(); };
+  }, [forgetSession, retryRestore]);
 
   const clear = useCallback((reason?: "expired") => {
     if (reason !== "expired") {
@@ -120,16 +163,21 @@ export function SessionProvider({ children, restoreOnMount = true }: {
       return;
     }
     setRestoreState("restoring");
+    const expectedGeneration = generation.current;
     void refreshSession()
-      .then((response) => { acceptRestoredSession(response); })
-      .catch(() => { setRestoreState("unavailable"); });
+      .then((response) => { if (generation.current === expectedGeneration) acceptRestoredSession(response); })
+      .catch(() => { if (generation.current === expectedGeneration) setRestoreState("unavailable"); });
   }, [acceptRestoredSession, forgetSession]);
 
   const logout = useCallback(async () => {
+    // Token rotation of this identity does not supersede an intentional logout.
+    // A new credential login or identity boundary does supersede it.
+    const expectedGeneration = authorityGeneration.current;
     await logoutSession();
+    if (authorityGeneration.current !== expectedGeneration) return;
     forgetSession();
     notifyOtherTabs("logout");
-  }, [forgetSession]);
+  }, [forgetSession, notifyOtherTabs]);
 
   useEffect(() => {
     if (!session) return;
@@ -142,12 +190,13 @@ export function SessionProvider({ children, restoreOnMount = true }: {
     const refresh = async () => {
       if (refreshing) return;
       refreshing = true;
+      const expectedGeneration = generation.current;
       try {
         const response = await refreshSession();
-        acceptRestoredSession(response);
+        if (generation.current === expectedGeneration) acceptRestoredSession(response);
       } catch {
         // A temporary network failure does not revoke the server session; retry while this tab is open.
-        schedule(30_000);
+        if (generation.current === expectedGeneration) schedule(30_000);
       } finally {
         refreshing = false;
       }
@@ -171,12 +220,14 @@ export function SessionProvider({ children, restoreOnMount = true }: {
     session,
     expired,
     restoreState,
-    establish,
+    authorityVersion: authorityGeneration.current,
+    captureAuthority,
+    establish: establishFromCredentials,
     updateEmailForSession,
     clear,
     logout,
     retryRestore,
-  }), [clear, establish, expired, logout, restoreState, retryRestore, session, updateEmailForSession]);
+  }), [captureAuthority, clear, establishFromCredentials, expired, logout, restoreState, retryRestore, session, updateEmailForSession]);
 
   return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }

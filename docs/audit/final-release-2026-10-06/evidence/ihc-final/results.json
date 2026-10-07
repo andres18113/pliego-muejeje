@@ -1,0 +1,665 @@
+[
+  {
+    "width": 375,
+    "stages": [
+      {
+        "stage": "home",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "BODY",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "skip-link",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "MAIN",
+        "activeId": "contenido-principal",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": true,
+        "overflow": false
+      },
+      {
+        "stage": "search-escape",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Buscar libros en el catálogo",
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "search-submit",
+        "url": "/catalog?que=Cien",
+        "title": "Cien · Catálogo · PLIEGO",
+        "heading": "Resultados para «Cien»",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "filters-keyboard",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "sort-keyboard",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Ordenar por",
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "edition-keyboard",
+        "url": "/catalog/editions/123?from=%2Fcatalog",
+        "title": "Edición · PLIEGO",
+        "heading": "Biblioteca 6045117dab35",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "help",
+        "url": "/ayuda",
+        "title": "Ayuda · PLIEGO",
+        "heading": "Estamos aquí para ayudarte.",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "help-article-keyboard",
+        "url": "/ayuda/ebooks",
+        "title": "eBooks · Ayuda · PLIEGO",
+        "heading": "eBooks",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog-503",
+        "url": "/catalog?que=auditoriafinal",
+        "title": "auditoriafinal · Catálogo · PLIEGO",
+        "heading": "Resultados para «auditoriafinal»",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog-503-recovered",
+        "url": "/catalog?que=auditoriafinal",
+        "title": "auditoriafinal · Catálogo · PLIEGO",
+        "heading": "Resultados para «auditoriafinal»",
+        "activeTag": "BODY",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "not-found",
+        "url": "/auditoria-final-ruta-no-existente",
+        "title": "Página no encontrada · PLIEGO",
+        "heading": "No encontramos esta página.",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "not-found-recovered",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "H1",
+        "activeId": "page-title",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      }
+    ],
+    "blockedWrites": [],
+    "pageErrors": [],
+    "axe": {
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            {
+              "target": [
+                "span[data-disabled=\"true\"] > span:nth-child(2)"
+              ],
+              "html": "<span>Anterior</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.37 (foreground color: #858398, background color: #f6f5f0, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": [],
+      "passes": [
+        {
+          "id": "aria-required-attr",
+          "nodeCount": 6
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "nodeCount": 82
+        },
+        {
+          "id": "button-name",
+          "nodeCount": 24
+        },
+        {
+          "id": "color-contrast",
+          "nodeCount": 134
+        },
+        {
+          "id": "link-name",
+          "nodeCount": 42
+        }
+      ]
+    },
+    "sortOptions": [
+      "Más vendidoscheck",
+      "Título: A–Zcheck",
+      "Precio: menor a mayorcheck",
+      "Precio: mayor a menorcheck"
+    ],
+    "errorRecovery": {
+      "status": 503,
+      "spanish": "Catálogo temporalmente no disponibleVuelve a consultar en unos minutos.Volver a intentar"
+    }
+  },
+  {
+    "width": 768,
+    "stages": [
+      {
+        "stage": "home",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "BODY",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "skip-link",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "MAIN",
+        "activeId": "contenido-principal",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": true,
+        "overflow": false
+      },
+      {
+        "stage": "search-escape",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Buscar libros en el catálogo",
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "search-submit",
+        "url": "/catalog?que=Cien",
+        "title": "Cien · Catálogo · PLIEGO",
+        "heading": "Resultados para «Cien»",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "filters-keyboard",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "sort-keyboard",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Ordenar por",
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "edition-keyboard",
+        "url": "/catalog/editions/123?from=%2Fcatalog",
+        "title": "Biblioteca 6045117dab35 · PLIEGO",
+        "heading": "Biblioteca 6045117dab35",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "help",
+        "url": "/ayuda",
+        "title": "Ayuda · PLIEGO",
+        "heading": "Estamos aquí para ayudarte.",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "help-article-keyboard",
+        "url": "/ayuda/ebooks",
+        "title": "eBooks · Ayuda · PLIEGO",
+        "heading": "eBooks",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog-503",
+        "url": "/catalog?que=auditoriafinal",
+        "title": "auditoriafinal · Catálogo · PLIEGO",
+        "heading": "Resultados para «auditoriafinal»",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog-503-recovered",
+        "url": "/catalog?que=auditoriafinal",
+        "title": "auditoriafinal · Catálogo · PLIEGO",
+        "heading": "Resultados para «auditoriafinal»",
+        "activeTag": "BODY",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "not-found",
+        "url": "/auditoria-final-ruta-no-existente",
+        "title": "Página no encontrada · PLIEGO",
+        "heading": "No encontramos esta página.",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "not-found-recovered",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "H1",
+        "activeId": "page-title",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      }
+    ],
+    "blockedWrites": [],
+    "pageErrors": [],
+    "axe": {
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            {
+              "target": [
+                "span[data-disabled=\"true\"] > span:nth-child(2)"
+              ],
+              "html": "<span>Anterior</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.37 (foreground color: #858398, background color: #f6f5f0, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": [],
+      "passes": [
+        {
+          "id": "aria-required-attr",
+          "nodeCount": 6
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "nodeCount": 82
+        },
+        {
+          "id": "button-name",
+          "nodeCount": 24
+        },
+        {
+          "id": "color-contrast",
+          "nodeCount": 136
+        },
+        {
+          "id": "link-name",
+          "nodeCount": 42
+        }
+      ]
+    },
+    "sortOptions": [
+      "Más vendidoscheck",
+      "Título: A–Zcheck",
+      "Precio: menor a mayorcheck",
+      "Precio: mayor a menorcheck"
+    ],
+    "errorRecovery": {
+      "status": 503,
+      "spanish": "Catálogo temporalmente no disponibleVuelve a consultar en unos minutos.Volver a intentar"
+    }
+  },
+  {
+    "width": 1280,
+    "stages": [
+      {
+        "stage": "home",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "BODY",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "skip-link",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "MAIN",
+        "activeId": "contenido-principal",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": true,
+        "overflow": false
+      },
+      {
+        "stage": "search-escape",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Buscar libros en el catálogo",
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "search-submit",
+        "url": "/catalog?que=Cien",
+        "title": "Cien · Catálogo · PLIEGO",
+        "heading": "Resultados para «Cien»",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "sort-keyboard",
+        "url": "/catalog",
+        "title": "Catálogo · PLIEGO",
+        "heading": "Todos los libros",
+        "activeTag": "BUTTON",
+        "activeId": "",
+        "activeLabel": "Ordenar por",
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "edition-keyboard",
+        "url": "/catalog/editions/123?from=%2Fcatalog",
+        "title": "Edición · PLIEGO",
+        "heading": "Biblioteca 6045117dab35",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "help",
+        "url": "/ayuda",
+        "title": "Ayuda · PLIEGO",
+        "heading": "Estamos aquí para ayudarte.",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "help-article-keyboard",
+        "url": "/ayuda/ebooks",
+        "title": "eBooks · Ayuda · PLIEGO",
+        "heading": "eBooks",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog-503",
+        "url": "/catalog?que=auditoriafinal",
+        "title": "auditoriafinal · Catálogo · PLIEGO",
+        "heading": "Resultados para «auditoriafinal»",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "catalog-503-recovered",
+        "url": "/catalog?que=auditoriafinal",
+        "title": "auditoriafinal · Catálogo · PLIEGO",
+        "heading": "Resultados para «auditoriafinal»",
+        "activeTag": "BODY",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": false,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "not-found",
+        "url": "/auditoria-final-ruta-no-existente",
+        "title": "Página no encontrada · PLIEGO",
+        "heading": "No encontramos esta página.",
+        "activeTag": "H1",
+        "activeId": "",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      },
+      {
+        "stage": "not-found-recovered",
+        "url": "/",
+        "title": "Descubre el catálogo · PLIEGO",
+        "heading": "Descubre el mundo de PLIEGO.",
+        "activeTag": "H1",
+        "activeId": "page-title",
+        "activeLabel": null,
+        "headingFocused": true,
+        "mainFocused": false,
+        "overflow": false
+      }
+    ],
+    "blockedWrites": [],
+    "pageErrors": [],
+    "axe": {
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "targets": [
+            {
+              "target": [
+                "span[data-disabled=\"true\"] > span:nth-child(2)"
+              ],
+              "html": "<span>Anterior</span>",
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 3.37 (foreground color: #858398, background color: #f6f5f0, font size: 11.3pt (15px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": [],
+      "passes": [
+        {
+          "id": "aria-required-attr",
+          "nodeCount": 6
+        },
+        {
+          "id": "aria-valid-attr-value",
+          "nodeCount": 87
+        },
+        {
+          "id": "button-name",
+          "nodeCount": 28
+        },
+        {
+          "id": "color-contrast",
+          "nodeCount": 143
+        },
+        {
+          "id": "link-name",
+          "nodeCount": 44
+        }
+      ]
+    },
+    "sortOptions": [
+      "Más vendidoscheck",
+      "Título: A–Zcheck",
+      "Precio: menor a mayorcheck",
+      "Precio: mayor a menorcheck"
+    ],
+    "errorRecovery": {
+      "status": 503,
+      "spanish": "Catálogo temporalmente no disponibleVuelve a consultar en unos minutos.Volver a intentar"
+    }
+  }
+]

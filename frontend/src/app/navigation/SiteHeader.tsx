@@ -1,5 +1,5 @@
 import { ActionIcon, Box, Drawer, Group, UnstyledButton } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { readCatalogCriteria, safeCatalogReturnHref } from "@/features/catalog/catalogUrl";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
@@ -7,6 +7,7 @@ import { useStorefrontNavigation } from "@/features/storefront/storefrontQuery";
 import { HeaderAccount, HeaderCart } from "./HeaderAccount";
 import { DesktopNavigation, MobileNavigation } from "./HeaderNavigation";
 import navigationClasses from "./HeaderNavigation.module.css";
+import { BrandLogo } from "@/shared/ui/BrandLogo";
 import { HeaderSearch } from "./HeaderSearch";
 import classes from "./SiteHeader.module.css";
 import homeClasses from "./HomeHeader.module.css";
@@ -21,6 +22,7 @@ export function SiteHeader() {
   const [panel, setPanel] = useState<HeaderPanel>(null);
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
   const searchTrigger = useRef<HTMLButtonElement>(null);
+  const header = useRef<HTMLElement>(null);
   const criteria = readCatalogCriteria(location.pathname === "/catalog" ? location.search
     : new URL(safeCatalogReturnHref(new URLSearchParams(location.search).get("from")), window.location.origin).search);
   const navigationLocation = location.pathname.startsWith("/catalog/editions/")
@@ -49,6 +51,44 @@ export function SiteHeader() {
     return () => window.removeEventListener("scroll", update);
   }, []);
 
+  // The centered sections need room on both sides for the wordmark and the actions. When larger text or a
+  // narrow window takes that room, the bar collapses to the compact menu instead of letting them overlap.
+  useLayoutEffect(() => {
+    const element = header.current;
+    const sections = element?.querySelector<HTMLElement>(`.${classes.navigation}`);
+    const primary = element?.querySelector<HTMLElement>(`.${classes.primary}`);
+    const actions = element?.querySelector<HTMLElement>(`.${classes.actions}`);
+    if (!element || !sections || !primary || !actions) return;
+    const boxes = (side: HTMLElement) => [...side.children].map((child) => child.getBoundingClientRect()).filter((box) => box.width > 0);
+    const measure = () => {
+      const wasCollapsed = element.hasAttribute("data-nav-collapsed");
+      element.removeAttribute("data-nav-collapsed");
+      const middle = sections.getBoundingClientRect();
+      const before = boxes(primary), after = boxes(actions);
+      // At least 12px of air on each side of the sections, measured on the real desktop layout.
+      const collapse = middle.width > 0 && (
+        (before.length > 0 && middle.left - Math.max(...before.map((box) => box.right)) < 12)
+        || (after.length > 0 && Math.min(...after.map((box) => box.left)) - middle.right < 12));
+      element.toggleAttribute("data-nav-collapsed", collapse);
+      if (collapse && !wasCollapsed) setPanel((current) => current?.startsWith("menu:") ? null : current);
+    };
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    // Re-measure when the window, the sections or any side control (the account settling after the session
+    // check, the cart badge) changes size, and when side controls are replaced.
+    const sizes = new ResizeObserver(measure);
+    const observeAll = () => [element, sections, ...primary.children, ...actions.children].forEach((target) => sizes.observe(target));
+    const children = new MutationObserver(() => { observeAll(); measure(); });
+    observeAll();
+    children.observe(primary, { childList: true });
+    children.observe(actions, { childList: true });
+    // Hidden (collapsed) sections report no size, so changes to their content are watched directly; otherwise
+    // a collapse taken while the sections were still loading would never be revisited.
+    children.observe(sections, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["aria-current", "aria-expanded", "aria-busy", "class"] });
+    void document.fonts?.ready.then(measure);
+    return () => { sizes.disconnect(); children.disconnect(); };
+  }, []);
+
   const menuKey = panel?.startsWith("menu:") ? panel.slice(5) : null;
   // A section menu closes on a press anywhere outside its own item; Escape is handled where focus is.
   useEffect(() => {
@@ -60,7 +100,7 @@ export function SiteHeader() {
     return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); };
   }, [menuKey]);
 
-  return <Box component="header" className={`${classes.header}${location.pathname === "/" ? ` ${homeClasses.header}` : ""}`} data-home={location.pathname === "/" || undefined} data-scrolled={scrolled || undefined} data-panel={menuKey ? "menu" : panel ?? undefined} data-testid="site-header">
+  return <Box component="header" ref={header} className={`${classes.header}${location.pathname === "/" ? ` ${homeClasses.header}` : ""}`} data-home={location.pathname === "/" || undefined} data-scrolled={scrolled || undefined} data-panel={menuKey ? "menu" : panel ?? undefined} data-testid="site-header">
     <a className={classes.skip} href="#contenido-principal" onClick={(event) => {
       const main = document.getElementById("contenido-principal");
       if (!main) return;
@@ -69,7 +109,7 @@ export function SiteHeader() {
     <Group className={classes.bar} wrap="nowrap">
       <Group className={classes.primary} wrap="nowrap">
         <ActionIcon className={classes.menuTrigger} aria-label="Abrir navegación" aria-expanded={panel === "navigation"} aria-haspopup="dialog" onClick={() => setPanel("navigation")}><MaterialSymbol name="menu" context="header" /></ActionIcon>
-        <UnstyledButton component={Link} to="/" className={classes.wordmark} aria-label="PLIEGO, ir al inicio">PLIEGO</UnstyledButton>
+        <UnstyledButton component={Link} to="/" className={classes.wordmark} aria-label="PLIEGO, ir al inicio"><BrandLogo compact="narrow" /></UnstyledButton>
       </Group>
       <DesktopNavigation navigation={navigation} selected={selected} openKey={menuKey} onOpenChange={(key) => setPanel(key ? `menu:${key}` : (current) => current?.startsWith("menu:") ? null : current)} />
       <Group component="nav" aria-label="Búsqueda, carrito y cuenta" className={classes.actions} wrap="nowrap" gap={0}>

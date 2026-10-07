@@ -50,10 +50,13 @@ public class CheckoutController {
             @RequestHeader("Idempotency-Key") UUID key,
             @Valid @RequestBody CheckoutRequest request) {
         validateCard(request);
-        CheckoutResult result = service.checkout(Long.parseLong(jwt.getSubject()), key, request.addressId() == null ? null : Long.valueOf(request.addressId()),
+        CheckoutResult result = request.expectedQuoteFingerprint() == null ? service.checkout(Long.parseLong(jwt.getSubject()), key, request.addressId() == null ? null : Long.valueOf(request.addressId()),
                 request.paymentMethod(), request.simulationOutcome(),
                 request.expectedCartId() == null ? null : Long.valueOf(request.expectedCartId()), request.fulfillmentMethod(),
-                request.pickupLocationId() == null ? null : Long.valueOf(request.pickupLocationId()));
+                request.pickupLocationId() == null ? null : Long.valueOf(request.pickupLocationId()))
+                : service.checkout(Long.parseLong(jwt.getSubject()), key, request.addressId() == null ? null : Long.valueOf(request.addressId()),
+                request.paymentMethod(), request.simulationOutcome(), request.expectedCartId() == null ? null : Long.valueOf(request.expectedCartId()),
+                request.fulfillmentMethod(),request.pickupLocationId() == null ? null : Long.valueOf(request.pickupLocationId()),request.expectedQuoteFingerprint());
         URI location = URI.create("/api/v1/orders/" + result.orderId());
         return ResponseEntity.created(location).body(toResponse(result));
     }
@@ -70,10 +73,12 @@ public class CheckoutController {
         return new CheckoutResponse(result.orderId(), result.orderState(),
                 result.paymentState(), result.total().setScale(2, RoundingMode.UNNECESSARY).toPlainString(),
                 result.paymentReference(), result.fulfillment(),money(result.amounts().subtotal()),money(result.amounts().taxRate()),
-                money(result.amounts().taxAmount()),money(result.amounts().shippingAmount()));
+                money(result.amounts().taxAmount()),money(result.amounts().shippingAmount()),
+                money(result.offerPricing().originalSubtotal()), money(result.offerPricing().savingsTotal()),
+                money(result.offerPricing().currentSubtotal()), result.offerPricing().pricingSnapshotAvailable());
     }
 
-    private static String money(java.math.BigDecimal value) {return value.setScale(2,RoundingMode.UNNECESSARY).toPlainString();}
+    private static String money(java.math.BigDecimal value) {return value == null ? null : value.setScale(2,RoundingMode.UNNECESSARY).toPlainString();}
 
     private static void validateCard(CheckoutRequest request) {
         if ("CARD".equals(request.paymentMethod())) {

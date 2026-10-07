@@ -1,0 +1,84 @@
+{
+  "before": {
+    "value": "12 / 3",
+    "start": 6
+  },
+  "moved": {
+    "value": "12 / 3",
+    "start": 6
+  },
+  "after": {
+    "value": "12 / 30",
+    "start": 7,
+    "active": "checkout-cvv",
+    "events": [
+      {
+        "type": "keydown",
+        "key": "1",
+        "value": "",
+        "start": 0,
+        "end": 0,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "input",
+        "value": "1",
+        "start": 1,
+        "end": 1,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "keydown",
+        "key": "2",
+        "value": "1",
+        "start": 1,
+        "end": 1,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "input",
+        "value": "12",
+        "start": 2,
+        "end": 2,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "keydown",
+        "key": "3",
+        "value": "12 /",
+        "start": 4,
+        "end": 4,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "input",
+        "value": "12 /3",
+        "start": 5,
+        "end": 5,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "keydown",
+        "key": "0",
+        "value": "12 / 3",
+        "start": 6,
+        "end": 6,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "input",
+        "value": "12 / 30",
+        "start": 7,
+        "end": 7,
+        "active": "checkout-expiration"
+      },
+      {
+        "type": "blur",
+        "value": "12 / 30",
+        "start": 7,
+        "end": 7,
+        "active": ""
+      }
+    ]
+  }
+}

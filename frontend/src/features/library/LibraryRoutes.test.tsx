@@ -11,6 +11,13 @@ const item = { ownedItemId: "8", editionId: "42", coverUrl: null, title: "Libro 
 const routes = [{ path: "/biblioteca", element: <LibraryPage /> }, { path: "/biblioteca/:ownedItemId", element: <OwnedItemPage /> }];
 afterEach(() => vi.unstubAllGlobals());
 describe("Mi biblioteca functional routes", () => {
+  it.each(["/biblioteca", "/biblioteca/8"])("offers sign-in recovery after an expired session on %s", async (path) => {
+    stubApi({ "GET /api/v1/me/library": () => problem(401, "UNAUTHORIZED", "Sesión caducada", "Vuelve a iniciar sesión."), "GET /api/v1/me/library/8": () => problem(401, "UNAUTHORIZED", "Sesión caducada", "Vuelve a iniciar sesión.") });
+    renderPurchaseRoute(routes, path);
+    expect(await screen.findByRole("heading", { name: "Tu sesión ya no está activa." })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: "Iniciar sesión" }).some(link => link.getAttribute("href") === `/sign-in?from=${encodeURIComponent(path)}`)).toBe(true);
+    expect(screen.queryByRole("button", { name: "Reintentar" })).not.toBeInTheDocument();
+  });
   it("filters server ownership and opens an acquired title's detail with real purchase actions", async () => {
     const api = stubApi({ "GET /api/v1/me/library": request => json({ items: new URL(request.url).searchParams.get("productType") === "AUDIOBOOK" ? [] : [item], page: 0, pageSize: 20, totalCount: "1" }), "GET /api/v1/me/library/8": () => json(item) });
     const user = userEvent.setup();

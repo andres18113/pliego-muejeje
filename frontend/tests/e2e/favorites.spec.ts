@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test";
 
 import { mockFavoritesApi } from "./shared/favorites-api";
 
+const testFrontendOrigin = process.env.PLIEGO_E2E_BASE_URL || "http://127.0.0.1:5173";
 /** Account pages are reached from the header's account menu. */
 async function openAccountSection(page: import("@playwright/test").Page, name: "Perfil" | "Direcciones" | "Favoritos" | "Pedidos") {
   await page.getByRole("button", { name: "Menú de cuenta" }).click();
@@ -29,9 +30,15 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await page.getByLabel("Correo electrónico").fill("lectora@example.invalid");
   await page.getByLabel("Contraseña").fill("Lectura-segura-2026");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
-  await expect(page).toHaveURL("http://127.0.0.1:5173/catalog");
+  await expect(page).toHaveURL(`${testFrontendOrigin}/catalog`);
   await expect(firstCard.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "true");
   await expect(firstCard.locator("[data-bookcard-feedback]")).toContainText("Agregado a favoritos.");
+  // On the catalog the heart stays immediate in both directions: it never asks.
+  await firstCard.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" }).click();
+  await expect(firstCard.getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "false");
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await firstCard.getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" }).click();
+  await expect(firstCard.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "true");
 
   // Buying happens on the edition page; the catalog card never opens the cart.
   await expect(page.getByRole("dialog", { name: "Tu carrito" })).toHaveCount(0);
@@ -46,11 +53,35 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await expect(favorite).toContainText("$\u00a018,50");
   await expect(favorite).toContainText("Disponible");
   await expect(favorite.locator("[data-bookcard-link]")).toHaveAttribute("href", /\/catalog\/editions\/42\?/);
-  // Removing is immediate and never asks; the toast is where it can be taken back.
-  await favorite.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" }).focus();
+  // On this page removing asks first, in the shared destructive confirmation; keeping changes nothing.
+  const remove = favorite.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" });
+  const confirm = page.getByRole("dialog", { name: "¿Quitar de Favoritos?" });
+  await remove.focus();
+  await page.keyboard.press("Enter");
+  await expect(confirm).toBeVisible();
+  await expect(confirm).toContainText("Cien años de soledad");
+  await expect(confirm.getByRole("button", { name: "Conservar" })).toBeFocused();
+  await expect(confirm.getByRole("button", { name: "Quitar de Favoritos" })).toHaveCSS("background-color", "rgb(126, 40, 31)");
+  // The collection's field is a soft neutral gray: blue never leads, as it does in lavender.
+  const field = (await page.locator('[class*="collection"]').first().evaluate((el) => getComputedStyle(el).backgroundColor)).match(/[\d.]+/g)!.map(Number);
+  expect(field[2]).toBeLessThanOrEqual(field[1]);
+  await page.screenshot({ path: test.info().outputPath("favorite-remove-confirm.png") });
+  await page.keyboard.press("Escape");
+  await expect(confirm).toBeHidden();
+  await expect(remove).toBeFocused();
+  await expect(page.locator("[data-favorite-row]")).toHaveCount(1);
+  await expect(page.locator("[data-undo-toast]")).toHaveCount(0);
+  // Confirming removes it; the toast is where it can still be taken back.
+  await page.keyboard.press("Enter");
+  await expect(confirm.getByRole("button", { name: "Conservar" })).toBeFocused();
+  await page.keyboard.press("Tab");
+  await expect(confirm.getByRole("button", { name: "Quitar de Favoritos" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeFocused();
   await expect(page.getByRole("dialog")).toHaveCount(0);
+  // The footer closes the page: nothing is left under it.
+  expect(await page.evaluate(() => { const footer = document.querySelector("#root > footer")!.getBoundingClientRect(); return Math.round(Math.max(window.innerHeight, document.documentElement.scrollHeight) - (footer.bottom + window.scrollY)); })).toBeCloseTo(0);
   const toast = page.locator("[data-undo-toast]");
   await expect(toast).toContainText("Quitado de favoritos");
   await page.screenshot({ path: test.info().outputPath("favorite-undo-toast.png") });
@@ -66,6 +97,8 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await page.setViewportSize({ width: 320, height: 640 });
   await page.addStyleTag({ content: "html { font-size: 200% !important; }" });
   await page.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" }).click();
+  await expect(confirm.getByRole("button", { name: "Quitar de Favoritos" })).toBeInViewport({ ratio: 1 });
+  await confirm.getByRole("button", { name: "Quitar de Favoritos" }).click();
   await expect(toast.getByRole("button", { name: "Deshacer" })).toBeInViewport({ ratio: 1 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.screenshot({ path: test.info().outputPath("favorite-undo-toast-phone-200.png") });
@@ -75,7 +108,7 @@ test("guests retain the favorite action through sign-in; customers can browse, t
 
 test("touch layouts keep the cover favorite visible without hover and without horizontal overflow", async ({ browser }) => {
   const context = await browser.newContext({
-    baseURL: "http://127.0.0.1:5173",
+    baseURL: testFrontendOrigin,
     viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,

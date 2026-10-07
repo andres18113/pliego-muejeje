@@ -2,6 +2,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { mockFavoritesApi } from "./shared/favorites-api";
 
+const testFrontendOrigin = process.env.PLIEGO_E2E_BASE_URL || "http://127.0.0.1:5173";
 /** Account pages are reached from the header's account menu. */
 async function openAccountSection(page: import("@playwright/test").Page, name: "Perfil" | "Direcciones" | "Favoritos" | "Pedidos") {
   await page.getByRole("button", { name: "Menú de cuenta" }).click();
@@ -12,7 +13,7 @@ async function signIn(page: Page, from = "/favorites") {
   await page.getByLabel("Correo electrónico").fill("lectora@example.invalid");
   await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
   await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
-  await expect(page).toHaveURL(`http://127.0.0.1:5173${from}`);
+  await expect(page).toHaveURL(`${testFrontendOrigin}${from}`);
 }
 test("lost successful favorite response reconciles the server result once", async ({ page }) => {
   await mockFavoritesApi(page, ["42"]);
@@ -31,9 +32,10 @@ test("lost successful favorite response reconciles the server result once", asyn
 test("keyboard removal moves focus to a surviving row then the empty heading", async ({ page }) => {
   await mockFavoritesApi(page, ["42", "43"]); await signIn(page);
   const rows = page.locator("[data-favorite-row]");
-  await rows.first().locator("[data-bookcard-favorite]").focus(); await page.keyboard.press("Enter");
+  // Removal on this page is confirmed in the shared destructive dialog, by keyboard too.
+  await rows.first().locator("[data-bookcard-favorite]").focus(); await page.keyboard.press("Enter"); await page.getByRole("dialog", { name: "¿Quitar de Favoritos?" }).getByRole("button", { name: "Quitar de Favoritos" }).press("Enter");
   await expect(rows).toHaveCount(1); await expect(rows.first().locator("[data-bookcard-favorite]")).toBeFocused();
-  await page.keyboard.press("Enter");
+  await page.keyboard.press("Enter"); await page.getByRole("dialog", { name: "¿Quitar de Favoritos?" }).getByRole("button", { name: "Quitar de Favoritos" }).press("Enter");
   await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeFocused();
   await page.keyboard.press("Tab"); await expect(page.getByRole("link", { name: "Explorar el catálogo" })).toBeFocused();
 });
@@ -80,7 +82,7 @@ test("authentication preserves Addresses through the sign-in/register switch", a
   await page.getByLabel("Correo electrónico").fill("lectora@example.invalid");
   await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
   await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
-  await expect(page).toHaveURL("http://127.0.0.1:5173/account/addresses?view=all#primary");
+  await expect(page).toHaveURL(`${testFrontendOrigin}/account/addresses?view=all#primary`);
 });
 
 for (const adaptation of ["200% text", "200% zoom", "320px reflow"] as const) {
@@ -103,7 +105,7 @@ for (const adaptation of ["200% text", "200% zoom", "320px reflow"] as const) {
     await expect(page).toHaveURL(/\/register/); await adapt();
     await page.locator(".auth-switch a").focus(); await page.keyboard.press("Enter");
     await signIn(page, "/favorites"); await adapt();
-    await page.locator("[data-bookcard-favorite]").focus(); await page.keyboard.press("Enter");
+    await page.locator("[data-bookcard-favorite]").focus(); await page.keyboard.press("Enter"); await page.getByRole("dialog", { name: "¿Quitar de Favoritos?" }).getByRole("button", { name: "Quitar de Favoritos" }).press("Enter");
     await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeFocused();
     await page.keyboard.press("Tab"); await expect(page.getByRole("link", { name: "Explorar el catálogo" })).toBeFocused();
     await page.screenshot({ path: testInfo.outputPath("favorites-adaptation.png"), fullPage: true });

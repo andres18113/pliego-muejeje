@@ -1618,6 +1618,8 @@ export interface components {
              */
             fulfillmentMethod: "HOME_DELIVERY" | "STORE_PICKUP" | "DIGITAL_ONLY";
             pickupLocationId?: string;
+            /** @description Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación. */
+            expectedQuoteFingerprint?: string;
         };
         CheckoutResponse: {
             orderId?: string;
@@ -1630,6 +1632,23 @@ export interface components {
             taxRate?: string;
             taxAmount?: string;
             shippingAmount?: string;
+            /**
+             * @description Subtotal original guardado al comprar; null si el pedido histórico no tiene el snapshot de precios.
+             * @example 50.00
+             */
+            originalSubtotal?: string | null;
+            /**
+             * @description Ahorro guardado al comprar, calculado por PostgreSQL; null si falta el snapshot histórico.
+             * @example 10.00
+             */
+            savingsTotal?: string | null;
+            /**
+             * @description Subtotal pagado antes de impuestos, leído del pedido inmutable; cadena decimal con dos posiciones.
+             * @example 40.00
+             */
+            currentSubtotal?: string | null;
+            /** @description Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra. */
+            pricingSnapshotAvailable: boolean;
         };
         Fulfillment: {
             method?: string;
@@ -1938,6 +1957,22 @@ export interface components {
             invoiceState?: string;
             invoicePdfAvailable?: boolean;
             invoiceXmlAvailable?: boolean;
+            /** @description Subtotal original guardado al comprar; null si falta el snapshot histórico. */
+            originalSubtotal?: string | null;
+            /** @description Ahorro total guardado al comprar; null si falta el snapshot histórico. */
+            savingsTotal?: string | null;
+            /** @description Subtotal pagado antes de impuestos, leído del pedido inmutable; cadena decimal con dos posiciones. */
+            currentSubtotal?: string | null;
+            /** @description Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra. */
+            pricingSnapshotAvailable: boolean;
+            /** @description Subtotal pagado antes de impuestos, leído del pedido inmutable; cadena decimal con dos posiciones. */
+            subtotal?: string | null;
+            /** @description Tasa de impuesto guardada al comprar, expresada como porcentaje y cadena decimal con dos posiciones. */
+            taxRate?: string | null;
+            /** @description Importe de impuesto guardado al comprar; cadena decimal con dos posiciones. */
+            taxAmount?: string | null;
+            /** @description Importe de envío guardado al comprar; cadena decimal con dos posiciones. */
+            shippingAmount?: string | null;
         };
         ItemSummary: {
             orderItemId?: string;
@@ -1957,6 +1992,11 @@ export interface components {
         Actions: {
             cancel?: boolean;
             changeShippingAddress?: boolean;
+            canCancel?: boolean;
+            /** @description Fecha límite, en UTC, para cancelar pedidos digitales y de retiro en tienda. */
+            cancellationDeadline?: string | null;
+            lifecycleState?: string;
+            libraryAccessState?: string;
         };
         Address: {
             recipient?: string;
@@ -1997,6 +2037,14 @@ export interface components {
             taxRate?: string;
             taxAmount?: string;
             shippingAmount?: string;
+            /** @description Subtotal original guardado al comprar; null si falta el snapshot histórico. */
+            originalSubtotal?: string | null;
+            /** @description Ahorro total guardado al comprar; null si falta el snapshot histórico. */
+            savingsTotal?: string | null;
+            /** @description Subtotal pagado antes de impuestos, leído del pedido inmutable; cadena decimal con dos posiciones. */
+            currentSubtotal?: string | null;
+            /** @description Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra. */
+            pricingSnapshotAvailable: boolean;
         };
         CustomerOrderItem: {
             orderItemId?: string;
@@ -2013,6 +2061,16 @@ export interface components {
             quantity?: number;
             subtotal?: string;
             requiresPhysicalFulfillment: boolean;
+            /** @description Precio unitario original guardado al comprar; null si falta el snapshot histórico. */
+            originalPrice?: string | null;
+            /** @description Ahorro unitario guardado al comprar; null si falta el snapshot histórico. */
+            unitSavings?: string | null;
+            /** @description Subtotal original de la línea guardado al comprar; null si falta el snapshot histórico. */
+            originalSubtotal?: string | null;
+            /** @description Ahorro total de la línea guardado al comprar; null si falta el snapshot histórico. */
+            lineSavings?: string | null;
+            /** @description Indica si esta línea conserva el snapshot de precios originales y ahorros de la compra. */
+            pricingSnapshotAvailable: boolean;
         };
         ElectronicIssuance: {
             provider?: string;
@@ -2396,6 +2454,23 @@ export interface components {
             physicalItemCount: number;
             /** Format: int32 */
             digitalItemCount: number;
+            /**
+             * @description Subtotal original del carrito antes de ofertas e impuestos, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 80.00
+             */
+            originalSubtotal?: string;
+            /**
+             * @description Ahorro total por ofertas, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 12.00
+             */
+            savingsTotal?: string;
+            /**
+             * @description Subtotal vigente después de ofertas y antes de impuestos, calculado por PostgreSQL; coincide con subtotal y se expresa como cadena decimal con dos posiciones.
+             * @example 68.00
+             */
+            currentSubtotal?: string;
+            /** @description Huella del resumen actual para confirmar cantidades y precios en checkout. */
+            quoteFingerprint?: string;
         };
         CartItem: {
             cartItemId?: string;
@@ -2419,6 +2494,26 @@ export interface components {
             format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             requiresPhysicalFulfillment: boolean;
             quantityEditable: boolean;
+            /**
+             * @description Precio unitario original antes de ofertas, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 20.00
+             */
+            originalPrice?: string;
+            /**
+             * @description Ahorro unitario vigente, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 3.00
+             */
+            unitSavings?: string;
+            /**
+             * @description Subtotal original de la línea para su cantidad, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 40.00
+             */
+            originalSubtotal?: string;
+            /**
+             * @description Ahorro total de la línea para su cantidad, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 6.00
+             */
+            lineSavings?: string;
         };
         PageResponsePublisher: {
             items?: components["schemas"]["Publisher"][];

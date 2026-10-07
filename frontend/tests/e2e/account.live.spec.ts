@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { verifyRegisteredEmail } from "./shared/verified-registration";
 
 /** Account pages are reached from the header's account menu. */
 async function openAccountSection(page: import("@playwright/test").Page, name: "Perfil" | "Direcciones" | "Favoritos" | "Pedidos") {
@@ -69,6 +70,7 @@ test("customer navigates profile, address book and orders across desktop and mob
   const email = `account-${Date.now()}@pliego.local`;
   const password = "Lectura-segura-2026";
   expect((await request.post(`${api}/auth/register`, { data: { email, password, firstNames: "Lectora", lastNames: "Cuenta" } })).status()).toBe(201);
+  verifyRegisteredEmail(email, api);
 
   await page.goto("/account");
   await page.evaluate(() => document.fonts.ready);
@@ -162,7 +164,7 @@ test("customer navigates profile, address book and orders across desktop and mob
   await page.getByRole("button", { name: "Guardar dirección" }).click();
   const home = page.locator(".account-address-row").filter({ hasText: "Casa" });
   await expect(home).toContainText("Ecuador");
-  await expect(home).toContainText("+593991234567");
+  await expect(home).toContainText("+593 99 123 4567");
   await expect(home).toContainText("Principal");
   await expect(page.getByLabel("Quién recibe")).toHaveCount(0);
 

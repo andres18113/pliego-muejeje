@@ -1,0 +1,4 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/features/auth/EmailActionPages.test.tsx > customer email actions > keeps a newer account signed in when an earlier password reset finishes
+ Test Files  1 failed (1)
+      Tests  1 failed | 9 passed (10)

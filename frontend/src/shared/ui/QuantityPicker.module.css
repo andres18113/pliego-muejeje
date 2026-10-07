@@ -1,5 +1,5 @@
 /* Quantity choice: the country/phone picker's trigger (edge, radius, ultramar focus) sized to its content,
-   and the same floating paper list — lavender tint for the hover/keyboard row, ultramar + check for the choice. */
+   and the same floating paper list — faint ultramar tint for the hover/keyboard row, ultramar + check for the choice. */
 .trigger.trigger { width: auto; gap: 8px; padding-inline: 14px 8px; font-variant-numeric: tabular-nums; }
 .trigger[aria-disabled="true"] { cursor: progress; opacity: .72; }
 .caption { color: var(--pliego-text-muted, #595a6e); }
@@ -7,7 +7,7 @@
 
 .panel.panel {
   --qp-blue: var(--store-blue, #283da8);
-  --qp-tint: color-mix(in srgb, var(--store-lavender, #e4def4) 62%, var(--store-paper, #f6f5f0));
+  --qp-tint: var(--store-hover, #e8e8eb);
   min-width: 112px; padding: 6px; border: 0; border-radius: 16px;
   background: var(--store-paper, #f6f5f0); color: var(--store-ink, #252740);
   box-shadow: 0 1px 0 #dcdad2, 0 18px 40px -18px rgb(20 23 55 / 38%);

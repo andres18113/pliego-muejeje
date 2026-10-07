@@ -1,0 +1,140 @@
+[
+  {
+    "editionId": "474",
+    "sku": "PLG-BK-000316",
+    "price": "63.96",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "408",
+    "sku": "PLG-BK-000317",
+    "price": "13.46",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "437",
+    "sku": "PLG-BK-000318",
+    "price": "17.81",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "406",
+    "sku": "PLG-BK-000319",
+    "price": "19.51",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "448",
+    "sku": "PLG-BK-000320",
+    "price": "20.36",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "393",
+    "sku": "PLG-BK-000321",
+    "price": "13.56",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "471",
+    "sku": "PLG-BK-000322",
+    "price": "26.36",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "401",
+    "sku": "PLG-BK-000323",
+    "price": "17.81",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "520",
+    "sku": "PLG-BK-000324",
+    "price": "27.96",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "402",
+    "sku": "PLG-BK-000325",
+    "price": "9.86",
+    "format": "PAPERBACK"
+  },
+  {
+    "editionId": "215",
+    "sku": "PLG-BK-000057",
+    "price": "12.79",
+    "format": "EBOOK"
+  },
+  {
+    "editionId": "324",
+    "sku": "PLG-BK-000061",
+    "price": "11.19",
+    "format": "EBOOK"
+  },
+  {
+    "editionId": "226",
+    "sku": "PLG-BK-000062",
+    "price": "11.19",
+    "format": "EBOOK"
+  },
+  {
+    "editionId": "254",
+    "sku": "PLG-BK-000063",
+    "price": "9.59",
+    "format": "EBOOK"
+  },
+  {
+    "editionId": "245",
+    "sku": "PLG-BK-000064",
+    "price": "8.79",
+    "format": "EBOOK"
+  },
+  {
+    "editionId": "306",
+    "sku": "PLG-BK-000065",
+    "price": "14.24",
+    "format": "EBOOK"
+  },
+  {
+    "editionId": "144",
+    "sku": "PLG-BK-000058",
+    "price": "23.19",
+    "format": "AUDIOBOOK"
+  },
+  {
+    "editionId": "154",
+    "sku": "PLG-BK-000059",
+    "price": "25.59",
+    "format": "AUDIOBOOK"
+  },
+  {
+    "editionId": "99",
+    "sku": "PLG-BK-000060",
+    "price": "13.49",
+    "format": "AUDIOBOOK"
+  },
+  {
+    "editionId": "157",
+    "sku": "PLG-BK-000066",
+    "price": "9.89",
+    "format": "AUDIOBOOK"
+  },
+  {
+    "editionId": "153",
+    "sku": "PLG-BK-000067",
+    "price": "18.69",
+    "format": "AUDIOBOOK"
+  },
+  {
+    "editionId": "128",
+    "sku": "PLG-BK-000070",
+    "price": "27.19",
+    "format": "AUDIOBOOK"
+  },
+  {
+    "editionId": "113",
+    "sku": "PLG-BK-000074",
+    "price": "7.19",
+    "format": "AUDIOBOOK"
+  }
+]

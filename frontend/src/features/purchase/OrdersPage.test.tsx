@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { json, problem, renderPurchaseRoute, stubApi } from "@/test/purchase";
@@ -35,6 +35,72 @@ describe("OrdersPage", () => {
     });
     renderPurchaseRoute(routes,"/orders");
     expect(await screen.findByRole("link",{ name: new RegExp(`${label}.*Pedido N.° 700`) })).toHaveTextContent(label);
+  });
+
+  it("reflects a historical saving under the total only when the order's snapshot holds one", async () => {
+    stubApi({
+      "GET /api/v1/orders": () => json({ items: [
+        summary({ orderId: "700", pricingSnapshotAvailable: true, originalSubtotal: "47.00", savingsTotal: "10.00", currentSubtotal: "37.00" }),
+        summary({ orderId: "701", pricingSnapshotAvailable: false, originalSubtotal: null, savingsTotal: null }),
+      ], page: 0, pageSize: 10, totalCount: "2" }),
+      "GET /api/v1/orders/700": () => json(orderDetailFixture("PREPARING", { pricingSnapshotAvailable: true, originalSubtotal: "47.00", savingsTotal: "10.00", currentSubtotal: "37.00" })),
+      "GET /api/v1/orders/701": () => json(orderDetailFixture("PREPARING", { orderId: "701", pricingSnapshotAvailable: false, originalSubtotal: null, savingsTotal: null })),
+    });
+    renderPurchaseRoute(routes, "/orders");
+    const saved = await screen.findByRole("link", { name: /Pedido N.° 700/ });
+    expect(await within(saved).findByText(/Ahorraste \$\s*10,00/)).toBeInTheDocument();
+    expect(saved.querySelector("[data-order-saving] .material-symbol")?.textContent).toBe("sell");
+    const plain = screen.getByRole("link", { name: /Pedido N.° 701/ });
+    expect(plain.querySelector("[data-order-saving]")).toBeNull();
+  });
+
+  const digitalDetail = (orderId: string, actions: Record<string, unknown>) => orderDetailFixture("PREPARING", {
+    orderId, fulfillment: null, shipment: null, address: null,
+    items: [{ orderItemId: "1", editionId: "306", title: "La mujer en la historia", authors: "Autora", publisher: "Editorial", requiresPhysicalFulfillment: false, format: "EBOOK", unitPrice: "14.25", quantity: 1, subtotal: "14.25" }],
+    availableActions: { cancel: false, changeShippingAddress: false, ...actions },
+  });
+  const digitalSummary = (orderId: string) => summary({ orderId, fulfillmentMethod: "DIGITAL_ONLY", shipmentState: null, orderState: "CONFIRMED", estimatedDeliveryFrom: null, estimatedDeliveryTo: null,
+    itemSummary: [{ orderItemId: "1", title: "La mujer en la historia", format: "EBOOK", quantity: 1 }] });
+
+  it("tells a cancelable digital purchase from a completed one, concisely and without technical data", async () => {
+    stubApi({
+      "GET /api/v1/orders": () => json({ items: [digitalSummary("800"), digitalSummary("801")], page: 0, pageSize: 10, totalCount: "2" }),
+      "GET /api/v1/orders/800": () => json(digitalDetail("800", { cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: new Date(Date.now() + 300_000).toISOString() })),
+      "GET /api/v1/orders/801": () => json(digitalDetail("801", { canCancel: false, lifecycleState: "COMPLETED", libraryAccessState: "OWNERSHIP_ONLY" })),
+    });
+    renderPurchaseRoute(routes, "/orders");
+    const open = await screen.findByRole("region", { name: "En curso" });
+    const window = await within(open).findByRole("link", { name: /Compra confirmada.*Pedido N.° 800/ });
+    expect(await within(window).findByText("Puedes cancelarlo durante los primeros 6 minutos.")).toBeInTheDocument();
+    const past = screen.getByRole("region", { name: "Anteriores" });
+    const done = await within(past).findByRole("link", { name: /Compra completada.*Pedido N.° 801/ });
+    expect(within(done).getByText("Disponible en Mi biblioteca.")).toBeInTheDocument();
+    expect(document.body.textContent).not.toMatch(/CANCELLATION_WINDOW|COMPLETED|OWNERSHIP_ONLY/);
+  });
+
+  it("marks a pickup order inside its window as cancelable while keeping its pickup state", async () => {
+    stubApi({
+      "GET /api/v1/orders": () => json({ items: [summary({ fulfillmentMethod: "STORE_PICKUP", shipmentState: null })], page: 0, pageSize: 10, totalCount: "1" }),
+      "GET /api/v1/orders/700": () => json({ ...pickupOrder, availableActions: { cancel: true, changeShippingAddress: false, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: new Date(Date.now() + 300_000).toISOString() } }),
+    });
+    renderPurchaseRoute(routes, "/orders");
+    const row = await screen.findByRole("link", { name: /Pedido N.° 700/ });
+    expect(await within(row).findByText("Puedes cancelarlo durante los primeros 6 minutos.")).toBeInTheDocument();
+  });
+
+  it("re-reads the list when a cancelable order's deadline arrives", async () => {
+    const deadline = new Date(Date.now() + 300).toISOString();
+    stubApi({
+      "GET /api/v1/orders": () => json({ items: [digitalSummary("800")], page: 0, pageSize: 10, totalCount: "1" }),
+      "GET /api/v1/orders/800": [
+        () => json(digitalDetail("800", { cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: deadline })),
+        () => json(digitalDetail("800", { canCancel: false, lifecycleState: "COMPLETED", libraryAccessState: "OWNERSHIP_ONLY", cancellationDeadline: deadline })),
+      ],
+    });
+    renderPurchaseRoute(routes, "/orders");
+    expect(await screen.findByText("Puedes cancelarlo durante los primeros 6 minutos.")).toBeInTheDocument();
+    expect(await screen.findByRole("link", { name: /Compra completada.*Pedido N.° 800/ }, { timeout: 4000 })).toBeInTheDocument();
+    expect(screen.queryByText(/primeros 6 minutos/)).toBeNull();
   });
 
   it("keeps collected STORE_PICKUP separate from delivery state",async () => {

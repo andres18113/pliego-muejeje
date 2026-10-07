@@ -53,7 +53,7 @@ export function ChoicePicker<T extends string>({ label, caption, value, options,
         if (next !== value) onChange(next as T);
       }}
     >
-      <Combobox.Target targetType="button">
+      <Combobox.Target targetType="button" withExpandedAttribute>
         <button
           type="button"
           role="combobox"

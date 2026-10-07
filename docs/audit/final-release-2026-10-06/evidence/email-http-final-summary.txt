@@ -1,0 +1,1 @@
+Transactional email HTTP gate passed: verification/reset/BCrypt/session revocation/concurrent single-use/checkout isolation/outbox retry/provider stub/server restart catch-up/lifecycle status snapshot

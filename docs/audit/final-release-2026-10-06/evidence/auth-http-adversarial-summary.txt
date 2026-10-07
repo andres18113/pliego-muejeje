@@ -1,0 +1,1 @@
+PASS auth adversarial: 18 invalid-input requests (double @, missing/blank/long/format boundaries), zero accounts, 3 invalid private sessions

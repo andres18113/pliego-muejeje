@@ -196,6 +196,61 @@ class CartApiIntegrationTest {
     }
 
     @Test
+    void offerAmountsForPhysicalEbookAndAudiobookAreForwardedWithoutRecalculation() throws Exception {
+        // Distinct database line values catch accidental quantity or savings arithmetic in Java.
+        gateway.cart = new Cart("40", "ACTIVE", List.of(
+                new CartItem("100", "250", "1984", "George Orwell", "PHYSICAL", null, 3,
+                        new BigDecimal("19.90"), new BigDecimal("59.69"), true, null, "PAPERBACK", true, true,
+                        new BigDecimal("22.15"), new BigDecimal("2.26"), new BigDecimal("66.46"), new BigDecimal("6.77")),
+                new CartItem("101", "251", "Animal Farm", "George Orwell", "EBOOK", null, 1,
+                        new BigDecimal("9.99"), new BigDecimal("9.99"), true, null, "EBOOK", false, false,
+                        new BigDecimal("12.50"), new BigDecimal("2.51"), new BigDecimal("12.50"), new BigDecimal("2.51")),
+                new CartItem("102", "252", "Homage to Catalonia", "George Orwell", "AUDIO", null, 1,
+                        new BigDecimal("16.35"), new BigDecimal("16.35"), true, null, "AUDIOBOOK", false, false,
+                        new BigDecimal("16.35"), new BigDecimal("0.00"), new BigDecimal("16.35"), new BigDecimal("0.00"))),
+                new BigDecimal("98.93"),
+                new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("86.03"), new BigDecimal("15.00"),
+                        new BigDecimal("12.90"), new BigDecimal("0.00"), new BigDecimal("98.93")),
+                null, true, 3, 2, new BigDecimal("95.31"), new BigDecimal("9.28"), new BigDecimal("86.03"));
+
+        mvc.perform(get("/api/v1/cart").header("Authorization", customerToken("42")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.originalSubtotal").value("95.31"))
+                .andExpect(jsonPath("$.savingsTotal").value("9.28"))
+                .andExpect(jsonPath("$.currentSubtotal").value("86.03"))
+                .andExpect(jsonPath("$.subtotal").value("86.03"))
+                .andExpect(jsonPath("$.taxRate").value("15.00"))
+                .andExpect(jsonPath("$.taxAmount").value("12.90"))
+                .andExpect(jsonPath("$.shippingAmount").value("0.00"))
+                .andExpect(jsonPath("$.total").value("98.93"))
+                .andExpect(jsonPath("$.totalCurrent").value("98.93"))
+                .andExpect(jsonPath("$.items[0].quantity").value(3))
+                .andExpect(jsonPath("$.items[0].originalPrice").value("22.15"))
+                .andExpect(jsonPath("$.items[0].currentPrice").value("19.90"))
+                .andExpect(jsonPath("$.items[0].unitSavings").value("2.26"))
+                .andExpect(jsonPath("$.items[0].originalSubtotal").value("66.46"))
+                .andExpect(jsonPath("$.items[0].lineSavings").value("6.77"))
+                .andExpect(jsonPath("$.items[0].currentSubtotal").value("59.69"))
+                .andExpect(jsonPath("$.items[0].quantityEditable").value(true))
+                .andExpect(jsonPath("$.items[1].format").value("EBOOK"))
+                .andExpect(jsonPath("$.items[1].originalPrice").value("12.50"))
+                .andExpect(jsonPath("$.items[1].currentPrice").value("9.99"))
+                .andExpect(jsonPath("$.items[1].unitSavings").value("2.51"))
+                .andExpect(jsonPath("$.items[1].originalSubtotal").value("12.50"))
+                .andExpect(jsonPath("$.items[1].lineSavings").value("2.51"))
+                .andExpect(jsonPath("$.items[1].currentSubtotal").value("9.99"))
+                .andExpect(jsonPath("$.items[1].quantityEditable").value(false))
+                .andExpect(jsonPath("$.items[2].format").value("AUDIOBOOK"))
+                .andExpect(jsonPath("$.items[2].originalPrice").value("16.35"))
+                .andExpect(jsonPath("$.items[2].currentPrice").value("16.35"))
+                .andExpect(jsonPath("$.items[2].unitSavings").value("0.00"))
+                .andExpect(jsonPath("$.items[2].originalSubtotal").value("16.35"))
+                .andExpect(jsonPath("$.items[2].lineSavings").value("0.00"))
+                .andExpect(jsonPath("$.items[2].currentSubtotal").value("16.35"))
+                .andExpect(jsonPath("$.items[2].quantityEditable").value(false));
+    }
+
+    @Test
     void missingOrForeignCartItemsReturnOneSafeNotFoundProblem() throws Exception {
         gateway.failure = databaseFailure("P4003");
         for (Endpoint endpoint : List.of(
@@ -353,6 +408,13 @@ class CartApiIntegrationTest {
                 .andExpect(jsonPath("$.components.schemas.Cart.properties.state.type[1]").value("null"))
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.cartItemId.type").value("string"))
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.currentPrice.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.Cart.properties.originalSubtotal.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.Cart.properties.savingsTotal.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.Cart.properties.currentSubtotal.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.originalPrice.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.unitSavings.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.originalSubtotal.type").value("string"))
+                .andExpect(jsonPath("$.components.schemas.CartItem.properties.lineSavings.type").value("string"))
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.available.type").value("boolean"))
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.coverUrl.type[1]").value("null"))
                 .andExpect(jsonPath("$.components.schemas.CartItem.properties.unavailabilityReason.type[1]").value("null"))

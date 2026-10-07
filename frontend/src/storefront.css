@@ -5,11 +5,39 @@
   --store-yellow: #f3df83;
   --store-paper: #f6f5f0;
   --store-display: "Bricolage Grotesque Variable", "Roboto Flex Variable", sans-serif;
+  /* The primary action's fill: ultramar in both schemes, on every page. --store-link is link text,
+     pale on dark grounds, and never a fill. */
+  --store-action: var(--store-blue);
+  --store-action-hover: #1d2c86;
+  --store-on-action: #fff;
+  /* Generic interaction states (hover, keyboard row, open, press) on any PLIEGO control: a faint ultramar on
+     paper. Lavender belongs to the eBook medium and is never a generic state. */
+  --store-hover: color-mix(in srgb, var(--store-blue) 7%, var(--store-paper));
+  --store-press: color-mix(in srgb, var(--store-blue) 13%, var(--store-paper));
+  /* The same states as a wash, for controls that sit on coloured grounds (outlined buttons on scenes and cards). */
+  --store-tint: color-mix(in srgb, var(--store-blue) 8%, transparent);
+  --store-tint-press: color-mix(in srgb, var(--store-blue) 14%, transparent);
+  /* Status and feedback surfaces (notices, stale-data notes, "needs you" fields): neutral — a white sheet with a
+     hairline, or a soft gray field. Green is for genuine success/savings, red for errors; never lavender. */
+  --status-surface: #fff;
+  --status-edge: color-mix(in srgb, var(--store-ink) 14%, transparent);
+  --status-soft: color-mix(in srgb, var(--store-ink) 5%, var(--store-paper));
+}
+:root[data-mantine-color-scheme="dark"] {
+  --store-action: #3a52d0;
+  --store-action-hover: #4b63e0;
+  --store-hover: #3c3e5a;
+  --store-press: #47496a;
+  --store-tint: rgb(255 255 255 / 8%);
+  --store-tint-press: rgb(255 255 255 / 14%);
+  --status-surface: #2b2d47;
+  --status-edge: rgb(255 255 255 / 12%);
+  --status-soft: #2e3049;
 }
 :is([data-storefront-surface], .storefront-panel) {
   --pliego-surface: var(--store-paper);
   --pliego-background: #eeece7;
-  --pliego-surface-hover: #e4def4;
+  --pliego-surface-hover: var(--store-hover);
   --pliego-text: var(--store-ink);
   --pliego-text-muted: #595a6e;
   --pliego-border: #d4d2dc;
@@ -25,16 +53,4 @@
   --pliego-border: #4e506b;
   --pliego-control-border: #9995b1;
   --store-link: #c5bcff;
-}
-.storefront-footer.storefront-footer { background: var(--store-blue); color: white; border: 0; padding: 56px 0 32px; margin: 0; }
-.storefront-footer .footer-content { width: min(calc(100% - 96px), 1728px); padding: 0; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px; margin-inline: auto; }
-.storefront-footer .footer-wordmark { font-family: var(--store-display); font-size: clamp(2.25rem, 7vw, 6.75rem); font-weight: 800; letter-spacing: -.055em; color: white; }
-.storefront-footer .footer-content p { font-size: 1rem; color: #e4def4; margin: 16px 0 0; }
-.storefront-footer nav { display: flex; flex-wrap: wrap; gap: 16px 32px; }
-.storefront-footer nav a { display: flex; align-items: center; min-height: 44px; text-decoration: none; color: white; }
-.storefront-footer a:hover { text-decoration: underline; text-underline-offset: 5px; }
-.storefront-footer a:focus-visible { outline: 3px solid var(--store-yellow); outline-offset: 4px; }
-@media (max-width: 767px) {
-  .storefront-footer .footer-content { width: calc(100% - 40px); grid-template-columns: 1fr; }
-  .storefront-footer.storefront-footer { padding-block: 40px 24px; }
 }

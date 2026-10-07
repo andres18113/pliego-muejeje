@@ -1,5 +1,5 @@
 /* PLIEGO country choice. The trigger is a form field (same height, edge and radius as its neighbours);
-   the panel is paper with one quiet search field and a list whose hover/keyboard row is a lavender tint
+   the panel is paper with one quiet search field and a list whose hover/keyboard row is a faint ultramar tint
    and whose chosen row reads ultramar with a check. Focus is always ultramar — never the legacy green. */
 .label { display: block; margin-bottom: 5px; color: var(--secondary-ink, var(--pliego-text-muted)); font-size: .8125rem; font-weight: 600; }
 
@@ -28,7 +28,7 @@
   background: var(--pliego-surface, #f6f5f0); color: var(--pliego-text, #252740);
   box-shadow: 0 1px 0 var(--pliego-border, #dcdad2), 0 18px 40px -18px rgb(20 23 55 / 38%);
 }
-.body { --cp-blue: var(--store-blue, #283da8); --cp-tint: color-mix(in srgb, var(--store-lavender, #e4def4) 62%, var(--pliego-surface, #f6f5f0)); display: grid; gap: 6px; min-width: 0; }
+.body { --cp-blue: var(--store-blue, #283da8); --cp-tint: var(--store-hover, #e8e8eb); display: grid; gap: 6px; min-width: 0; }
 :global([data-mantine-color-scheme="dark"]) .body, :global([data-mantine-color-scheme="dark"]) .trigger { --cp-blue: var(--store-link, #c5bcff); }
 /* Portalled outside the page's token scope: dark mode names PLIEGO's dark sheet and lavender directly. */
 :global([data-mantine-color-scheme="dark"]) .body { --cp-tint: #3a3660; }
@@ -89,7 +89,7 @@
   flex: none; width: auto; gap: 8px; padding-inline: 12px 8px; border: 0; border-right: 1px solid color-mix(in srgb, var(--control-border, #8e8aa8) 55%, transparent);
   border-radius: 0; background: transparent; box-shadow: none; font: inherit; font-variant-numeric: tabular-nums;
 }
-.phoneField .trigger.trigger:focus-visible, .phoneField .trigger.trigger[data-open] { background: color-mix(in srgb, var(--store-lavender, #e4def4) 55%, transparent); }
+.phoneField .trigger.trigger:focus-visible, .phoneField .trigger.trigger[data-open] { background: color-mix(in srgb, var(--store-blue, #283da8) 8%, transparent); }
 .phoneField .value { flex: none; gap: 8px; }
 /* The control sizes to its column, never to its content; when that column is very narrow (large text, tight
    inline layouts) the prefix takes its own line above the number instead of overflowing its neighbours. */

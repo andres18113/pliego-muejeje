@@ -4,7 +4,9 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent, type MouseEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BookCover } from "@/features/catalog/BookCover";
+import { mediaCue, mediaOfFormat } from "@/features/catalog/catalogMedia";
 import { catalogHref, readCatalogCriteria, type CatalogCriteria } from "@/features/catalog/catalogUrl";
+import { formatAuthorNames } from "@/features/catalog/formatters";
 import { searchPublicEditions } from "@/shared/api/catalog";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import classes from "./HeaderSearch.module.css";
@@ -88,13 +90,18 @@ export function HeaderSearch({ criteria, topics, opened, onClose }: { criteria: 
       <p className={classes.label} aria-hidden="true">{waiting ? "Buscando…" : items.length === 1 ? "1 edición" : `${items.length} ediciones`}</p>
       {!waiting && <VisuallyHidden role="status">{items.length === 1 ? "1 edición sugerida." : `${items.length} ediciones sugeridas.`}</VisuallyHidden>}
       <ul ref={list} className={classes.results}>
-        {items.map((edition, index) => <li key={edition.editionId}>
+        {items.map((edition, index) => {
+          // The medium is the edition's own format, as the API reports it.
+          const cue = mediaCue(mediaOfFormat(edition.format));
+          return <li key={edition.editionId}>
           <Link className={classes.result} to={`/catalog/editions/${edition.editionId}?from=${encodeURIComponent(destination)}`} onKeyDown={(event) => resultKey(event, index)} onClick={closeOnPlainClick}>
             <span className={classes.thumb}><BookCover url={edition.coverUrl} license={null} attribution={null} title={edition.title} size="compact" decorative /></span>
-            <span className={classes.resultCopy}><strong>{edition.title}</strong><span>{edition.authors}</span></span>
+            <span className={classes.resultCopy}><strong>{edition.title}</strong><span>{formatAuthorNames(edition.authors)}</span></span>
+            <span className={classes.resultMedia} data-media={edition.format === "EBOOK" || edition.format === "AUDIOBOOK" ? edition.format : "PHYSICAL"}><MaterialSymbol name={cue.symbol} size={18} aria-hidden="true" /><span>{cue.label}</span></span>
             <MaterialSymbol name="arrow_forward" size={20} className={classes.resultArrow} />
           </Link>
-        </li>)}
+        </li>;
+        })}
       </ul>
       <Link to={destination} className={classes.all} onClick={closeOnPlainClick}>Ver todos los resultados de “{normalized}”</Link>
     </div>;

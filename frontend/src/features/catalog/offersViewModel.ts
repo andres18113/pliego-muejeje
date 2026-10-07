@@ -5,7 +5,7 @@ import { formatUsd } from "./formatters";
 export function toOfferViewModel(offer: OfferSummary) {
   return {
     originalPriceLabel: formatUsd(offer.originalPrice), effectivePriceLabel: formatUsd(offer.effectivePrice), discountLabel: formatUsd(offer.savingsAmount), savingsPercent: offer.savingsPercent,
-    remainingLabel: `Quedan ${offer.daysRemaining} ${offer.daysRemaining === 1 ? "día" : "días"}`,
+    remainingLabel: offer.daysRemaining === 0 ? "Termina hoy" : offer.daysRemaining === 1 ? "Queda 1 día" : `Quedan ${offer.daysRemaining} días`,
     endingSoon: offer.endingSoon, endsAt: offer.endsAt,
     endsLabel: formatOfferEnd(offer.endsAt), offerCopy: offer.offerCopy ?? null, terms: offer.terms ?? null,
   };

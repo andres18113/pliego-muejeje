@@ -1,0 +1,40 @@
+[
+  {
+    "width": 375,
+    "before": {
+      "overflow": false,
+      "active": "<h1 class=\"_title_1o8vq_55\" tabindex=\"-1\" data-route-focus=\"\">Mi biblioteca</h1>"
+    },
+    "pending": "BODY",
+    "loaded": {
+      "active": "BODY",
+      "activeText": "\n    :root, :host{--mantine-line-height: calc(1.5rem * var(--mantine-scale));--mantine-font-family: \"Roboto Flex Variable\", Roboto, Arial, s",
+      "headingFocused": false,
+      "overflow": false
+    },
+    "helpFocus": {
+      "active": "BODY",
+      "headingFocused": false,
+      "overflow": false
+    }
+  },
+  {
+    "width": 1280,
+    "before": {
+      "overflow": false,
+      "active": "<h1 class=\"_title_1o8vq_55\" tabindex=\"-1\" data-route-focus=\"\">Mi biblioteca</h1>"
+    },
+    "pending": "BODY",
+    "loaded": {
+      "active": "BODY",
+      "activeText": "\n    :root, :host{--mantine-line-height: calc(1.5rem * var(--mantine-scale));--mantine-font-family: \"Roboto Flex Variable\", Roboto, Arial, s",
+      "headingFocused": false,
+      "overflow": false
+    },
+    "helpFocus": {
+      "active": "BODY",
+      "headingFocused": false,
+      "overflow": false
+    }
+  }
+]

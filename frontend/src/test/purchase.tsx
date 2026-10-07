@@ -98,7 +98,9 @@ export function cartBody(items: Partial<CartItemFixture>[] = [{}], total?: strin
   };
 }
 
-type CartItemFixture = ReturnType<typeof cartItem> & { format?: string; requiresPhysicalFulfillment?: boolean; quantityEditable?: boolean };
+type CartItemFixture = ReturnType<typeof cartItem> & { format?: string; requiresPhysicalFulfillment?: boolean; quantityEditable?: boolean;
+  /** The server's offer projection for the line (optional, as in older responses). */
+  originalPrice?: string; unitSavings?: string; originalSubtotal?: string; lineSavings?: string };
 
 function cartItem(index: number) {
   return {

@@ -1,0 +1,21 @@
+/* The approved PLIEGO logo at the height its place gives it; one drawing shows at a time (lockup or mark, light or reverse). */
+.root { display: inline-flex; flex: none; align-items: center; height: var(--brand-height, 28px); transition: height 200ms cubic-bezier(.32, .94, .6, 1); }
+.root img { display: none; width: auto; height: 100%; }
+.root .logo.light { display: block; }
+:global([data-mantine-color-scheme="dark"]) .root .logo.light { display: none; }
+:global([data-mantine-color-scheme="dark"]) .root .logo.dark { display: block; }
+@media (max-width: 359px) {
+  .root[data-compact] { height: 30px; }
+  .root[data-compact] .logo.logo { display: none; }
+  .root[data-compact] .mark.light { display: block; }
+  :global([data-mantine-color-scheme="dark"]) .root[data-compact] .mark.light { display: none; }
+  :global([data-mantine-color-scheme="dark"]) .root[data-compact] .mark.dark { display: block; }
+}
+@media (max-width: 599px) {
+  .root[data-compact="phone"] { height: 30px; }
+  .root[data-compact="phone"] .logo.logo { display: none; }
+  .root[data-compact="phone"] .mark.light { display: block; }
+  :global([data-mantine-color-scheme="dark"]) .root[data-compact="phone"] .mark.light { display: none; }
+  :global([data-mantine-color-scheme="dark"]) .root[data-compact="phone"] .mark.dark { display: block; }
+}
+@media (prefers-reduced-motion: reduce) { .root { transition: none; } }

@@ -15,6 +15,13 @@ export function savingsPercentLabel(savingsPercent: string | null) {
   return Number.isFinite(value) && value > 0 ? `${new Intl.NumberFormat("es-EC", { maximumFractionDigits: 1 }).format(value)} %` : null;
 }
 
+/** The card's urgency chip: only when the server's own days left are five or fewer. */
+export function offerUrgencyLabel(daysRemaining: number) {
+  if (daysRemaining > 5) return null;
+  if (daysRemaining <= 0) return "Termina hoy";
+  return daysRemaining === 1 ? "Queda 1 día" : `Quedan ${daysRemaining} días`;
+}
+
 export function offersCountLabel(totalCount: string) {
   return `${totalCount} ${totalCount === "1" ? "oferta" : "ofertas"}`;
 }

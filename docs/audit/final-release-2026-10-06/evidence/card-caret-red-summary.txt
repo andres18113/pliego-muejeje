@@ -1,0 +1,2 @@
+  ✘  1 [chromium] › tests/e2e/purchase.spec.ts:329:1 › keeps rapid expiry input ordered when a prior caret frame runs between keystrokes (9.2s)
+  1 failed

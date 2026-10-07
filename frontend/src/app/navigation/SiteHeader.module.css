@@ -15,11 +15,16 @@
   --pliego-background: #eeece7;
   --pliego-text: var(--store-ink);
   --pliego-text-muted: #595a6e;
-  --pliego-surface-hover: var(--store-lavender);
+  --pliego-surface-hover: var(--store-hover);
   --pliego-border: #d4d2dc;
   --header-accent: var(--mantine-primary-color-filled);
   --header-focus: var(--mantine-color-pliego-8);
   --header-error: var(--mantine-color-red-8);
+  /* The legacy global tokens (`a:hover`, text/secondary buttons in styles.css) are PLIEGO's old green; inside the
+     header, its account panel and search overlay they follow the header accent instead, so no inherited hover,
+     open or selected state can turn green. Re-pointed here once rather than patched per element. */
+  --forest: var(--header-accent);
+  --sage: color-mix(in srgb, var(--header-accent) 10%, transparent);
 }
 :global([data-mantine-color-scheme="dark"]) .header,
 :global([data-mantine-color-scheme="dark"]) .accountPanel,
@@ -37,7 +42,7 @@
 .header[data-scrolled] { height: 72px; margin-bottom: 16px; box-shadow: 0 1px 0 var(--pliego-border), 0 12px 28px -22px rgb(20 23 55 / 45%); }
 .bar.bar { position: relative; width: 100%; max-width: 1824px; height: 80px; margin-inline: auto; padding: 0 48px; border-radius: 0; background: var(--pliego-surface); gap: 24px; transition: box-shadow 200ms ease; }
 .header > .bar.bar { height: 100%; }
-.header[data-scrolled] .wordmark.wordmark { font-size: 30px; }
+.header[data-scrolled] .wordmark.wordmark { --brand-height: 26px; }
 .header > .bar { z-index: 2; }
 .desktopMenu { position: absolute; top: 100%; left: 0; width: 100%; }
 .desktopMenu .megaPanel { position: relative; z-index: 1; margin-top: 0; }
@@ -51,7 +56,7 @@
 .mobileNavigation { display: grid; gap: 8px; padding-block: 12px; }
 .mobileNavigation .navLink { justify-content: flex-start; }
 .navigation { display: flex; align-items: center; gap: 4px; }
-.wordmark.wordmark { display: flex; min-height: 44px; align-items: center; flex-shrink: 0; color: var(--pliego-text); font-family: var(--store-display); font-size: 34px; transition: font-size 200ms cubic-bezier(.32, .94, .6, 1); font-weight: 800; letter-spacing: -.06em; line-height: 1; text-decoration: none; }
+.wordmark.wordmark { --brand-height: 28px; display: flex; min-height: 44px; align-items: center; flex-shrink: 0; color: var(--pliego-text); line-height: 1; text-decoration: none; }
 .navLink.navLink { position: relative; display: inline-flex; min-height: 44px; align-items: center; justify-content: center; border-radius: 999px; padding: 10px 14px; color: var(--pliego-text); font-size: 1rem; line-height: 1.5rem; font-weight: 500; text-decoration: none; }
 .navLink[aria-current="page"] { color: var(--header-accent); }
 /* A short ultramar rule marks hover and the current page instead of a filled block. */
@@ -60,6 +65,7 @@
 .icon.icon { position: relative; width: 44px; min-width: 44px; height: 44px; min-height: 44px; border-radius: 999px; color: var(--pliego-text); }
 .navLink:hover, .navLink[aria-expanded="true"] { color: var(--header-accent); }
 .icon.icon:hover { background: var(--pliego-surface-hover); color: var(--pliego-text); }
+.icon.icon:active { background: var(--store-press); }
 .actions.actions { flex: 1 1 auto; justify-content: flex-end; min-width: 0; }
 .header, .bar.bar, .primary.primary, .actions.actions, .icon.icon, .menuTrigger.menuTrigger { overflow: visible; }
 .icon :global(.mantine-ActionIcon-icon) { overflow: visible; }
@@ -68,18 +74,18 @@
 .skip { position: absolute; top: 0; left: 0; z-index: 120; min-height: 44px; border-radius: 6px; padding: 12px 16px; background: var(--pliego-surface); color: var(--pliego-text); transform: translateY(-180%); }
 .skip:focus { transform: none; }
 .header :focus-visible, .accountPanel :focus-visible, .overlayContent :focus-visible { outline: 2px solid var(--header-focus); outline-offset: 3px; }
-/* The account menu: a paper panel that names who is signed in (display type on a quiet mist field), then
+/* The account menu: a paper panel that names who is signed in (monogram, display-type name and email over a hairline), then
    the account destinations. The current page reads ultramar with PLIEGO's yellow "here" dot. */
 .accountPanel.accountPanel { max-width: calc(100vw - 24px); border: 0; border-radius: 20px; padding: 8px; background: var(--pliego-surface); color: var(--pliego-text); box-shadow: 0 1px 0 var(--pliego-border), 0 18px 40px -18px rgb(20 23 55 / 38%); }
-.identity { display: grid; gap: 2px; margin-bottom: 6px; padding: 14px 14px 12px; border-radius: 14px; background: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--pliego-surface)); overflow-wrap: anywhere; }
+.identity { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 12px; margin-bottom: 6px; padding: 12px 12px 14px; border-bottom: 1px solid var(--pliego-border); overflow-wrap: anywhere; }
+.identityCopy { display: grid; gap: 2px; min-width: 0; }
 .identityName.identityName { color: var(--pliego-text); font: 700 1.125rem/1.2 var(--store-display); letter-spacing: -.03em; }
 .muted { color: var(--pliego-text-muted); }
 .accountItem.accountItem { min-height: 44px; padding-inline: 12px; border-radius: 12px; color: var(--pliego-text); font-size: .9375rem; font-weight: 500; }
-.accountItem.accountItem:hover, .accountItem[data-hovered] { background: color-mix(in srgb, var(--store-lavender, #e4def4) 60%, var(--pliego-surface)); }
+.accountItem.accountItem:hover, .accountItem[data-hovered] { background: var(--pliego-surface-hover); }
+.accountItem.accountItem:active { background: var(--store-press); }
 .accountItem[aria-current="page"] { color: var(--header-accent); font-weight: 600; }
 .hereDot { display: block; width: 8px; height: 8px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
-:global([data-mantine-color-scheme="dark"]) .identity { background: #2e2b4d; }
-:global([data-mantine-color-scheme="dark"]) .accountItem.accountItem:hover, :global([data-mantine-color-scheme="dark"]) .accountItem[data-hovered] { background: var(--pliego-surface-hover); }
 @media (forced-colors: active) { .hereDot { background: CanvasText; } .identity { border: 1px solid CanvasText; } }
 .error { padding: 8px 12px; color: var(--header-error); }
 .overlayInner.overlayInner { align-items: start; padding: 12px 24px; }
@@ -120,7 +126,7 @@
   .header[data-scrolled] { height: 60px; margin-bottom: 12px; }
   .bar.bar { height: 68px; padding: 10px 24px; gap: 4px; }
   .header > .bar.bar { padding-block: 0; }
-  .header[data-scrolled] .wordmark.wordmark { font-size: 28px; }
+  .header[data-scrolled] .wordmark.wordmark { --brand-height: 24px; }
   .searchTrigger.searchTrigger { flex-basis: 220px; }
   .primary.primary { gap: 16px; }
   .menuTrigger.menuTrigger { display: flex; }
@@ -141,7 +147,7 @@
   .header[data-scrolled] { height: 56px; margin-bottom: 8px; }
   .bar.bar { padding-inline: 6px; }
   .primary.primary { gap: 8px; }
-  .wordmark.wordmark { font-size: 28px; letter-spacing: -.06em; }
+  .wordmark.wordmark { --brand-height: 26px; }
   .overlayInner.overlayInner { padding-inline: 6px; }
   .overlayContent .bar { padding-right: 0; }
   .overlayContent .primary { gap: 4px; }
@@ -165,17 +171,15 @@
 .searchKey { display: grid; place-items: center; min-width: 26px; height: 26px; border: 1px solid var(--pliego-border); border-radius: 6px; color: var(--pliego-text-muted); font: 600 .8125rem/1 var(--mantine-font-family); }
 .header[data-scrolled] .searchTrigger.searchTrigger { min-height: 40px; }
 @media (max-width: 599px) { .searchTrigger.searchTrigger { flex: none; justify-content: center; width: 44px; padding: 0; margin-right: 0; border-color: transparent; background: transparent; } .searchText, .searchKey { display: none; } .menuBook > div { height: 160px; } .menuBook :global(.book-cover) { width: 85px; } }
-/* The wordmark carries PLIEGO ultramar on every route. */
-:global([data-mantine-color-scheme="light"]) :is(.header, .overlayContent) .wordmark.wordmark { color: var(--store-blue); }
 
 @media (hover: none) { .searchKey { display: none; } }
 /* Room to read: the pill holds its width instead of shrinking with the row, with air around the icon, label and key. */
 @media (min-width: 600px) { .searchTrigger.searchTrigger { flex: none; width: 216px; gap: 12px; margin-right: 16px; padding: 0 10px 0 16px; } }
 /* Where the centered navigation shares the row, the pill stays clear of it. */
-@media (min-width: 960px) and (max-width: 1199px) { .searchTrigger.searchTrigger { width: 200px; gap: 10px; margin-right: 12px; padding: 0 10px 0 14px; } }
+@media (min-width: 960px) and (max-width: 1279px) { .searchTrigger.searchTrigger { width: 200px; gap: 10px; margin-right: 12px; padding: 0 10px 0 14px; } }
 @media (min-width: 960px) and (max-width: 1023px) { .searchTrigger.searchTrigger { width: 164px; padding-right: 14px; } .searchKey { display: none; } }
-@media (min-width: 1200px) { .searchTrigger.searchTrigger { width: 264px; margin-right: 20px; padding: 0 12px 0 18px; } }
-@media (prefers-reduced-motion: reduce) { .header, .wordmark.wordmark, .navLink.navLink::after, .searchTrigger.searchTrigger { transition: none; } }
+@media (min-width: 1280px) { .searchTrigger.searchTrigger { width: 264px; margin-right: 20px; padding: 0 12px 0 18px; } }
+@media (prefers-reduced-motion: reduce) { .header, .navLink.navLink::after, .searchTrigger.searchTrigger { transition: none; } }
 @media (min-width: 960px) {
   .navigation { display: flex; }
   .menuTrigger.menuTrigger { display: none; }
@@ -188,8 +192,9 @@
   .navigation { display: none; }
   .menuTrigger.menuTrigger { display: flex; }
 }
-/* PLIEGO's full stop: the same yellow mark as the hero and the selected topic. */
-.header .wordmark.wordmark::after { content: ""; flex: none; width: .19em; height: .19em; margin-left: .06em; align-self: center; transform: translateY(.26em); border-radius: 50%; background: var(--store-yellow); }
+/* Wide enough by the viewport but not for its content (larger text): SiteHeader measures and collapses early. */
+.header[data-nav-collapsed] .navigation { display: none; }
+.header[data-nav-collapsed] .menuTrigger.menuTrigger { display: flex; }
 
 /* Under an open section menu the page steps back behind a light ink veil; the bar and the panel stay above it. */
 .menuVeil { position: fixed; inset: 0; z-index: 1; background: rgb(37 39 64 / 22%); }

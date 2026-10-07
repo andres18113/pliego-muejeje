@@ -1,58 +1,45 @@
-/* Ofertas: a calm commercial page. The name stands centered on the paper in ultramar display type with one
-   line under it; product types are Home-style chips on the same axis; the count faces theme and order on one
-   row; then the shelf, one card fewer per row than the catalog. Saturated color stays inside the cards
+/* Ofertas: a calm commercial page. A small eyebrow over one ink headline, centered on the paper; product types
+   as thin, compact chips on the same axis; the count faces theme and order (the shared quiet choice pickers)
+   on one row; then the shelf, one card fewer per row than the catalog. The controls stay secondary to the
+   offers. Saturated color stays inside the cards
    (the saving in ultramar, yellow only on an offer about to end): the page itself is paper. */
 .page {
   --offers-blue: var(--store-blue, #283da8); --offers-blue-hover: #1d2c86; --offers-on-blue: #fff;
   --offers-ink: var(--pliego-text, #252740); --offers-muted: var(--pliego-text-muted, #595a6e);
   --offers-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0));
   --offers-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
+  --offers-hairline: color-mix(in srgb, var(--store-ink, #252740) 20%, transparent);
   --offers-ease: cubic-bezier(.32, .94, .6, 1);
-  display: grid; gap: 20px; max-width: 1240px; min-width: 0; padding-top: clamp(20px, 3.4vw, 44px); padding-bottom: 64px; color: var(--offers-ink);
+  display: grid; gap: 16px; max-width: 1240px; min-width: 0; padding-top: clamp(24px, 4vw, 56px); padding-bottom: 64px; color: var(--offers-ink);
 }
-:global([data-mantine-color-scheme="dark"]) .page { --offers-blue: var(--store-link, #c5bcff); --offers-blue-hover: #d8d1ff; --offers-on-blue: var(--store-ink, #252740); --offers-mist: #2e2b4d; --offers-line: #3d3964; }
+:global([data-mantine-color-scheme="dark"]) .page { --offers-blue: var(--store-link, #c5bcff); --offers-blue-hover: #d8d1ff; --offers-on-blue: var(--store-ink, #252740); --offers-mist: #2e2b4d; --offers-line: #3d3964; --offers-hairline: rgb(255 255 255 / 22%); }
 .page:focus { outline: none; }
 /* The page is paper edge to edge, in both schemes; the storefront tokens on .page follow the scheme. */
 :global(html):has(.page), :global(body):has(.page) { background: #f6f5f0; }
 :global(html[data-mantine-color-scheme="dark"]):has(.page), :global([data-mantine-color-scheme="dark"] body):has(.page) { background: #22243b; }
 
-.masthead { display: grid; justify-items: center; gap: 10px; min-width: 0; text-align: center; }
-.title { margin: 0; color: var(--offers-blue); font: 700 clamp(2.5rem, 1.6rem + 4vw, 4rem)/.98 var(--store-display); letter-spacing: -.05em; overflow-wrap: anywhere; }
+.masthead { display: grid; justify-items: center; gap: 8px; min-width: 0; padding-bottom: clamp(8px, 2vw, 20px); text-align: center; }
+.eyebrow { margin: 0; color: var(--offers-ink); font-size: 1.0625rem; font-weight: 500; line-height: 1.3; }
+.title { margin: 0; color: var(--offers-ink); font: 650 clamp(2.25rem, 1.4rem + 3.6vw, 3.75rem)/1.02 var(--store-display); letter-spacing: -.045em; overflow-wrap: anywhere; text-wrap: balance; }
 .title:focus { outline: none; }
-.title:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 8px; border-radius: 8px; }
-.intro { max-width: 54ch; margin: 0; color: var(--offers-muted); font-size: 1.0625rem; line-height: 1.5; text-wrap: pretty; }
+.title:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 4px; border-radius: 8px; }
 
 .filtersNote { margin: 0; color: var(--offers-muted); font-size: .9375rem; text-align: center; }
 .textAction { min-height: 44px; padding: 0 4px; border: 0; background: none; color: var(--offers-blue); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
 .textAction:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 2px; border-radius: 4px; }
 
-/* Chips choose a real set the server reports; chosen = ultramar with the yellow "this one" dot. */
-.chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; min-width: 0; padding-top: 4px; }
-.chip {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 18px; border: 0; border-radius: 999px;
-  background: transparent; box-shadow: inset 0 0 0 1.5px var(--offers-line); color: var(--offers-ink);
-  font: inherit; font-size: .9375rem; font-weight: 500; line-height: 1.3; cursor: pointer;
-  transition: background-color 160ms var(--offers-ease), color 160ms var(--offers-ease), box-shadow 160ms var(--offers-ease);
-}
-.chipCount { color: var(--offers-muted); font-weight: 400; font-variant-numeric: tabular-nums; }
-.chip[aria-pressed="true"] { background: var(--offers-blue); box-shadow: none; color: var(--offers-on-blue); font-weight: 600; }
-.chip[aria-pressed="true"] .chipCount { color: inherit; opacity: .85; }
-.chip[aria-pressed="true"]::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; margin-right: 2px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
-.chip:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 3px; }
-@media (hover: hover) { .chip[aria-pressed="false"]:hover { background: var(--offers-mist); box-shadow: inset 0 0 0 1.5px var(--offers-blue); } }
+/* Chips choose a real set the server reports: PLIEGO's shared filter chips, on this page's tokens. */
+.chips { composes: chips from "../../shared/ui/filterChips.module.css"; }
+.chip { composes: chip from "../../shared/ui/filterChips.module.css"; --chip-accent: var(--offers-blue); --chip-ink: var(--offers-ink); --chip-hairline: var(--offers-hairline); --chip-muted: var(--offers-muted); }
+.chipCount { composes: chipCount from "../../shared/ui/filterChips.module.css"; }
 
 /* The count faces the two controls; they wrap under it when the row runs out. */
-.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; min-width: 0; padding-top: 12px; }
-.count { margin: 0; color: var(--offers-ink); font-size: 1.0625rem; font-weight: 600; line-height: 1.3; font-variant-numeric: tabular-nums; }
-.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px; min-width: 0; }
-.control { display: flex; align-items: center; gap: 10px; min-width: 0; color: var(--offers-muted); font-size: .875rem; }
-.select { position: relative; display: inline-flex; align-items: center; min-width: 0; max-width: 100%; }
-.select select {
-  appearance: none; min-width: 0; max-width: 100%; min-height: 44px; padding: 8px 40px 8px 16px; border: 0; border-radius: 999px;
-  background: var(--offers-mist); color: var(--offers-ink); font: inherit; font-size: .9375rem; font-weight: 500; text-overflow: ellipsis; cursor: pointer;
-}
-.select select:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 2px; }
-.select :global(.material-symbol) { position: absolute; right: 12px; pointer-events: none; color: var(--offers-ink); }
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 24px; min-width: 0; padding-top: 8px; }
+.count { margin: 0; color: var(--offers-ink); font-size: 1rem; font-weight: 500; line-height: 1.3; font-variant-numeric: tabular-nums; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 4px 12px; min-width: 0; }
+.picker.picker { min-height: 44px; max-width: 100%; }
+/* The picker draws its own focus (ultramar edge and halo); the page outline would double it. */
+.controls .picker.picker:focus-visible { outline: none; }
 
 .results { display: grid; gap: 8px; min-width: 0; }
 
@@ -69,23 +56,20 @@
 .action:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 3px; }
 @media (hover: hover) { .action:hover { background: var(--offers-blue-hover); } }
 
-/* Pages: one centered group, like the catalog's. */
-.pages { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px 16px; padding-top: 8px; }
-.pageStep { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 8px 16px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--offers-blue); color: var(--offers-blue); font-size: .9375rem; font-weight: 600; text-decoration: none; }
-.pageStep:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 3px; }
-@media (hover: hover) { .pageStep:hover { background: var(--offers-mist); } }
-.pagePosition { color: var(--offers-muted); font-size: .9375rem; font-variant-numeric: tabular-nums; }
-
-.onward { margin: 8px 0 0; text-align: center; }
-.onward a { display: inline-flex; align-items: center; min-height: 44px; color: var(--offers-ink); font-weight: 500; text-decoration: underline; text-underline-offset: 4px; }
-.onward a:hover { color: var(--offers-blue); }
-.onward a:focus-visible { outline: 3px solid var(--offers-blue); outline-offset: 2px; border-radius: 4px; }
+/* The close: three white cards (Google Store benefit cards) with a Material symbol, a short statement and one
+   muted line, centered, after the last offer and before the footer. No color fields, covers or links. */
+.promise { min-width: 0; margin-top: clamp(16px, 3vw, 40px); }
+.promise ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 2vw, 24px); margin: 0; padding: 0; list-style: none; }
+.promise li { display: grid; justify-items: center; align-content: start; gap: 12px; min-width: 0; padding: clamp(32px, 4vw, 48px) clamp(20px, 3vw, 36px); border-radius: 24px; background: #fff; text-align: center; }
+:global([data-mantine-color-scheme="dark"]) .promise li { background: color-mix(in srgb, #fff 6%, var(--pliego-surface, #22243b)); }
+.promise li :global(.material-symbol) { margin-bottom: 4px; color: var(--offers-blue); }
+.promise h3 { max-width: 20ch; margin: 0; color: var(--offers-ink); font: 600 clamp(1.125rem, 1rem + .4vw, 1.3125rem)/1.25 var(--store-display); letter-spacing: -.025em; text-wrap: balance; }
+.promise p { max-width: 32ch; margin: 0; color: var(--offers-muted); font-size: .9375rem; line-height: 1.5; text-wrap: pretty; }
+@media (max-width: 899px) { .promise ul { grid-template-columns: minmax(0, 1fr); } .promise li { padding-block: 28px; } }
 
 @media (max-width: 599px) {
   .toolbar { align-items: flex-start; flex-direction: column; }
-  .controls { width: 100%; }
-  .control { flex: 1 1 100%; justify-content: space-between; }
-  .select { flex: 1 1 auto; max-width: 70%; }
-  .select select { width: 100%; }
+  /* The quiet triggers' own inset lines their captions up with the count. */
+  .controls { justify-content: flex-start; margin-left: -10px; }
 }
-@media (prefers-reduced-motion: reduce) { .chip, .action { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .action { transition: none; } }

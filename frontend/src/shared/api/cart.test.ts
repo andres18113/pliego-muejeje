@@ -73,3 +73,72 @@ it("rejects missing cart capabilities rather than inferring them from display fo
   await expect(getCartDetail()).rejects.toMatchObject({ status: 502 });
   vi.unstubAllGlobals();
 });
+
+describe("cart offer pricing contract", () => {
+  afterEach(() => vi.unstubAllGlobals());
+
+  const linePricing = {
+    originalPrice: "25.00", unitSavings: "6.51", originalSubtotal: "75.00", lineSavings: "19.53",
+  };
+  const summaryPricing = { originalSubtotal: "75.00", savingsTotal: "19.53", currentSubtotal: "55.47" };
+
+  it.each(["PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"])("preserves authoritative offer amounts for %s", async (format) => {
+    const body = cartBody([{ format, quantity: format === "PAPERBACK" || format === "HARDCOVER" ? 3 : 1, currentPrice: "18.49", currentSubtotal: "55.47" }], "67.30");
+    vi.stubGlobal("fetch", vi.fn(async () => json({
+      ...body, items: body.items.map(item => ({ ...item, ...linePricing })), ...summaryPricing,
+      subtotal: "55.47", taxRate: "15.00", taxAmount: "8.32", shippingAmount: "3.51", total: "67.30",
+    })));
+
+    const cart = await getCartDetail();
+    expect(cart.items[0]).toMatchObject({ ...linePricing, currentPrice: "18.49", currentSubtotal: "55.47" });
+    expect(cart).toMatchObject({ ...summaryPricing, subtotal: "55.47", totalCurrent: "67.30", taxAmount: "8.32", total: "67.30" });
+  });
+
+  it("keeps explicit zero savings for lines without an offer in a mixed cart", async () => {
+    const body = cartBody([{ format: "PAPERBACK", quantity: 3 }, { format: "EBOOK" }, { format: "AUDIOBOOK" }], "92.47");
+    vi.stubGlobal("fetch", vi.fn(async () => json({
+      ...body,
+      items: body.items.map((item, index) => ({
+        ...item,
+        ...(index === 0 ? linePricing : { originalPrice: "18.50", unitSavings: "0.00", originalSubtotal: "18.50", lineSavings: "0.00" }),
+      })),
+      ...summaryPricing,
+    })));
+
+    const cart = await getCartDetail();
+    expect(cart.items[1]).toMatchObject({ format: "EBOOK", unitSavings: "0.00", lineSavings: "0.00" });
+    expect(cart.items[2]).toMatchObject({ format: "AUDIOBOOK", originalPrice: "18.50", originalSubtotal: "18.50" });
+    expect(cart.savingsTotal).toBe("19.53");
+  });
+
+  it("accepts legacy responses without inventing pricing fields", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => json({ ...cartBody(), subtotal: "18.50" })));
+    const cart = await getCartDetail();
+    expect(cart.items[0]).toMatchObject({ currentPrice: "18.50", currentSubtotal: "18.50" });
+    expect(cart.items[0]).not.toHaveProperty("originalPrice");
+    expect(cart.items[0]).not.toHaveProperty("unitSavings");
+    expect(cart.items[0]).not.toHaveProperty("originalSubtotal");
+    expect(cart.items[0]).not.toHaveProperty("lineSavings");
+    expect(cart).not.toHaveProperty("originalSubtotal");
+    expect(cart).not.toHaveProperty("savingsTotal");
+    expect(cart).not.toHaveProperty("currentSubtotal");
+    expect(cart.subtotal).toBe("18.50");
+  });
+
+  it.each(["originalPrice", "unitSavings", "originalSubtotal", "lineSavings"])("rejects malformed present line %s", async (field) => {
+    const body = cartBody();
+    for (const value of [18.5, null, "18.5", "-1.00", "18.500", " 18.50", ""]) {
+      vi.stubGlobal("fetch", vi.fn(async () => json({
+        ...body, items: body.items.map(item => ({ ...item, [field]: value })),
+      })));
+      await expect(getCartDetail(), `${field}=${JSON.stringify(value)}`).rejects.toMatchObject({ status: 502 });
+    }
+  });
+
+  it.each(["originalSubtotal", "savingsTotal", "currentSubtotal"])("rejects malformed present summary %s", async (field) => {
+    for (const value of [18.5, null, "18.5", "-1.00", "18.500", " 18.50", ""]) {
+      vi.stubGlobal("fetch", vi.fn(async () => json({ ...cartBody(), [field]: value })));
+      await expect(getCartDetail(), `${field}=${JSON.stringify(value)}`).rejects.toMatchObject({ status: 502 });
+    }
+  });
+});

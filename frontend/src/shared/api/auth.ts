@@ -8,11 +8,13 @@ export type RegisterRequest = components["schemas"]["RegisterRequest"];
 let refreshInFlight: Promise<Required<LoginResponse> | null> | null = null;
 
 export async function login(body: components["schemas"]["LoginRequest"]) {
-  const { data, error, response } = await apiClient.POST("/api/v1/auth/login", { body });
+  return withAuthSessionLock(async (signal) => {
+  const { data, error, response } = await apiClient.POST("/api/v1/auth/login", { body, signal });
   if (error) {
     throw toApiRequestError(response.status, error, "No se pudo iniciar sesión", "Revisa tus datos e inténtalo otra vez.");
   }
   return requireLoginResponse(data, "No se pudo iniciar sesión");
+  });
 }
 
 export async function refreshSession() {

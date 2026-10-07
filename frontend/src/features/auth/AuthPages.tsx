@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
+import { useSessionOperationScope } from "@/app/sessionOperation";
 import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { login, register } from "@/shared/api/auth";
 import { ApiRequestError, describeApiError, fieldErrorMessages } from "@/shared/api/errors";
@@ -54,6 +55,7 @@ export function SignInPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const session = useSession();
+  const scope = useSessionOperationScope(location.key);
   const errorRef = useRef<HTMLDivElement>(null);
   const submitLockRef = useRef(false);
   const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
@@ -89,17 +91,22 @@ export function SignInPage() {
     try {
       setUnverifiedEmail(null);
       const response = await login(values);
+      if (!scope.isCurrent()) return;
       if (!response.user) throw new Error("La respuesta de inicio de sesión está incompleta.");
-      session.establish({
+      const acceptedSession = {
         accessToken: response.accessToken!,
         expiresAt: Date.now() + response.expiresInSeconds! * 1000,
         user: response.user as NonNullable<typeof response.user> & Required<NonNullable<typeof response.user>>,
-      });
+      };
+      session.establish(acceptedSession);
+      const acceptedAuthority = session.captureAuthority(acceptedSession);
       setFeedback({ state: "success", message: "Inicio de sesión correcto. Abriendo tu cuenta…" });
       await new Promise<void>((resolve) => window.setTimeout(resolve, 220));
+      if (!acceptedAuthority.isCurrent() || !scope.isViewCurrent()) return;
       if (response.user.role === "ADMIN") navigate("/admin", { replace: true });
       else navigate(intent, { replace: true, state: stateAfterSignIn(location.state) });
     } catch (error: unknown) {
+      if (!scope.isCurrent()) return;
       const fields = (["email", "password"] as const).filter((field) => {
         const message=fieldErrorMessages(error,field);
         if(message) setError(field,{type:"server",message});
@@ -228,7 +235,8 @@ export function RegisterPage() {
   } = useForm<RegisterValues>({
     resolver: zodResolver(registerSchema),
     defaultValues: { email: "", password: "", firstNames: "", lastNames: "", phone: "" },
-    mode: "onSubmit",
+    // A field is checked once it has been visited (or on submit), then as it is corrected; never while untouched.
+    mode: "onTouched",
     reValidateMode: "onChange",
     shouldFocusError: false,
   });
@@ -293,7 +301,7 @@ export function RegisterPage() {
     <>
 
       <main className={`auth-page page-frame ${flow.page}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
-        <div className="auth-content" data-auth-state={registered ? "success" : activeFeedback.state}>
+        <div className="auth-content" data-auth-state={registered ? "success" : activeFeedback.state} data-auth-view={registered ? undefined : "register"}>
           <BackToCatalogLink to={from} />
           {registered ? (
             <section aria-labelledby="register-success-heading">
@@ -307,7 +315,6 @@ export function RegisterPage() {
           ) : (
             <>
               <h1>Crear cuenta</h1>
-              <p>Regístrate como cliente para continuar.</p>
               <p className="auth-form-note">Todos los campos son obligatorios, excepto el teléfono.</p>
               <form className="auth-form register-form" onSubmit={onSubmit} onChangeCapture={() => clearErrorFeedback(feedback, serverError, setFeedback, setServerError)} noValidate aria-busy={isSubmitting || isValidating}>
                 {serverError && (
@@ -317,6 +324,7 @@ export function RegisterPage() {
                   </div>
                 )}
 
+                <div className="register-names">
                 <Field controlId="register-first-names" label="Nombres">
                   <input
                     id="register-first-names"
@@ -345,6 +353,7 @@ export function RegisterPage() {
                   />
                   {errors.lastNames && <FieldMessage tone="error" id="register-last-names-error">{errors.lastNames.message}</FieldMessage>}
                 </Field>
+                </div>
                 <Field controlId="register-email" label="Correo electrónico">
                   <input
                     id="register-email"

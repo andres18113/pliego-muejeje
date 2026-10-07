@@ -66,6 +66,7 @@ const shipmentStates: Record<string, string> = {
 const purchaseStates: Record<string, string> = {
   PENDING_PAYMENT: "Pendiente de pago",
   CONFIRMED: "Compra confirmada",
+  COMPLETED: "Compra completada",
   CANCELLED: "Compra cancelada",
 };
 

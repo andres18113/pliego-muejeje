@@ -1,0 +1,38 @@
+[
+  {
+    "width": 375,
+    "scope": "synthetic customer quantity; all APIs intercepted",
+    "attemptedBusinessWrites": [],
+    "closed": "false",
+    "open": "true",
+    "controlsMatches": true,
+    "optionCount": 10,
+    "afterEscape": "false",
+    "focusRetained": true,
+    "overflow": false
+  },
+  {
+    "width": 768,
+    "scope": "synthetic customer quantity; all APIs intercepted",
+    "attemptedBusinessWrites": [],
+    "closed": "false",
+    "open": "true",
+    "controlsMatches": true,
+    "optionCount": 10,
+    "afterEscape": "false",
+    "focusRetained": true,
+    "overflow": false
+  },
+  {
+    "width": 1280,
+    "scope": "synthetic customer quantity; all APIs intercepted",
+    "attemptedBusinessWrites": [],
+    "closed": "false",
+    "open": "true",
+    "controlsMatches": true,
+    "optionCount": 10,
+    "afterEscape": "false",
+    "focusRetained": true,
+    "overflow": false
+  }
+]

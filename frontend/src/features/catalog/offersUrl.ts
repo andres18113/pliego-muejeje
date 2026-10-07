@@ -7,7 +7,8 @@ export function readOffersCriteria(search: string): OffersCriteria {
   const sort = params.get("sort");
   const productType = params.get("productType");
   return {
-    page: catalog.page, pageSize: 20, category: catalog.category,
+    // Ofertas shows every offer at once: an old "?page=" in a shared link is ignored.
+    page: 0, pageSize: 50, category: catalog.category,
     productType: productType === "PHYSICAL" || productType === "EBOOK" || productType === "AUDIOBOOK" ? productType : "",
     sort: sort === "ENDING_SOON" || sort === "PRICE_ASC" || sort === "PRICE_DESC" ? sort : "RELEVANCE",
   };
@@ -18,7 +19,6 @@ export function offersHref(criteria: OffersCriteria) {
   if (criteria.productType) params.set("productType", criteria.productType);
   if (criteria.category) params.set("category", criteria.category);
   if (criteria.sort !== "RELEVANCE") params.set("sort", criteria.sort);
-  if (criteria.page) params.set("page", String(criteria.page));
   const query = params.toString();
   return query ? `/ofertas?${query}` : "/ofertas";
 }

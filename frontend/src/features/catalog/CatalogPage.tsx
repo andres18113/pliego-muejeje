@@ -6,7 +6,7 @@ import { Button, UnstyledButton } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { AppliedCriteria, CatalogHeading, CatalogToolbar, SortControl, type RemovableCriterion } from "./CatalogControls";
 import classes from "./exploration.module.css";
-import { SiteFooter } from "@/shared/ui/SiteFooter";
+import { HomeFooter } from "./HomeFooter";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { describeApiError } from "@/shared/api/errors";
 import { getPublicCategories, getPublicCatalogFilterOptions, searchPublicEditions } from "@/shared/api/catalog";
@@ -253,7 +253,7 @@ export function CatalogPage() {
         </div>
       </main>
 
-      <SiteFooter />
+      <HomeFooter />
     </div>
   );
 }

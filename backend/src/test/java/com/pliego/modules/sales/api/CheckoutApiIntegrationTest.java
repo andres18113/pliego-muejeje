@@ -56,6 +56,58 @@ import com.pliego.modules.sales.gateway.CheckoutGateway;
 class CheckoutApiIntegrationTest {
 
     @Test
+    void forwardsAcceptedQuoteAndRejectsMalformedFingerprint() throws Exception {
+        perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\",\"expectedQuoteFingerprint\":\"" + "a".repeat(64) + "\"}")
+                .andExpect(status().isCreated());
+        assertEquals("a".repeat(64), gateway.fingerprint);
+        gateway.reset();
+        perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\",\"expectedQuoteFingerprint\":\"not-a-quote\"}")
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].field").value("expectedQuoteFingerprint"));
+        assertEquals(0, gateway.calls);
+    }
+
+    @Test
+    void confirmationAndResolutionForwardTheSameImmutablePurchasePricing() throws Exception {
+        gateway.result = new CheckoutResult("700", "CONFIRMED", "APPROVED", new BigDecimal("45.77"), APPROVED_REFERENCE,
+                null, new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("39.80"), new BigDecimal("15.00"),
+                        new BigDecimal("5.97"), new BigDecimal("0.00"), new BigDecimal("45.77")),
+                new com.pliego.modules.sales.application.PostPurchaseModels.OfferPricing(
+                        new BigDecimal("44.31"), new BigDecimal("4.51"), new BigDecimal("39.80"), true));
+        perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.originalSubtotal").value("44.31"))
+                .andExpect(jsonPath("$.savingsTotal").value("4.51"))
+                .andExpect(jsonPath("$.currentSubtotal").value("39.80"))
+                .andExpect(jsonPath("$.pricingSnapshotAvailable").value(true))
+                .andExpect(jsonPath("$.subtotal").value("39.80"))
+                .andExpect(jsonPath("$.taxRate").value("15.00"))
+                .andExpect(jsonPath("$.taxAmount").value("5.97"))
+                .andExpect(jsonPath("$.shippingAmount").value("0.00"))
+                .andExpect(jsonPath("$.total").value("45.77"));
+        mvc.perform(post("/api/v1/checkout/attempts/" + UUID.randomUUID() + "/resolve")
+                        .header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.state").value("CREATED"))
+                .andExpect(jsonPath("$.order.originalSubtotal").value("44.31"))
+                .andExpect(jsonPath("$.order.savingsTotal").value("4.51"))
+                .andExpect(jsonPath("$.order.currentSubtotal").value("39.80"))
+                .andExpect(jsonPath("$.order.pricingSnapshotAvailable").value(true))
+                .andExpect(jsonPath("$.order.total").value("45.77"));
+    }
+
+    @Test
+    void legacyCheckoutDoesNotInventHistoricalOriginalPricesOrSavings() throws Exception {
+        perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.pricingSnapshotAvailable").value(false))
+                .andExpect(jsonPath("$.originalSubtotal").doesNotExist())
+                .andExpect(jsonPath("$.savingsTotal").doesNotExist())
+                .andExpect(jsonPath("$.subtotal").value("39.80"))
+                .andExpect(jsonPath("$.total").value("39.80"));
+    }
+
+    @Test
     void pickupAcceptsLocationWithoutDeliveryAddress() throws Exception {
         mvc.perform(post("/api/v1/checkout").header("Authorization", token("100", "CUSTOMER"))
                 .header("Idempotency-Key", java.util.UUID.randomUUID().toString())
@@ -267,6 +319,7 @@ class CheckoutApiIntegrationTest {
         Long address;
         String method;
         String outcome;
+        String fingerprint;
         DatabaseException failure;
         CheckoutResult result;
 
@@ -279,8 +332,15 @@ class CheckoutApiIntegrationTest {
             address = 0L;
             method = null;
             outcome = null;
+            fingerprint = null;
             failure = null;
             result = new CheckoutResult("700", "CONFIRMED", "APPROVED", new BigDecimal("39.80"), APPROVED_REFERENCE);
+        }
+
+        @Override public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod,
+                String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint) {
+            fingerprint = quoteFingerprint;
+            return checkout(actorUserId,key,addressId,paymentMethod,paymentOutcome,cartId,fulfillmentMethod,pickupLocationId);
         }
 
         @Override public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod,

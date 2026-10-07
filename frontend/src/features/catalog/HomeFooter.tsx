@@ -6,6 +6,7 @@ import { MastercardLogoIcon } from "react-svg-credit-card-payment-icons/masterca
 import { VisaLogoIcon } from "react-svg-credit-card-payment-icons/visa";
 import { useHelpCategories } from "@/features/help/helpQuery";
 import { useStorefrontNavigation } from "@/features/storefront/storefrontQuery";
+import { BrandLogo } from "@/shared/ui/BrandLogo";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import classes from "./homeFooter.module.css";
 
@@ -21,17 +22,21 @@ const cardBrands = [
   { name: "Diners Club", Mark: DinersClubLogoIcon },
 ];
 
+/**
+ * The storefront footer: the close of its two front pages, Home and Catalog. Carries its own tokens so it reads the
+ * same wherever it is placed.
+ */
 export function HomeFooter() {
   const sections = useStorefrontNavigation().data?.sections ?? [];
   const topics = useHelpCategories().data ?? [];
   const explore = sections.filter(section => exploreKeys.includes(section.key));
   const help = sections.find(section => section.key === "HELP");
   const helpLinks = help ? helpTopics.flatMap(slug => topics.filter(topic => topic.slug === slug)) : [];
-  return <Box component="footer" className={classes.footer}>
+  return <Box component="footer" className={classes.footer} data-storefront-surface>
     <div className={classes.inner}>
       <div className={classes.top}>
         <div className={classes.brand}>
-          <Link to="/" aria-label="PLIEGO, ir al inicio" className={classes.wordmark}>PLIEGO</Link>
+          <Link to="/" aria-label="PLIEGO, ir al inicio" className={classes.wordmark}><BrandLogo /></Link>
           <p>Libros para mirar el mundo de otra manera.</p>
         </div>
         <nav aria-label="Navegación del pie de página" className={classes.navigation}>

@@ -1,5 +1,5 @@
-/* Cart: each book is one purchase unit — a paper field holding the cover, identity, quantity beside its
-   amount, availability and the unit's own actions. Reads the purchase-flow tokens (--pf-*). */
+/* Cart: each book is one purchase unit — a white card (Google Store cart) holding the cover, the title, quantity
+   facing its price, availability, the unit's own actions and, with an offer, its saving. Reads the purchase-flow tokens (--pf-*). */
 /* On the page's centre axis, above the cart: icon and words read as one light link — the icon sits on the
    text's optical centre and only the words carry the underline. */
 .back { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; justify-self: center; color: var(--pf-blue); font-size: 1.0625rem; font-weight: 500; line-height: 1; text-decoration: none; }
@@ -9,37 +9,45 @@
 .back:hover > span { text-decoration-thickness: 1.5px; text-decoration-color: currentColor; }
 
 .items { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; min-width: 0; }
-.list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin: 0; padding: 0; list-style: none; }
 .item {
   display: grid;
-  grid-template-columns: 96px minmax(0, 1fr) auto;
-  grid-template-areas: "cover identity identity" "cover buy buy" "cover actions actions";
-  column-gap: clamp(16px, 2.2vw, 28px);
-  row-gap: 14px;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  /* The saving chip shares the actions' row (chip left, actions right), so an offer adds no extra row. */
+  grid-template-areas: "cover identity identity" "cover buy buy" "cover saving actions";
+  column-gap: clamp(16px, 2vw, 24px);
+  row-gap: 12px;
   min-width: 0;
-  padding: clamp(16px, 2vw, 24px);
-  border-radius: 24px;
-  background: var(--pf-paper);
+  padding: clamp(16px, 2vw, 20px);
+  border-radius: 20px;
+  background: var(--pf-card, var(--pf-paper));
+  box-shadow: inset 0 0 0 1px var(--pf-card-edge, transparent);
 }
-.item[data-unavailable] { grid-template-areas: "cover identity identity" "cover buy buy" "cover problem problem" "cover actions actions"; }
+.item[data-unavailable] { grid-template-areas: "cover identity identity" "cover buy buy" "cover problem problem" "cover saving actions"; }
 .item[aria-busy="true"] :is(.quantity, .actions) { opacity: .72; }
 .cover { grid-area: cover; display: block; align-self: start; }
 .cover :global(.book-cover) { width: 100%; }
 .item[data-unavailable] .cover { opacity: .62; }
 
 .identity { grid-area: identity; display: grid; align-content: start; gap: 4px; min-width: 0; }
-.identity h2 { margin: 0; font: 650 clamp(1.25rem, 1.1rem + .6vw, 1.5rem)/1.12 var(--pf-display); letter-spacing: -.035em; overflow-wrap: anywhere; }
+.identity h2 { margin: 0; font: 650 clamp(1.125rem, 1.05rem + .4vw, 1.3125rem)/1.18 var(--pf-display); letter-spacing: -.035em; overflow-wrap: anywhere; }
 .identity h2 a { color: var(--pf-ink); text-decoration: none; }
 .identity h2 a:hover { color: var(--pf-blue); text-decoration: underline; text-decoration-thickness: 1.5px; text-underline-offset: 4px; }
 .authors { margin: 0; color: var(--pf-muted); overflow-wrap: anywhere; }
 
 .buy { grid-area: buy; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; min-width: 0; }
-.quantity { min-width: 0; }
-.quantityStatic { margin: 0; color: var(--pf-muted); }
+/* The quiet trigger carries its own 10px inset; this lines "Cant." up with the title. */
+.quantity { min-width: 0; margin-left: -10px; }
+/* A fixed quantity (digital editions) reads like the quiet picker's face, without the chevron. */
+.quantityStatic { display: flex; align-items: center; min-height: 44px; margin: 0 0 0 10px; color: var(--pf-ink); font-size: 1rem; font-variant-numeric: tabular-nums; }
+.quantityCaption { color: var(--pf-muted); }
+.quantityValue { margin-left: 4px; font-weight: 650; }
 
 .amount { display: grid; justify-items: end; gap: 2px; min-width: 0; margin-left: auto; text-align: right; }
-.subtotal { margin: 0; font: 650 1.375rem/1.1 var(--pf-display); letter-spacing: -.02em; overflow-wrap: anywhere; }
-.unit { margin: 0; color: var(--pf-muted); font-size: .875rem; overflow-wrap: anywhere; }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: flex-end; gap: 2px 10px; margin: 0; }
+.subtotal { font: 650 1.25rem/1.1 var(--pf-display); letter-spacing: -.02em; overflow-wrap: anywhere; }
+/* With an offer, the line's price before it, smaller and struck (the server's original line subtotal). */
+.was { color: var(--pf-muted); font-size: 1rem; font-variant-numeric: tabular-nums; }
 
 /* Shown only when the book can no longer be bought as it stands. */
 .problem { grid-area: problem; min-width: 0; padding: 12px 14px; border-radius: 14px; background: var(--pf-sheet); }
@@ -49,6 +57,16 @@
 .actions :global(.text-button) { min-height: 44px; color: var(--pf-blue); }
 
 /* Auto-placed under the unit, so an empty one leaves no row behind. */
+/* The line's offer saving as one compact pale-green chip under its actions, sized to its words (the server's
+   saving for this quantity). */
+.saving {
+  --cart-save-bg: #d7f1dc; --cart-save-ink: #17522a;
+  grid-area: saving; align-self: center; justify-self: start; display: inline-flex; align-items: center; gap: 6px; min-width: 0; max-width: 100%; margin: 0; padding: 6px 12px 6px 10px; border-radius: 8px;
+  background: var(--cart-save-bg); color: var(--cart-save-ink); font-size: .875rem; font-weight: 500; line-height: 1.35;
+}
+:global([data-mantine-color-scheme="dark"]) .saving { --cart-save-bg: #1f3d29; --cart-save-ink: #bdeec9; }
+.saving :global(.material-symbol) { flex: none; font-size: 18px !important; width: 18px; }
+@media (forced-colors: active) { .saving { border: 1px solid CanvasText; } }
 .feedback { grid-column: 2 / -1; margin: 0; color: var(--pf-muted); font-size: .9375rem; line-height: 1.45; }
 .feedback:empty { display: none; }
 .feedback[data-tone="success"] { color: var(--pf-blue); font-weight: 600; }
@@ -68,10 +86,28 @@
 .savedList > li { display: flex; min-width: 0; }
 .savedAll { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; }
 
+/* When the card is too narrow for the chip beside the actions (a narrow column or larger text: rem follows the
+   reader's text size), the chip takes its own row under them. */
+.list > li { container-type: inline-size; min-width: 0; }
+@container (max-width: 40rem) {
+  .item { grid-template-areas: "cover identity identity" "cover buy buy" "cover actions actions" "cover saving saving"; }
+  .item[data-unavailable] { grid-template-areas: "cover identity identity" "cover buy buy" "cover problem problem" "cover actions actions" "cover saving saving"; }
+}
 @media (max-width: 599px) {
-  .item { grid-template-columns: 64px minmax(0, 1fr) minmax(0, auto); grid-template-areas: "cover identity identity" "buy buy buy" "actions actions actions"; border-radius: 20px; }
-  .item[data-unavailable] { grid-template-areas: "cover identity identity" "buy buy buy" "problem problem problem" "actions actions actions"; }
+  .item { grid-template-columns: 64px minmax(0, 1fr) minmax(0, auto); grid-template-areas: "cover identity identity" "buy buy buy" "actions actions actions" "saving saving saving"; border-radius: 20px; }
+  .item[data-unavailable] { grid-template-areas: "cover identity identity" "buy buy buy" "problem problem problem" "actions actions actions" "saving saving saving"; }
   .actions { justify-content: space-between; }
   .feedback { grid-column: 1 / -1; }
 }
 @media (forced-colors: active) { .item, .savedEmpty { border: 1px solid CanvasText; } }
+
+/* In the saved list, a confirmation about the cart ("Esta edición digital ya está en tu carrito.", "Agregado al
+   carrito.") reads as a quiet ultramar note with Material info, not as small grey text. Errors keep their own tone. */
+.saved :global([data-bookcard-feedback][role="status"]) {
+  display: inline-flex; align-items: center; gap: 6px; justify-self: start; max-width: 100%; margin: 2px 0 0; padding: 6px 12px 6px 10px; border-radius: 8px;
+  background: color-mix(in srgb, var(--pf-blue) 9%, transparent); color: var(--pf-blue); font-size: .875rem; font-weight: 600; line-height: 1.35;
+}
+.saved :global([data-bookcard-feedback][role="status"])::before {
+  content: "info"; flex: none; font-family: "Material Symbols Outlined"; font-size: 18px; font-weight: 400; line-height: 1; font-feature-settings: "liga"; -webkit-font-smoothing: antialiased;
+}
+@media (forced-colors: active) { .saved :global([data-bookcard-feedback][role="status"]) { border: 1px solid CanvasText; } }

@@ -1,8 +1,9 @@
-import { useEffect, useRef, type ReactNode } from "react";
+import { Fragment, useEffect, useRef, type ReactNode } from "react";
 import { ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 
 
@@ -38,7 +39,7 @@ export function CustomerOnly({
   const location = useLocation();
   const requestedHref = safeAuthReturnHref(`${location.pathname}${location.search}${location.hash}`);
   const returnHref = requestedHref === "/catalog" ? intent : requestedHref;
-  const { session, expired } = useSession();
+  const { session, expired, authorityVersion } = useSession();
   const gateRef = useRef<HTMLHeadingElement>(null);
   useEffect(() => {
     if (!session || session.user.role !== "CUSTOMER") gateRef.current?.focus({ preventScroll: true });
@@ -69,11 +70,11 @@ export function CustomerOnly({
         <h1 id="purchase-gate-heading" ref={gateRef} tabIndex={-1}>Esta página no está disponible para tu cuenta.</h1>
         <p>Esta página está disponible únicamente para cuentas de cliente.</p>
         <div className="purchase-actions">
-          <ButtonLink variant="secondary" to="/catalog">Ir al catálogo</ButtonLink>
+          <Link className="route-home" to="/"><MaterialSymbol name="arrow_back" aria-hidden="true" /><span>Ir al inicio</span></Link>
         </div>
       </section>
     );
   }
 
-  return <>{children}</>;
+  return <Fragment key={`${authorityVersion}:${session.user.userId}`}>{children}</Fragment>;
 }

@@ -35,6 +35,11 @@ const cartDetailSchema = z.object({
     quantity: z.number().int().positive(),
     currentPrice: moneySchema,
     currentSubtotal: moneySchema,
+    /** Authoritative offer projection; older responses may omit it, but present amounts must be valid. */
+    originalPrice: moneySchema.optional(),
+    unitSavings: moneySchema.optional(),
+    originalSubtotal: moneySchema.optional(),
+    lineSavings: moneySchema.optional(),
     available: z.boolean(),
     requiresPhysicalFulfillment: z.boolean(),
     quantityEditable: z.boolean(),
@@ -42,6 +47,11 @@ const cartDetailSchema = z.object({
     unavailabilityReason: z.enum(stockUnavailabilityReasons).nullable().catch(null),
   })),
   totalCurrent: moneySchema,
+  /** Subtotal before offers, total savings and discounted subtotal, all supplied by the Database API. */
+  originalSubtotal: moneySchema.optional(),
+  savingsTotal: moneySchema.optional(),
+  currentSubtotal: moneySchema.optional(),
+  quoteFingerprint: z.string().regex(/^[0-9a-f]{64}$/).optional(),
   /**
    * Commercial breakdown computed by the Database API (V041): subtotal before tax, the IVA rate as a percentage
    * ("15.00" is 15 %), the IVA amount, delivery when it applies, and the total. The cart never derives these:

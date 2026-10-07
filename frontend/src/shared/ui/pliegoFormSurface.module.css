@@ -12,7 +12,7 @@
   --control-border: color-mix(in srgb, var(--store-ink, #252740) 40%, var(--store-lavender, #e4def4));
   --control-border-hover: var(--store-blue, #283da8);
   --control-surface: #fbfaf7;
-  --control-open-surface: color-mix(in srgb, var(--store-lavender, #e4def4) 40%, #fbfaf7);
+  --control-open-surface: var(--store-hover, #e8e8eb);
   --control-open-shadow: 0 0 0 3px color-mix(in srgb, var(--store-blue, #283da8) 16%, transparent);
   --control-focus-ring: 0 0 0 1px var(--store-blue, #283da8);
 }

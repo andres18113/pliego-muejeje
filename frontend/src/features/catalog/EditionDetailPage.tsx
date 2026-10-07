@@ -16,11 +16,14 @@ import { useFavoriteSessionFailure, useFavoriteStatuses } from "@/features/favor
 import { FavoriteButton } from "./FavoriteButton";
 import { favoriteStatusQueryKey } from "@/shared/api/favorites";
 import { BookCover } from "./BookCover";
+import { MaterialSymbol, type MaterialSymbolName } from "@/shared/ui/MaterialSymbol";
+import { mediaOfProductType, type CatalogMedia } from "./catalogMedia";
 import { StockStatus } from "./StockStatus";
+import { SavingsChip, UrgencyChip } from "./OfferChips";
+import { offerUrgencyLabel } from "./offersPresentation";
 import { availabilityConflictMessage, resolveStockStatus, stockReadOptions } from "./stockStatusModel";
-import surface from "./availabilitySurface.module.css";
 import classes from "./editionDetail.module.css";
-import { formatAudioDuration, formatEdition, formatLanguage, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
+import { formatAudioDuration, formatEdition, formatLanguage, formatNarrators, formatPageCount, formatPublicationDate, formatUsd } from "./formatters";
 import { catalogHref, readCatalogCriteria, safeCatalogReturnHref, safeExternalHttpHref } from "./catalogUrl";
 
 type PurchaseFeedback = {
@@ -29,23 +32,33 @@ type PurchaseFeedback = {
 };
 
 type CoverPreview = {
-  url: string;
+  url: string | null;
   license: string | null;
   attribution: string | null;
   title: string;
+  media: CatalogMedia | null;
 };
 
 function coverPreviewFromNavigation(state: unknown, editionId: string): CoverPreview | null {
   if (!state || typeof state !== "object" || !("coverPreview" in state)) return null;
   const preview = state.coverPreview;
   if (!preview || typeof preview !== "object" || !("editionId" in preview)
-      || preview.editionId !== editionId || !("url" in preview) || typeof preview.url !== "string"
+      || preview.editionId !== editionId || !("url" in preview) || (typeof preview.url !== "string" && preview.url !== null)
       || !("title" in preview) || typeof preview.title !== "string") return null;
   const license = "license" in preview && typeof preview.license === "string" ? preview.license : null;
   const attribution = "attribution" in preview && typeof preview.attribution === "string"
     ? preview.attribution
     : null;
-  return { url: preview.url, license, attribution, title: preview.title };
+  const media = "media" in preview && (preview.media === "physical" || preview.media === "ebook" || preview.media === "audiobook")
+    ? preview.media
+    : null;
+  return { url: preview.url, license, attribution, title: preview.title, media };
+}
+
+/** The collection the reader came from, when it names one medium (`/catalog?productType=EBOOK…`). */
+function mediaOfReturnHref(href: string): CatalogMedia | null {
+  const productType = new URL(href, "http://pliego.local").searchParams.get("productType");
+  return productType === "PHYSICAL" || productType === "EBOOK" || productType === "AUDIOBOOK" ? mediaOfProductType(productType) : null;
 }
 
 export function EditionDetailPage() {
@@ -193,6 +206,8 @@ export function EditionDetailPage() {
   });
   const stockFocus = useAvailabilityFocus(!detailQuery.error && Boolean(detailQuery.data?.available), () => document.getElementById("detail-error-heading") ?? detailHeadingRef.current, () => detailHeadingRef.current);
   const detail = detailQuery.data;
+  // The same urgency as the Ofertas cards: only when the server's own days left are five or fewer.
+  const urgency = detail?.offer ? offerUrgencyLabel(detail.offer.daysRemaining) : null;
 
   useEffect(() => {
     document.title = detail?.title ? `${detail.title} · PLIEGO` : "Edición · PLIEGO";
@@ -217,32 +232,47 @@ export function EditionDetailPage() {
   }
 
   if (detailQuery.isPending) {
+    // The page's own composition while the record loads: the edition's medium when the card said so,
+    // else the medium of the collection it came from, else neutral paper — never a guess.
+    const loadingMedia = coverPreview?.media ?? mediaOfReturnHref(returnHref);
+    const loadingCue = loadingMedia ? mediaCue[loadingMedia] : null;
     return (
       <>
-
-        <main className="detail-route page-frame" id="contenido-principal" tabIndex={-1} aria-busy="true">
-          {!coverPreview && <h1 className="visually-hidden">Consultando la edición</h1>}
-          <BackToCatalogLink to={returnHref} historyBack={returnWithHistory} />
-          {coverPreview ? (
-            <div className="edition-detail detail-loading-preview">
-              <div className="detail-cover-column">
-                <BookCover
-                  url={coverPreview.url}
-                  license={coverPreview.license}
-                  attribution={coverPreview.attribution}
-                  title={coverPreview.title}
-                  size="detail"
-                  loading="eager"
-                />
-              </div>
-              <div className="detail-copy">
-                <h1>{coverPreview.title}</h1>
-                <p className="detail-loading" role="status" aria-live="polite">Consultando la edición…</p>
+        <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} aria-busy="true" data-media={loadingMedia ?? undefined} data-loading>
+          <nav className={classes.trail} aria-label="Ruta de navegación">
+            <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
+            {coverPreview ? <span aria-current="page">{coverPreview.title}</span> : <span aria-hidden="true"><i className={classes.bone} data-bone="trail" /></span>}
+          </nav>
+          <div className={classes.edition}>
+            <div className={classes.cover}>
+              {coverPreview?.url ? (
+                <BookCover url={coverPreview.url} license={coverPreview.license} attribution={coverPreview.attribution} title={coverPreview.title} size="detail" loading="eager" />
+              ) : <span className={classes.coverBone} aria-hidden="true" />}
+            </div>
+            <header className={classes.identity}>
+              {loadingCue && <p className={classes.medium}><MaterialSymbol name={loadingCue.symbol} aria-hidden="true" size={18} />{loadingCue.label}</p>}
+              {coverPreview ? <h1 data-long={coverPreview.title.length > 56 || undefined}>{coverPreview.title}</h1> : <>
+                <h1 className="visually-hidden">Consultando la edición</h1>
+                <span className={classes.bone} data-bone="title" aria-hidden="true" />
+              </>}
+              <span className={classes.bone} data-bone="author" aria-hidden="true" />
+            </header>
+            <div className={classes.buy} aria-hidden="true">
+              <div className={classes.offer}><span className={classes.bone} data-bone="price" /><span className={classes.bone} data-bone="stock" /></div>
+              <div className={classes.actions}><span className={classes.bone} data-bone="action" /><span className={classes.bone} data-bone="favorite" /></div>
+            </div>
+            <div className={classes.facts} aria-hidden="true">
+              <span className={classes.bone} data-bone="heading" />
+              <div className={classes.factsGrid}>
+                {Array.from({ length: 6 }, (_, index) => <div key={index}><span className={classes.bone} data-bone="label" /><span className={classes.bone} data-bone="value" /></div>)}
               </div>
             </div>
-          ) : (
-            <p className="detail-loading" role="status" aria-live="polite">Consultando la edición…</p>
-          )}
+            <div className={classes.synopsis} aria-hidden="true">
+              <span className={classes.bone} data-bone="synopsis-heading" />
+              <div className={classes.synopsisBones}>{[100, 96, 98, 92, 58].map((width) => <span key={width} className={classes.bone} data-bone="line" style={{ width: `${width}%` }} />)}</div>
+            </div>
+          </div>
+          <p className="visually-hidden" role="status" aria-live="polite">Consultando la edición…</p>
         </main>
         <SiteFooter returnHref={returnHref} historyBack={returnWithHistory} />
       </>
@@ -287,7 +317,9 @@ export function EditionDetailPage() {
     cartCheckMutation.mutate();
   }
 
-  const physical = !isDigitalFormat(detail.format);
+  // Every medium shares one composition; only its supporting surface and quiet cue differ.
+  const media = detail.format === "EBOOK" ? "ebook" : detail.format === "AUDIOBOOK" ? "audiobook" : "physical";
+  const cue = mediaCue[media];
   const favorite = (
     <FavoriteButton
                 editionId={editionId}
@@ -296,7 +328,7 @@ export function EditionDetailPage() {
                 ready={!customerId || Boolean(favoriteQuery.data)}
                 queryKey={favoriteStatusQueryKey(customerId ?? "guest", favoriteQuery.stableIds)}
                 returnHref={currentIntent}
-                className={physical ? classes.favorite : "detail-favorite-button"}
+                className={classes.favorite}
               />
   );
   const purchase = !purchasingAvailable ? (
@@ -390,99 +422,28 @@ export function EditionDetailPage() {
                 </>
               );
 
-  if (physical) {
-    const secondary = [publisher, formatEdition(detail.format), detail.language ? formatLanguage(detail.language) : ""].filter(Boolean);
-    const facts = [
-      detail.isbn13 ? ["ISBN-13", detail.isbn13] : null,
-      detail.pageCount ? ["Páginas", formatPageCount(detail.pageCount)] : null,
-      detail.publicationDate ? ["Publicación", formatPublicationDate(detail.publicationDate)] : null,
-    ].filter((fact): fact is [string, string] => fact !== null);
-    return (
-      <>
-        <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1}>
-          <nav className={classes.trail} aria-label="Ruta de navegación">
-            <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
-            <span aria-current="page">{title}</span>
-          </nav>
-
-          <article className={classes.edition} data-available={detail.available}>
-            <div className={classes.cover}>
-              <BookCover
-                url={detail.coverUrl ?? null}
-                license={detail.coverLicense ?? null}
-                attribution={detail.coverAttribution ?? null}
-                title={title}
-                size="detail"
-                loading="eager"
-              />
-              {safeCoverSourceHref && (
-                <a className={classes.coverSource} href={safeCoverSourceHref} target="_blank" rel="noopener noreferrer">
-                  Consultar fuente de la portada <span>(abre en pestaña nueva)</span>
-                </a>
-              )}
-            </div>
-
-            <header className={classes.identity}>
-              <h1 ref={detailHeadingRef} tabIndex={-1} aria-describedby="edition-stock" data-long={title.length > 56 || undefined}>{title}</h1>
-              {detail.subtitle && <p className={classes.subtitle}>{detail.subtitle}</p>}
-              {authors && <p className={classes.authors}>{authors}</p>}
-              {secondary.length > 0 && <p className={classes.secondary}>{secondary.map((fact) => <span key={fact}>{fact}</span>)}</p>}
-            </header>
-
-            <section className={classes.buy} aria-label="Compra">
-              <div className={classes.offer}>
-                {detail.price && <p className={classes.price}>{formatUsd(detail.price)}</p>}
-                {detail.offer && <div aria-label="Oferta vigente"><p>Precio anterior: <s>{formatUsd(detail.offer.originalPrice!)}</s></p><p>Descuento: {formatUsd(detail.offer.discountAmount!)}</p></div>}
-                <StockStatus id="edition-stock" available={detail.available} variant="quiet" className={classes.stock} />
-              </div>
-              <div className={classes.actions}>
-                {purchase}
-                {favorite}
-              </div>
-            </section>
-
-            {facts.length > 0 && (
-              <dl className={classes.facts}>
-                {facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
-              </dl>
-            )}
-
-            {detail.synopsis && <Synopsis text={detail.synopsis} />}
-
-            {detail.categories && detail.categories.length > 0 && (
-              <section className={classes.categories} aria-labelledby="detail-categories-heading">
-                <h2 id="detail-categories-heading">Categorías</h2>
-                <ul>
-                  {detail.categories.map((category) => (
-                    <li key={category.slug || category.name}>
-                      {category.slug && category.name
-                        ? <Link to={catalogHref({ ...criteria, category: category.slug, page: 0 })}>{category.name}</Link>
-                        : category.name}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </article>
-        </main>
-        <SiteFooter returnHref={returnHref} historyBack={returnWithHistory} />
-      </>
-    );
-  }
-
-  // eBooks and audiobooks keep the previous presentation until their page is designed.
+  const facts = [
+    publisher ? ["Editorial", publisher] : null,
+    // Digital formats carry their one technical detail (file format, running time) beside the medium.
+    ["Formato", media === "ebook" ? ["eBook", detail.ebookFileFormat].filter(Boolean).join(" · ")
+      : media === "audiobook" ? ["Audiolibro", detail.audioDurationSeconds ? formatAudioDuration(detail.audioDurationSeconds) : null].filter(Boolean).join(" · ")
+      : formatEdition(detail.format)],
+    media === "audiobook" ? ["Narración", formatNarrators(detail.narrators)] : null,
+    detail.language ? ["Idioma", formatLanguage(detail.language)] : null,
+    detail.pageCount ? ["Páginas", formatPageCount(detail.pageCount)] : null,
+    detail.publicationDate ? ["Publicación", formatPublicationDate(detail.publicationDate)] : null,
+    detail.isbn13 ? ["ISBN-13", detail.isbn13] : null,
+  ].filter((fact): fact is [string, string] => fact !== null && Boolean(fact[1]));
   return (
     <>
-
-      <main className="detail-route page-frame" id="contenido-principal" tabIndex={-1}>
-        <nav className="detail-breadcrumb" aria-label="Ruta de navegación">
+      <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} data-media={media}>
+        <nav className={classes.trail} aria-label="Ruta de navegación">
           <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
-          <span aria-hidden="true">/</span>
           <span aria-current="page">{title}</span>
         </nav>
 
-        <article className="edition-detail">
-          <div className="detail-cover-column">
+        <article className={classes.edition} data-available={detail.available}>
+          <div className={classes.cover}>
             <BookCover
               url={detail.coverUrl ?? null}
               license={detail.coverLicense ?? null}
@@ -492,66 +453,73 @@ export function EditionDetailPage() {
               loading="eager"
             />
             {safeCoverSourceHref && (
-              <a className="cover-source" href={safeCoverSourceHref} target="_blank" rel="noopener noreferrer">
+              <a className={classes.coverSource} href={safeCoverSourceHref} target="_blank" rel="noopener noreferrer">
                 Consultar fuente de la portada <span>(abre en pestaña nueva)</span>
               </a>
             )}
           </div>
 
-          <div className={`detail-copy ${surface.surface}`}>
-            <h1 ref={detailHeadingRef} tabIndex={-1} aria-describedby="edition-stock">{title}</h1>
-            {detail.subtitle && <p className="detail-subtitle">{detail.subtitle}</p>}
-            {authors && <p className="detail-authors">{authors}</p>}
-            {publisher && <p className="detail-publisher">{publisher}</p>}
+          <header className={classes.identity}>
+            {cue && <p className={classes.medium}><MaterialSymbol name={cue.symbol} aria-hidden="true" size={18} />{cue.label}</p>}
+            <h1 ref={detailHeadingRef} tabIndex={-1} aria-describedby="edition-stock" data-long={title.length > 56 || undefined}>{title}</h1>
+            {detail.subtitle && <p className={classes.subtitle}>{detail.subtitle}</p>}
+            {authors && <p className={classes.authors}>{authors}</p>}
+          </header>
 
-            {detail.price && <p className="detail-price">{formatUsd(detail.price)}</p>}
-            {detail.offer && <div aria-label="Oferta vigente"><p>Precio anterior: <s>{formatUsd(detail.offer.originalPrice!)}</s></p><p>Descuento: {formatUsd(detail.offer.discountAmount!)}</p></div>}
-            <StockStatus id="edition-stock" available={detail.available} className={surface.status} />
-
-            <div className="detail-purchase">
-              {favorite}
-              {purchase}
+          <section className={classes.buy} aria-label="Compra">
+            {/* With an offer: price, then the offer's two chips as one group, then availability on its own quiet line. */}
+            <div className={classes.offer} data-offer={detail.offer ? "" : undefined}>
+              <div className={classes.priceLine}>
+                {detail.price && <p className={classes.price}>{formatUsd(detail.price)}</p>}
+                {detail.offer && <p className={classes.was}><span className="visually-hidden">Precio anterior </span><s>{formatUsd(detail.offer.originalPrice)}</s></p>}
+              </div>
+              {detail.offer && <div className={classes.offerChips}>
+                <SavingsChip amountLabel={formatUsd(detail.offer.savingsAmount)} />
+                {urgency && <UrgencyChip label={urgency} />}
+              </div>}
+              <StockStatus id="edition-stock" available={detail.available} variant="quiet" className={classes.stock} />
             </div>
+            <div className={classes.actions}>
+              {purchase}
+              {favorite}
+            </div>
+          </section>
 
-            <dl className="edition-facts">
-              <div><dt>Formato</dt><dd>{formatEdition(detail.format)}</dd></div>
-              {detail.format === "EBOOK" && detail.ebookFileFormat && <div><dt>Formato de archivo</dt><dd>{detail.ebookFileFormat}</dd></div>}
-              {detail.format === "AUDIOBOOK" && detail.audioDurationSeconds && <div><dt>Duración</dt><dd>{formatAudioDuration(detail.audioDurationSeconds)}</dd></div>}
-              {detail.format === "AUDIOBOOK" && Boolean(detail.narrators?.length) && <div><dt>Narración</dt><dd>{detail.narrators!.join(", ")}</dd></div>}
-              {detail.language && <div><dt>Idioma</dt><dd>{formatLanguage(detail.language)}</dd></div>}
-              {detail.isbn13 && <div><dt>ISBN-13</dt><dd>{detail.isbn13}</dd></div>}
-              {detail.pageCount && <div><dt>Páginas</dt><dd>{formatPageCount(detail.pageCount)}</dd></div>}
-              {detail.publicationDate && <div><dt>Publicación</dt><dd>{formatPublicationDate(detail.publicationDate)}</dd></div>}
+          <section className={classes.facts} aria-labelledby="edition-facts-heading">
+            <h2 id="edition-facts-heading">Datos de la edición</h2>
+            <dl>
+              {facts.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}
             </dl>
+          </section>
 
-            {detail.synopsis && (
-              <section className="detail-synopsis" aria-labelledby="synopsis-heading">
-                <h2 id="synopsis-heading">Sinopsis</h2>
-                <p>{detail.synopsis}</p>
-              </section>
-            )}
+          {detail.synopsis && <Synopsis text={detail.synopsis} />}
 
-            {detail.categories && detail.categories.length > 0 && (
-              <section className="detail-categories" aria-labelledby="detail-categories-heading">
-                <h2 id="detail-categories-heading">Categorías</h2>
-                <ul>
-                  {detail.categories.map((category) => (
-                    <li key={category.slug || category.name}>
-                      {category.slug && category.name
-                        ? <Link to={catalogHref({ ...criteria, category: category.slug, page: 0 })}>{category.name}</Link>
-                        : category.name}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </div>
+          {detail.categories && detail.categories.length > 0 && (
+            <section className={classes.categories} aria-labelledby="detail-categories-heading">
+              <h2 id="detail-categories-heading">Categorías</h2>
+              <ul>
+                {detail.categories.map((category) => (
+                  <li key={category.slug || category.name}>
+                    {category.slug && category.name
+                      ? <Link to={catalogHref({ ...criteria, category: category.slug, page: 0 })}>{category.name}</Link>
+                      : category.name}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
         </article>
       </main>
       <SiteFooter returnHref={returnHref} historyBack={returnWithHistory} />
     </>
   );
 }
+
+const mediaCue: Record<CatalogMedia, { symbol: MaterialSymbolName; label: string } | null> = {
+  physical: null,
+  ebook: { symbol: "mobile", label: "eBook" },
+  audiobook: { symbol: "headphones", label: "Audiolibro" },
+};
 
 /** The synopsis reads after the purchase decision: a comfortable column, opened in full only on request when long. */
 function Synopsis({ text }: { text: string }) {

@@ -1,21 +1,14 @@
 /* Mi biblioteca: the customer's owned digital titles. The collection is a shelf of owned objects — each a
-   mist field with its jacket, identity and when it was acquired; a revoked title steps back to the sheet with
-   a hairline. The detail is one ownership scene (jacket, identity, state, the server's actions) over the
+   white card with a thin, quiet ultramar edge (--lib-edge; hover is the full 2px ultramar) with its jacket, identity and when it was acquired; a revoked title steps back to the paper,
+   muted. Nothing is coloured by format: the small media cue (Material mobile / headphones) carries it. The detail is one ownership scene (jacket, identity, state, the server's actions) over the
    edition's facts and the purchases that granted it. Tokens come from the Account shell. */
+.collection, .page { --lib-card: #fff; --lib-edge: color-mix(in srgb, var(--acc-blue) 30%, transparent); }
+:global([data-mantine-color-scheme="dark"]) :is(.collection, .page) { --lib-card: var(--acc-sheet); }
 .collection { display: grid; gap: 20px; width: 100%; max-width: 920px; min-width: 0; margin-inline: auto; }
 
-/* Filters: Home-style toggle chips on the page axis. Chosen = ultramar with the yellow "this one" dot. */
-.filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; min-width: 0; }
-.chip {
-  display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 8px 18px; border: 0; border-radius: 999px;
-  background: transparent; box-shadow: inset 0 0 0 1.5px var(--acc-line); color: var(--acc-ink);
-  font: inherit; font-size: .9375rem; font-weight: 500; line-height: 1.3; cursor: pointer;
-  transition: background-color 160ms var(--acc-ease), color 160ms var(--acc-ease), box-shadow 160ms var(--acc-ease);
-}
-.chip[aria-pressed="true"] { background: var(--acc-blue); box-shadow: none; color: var(--acc-on-blue); font-weight: 600; }
-.chip[aria-pressed="true"]::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--acc-yellow); }
-.chip:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }
-@media (hover: hover) { .chip[aria-pressed="false"]:hover { background: var(--acc-mist); box-shadow: inset 0 0 0 1.5px var(--acc-blue); } }
+/* Filters: PLIEGO's shared filter chips (as on Ofertas), on the page axis. */
+.filters { composes: chips from "../../shared/ui/filterChips.module.css"; }
+.chip { composes: chip from "../../shared/ui/filterChips.module.css"; --chip-accent: var(--acc-blue); --chip-ink: var(--acc-ink); }
 
 .count { margin: 8px 0 -8px; color: var(--acc-muted); font-size: .9375rem; line-height: 1.4; font-variant-numeric: tabular-nums; }
 
@@ -23,7 +16,7 @@
 .shelf { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 12px; min-width: 0; margin: 0; padding: 0; list-style: none; }
 .owned {
   position: relative; display: grid; grid-template-columns: clamp(64px, 18vw, 84px) minmax(0, 1fr) auto; align-items: center; gap: 16px;
-  min-width: 0; padding: 16px 14px 16px 16px; border-radius: 18px; background: var(--acc-mist); color: var(--acc-ink);
+  min-width: 0; padding: 16px 14px 16px 16px; border-radius: 18px; background: var(--lib-card); box-shadow: inset 0 0 0 1px var(--lib-edge); color: var(--acc-ink);
   transition: box-shadow 160ms var(--acc-ease);
 }
 .ownedCover { display: block; min-width: 0; }
@@ -40,7 +33,7 @@
 .ownedAuthors { display: -webkit-box; overflow: hidden; color: var(--acc-muted); font-size: .9375rem; line-height: 1.4; overflow-wrap: anywhere; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; }
 .ownedNote { display: flex; align-items: center; gap: 6px; padding-top: 4px; color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
 .ownedGo { color: var(--acc-blue); transition: translate 160ms var(--acc-ease); }
-.owned[data-ownership="REVOKED"] { background: var(--acc-sheet); box-shadow: inset 0 0 0 1px var(--acc-line); }
+.owned[data-ownership="REVOKED"] { background: transparent; }
 .owned[data-ownership="REVOKED"] :is(.media, .ownedTitle, .ownedGo) { color: var(--acc-muted); }
 .owned[data-ownership="REVOKED"] .ownedCover { opacity: .6; }
 @media (hover: hover) {
@@ -84,7 +77,7 @@
 .detail { display: grid; gap: clamp(28px, 4vw, 44px); min-width: 0; }
 .scene {
   display: grid; grid-template-columns: minmax(132px, 208px) minmax(0, 1fr); align-items: center; gap: clamp(24px, 4.4vw, 52px);
-  min-width: 0; padding: clamp(20px, 3.6vw, 40px); border-radius: 24px; background: var(--acc-mist);
+  min-width: 0; padding: clamp(20px, 3.6vw, 40px); border-radius: 24px; background: var(--lib-card); box-shadow: inset 0 0 0 1px var(--lib-edge);
 }
 .jacket { min-width: 0; }
 .jacket :global(.book-cover) { width: 100%; }
@@ -106,10 +99,10 @@
 .action[data-action="VIEW_ORDER"] { background: var(--acc-blue); box-shadow: none; color: var(--acc-on-blue); }
 .action:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }
 @media (hover: hover) {
-  .action:hover { background: var(--acc-lavender); }
+  .action:hover { background: var(--store-tint); }
   .action[data-action="VIEW_ORDER"]:hover { background: var(--acc-blue-hover); }
 }
-.detail[data-ownership="REVOKED"] .scene { background: var(--acc-sheet); box-shadow: inset 0 0 0 1px var(--acc-line); }
+.detail[data-ownership="REVOKED"] .scene { background: transparent; }
 .detail[data-ownership="REVOKED"] .jacket { opacity: .6; }
 .detail[data-ownership="REVOKED"] :is(.media, .title, .ownershipState, .ownershipState :global(.material-symbol)) { color: var(--acc-muted); }
 
@@ -122,7 +115,7 @@
 .record dd { font-size: .9375rem; font-weight: 500; line-height: 1.45; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .facts dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 150px), 1fr)); gap: 16px 24px; }
 .purchases ul { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
-.purchase { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 16px 18px; border: 1px solid var(--acc-line); border-radius: 20px; background: var(--acc-sheet); }
+.purchase { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 16px; padding: 16px 18px; border: 1px solid var(--lib-edge); border-radius: 20px; background: var(--lib-card); }
 .purchase p { margin: 0; }
 .purchaseOrder { font-weight: 600; font-variant-numeric: tabular-nums; }
 .purchaseDate { color: var(--acc-muted); font-size: .9375rem; text-align: right; }
@@ -143,6 +136,6 @@
   .purchaseDate { text-align: left; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .chip, .owned, .ownedGo, .action { transition: none; }
+  .owned, .ownedGo, .action { transition: none; }
   .owned:has(a:hover) .ownedGo { translate: none; }
 }

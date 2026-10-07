@@ -279,6 +279,7 @@ public final class ApiExceptionHandler {
             case CART_EMPTY -> "Carrito vacío";
             case CART_ITEM_NOT_FOUND -> "Artículo del carrito no encontrado";
             case CART_QUANTITY_INVALID -> "Cantidad del carrito inválida";
+            case CART_QUOTE_CHANGED -> "El carrito cambió";
             case ORDER_NOT_FOUND -> "Pedido no encontrado";
             case ORDER_INVALID_TRANSITION -> "Cambio de estado del pedido inválido";
             case LIBRARY_ITEM_NOT_FOUND -> "Título de biblioteca no disponible";
@@ -384,6 +385,7 @@ public final class ApiExceptionHandler {
             case ACTOR_NOT_FOUND -> "La sesión no es válida. Inicia sesión nuevamente.";
             case PAGINATION_OUT_OF_RANGE -> "La página solicitada es demasiado lejana. Vuelve a la primera página o reduce el tamaño de página.";
             case IDEMPOTENCY_CONFLICT -> "Este intento ya se usó con otros datos. Consulta su resultado antes de continuar.";
+            case CART_QUOTE_CHANGED -> "Los productos, las cantidades o los precios cambiaron. Revisa el total actualizado antes de confirmar la compra.";
             case ATTEMPT_NOT_CREATED -> "Confirmamos que este intento no creó ningún registro. Puedes iniciar uno nuevo.";
             case PROFILE_VERSION_CONFLICT -> "Tus datos cambiaron desde que empezaste a editar. Revisa el perfil actual antes de guardar de nuevo.";
             case ACTOR_INACTIVE -> "Tu cuenta está bloqueada y no puede realizar esta operación.";

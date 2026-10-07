@@ -7,6 +7,7 @@ import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { cartUnitCount, useCustomerCart } from "@/features/purchase/cartQuery";
 import { getProfile, profileQueryKey } from "@/shared/api/customer";
 import { ApiRequestError } from "@/shared/api/errors";
+import { AccountMonogram } from "@/shared/ui/AccountMonogram";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import classes from "./SiteHeader.module.css";
 
@@ -96,9 +97,12 @@ export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange:
         if (event.key === "Escape") requestAnimationFrame(() => trigger.current?.focus({ preventScroll: true }));
       }}>
         <div className={classes.identity}>
+          <AccountMonogram firstNames={isCustomer ? profile.data?.firstNames : null} lastNames={isCustomer ? profile.data?.lastNames : null} size={40} />
+          <div className={classes.identityCopy}>
           <Text className={classes.identityName}>{isCustomer && profile.data ? `${profile.data.firstNames} ${profile.data.lastNames}` : isCustomer ? "Tu cuenta" : "Administración"}</Text>
           <Text size="sm" className={classes.muted}>{session.user.email}</Text>
           {profile.isError && <Text size="xs" className={classes.muted}>No pudimos consultar tu nombre.</Text>}
+          </div>
         </div>
         {isCustomer ? accountSections.map((section, index) => {
           const current = section.current(location.pathname);

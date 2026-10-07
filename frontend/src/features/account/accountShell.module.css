@@ -13,6 +13,9 @@
   --acc-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0));
   --acc-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
   --acc-sheet: #fbfaf7;
+  /* Interaction states: PLIEGO's shared faint ultramar, never the decorative mist or lavender. */
+  --acc-hover: var(--store-hover, #e8e8eb);
+  --acc-press: var(--store-press, #dcdde6);
   --acc-on-blue: #fff;
   --acc-ease: cubic-bezier(.32, .94, .6, 1);
   --acc-display: var(--store-display);

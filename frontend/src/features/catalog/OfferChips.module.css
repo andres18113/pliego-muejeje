@@ -1,0 +1,11 @@
+/* The two offer chips shared by the Ofertas cards and the edition page: small, flat, 8px radius, quiet type.
+   Pale green with Material sell for the saving; pale red for the days left. */
+.chip {
+  --chip-save-bg: #d7f1dc; --chip-save-ink: #17522a; --chip-urgent-bg: #fce8e6; --chip-urgent-ink: #8c1d18;
+  display: inline-flex; align-items: center; gap: 4px; margin: 0; padding: 3px 9px; border-radius: 8px;
+  font-size: .8125rem; font-weight: 500; line-height: 1.35; white-space: nowrap;
+}
+:global([data-mantine-color-scheme="dark"]) .chip { --chip-save-bg: #1f3d29; --chip-save-ink: #bdeec9; --chip-urgent-bg: #4a2225; --chip-urgent-ink: #ffd9d5; }
+.saving { padding-left: 7px; background: var(--chip-save-bg); color: var(--chip-save-ink); }
+.urgency { padding-inline: 10px; background: var(--chip-urgent-bg); color: var(--chip-urgent-ink); }
+@media (forced-colors: active) { .chip { border: 1px solid CanvasText; } }

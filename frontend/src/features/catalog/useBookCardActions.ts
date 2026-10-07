@@ -8,6 +8,7 @@ import { ApiRequestError } from "@/shared/api/errors";
 import { addEditionToCart, getActiveCart } from "@/shared/api/cart";
 import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { useSession } from "@/app/session";
+import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { availabilityConflictMessage, resolveStockStatus } from "./stockStatusModel";
 import type { BookCardFeedback, FavoriteControl, CartControl } from "./bookCardModel";
 
@@ -19,6 +20,7 @@ export interface FavoriteControllerProps { editionId: string; isFavorite: boolea
 class FavoriteOutcomeUnknown extends Error {}
 
 export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, returnHref, onFeedback, onChanged }: FavoriteControllerProps): FavoriteControl {
+  const scope = useSessionOperationScope(editionId);
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -34,20 +36,31 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
   const [uncertain, setUncertain] = useState(false);
   const handledIntent = useRef(false);
   const mutation = useMutation({
-    mutationFn: async (next: boolean) => {
+    meta: { authRequired: true },
+    mutationFn: async ({ next, scope: issued, target }: { next: boolean; scope: SessionOperationScope; target: string }) => {
+      issued.assertCurrent();
       try {
-        await (next ? addCustomerFavorite(editionId) : removeCustomerFavorite(editionId));
+        await (next ? addCustomerFavorite(target) : removeCustomerFavorite(target));
+        issued.assertCurrent();
         return next;
       } catch (error) {
+        issued.assertCurrent();
         if (error instanceof ApiRequestError && error.status < 500) throw error;
         try {
-          const statuses = await getCustomerFavoriteStatus([editionId]);
-          return statuses.find(status => status.editionId === editionId)!.favorite;
+          const statuses = await getCustomerFavoriteStatus([target]);
+          issued.assertCurrent();
+          return statuses.find(status => status.editionId === target)!.favorite;
         } catch { throw new FavoriteOutcomeUnknown(); }
       }
     },
     retry: false,
   });
+  useEffect(() => {
+    mutation.reset(); lock.current = false; setChecking(false); setUncertain(false);
+    setShownFavorite(isFavorite); setFeedback(null);
+    // Reset only authority/resource changes, never ordinary token rotation.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scope]);
 
   useEffect(() => {
     if (lastFavoriteProp.current !== isFavorite) {
@@ -77,16 +90,19 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
     setFeedback(null);
     setChecking(true);
     try {
-      const actual = await mutation.mutateAsync(next);
+      const actual = await mutation.mutateAsync({ next, scope, target: editionId });
+      if (!scope.isCurrent()) return;
       setShownFavorite(actual);
       queryClient.setQueriesData<FavoriteStatus[]>({ queryKey: ["customer-favorite-status", session.user.userId] }, old => old?.map(status => status.editionId === editionId ? { ...status, favorite: actual } : status));
       await Promise.all([
         queryClient.invalidateQueries({ queryKey }),
         queryClient.invalidateQueries({ queryKey: ["customer-favorites", session.user.userId] }),
       ]);
+      if (!scope.isCurrent()) return;
       if (actual === next) onChangedRef.current?.(actual);
       setFeedback({ message: actual === next ? (actual ? "Agregado a favoritos." : "Quitado de favoritos.") : (actual ? "El libro sigue guardado en tus favoritos. El cambio no se confirmó." : "El libro no está guardado en tus favoritos. El cambio no se confirmó."), error: actual !== next });
     } catch (error) {
+      if (!scope.isCurrent()) return;
       if (error instanceof FavoriteOutcomeUnknown) {
         setUncertain(true);
         setFeedback({ message: "No pudimos confirmar tus favoritos. Consulta el estado antes de volver a cambiarlo.", error: true });
@@ -106,10 +122,9 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
         error: true,
       });
     } finally {
-      lock.current = false;
-      setChecking(false);
+      if (scope.isCurrent()) { lock.current = false; setChecking(false); }
     }
-  }, [clear, editionId, goToSignIn, isFavorite, mutation, queryClient, queryKey, session, setFeedback]);
+  }, [clear, editionId, goToSignIn, isFavorite, mutation, queryClient, queryKey, scope, session, setFeedback]);
 
   const locationIntent = readCatalogIntent(location.state);
   useEffect(() => {
@@ -131,20 +146,25 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
     lock.current = true;
     setChecking(true);
     void getCustomerFavoriteStatus([editionId]).then(async statuses => {
+      if (!scope.isCurrent()) return;
       const actual = statuses.find(status => status.editionId === editionId)!.favorite;
       setShownFavorite(actual);
       queryClient.setQueriesData<FavoriteStatus[]>({ queryKey: ["customer-favorite-status", session?.user.userId] }, old => old?.map(status => status.editionId === editionId ? { ...status, favorite: actual } : status));
       setUncertain(false);
       setFeedback({ message: actual ? "El libro está guardado en tus favoritos." : "El libro no está guardado en tus favoritos.", error: false });
       await queryClient.invalidateQueries({ queryKey: ["customer-favorite-status", session?.user.userId] });
+      if (!scope.isCurrent()) return;
       await queryClient.invalidateQueries({ queryKey: ["customer-favorites", session?.user.userId] });
-    }).catch(() => setFeedback({ message: "Aún no pudimos consultar tus favoritos. Conservamos el resultado sin confirmar.", error: true })).finally(() => { lock.current = false; setChecking(false); });
+    }).catch(() => { if (scope.isCurrent()) setFeedback({ message: "Aún no pudimos consultar tus favoritos. Conservamos el resultado sin confirmar.", error: true }); }).finally(() => { if (scope.isCurrent()) { lock.current = false; setChecking(false); } });
   } };
   return { state: "ready", selected: shownFavorite, onPress: () => void saveFavorite(!shownFavorite) };
 }
 
 class CartAddOutcomeUnknown extends Error {}
-export function useCartControl({ editionId, available, format, returnHref, onFeedback, onAdded }: { editionId: string; available: boolean; format?: string; returnHref: string; onFeedback: FeedbackSink; onAdded?: (editionId: string) => void }): CartControl {
+/** `quantity`: how many units one press adds (default 1; digital editions always add one). */
+export function useCartControl({ editionId, available, format, returnHref, onFeedback, onAdded, quantity: requested = 1 }: { editionId: string; available: boolean; format?: string; returnHref: string; onFeedback: FeedbackSink; onAdded?: (editionId: string) => void; quantity?: number }): CartControl {
+  const scope = useSessionOperationScope(editionId);
+  const addQuantity = isDigitalFormat(format) ? 1 : Math.max(1, Math.trunc(requested));
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -156,19 +176,25 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
   const pulseTimer = useRef<number | null>(null);
   const handledIntent = useRef(false);
   const mutation = useMutation({
-    mutationFn: async () => {
+    meta: { authRequired: true },
+    mutationFn: async ({ scope: issued, target, amount, medium }: { scope: SessionOperationScope; target: string; amount: number; medium?: string }) => {
+      issued.assertCurrent();
       const cart = await getActiveCart();
-      const previousQuantity = cart.items.find((item) => item.editionId === editionId)?.quantity ?? 0;
-      if (isDigitalFormat(format) && previousQuantity >= 1) return { quantity: previousQuantity, previousQuantity };
+      issued.assertCurrent();
+      const previousQuantity = cart.items.find((item) => item.editionId === target)?.quantity ?? 0;
+      if (isDigitalFormat(medium) && previousQuantity >= 1) return { quantity: previousQuantity, previousQuantity };
       try {
-        const result = await addEditionToCart(editionId);
+        const result = await addEditionToCart(target, amount);
+        issued.assertCurrent();
         return { quantity: result.quantity, previousQuantity };
       } catch (error) {
+        issued.assertCurrent();
         if (!(error instanceof ApiRequestError) || error.status >= 500) {
           try {
             const current = await getActiveCart();
-            const currentQuantity = current.items.find((item) => item.editionId === editionId)?.quantity ?? 0;
-            if (currentQuantity === previousQuantity + 1) return { quantity: currentQuantity, previousQuantity };
+            issued.assertCurrent();
+            const currentQuantity = current.items.find((item) => item.editionId === target)?.quantity ?? 0;
+            if (currentQuantity === previousQuantity + amount) return { quantity: currentQuantity, previousQuantity };
           } catch { /* Preserve uncertainty if the reconciliation read also fails. */ }
           throw new CartAddOutcomeUnknown();
         }
@@ -176,16 +202,19 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
       }
     },
     retry: false,
-    onSuccess: async ({ quantity, previousQuantity }) => {
+    onSuccess: async ({ quantity, previousQuantity }, issued) => {
+      if (!issued.scope.isCurrent()) return;
       await queryClient.invalidateQueries({ queryKey: ["customer-cart"] });
+      if (!issued.scope.isCurrent()) return;
       setFeedback({ message: isDigitalFormat(format) && quantity === previousQuantity ? "Esta edición digital ya está en tu carrito." : quantity === 1 ? "Agregado al carrito." : `El carrito ahora tiene ${quantity} unidades de esta edición.`, error: false });
       setAddedPulse(true);
       if (pulseTimer.current !== null) window.clearTimeout(pulseTimer.current);
-      pulseTimer.current = window.setTimeout(() => setAddedPulse(false), 1_100);
+      pulseTimer.current = window.setTimeout(() => { if (issued.scope.isCurrent()) setAddedPulse(false); }, 1_100);
       // Only a confirmed add (the cart was re-read above) reaches the preview; failures never open it.
       onAdded?.(editionId);
     },
-    onError: async (error) => {
+    onError: async (error, issued) => {
+      if (!issued.scope.isCurrent()) return;
       if (error instanceof ApiRequestError && error.status === 401) {
         clear("expired");
         navigate(authLocation("/sign-in", returnHref), {
@@ -205,8 +234,14 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
         queryClient.invalidateQueries({ queryKey: ["customer-favorites"] }),
       ]);
     },
-    onSettled: () => { lock.current = false; },
+    onSettled: (_data, _error, issued) => { if (issued.scope.isCurrent()) lock.current = false; },
   });
+
+  useEffect(() => {
+    mutation.reset(); lock.current = false; setUncertain(false); setAddedPulse(false); setFeedback(null);
+    if (pulseTimer.current !== null) window.clearTimeout(pulseTimer.current);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scope]);
 
   useEffect(() => () => {
     if (pulseTimer.current !== null) window.clearTimeout(pulseTimer.current);
@@ -222,8 +257,8 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
       state: stripCatalogIntent(location.state),
     });
     lock.current = true;
-    mutation.mutate();
-  }, [available, editionId, location.hash, location.pathname, location.search, location.state, locationIntent, mutation, navigate, session]);
+    mutation.mutate({ scope, target: editionId, amount: addQuantity, medium: format });
+  }, [addQuantity, available, editionId, format, location.hash, location.pathname, location.search, location.state, locationIntent, mutation, navigate, scope, session]);
 
   function addToCart() {
     setFeedback(null);
@@ -240,7 +275,7 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
       return;
     }
     lock.current = true;
-    mutation.mutate();
+    mutation.mutate({ scope, target: editionId, amount: addQuantity, medium: format });
   }
 
   if (session?.user.role === "ADMIN") return { state: "restricted", reason: "Acciones disponibles para cuentas de cliente." };

@@ -1,11 +1,39 @@
 {
   "version": 1,
   "skills": {
+    "configuration-properties": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/configuration-properties/SKILL.md",
+      "computedHash": "8691b77952c63548bf99a4f978ea33f88c74cbb7972addf68fba62099ca50c99"
+    },
+    "flyway-migrations": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/flyway-migrations/SKILL.md",
+      "computedHash": "c85f5d5dc06d11c35e8a5439ffe4f1a8fd2532c6a32b51277cc74b2bd1d09183"
+    },
     "frontend-design": {
       "source": "anthropics/skills",
       "sourceType": "github",
       "skillPath": "skills/frontend-design/SKILL.md",
       "computedHash": "89496d5dd00f4810205f351759594fc2742bf8eea85a2f2b2d1de59f4bd91576"
+    },
+    "http-interface-clients": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/http-interface-clients/SKILL.md",
+      "computedHash": "6deea45322cc261784bb4fa7ccd13f2d8712f8201a5107bab038e8c55aed1a4b"
+    },
+    "idempotency-patterns": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/idempotency-patterns/SKILL.md",
+      "computedHash": "011a17186b09461c1cfd4a32afa785202b97bb13c0d43c290ddd6e0381745bf1"
     },
     "mantine-combobox": {
       "source": "mantinedev/skills",
@@ -24,6 +52,53 @@
       "sourceType": "github",
       "skillPath": "skills/mantine-form/SKILL.md",
       "computedHash": "1bf98bd02676810bf420019b501ffaaba61774869b2b758dd5518620311ef518"
+    },
+    "playwright": {
+      "source": "openai/skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/.curated/playwright/SKILL.md",
+      "computedHash": "595a334de3bd5335f442a33d1bdefb01207c88c99fe43e3bd99b0d5435f230de"
+    },
+    "resilience-retry": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/resilience-retry/SKILL.md",
+      "computedHash": "5828a68374c83e975217a89abf294258f22eca369dc8d3a942922f70e5b47353"
+    },
+    "spring-security-jwt": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/spring-security-jwt/SKILL.md",
+      "computedHash": "d9951e279b75fb2a88a3beebb4a6bc747de24d9065d50ea4b1f4b06c247d330c"
+    },
+    "supabase-postgres-best-practices": {
+      "source": "supabase/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/supabase-postgres-best-practices/SKILL.md",
+      "computedHash": "e14e276241805c97dbcfe40dcbea1a3035269cc7293cac4b1832dda41a835e60"
+    },
+    "testing-pyramid": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/testing-pyramid/SKILL.md",
+      "computedHash": "2484a5bc889f728de67a601b04f0cb2d42e2cda62dbde0a904c9be3af53ed067"
+    },
+    "transactional-patterns": {
+      "source": "rrezartprebreza/spring-boot-skills",
+      "ref": "main",
+      "sourceType": "github",
+      "skillPath": "skills/spring-boot-4/transactional-patterns/SKILL.md",
+      "computedHash": "5952b8cb315ce4b98313ca44b83fb08dea5d0a3cb0c5c64260ba62b491ca7f2a"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "a6a44d5498f7e8f68289902f3dedfc6f38ae0cee1e96527c80724cf27f727c2a"
     }
   }
 }

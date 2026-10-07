@@ -1,0 +1,4 @@
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+ FAIL  src/shared/api/auth.test.ts > cookie session recovery with an expired access token > does not treat a late 401 for a replaced bearer as expiry of the renewed session
+ Test Files  1 failed | 1 passed (2)
+      Tests  1 failed | 16 passed (17)

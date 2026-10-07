@@ -30,8 +30,8 @@ import tools.jackson.databind.ObjectMapper;
 public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
 
     private static final String CART_GET = "SELECT q.cart_id,q.state,pliego.fn_purchase_item_capabilities(q.items)::text AS items,q.total_current,q.subtotal,q.tax_rate,q.tax_amount,"
-            + "q.shipping_amount,q.total,w.estimated_from,w.estimated_to,r.requires_physical_fulfillment,r.physical_item_count,r.digital_item_count "
-            + "FROM pliego.fn_cart_quote(?) q CROSS JOIN pliego.fn_cart_delivery_window(?) w CROSS JOIN pliego.fn_cart_checkout_requirements(?) r";
+            + "q.shipping_amount,q.total,q.original_subtotal,q.savings_total,q.current_subtotal,q.quote_fingerprint,w.estimated_from,w.estimated_to,r.requires_physical_fulfillment,r.physical_item_count,r.digital_item_count "
+            + "FROM pliego.fn_cart_checkout_quote(?) q CROSS JOIN pliego.fn_cart_delivery_window(?) w CROSS JOIN pliego.fn_cart_checkout_requirements(?) r";
     private static final String CART_ADD_ITEM = "CALL pliego.sp_cart_add_item(?,?,?,?,?,?)";
     private static final String CART_UPDATE_ITEM = "CALL pliego.sp_cart_update_item(?,?,?,?,?,?)";
     private static final String CART_REMOVE_ITEM = "CALL pliego.sp_cart_remove_item(?,?)";
@@ -106,7 +106,8 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
                 rs.getBigDecimal("total_current"),new com.pliego.foundation.money.MonetaryAmounts(rs.getBigDecimal("subtotal"),
                         rs.getBigDecimal("tax_rate"),rs.getBigDecimal("tax_amount"),rs.getBigDecimal("shipping_amount"),rs.getBigDecimal("total")),
                 deliveryWindow(rs.getObject("estimated_from", LocalDate.class), rs.getObject("estimated_to", LocalDate.class)),
-                rs.getBoolean("requires_physical_fulfillment"),rs.getInt("physical_item_count"),rs.getInt("digital_item_count"));
+                rs.getBoolean("requires_physical_fulfillment"),rs.getInt("physical_item_count"),rs.getInt("digital_item_count"),
+                rs.getBigDecimal("original_subtotal"), rs.getBigDecimal("savings_total"), rs.getBigDecimal("current_subtotal"), rs.getString("quote_fingerprint"));
     };
 
     private static DeliveryWindow deliveryWindow(LocalDate from, LocalDate to) {
@@ -130,7 +131,8 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
                     item.path("quantity").intValue(), decimal(item, "currentPrice"),
                     decimal(item, "currentSubtotal"), item.path("available").booleanValue(),
                     nullableText(item, "unavailabilityReason"), text(item, "format"), item.path("requiresPhysicalFulfillment").booleanValue(),
-                    item.path("quantityEditable").booleanValue()));
+                    item.path("quantityEditable").booleanValue(), decimal(item, "originalPrice"),
+                    decimal(item, "unitSavings"), decimal(item, "originalSubtotal"), decimal(item, "lineSavings")));
         }
         return List.copyOf(result);
     }
