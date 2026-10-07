@@ -91,3 +91,9 @@ done
 PLIEGO_TEST_API_BASE_URL="$application_url" timeout 180s python3 "$script_dir/auth_session_http_gate.py"
 timeout 180s python3 "$script_dir/auth_adversarial_http_gate.py"
 printf 'PostgreSQL 18 SQL, concurrency, HTTP, and Flyway gates passed.\n'
+if [[ "${PLIEGO_RUN_LIVE_BROWSER:-0}" == 1 ]]; then
+    kill "$application_pid"
+    wait "$application_pid" 2>/dev/null || true
+    application_pid=''
+    bash "$script_dir/run_live_browser_gates.sh"
+fi

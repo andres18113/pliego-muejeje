@@ -125,7 +125,20 @@ jobs:
           sudo -u postgres createdb -p 55432 --owner=pliego pliego
           psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180000" \
             | grep -qx t
-      - name: Run live SQL, concurrency, HTTP, and Flyway gates
+      - name: Set up Node.js for live browser contracts
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Install live browser dependencies
+        working-directory: frontend
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Run live SQL, concurrency, HTTP, Flyway, and browser gates
+        env:
+          PLIEGO_RUN_LIVE_BROWSER: '1'
         run: bash backend/src/test/postgres18/run_ci_gates.sh
       - name: Verify transactional email with local Mailtrap stub
         shell: bash

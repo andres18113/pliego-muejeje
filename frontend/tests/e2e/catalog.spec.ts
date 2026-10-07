@@ -675,8 +675,17 @@ test("keeps catalog search usable at the minimum 320px viewport", async ({ page 
   const searchTrigger = page.getByRole("button", { name: "Buscar libros en el catálogo" });
   const searchButtonBounds = await searchTrigger.boundingBox();
   const searchbox = await openCatalogSearch(page);
+  const dialog = page.getByRole("dialog", { name: "Buscar en el catálogo" });
+  // CDP rounds translated border corners independently during the opening transition.
+  // Measure the settled visual target while retaining the full 44px requirement.
+  await expect(dialog).toHaveCSS("opacity", "1");
+  await expect.poll(() => dialog.evaluate((element) =>
+    element.getAnimations().some((animation) => animation.pending || animation.playState === "running"),
+  )).toBe(false);
+  const closeButton = page.getByRole("button", { name: "Cerrar búsqueda" });
+  expect(await closeButton.evaluate((element) => parseFloat(getComputedStyle(element).height))).toBeGreaterThanOrEqual(44);
   const queryBounds = await searchbox.boundingBox();
-  const closeButtonBounds = await page.getByRole("button", { name: "Cerrar búsqueda" }).boundingBox();
+  const closeButtonBounds = await closeButton.boundingBox();
   expect(queryBounds).not.toBeNull();
   expect(searchButtonBounds).not.toBeNull();
   expect(closeButtonBounds).not.toBeNull();

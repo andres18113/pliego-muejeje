@@ -1,7 +1,8 @@
 import { test, expect } from "@playwright/test";
-import { readFileSync } from "node:fs";
-import { homedir } from "node:os";
-import { join } from "node:path";
+import { randomUUID } from "node:crypto";
+import { verifyRegisteredEmail } from "./shared/verified-registration";
+
+test.skip(!process.env.PLIEGO_E2E_LIVE, "Requires the disposable PostgreSQL/backend live-browser gate.");
 
 test.use({ trace: "off" });
 
@@ -56,11 +57,14 @@ test("live Home, navigation, physical/digital catalog, detail, search and offers
 });
 
 test("live physical and digital purchase controls keep cart quantities and clean the fixture", async ({ page }) => {
-  const path = process.env.PLIEGO_CART_GATE_ENV ?? join(homedir(), ".config/pliego/digital-cart-gate.env");
-  const values = Object.fromEntries(readFileSync(path, "utf8").split("\n").filter((line) => line.startsWith("export ")).map((line) => {
-    const at = line.indexOf("="); return [line.slice(7, at), line.slice(at + 1).replace(/^['"]|['"]$/g, "")];
-  }));
-  const login = await page.request.post("/api/v1/auth/login", { data: { email: values.PLIEGO_CUSTOMER_EMAIL, password: values.PLIEGO_CUSTOMER_PASSWORD } });
+  const email = `digital-browser-${randomUUID()}@example.invalid`;
+  const password = `Fixture-${randomUUID()}`;
+  const registration = await page.request.post("/api/v1/auth/register", {
+    data: { email, password, firstNames: "Cliente", lastNames: "Prueba" },
+  });
+  expect(registration.status()).toBe(201);
+  verifyRegisteredEmail(email, process.env.PLIEGO_API_BASE_URL ?? "http://127.0.0.1:18080");
+  const login = await page.request.post("/api/v1/auth/login", { data: { email, password } });
   expect(login.ok()).toBeTruthy();
   const token = (await login.json()).accessToken;
   const headers = { Authorization: `Bearer ${token}` };

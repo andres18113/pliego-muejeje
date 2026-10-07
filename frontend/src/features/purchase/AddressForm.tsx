@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { isSupportedCountry, parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js/max";
@@ -95,6 +95,7 @@ export function AddressForm({
   const optionalDetailsRef = useRef<HTMLDetailsElement>(null);
   const problemRef = useRef<HTMLParagraphElement>(null);
   const [showRecipient, setShowRecipient] = useState(false);
+  const [invalidFocus, setInvalidFocus] = useState<keyof AddressValues | null>(null);
   const [detailsOpen, setDetailsOpen] = useState(Boolean(address?.line2 || address?.postalCode || address?.reference));
   const [problem, setProblem] = useState<string | null>(recovery.error ?? (recovery.key ? "Hay una dirección pendiente de confirmar. Consulta el resultado antes de crear otra." : null));
   const countries = useCountries();
@@ -130,6 +131,14 @@ export function AddressForm({
   useEffect(() => { if (problem) problemRef.current?.scrollIntoView?.({ block: "nearest" }); }, [problem]);
   const countryCode = watch("countryCode") as CountryCode;
   const busy = isSubmitting || resolving;
+  useLayoutEffect(() => {
+    if (!invalidFocus || busy || disabled || !scope.isCurrent()) return;
+    const control = document.getElementById(`address-${invalidFocus}`);
+    if (!control || (control instanceof HTMLInputElement && control.disabled)) return;
+    if (invalidFocus === "phone" || invalidFocus === "countryCode") control.focus();
+    else setFocus(invalidFocus);
+    setInvalidFocus(null);
+  }, [invalidFocus, busy, disabled, scope, setFocus, showRecipient, detailsOpen]);
   useEffect(() => { onStateChange?.({ dirty: isDirty, busy }); }, [onStateChange, isDirty, busy]);
   const phone = watch("phone");
 
@@ -236,12 +245,7 @@ export function AddressForm({
             if(optionalDetailsRef.current) optionalDetailsRef.current.open=true;
             setDetailsOpen(true);
           }
-          const first=invalidFields[0];
-          requestAnimationFrame(() => {
-            if(first==="phone") document.getElementById("address-phone")?.focus();
-            else if(first==="countryCode") document.getElementById("address-countryCode")?.focus();
-            else setFocus(first);
-          });
+          setInvalidFocus(invalidFields[0]);
           return;
         }
         if (error.status === 404 || error.status === 409) await onUncertain();

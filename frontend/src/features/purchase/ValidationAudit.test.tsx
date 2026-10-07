@@ -93,7 +93,7 @@ describe("confirmed validation audit regressions", () => {
     expect(api.count("PUT", "/api/v1/me/addresses/15")).toBe(1);
   });
 
-  it("offers recipient recovery when the server rejects an automatic recipient", async () => {
+  it.each(["after commit", "before commit"] as const)("offers recipient recovery when the frame runs %s", async (frameOrder) => {
     stubApi({ "GET /api/v1/me": () => json({ ...profile, firstNames: "A".repeat(120), lastNames: "B".repeat(120) }),
       "POST /api/v1/me/addresses": () => fieldProblem("recipient", "El destinatario no puede superar 241 caracteres.") });
     renderPurchaseRoute([{ path: "/address", element: <AddressForm firstAddress
@@ -103,6 +103,13 @@ describe("confirmed validation audit regressions", () => {
     await user.type(screen.getByLabelText("Ciudad"), "Quito"); await user.type(screen.getByLabelText("Provincia"), "Pichincha");
     await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
+    if (frameOrder === "before commit") {
+      // A rendering frame can run before React commits the newly revealed recipient.
+      vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => {
+        callback(0);
+        return 0;
+      });
+    }
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
     const recipient = await screen.findByLabelText("Quién recibe el pedido");
     expect(recipient).toHaveValue(`${"A".repeat(120)} ${"B".repeat(120)}`);
