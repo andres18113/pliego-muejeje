@@ -1,0 +1,96 @@
+import { fireEvent, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+import { afterEach, expect, it, vi } from "vitest";
+import { json, renderPurchaseRoute, stubApi } from "@/test/purchase";
+import { AccountPage } from "./AccountPage";
+import { BillingIdentityEditor } from "./BillingIdentityEditor";
+const profile = { customerId: "2", email: "reader@example.test", firstNames: "Lectora", lastNames: "Prueba", phone: null, state: "ACTIVE", version: "0" };
+const routes = [{ path: "/account", element: <AccountPage/> }];
+afterEach(() => vi.unstubAllGlobals());
+it("waits for blur or submit to validate incomplete cedula edits without altering the input", async () => {
+  const api = stubApi({ "GET /api/v1/me/billing-identity": () => new Response(null, { status: 204 }) });
+  renderPurchaseRoute([{ path: "/account", element: <BillingIdentityEditor /> }], "/account");
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole("button", { name: "Agregar cédula" }));
+  const input = screen.getByLabelText("Cédula");
+  let partial = "";
+  for (const digit of "012345678") {
+    partial += digit;
+    await user.type(input, digit);
+    expect(input).toHaveValue(partial);
+    expect(input).not.toHaveAttribute("aria-invalid", "true");
+    expect(input).toHaveAttribute("aria-describedby", "profile-cedula-help");
+  }
+  await user.tab();
+  expect(input).toHaveAttribute("aria-invalid", "true");
+  expect(input).toHaveAttribute("aria-describedby", "profile-cedula-error");
+  expect(input).toHaveAccessibleDescription(/10 dígitos/);
+  expect(input).toHaveValue("012345678");
+  await user.type(input, "x");
+  expect(input).toHaveValue("012345678x");
+  expect(input).not.toHaveAttribute("aria-invalid", "true");
+  await user.click(screen.getByRole("button", { name: "Guardar cédula" }));
+  expect(input).toHaveAttribute("aria-invalid", "true");
+  expect(input).toHaveAccessibleDescription(/10 dígitos/);
+  expect(input).toHaveValue("012345678x");
+  expect(api.count("PUT", "/api/v1/me/billing-identity")).toBe(0);
+  await user.clear(input);
+  await user.type(input, "0123");
+  expect(input).not.toHaveAttribute("aria-invalid", "true");
+  fireEvent.submit(screen.getByRole("form", { name: "Editar cédula" }));
+  expect(input).toHaveAttribute("aria-invalid", "true");
+  expect(api.count("PUT", "/api/v1/me/billing-identity")).toBe(0);
+});
+it("keeps the optional purpose brief and discloses the limits without certifying identity", async () => {
+  const api = stubApi({ "GET /api/v1/me/billing-identity": () => new Response(null, { status: 204 }) });
+  renderPurchaseRoute([{ path: "/account", element: <BillingIdentityEditor /> }], "/account");
+  expect(screen.getByText("Opcional en tu perfil. Se usa para nuevas facturas a tu nombre.")).toBeInTheDocument();
+  const summary = screen.getByText("Uso y validación de la cédula", { selector: "summary" });
+  const details = summary.closest("details")!;
+  expect(details).not.toHaveAttribute("open");
+  expect(details).toHaveTextContent(/formato y.*dígito verificador/);
+  expect(details).toHaveTextContent(/no verificamos la titularidad/i);
+  expect(details).toHaveTextContent(/simulación académica sin validez tributaria/i);
+  expect(details).toHaveTextContent(/No cambia documentos anteriores/);
+  const user = userEvent.setup();
+  await user.click(summary);
+  expect(details).toHaveAttribute("open");
+  await user.click(await screen.findByRole("button", { name: "Agregar cédula" }));
+  const input = screen.getByLabelText("Cédula");
+  expect(input).toHaveAccessibleDescription("Escribe los 10 dígitos de tu cédula.");
+  fireEvent.change(input, { target: { value: "0123456783" } });
+  await user.click(screen.getByRole("button", { name: "Guardar cédula" }));
+  expect(input).toHaveAttribute("aria-describedby", "profile-cedula-error");
+  expect(screen.queryByText("Escribe los 10 dígitos de tu cédula.")).not.toBeInTheDocument();
+  expect(api.count("PUT", "/api/v1/me/billing-identity")).toBe(0);
+});
+it("keeps identity optional and rejects invalid edits before persisting a synthetic valid identification", async () => {
+  let identity: unknown = null;
+  const api = stubApi({ "GET /api/v1/me": () => json(profile),
+    "GET /api/v1/me/billing-identity": () => identity ? json(identity) : new Response(null, {status:204}),
+    "PUT /api/v1/me/billing-identity": async request => { identity = await request.json(); return new Response(null, {status:204}); } });
+  renderPurchaseRoute(routes, "/account");
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole("button", { name: "Agregar cédula" }));
+  const input = screen.getByLabelText("Cédula");
+  fireEvent.change(input, {target:{value:"0123456783"}});
+  await user.click(screen.getByRole("button", {name:"Guardar cédula"}));
+  expect(input).toHaveAccessibleDescription(/10 dígitos/);
+  expect(api.count("PUT", "/api/v1/me/billing-identity")).toBe(0);
+  fireEvent.change(input, {target:{value:"0123456782"}});
+  await user.click(screen.getByRole("button", {name:"Guardar cédula"}));
+  await waitFor(() => expect(identity).toEqual({type:"EC_CEDULA",number:"0123456782"}));
+  expect(await screen.findByText(/••••••6782/)).toBeInTheDocument();
+  expect(screen.queryByText("0123456782")).not.toBeInTheDocument();
+});
+it("requires an explicit remove command and never modifies historical orders", async () => {
+  let present = true;
+  const api=stubApi({"GET /api/v1/me":()=>json(profile),"GET /api/v1/me/billing-identity":()=>present?json({type:"EC_CEDULA",number:"0123456782"}):new Response(null,{status:204}),"DELETE /api/v1/me/billing-identity":()=>{present=false;return new Response(null,{status:204});}});
+  renderPurchaseRoute(routes,"/account");
+  await userEvent.click(await screen.findByRole("button",{name:"Editar cédula"}));
+  expect(screen.getByLabelText("Cédula")).toHaveValue("0123456782");
+  await userEvent.click(screen.getByRole("button",{name:"Quitar cédula"}));
+  expect(await screen.findByRole("button",{name:"Agregar cédula"})).toBeInTheDocument();
+  expect(api.count("DELETE","/api/v1/me/billing-identity")).toBe(1);
+  expect(api.calls.filter(call=>call.path.includes("/orders"))).toHaveLength(0);
+});

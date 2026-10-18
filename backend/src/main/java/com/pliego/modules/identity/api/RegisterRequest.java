@@ -20,11 +20,17 @@ public record RegisterRequest(
         @PersonName(label = "nombres") @Schema(example = "Ana María", requiredMode = Schema.RequiredMode.REQUIRED, minLength = 1, maxLength = 120) String firstNames,
         @PersonName(label = "apellidos") @Schema(example = "Pérez López", requiredMode = Schema.RequiredMode.REQUIRED, minLength = 1, maxLength = 120) String lastNames,
         @PhoneNumber
-        @Schema(example = "+59325550134", nullable = true, description = "Prefijo internacional obligatorio; admite separadores de presentación.") String phone) {
+        @Schema(example = "+59325550134", nullable = true, description = "Prefijo internacional obligatorio; admite separadores de presentación.") String phone,
+        @Size(max = 2048, message = "La ruta de regreso es demasiado larga.")
+        @Schema(nullable = true, description = "Ruta relativa permitida para continuar tras verificar el correo e iniciar sesión; nunca concede acceso.", example = "/cart", maxLength = 2048) String returnTo) {
 
     public RegisterRequest {
         firstNames=PersonRules.name(firstNames); lastNames=PersonRules.name(lastNames);
         phone=PhoneNumbers.normalized(phone);
+    }
+
+    public RegisterRequest(String email, String password, String firstNames, String lastNames, String phone) {
+        this(email, password, firstNames, lastNames, phone, null);
     }
 
     @Override

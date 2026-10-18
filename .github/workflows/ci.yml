@@ -65,6 +65,8 @@ jobs:
       PLIEGO_ADMIN_PASSWORD_HASH: smoke-placeholder-not-usable
       PLIEGO_PG18_APP_PORT: '18080'
       CHECKOUT_BASE_URL: http://127.0.0.1:18080
+      # Historical upgrade jobs start schemas older than the billing queue.
+      PLIEGO_BILLING_ENABLED: 'false'
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -139,7 +141,19 @@ jobs:
       - name: Run live SQL, concurrency, HTTP, Flyway, and browser gates
         env:
           PLIEGO_RUN_LIVE_BROWSER: '1'
+          PLIEGO_BILLING_ENABLED: 'true'
+          PLIEGO_BILLING_POLL_INTERVAL: PT0.1S
+          PLIEGO_BILLING_BATCH_SIZE: '20'
         run: bash backend/src/test/postgres18/run_ci_gates.sh
+      - name: Verify trusted runtime privilege boundaries without elevated application role
+        run: sudo -u postgres psql -p 55432 -d pliego -v ON_ERROR_STOP=1 -f backend/src/test/postgres18/billing_runtime_privileges_gate.sql
+      - name: Verify academic billing coexistence across Flyway upgrades
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_billing_upgrade_ci
+          PGDATABASE=pliego_billing_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_billing_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/automatic_billing_upgrade_gate.py
       - name: Verify transactional email with local Mailtrap stub
         shell: bash
         run: |
@@ -154,3 +168,17 @@ jobs:
           PGDATABASE=pliego_monetary_upgrade_ci \
             PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_monetary_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/monetary_upgrade_gate.py
+      - name: Verify Ecuador zero IVA and preserved taxable history across Flyway upgrade
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_ecuador_tax_upgrade_ci
+          PGDATABASE=pliego_ecuador_tax_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_ecuador_tax_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/ecuador_tax_upgrade_gate.py
+      - name: Verify Ecuador contact policy preserves legacy contacts and delivery history
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_ecuador_contact_upgrade_ci
+          PGDATABASE=pliego_ecuador_contact_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_ecuador_contact_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/ecuador_contact_upgrade_gate.py

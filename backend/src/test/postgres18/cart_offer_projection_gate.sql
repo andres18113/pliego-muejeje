@@ -47,7 +47,7 @@ BEGIN
  WHERE q.value - ARRAY['originalPrice','unitSavings','originalSubtotal','lineSavings']  IS DISTINCT FROM  l.value)
  THEN RAISE EXCEPTION 'Existing item values or ordering changed'; END IF;
  IF quote.original_subtotal IS DISTINCT FROM 214.88 OR quote.savings_total IS DISTINCT FROM 40.98 OR quote.current_subtotal IS DISTINCT FROM 173.90
- OR quote.tax_amount IS DISTINCT FROM 26.09 OR quote.total IS DISTINCT FROM 199.99 THEN RAISE EXCEPTION 'Mixed simultaneous-offer totals incorrect'; END IF;
+ OR quote.tax_amount IS DISTINCT FROM 0.00 OR quote.total IS DISTINCT FROM 173.90 THEN RAISE EXCEPTION 'Mixed simultaneous-offer totals incorrect'; END IF;
  IF quote.original_subtotal-quote.savings_total IS DISTINCT FROM quote.current_subtotal
  OR quote.current_subtotal+quote.tax_amount+quote.shipping_amount IS DISTINCT FROM quote.total
  OR quote.current_subtotal IS DISTINCT FROM quote.subtotal OR quote.subtotal IS DISTINCT FROM legacy.subtotal
@@ -97,12 +97,12 @@ BEGIN
  SELECT pickup_location_id INTO pickup FROM pliego.fn_pickup_locations() LIMIT 1;
  CALL pliego.sp_checkout_idempotent(buyer,key,NULL,'TRANSFER','APPROVED',cart,'STORE_PICKUP',pickup,order_id,state,pay,total,reference);
  SELECT * INTO pricing FROM pliego.fn_order_pricing(order_id);
- IF total IS DISTINCT FROM 199.99 OR total IS DISTINCT FROM quote.total OR pricing.subtotal IS DISTINCT FROM 173.90 OR pricing.tax_amount IS DISTINCT FROM 26.09
+ IF total IS DISTINCT FROM 173.90 OR total IS DISTINCT FROM quote.total OR pricing.subtotal IS DISTINCT FROM 173.90 OR pricing.tax_amount IS DISTINCT FROM 0.00
  OR (SELECT sum(subtotal) FROM pliego.pedido_item WHERE pedido_id=order_id) IS DISTINCT FROM 173.90
  THEN RAISE EXCEPTION 'Checkout repriced authoritative offer totals'; END IF;
  CALL pliego.sp_edition_offer_clear(actor,physical);
  CALL pliego.sp_checkout_idempotent(buyer,key,NULL,'TRANSFER','APPROVED',cart,'STORE_PICKUP',pickup,replay,state,pay,total,reference);
- IF replay IS DISTINCT FROM order_id OR total IS DISTINCT FROM 199.99 THEN RAISE EXCEPTION 'Offer mutation changed historical checkout replay'; END IF;
+ IF replay IS DISTINCT FROM order_id OR total IS DISTINCT FROM 173.90 THEN RAISE EXCEPTION 'Offer mutation changed historical checkout replay'; END IF;
 END $gate$;
 ROLLBACK;
 SELECT 'PASS: cart offer projection, quantity, formats, mixed offers, expiry, taxes, invariants and checkout compatibility';

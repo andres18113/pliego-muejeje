@@ -1,21 +1,22 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
 import { useQuery, type QueryObserverResult } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
 import { z } from "zod";
-import { parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js/max";
+import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { changeEmail, EmailChangeOutcomeUnknown, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
-import { personNameSchema, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
+import { personNameSchema, personNameError, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
-import { useCountries } from "@/shared/api/reference";
 import { FieldMessage } from "@/shared/ui/Field";
 import { ReadFailure } from "@/features/purchase/CartPage";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
+import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
+import { BillingIdentityEditor } from "./BillingIdentityEditor";
+import { PasswordRecovery } from "./PasswordRecovery";
 import { AccountShell } from "./AccountShell";
 import { AccountMonogram } from "@/shared/ui/AccountMonogram";
 import classes from "./profile.module.css";
@@ -50,7 +51,8 @@ function AccountContent() {
     {profileQuery.isPending ? <p className="purchase-loading" role="status">Consultando tus datos…</p> : !profileQuery.data ? <ReadFailure error={profileQuery.error} title="No pudimos consultar tus datos." onRetry={() => void profileQuery.refetch()} retrying={profileQuery.isFetching} /> : <>
       {profileQuery.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus datos. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void profileQuery.refetch()}>Actualizar</Button></p>}
       <Profile profile={profileQuery.data} readCurrent={!profileQuery.isError} refetch={profileQuery.refetch} onExpired={() => clear("expired")} />
-      <p className={classes.verification}>¿No encuentras el enlace para verificar tu correo? <Link to="/reenviar-verificacion" state={{ email: profileQuery.data.email }}>Reenviar verificación de correo</Link></p>
+      <PasswordRecovery key={`${profileQuery.data.customerId}:${profileQuery.data.email}`} email={profileQuery.data.email} verified={profileQuery.data.emailVerified !== false} readCurrent={!profileQuery.isError && !profileQuery.isFetching} />
+      <BillingIdentityEditor />
     </>}
   </AccountShell>;
 }
@@ -138,13 +140,17 @@ function EditorFrame({ label, onSubmit, onCancel, saving, saved, children, error
       {children}
       {error && <p className={`${classes.feedback} ${classes.feedbackError}`} role="alert"><MaterialSymbol name="info" aria-hidden="true" size={16} />{error}</p>}
     </div>
-    <div className={classes.inlineActions}>
-      <button type="submit" className={classes.save} aria-disabled={saving || undefined} aria-busy={saving || undefined}>
-        <TransactionButtonLabel state={saving ? "pending" : saved ? "success" : "idle"} idle="Guardar" pending="Guardando…" success="Guardado" />
-      </button>
-      <button type="button" className={classes.cancel} aria-disabled={saving || undefined} onClick={() => { if (!saving) onCancel(); }}>Cancelar</button>
+    <div className={classes.inlineActionGroup} role="group" aria-label="Acciones de edición">
+      <div className={classes.inlineActions}>
+        <button type="submit" className={classes.save} aria-disabled={saving || undefined} aria-busy={saving || undefined}>
+          <TransactionButtonLabel state={saving ? "pending" : saved ? "success" : "idle"} idle="Guardar" pending="Guardando…" success="Guardado" />
+        </button>
+        <button type="button" className={classes.cancel} aria-disabled={saving || undefined} onClick={() => { if (!saving) onCancel(); }}>Cancelar</button>
+      </div>
+      {(saving || notice) && <p className={saving ? "visually-hidden" : classes.draftNotice} role="status">
+        {saving ? "Guardando cambios." : <><MaterialSymbol name="edit" size={14} aria-hidden="true" />{notice}</>}
+      </p>}
     </div>
-    {(saving || notice) && <p className={`${classes.feedback} ${classes.draftNotice}`} role="status">{saving ? "Guardando el dato enviado… Puedes seguir escribiendo; los cambios nuevos quedarán sin guardar." : notice}</p>}
   </form>;
 }
 
@@ -201,28 +207,26 @@ function NameEditor({ field, label, profile, refetch, onExpired, onDone }: Edito
     if (result.done && draft.complete(submitted, result.current)) { onDone(result.done); return true; }
     return false;
   })}>
-    <input ref={inputRef} id={`profile-${field}-input`} className={classes.input} value={value} autoComplete={field === "firstNames" ? "given-name" : "family-name"}
+    <PersonNameInput onInputRejected={setInvalid} ref={inputRef} id={`profile-${field}-input`} className={classes.input} value={value} autoComplete={field === "firstNames" ? "given-name" : "family-name"}
       aria-invalid={Boolean(invalid) || undefined} aria-describedby={invalid ? `${inputId}-error` : undefined}
-      onChange={(event) => setValue(event.target.value)} />
+      onChange={(event) => { setValue(event.target.value); setInvalid(null); }}
+      onBlur={() => setInvalid(personNameError(value, label))} />
     {invalid && <FieldMessage id={`${inputId}-error`} tone="error">{invalid}</FieldMessage>}
   </EditorFrame>;
 }
 
 function PhoneEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
   const scope = useSessionOperationScope(`${profile.customerId}:phone`);
-  const countries = useCountries();
   const draft = useProfileDraft(profile, "phone", profile.phone ?? "");
   const { value, setValue } = draft;
   const original = draft.original.current;
-  const [country, setCountry] = useState<CountryCode>((draft.country.current ?? parsePhoneNumberFromString(value)?.country ?? "EC") as CountryCode);
   const [invalid, setInvalid] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { saving, saved, run } = useProfileSaving(profile.customerId, "phone");
-  useEffect(() => { document.getElementById("profile-phone-input")?.focus(); }, [countries.isPending]);
+  useEffect(() => { document.getElementById("profile-phone-input")?.focus(); }, []);
 
   return <EditorFrame label="Editar teléfono" saving={saving} saved={saved} error={error} notice={draft.notice} onCancel={() => { draft.cancel(); onDone(); }} onSubmit={() => void run(async () => {
     const submitted = value;
-    const submittedCountry = country;
     setError(null);
     const trimmed = value.trim();
     const phoneProblem=phoneError(trimmed);
@@ -234,24 +238,24 @@ function PhoneEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     if (!scope.isCurrent()) return false;
     if(result.fieldError) { setInvalid(result.fieldError); document.getElementById("profile-phone-input")?.focus(); return false; }
     if (result.error) { setError(result.error); return false; }
-    if (result.done && draft.complete(submitted, result.current, Boolean(draft.country.current && draft.country.current !== submittedCountry))) { onDone(result.done); return true; }
+    if (result.done && draft.complete(submitted, result.current)) { onDone(result.done); return true; }
     return false;
   })}>
     <div className={classes.phone}>
       <InternationalPhoneField
         id="profile-phone-input"
         label="Teléfono"
-        countries={countries.data ?? []}
-        countryCode={country}
+        countries={[{ code: "EC", name: "Ecuador" }]}
+        countryCode="EC"
         value={value || undefined}
-        onCountryChange={(code) => { draft.setCountry(code); setCountry(code as CountryCode); }}
-        onChange={(next) => setValue(next ?? "")}
-        disabled={countries.isPending || countries.isError}
+        onCountryChange={() => undefined}
+        onChange={(next) => { setValue(next ?? ""); setInvalid(null); }}
+        onBlur={() => setInvalid(phoneError(value.trim()))}
+        error={invalid}
+        hint="Vacío para quitarlo."
         invalid={Boolean(invalid)}
-        describedBy={invalid ? "profile-phone-error" : "profile-phone-help"}
       />
     </div>
-    {invalid ? <FieldMessage id="profile-phone-error" tone="error">{invalid}</FieldMessage> : <FieldMessage id="profile-phone-help" tone="help">Déjalo vacío para quitarlo.</FieldMessage>}
   </EditorFrame>;
 }
 
@@ -275,7 +279,7 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
 
   function confirmed(stored: string): Result {
     if (session && session.user.email !== stored) updateEmailForSession(session, stored);
-    return { message: `Verifica ${stored} con el enlace enviado. Las sesiones anteriores ya no se renovarán.`, error: false };
+    return { message: `Correo actualizado. Revisa ${stored} para verificarlo.`, error: false };
   }
 
   return <EditorFrame label="Cambiar correo electrónico" saving={saving} saved={saved} error={error} notice={draft.notice} onCancel={() => { draft.cancel(); onDone(); }} onSubmit={() => void run(async () => {
@@ -334,13 +338,17 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     <input ref={emailRef} id={emailId} className={classes.input} type="email" inputMode="email" autoComplete="email" maxLength={254} value={email}
       aria-label="Nuevo correo" placeholder={profile.email}
       aria-invalid={Boolean(errors.email) || undefined} aria-describedby={errors.email ? `${emailId}-error` : `${emailId}-note`}
-      onChange={(event) => setEmail(event.target.value)} />
+      onChange={(event) => { setEmail(event.target.value); setErrors(current => ({ ...current, email: undefined })); }} />
     {errors.email && <FieldMessage id={`${emailId}-error`} tone="error">{errors.email}</FieldMessage>}
+    {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace para verificar el nuevo correo.</p>}
     <label className={classes.subLabel} htmlFor={passwordId}>Contraseña actual</label>
     <input ref={passwordRef} id={passwordId} className={classes.input} type="password" autoComplete="current-password" value={password}
       aria-invalid={Boolean(errors.password) || undefined} aria-describedby={errors.password ? `${passwordId}-error` : undefined}
-      onChange={(event) => setPassword(event.target.value)} />
+      onChange={(event) => { setPassword(event.target.value); setErrors(current => ({ ...current, password: undefined })); }} />
     {errors.password && <FieldMessage id={`${passwordId}-error`} tone="error">{errors.password}</FieldMessage>}
-    <p className={classes.inlineNote} id={`${emailId}-note`}>Enviaremos un enlace al nuevo correo para verificarlo. Las sesiones anteriores ya no se renovarán; el acceso actual vence según su duración.</p>
+    <details className={classes.securityDisclosure}>
+      <summary>Seguridad del cambio</summary>
+      <p>Te pedimos tu contraseña para proteger tu cuenta. Cuando tu sesión termine, tendrás que iniciar sesión de nuevo en tus dispositivos.</p>
+    </details>
   </EditorFrame>;
 }

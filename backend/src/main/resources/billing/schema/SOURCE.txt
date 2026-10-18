@@ -1,0 +1,10 @@
+Factura XML version: 1.1.0. Official SRI bytes preserved unchanged.
+Source: https://www.sri.gob.ec/o/sri-portlet-biblioteca-alfresco-internet/descargar/05546998-6f29-4870-be3b-62650f312a6c/XML%20y%20XSD%20Factura.zip
+Retrieved: 2026-10-17
+ZIP SHA-256: ba1ff0c4e329fe759c3f88dc75f2975780b315b6eb3d0069071b77c1f26fec03
+factura_V1.1.0.xsd SHA-256: 62db9bf0ecceb00ef2b7ed136e59224815e5e5e33c77efc6a0552001e052eb8b
+Imported XMLDSig schema (not a signature in generated documents):
+https://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd
+xmldsig-core-schema.xsd SHA-256: d102ad3df7664c307e0c2c776ba4a90513b1969974d8a940bae1a77f9f21e15d
+The academic renderer never calls SRI and emits no signature/authorization.
+Schemas are compiled locally with external DTD/schema access disabled.

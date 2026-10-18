@@ -105,6 +105,48 @@ describe("session identity boundaries", () => {
     return { accessToken: `token-${userId}`, expiresAt: Date.now() + 1_800_000, user: { userId, email, role: "CUSTOMER" } };
   }
 
+  const legacyKey = "pliego:checkout-billing:100:synthetic-attempt";
+  const pendingKey = "pliego:pending:checkout:100:synthetic-attempt";
+  function seedLegacy() {
+    localStorage.setItem(legacyKey, "synthetic fiscal snapshot");
+    localStorage.setItem(pendingKey, "opaque-recovery-key");
+    localStorage.setItem("reader-theme", "dark");
+  }
+  function expectOnlyLegacyRemoved() {
+    expect(localStorage.getItem(legacyKey)).toBeNull();
+    expect(localStorage.getItem(pendingKey)).toBe("opaque-recovery-key");
+    expect(localStorage.getItem("reader-theme")).toBe("dark");
+  }
+
+  it("cleans legacy fiscal storage at startup without mounting checkout", () => {
+    seedLegacy();
+    setupBoundary();
+    expectOnlyLegacyRemoved();
+  });
+
+  it.each(["logout", "clear", "replace", "expired"] as const)("cleans legacy fiscal storage on %s outside checkout without erasing pending recovery", async (change) => {
+    const boundary = setupBoundary();
+    act(() => boundary.controls.establish(identity("100", "ana@example.com")));
+    seedLegacy();
+    if (change === "logout") {
+      let finish: () => void = () => {};
+      mockLogout.mockImplementationOnce(() => new Promise<void>(resolve => { finish = resolve; }));
+      let pending: Promise<void>;
+      act(() => { pending = boundary.controls.logout(); });
+      expect(boundary.controls.session?.user.userId).toBe("100");
+      await act(async () => { finish(); await pending!; });
+      expect(boundary.controls.session).toBeNull();
+    } else if (change === "clear") {
+      act(() => boundary.controls.clear());
+    } else if (change === "replace") {
+      act(() => boundary.controls.establish(identity("200", "bea@example.com")));
+    } else {
+      mockRefresh.mockResolvedValueOnce(null);
+      await act(async () => { await boundary.controls.retryRestore(); });
+    }
+    expectOnlyLegacyRemoved();
+  });
+
   it("removes private A caches before establishing B while retaining public catalog data", () => {
     const boundary = setupBoundary();
     act(() => boundary.controls.establish(identity("100", "ana@example.com")));

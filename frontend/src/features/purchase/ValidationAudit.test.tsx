@@ -20,49 +20,46 @@ const fieldProblem = (field: string, message: string) => json({ code: "VALIDATIO
 describe("confirmed validation audit regressions", () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  it("rejects digits in registration names with specific feedback and preserves the draft", async () => {
-    const api = stubApi({ "POST /api/v1/auth/register": () => json({ userId: "2", customerId: "2", state: "ACTIVE" }, 201) });
+  it("rejects digits in registration names immediately without submitting", async () => {
+    const api = stubApi({});
     renderPurchaseRoute(registration, "/register", { role: null });
-    const user = userEvent.setup(); await fillRegistration(user, "Gat1n");
-    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
-    expect(await screen.findByText("Tus nombres solo pueden contener letras, espacios, apóstrofes y guiones.")).toBeInTheDocument();
-    expect(screen.getByLabelText("Nombres")).toHaveValue("Gat1n");
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("Nombres"), "Gatín1");
+    expect(screen.getByLabelText("Nombres")).toHaveValue("Gatín");
+    expect(screen.getByLabelText("Nombres")).toHaveAccessibleDescription(/letras|números/);
     expect(api.count("POST", "/api/v1/auth/register")).toBe(0);
   });
 
-  it("applies the same name rule to a profile edit", async () => {
-    const api = stubApi({ "GET /api/v1/me": () => json(profile), "PATCH /api/v1/me": () => new Response(null, { status: 204 }) });
+  it("rejects profile name digits immediately with the same name rule", async () => {
+    const api = stubApi({ "GET /api/v1/me": () => json(profile) });
     renderPurchaseRoute(account, "/account");
     const user = userEvent.setup(); await user.click(await screen.findByRole("button", { name: "Editar nombres" }));
-    await user.clear(screen.getByLabelText("Nombres")); await user.type(screen.getByLabelText("Nombres"), "Gat1n");
-    await user.click(screen.getByRole("button", { name: "Guardar" }));
-    expect(await screen.findByText("Tus nombres solo pueden contener letras, espacios, apóstrofes y guiones.")).toBeInTheDocument();
-    expect(screen.getByLabelText("Nombres")).toHaveValue("Gat1n");
+    await user.clear(screen.getByLabelText("Nombres")); await user.type(screen.getByLabelText("Nombres"), "Gatín1");
+    expect(screen.getByLabelText("Nombres")).toHaveValue("Gatín");
+    expect(screen.getByLabelText("Nombres")).toHaveAccessibleDescription(/letras|números/);
     expect(api.count("PATCH", "/api/v1/me")).toBe(0);
   });
 
-  it("requires an explicit international prefix in registration instead of accepting an ambiguous national number", async () => {
+  it("uses the fixed Ecuador prefix and normalizes national registration input", async () => {
     const api = stubApi({ "POST /api/v1/auth/register": () => json({ userId: "2", customerId: "2", state: "ACTIVE" }, 201) });
     renderPurchaseRoute(registration, "/register", { role: null });
     const user = userEvent.setup(); await fillRegistration(user);
     await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
-    await user.type(screen.getByLabelText(/Teléfono/), "0991234567");
+    await user.type(screen.getByLabelText(/Teléfono/), "991234567");
+    expect(screen.getByLabelText(/Teléfono/)).toHaveValue("991234567");
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
-    expect(await screen.findByText("Incluye el prefijo internacional, por ejemplo +593 99 123 4567.")).toBeInTheDocument();
-    expect(screen.getByLabelText(/Teléfono/)).toHaveValue("0991234567");
-    expect(api.count("POST", "/api/v1/auth/register")).toBe(0);
+    await waitFor(() => expect(api.calls.find(call => call.method === "POST")?.body).toMatchObject({ phone: "+593991234567" }));
   });
 
-  it("does not silently turn a pasted phone extension into extra phone digits", async () => {
-    const api = stubApi({ "GET /api/v1/me": () => json(profile), "PATCH /api/v1/me": () => new Response(null, { status: 204 }) });
+  it("rejects a pasted extension immediately instead of changing it into phone digits", async () => {
+    const api = stubApi({ "GET /api/v1/me": () => json(profile) });
     renderPurchaseRoute(account, "/account");
     const user = userEvent.setup(); await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
     const phone = await screen.findByLabelText("Teléfono");
     await waitFor(() => expect(phone).toBeEnabled());
     await user.click(phone); await user.paste("+593 99 123 4567 ext 5");
-    expect(screen.getByLabelText("Teléfono")).toHaveValue("+593 99 123 4567 ext 5");
-    await user.click(screen.getByRole("button", { name: "Guardar" }));
-    expect(await screen.findByText("Usa solo dígitos, espacios, paréntesis, puntos o guiones; no incluyas letras ni extensiones.")).toBeInTheDocument();
+    expect(phone).toHaveValue("");
+    expect(phone).toHaveAccessibleDescription(/solo números/);
     expect(api.count("PATCH", "/api/v1/me")).toBe(0);
   });
 
@@ -115,5 +112,11 @@ describe("confirmed validation audit regressions", () => {
     expect(recipient).toHaveValue(`${"A".repeat(120)} ${"B".repeat(120)}`);
     expect(recipient).toHaveAccessibleDescription("El destinatario no puede superar 241 caracteres.");
     await waitFor(() => expect(recipient).toHaveFocus());
+    await user.keyboard("{End}"); await user.type(recipient, "Z");
+    expect(recipient).toHaveValue(`${"A".repeat(120)} ${"B".repeat(120)}`);
+    expect(recipient).toHaveAccessibleDescription(/241/);
+    await user.clear(recipient); await user.type(recipient, "Ana1");
+    expect(recipient).toHaveValue("Ana");
+    expect(recipient).toHaveAccessibleDescription(/letras|números/);
   });
 });

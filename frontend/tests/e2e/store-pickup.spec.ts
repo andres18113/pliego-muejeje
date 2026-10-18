@@ -1,3 +1,4 @@
+import { fillCheckoutBilling } from "./billing-fixtures";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { pickupLocation, pickupOrder } from "../../src/test/pickup";
@@ -141,6 +142,7 @@ for (const payment of ["CARD", "TRANSFER"] as const) {
       await expect(page.getByText("Banco Guayaquil")).toBeVisible();
     }
     await expect(page.getByRole("button", { name: "Hacer pedido" })).toBeEnabled();
+    await fillCheckoutBilling(page);
     await page.getByRole("button", { name: "Hacer pedido" }).click();
     await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
     await expect(page.getByText("P-ABC234")).toBeVisible();

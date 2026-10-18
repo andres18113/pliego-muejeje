@@ -1,6 +1,7 @@
 package com.pliego.modules.customer.api;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import java.util.Locale;
 import com.pliego.foundation.validation.AddressRecipient;
 import com.pliego.foundation.validation.PersonRules;
 import com.pliego.foundation.validation.PhoneNumber;
@@ -24,15 +25,15 @@ public record AddressRequest(
         @Schema(example = "Quito", maxLength = 100) String city,
         @NotBlank(message = "La provincia es obligatoria.") @Size(max = 100, message = "La provincia no puede superar 100 caracteres.")
         @Schema(example = "Pichincha", maxLength = 100) String province,
-        @NotBlank(message = "El código de país es obligatorio.") @Pattern(regexp = "^[A-Za-z]{2}$", message = "El código de país debe tener dos letras.")
-        @Schema(example = "EC", pattern = "^[A-Za-z]{2}$") String countryCode,
+        @NotBlank(message = "El código de país es obligatorio.") @Pattern(regexp = "^EC$", message = "Las entregas están disponibles únicamente en Ecuador.")
+        @Schema(example = "EC", pattern = "^EC$", allowableValues = {"EC"}) String countryCode,
         @Size(max = 20, message = "El código postal no puede superar 20 caracteres.")
         @Schema(example = "170101", nullable = true, maxLength = 20) String postalCode,
         @Size(max = 300, message = "La referencia no puede superar 300 caracteres.")
         @Schema(example = "Frente al parque", nullable = true, maxLength = 300) String reference,
         @PhoneNumber(required = true)
-        @Schema(example = "+59325550134", requiredMode = Schema.RequiredMode.REQUIRED, description = "Teléfono internacional con prefijo explícito.") String phone,
+        @Schema(example = "+59325550134", requiredMode = Schema.RequiredMode.REQUIRED, description = "Teléfono de Ecuador (+593): 9 dígitos para celular o 8 para fijo.") String phone,
         @NotNull(message = "Indica si la dirección debe ser principal.")
         @Schema(example = "true") Boolean makePrimary) {
-    public AddressRequest { recipient=PersonRules.name(recipient); phone=PhoneNumbers.normalized(phone); }
+    public AddressRequest { recipient=PersonRules.name(recipient); phone=PhoneNumbers.normalized(phone); countryCode=countryCode == null ? null : countryCode.strip().toUpperCase(Locale.ROOT); }
 }

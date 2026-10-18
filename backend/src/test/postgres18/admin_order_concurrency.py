@@ -38,7 +38,7 @@ def fixture():
             CALL pliego.sp_inventory_entry(v_admin,v_edition,2,'fixture',v_movement,v_before,v_after);
             CALL pliego.sp_customer_register('i10-conc-customer-{suffix}@pliego.local','fixture-hash',
                 'Cliente','Prueba',NULL,v_user,v_customer,v_state);
-            CALL pliego.sp_address_create(v_user,'Casa','Cliente I10','Calle I10',NULL,
+            CALL pliego.sp_address_create(v_user,'Casa','Cliente Prueba','Calle I10',NULL,
                 'Quito','Pichincha','EC',NULL,NULL,'+59325550134',TRUE,v_address);
             CALL pliego.sp_cart_add_item(v_user,v_edition,1,v_cart,v_item,v_quantity);
             CALL pliego.sp_checkout(v_user,v_address,'CARD','APPROVED',

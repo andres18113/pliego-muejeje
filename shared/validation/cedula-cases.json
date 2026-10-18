@@ -1,0 +1,197 @@
+{
+  "description": "Synthetic format/checksum fixtures only; no real-person identity or ownership assertions. ASCII external spaces only.",
+  "cases": [
+    {
+      "id": "checksum-00",
+      "input": "0012345674",
+      "valid": true,
+      "normalized": "0012345674"
+    },
+    {
+      "id": "external-spaces-00",
+      "input": "  0012345674  ",
+      "valid": true,
+      "normalized": "0012345674"
+    },
+    {
+      "id": "wrong-checksum-00",
+      "input": "0012345675",
+      "valid": false,
+      "normalized": "0012345675"
+    },
+    {
+      "id": "checksum-99",
+      "input": "9912345676",
+      "valid": true,
+      "normalized": "9912345676"
+    },
+    {
+      "id": "external-spaces-99",
+      "input": "  9912345676  ",
+      "valid": true,
+      "normalized": "9912345676"
+    },
+    {
+      "id": "wrong-checksum-99",
+      "input": "9912345677",
+      "valid": false,
+      "normalized": "9912345677"
+    },
+    {
+      "id": "checksum-17",
+      "input": "1798765432",
+      "valid": true,
+      "normalized": "1798765432"
+    },
+    {
+      "id": "external-spaces-17",
+      "input": "  1798765432  ",
+      "valid": true,
+      "normalized": "1798765432"
+    },
+    {
+      "id": "wrong-checksum-17",
+      "input": "1798765433",
+      "valid": false,
+      "normalized": "1798765433"
+    },
+    {
+      "id": "null",
+      "input": null,
+      "valid": false,
+      "normalized": null
+    },
+    {
+      "id": "empty",
+      "input": "",
+      "valid": false,
+      "normalized": ""
+    },
+    {
+      "id": "short",
+      "input": "123",
+      "valid": false,
+      "normalized": "123"
+    },
+    {
+      "id": "long",
+      "input": "001234567890",
+      "valid": false,
+      "normalized": "001234567890"
+    },
+    {
+      "id": "internal-space",
+      "input": "00123 5674",
+      "valid": false,
+      "normalized": "00123 5674"
+    },
+    {
+      "id": "plus",
+      "input": "+012345674",
+      "valid": false,
+      "normalized": "+012345674"
+    },
+    {
+      "id": "decimal",
+      "input": "00123456.4",
+      "valid": false,
+      "normalized": "00123456.4"
+    },
+    {
+      "id": "letter",
+      "input": "00123456a4",
+      "valid": false,
+      "normalized": "00123456a4"
+    },
+    {
+      "id": "fullwidth",
+      "input": "００１２３４５６７４",
+      "valid": false,
+      "normalized": "００１２３４５６７４"
+    },
+    {
+      "id": "arabic",
+      "input": "٠٠١٢٣٤٥٦٧٤",
+      "valid": false,
+      "normalized": "٠٠١٢٣٤٥٦٧٤"
+    },
+    {
+      "id": "tab",
+      "input": "\t0012345674\t",
+      "valid": false,
+      "normalized": "\t0012345674\t"
+    },
+    {
+      "id": "newline",
+      "input": "\n0012345674\n",
+      "valid": false,
+      "normalized": "\n0012345674\n"
+    },
+    {
+      "id": "nbsp",
+      "input": " 0012345674 ",
+      "valid": false,
+      "normalized": " 0012345674 "
+    },
+    {
+      "id": "repeated-0",
+      "input": "0000000000",
+      "valid": false,
+      "normalized": "0000000000"
+    },
+    {
+      "id": "repeated-1",
+      "input": "1111111111",
+      "valid": false,
+      "normalized": "1111111111"
+    },
+    {
+      "id": "repeated-2",
+      "input": "2222222222",
+      "valid": false,
+      "normalized": "2222222222"
+    },
+    {
+      "id": "repeated-3",
+      "input": "3333333333",
+      "valid": false,
+      "normalized": "3333333333"
+    },
+    {
+      "id": "repeated-4",
+      "input": "4444444444",
+      "valid": false,
+      "normalized": "4444444444"
+    },
+    {
+      "id": "repeated-5",
+      "input": "5555555555",
+      "valid": false,
+      "normalized": "5555555555"
+    },
+    {
+      "id": "repeated-6",
+      "input": "6666666666",
+      "valid": false,
+      "normalized": "6666666666"
+    },
+    {
+      "id": "repeated-7",
+      "input": "7777777777",
+      "valid": false,
+      "normalized": "7777777777"
+    },
+    {
+      "id": "repeated-8",
+      "input": "8888888888",
+      "valid": false,
+      "normalized": "8888888888"
+    },
+    {
+      "id": "repeated-9",
+      "input": "9999999999",
+      "valid": false,
+      "normalized": "9999999999"
+    }
+  ]
+}

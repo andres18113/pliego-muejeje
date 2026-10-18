@@ -12,7 +12,9 @@ public final class EmailActionRequests {
  private EmailActionRequests() {}
  @Schema(name="EmailActionRequest")
  public record EmailRequest(@NotBlank(message="El correo es obligatorio.") @Email(message="Escribe un correo válido.")
-   @Size(max=254,message="El correo admite hasta 254 caracteres.") String email) {
+   @Size(max=254,message="El correo admite hasta 254 caracteres.") String email,
+   @Size(max=2048,message="La ruta de regreso es demasiado larga.")
+   @Schema(nullable=true,description="Ruta relativa permitida para continuar después de la acción y el inicio de sesión.",example="/cart",maxLength=2048) String returnTo) {
   @Override public String toString() {return "EmailRequest[redacted]";}
  }
  @Schema(name="EmailVerificationRequest")

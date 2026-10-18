@@ -1,5 +1,5 @@
 {
-  "version": "1",
+  "version": "2",
   "unicodeVersion": "17.0",
   "maxNameCodePoints": 120,
   "maxRecipientCodePoints": 241,
@@ -7,17 +7,26 @@
   "spaceSeparatorPattern": "[    -   　]",
   "outerWhitespacePattern": "^[\\t\\n\\x0b\\f\\r ]+|[\\t\\n\\x0b\\f\\r ]+$",
   "phonePresentationPattern": "^[+0-9 ().\\-\\t\\n\\r]+$",
-  "canonicalPhonePattern": "^\\+[1-9][0-9]{6,14}$",
+  "canonicalPhonePattern": "^\\+593(?:[2-7][2-7]\\d{6}|964[0-2]\\d{5}|9(?:39|[57][89]|6[0-36-9]|[89]\\d)\\d{6})$",
   "phoneMetadataVersion": "9.0.40",
   "messages": {
     "nameEmpty": "Escribe tus {label}.",
     "nameTooLong": "Tus {label} no pueden superar 120 caracteres.",
     "nameCharacters": "Tus {label} solo pueden contener letras, espacios, apóstrofes y guiones.",
-    "phonePrefix": "Incluye el prefijo internacional, por ejemplo +593 99 123 4567.",
-    "phoneCharacters": "Usa solo dígitos, espacios, paréntesis, puntos o guiones; no incluyas letras ni extensiones.",
-    "phoneInvalid": "Revisa el prefijo internacional y el número: no corresponden a un teléfono válido.",
-    "phoneChangedDigits": "Revisa el prefijo internacional: no incluyas el cero de marcación nacional después del código de país.",
+    "phonePrefix": "Usa el prefijo de Ecuador (+593).",
+    "phoneCharacters": "Escribe solo dígitos en el número de teléfono.",
+    "phoneInvalid": "Revisa los dígitos: ese número no corresponde a un celular o fijo válido de Ecuador.",
+    "phoneChangedDigits": "Escribe el número sin el 0 inicial; el prefijo +593 ya está incluido.",
     "recipientEmpty": "Escribe quién recibe el pedido.",
-    "recipientTooLong": "El destinatario no puede superar 241 caracteres."
-  }
+    "recipientTooLong": "El destinatario no puede superar 241 caracteres.",
+    "phoneCountry": "Solo se aceptan teléfonos de Ecuador (+593).",
+    "phoneTooLong": "El número no puede tener más de 9 dígitos.",
+    "phoneMobileLength": "Un celular de Ecuador debe tener 9 dígitos y empezar con 9.",
+    "phoneFixedLength": "Un fijo de Ecuador debe tener 8 dígitos, incluido el código de área.",
+    "phoneStart": "Para un celular empieza con 9; para un fijo usa un código de área de 2 a 7.",
+    "recipientCharacters": "El destinatario solo puede contener letras, espacios, apóstrofes y guiones."
+  },
+  "phoneCountry": "EC",
+  "phoneCallingCode": "593",
+  "maxNationalPhoneDigits": 9
 }

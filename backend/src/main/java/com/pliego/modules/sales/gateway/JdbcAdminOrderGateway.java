@@ -36,6 +36,14 @@ import tools.jackson.databind.ObjectMapper;
 @Repository
 public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOrderGateway {
 
+    @Override
+    public void approvePayment(long actorUserId, long orderId) {
+        withDatabaseErrorTranslation(() -> {
+            jdbcTemplate.update("CALL pliego.sp_billed_order_approve(?,?)", actorUserId, orderId);
+            return null;
+        });
+    }
+
     private static final String SEARCH = "SELECT order_id,customer_id,customer_name,created_at,order_state,"
             + "total,payment_state,total_count FROM pliego.fn_admin_orders(?,?,?,?,?,?,?)";
     private static final String DETAIL = "SELECT order_id,customer_id,customer_email,customer_name,order_state,"

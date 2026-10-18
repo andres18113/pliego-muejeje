@@ -38,7 +38,7 @@ def main():
     status, cart=request('/api/v1/cart',actor)
     assert status==200
     assert {name:cart[name] for name in ['subtotal','taxRate','taxAmount','shippingAmount','total']} == {
-        'subtotal':'7.25','taxRate':'15.00','taxAmount':'1.09','shippingAmount':'0.00','total':'8.34'}
+        'subtotal':'7.25','taxRate':'0.00','taxAmount':'0.00','shippingAmount':'0.00','total':'7.25'}
     key=str(uuid.uuid4())
     body={'fulfillmentMethod':'STORE_PICKUP','pickupLocationId':location['id'],'paymentMethod':'TRANSFER','simulationOutcome':'APPROVED'}
     for changes in [{'addressId':str(address)}, {'pickupLocationId':None}, {'fulfillmentMethod':'HOME_DELIVERY'}]:
@@ -47,7 +47,7 @@ def main():
     status, problem=request('/api/v1/checkout',actor,'POST',{**body,'pickupLocationId':'9223372036854775807'},str(uuid.uuid4()))
     assert status==404 and problem['code']=='P5010'
     status, checkout=request('/api/v1/checkout',actor,'POST',body,key)
-    assert status==201 and checkout['total']=='8.34' and checkout['taxAmount']=='1.09'
+    assert status==201 and checkout['total']=='7.25' and checkout['taxAmount']=='0.00'
     assert checkout['fulfillment']['method']=='STORE_PICKUP'
     pickup=checkout['fulfillment']['pickup']
     assert pickup['location']==location and re.fullmatch(r'P-[2-9A-HJ-NP-Z]{6,8}',pickup['pickupCode'])
@@ -57,7 +57,7 @@ def main():
     assert detail['fulfillment']['state']=='PENDING' and detail['fulfillment']['pickup']==pickup
     status, page=request('/api/v1/orders',actor)
     summary=next(o for o in page['items'] if o['orderId']==oid)
-    assert summary['fulfillmentMethod']=='STORE_PICKUP' and summary['shipmentState'] is None and summary['total']=='8.34'
+    assert summary['fulfillmentMethod']=='STORE_PICKUP' and summary['shipmentState'] is None and summary['total']=='7.25'
     assert query(f"SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{oid}'")=='1'
     query(f"UPDATE pliego.ubicacion_retiro SET activo=FALSE WHERE ubicacion_retiro_id={location['id']}")
     try:
@@ -71,7 +71,7 @@ def main():
         query(f"UPDATE pliego.ubicacion_retiro SET activo=TRUE WHERE ubicacion_retiro_id={location['id']}")
     admin=int(query("SELECT usuario_id FROM pliego.usuario WHERE rol='ADMIN' AND estado='ACTIVE' ORDER BY usuario_id LIMIT 1"))
     status, admin_detail=request('/api/v1/admin/orders/'+oid,admin,admin=True)
-    assert status==200 and admin_detail['address'] is None and admin_detail['taxAmount']=='1.09'
+    assert status==200 and admin_detail['address'] is None and admin_detail['taxAmount']=='0.00'
     path=f'/api/v1/admin/orders/{oid}/pickup/collect'
     status, problem=request(f'/api/v1/admin/orders/{oid}/transitions',admin,'POST',{'targetState':'PREPARING'},admin=True)
     assert status==409 and problem['code']=='P5002', 'Legacy admin transition bypassed pickup collection'

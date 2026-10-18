@@ -33,3 +33,13 @@
 | [0029](0029-digital-and-pickup-cancellation-window.md) | Persisted six-minute digital and pickup cancellation window with restart-safe finalization | Accepted for requested order-lifecycle adjustment | 2026-10-06 |
 | [0030](0030-accepted-checkout-quotes-and-mail-completion.md) | Accepted cart snapshot protection, immutable replay and observable fenced mail completion | Accepted for final robustness audit | 2026-10-06 |
 | [0031](0031-client-command-authority-and-view-lifetime.md) | Issuing authority, credential and view boundaries for asynchronous client commands | Accepted for final robustness audit | 2026-10-06 |
+| [0032](0032-current-email-verification-profile-read.md) | Explicit database-owned current-email verification in the additive profile read contract | Accepted for requested production corrections | 2026-10-07 |
+
+- [0033 — IVA cero del catálogo de Ecuador](0033-ecuador-catalog-zero-iva.md)
+- [0034 — Contacto y entrega restringidos a Ecuador](0034-ecuador-contact-and-delivery-scope.md)
+
+- [0035 — Orden español estable de los títulos del catálogo](0035-spanish-catalog-title-ordering.md)
+- [0036 — Conservación del origen en acciones de correo](0036-email-action-return-context.md)
+- [0037 — Cédula como atributo privado de facturación](0037-ecuador-billing-identity.md)
+- [0038 — Facturación académica automática](0038-automatic-academic-billing.md)
+- [0039 — Navegación interna segura hacia atrás](0039-safe-back-navigation.md)

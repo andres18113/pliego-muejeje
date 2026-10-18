@@ -37,6 +37,7 @@ public final class PersonRules {
     public static String recipientError(String input) {
         String value=name(input);
         if(value==null || value.isEmpty()) return message("recipientEmpty");
-        return value.codePointCount(0,value.length())>RULES.path("maxRecipientCodePoints").asInt() ? message("recipientTooLong") : null;
+        if(value.codePointCount(0,value.length())>RULES.path("maxRecipientCodePoints").asInt()) return message("recipientTooLong");
+        return NAME.matcher(value).matches() ? null : message("recipientCharacters");
     }
 }

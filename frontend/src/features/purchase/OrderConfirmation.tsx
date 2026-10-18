@@ -14,6 +14,7 @@ import { ShipmentTrack } from "./ShipmentTrack";
 import { TransferFacts } from "./TransferFacts";
 import scene from "./orderDetail.module.css";
 import classes from "./purchaseFlow.module.css";
+import { InvoiceDocuments } from "./InvoiceDocuments";
 import { SuccessfulOrderConfirmation } from "./SuccessfulOrderConfirmation";
 
 /**
@@ -23,9 +24,9 @@ import { SuccessfulOrderConfirmation } from "./SuccessfulOrderConfirmation";
 export function OrderConfirmation({ order, headingRef }: { order: OrderDetail; headingRef: Ref<HTMLHeadingElement> }) {
   const story = orderStory({ orderState: order.orderState, purchaseState: order.purchaseState, paymentState: order.payment?.state, shipmentState: order.shipment?.state ?? null });
   if (story.kind !== "cancelled" && story.kind !== "payment-rejected" && story.kind !== "awaiting-payment") {
-    return <SuccessfulOrderConfirmation order={order} headingRef={headingRef} />;
+    return <><SuccessfulOrderConfirmation order={order} headingRef={headingRef} /><InvoiceDocuments orderId={order.orderId} /></>;
   }
-  return <OtherOrderConfirmation order={order} headingRef={headingRef} />;
+  return <><OtherOrderConfirmation order={order} headingRef={headingRef} /><InvoiceDocuments orderId={order.orderId} /></>;
 }
 
 /** Pending and closed purchases retain their server-reported story and recovery actions. */

@@ -33,7 +33,7 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
   const [value, updateValue] = useState(draft?.value ?? initial);
   const latest = useRef(value);
   const country = useRef(draft?.country);
-  const [notice, setNotice] = useState(draft ? "Recuperamos tu borrador sin guardar." : "");
+  const [notice, setNotice] = useState(draft ? "Borrador recuperado" : "");
   const currentProfile = useRef(profile);
   currentProfile.current = profile;
   useEffect(() => {
@@ -42,10 +42,10 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
       const stored = read(profile.customerId, field);
       if (stored && stored.original.version !== original.current.version) {
         original.current = stored.original;
-        setNotice("Guardamos el dato enviado. Tienes cambios nuevos sin guardar.");
+        setNotice("Cambios nuevos sin guardar");
       } else if (!stored) {
         original.current = currentProfile.current;
-        setNotice("El dato enviado se guardó.");
+        setNotice("Cambios guardados");
       }
     }
     window.addEventListener("pliego-profile-draft", changed);
@@ -58,12 +58,12 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
     latest.current = next;
     updateValue(next);
     write(profile.customerId, field, { value: next, original: original.current, country: country.current });
-    setNotice("Tienes cambios sin guardar. Conservamos tu borrador si sales de esta página.");
+    setNotice(next === initial ? "" : "Cambios sin guardar");
   }
   function setCountry(next: string) {
     country.current = next;
     write(profile.customerId, field, { value: latest.current, original: original.current, country: next });
-    setNotice("Tienes cambios sin guardar. Conservamos tu borrador si sales de esta página.");
+    setNotice("Cambios sin guardar");
   }
   function cancel() { write(profile.customerId, field, null); }
   function complete(submitted: string, current?: CustomerProfile, keepEditing = false) {
@@ -75,7 +75,7 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
     if (remaining === submitted && !keepEditing) { cancel(); return true; }
     if (current) original.current = current;
     write(profile.customerId, field, { value: remaining, original: original.current, country: stored?.country ?? country.current });
-    setNotice("Guardamos el dato enviado. Tienes cambios nuevos sin guardar.");
+    setNotice("Cambios nuevos sin guardar");
     return false;
   }
   return { value, setValue, original, notice, cancel, complete, country, setCountry };

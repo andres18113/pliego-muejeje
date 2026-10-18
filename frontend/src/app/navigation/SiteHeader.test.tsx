@@ -1,13 +1,39 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router-dom";
+import { createMemoryRouter, MemoryRouter, RouterProvider } from "react-router-dom";
 import { afterEach, expect, it, vi } from "vitest";
 import { SessionProvider } from "@/app/session";
 import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { storefrontNavigationFixture } from "@/test/storefrontFixture";
 import { SiteHeader } from "./SiteHeader";
+import { BackNavigationProvider } from "./BackNavigationProvider";
 
 afterEach(() => vi.unstubAllGlobals());
+
+it("closes the menu on a full pointerdown/click on back, then navigates on the next activation", async () => {
+  vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify(richNavigation), { status: 200, headers: { "Content-Type": "application/json" } })));
+  const router = createMemoryRouter([{ path: "*", element: <BackNavigationProvider><SiteHeader /></BackNavigationProvider> }], { initialEntries: ["/ayuda"] });
+  render(<PliegoThemeProvider><QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><SessionProvider restoreOnMount={false}><RouterProvider router={router} /></SessionProvider></QueryClientProvider></PliegoThemeProvider>);
+  await act(async () => { await router.navigate("/catalog?que=Origen&page=2"); });
+  fireEvent.click(await screen.findByRole("button", { name: "Libros" }));
+  expect(screen.getByRole("region", { name: "Menú de Libros" })).toBeInTheDocument();
+  const back = screen.getByRole("button", { name: "Volver atrás" });
+  fireEvent.pointerDown(back);
+  fireEvent.mouseDown(back);
+  back.focus();
+  fireEvent.pointerUp(back);
+  fireEvent.mouseUp(back);
+  fireEvent.click(back);
+  expect(screen.queryByRole("region", { name: "Menú de Libros" })).not.toBeInTheDocument();
+  expect(router.state.location.pathname + router.state.location.search).toBe("/catalog?que=Origen&page=2");
+  expect(back).toHaveFocus();
+  fireEvent.pointerDown(back);
+  fireEvent.mouseDown(back);
+  fireEvent.pointerUp(back);
+  fireEvent.mouseUp(back);
+  fireEvent.click(back);
+  expect(router.state.location.pathname).toBe("/ayuda");
+});
 
 function renderHeader(path = "/", projection = storefrontNavigationFixture) {
   vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify(projection), { status: 200, headers: { "Content-Type": "application/json" } })));

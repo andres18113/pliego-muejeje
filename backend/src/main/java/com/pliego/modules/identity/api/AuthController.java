@@ -49,7 +49,7 @@ public class AuthController {
     @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
         RegistrationResult result = authService.register(request.email(), request.password(), request.firstNames(),
-                request.lastNames(), request.phone());
+                request.lastNames(), request.phone(), request.returnTo());
         RegisterResponse response = new RegisterResponse(Long.toString(result.userId()),
                 Long.toString(result.customerId()), result.state());
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

@@ -116,8 +116,8 @@ test("BookCard: keyboard order, full names, separate actions and navigation", as
   expect(await link.evaluate((element) => ({ visible: element.matches(":focus-visible"), width: getComputedStyle(element).outlineWidth, offset: getComputedStyle(element).outlineOffset }))).toEqual({ visible: true, width: "3px", offset: "3px" });
   const duplicates = page.locator('[data-bookcard-diagnostic] [data-bookcard-link]').filter({ hasText: "Ecuaciones diferenciales y problemas con valores en la frontera" });
   await expect(duplicates).toHaveCount(2);
-  await expect(duplicates.first()).toHaveAccessibleName("Ver edición: Ecuaciones diferenciales y problemas con valores en la frontera. Limusa Wiley, Rústica · Español");
-  await expect(duplicates.last()).toHaveAccessibleName("Ver edición: Ecuaciones diferenciales y problemas con valores en la frontera. Pearson Educación, Rústica · Español");
+  await expect(duplicates.first()).toHaveAccessibleName("Ver edición: Ecuaciones diferenciales y problemas con valores en la frontera. Limusa Wiley, Libro. Rústica · Español");
+  await expect(duplicates.last()).toHaveAccessibleName("Ver edición: Ecuaciones diferenciales y problemas con valores en la frontera. Pearson Educación, Libro. Rústica · Español");
   await expect(link).toHaveAccessibleDescription(/Albert Camus.*20,00/);
   await page.keyboard.press("Enter");
   await expect(page).toHaveURL(/bookcard=9000001#bookcard-preview/);

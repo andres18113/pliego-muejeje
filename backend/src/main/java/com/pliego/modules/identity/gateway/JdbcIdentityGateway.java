@@ -65,6 +65,12 @@ public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityG
     }
 
     @Override
+    public void setEmailActionReturnPath(String nonce, String returnPath) {
+        withDatabaseErrorTranslation(() -> jdbcTemplate.query("SELECT pliego.fn_email_action_set_return_path(?,?)",
+                statement -> { statement.setString(1, nonce); statement.setString(2, returnPath); }, resultSet -> null));
+    }
+
+    @Override
     public boolean consumeEmailAction(String purpose, String tokenHash, String passwordHash) {
         return withDatabaseErrorTranslation(() -> Boolean.TRUE.equals(jdbcTemplate.queryForObject(
                 "SELECT pliego.fn_email_action_consume(?,?,?)", Boolean.class, purpose, tokenHash, passwordHash)));

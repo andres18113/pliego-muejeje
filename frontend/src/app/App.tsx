@@ -3,6 +3,7 @@ import { CartPreviewProvider } from "@/features/purchase/CartPreview";
 import { Link, Outlet, RouterProvider, ScrollRestoration, createBrowserRouter, isRouteErrorResponse, redirect, useLocation, useNavigation, useNavigationType, useRouteError } from "react-router-dom";
 import { CatalogHomePage } from "@/features/catalog/CatalogHomePage";
 import { SiteHeader } from "./navigation/SiteHeader";
+import { BackNavigationProvider } from "./navigation/BackNavigationProvider";
 import { PurchaseHeader } from "./navigation/PurchaseHeader";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -185,7 +186,7 @@ export function App() {
 function RootSessionLayout() {
   return (
     <SessionProvider>
-      <RootLayout />
+      <BackNavigationProvider><RootLayout /></BackNavigationProvider>
     </SessionProvider>
   );
 }
@@ -230,7 +231,7 @@ function ApplicationLayout() {
 }
 
 function RootRouteErrorBoundary() {
-  return <SessionProvider restoreOnMount={false}><RouteErrorBoundary /></SessionProvider>;
+  return <SessionProvider restoreOnMount={false}><BackNavigationProvider><RouteErrorBoundary /></BackNavigationProvider></SessionProvider>;
 }
 
 export function RouteErrorBoundary() {

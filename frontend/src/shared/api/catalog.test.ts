@@ -64,7 +64,7 @@ describe("parseTotalCount", () => {
 
 describe("searchPublicEditions", () => {
   it("keeps the frontend sort choices aligned with the OpenAPI pattern", () => {
-    const sorts = ["TITLE_ASC", "PRICE_ASC", "PRICE_DESC", "BEST_SELLING"] satisfies EditionSearch["sort"][];
+    const sorts = ["TITLE_ASC", "TITLE_DESC", "PRICE_ASC", "PRICE_DESC", "BEST_SELLING"] satisfies EditionSearch["sort"][];
     const sortParameter = openApi.paths["/api/v1/catalog/editions"].get.parameters.find(parameter => parameter.name === "sort");
     expect(sortParameter?.schema.pattern?.split("|")).toEqual(sorts);
   });

@@ -1,0 +1,18 @@
+.back {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.back:hover { background: color-mix(in srgb, currentColor 8%, transparent); }
+.back:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+
+.primary { display: flex; align-items: center; gap: 4px; min-width: 0; }

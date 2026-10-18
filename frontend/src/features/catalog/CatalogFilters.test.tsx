@@ -19,7 +19,7 @@ describe("catalog facets", () => {
   it("omits single-valued facets and recovers active historical URL values", () => {
     const available = catalogFacets(options, readCatalogCriteria(""));
     expect(available).toMatchObject({ format: true, language: false });
-    expect(available.sorts.map(sort => sort.value)).toEqual(["BEST_SELLING", "TITLE_ASC"]);
+    expect(available.sorts.map(sort => sort.value)).toEqual(["BEST_SELLING", "TITLE_ASC", "TITLE_DESC"]);
     const historical = catalogFacets(undefined, readCatalogCriteria("?language=en&minPrice=10&sort=PRICE_DESC"));
     expect(historical).toMatchObject({ format: false, language: true });
     expect(historical.sorts.map(sort => sort.value)).toContain("PRICE_DESC");

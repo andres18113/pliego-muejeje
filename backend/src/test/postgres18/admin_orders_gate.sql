@@ -47,7 +47,7 @@ BEGIN
         v_created,v_created,v_customer,0,20);
     IF v_page.order_id IS DISTINCT FROM v_logistics_order OR v_page.customer_id IS DISTINCT FROM v_customer
        OR v_page.customer_name <> 'Cliente Prueba' OR v_page.order_state <> 'CONFIRMED'
-       OR v_page.payment_state <> 'APPROVED' OR v_page.total <> 45.77 OR v_page.total_count <> 1 THEN
+       OR v_page.payment_state <> 'APPROVED' OR v_page.total <> 39.80 OR v_page.total_count <> 1 THEN
         RAISE EXCEPTION 'admin filtered search result mismatch';
     END IF;
     IF EXISTS (SELECT 1 FROM pliego.fn_admin_orders(v_admin,'SHIPPED',NULL,NULL,v_customer,0,20))
@@ -60,7 +60,7 @@ BEGIN
     SELECT * INTO v_detail FROM pliego.fn_admin_order_detail(v_admin,v_logistics_order);
     IF v_detail.customer_id IS DISTINCT FROM v_customer OR v_detail.customer_email <> 'i10-gate-customer@pliego.local'
        OR v_detail.customer_name <> 'Cliente Prueba' OR v_detail.order_state <> 'CONFIRMED'
-       OR v_detail.subtotal <> 39.80 OR v_detail.total <> 45.77
+       OR v_detail.subtotal <> 39.80 OR v_detail.total <> 39.80
        OR jsonb_array_length(v_detail.items) <> 1
        OR v_detail.items->0->>'sku_snapshot' <> 'I10-GATE-1'
        OR v_detail.items->0->>'titulo_snapshot' <> 'Libro I10'
@@ -70,7 +70,7 @@ BEGIN
        OR v_detail.address->>'destinatario' <> 'Cliente Prueba'
        OR v_detail.address->>'direccion_linea1' <> 'Calle snapshot I10'
        OR v_detail.payment->>'estado' <> 'APPROVED'
-       OR (v_detail.payment->>'monto')::NUMERIC <> 45.77
+       OR (v_detail.payment->>'monto')::NUMERIC <> 39.80
        OR jsonb_array_length(v_detail.state_history) <> 2
        OR jsonb_array_length(v_detail.inventory_movements) <> 1
        OR v_detail.inventory_movements->0->>'tipo' <> 'SALE' THEN

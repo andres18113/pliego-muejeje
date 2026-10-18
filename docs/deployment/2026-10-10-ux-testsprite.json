@@ -1,0 +1,127 @@
+{
+  "release": "20261011-ux-testsprite-ff03316f",
+  "baseCommit": "4d3e666e86afdfbe9934c3769b70815a416649cc",
+  "localChangesCommitted": false,
+  "deployed": true,
+  "frontendUrl": "https://www.pliegolibros.com",
+  "canonicalFrontendUrl": "https://pliegolibros.com",
+  "apiUrl": "https://api.pliegolibros.com",
+  "backendCurrent": "/opt/pliego/current",
+  "backendRelease": "/opt/pliego/releases/20261011-ux-testsprite-ff03316f",
+  "frontendCurrent": "/var/www/pliego/current",
+  "frontendRelease": "/var/www/pliego/releases/20261011-ux-testsprite-ff03316f",
+  "jar": "pliego-backend-0.1.0-SNAPSHOT.jar",
+  "jarSha256": "ff03316f66a26c0552bab3ebb8814fd76d731a0fd39e0c4f944ee4c0edd25be8",
+  "frontendArchiveSha256": "81eb82b7da1ba4e0ae42fd9baa3c215251e103afa235ab24baf345e6aaacb434",
+  "systemd": {
+    "unit": "pliego.service",
+    "active": true,
+    "enabled": true,
+    "restarts": 0,
+    "user": "pliego",
+    "java": 25,
+    "xms": "256m",
+    "xmx": "1280m",
+    "hikariMaximum": 8,
+    "hikariMinimum": 2
+  },
+  "flyway": {
+    "successful": 70,
+    "appliedInThisRelease": [
+      "067",
+      "068",
+      "069",
+      "070"
+    ],
+    "deployedHistorical66Identical": true,
+    "approved19Identical": true,
+    "mechanism": "normal backend startup only"
+  },
+  "security": {
+    "configurationHashesUnchanged": true,
+    "environmentFile": "/etc/pliego/pliego.env",
+    "environmentFilePermissions": "0640 root:pliego",
+    "nginxSyntax": "PASS",
+    "nginxConfigChanged": false,
+    "nginxReloadRequired": false,
+    "aopThreeHostsWithoutCertificate": "400",
+    "directExternalOrigin": "connection timed out, HTTP000",
+    "backendBind": "127.0.0.1:8080",
+    "databaseBind": "127.0.0.1:5432",
+    "ufwActive": true,
+    "public8080or5432Allow": false,
+    "corsAllowedOrigin": "https://pliegolibros.com",
+    "www": "existing301 to canonical apex preserving route/query",
+    "sessionCookieSecure": true
+  },
+  "catalog": {
+    "editions": 425,
+    "ascendingAndDescendingWholeSetPassed": true,
+    "pagesPerDirection": 9,
+    "uniqueCoverUrls": 425,
+    "decodedCoverImages": 425,
+    "offersStored": 23,
+    "offersCurrentlyActive": 11,
+    "offersExpired": 12,
+    "offerDatesModified": false
+  },
+  "mail": {
+    "enabled": true,
+    "configurationChanged": false,
+    "outboxAllExistingSent": true,
+    "expiredSendingLeases": 0,
+    "newEmailsSentByDeployment": 0,
+    "newAccountsCreatedByDeployment": 0,
+    "purchasesCreatedByDeployment": 0
+  },
+  "tax": {
+    "newQuotesAndPurchasesIVA": "0.00",
+    "existingCommercialHistoryPreserved": true
+  },
+  "resources": {
+    "ramUsedMiB": 1000,
+    "ramAvailableMiB": 2915,
+    "swapUsedMiB": 0,
+    "diskAvailableGiB": 33,
+    "serviceMemoryMiB": 356
+  },
+  "validation": {
+    "frontendTests": 746,
+    "backendTests": 234,
+    "nativePgGates": 63,
+    "localBrowserTests": 87,
+    "typecheck": "PASS",
+    "productionBuild": "PASS",
+    "publicCatalogBrowserWidths": [
+      320,
+      390,
+      1280
+    ],
+    "publicSpaReload": "PASS",
+    "publicHttp404StackAndSqlAbsent": true,
+    "criticalErrorsSinceActivation": 0,
+    "publicRegistrationReadonlyWidths": [
+      320,
+      390,
+      1280
+    ],
+    "publicRegistrationSynchronousNameAndEcuadorPhone": "PASS",
+    "publicRegistrationNetworkGuard": "All application writes blocked; anonymous refresh204 fixture; no account or email submissions"
+  },
+  "rollback": {
+    "directory": "/opt/pliego/deployment/20261011-ux-testsprite-ff03316f",
+    "script": "/opt/pliego/deployment/20261011-ux-testsprite-ff03316f/rollback.py",
+    "preflight": "PASS",
+    "executed": false,
+    "previousRelease": "20261007-corrections-ecca2421",
+    "databaseBackup": "/opt/pliego/deployment/20261011-ux-testsprite-ff03316f/backup/pliego-before-flyway.dump",
+    "policy": "Rollback changes application pointers only; never reverses Flyway or restores/deletes production data automatically."
+  },
+  "commands": {
+    "status": "ssh -F /home/andres18123/.ssh/config pliego-vps 'systemctl status pliego nginx --no-pager'",
+    "restart": "ssh -F /home/andres18123/.ssh/config -t pliego-vps 'sudo systemctl restart pliego'",
+    "logs": "ssh -F /home/andres18123/.ssh/config -t pliego-vps 'sudo journalctl -u pliego -n 100 --no-pager'",
+    "rollbackPreflight": "ssh -F /home/andres18123/.ssh/config -t pliego-vps 'sudo python3 /opt/pliego/deployment/20261011-ux-testsprite-ff03316f/rollback.py --dry-run'"
+  },
+  "remainingDeploymentBlockers": []
+}

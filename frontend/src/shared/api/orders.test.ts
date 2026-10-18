@@ -194,3 +194,11 @@ describe("checkout API", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
 });
+
+it("reads a pending order invoice with no issued timestamp instead of losing the entire order", async () => {
+  const invoice={invoiceId:"8",documentNumber:"DRAFT-700",state:"DRAFT",buyerName:"Compradora Prueba",identityType:"EC_CEDULA",identityNumber:"0123456782",currency:"USD",subtotal:"37.00",taxTotal:"0.00",total:"37.00",issuedAt:null};
+  respond(200,{...orderDetailFixture(),invoice});
+  const detail=await getOrder("700");
+  expect(detail.invoice?.state).toBe("DRAFT");
+  expect(detail.invoice?.issuedAt).toBeNull();
+});

@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { act, renderHook, screen, waitFor } from "@testing-library/react";
+import { act, renderHook, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { useSession } from "@/app/session";
@@ -93,7 +93,7 @@ describe("account command authority boundaries", () => {
     await user.clear(input);
     await user.type(input, "Ana Elena");
     await user.click(screen.getByRole("button", { name: "Cambiar a Bea" }));
-    await screen.findByText(profileB.email);
+    await waitFor(() => expect(within(screen.getByRole("region", { name: "Perfil y datos personales" })).getByText(profileB.email)).toBeInTheDocument());
     // The save lock reports completion even when its originating editor was unmounted.
     let removeListener = () => {};
     const completed = new Promise<void>(resolve => {
@@ -112,8 +112,8 @@ describe("account command authority boundaries", () => {
       const stored = JSON.parse(sessionStorage.getItem(draftKey)!);
       expect(stored.value).toBe("Ana Elena");
       expect(stored.original).toEqual(profileA);
-      expect(api.count("GET", "/api/v1/me")).toBe(2);
-      expect(screen.getByText(profileB.email)).toBeInTheDocument();
+      expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/me").length).toBe(2);
+      expect(within(screen.getByRole("region", { name: "Perfil y datos personales" })).getByText(profileB.email)).toBeInTheDocument();
       expect(screen.queryByText("Guardamos tus nombres.")).not.toBeInTheDocument();
     } finally {
       removeListener();

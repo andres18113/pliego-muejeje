@@ -61,6 +61,17 @@ class TransactionalMailTest {
   assertTrue(verify.text().contains("vence el 5 de octubre de 2026, 07:00")); assertTrue(verify.text().contains("Si no creaste esta cuenta, puedes ignorar este mensaje."));
   assertTrue(verify.html().contains("copia este enlace")); assertTrue(reset.text().contains("Restablecer contraseña: "));
  }
+ @Test void emailActionKeepsSafeReturnContextSeparateFromTheFragmentCredential() {
+  var credential=tokens.issue("VERIFY_EMAIL");
+  var data=json.createObjectNode().put("nonce",credential.nonce()).put("returnTo","/cart?source=edition#items");
+  var message=templates().render("VERIFY_EMAIL",data);
+  assertTrue(message.text().contains("/verificar-correo?from=%2Fcart%3Fsource%3Dedition%23items#token="));
+  for(String unsafe:new String[]{"https://evil.test/cart","//evil.test/cart","/admin","/cart/../admin","/cart\\evil"}) {
+   data.put("returnTo",unsafe);
+   assertTrue(templates().render("VERIFY_EMAIL",data).text().contains("/verificar-correo#token="));
+   assertFalse(templates().render("VERIFY_EMAIL",data).text().contains("?from="));
+  }
+ }
  private MailTemplates templates() { return new MailTemplates(settings(URI.create("http://127.0.0.1/api/send")),tokens,json); }
  /** Writes the rendered message next to the build so its HTML can be opened and checked by eye. */
  private static MailMessage preview(String name,MailMessage message) throws Exception {

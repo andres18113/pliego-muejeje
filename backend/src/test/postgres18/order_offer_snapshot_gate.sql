@@ -39,7 +39,7 @@ BEGIN
  SELECT * INTO pricing FROM pliego.fn_order_offer_pricing(order_id);
  IF pricing.original_subtotal IS DISTINCT FROM 214.88 OR pricing.savings_total IS DISTINCT FROM 40.98
  OR pricing.current_subtotal IS DISTINCT FROM 173.90 OR pricing.pricing_snapshot_available IS DISTINCT FROM TRUE
- OR total IS DISTINCT FROM 199.99 THEN RAISE EXCEPTION 'Stored order offer totals incorrect'; END IF;
+ OR total IS DISTINCT FROM 173.90 THEN RAISE EXCEPTION 'Stored order offer totals incorrect'; END IF;
  SELECT * INTO detail FROM pliego.fn_customer_order_detail_priced(buyer,order_id);
  enriched:=pliego.fn_order_item_offer_snapshots(detail.items);
  IF jsonb_array_length(enriched) IS DISTINCT FROM 4 THEN RAISE EXCEPTION 'Historical projection dropped items'; END IF;
@@ -81,7 +81,7 @@ BEGIN
  IF pricing.original_subtotal IS DISTINCT FROM 214.88 OR pricing.savings_total IS DISTINCT FROM 40.98
  OR pricing.current_subtotal IS DISTINCT FROM 173.90 THEN RAISE EXCEPTION 'Catalog mutations repriced historical order summary'; END IF;
  CALL pliego.sp_checkout_idempotent(buyer,key,NULL,'TRANSFER','APPROVED',checkout_cart,'STORE_PICKUP',pickup,replay,state,pay,total,reference);
- IF replay IS DISTINCT FROM order_id OR total IS DISTINCT FROM 199.99 THEN RAISE EXCEPTION 'Replay repriced historical order'; END IF;
+ IF replay IS DISTINCT FROM order_id OR total IS DISTINCT FROM 173.90 THEN RAISE EXCEPTION 'Replay repriced historical order'; END IF;
  BEGIN
   UPDATE pliego.pedido_item SET precio_original_snapshot=100 WHERE pedido_id=order_id;
   RAISE EXCEPTION 'Historical offer snapshot accepted an update';

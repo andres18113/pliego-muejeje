@@ -50,7 +50,17 @@ public class CheckoutController {
             @RequestHeader("Idempotency-Key") UUID key,
             @Valid @RequestBody CheckoutRequest request) {
         validateCard(request);
-        CheckoutResult result = request.expectedQuoteFingerprint() == null ? service.checkout(Long.parseLong(jwt.getSubject()), key, request.addressId() == null ? null : Long.valueOf(request.addressId()),
+        CheckoutResult result = request.billingIdentity() != null
+                ? service.checkoutBilled(Long.parseLong(jwt.getSubject()), key,
+                    request.addressId() == null ? null : Long.valueOf(request.addressId()), request.paymentMethod(),
+                    request.simulationOutcome(), request.expectedCartId() == null ? null : Long.valueOf(request.expectedCartId()),
+                    request.fulfillmentMethod(), request.pickupLocationId() == null ? null : Long.valueOf(request.pickupLocationId()),
+                    request.expectedQuoteFingerprint(), new com.pliego.modules.sales.application.PostPurchaseModels.CheckoutBilling(
+                        request.billingIdentity().type(), request.billingIdentity().number(), request.buyerName(),
+                        new com.pliego.modules.sales.application.PostPurchaseModels.BillingAddress(request.billingAddress().line1(),
+                            request.billingAddress().line2(), request.billingAddress().city(), request.billingAddress().province(),
+                            request.billingAddress().countryCode(), request.billingAddress().postalCode())))
+                : request.expectedQuoteFingerprint() == null ? service.checkout(Long.parseLong(jwt.getSubject()), key, request.addressId() == null ? null : Long.valueOf(request.addressId()),
                 request.paymentMethod(), request.simulationOutcome(),
                 request.expectedCartId() == null ? null : Long.valueOf(request.expectedCartId()), request.fulfillmentMethod(),
                 request.pickupLocationId() == null ? null : Long.valueOf(request.pickupLocationId()))

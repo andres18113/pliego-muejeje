@@ -6,7 +6,7 @@
   /* Top of page is airier; once scrolled the bar compacts. The margin keeps the page from jumping. */
   height: 88px;
   margin: 0;
-  transition: height 200ms cubic-bezier(.32, .94, .6, 1), margin-bottom 200ms cubic-bezier(.32, .94, .6, 1);
+  transition: box-shadow 200ms cubic-bezier(.32, .94, .6, 1);
   background: var(--pliego-surface);
   color: var(--pliego-text);
 }
@@ -157,7 +157,7 @@
   .menuBookGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .moreCategories { flex-basis: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { .bar.bar { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .header, .bar.bar { transition: none; } }
 @media (forced-colors: active) {
   .bar, .megaPanel, .searchTrigger { border: 1px solid CanvasText; }
   .header :focus-visible, .accountPanel :focus-visible, .overlayContent :focus-visible { outline-color: Highlight; }

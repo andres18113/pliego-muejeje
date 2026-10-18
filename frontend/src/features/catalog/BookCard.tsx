@@ -43,13 +43,14 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
 
   return <article className={[classes.card, className].filter(Boolean).join(" ")} data-bookcard data-edition-id={book.id} data-media={media} data-unavailable={!book.available || undefined}>
     <Anchor id={`${uid}-edition-link`} component={Link} to={to} state={navigationState} onClick={onNavigate} underline="never" className={classes.mainLink}
-      aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.editionLabel}`} aria-describedby={`${uid}-authors ${uid}-price ${uid}-availability`} data-bookcard-link>
+      aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.formatLabel}. ${book.editionLabel}`} aria-describedby={`${uid}-authors ${uid}-price ${uid}-availability`} data-bookcard-link>
       <div className={classes.shelf} data-bookcard-shelf>
         <BookCover url={book.cover.url} license={null} attribution={null} title={book.title} size="card" decorative loading="lazy" />
       </div>
       <div className={classes.identity} data-bookcard-identity>
         <Text component={Heading} lineClamp={4} className={classes.bookTitle} id={`${uid}-title`} data-bookcard-title>{book.title}</Text>
         <Text component="p" lineClamp={2} className={classes.authors} id={`${uid}-authors`}>{book.authors}</Text>
+        <p className={classes.edition} data-bookcard-format>{book.formatLabel}</p>
         {showEdition && <p className={classes.edition}>{book.editionLabel}</p>}
       </div>
     </Anchor>

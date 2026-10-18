@@ -1,5 +1,10 @@
+import type { ConfirmedCartAddition } from "@/shared/ui/cartAdditionFeedback";
+import { useCustomerCart } from "@/features/purchase/cartQuery";
+import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
+import { useSession } from "@/app/session";
+import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { useAvailabilityFocus } from "@/features/catalog/useAvailabilityFocus";
-import { useId, useRef, useState } from "react";
+import { useCallback, useId, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import type { QueryKey } from "@tanstack/react-query";
 import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
@@ -16,12 +21,13 @@ import classes from "./favorites.module.css";
  * rules (price, stock, favorite, cart) come from the shared BookCard sources — only the
  * presentation is specific to a saved collection. Removal refreshes the authoritative list; its page owns focus recovery when a row disappears.
  */
-export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemoved, cartQuantity, onAddedToCart, confirmRemoval = false }: {
+export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemoved, cartQuantity, onAddedToCart, onCartConfirmed, confirmRemoval = false }: {
   edition: BookCardEditionSource; detailHref: string; returnHref: string; queryKey: QueryKey;
   /** Units the cart action adds (the cart's saved list restores a line with the quantity it had). */
   cartQuantity?: number;
   /** The server confirmed the add. */
   onAddedToCart?: (editionId: string) => void;
+  onCartConfirmed?: (addition: ConfirmedCartAddition) => void;
   /** The server confirmed the removal: the page offers to undo it. */
   onRemoved?: () => void;
   /** Ask before removing (the Favoritos page). Elsewhere the toggle stays immediate. */
@@ -30,14 +36,31 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
   const uid = useId();
   const [feedback, setFeedback] = useState<BookCardFeedback | null>(null);
   const [confirming, setConfirming] = useState(false);
+  const cartFeedback = useCallback((value: BookCardFeedback | null) => setFeedback(value?.kind === "success" ? null : value), []);
   const favoriteButton = useRef<HTMLButtonElement>(null);
   const book = toBookCardData(edition);
+  const { session } = useSession();
+  const scope = useSessionOperationScope(book.id);
+  const cartQuery = useCustomerCart(session?.user.role === "CUSTOMER", { fresh: false });
+  const [confirmedAdd, setConfirmedAdd] = useState<{ scope: SessionOperationScope; quantity: number; readAt: number } | null>(null);
+  // A successful command is authority even if its follow-up read is temporarily unavailable.
+  // The next successful cart read supersedes it, including removal from another tab.
+  const confirmedQuantity = confirmedAdd && confirmedAdd.scope === scope && cartQuery.dataUpdatedAt <= confirmedAdd.readAt
+    ? confirmedAdd.quantity : cartQuery.data?.items.find(line => line.editionId === book.id)?.quantity ?? 0;
+  const digitalInCart = isDigitalFormat(edition.format) && confirmedQuantity >= 1;
   const favorite = useFavoriteControl({ editionId: book.id, isFavorite: true, ready: true, queryKey, returnHref, onFeedback: setFeedback, onChanged: (saved) => { if (!saved) onRemoved?.(); } });
-  const cart = useCartControl({ editionId: book.id, available: book.available, format: edition.format, returnHref, onFeedback: setFeedback, quantity: cartQuantity, onAdded: onAddedToCart });
+  const cart = useCartControl({ editionId: book.id, available: book.available, format: edition.format, returnHref, onFeedback: cartFeedback, quantity: cartQuantity, onConfirmedAddition: addition => {
+    setConfirmedAdd({ scope, quantity: addition.quantity, readAt: cartQuery.dataUpdatedAt });
+    onCartConfirmed?.(addition);
+    onAddedToCart?.(book.id);
+  } });
   const selected = "selected" in favorite ? favorite.selected : undefined;
   const favoriteLabel = favoriteActionLabel(favorite);
-  const cartAction = resolveCartAction(book, cart, "row");
-  const cartFocus = useAvailabilityFocus(!cartAction.unavailable, () => {
+  // Saved-list actions remain actions; the persistent quantity carries their confirmed result.
+  const cartAction = resolveCartAction(book, cart.state === "success" ? { ...cart, state: "ready" } : cart, "row");
+  const cartText = digitalInCart && cart.state !== "pending" ? "Ya está en el carrito" : cartAction.text;
+  const cartLabel = digitalInCart && cart.state !== "pending" ? "Ya está en el carrito" : cartAction.label;
+  const cartFocus = useAvailabilityFocus(!cartAction.unavailable && !digitalInCart, () => {
     const favorite = document.getElementById(`${uid}-favorite-action`) as HTMLButtonElement | null;
     return favorite && !favorite.disabled ? favorite : document.getElementById(`${uid}-edition-link`);
   });
@@ -66,11 +89,11 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
     </div>
     <div className={classes.actions} data-bookcard-actions>
       <button type="button" className={classes.cart}
-        aria-label={`${cartAction.label}: ${book.title}`} aria-busy={cartAction.busy || undefined}
+        aria-label={`${cartLabel}: ${book.title}`} aria-busy={cartAction.busy || undefined}
         aria-describedby={`${uid}-price ${uid}-stock`}
-        disabled={cartAction.unavailable || (!cartAction.enabled && !cartAction.busy)} aria-disabled={!cartAction.enabled || undefined} {...cartFocus} onClick={"onPress" in cart ? cart.onPress : undefined}
+        disabled={digitalInCart || cartAction.unavailable || (!cartAction.enabled && !cartAction.busy)} aria-disabled={!cartAction.enabled || undefined} {...cartFocus} onClick={"onPress" in cart ? cart.onPress : undefined}
         data-unavailable={cartAction.unavailable || undefined} data-bookcard-cart>
-        <MaterialSymbol name={cartAction.icon} size={20} aria-hidden="true" /><span>{cartAction.text}</span>
+        <MaterialSymbol name={cartAction.icon} size={20} aria-hidden="true" /><span>{cartText}</span>
       </button>
       <button ref={favoriteButton} id={`${uid}-favorite-action`} type="button" className={classes.favorite}
         aria-label={`${favoriteLabel}: ${book.title}`} aria-pressed={"selected" in favorite ? favorite.selected : undefined} aria-busy={favorite.state === "pending" || undefined}
@@ -79,8 +102,9 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
         <span className={classes.favoriteText}>{favorite.state === "uncertain" ? "Consultar" : selected === false ? "Guardar de nuevo" : "Quitar"}</span>
       </button>
     </div>
-    {(reasons.length > 0 || feedback || cart.state === "uncertain") && <div className={classes.feedback}>
+    {(confirmedQuantity > 0 || reasons.length > 0 || feedback || cart.state === "uncertain") && <div className={classes.feedback}>
       {reasons.filter((reason) => reason !== feedback?.message).map((reason) => <p key={reason}>{reason}</p>)}
+      {confirmedQuantity > 0 && <p className={classes.cartQuantity}>En el carrito: {confirmedQuantity} {confirmedQuantity === 1 ? "unidad" : "unidades"}</p>}
       {feedback && <p role={feedback.kind === "error" ? "alert" : "status"} aria-atomic="true" data-bookcard-feedback>{feedback.message}</p>}
       {cart.state === "uncertain" && <Link to={cart.recoveryTo}>Consultar carrito</Link>}
     </div>}

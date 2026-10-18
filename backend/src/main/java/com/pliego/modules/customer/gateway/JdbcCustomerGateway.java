@@ -28,7 +28,7 @@ import com.pliego.modules.customer.application.CustomerFavorites.Status;
 @Repository
 public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerGateway {
 
-    private static final String PROFILE_QUERY = "SELECT * FROM pliego.fn_customer_profile_versioned(?)";
+    private static final String PROFILE_QUERY = "SELECT * FROM pliego.fn_customer_profile_verified(?)";
     private static final String PROFILE_UPDATE_CALL = "CALL pliego.sp_customer_update_versioned(?,?,?,?,?)";
     private static final String PASSWORD_HASH_QUERY = "SELECT pliego.fn_customer_password_hash(?) AS password_hash";
     private static final String EMAIL_CHANGE_CALL = "CALL pliego.sp_customer_change_email(?,?,?)";
@@ -60,7 +60,8 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
                 statement -> statement.setLong(1, actorUserId), results -> results.next()
                         ? new CustomerProfile(results.getLong("customer_id"), results.getString("email"),
                                 results.getString("first_names"), results.getString("last_names"),
-                                results.getString("phone"), results.getString("state"), results.getLong("version"))
+                                results.getString("phone"), results.getString("state"), results.getLong("version"),
+                                results.getBoolean("email_verified"))
                         : null));
     }
 

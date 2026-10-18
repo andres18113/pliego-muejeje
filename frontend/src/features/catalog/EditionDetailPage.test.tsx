@@ -73,6 +73,26 @@ function expectSharedChrome() {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("EditionDetailPage", () => {
+  it.each([["PAPERBACK", "Libro"], ["EBOOK", "eBook"], ["AUDIOBOOK", "Audiolibro"]])("names the %s medium on the edition page", async (format, label) => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse(true, { format,
+      ...(format === "AUDIOBOOK" ? { audioDurationSeconds: 3600, narrators: ["Ana Voz"] } : {}),
+    })));
+    renderDetail();
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    const identity = screen.getByRole("heading", { name: "Cien años de soledad" }).closest("header")!;
+    expect(within(identity).getByText(label, { exact: true })).toBeVisible();
+  });
+
+  it.each(["/ofertas", "/catalog?que=Cien&productType=EBOOK&page=2"])("keeps generic catalog navigation separate from contextual return to %s", async (origin) => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse()));
+    renderDetail(`/catalog/editions/42?from=${encodeURIComponent(origin)}`);
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    const trail = within(screen.getByRole("navigation", { name: "Ruta de navegación" }));
+    expect(trail.getByRole("link", { name: "Catálogo" })).toHaveAttribute("href", "/catalog");
+    const footer = within(screen.getByRole("navigation", { name: "Navegación del pie de página" }));
+    expect(footer.getByRole("link", { name: origin === "/ofertas" ? "Volver a Ofertas" : "Volver al catálogo" })).toHaveAttribute("href", origin);
+  });
+
   const serverOffer = { offerId: "4", originalPrice: "18.50", discountAmount: "5.00", effectivePrice: "13.50", savingsAmount: "5.00", savingsPercent: "27.03", daysRemaining: 2, endingSoon: true, startsAt: "2026-01-01T00:00:00-05:00", endsAt: "2026-10-09T23:59:59-05:00", offerCopy: "Una lectura para ti", terms: "Válida hasta agotar existencias." };
   function stubOffer(overrides: Record<string, unknown>) {
     vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {

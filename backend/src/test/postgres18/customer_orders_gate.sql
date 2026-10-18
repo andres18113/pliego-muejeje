@@ -50,7 +50,7 @@ BEGIN
 
     SELECT * INTO v_page FROM pliego.fn_customer_orders(v_a,0,1);
     IF v_page.order_id IS DISTINCT FROM v_order OR v_page.total_count <> 1
-       OR v_page.total <> 49.85 OR v_page.payment_state <> 'APPROVED' THEN
+       OR v_page.total <> 43.35 OR v_page.payment_state <> 'APPROVED' THEN
         RAISE EXCEPTION 'own-order summary mismatch';
     END IF;
     IF EXISTS (SELECT 1 FROM pliego.fn_customer_orders(v_b,0,20)) THEN
@@ -60,7 +60,7 @@ BEGIN
     SELECT * INTO v_detail FROM pliego.fn_customer_order_detail(v_a,v_order);
     v_items := v_detail.items;
     v_address_snapshot := v_detail.address;
-    IF v_detail.order_id IS DISTINCT FROM v_order OR v_detail.total <> 49.85
+    IF v_detail.order_id IS DISTINCT FROM v_order OR v_detail.total <> 43.35
        OR jsonb_array_length(v_items) <> 2
        OR v_items->0->>'title' <> 'Libro I9'
        OR v_items->0->>'authors' <> 'Autor I9'
@@ -73,7 +73,7 @@ BEGIN
        OR v_address_snapshot->>'destinatario' <> 'Cliente A'
        OR v_address_snapshot->>'direccion_linea1' <> 'Calle original'
        OR v_detail.payment->>'state' <> 'APPROVED'
-       OR (v_detail.payment->>'amount')::NUMERIC <> 49.85
+       OR (v_detail.payment->>'amount')::NUMERIC <> 43.35
        OR jsonb_array_length(v_detail.state_history) <> 2 THEN
         RAISE EXCEPTION 'own-order detail snapshot mismatch';
     END IF;

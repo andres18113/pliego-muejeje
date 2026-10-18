@@ -25,13 +25,13 @@ This pass completes functional integration using the existing components. The fi
 
 | Route | Existing backend action | State/behavior |
 | --- | --- | --- |
-| `/verificar-correo#token=…` | `POST /api/v1/auth/verify-email` | Explicit confirmation; pending, success, invalid/missing/used token, uncertain outcome |
+| `/verificar-correo#token=…` | `POST /api/v1/auth/verify-email` | Automatic verification and return to validated origin or Home; pending, success, invalid/missing/used token, uncertain outcome |
 | `/reenviar-verificacion` | `POST /api/v1/auth/resend-verification` | Validation, neutral accepted response, pending/error/uncertain outcome |
 | `/recuperar-contrasena` | `POST /api/v1/auth/forgot-password` | Same neutral request behavior |
 | `/restablecer-contrasena#token=…` | `POST /api/v1/auth/reset-password` | Password form; clears local session after success |
 
 - Sign-in links to resend/recovery. Registration directs customers to verify. Account links to resend and uses existing `PUT /api/v1/me/email`, re-verification and refresh-session revocation.
-- API client: `shared/api/emailActions.ts`; hooks: `features/auth/emailActionHooks.ts`; pages: `EmailActionPages.tsx`. Fragments are scrubbed; tokens remain in memory and are consumed only after confirmation. New fragment links on an already-mounted route replace the old token.
+- API client: `shared/api/emailActions.ts`; hooks: `features/auth/emailActionHooks.ts`; pages: `EmailActionPages.tsx`. Fragments are scrubbed; tokens remain in memory. Email verification starts automatically on opening the link; password reset still requires submitting the new password. New fragment links on an already-mounted route replace the old token; revisiting a verification token retains its original result without a repeated HTTP command. Updated behavior: [email verification](email-verification.md).
 - Commands have pending/error/success states, no automatic retries and explicit uncertain-outcome recovery. Session profile updates cannot restore a session cleared/replaced during an email command.
 - Order confirmation is enqueued by backend checkout; the existing purchase confirmation/order views show the committed purchase. Do not send a second email from React or promise delivery when only enqueuing is known.
 - Mailtrap credentials, provider transport, token generation, templates, outbox and retries remain backend-only. Customer UI uses Spanish domain feedback.

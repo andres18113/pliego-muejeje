@@ -69,11 +69,25 @@ class AdminOrderApiIntegrationTest {
     @BeforeEach void reset() { gateway.reset(); }
 
     @Test
+    void approvesPendingPaymentAsRealAdminAndTranslatesInvalidState() throws Exception {
+        mvc.perform(post("/api/v1/admin/orders/700/approve-payment")
+                .header("Authorization", token("7", "ADMIN"))).andExpect(status().isNoContent());
+        assertEquals(7L, gateway.actor);
+        assertEquals("approve-payment", gateway.lastOperation);
+        gateway.failure = failure("P5006", "private payment internals");
+        String body = mvc.perform(post("/api/v1/admin/orders/700/approve-payment")
+                .header("Authorization", token("7", "ADMIN")))
+                .andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("P5006"))
+                .andReturn().getResponse().getContentAsString();
+        assertFalse(body.contains("private payment internals"));
+    }
+
+    @Test
     void allRoutesRequireAdminRole() throws Exception {
         for (var request : List.of(get("/api/v1/admin/orders"), get("/api/v1/admin/orders/700"),
                 post("/api/v1/admin/orders/700/transitions").contentType("application/json")
                         .content("{\"targetState\":\"PREPARING\"}"),
-                post("/api/v1/admin/orders/700/cancel"))) {
+                post("/api/v1/admin/orders/700/cancel"), post("/api/v1/admin/orders/700/approve-payment"))) {
             mvc.perform(request).andExpect(status().isUnauthorized());
             mvc.perform(request.header("Authorization", token("42", "CUSTOMER")))
                     .andExpect(status().isForbidden()).andExpect(jsonPath("$.code").value("ACCESS_DENIED"));
@@ -301,6 +315,12 @@ class AdminOrderApiIntegrationTest {
     }
 
     static class FakeAdminOrderGateway implements AdminOrderGateway {
+        @Override public void approvePayment(long actorUserId, long orderId) {
+            actor = actorUserId;
+            lastOperation = "approve-payment";
+            if (failure != null) throw failure;
+        }
+
         @Override public void transitionShipment(long actor,long order,String state) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
         @Override public void updateTracking(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.Tracking tracking) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
         @Override public long issueInvoice(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice invoice) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }

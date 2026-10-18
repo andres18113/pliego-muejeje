@@ -35,7 +35,7 @@ def main():
         _, err = checkout.communicate(timeout=8)
         assert checkout.returncode == 0, err
         money = query(f"SELECT pi.precio_unitario,p.subtotal,p.impuesto_monto,p.total FROM pliego.pedido_item pi JOIN pliego.pedido p USING(pedido_id) JOIN pliego.cliente c USING(cliente_id) WHERE c.usuario_id={actor}")
-        assert money == '3.00|3.00|0.45|3.45', money
+        assert money == '3.00|3.00|0.00|3.00', money
         print('Offers concurrency passed: checkout waited for offer mutation and persisted consistent monetary snapshots.')
     finally:
         for child in [mutation, checkout]:

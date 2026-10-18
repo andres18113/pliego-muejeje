@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { CheckoutBilling } from "./billing";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
 import { fulfillmentSchema } from "./pickup";
@@ -22,7 +23,7 @@ const availableActionsSchema = z.object({ cancel: z.boolean(), changeShippingAdd
 export type OrderAvailableActions = z.infer<typeof availableActionsSchema>;
 
 export type PaymentMethod = "CARD" | "TRANSFER";
-export type CheckoutCommand = {
+export type CheckoutCommand = Partial<CheckoutBilling> & {
   paymentMethod: PaymentMethod;
   /** Transient; sent only for CARD and never stored by the client. */
   cardNumber?: string;
@@ -68,6 +69,7 @@ export async function submitCheckout(command: CheckoutCommand, key: string): Pro
     ? { fulfillmentMethod: command.fulfillmentMethod, pickupLocationId: command.pickupLocationId }
     : { addressId: command.addressId, fulfillmentMethod: "HOME_DELIVERY" as const };
   const body = {
+    ...(command.billingIdentity ? { billingIdentity: command.billingIdentity, buyerName: command.buyerName, billingAddress: command.billingAddress ? { ...command.billingAddress, line2: command.billingAddress.line2 ?? undefined, postalCode: command.billingAddress.postalCode ?? undefined } : undefined } : {}),
     ...destination, expectedCartId: command.expectedCartId, expectedQuoteFingerprint: command.expectedQuoteFingerprint, paymentMethod: command.paymentMethod,
     simulationOutcome: "APPROVED",
     ...(command.paymentMethod === "CARD" ? { cardNumber: command.cardNumber } : {}),
@@ -235,7 +237,7 @@ const invoiceSchema = z.object({
   subtotal: moneySchema,
   taxTotal: moneySchema,
   total: moneySchema,
-  issuedAt: z.string(),
+  issuedAt: z.string().nullable(),
   billingAddress: z.object({
     line1: z.string(),
     line2: nullableText,

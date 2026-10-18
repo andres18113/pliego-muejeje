@@ -38,9 +38,9 @@ public interface CustomerGateway {
     void removeFavorite(long actorUserId, long editionId);
 
     record CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone,
-            String state, long version) {
-        public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state) {
-            this(customerId, email, firstNames, lastNames, phone, state, 0);
+            String state, long version, boolean emailVerified) {
+        public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state, boolean emailVerified) {
+            this(customerId, email, firstNames, lastNames, phone, state, 0, emailVerified);
         }
     }
 

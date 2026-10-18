@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { billingIdentitySchema, type BillingIdentity } from "./billing";
 import type { components } from "./generated";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
@@ -12,6 +13,7 @@ export const profileQueryKey = ["customer-profile"] as const;
 const profileSchema = z.object({
   customerId: z.string().min(1),
   email: z.string().email(),
+  emailVerified: z.boolean().nullish(),
   firstNames: z.string(),
   lastNames: z.string(),
   phone: z.string().nullable(),
@@ -153,4 +155,22 @@ export async function setPrimaryAddress(addressId: string): Promise<void> {
     params: { path: { addressId: addressId as unknown as number } },
   });
   if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos cambiar la dirección principal", "Consulta la lista actual antes de volver a intentarlo.");
+}
+
+export const billingIdentityQueryKey = ["customer-billing-identity"] as const;
+export async function getBillingIdentity(signal?: AbortSignal): Promise<BillingIdentity | null> {
+  const { data, error, response } = await apiClient.GET("/api/v1/me/billing-identity", { signal });
+  if (response.status === 204) return null;
+  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos consultar tu cédula", "Comprueba tu conexión e inténtalo otra vez.");
+  const parsed = billingIdentitySchema.safeParse(data);
+  if (!parsed.success) throw toApiRequestError(502, {}, "No pudimos consultar tu cédula", "La respuesta del servidor está incompleta.");
+  return parsed.data;
+}
+export async function setBillingIdentity(identity: BillingIdentity): Promise<void> {
+  const { error, response } = await apiClient.PUT("/api/v1/me/billing-identity", { body: billingIdentitySchema.parse(identity) });
+  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos guardar tu cédula", "Revisa el dato e inténtalo otra vez.");
+}
+export async function removeBillingIdentity(): Promise<void> {
+  const { error, response } = await apiClient.DELETE("/api/v1/me/billing-identity");
+  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos quitar tu cédula", "Consulta el dato actual antes de continuar.");
 }

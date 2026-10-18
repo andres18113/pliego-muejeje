@@ -69,7 +69,7 @@ public class CustomerController {
     public CustomerProfileResponse getProfile(@AuthenticationPrincipal Jwt jwt) {
         CustomerProfile profile = customerService.getProfile(actorUserId(jwt));
         return new CustomerProfileResponse(Long.toString(profile.customerId()), profile.email(), profile.firstNames(),
-                profile.lastNames(), profile.phone(), profile.state(), Long.toString(profile.version()));
+                profile.lastNames(), profile.phone(), profile.state(), Long.toString(profile.version()), profile.emailVerified());
     }
 
     @PutMapping(path = "/me", consumes = MediaType.APPLICATION_JSON_VALUE)

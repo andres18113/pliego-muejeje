@@ -14,7 +14,7 @@ import { useSession } from "@/app/session";
 import { BookCover } from "@/features/catalog/BookCover";
 import { formatEdition, formatUsd } from "@/features/catalog/formatters";
 import { getCartDetail, type CartDetail } from "@/shared/api/cart";
-import { addressesQueryKey, listAddresses, type CustomerAddress } from "@/shared/api/customer";
+import { addressesQueryKey, listAddresses, getProfile, profileQueryKey, getBillingIdentity, billingIdentityQueryKey, type CustomerAddress } from "@/shared/api/customer";
 import { ApiRequestError, fieldErrorMessages, readRecoveryDetail } from "@/shared/api/errors";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import {
@@ -50,8 +50,15 @@ import { FulfillmentTabs } from "./FulfillmentTabs";
 import { PickupLocationPicker } from "./PickupLocationPicker";
 import pickupClasses from "./pickup.module.css";
 import { CardSecurityCodeHelp } from "./CardSecurityCodeHelp";
+import { PersonNameInput } from "@/shared/ui/PersonNameInput";
+import { personNameError } from "@/shared/validation/person";
+
+import { checkoutBillingSchema, type CheckoutBilling } from "@/shared/api/billing";
+import { BillingIdentityForm } from "./BillingIdentityForm";
+import { clearLegacyBillingIntents } from "./checkoutBillingIntent";
 
 const checkoutSchema = z.object({
+  ...checkoutBillingSchema.shape,
   fulfillmentMethod: z.enum(checkoutFulfillmentMethods),
   addressId: z.string(),
   pickupLocationId: z.string(),
@@ -84,6 +91,10 @@ const checkoutSchema = z.object({
   const cvvLength = detectCardBrand(values.cardNumber) === "amex" ? 4 : 3;
   if (!new RegExp(`^\\d{${cvvLength}}$`).test(values.cvv)) context.addIssue({ code: "custom", path: ["cvv"], message: `El código de seguridad debe tener ${cvvLength} dígitos.` });
   if (!values.cardholder.trim()) context.addIssue({ code: "custom", path: ["cardholder"], message: "Escribe el nombre del titular de la tarjeta." });
+  else {
+    const error = personNameError(values.cardholder, "nombres");
+    if (error) context.addIssue({ code: "custom", path: ["cardholder"], message: error.replace("Tus nombres", "El nombre del titular") });
+  }
 });
 
 type CheckoutValues = z.input<typeof checkoutSchema>;
@@ -109,6 +120,10 @@ function CheckoutContent() {
   const { session, clear: clearSession } = useSession();
   const actor = session!.user.userId;
   const scope = useSessionOperationScope("checkout");
+  useEffect(() => {
+    clearLegacyBillingIntents();
+    return clearLegacyBillingIntents;
+  }, []);
   const [recovery] = useState(() => {
     try { return { key: readPendingAttempt("checkout", actor), error: null }; }
     catch (error) { return { key: null, error: (error as Error).message }; }
@@ -116,6 +131,14 @@ function CheckoutContent() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const cartQuery = useCustomerCart(true);
+  const [reviewedCart, setReviewedCart] = useState<{ actor: string; cart: CartDetail | null }>(() => ({ actor, cart: cartQuery.data ?? null }));
+  const acceptedCart = reviewedCart.actor === actor ? reviewedCart.cart : null;
+  const cartReviewRequired = Boolean(cartQuery.data && acceptedCart && cartSignature(cartQuery.data) !== cartSignature(acceptedCart));
+  useEffect(() => {
+    // Only the initial read is implicitly reviewed. Later material updates need the customer's
+    // explicit acknowledgement, including the mount refresh of a previously cached cart.
+    if (cartQuery.data && (reviewedCart.actor !== actor || !reviewedCart.cart)) setReviewedCart({ actor, cart: cartQuery.data });
+  }, [actor, cartQuery.data, reviewedCart.actor, reviewedCart.cart]);
   const stockFocus = useAvailabilityFocus(!cartQuery.data?.items.some(item => !resolveStockStatus(item).canAddToCart), () => document.getElementById("checkout-stock-blocker"));
   const addressesQuery = useQuery({
     queryKey: addressesQueryKey,
@@ -132,6 +155,7 @@ function CheckoutContent() {
   const [problem, setProblem] = useState<Problem | null>(recovery.error ? { title: "No enviamos tu pedido.", detail: recovery.error } : null);
   const [addressEditor, setAddressEditor] = useState({ opened: false, opening: 0 });
   const addressTrigger = useRef<HTMLElement | null>(null);
+  const savedAddressFocusPending = useRef(false);
   const [choosingPayment, setChoosingPayment] = useState(false);
   // Card details live only in this form: they are confirmed in the dialog, sent once and then discarded.
   const [cardDialog, setCardDialog] = useState(false);
@@ -163,13 +187,20 @@ function CheckoutContent() {
     getFieldState,
     trigger,
     resetField,
-    formState: { errors },
+    formState: { errors, dirtyFields },
   } = useForm<CheckoutValues>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { fulfillmentMethod: "HOME_DELIVERY", addressId: "", pickupLocationId: "", paymentMethod: undefined, cardNumber: "", expiration: "", cvv: "", cardholder: "" },
+    defaultValues: { billingIdentity: { type: "EC_CEDULA", number: "" }, buyerName: "", billingAddress: { line1: "", line2: "", city: "", province: "", countryCode: "EC", postalCode: "" }, fulfillmentMethod: "HOME_DELIVERY", addressId: "", pickupLocationId: "", paymentMethod: undefined, cardNumber: "", expiration: "", cvv: "", cardholder: "" },
     // Focus is placed explicitly: the address choice may have no input to focus yet.
     shouldFocusError: false,
   });
+  const profileQuery = useQuery({queryKey: profileQueryKey, queryFn: ({signal}) => getProfile(signal), meta:{authRequired:true}, retry:false});
+  const identityQuery = useQuery({queryKey: billingIdentityQueryKey, queryFn: ({signal}) => getBillingIdentity(signal), meta:{authRequired:true}, retry:false});
+  useEffect(() => {
+    if (!scope.isCurrent() || phase !== "idle") return;
+    if (profileQuery.data && !dirtyFields.buyerName) setValue("buyerName", `${profileQuery.data.firstNames} ${profileQuery.data.lastNames}`.trim());
+    if (identityQuery.data && !dirtyFields.billingIdentity?.number) setValue("billingIdentity.number", identityQuery.data.number);
+  }, [profileQuery.data, identityQuery.data, dirtyFields.buyerName, dirtyFields.billingIdentity?.number, phase, scope, setValue]);
   const cardNumberRegistration = register("cardNumber");
   const cvvRegistration = register("cvv");
   const cardholderRegistration = register("cardholder");
@@ -278,6 +309,9 @@ function CheckoutContent() {
       (document.querySelector<HTMLElement>('input[name="pickupLocationId"]') ?? document.getElementById("checkout-change-pickup"))?.focus();
     } else if (invalid.addressId) {
       (document.querySelector<HTMLElement>('input[name="addressId"]') ?? document.getElementById("checkout-add-address") ?? document.getElementById("checkout-change-address"))?.focus();
+    } else if (Object.keys(invalid).some(field => field === "buyerName" || field.startsWith("billing"))) {
+      const fiscalError = document.querySelector<HTMLElement>('#checkout-form [aria-invalid="true"]');
+      fiscalError?.focus();
     } else if (invalid.paymentMethod) {
       setChoosingPayment(true);
       requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-purchase="payment-method"]')?.focus());
@@ -371,9 +405,9 @@ function CheckoutContent() {
     const destinationUnavailable = values.fulfillmentMethod === "DIGITAL_ONLY" ? false : values.fulfillmentMethod === "HOME_DELIVERY"
       ? addressesQuery.isPending || addressesQuery.isError || addressesQuery.isFetching
       : pickupQuery.isPending || pickupQuery.isError || pickupQuery.isFetching || !selectedPickup;
-    if (recovery.error || submitLock.current || phase !== "idle" || destinationUnavailable || !paymentReady || (values.paymentMethod === "TRANSFER" && !transferDetails.data)) return;
+    if (recovery.error || submitLock.current || phase !== "idle" || cartReviewRequired || cartQuery.isFetching || destinationUnavailable || !paymentReady || (values.paymentMethod === "TRANSFER" && !transferDetails.data)) return;
     const displayedCart = cartQuery.data;
-    if (!displayedCart) return;
+    if (!displayedCart || !acceptedCart) return;
     submitLock.current = true;
     cardNumberServerError.current = null;
     setProblem(null);
@@ -405,12 +439,9 @@ function CheckoutContent() {
         setProblem({ title: "Tu carrito está vacío.", detail: "No enviamos ningún pedido. Agrega un libro desde el catálogo." });
         return;
       }
-      if (cartSignature(fresh) !== cartSignature(displayedCart)) {
+      if (cartSignature(fresh) !== cartSignature(acceptedCart)) {
         setPhase("idle");
-        setProblem({
-          title: "Tu carrito cambió.",
-          detail: "Los precios, cantidades o la disponibilidad se actualizaron desde que abriste esta página. Revisa el nuevo resumen y confirma otra vez.",
-        });
+        setProblem(null);
         return;
       }
       if (fresh.items.some((item) => !resolveStockStatus(item).canAddToCart)) {
@@ -423,10 +454,12 @@ function CheckoutContent() {
         return;
       }
 
+      const fiscal = checkoutBillingSchema.parse(values);
       try {
         const existing = readPendingAttempt("checkout", actor);
         if (existing) { pendingKey.current = existing; setPhase("unknown"); return; }
         pendingKey.current = await beginPendingAttempt("checkout", actor);
+        if (!scope.isCurrent()) return;
       } catch (error) {
         setPhase("idle");
         setProblem({ title: "No enviamos tu pedido.", detail: (error as Error).message });
@@ -439,6 +472,7 @@ function CheckoutContent() {
       let result: CheckoutResult;
       try {
         result = await submitCheckout({
+          ...fiscal,
           ...(values.fulfillmentMethod === "DIGITAL_ONLY"
             ? { fulfillmentMethod: "DIGITAL_ONLY" } as const
             : values.fulfillmentMethod === "STORE_PICKUP"
@@ -497,7 +531,7 @@ function CheckoutContent() {
     pendingKey.current = null;
     setPhase("idle");
     const code = error.code;
-    const fields=(["addressId","pickupLocationId","fulfillmentMethod","paymentMethod","cardNumber"] as const).filter((field) => {
+    const fields=(["addressId","pickupLocationId","fulfillmentMethod","paymentMethod","cardNumber","buyerName","billingIdentity.number","billingIdentity.type","billingAddress.line1","billingAddress.line2","billingAddress.city","billingAddress.province","billingAddress.countryCode","billingAddress.postalCode"] as const).filter((field) => {
       const message=fieldErrorMessages(error,field);
       if(message) {
         setError(field,{type:"server",message});
@@ -572,7 +606,7 @@ function CheckoutContent() {
   const pricing = toCartPricingViewModel(cart);
   const summarySaving = pricing.summary.savingsTotal && hasSaving(pricing.summary.savingsTotal.rawValue) ? pricing.summary.savingsTotal : null;
 
-  if (cart.items.length === 0 && phase === "idle" && !problem) {
+  if (cart.items.length === 0 && phase === "idle" && !problem && !cartReviewRequired) {
     return (
       <PurchaseFlow stage="checkout">
         <section className={classes.empty} aria-labelledby="checkout-empty-heading">
@@ -591,6 +625,7 @@ function CheckoutContent() {
     ?? addresses?.find(address => address.primary) ?? addresses?.[0];
   // The customer must settle payment first; submitting still validates the destination and current data.
   const submitBlocked = Boolean(recovery.error) || busy || phase === "unknown" || phase === "reconciling" || unavailable
+    || cartReviewRequired || cartQuery.isFetching
     || !paymentReady
     || cart.items.length === 0
     || (fulfillmentMethod === "DIGITAL_ONLY" ? false : fulfillmentMethod === "HOME_DELIVERY"
@@ -607,6 +642,19 @@ function CheckoutContent() {
   return (
     <PurchaseFlow stage="checkout">
       <CheckoutHeading />
+
+      {cartReviewRequired && acceptedCart && phase === "idle" && (
+        <section className={classes.problem} role="alert" aria-label="Tu carrito cambió">
+          <h2>Tu carrito cambió.</h2>
+          <p>Actualizamos cantidades, precios o importes del carrito. Revisa el resumen actualizado antes de continuar; no enviamos ningún pedido.</p>
+          <p>Antes: {formatUsd(acceptedCart.total ?? acceptedCart.totalCurrent)}. Ahora: {formatUsd(cart.total ?? cart.totalCurrent)}.</p>
+          <Button variant="secondary" type="button" disabled={cartQuery.isFetching} onClick={() => {
+            if (!cartQuery.data || cartQuery.isFetching) return;
+            setReviewedCart({ actor, cart: cartQuery.data });
+            setProblem(null);
+          }}>Revisé el resumen actualizado</Button>
+        </section>
+      )}
 
       {problem && (
         <div className={classes.problem} role="alert" tabIndex={-1} ref={problemRef}>
@@ -799,6 +847,7 @@ function CheckoutContent() {
           {digitalOnly && <p role="note">Esta compra digital no requiere entrega ni retiro. La titularidad se confirma en Mi biblioteca después del pago aprobado.</p>}
 
           <form id="checkout-form" className={`${classes.panel} ${classes.fieldError} ${classes.checkoutPayment}`} onSubmit={submit} noValidate aria-labelledby="checkout-payment-heading">
+            <BillingIdentityForm register={register as unknown as import("react-hook-form").UseFormRegister<CheckoutBilling>} errors={errors} disabled={phase !== "idle" || Boolean(recovery.error)} />
             <div className={classes.panelHead}>
               <h2 id="checkout-payment-heading">Pago</h2>
               {methodSettled && (
@@ -859,16 +908,22 @@ function CheckoutContent() {
         opening={addressEditor.opening}
         firstAddress={(addresses?.length ?? 0) === 0}
         disabled={addressesQuery.isError || addressesQuery.isFetching}
-        onClose={() => { setAddressEditor((state) => ({ ...state, opened: false })); returnFocusTo(addressTrigger.current, "checkout-change-address"); }}
+        onClose={() => { savedAddressFocusPending.current = false; setAddressEditor((state) => ({ ...state, opened: false })); returnFocusTo(addressTrigger.current, "checkout-change-address"); }}
         onSaved={async (savedId) => {
           const refreshed = await addressesQuery.refetch();
+          if (!scope.isCurrent()) return;
+          savedAddressFocusPending.current = true;
           setAddressEditor((state) => ({ ...state, opened: false }));
           setChangingAddress(false);
           if (refreshed.data?.some((address) => address.addressId === savedId)) {
             setValue("addressId", savedId, { shouldValidate: true });
           }
           setAddressNotice("Guardamos la dirección y la elegimos para este pedido.");
-          returnFocusTo(null, "checkout-change-address");
+        }}
+        onExitTransitionEnd={() => {
+          if (!savedAddressFocusPending.current) return;
+          savedAddressFocusPending.current = false;
+          if (scope.isCurrent()) returnFocusTo(null, "checkout-change-address");
         }}
         onUncertain={async () => { await addressesQuery.refetch(); }}
         onSessionExpired={() => clearSession("expired")}
@@ -1022,7 +1077,7 @@ function CheckoutContent() {
                     {errors.cvv && <FieldMessage id="cvv-error" tone="error">{errors.cvv.message}</FieldMessage>}
                     <span id="cvv-help" className="visually-hidden">{cardBrand === "amex" ? "4 dígitos en el frente." : "3 dígitos al reverso."}</span>
                   </div>
-                  <div className={`form-field ${classes.wide}`}><label htmlFor="checkout-cardholder">Nombre en la tarjeta</label><input id="checkout-cardholder" data-autofocus={cardAutofocus === "checkout-cardholder" || undefined} autoComplete="off" maxLength={120} disabled={busy} aria-invalid={Boolean(errors.cardholder) || undefined} aria-describedby={errors.cardholder ? "cardholder-error" : undefined} {...cardholderRegistration} onBlur={(event) => { void cardholderRegistration.onBlur(event); validateCardFieldOnBlur("cardholder", event); }} onChange={(event) => { void Promise.resolve(cardholderRegistration.onChange(event)).then(() => revalidateCardField("cardholder")); }} />{errors.cardholder && <FieldMessage id="cardholder-error" tone="error">{errors.cardholder.message}</FieldMessage>}</div>
+                  <div className={`form-field ${classes.wide}`}><label htmlFor="checkout-cardholder">Nombre en la tarjeta</label><PersonNameInput onInputRejected={message => setError("cardholder", { type: "validate", message })} id="checkout-cardholder" data-autofocus={cardAutofocus === "checkout-cardholder" || undefined} autoComplete="off" maxLength={120} disabled={busy} aria-invalid={Boolean(errors.cardholder) || undefined} aria-describedby={errors.cardholder ? "cardholder-error" : undefined} {...cardholderRegistration} onBlur={(event) => { void cardholderRegistration.onBlur(event); validateCardFieldOnBlur("cardholder", event); }} onChange={(event) => { const value = event.currentTarget.value; void cardholderRegistration.onChange(event); const message = personNameError(value, "nombres"); if (message) setError("cardholder", { type: "validate", message }); else clearErrors("cardholder"); }} />{errors.cardholder && <FieldMessage id="cardholder-error" tone="error">{errors.cardholder.message}</FieldMessage>}</div>
                 </div>
               <div className={classes.dialogActions}>
                 <Button variant="primary" type="submit" data-card-blur-skip>Usar esta tarjeta</Button>
@@ -1163,7 +1218,11 @@ function cartSignature(cart: CartDetail) {
     cart.cartId,
     cart.quoteFingerprint,
     cart.totalCurrent,
+    cart.total,
+    cart.subtotal,
+    cart.taxAmount,
+    cart.shippingAmount,
     cart.requiresPhysicalFulfillment,
-    cart.items.map((item) => [item.cartItemId, item.quantity, item.currentPrice, item.available, item.format]),
+    cart.items.map((item) => [item.cartItemId, item.quantity, item.currentPrice, item.currentSubtotal, item.available, item.format]),
   ]);
 }

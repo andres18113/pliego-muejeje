@@ -16,14 +16,16 @@ export function HeaderCart() {
   const location = useLocation();
   const isCustomer = session?.user.role === "CUSTOMER";
   const cart = useCustomerCart(isCustomer, { fresh: false });
-  const units = cart.data ? cartUnitCount(cart.data.items) : null;
+  const cachedUnits = cart.data ? cartUnitCount(cart.data.items) : null;
+  const units = cart.isError && cachedUnits === 0 ? null : cachedUnits;
+  const announceCounter = location.pathname !== "/favorites" && location.pathname !== "/cart";
   const detail = units === null ? (cart.isError ? "unidades no disponibles" : "consultando unidades") : units === 1 ? "1 unidad" : `${units} unidades`;
   if (session?.user.role === "ADMIN") return null;
   return (
     <ActionIcon component={Link} to="/cart" variant="subtle" className={classes.icon} aria-label={isCustomer ? `Carrito, ${detail}` : "Carrito"} title="Carrito" aria-current={location.pathname === "/cart" ? "page" : undefined}>
       <MaterialSymbol name="shopping_cart" context="header" />
       {isCustomer && units !== null && units > 0 && <span className={classes.cartCount} aria-hidden="true" data-testid="header-cart-count">{units > 99 ? "99+" : units}</span>}
-      {isCustomer && <VisuallyHidden aria-live="polite" aria-atomic="true">{detail}</VisuallyHidden>}
+      {isCustomer && <VisuallyHidden aria-live={announceCounter ? "polite" : undefined} aria-atomic={announceCounter || undefined}>{detail}</VisuallyHidden>}
     </ActionIcon>
   );
 }
@@ -61,7 +63,7 @@ export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange:
   }, [session]);
 
   const returnTo = safeAuthReturnHref(location.pathname === "/sign-in" || location.pathname === "/register"
-    ? new URLSearchParams(location.search).get("from") : `${location.pathname}${location.search}`);
+    ? new URLSearchParams(location.search).get("from") : `${location.pathname}${location.search}${location.hash}`);
   if (!session) return (
     <ActionIcon component={Link} to={authLocation("/sign-in", returnTo)} variant="subtle" className={classes.icon} aria-label="Iniciar sesión" title="Iniciar sesión">
       <MaterialSymbol name="account_circle" context="header" />

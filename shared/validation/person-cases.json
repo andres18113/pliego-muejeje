@@ -17,8 +17,8 @@
   "phones": [
     { "input": "+593 (99) 123-4567", "valid": true, "normalized": "+593991234567" },
     { "input": "+59325550134", "valid": true, "normalized": "+59325550134" },
-    { "input": "+44 20 7946 0018", "valid": true, "normalized": "+442079460018" },
-    { "input": "+39 02 36618 300", "valid": true, "normalized": "+390236618300" },
+    { "input": "+44 20 7946 0018", "valid": false },
+    { "input": "+39 02 36618 300", "valid": false },
     { "input": "0991234567", "valid": false },
     { "input": "+5930991234567", "valid": false },
     { "input": "+44 020 7946 0018", "valid": false },

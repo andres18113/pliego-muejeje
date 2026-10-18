@@ -10,5 +10,6 @@ public record CustomerProfileResponse(
         @Schema(example = "Pérez López") String lastNames,
         @Schema(example = "+59325550134", nullable = true) String phone,
         @Schema(example = "ACTIVE", allowableValues = { "ACTIVE", "BLOCKED" }) String state,
-        @Schema(example = "0", description = "Versión decimal para actualizaciones condicionales.") String version) {
+        @Schema(example = "0", description = "Versión decimal para actualizaciones condicionales.") String version,
+        @Schema(description = "Indica si el correo actual está verificado.", example = "true") boolean emailVerified) {
 }

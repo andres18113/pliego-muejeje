@@ -1,0 +1,4 @@
+.copy { flex-basis: 100%; }
+.copy strong { display: block; margin-bottom: 4px; }
+.copy p { margin: 0; font-weight: 400; }
+.action { display: inline-flex; align-items: center; text-decoration: none; }

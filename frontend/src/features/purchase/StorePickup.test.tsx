@@ -1,3 +1,4 @@
+import { fillBillingFixture, billingFixturePayload } from "./billingTestFixtures";
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -62,11 +63,11 @@ describe("STORE_PICKUP transport and checkout", () => {
       await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
       await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
     }
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     const posts = transport.calls.filter(call => call.path === "/api/v1/checkout");
     expect(posts).toHaveLength(1);
-    expect(posts[0].body).toEqual({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", expectedCartId: "40", paymentMethod: method,
+    expect(posts[0].body).toEqual({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", expectedCartId: "40", paymentMethod: method,
       simulationOutcome: "APPROVED", ...(method === "CARD" ? { cardNumber: "4111111111111111" } : {}) });
     expect(posts[0].headers.get("Idempotency-Key")).toMatch(/^[0-9a-f-]{36}$/);
     expect(screen.getByText(/Presenta la confirmación enviada a tu correo/)).toBeInTheDocument();
@@ -88,7 +89,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
     await user.click(await screen.findByRole("tab", { name: "Retiro" }));
     const second = await screen.findByRole("radio", { name: /Segundo punto/ }); await transfer(user);
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("Elige un punto de retiro.")).toBeInTheDocument();
     expect(transport.count("POST", "/api/v1/checkout")).toBe(0);
     expect(screen.getAllByRole("radio")[0]).toHaveFocus();
@@ -143,7 +144,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     const transport = api({ "POST /api/v1/checkout": () => { throw new TypeError("Failed to fetch"); },
       "POST /api/v1/checkout/attempts/*/resolve": () => json({ state: "CREATED", order: approved }) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout"); await selectPickup(user); await transfer(user);
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: /Consultar resultado/ }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     expect(transport.calls.filter(call => call.method === "POST" && call.path === "/api/v1/checkout")).toHaveLength(1);

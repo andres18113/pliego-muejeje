@@ -91,6 +91,7 @@
 }
 .phoneField .trigger.trigger:focus-visible, .phoneField .trigger.trigger[data-open] { background: color-mix(in srgb, var(--store-blue, #283da8) 8%, transparent); }
 .phoneField .value { flex: none; gap: 8px; }
+.phoneField .fixedPrefix { cursor: default; }
 /* The control sizes to its column, never to its content; when that column is very narrow (large text, tight
    inline layouts) the prefix takes its own line above the number instead of overflowing its neighbours. */
 .phoneField { container-type: inline-size; flex-wrap: wrap; }

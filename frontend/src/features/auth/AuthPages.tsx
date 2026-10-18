@@ -1,4 +1,3 @@
-import { safeCatalogReturnHref } from "@/features/catalog/catalogUrl";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
@@ -7,11 +6,13 @@ import { z } from "zod";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope } from "@/app/sessionOperation";
-import { authLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
+import { authLocation, emailActionLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { login, register } from "@/shared/api/auth";
 import { ApiRequestError, describeApiError, fieldErrorMessages } from "@/shared/api/errors";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
-import { personNameSchema, optionalPhoneSchema } from "@/shared/validation/person";
+import { personNameSchema, personNameError, phoneError, optionalPhoneSchema } from "@/shared/validation/person";
+import { PersonNameInput } from "@/shared/ui/PersonNameInput";
+import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { stateAfterRegistration, stateAfterSignIn } from "@/features/favorites/favoriteIntent";
@@ -59,7 +60,7 @@ export function SignInPage() {
   const errorRef = useRef<HTMLDivElement>(null);
   const submitLockRef = useRef(false);
   const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
-  const from = safeCatalogReturnHref(intent);
+  const from = intent;
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   // The server refuses the sign-in until the address is verified; the address typed goes on to the resend page.
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
@@ -150,7 +151,7 @@ export function SignInPage() {
               <div className="auth-error" role="alert" tabIndex={-1} ref={errorRef} data-tone={unverifiedEmail ? "info" : undefined}>
                 <h2>{serverError.title}</h2>
                 <p>{serverError.detail}</p>
-                {unverifiedEmail && <Link to="/reenviar-verificacion" state={{ email: unverifiedEmail }}>Solicitar enlace de verificación</Link>}
+                {unverifiedEmail && <Link to={emailActionLocation("/reenviar-verificacion", intent)} state={{ email: unverifiedEmail }}>Solicitar enlace de verificación</Link>}
               </div>
             )}
 
@@ -199,7 +200,7 @@ export function SignInPage() {
             </Button>
           </form>
 
-          <p className={flow.links}><Link to="/recuperar-contrasena">¿Olvidaste tu contraseña?</Link><Link to="/reenviar-verificacion">Reenviar verificación</Link></p>
+          <p className={flow.links}><Link to={emailActionLocation("/recuperar-contrasena", intent)}>¿Olvidaste tu contraseña?</Link><Link to={emailActionLocation("/reenviar-verificacion", intent)}>Reenviar verificación</Link></p>
 
           <p className="auth-switch">
             ¿Todavía no tienes una cuenta? <Link to={authLocation("/register", intent)} state={location.state}>Crear cuenta</Link>
@@ -217,7 +218,7 @@ export function RegisterPage() {
   const successRef = useRef<HTMLHeadingElement>(null);
   const submitLockRef = useRef(false);
   const intent = safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
-  const from = safeCatalogReturnHref(intent);
+  const from = intent;
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const [registered, setRegistered] = useState(false);
@@ -227,6 +228,7 @@ export function RegisterPage() {
     register: registerField,
     handleSubmit,
     reset,
+    watch,
     setFocus,
     setError,
     setValue,
@@ -250,6 +252,11 @@ export function RegisterPage() {
     if (registered) successRef.current?.focus();
   }, [serverError, registered]);
 
+  function focusRegistrationField(field: keyof RegisterValues) {
+    if (field === "phone") document.getElementById("register-phone")?.focus();
+    else setFocus(field);
+  }
+
   const submit = handleSubmit(async (values) => {
     setServerError(null);
     try {
@@ -259,6 +266,7 @@ export function RegisterPage() {
         firstNames: values.firstNames,
         lastNames: values.lastNames,
         phone: values.phone || undefined,
+        ...(intent !== "/" ? { returnTo: intent } : {}),
       });
       reset({ email: values.email, password: "", firstNames: "", lastNames: "", phone: "" });
       setRegisteredEmail(values.email);
@@ -272,7 +280,7 @@ export function RegisterPage() {
       });
       if(fields.length) {
         if(fields.includes("phone")) setPhoneVisible(true);
-        requestAnimationFrame(() => setFocus(fields[0]));
+        requestAnimationFrame(() => focusRegistrationField(fields[0]));
         setFeedback({state:"error",message:"Revisa los campos señalados."}); return;
       }
       setServerError(authFailure(error, "No pudimos crear tu cuenta", "Comprueba tu conexión e inténtalo otra vez."));
@@ -281,7 +289,7 @@ export function RegisterPage() {
   }, (invalid) => {
     setFeedback({ state: "error", message: "Revisa los campos señalados y vuelve a intentarlo." });
     const firstInvalid = (["firstNames", "lastNames", "email", "password", "phone"] as const).find((field) => invalid[field]);
-    if (firstInvalid) setFocus(firstInvalid);
+    if (firstInvalid) focusRegistrationField(firstInvalid);
   });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -307,9 +315,10 @@ export function RegisterPage() {
             <section aria-labelledby="register-success-heading">
               <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Revisa tu correo</h1>
               <AuthState tone="waiting" scene title="Falta un paso: verificar tu correo"
-                actions={<><ButtonLink variant="secondary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink><Link to="/reenviar-verificacion" state={{ email: registeredEmail }}>Reenviar verificación</Link></>}>
+                actions={<><ButtonLink variant="secondary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink><Link to={emailActionLocation("/reenviar-verificacion", intent)} state={{ email: registeredEmail }}>Reenviar verificación</Link></>}>
                 <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong>{registeredEmail}</strong>. Verifica tu correo con el enlace enviado antes de iniciar sesión.</p>
                 <p>Si no lo ves, mira en la carpeta de correo no deseado.</p>
+                <p>Después de verificarlo, inicia sesión{intent.startsWith("/cart") ? " para volver a tu carrito." : " para continuar donde estabas."}</p>
               </AuthState>
             </section>
           ) : (
@@ -326,7 +335,8 @@ export function RegisterPage() {
 
                 <div className="register-names">
                 <Field controlId="register-first-names" label="Nombres">
-                  <input
+                  <PersonNameInput
+                    onInputRejected={(message) => setError("firstNames", { type: "validate", message })}
                     id="register-first-names"
                     type="text"
                     autoComplete="given-name"
@@ -335,12 +345,17 @@ export function RegisterPage() {
                     aria-required="true"
                     aria-invalid={Boolean(errors.firstNames)}
                     aria-describedby={errors.firstNames ? "register-first-names-error" : undefined}
-                    {...registerField("firstNames")}
+                    {...registerField("firstNames", { onChange: (event) => {
+                      const message = personNameError(event.target.value, "nombres");
+                      if (message) setError("firstNames", { type: "validate", message });
+                      else clearErrors("firstNames");
+                    } })}
                   />
                   {errors.firstNames && <FieldMessage tone="error" id="register-first-names-error">{errors.firstNames.message}</FieldMessage>}
                 </Field>
                 <Field controlId="register-last-names" label="Apellidos">
-                  <input
+                  <PersonNameInput
+                    onInputRejected={(message) => setError("lastNames", { type: "validate", message })}
                     id="register-last-names"
                     type="text"
                     autoComplete="family-name"
@@ -349,7 +364,11 @@ export function RegisterPage() {
                     aria-required="true"
                     aria-invalid={Boolean(errors.lastNames)}
                     aria-describedby={errors.lastNames ? "register-last-names-error" : undefined}
-                    {...registerField("lastNames")}
+                    {...registerField("lastNames", { onChange: (event) => {
+                      const message = personNameError(event.target.value, "apellidos");
+                      if (message) setError("lastNames", { type: "validate", message });
+                      else clearErrors("lastNames");
+                    } })}
                   />
                   {errors.lastNames && <FieldMessage tone="error" id="register-last-names-error">{errors.lastNames.message}</FieldMessage>}
                 </Field>
@@ -400,18 +419,23 @@ export function RegisterPage() {
                   {phoneVisible ? "Quitar teléfono" : "Añadir teléfono (opcional)"}
                 </button>
                 <Field controlId="register-phone" id="register-phone-field" hidden={!phoneVisible} label={<>Teléfono <span>(opcional)</span></>}>
-                  <input
-                    id="register-phone"
-                    type="tel"
-                    autoComplete="tel"
-                    inputMode="tel"
-                    aria-invalid={Boolean(errors.phone)}
-                    aria-describedby={errors.phone ? "register-phone-error" : "register-phone-help"}
-                    {...registerField("phone")}
-                  />
-                  {errors.phone
-                    ? <FieldMessage tone="error" id="register-phone-error">{errors.phone.message}</FieldMessage>
-                    : <FieldMessage tone="help" id="register-phone-help">Incluye el prefijo internacional, por ejemplo +593 99 123 4567. Puedes usar espacios, paréntesis o guiones.</FieldMessage>}
+                  {phoneVisible && <InternationalPhoneField
+                    id="register-phone" label="Teléfono (opcional)"
+                    countries={[{ code: "EC", name: "Ecuador" }]}
+                    countryCode="EC" onCountryChange={() => undefined}
+                    value={watch("phone") || undefined}
+                    onChange={(value) => {
+                      const next = value ?? "";
+                      setValue("phone", next, { shouldDirty: true });
+                      clearErrors("phone");
+                    }}
+                    onBlur={() => {
+                      const message = phoneError(watch("phone"));
+                      if (message) setError("phone", { type: "validate", message });
+                      else clearErrors("phone");
+                    }}
+                    error={errors.phone?.message}
+                  />}
                 </Field>
                 {activeFeedback.state === "error" && !serverError && (
                   <p className="auth-feedback auth-feedback--error" role="status" aria-live="polite">{activeFeedback.message}</p>

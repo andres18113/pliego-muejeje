@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, expect, it, vi } from "vitest";
 import { json, renderPurchaseRoute, stubApi } from "@/test/purchase";
@@ -20,4 +20,27 @@ it("shows the published resources the address asks for and opens plain text arti
   await screen.findByRole("heading", { name: "Cómo funcionan los eBooks" });
   expect(screen.getByText("<script>alert('x')</script>")).toBeInTheDocument();
   expect(api.calls.some(call => call.path.includes("que=ebooks"))).toBe(true);
+});
+
+const ebookArticle = { slug: "ebooks", categorySlug: "ebooks", title: "eBooks", summary: "Lectura digital", position: 1, applicability: "EBOOK" };
+it.each([false, true])("offers more category help only when another published resource exists (%s)", async (hasAnotherResource) => {
+  const resources = hasAnotherResource ? [ebookArticle, { ...ebookArticle, slug: "descargar-ebooks", title: "Descargar eBooks" }] : [ebookArticle];
+  const api = stubApi({
+    "GET /api/v1/help/categories": () => json({ items: [{ slug: "ebooks", title: "eBooks", position: 1, applicability: "EBOOK" }] }),
+    "GET /api/v1/help/articles/ebooks": () => json({ ...ebookArticle, body: "Tus libros digitales." }),
+    "GET /api/v1/help/articles": request => {
+      expect(new URL(request.url).searchParams.get("category")).toBe("ebooks");
+      return json({ items: resources, page: 0, pageSize: 2, totalCount: String(resources.length) });
+    },
+  });
+  renderPurchaseRoute([{ path: "/ayuda/:slug", element: <HelpArticlePage /> }], "/ayuda/ebooks");
+  await screen.findByRole("heading", { level: 1, name: "eBooks" });
+  await screen.findByRole("link", { name: "eBooks" });
+  await waitFor(() => expect(api.calls.some(call => call.method === "GET" && new URL(call.path, "http://localhost").pathname === "/api/v1/help/articles")).toBe(true));
+  if (hasAnotherResource) {
+    expect(await screen.findByRole("link", { name: "Más sobre eBooks" })).toHaveAttribute("href", "/ayuda?category=ebooks");
+  } else {
+    expect(screen.queryByRole("link", { name: "Más sobre eBooks" })).not.toBeInTheDocument();
+  }
+  expect(screen.getByRole("link", { name: "Ver todos los recursos de Ayuda" })).toHaveAttribute("href", "/ayuda");
 });

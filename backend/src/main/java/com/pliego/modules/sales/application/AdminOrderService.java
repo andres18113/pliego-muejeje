@@ -20,6 +20,11 @@ public class AdminOrderService {
         this.gateway = gateway;
     }
 
+    @Transactional
+    public void approvePayment(long actorUserId, long orderId) {
+        gateway.approvePayment(actorUserId, orderId);
+    }
+
     @Transactional(readOnly = true)
     public Page search(long actorUserId, Search search) {
         return gateway.search(actorUserId, search);

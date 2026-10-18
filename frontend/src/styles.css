@@ -84,10 +84,11 @@
 
 * { box-sizing: border-box; }
 
-html { min-width: 320px; scroll-behavior: auto; }
+/* Browser zoom and a classic scrollbar can leave less than 320px of usable width. */
+html { min-width: 0; scroll-behavior: auto; }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   margin: 0;
   background: var(--paper);
   color: var(--ink);

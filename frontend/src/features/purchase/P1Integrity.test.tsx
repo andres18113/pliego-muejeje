@@ -1,3 +1,4 @@
+import { fillBillingFixture } from "./billingTestFixtures";
 import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -29,12 +30,12 @@ describe("P1 integrity regressions", () => {
     renderPurchaseRoute(routes, "/checkout");
     await screen.findByText(/Av\. Principal 123/);
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: /Consultar mis pedidos|Consultar resultado/ }));
     await waitFor(() => expect(api.calls.filter((call) => call.method === "GET" || call.path.includes("resolve")).length).toBeGreaterThan(3));
     expect(screen.queryByRole("heading", { name: "No se creó ningún pedido." })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Hacer pedido" })).toHaveAttribute("aria-disabled", "true");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(api.calls.filter((call) => call.method === "POST" && call.path === "/api/v1/checkout")).toHaveLength(1);
   });
 
@@ -202,7 +203,7 @@ describe("P1 integrity regressions", () => {
     renderPurchaseRoute(routes, "/checkout");
     await screen.findByText(/Av\. Principal 123/);
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await waitFor(() => expect(finishPreflight).toBeTypeOf("function"));
     await act(async () => {
       localStorage.setItem("pliego:pending:checkout:2", "550e8400-e29b-41d4-a716-446655440000");

@@ -22,8 +22,9 @@ cleanup() {
 trap cleanup EXIT
 
 # HTTP is confined to loopback in this disposable fixture; the preceding auth gate tests Secure cookies.
+cp "$repo_dir/backend/target/pliego-backend-0.1.0-SNAPSHOT.jar" "$work_dir/backend.jar"
 PLIEGO_MAIL_ENABLED=false PLIEGO_AUTH_COOKIE_SECURE=false PLIEGO_CORS_ALLOWED_ORIGINS="$frontend_url" \
-    java -jar "$repo_dir/backend/target/pliego-backend-0.1.0-SNAPSHOT.jar" "--server.port=$api_port" --server.address=127.0.0.1 >"$work_dir/api.log" 2>&1 &
+    java -jar "$work_dir/backend.jar" "--server.port=$api_port" --server.address=127.0.0.1 >"$work_dir/api.log" 2>&1 &
 api_pid=$!
 wait_for() {
     local url="$1" pid="$2" log="$3"
@@ -61,4 +62,4 @@ frontend_pid=$!
 wait_for "$frontend_url/" "$frontend_pid" "$work_dir/frontend.log"
 cd "$repo_dir/frontend"
 PLIEGO_E2E_LIVE=1 PLIEGO_E2E_BASE_URL="$frontend_url" PLIEGO_API_BASE_URL="$api_url" \
-    npx playwright test tests/e2e/digital-physical-contract.live.spec.ts --workers=1 --output="$work_dir/results"
+    npx playwright test tests/e2e/digital-physical-contract.live.spec.ts tests/e2e/purchase.live.spec.ts --workers=1 --output="$work_dir/results"

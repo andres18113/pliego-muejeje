@@ -229,7 +229,7 @@ def main():
     status, _, mutation = request(f"/api/v1/cart/items/{cart_item}", customer, method="PUT", body={"quantity": 2})
     assert status == 200 and mutation["quantity"] == 2, (status, mutation)
     status, _, cart = request("/api/v1/cart", customer)
-    assert status == 200 and cart["totalCurrent"] == "46.00" and len(cart["items"]) == 1, (status, cart)
+    assert status == 200 and cart["totalCurrent"] == "40.00" and len(cart["items"]) == 1, (status, cart)
 
     # --- checkout: invalid CARD first (no persistence), then APPROVED ---
     status, headers, problem = request("/api/v1/checkout", customer, method="POST", body={
@@ -247,14 +247,14 @@ def main():
     assert status == 201, (status, order)
     assert headers["Location"] == "/api/v1/orders/" + order["orderId"], headers
     assert order["orderState"] == "CONFIRMED" and order["paymentState"] == "APPROVED"
-    assert order["total"] == "46.00" and order["paymentReference"].startswith("SIM-")
+    assert order["total"] == "40.00" and order["paymentReference"].startswith("SIM-")
     assert "cardNumber" not in order
     order_id = order["orderId"]
     assert query(f"SELECT stock_actual FROM pliego.inventario WHERE edicion_id={edition_id}") == "3"
 
     # --- customer order detail + snapshots survive later catalog edits ---
     status, _, bought = request(f"/api/v1/orders/{order_id}", customer)
-    assert status == 200 and bought["total"] == "46.00" and len(bought["items"]) == 1, (status, bought)
+    assert status == 200 and bought["total"] == "40.00" and len(bought["items"]) == 1, (status, bought)
     assert bought["items"][0]["unitPrice"] == "20.00"
     assert bought["items"][0]["title"] == f"Libro Journey {suffix}"
     assert bought["address"]["line1"] == "Calle 2"
@@ -272,7 +272,7 @@ def main():
     status, _, frozen = request(f"/api/v1/orders/{order_id}", customer)
     assert status == 200, (status, frozen)
     assert frozen["items"][0]["title"] == f"Libro Journey {suffix}", frozen["items"]
-    assert frozen["items"][0]["unitPrice"] == "20.00" and frozen["total"] == "46.00"
+    assert frozen["items"][0]["unitPrice"] == "20.00" and frozen["total"] == "40.00"
 
     # --- ownership: another customer sees safe 404s ---
     status, headers, problem = request(f"/api/v1/orders/{order_id}", other)

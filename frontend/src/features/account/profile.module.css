@@ -39,6 +39,7 @@
 .fact[data-editing] .factLabel { padding-top: 11px; color: var(--acc-blue); }
 .inlineFields { display: grid; gap: 6px; min-width: 0; max-width: 26rem; }
 .inlineActions { display: flex; align-items: center; gap: 4px; margin-right: -10px; min-height: 44px; }
+.inlineActionGroup { display: grid; gap: 6px; align-content: start; }
 
 /* The value becomes a rounded field in the same place: the PLIEGO pill (as the header's search field),
    paper surface and hairline edge; its text starts exactly where the read-only value stood. */
@@ -55,6 +56,19 @@
 /* A second field's label speaks like the row labels; every helper line (note, help, error, draft) like one helper. */
 .subLabel { margin-top: 6px; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .inlineNote { margin: 2px 0 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+.securityDisclosure { color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+.securityDisclosure > summary { width: fit-content; min-height: 44px; padding-block: 12px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.securityDisclosure > summary:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }
+.securityDisclosure > p { margin: 0 0 6px; }
+.passwordSection { display: grid; justify-items: start; gap: 10px; width: min(100%, 760px); min-width: 0; justify-self: center; padding-top: 24px; border-top: 1px solid var(--acc-line); }
+.passwordSection > h2 { margin: 0; color: var(--acc-ink); font-size: 1.125rem; font-weight: 600; }
+.passwordIntro { max-width: 56ch; margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.5; overflow-wrap: anywhere; }
+.passwordIntro > strong { color: var(--acc-ink); font-weight: 500; }
+.passwordAction { max-width: 100%; min-height: 44px; white-space: normal; text-align: center; }
+.passwordNotice { margin: 0; font-size: .875rem; line-height: 1.4; overflow-wrap: anywhere; }
+.passwordVerification { margin: 0; font-size: .9375rem; }
+.passwordVerification a { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
+.passwordVerification a:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
 .inlineFields :global(.field-error), .inlineFields :global(.field-help) { font-size: .8125rem; line-height: 1.4; }
 .inlineFields :global(.field-error) { color: var(--error, #9b2c2c); font-weight: 600; }
 .inlineFields :global(.field-help) { color: var(--acc-muted); }
@@ -79,7 +93,8 @@
 
 .feedback { grid-area: feedback; display: flex; align-items: center; gap: 6px; margin: 2px 0 0; color: var(--acc-ink); font-size: .875rem; line-height: 1.4; overflow-wrap: anywhere; }
 .inlineFields > .feedback { grid-area: auto; font-size: .8125rem; }
-.draftNotice { grid-area: auto; grid-column: 1 / -1; max-width: 45ch; color: var(--acc-muted); font-size: .8125rem; }
+.draftNotice { display: flex; align-items: start; gap: 4px; max-width: 24ch; margin: 0; color: var(--acc-muted); font-size: .75rem; line-height: 1.4; }
+.draftNotice :global(.material-symbol) { flex: none; margin-top: 1px; }
 .feedback :global(.material-symbol) { flex: none; color: var(--acc-blue); }
 .feedbackError { color: var(--error, #9b2c2c); }
 .feedbackError :global(.material-symbol) { color: currentColor; }

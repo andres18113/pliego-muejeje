@@ -78,10 +78,10 @@ def main():
     assert detail["orderId"] == str(logistics_order)
     assert detail["customerId"] == query(f"SELECT cliente_id FROM pliego.pedido WHERE pedido_id={logistics_order}")
     assert detail["customerEmail"].startswith("i10-conc-customer-")
-    assert detail["orderState"] == "CONFIRMED" and detail["total"] == "8.34"
+    assert detail["orderState"] == "CONFIRMED" and detail["total"] == "7.25"
     assert len(detail["items"]) == 1 and detail["items"][0]["title"].startswith("Libro I10 ")
     assert detail["address"]["line1"] == "Calle I10"
-    assert detail["payment"]["state"] == "APPROVED" and detail["payment"]["amount"] == "8.34"
+    assert detail["payment"]["state"] == "APPROVED" and detail["payment"]["amount"] == "7.25"
     assert len(detail["stateHistory"]) == 2
     assert len(detail["inventoryMovements"]) == 1
     movement = detail["inventoryMovements"][0]
@@ -96,7 +96,7 @@ def main():
     status, page = request("/api/v1/admin/orders?" + date_filter, admin)
     assert status == 200 and page["totalCount"] == "2" and len(page["items"]) == 2, (status, page)
     assert {item["orderId"] for item in page["items"]} == {str(logistics_order), str(cancel_order)}
-    assert all(item["total"] == "8.34" for item in page["items"])
+    assert all(item["total"] == "7.25" for item in page["items"])
 
     status, missing = request("/api/v1/admin/orders/9223372036854775807", admin)
     assert status == 404 and missing["code"] == "P5001"

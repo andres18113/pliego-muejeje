@@ -1,3 +1,4 @@
+import { fillBillingFixture, billingFixturePayload } from "./billingTestFixtures";
 import { act, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -39,9 +40,9 @@ describe("digital checkout", () => {
     expect(transport.count("GET", "/api/v1/pickup-locations")).toBe(0);
     await user.click(screen.getByRole("button", { name: "Transferencia bancaria" }));
     await screen.findByText("Banco Guayaquil");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await screen.findByRole("heading", { name: "Pedido abierto" });
-    expect(transport.calls.find(call => call.path === "/api/v1/checkout")?.body).toEqual({ fulfillmentMethod: "DIGITAL_ONLY", expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" });
+    expect(transport.calls.find(call => call.path === "/api/v1/checkout")?.body).toEqual({ ...billingFixturePayload, fulfillmentMethod: "DIGITAL_ONLY", expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" });
   });
 
 

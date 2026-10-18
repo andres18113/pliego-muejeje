@@ -7,6 +7,7 @@ import { addCustomerFavorite, removeCustomerFavorite, getCustomerFavoriteStatus,
 import { ApiRequestError } from "@/shared/api/errors";
 import { addEditionToCart, getActiveCart } from "@/shared/api/cart";
 import { isDigitalFormat } from "@/shared/api/editionFormats";
+import type { ConfirmedCartAddition } from "@/shared/ui/cartAdditionFeedback";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { availabilityConflictMessage, resolveStockStatus } from "./stockStatusModel";
@@ -162,7 +163,7 @@ export function useFavoriteControl({ editionId, isFavorite, ready, queryKey, ret
 
 class CartAddOutcomeUnknown extends Error {}
 /** `quantity`: how many units one press adds (default 1; digital editions always add one). */
-export function useCartControl({ editionId, available, format, returnHref, onFeedback, onAdded, quantity: requested = 1 }: { editionId: string; available: boolean; format?: string; returnHref: string; onFeedback: FeedbackSink; onAdded?: (editionId: string) => void; quantity?: number }): CartControl {
+export function useCartControl({ editionId, available, format, returnHref, onFeedback, onAdded, onConfirmedAddition, quantity: requested = 1 }: { editionId: string; available: boolean; format?: string; returnHref: string; onFeedback: FeedbackSink; onAdded?: (editionId: string) => void; onConfirmedAddition?: (addition: ConfirmedCartAddition) => void; quantity?: number }): CartControl {
   const scope = useSessionOperationScope(editionId);
   const addQuantity = isDigitalFormat(format) ? 1 : Math.max(1, Math.trunc(requested));
   const location = useLocation();
@@ -182,11 +183,11 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
       const cart = await getActiveCart();
       issued.assertCurrent();
       const previousQuantity = cart.items.find((item) => item.editionId === target)?.quantity ?? 0;
-      if (isDigitalFormat(medium) && previousQuantity >= 1) return { quantity: previousQuantity, previousQuantity };
+      if (isDigitalFormat(medium) && previousQuantity >= 1) return { quantity: previousQuantity, previousQuantity, confirmedAddition: false };
       try {
         const result = await addEditionToCart(target, amount);
         issued.assertCurrent();
-        return { quantity: result.quantity, previousQuantity };
+        return { quantity: result.quantity, previousQuantity, confirmedAddition: true };
       } catch (error) {
         issued.assertCurrent();
         if (!(error instanceof ApiRequestError) || error.status >= 500) {
@@ -194,7 +195,7 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
             const current = await getActiveCart();
             issued.assertCurrent();
             const currentQuantity = current.items.find((item) => item.editionId === target)?.quantity ?? 0;
-            if (currentQuantity === previousQuantity + amount) return { quantity: currentQuantity, previousQuantity };
+            if (currentQuantity === previousQuantity + amount) return { quantity: currentQuantity, previousQuantity, confirmedAddition: false };
           } catch { /* Preserve uncertainty if the reconciliation read also fails. */ }
           throw new CartAddOutcomeUnknown();
         }
@@ -202,16 +203,25 @@ export function useCartControl({ editionId, available, format, returnHref, onFee
       }
     },
     retry: false,
-    onSuccess: async ({ quantity, previousQuantity }, issued) => {
+    onSuccess: async ({ quantity, previousQuantity, confirmedAddition }, issued) => {
       if (!issued.scope.isCurrent()) return;
+      // Publish the accepted command before refetching: an empty cart becoming populated
+      // can replace its saved-list rows. The collection owns the persistent notification.
+      if (confirmedAddition) onConfirmedAddition?.({ quantity, addedQuantity: issued.amount });
+      const cartReadAt = queryClient.getQueryState(["customer-cart"])?.dataUpdatedAt ?? 0;
       await queryClient.invalidateQueries({ queryKey: ["customer-cart"] });
       if (!issued.scope.isCurrent()) return;
-      setFeedback({ message: isDigitalFormat(format) && quantity === previousQuantity ? "Esta edición digital ya está en tu carrito." : quantity === 1 ? "Agregado al carrito." : `El carrito ahora tiene ${quantity} unidades de esta edición.`, error: false });
-      setAddedPulse(true);
+      const refreshed = queryClient.getQueryState<{ items: { editionId: string; quantity: number }[] }>(["customer-cart"]);
+      const confirmedQuantity = refreshed && refreshed.dataUpdatedAt > cartReadAt
+        ? refreshed.data?.items.find(item => item.editionId === issued.target)?.quantity ?? 0 : quantity;
+      setFeedback(!confirmedAddition && quantity !== previousQuantity
+        ? { message: `No pudimos confirmar esta acción. Al consultar, el carrito tiene ${confirmedQuantity} ${confirmedQuantity === 1 ? "unidad" : "unidades"} de esta edición. Revisa el carrito antes de agregar otra copia.`, error: true }
+        : { message: isDigitalFormat(format) && quantity === previousQuantity ? "Esta edición digital ya está en tu carrito." : quantity === 1 ? "Agregado al carrito." : `El carrito ahora tiene ${quantity} unidades de esta edición.`, error: false });
+      setAddedPulse(confirmedAddition);
       if (pulseTimer.current !== null) window.clearTimeout(pulseTimer.current);
       pulseTimer.current = window.setTimeout(() => { if (issued.scope.isCurrent()) setAddedPulse(false); }, 1_100);
-      // Only a confirmed add (the cart was re-read above) reaches the preview; failures never open it.
-      onAdded?.(editionId);
+      if (confirmedAddition) onAdded?.(editionId);
+
     },
     onError: async (error, issued) => {
       if (!issued.scope.isCurrent()) return;

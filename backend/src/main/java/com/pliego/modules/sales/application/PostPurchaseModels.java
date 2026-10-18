@@ -66,6 +66,9 @@ public final class PostPurchaseModels {
     }
     public record ShipmentEvent(String eventId, String type, String origin, String actorUserId,
             String previousState, String newState, String carrier, String trackingCode, String trackingUrl, String at) { }
+    public record CheckoutBilling(String identityType, String identityNumber, String buyerName, BillingAddress address) {
+        @Override public String toString() { return "CheckoutBilling[redacted]"; }
+    }
     public record BillingAddress(String line1, String line2, String city, String province, String countryCode, String postalCode) { }
     public record Invoice(String invoiceId, String documentNumber, String state, String buyerName,
             String identityType, String identityNumber, String buyerEmail, String currency,

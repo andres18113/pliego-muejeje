@@ -1,3 +1,4 @@
+import { fillCheckoutBilling } from "./billing-fixtures";
 import { expect, test, type Page, type Route } from "@playwright/test";
 
 /** Account pages are reached from the header's account menu. */
@@ -303,6 +304,7 @@ for (const viewport of [{ name: "desktop", width: 1280, height: 900 }, { name: "
     await expect(page.getByRole("button", { name: "Cambiar método de pago" })).toBeFocused();
     await expectNoHorizontalOverflow(page);
     await page.screenshot({ path: testInfo.outputPath("card-chosen.png"), fullPage: true });
+    await fillCheckoutBilling(page);
     await page.getByRole("button", { name: "Hacer pedido" }).click();
 
     await expect(page.locator('[data-purchase="summary"] [role="status"]')).toContainText("Creando tu pedido simulado");
@@ -463,6 +465,7 @@ test("a rejected simulated payment leaves the cart active for a deliberate new a
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
   await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
+  await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido" }).click();
 
   await expect(page.getByRole("heading", { level: 1, name: "El pago no se completó" })).toBeVisible();
@@ -482,10 +485,12 @@ test("a lost checkout response is reconciled through orders without replaying th
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await saveFirstAddress(page);
   await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
+  await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido" }).click();
 
   const unknown = page.getByRole("heading", { name: "No pudimos confirmar si se creó tu pedido." });
   await expect(unknown).toBeVisible();
+  await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido" }).click({ force: true });
   expect(api.checkoutPosts).toBe(1);
 
@@ -504,6 +509,7 @@ test("a stock change at checkout refreshes the cart and names the affected item"
   await saveFirstAddress(page);
   await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
   api.stock = 0;
+  await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido" }).click();
 
   // The pre-submit read sees availability change, so nothing is sent.

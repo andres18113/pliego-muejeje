@@ -57,6 +57,14 @@ public class AdminOrderController {
         this.service = service;
     }
 
+    @PostMapping("/{orderId}/approve-payment")
+    @Operation(summary = "Aprobar un pago académico pendiente y emitir su factura")
+    @ApiResponse(responseCode = "204", description = "Pago aprobado de manera idempotente")
+    public ResponseEntity<Void> approvePayment(@AuthenticationPrincipal Jwt jwt, @PathVariable @Positive long orderId) {
+        service.approvePayment(actorId(jwt), orderId);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping
     @Operation(summary = "Buscar pedidos", description = "Filtros y orden definidos por fn_admin_orders.")
     @ApiResponse(responseCode = "200", description = "Página de pedidos")

@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { logoutSession, refreshSession, type LoginResponse } from "@/shared/api/auth";
+import { clearLegacyBillingIntents } from "@/shared/api/legacyBillingStorage";
 import { setApiAccessToken } from "@/shared/api/client";
 
 export type AuthenticatedUser = Required<NonNullable<LoginResponse["user"]>>;
@@ -57,7 +58,10 @@ export function SessionProvider({ children, restoreOnMount = true }: {
       : currentSession.current?.user.userId === userId && currentSession.current?.user.role === role) };
   }, []);
 
+  useEffect(() => { clearLegacyBillingIntents(); }, []);
+
   const forgetPrivateData = useCallback(() => {
+    clearLegacyBillingIntents();
     queryClient.removeQueries({ predicate: query => query.meta?.authRequired === true });
     const mutations = queryClient.getMutationCache();
     for (const mutation of mutations.getAll()) if (mutation.meta?.authRequired === true) mutations.remove(mutation);

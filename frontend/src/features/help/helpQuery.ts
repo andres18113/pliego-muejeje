@@ -9,8 +9,8 @@ export function useHelpCategories() {
   const query = useQuery({ queryKey: helpQueryKeys.categories, queryFn: ({ signal }) => getHelpCategories(signal), retry });
   return { ...query, viewState: toReadViewState(query, data => data.length === 0) };
 }
-export function useHelpArticles(criteria: HelpCriteria) {
-  const query = useQuery({ queryKey: helpQueryKeys.articles(criteria), queryFn: ({ signal }) => searchHelpArticles(criteria, signal), retry });
+export function useHelpArticles(criteria: HelpCriteria, enabled = true) {
+  const query = useQuery({ queryKey: helpQueryKeys.articles(criteria), queryFn: ({ signal }) => searchHelpArticles(criteria, signal), retry, enabled });
   return { ...query, viewState: toReadViewState(query, data => data.items.length === 0) };
 }
 export function useHelpArticle(slug: string) {

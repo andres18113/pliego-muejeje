@@ -8,6 +8,7 @@ import com.google.i18n.phonenumbers.NumberParseException;
 public final class PhoneNumbers {
     private static final Pattern PRESENTATION = Pattern.compile(PersonRules.rule("phonePresentationPattern"));
     private static final Pattern CANONICAL = Pattern.compile(PersonRules.rule("canonicalPhonePattern"));
+    private static final int MAX_NATIONAL_DIGITS = Integer.parseInt(PersonRules.rule("maxNationalPhoneDigits"));
     private static final PhoneNumberUtil NUMBERS = PhoneNumberUtil.getInstance();
     private PhoneNumbers() { }
     public static String normalized(String input) {
@@ -24,12 +25,23 @@ public final class PhoneNumbers {
         if (!PRESENTATION.matcher(value).matches()) return PersonRules.message("phoneCharacters");
         String canonical = normalized(value);
         if (!canonical.startsWith("+")) return PersonRules.message("phonePrefix");
+        if (!canonical.startsWith("+593")) return PersonRules.message("phoneCountry");
+        String national = canonical.substring(4);
+        if (national.startsWith("0")) return PersonRules.message("phoneChangedDigits");
+        if (!national.matches("[0-9]+")) return PersonRules.message("phoneCharacters");
+        if (national.length() > MAX_NATIONAL_DIGITS) return PersonRules.message("phoneTooLong");
+        if (national.startsWith("9") && national.length() != 9) return PersonRules.message("phoneMobileLength");
+        if (national.matches("^[2-7].*") && national.length() != 8) return PersonRules.message("phoneFixedLength");
+        if (!national.matches("^[2-79].*")) return PersonRules.message("phoneStart");
         if (!CANONICAL.matcher(canonical).matches()) return PersonRules.message("phoneInvalid");
         try {
             var number = NUMBERS.parse(canonical,"ZZ");
             if (!NUMBERS.format(number,PhoneNumberUtil.PhoneNumberFormat.E164).equals(canonical))
                 return PersonRules.message("phoneChangedDigits");
-            return NUMBERS.isValidNumber(number) ? null : PersonRules.message("phoneInvalid");
+            var type = NUMBERS.getNumberType(number);
+            return NUMBERS.isValidNumberForRegion(number,"EC")
+                    && (type == PhoneNumberUtil.PhoneNumberType.MOBILE || type == PhoneNumberUtil.PhoneNumberType.FIXED_LINE)
+                    ? null : PersonRules.message("phoneInvalid");
         } catch (NumberParseException failure) { return PersonRules.message("phoneInvalid"); }
     }
 }

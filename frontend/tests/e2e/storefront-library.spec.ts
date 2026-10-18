@@ -1,3 +1,4 @@
+import { fillCheckoutBilling, billingFixturePayload } from "./billing-fixtures";
 import { expect, test, type Page } from "@playwright/test";
 import { orderDetailFixture } from "../../src/test/orders";
 
@@ -126,8 +127,9 @@ for (const mixed of [false, true]) test(`${mixed ? "mixed" : "digital-only"} che
   else { await expect(page.getByRole("tab", { name: "Entrega", exact: true })).toHaveCount(0); expect(api.physicalReads).toEqual([]); }
   await page.getByRole("button", { name: "Transferencia bancaria", exact: true }).click();
   await expect(page.getByText("Banco Guayaquil", { exact: true })).toBeVisible();
+  await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido", exact: true }).click();
   await expect(page).toHaveURL(/\/orders\/700$/);
-  expect(api.checkout).toEqual([{ ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
+  expect(api.checkout).toEqual([{ ...billingFixturePayload, ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
   if (!mixed) { expect(api.physicalReads).toEqual([]); await expect(page.getByRole("region", { name: "Destino confirmado" })).toHaveCount(0); }
 });

@@ -1,3 +1,4 @@
+import { fillCheckoutBilling } from "./billing-fixtures";
 import { expect, test } from "@playwright/test";
 import { verifyRegisteredEmail } from "./shared/verified-registration";
 
@@ -43,16 +44,16 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await page.getByRole("button", { name: "Añadir dirección", exact: true }).click();
   await page.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
-  await page.getByLabel("Ciudad").fill("Quito");
-  await page.getByLabel("Provincia").fill("Pichincha");
-  await page.getByLabel("Teléfono de contacto").fill("0991234567");
+  await page.getByLabel("Ciudad", { exact: true }).fill("Quito");
+  await page.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+  await page.getByLabel("Teléfono de contacto").fill("991234567");
   await page.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(page.locator('[data-purchase="selected-address"]')).toContainText("Av. Amazonas 100");
   await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Tarjeta" }).click();
   await page.getByLabel("Número de tarjeta").fill("4111111111111111");
   await page.getByLabel("Caducidad (MM/AA)").fill("12/30");
   await page.getByLabel("Código de seguridad", { exact: true }).fill("123");
-  await page.getByLabel("Nombre en la tarjeta").fill("Lectora E2E");
+  await page.getByLabel("Nombre en la tarjeta").fill("Lectora Prueba");
   await page.getByRole("button", { name: "Usar esta tarjeta" }).click();
   await expect(page.getByText("Pago aprobado")).toHaveCount(0);
   for (const viewport of [
@@ -63,6 +64,7 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
     await page.screenshot({ path: `/tmp/pliego-checkout-${viewport.name}.png`, fullPage: true });
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   }
+  await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Es momento de celebrar" })).toBeVisible();
   const orderId = /\/orders\/(\d+)$/.exec(page.url())?.[1];
@@ -107,9 +109,9 @@ test("transfer checkout reads configured bank data and confirms the approved pay
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await page.getByRole("button", { name: "Añadir dirección", exact: true }).click();
   await page.getByLabel("Dirección", { exact: true }).fill("Calle Lectura 12");
-  await page.getByLabel("Ciudad").fill("Quito");
-  await page.getByLabel("Provincia").fill("Pichincha");
-  await page.getByLabel("Teléfono de contacto").fill("0991234567");
+  await page.getByLabel("Ciudad", { exact: true }).fill("Quito");
+  await page.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+  await page.getByLabel("Teléfono de contacto").fill("991234567");
   await page.getByRole("button", { name: "Guardar dirección" }).click();
   await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();
   const configured = await (await request.get(`${api}/reference/transfer-details`)).json();
@@ -133,6 +135,7 @@ test("transfer checkout reads configured bank data and confirms the approved pay
   await page.getByRole("button", { name: "Copiar número de cuenta" }).click();
   expect(await page.evaluate(() => navigator.clipboard.readText())).toBe(configured.accountNumber);
   const createdResponse = page.waitForResponse(response => response.url().endsWith("/api/v1/checkout") && response.request().method() === "POST");
+  await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido" }).click();
   const receipt = await (await createdResponse).json();
   expect(receipt.paymentReference).toMatch(/^SIM-/);

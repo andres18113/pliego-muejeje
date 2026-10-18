@@ -178,6 +178,24 @@ class AuthApiIntegrationTest {
     }
 
     @Test
+    void registrationKeepsSafeNavigationContextWithoutChangingPendingVerification() throws Exception {
+        identityGateway.registrationResult = new RegistrationResult(100, 87, "PENDING_VERIFICATION");
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
+                .content(REGISTER_JSON.replace("}", ",\"returnTo\":\"/cart?source=edition#items\"}")))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.state").value("PENDING_VERIFICATION"));
+        org.assertj.core.api.Assertions.assertThat(identityGateway.emailReturnPath).isEqualTo("/cart?source=edition#items");
+    }
+
+    @Test
+    void registrationIgnoresExternalNavigationContextAndStillRequiresVerification() throws Exception {
+        identityGateway.registrationResult = new RegistrationResult(100, 87, "PENDING_VERIFICATION");
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON)
+                .content(REGISTER_JSON.replace("}", ",\"returnTo\":\"https://evil.test/cart\"}")))
+                .andExpect(status().isCreated()).andExpect(jsonPath("$.state").value("PENDING_VERIFICATION"));
+        org.assertj.core.api.Assertions.assertThat(identityGateway.emailReturnPath).isNull();
+    }
+
+    @Test
     void emailActionEndpointsArePublicNeutralAndValidateTokensAndPasswords() throws Exception {
         for(String path:List.of("resend-verification","forgot-password")) {
             String known=mvc.perform(post("/api/v1/auth/"+path).contentType(MediaType.APPLICATION_JSON)
@@ -532,6 +550,7 @@ class AuthApiIntegrationTest {
         private String registeredPhone;
         private String verificationHash;
         private String verificationNonce;
+        private String emailReturnPath;
 
         @Override
         public RegistrationResult register(String email, String passwordHash, String firstNames, String lastNames,
@@ -552,6 +571,12 @@ class AuthApiIntegrationTest {
         @Override
         public boolean requestEmailAction(String email, String purpose, String hash, String nonce, String remoteHash) {
             return false;
+        }
+
+        @Override
+        public void setEmailActionReturnPath(String nonce, String returnPath) {
+            org.junit.jupiter.api.Assertions.assertEquals(verificationNonce, nonce);
+            emailReturnPath = returnPath;
         }
 
         @Override
@@ -627,6 +652,7 @@ class AuthApiIntegrationTest {
             registeredFirstNames = null;
             registeredLastNames = null;
             registeredPhone = null;
+            emailReturnPath = null;
         }
 
         @Override

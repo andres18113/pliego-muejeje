@@ -26,14 +26,14 @@ public class EmailActionController {
  @ApiResponse(responseCode="202",description="Solicitud recibida",content=@Content(schema=@Schema(implementation=AcceptedResponse.class)))
  @ApiResponse(responseCode="400",description="Datos inválidos",content=@Content(schema=@Schema(implementation=ProblemResponse.class)))
  public ResponseEntity<AcceptedResponse> resend(@Valid @RequestBody EmailRequest request,HttpServletRequest servlet) {
-  actions.request(request.email(),"VERIFY_EMAIL",servlet.getRemoteAddr());return accepted();
+  actions.request(request.email(),"VERIFY_EMAIL",servlet.getRemoteAddr(),request.returnTo());return accepted();
  }
  @PostMapping(path="/forgot-password",consumes=MediaType.APPLICATION_JSON_VALUE)
  @Operation(summary="Solicitar recuperación de contraseña",description="Respuesta idéntica para cuentas existentes, desconocidas, bloqueadas o limitadas. Enlace de uso único durante 15 minutos.")
  @ApiResponse(responseCode="202",description="Solicitud recibida",content=@Content(schema=@Schema(implementation=AcceptedResponse.class)))
  @ApiResponse(responseCode="400",description="Datos inválidos",content=@Content(schema=@Schema(implementation=ProblemResponse.class)))
  public ResponseEntity<AcceptedResponse> forgot(@Valid @RequestBody EmailRequest request,HttpServletRequest servlet) {
-  actions.request(request.email(),"RESET_PASSWORD",servlet.getRemoteAddr());return accepted();
+  actions.request(request.email(),"RESET_PASSWORD",servlet.getRemoteAddr(),request.returnTo());return accepted();
  }
  @PostMapping(path="/verify-email",consumes=MediaType.APPLICATION_JSON_VALUE)
  @Operation(summary="Verificar correo",description="Consume un token de uso único que vence a las 24 horas. No inicia sesión automáticamente.")

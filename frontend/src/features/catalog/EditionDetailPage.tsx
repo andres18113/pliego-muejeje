@@ -9,7 +9,7 @@ import { getPublicEdition } from "@/shared/api/catalog";
 import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { authLocation } from "@/features/auth/authLocation";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
-import { BackToCatalogLink, CatalogReturnLink } from "@/shared/ui/BackToCatalogLink";
+import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
 import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 import { useSession } from "@/app/session";
 import { useFavoriteSessionFailure, useFavoriteStatuses } from "@/features/favorites/favoriteStatus";
@@ -240,7 +240,7 @@ export function EditionDetailPage() {
       <>
         <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} aria-busy="true" data-media={loadingMedia ?? undefined} data-loading>
           <nav className={classes.trail} aria-label="Ruta de navegación">
-            <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
+            <Link to="/catalog">Catálogo</Link>
             {coverPreview ? <span aria-current="page">{coverPreview.title}</span> : <span aria-hidden="true"><i className={classes.bone} data-bone="trail" /></span>}
           </nav>
           <div className={classes.edition}>
@@ -438,7 +438,7 @@ export function EditionDetailPage() {
     <>
       <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} data-media={media}>
         <nav className={classes.trail} aria-label="Ruta de navegación">
-          <CatalogReturnLink to={returnHref} historyBack={returnWithHistory}>Catálogo</CatalogReturnLink>
+          <Link to="/catalog">Catálogo</Link>
           <span aria-current="page">{title}</span>
         </nav>
 
@@ -516,7 +516,7 @@ export function EditionDetailPage() {
 }
 
 const mediaCue: Record<CatalogMedia, { symbol: MaterialSymbolName; label: string } | null> = {
-  physical: null,
+  physical: { symbol: "book_2", label: "Libro" },
   ebook: { symbol: "mobile", label: "eBook" },
   audiobook: { symbol: "headphones", label: "Audiolibro" },
 };

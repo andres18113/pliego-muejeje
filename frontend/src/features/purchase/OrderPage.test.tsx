@@ -1,9 +1,11 @@
-import { screen, waitFor, within } from "@testing-library/react";
+import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { json, problem, renderPurchaseRoute, stubApi } from "@/test/purchase";
+import { json, problem, renderPurchaseRoute, stubApi as stubPurchaseApi } from "@/test/purchase";
 import { pickupOrder } from "@/test/pickup";
 import { OrderPage } from "./OrderPage";
+
+const stubApi = (routes: Parameters<typeof stubPurchaseApi>[0]) => stubPurchaseApi({"GET /api/v1/orders/700/invoice": () => new Response(null, {status:404}), ...routes});
 
 const routes = [{ path: "/orders/:orderId", element: <OrderPage /> }];
 
@@ -56,6 +58,52 @@ describe("OrderPage", () => {
     availableActions: { cancel: false, changeShippingAddress: false, ...actions },
   });
 
+  it("discards an open cancellation dialog across A to B to A POP without cancelling B", async () => {
+    const api = stubApi({
+      "GET /api/v1/orders/700": () => json(order()),
+      "GET /api/v1/orders/701": () => json(order({ orderId: "701" })),
+      "GET /api/v1/orders/701/invoice": () => new Response(null, { status: 404 }),
+    });
+    const { router } = renderPurchaseRoute(routes, "/orders/700");
+    await userEvent.click(await screen.findByRole("button", { name: "Cancelar pedido" }));
+    await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    await act(async () => { await router.navigate("/orders/701"); });
+    await screen.findByText("701", { selector: "dd" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    expect(screen.queryByRole("button", { name: "Confirmar cancelación" })).toBeNull();
+    await act(async () => { await router.navigate(-1); });
+    await screen.findByText("700", { selector: "dd" });
+    expect(screen.queryByRole("dialog")).toBeNull();
+    expect(api.calls.filter(call => call.method === "POST")).toHaveLength(0);
+  });
+
+  it("does not carry an in-flight cancellation or its late response into a new A view after A to B to A", async () => {
+    let finish: (response: Response) => void = () => {};
+    const api = stubApi({
+      "GET /api/v1/orders/700": () => json(order()),
+      "GET /api/v1/orders/701": () => json(order({ orderId: "701" })),
+      "GET /api/v1/orders/701/invoice": () => new Response(null, { status: 404 }),
+      "POST /api/v1/orders/700/cancel": () => new Promise<Response>(resolve => { finish = resolve; }),
+    });
+    const { router } = renderPurchaseRoute(routes, "/orders/700");
+    await userEvent.click(await screen.findByRole("button", { name: "Cancelar pedido" }));
+    await userEvent.click(await screen.findByRole("button", { name: "Confirmar cancelación" }));
+    await waitFor(() => expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(1));
+    await act(async () => { await router.navigate("/orders/701"); });
+    await screen.findByText("701", { selector: "dd" });
+    await act(async () => { await router.navigate(-1); });
+    await screen.findByText("700", { selector: "dd" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
+    const reads = api.count("GET", "/api/v1/orders/700");
+    await act(async () => {
+      finish(json({ orderId: "700", previousState: "CONFIRMED", orderState: "CANCELLED", paymentState: "REFUNDED", restoredUnits: 2 }));
+    });
+    expect(screen.queryByText("El pago fue reembolsado.")).toBeNull();
+    expect(api.count("GET", "/api/v1/orders/700")).toBe(reads);
+    expect(api.count("POST", "/api/v1/orders/701/cancel")).toBe(0);
+    expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(1);
+  });
+
   it("presents a digital purchase inside its window as confirmed and cancelable, as the server says", async () => {
     stubApi({ "GET /api/v1/orders/700": () => json(digitalOrder({ cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: "2026-10-06T15:06:00Z", libraryAccessState: "OWNERSHIP_ONLY" })) });
     renderPurchaseRoute(routes, "/orders/700");
@@ -95,7 +143,7 @@ describe("OrderPage", () => {
     expect(await screen.findByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
     expect(await screen.findByRole("heading", { level: 2, name: "¡Gracias por tu compra!" }, { timeout: 4000 })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
-    expect(api.count("GET", "/api/v1/orders/700")).toBe(2);
+    expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/orders/700").length).toBe(2);
   });
 
   it("re-reads at once when the reported deadline has already passed, and never loops if the server still reports the window", async () => {
@@ -103,9 +151,9 @@ describe("OrderPage", () => {
     const api = stubApi({ "GET /api/v1/orders/700": () => json(digitalOrder({ cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: past })) });
     renderPurchaseRoute(routes, "/orders/700");
     await screen.findByRole("heading", { level: 2, name: "Compra confirmada" });
-    await waitFor(() => expect(api.count("GET", "/api/v1/orders/700")).toBe(2));
+    await waitFor(() => expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/orders/700").length).toBe(2));
     await new Promise((resolve) => setTimeout(resolve, 1500));
-    expect(api.count("GET", "/api/v1/orders/700")).toBe(2);
+    expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/orders/700").length).toBe(2);
     // The server still offers cancellation, so the action stays: the client clock never removes it.
     expect(screen.getByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
   });
@@ -320,7 +368,7 @@ describe("OrderPage", () => {
     await userEvent.click(await screen.findByRole("button", { name: "Cancelar pedido" }));
     await userEvent.click(await screen.findByRole("button", { name: "Confirmar cancelación" }));
     expect(await screen.findByText(/La cancelación no aparece en el estado actual/)).toBeInTheDocument();
-    expect(api.count("GET", "/api/v1/orders/700")).toBeGreaterThan(1);
+    expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/orders/700").length).toBeGreaterThan(1);
     expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(1);
   });
 });

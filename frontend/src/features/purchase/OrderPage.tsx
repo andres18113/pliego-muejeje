@@ -27,6 +27,7 @@ import { TransferFacts } from "./TransferFacts";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import classes from "./orderPage.module.css";
+import { InvoiceDocuments } from "./InvoiceDocuments";
 import { PickupDetails } from "./PickupDetails";
 
 export function OrderPage() {
@@ -41,7 +42,7 @@ export function OrderPage() {
   return (
     <PurchasePage title={`Pedido ${orderId}`}>
       <CustomerOnly intent={`/orders/${orderId}`} task="ver tu pedido">
-        <OrderContent orderId={orderId} returnTo={returnTo} purchased={purchased} />
+        <OrderContent key={orderId} orderId={orderId} returnTo={returnTo} purchased={purchased} />
       </CustomerOnly>
     </PurchasePage>
   );
@@ -203,6 +204,7 @@ function OrderView({ order, readCurrent, confirming, setConfirming, cancellation
         </section>
         <aside className={classes.aside} aria-label="Pago y documentos">
           <PaymentPanel order={order} />
+          <InvoiceDocuments orderId={order.orderId} />
           {(order.invoice || order.creditNotes.length > 0) && <DocumentsPanel invoice={order.invoice} creditNotes={order.creditNotes} />}
         </aside>
       </div>
@@ -448,7 +450,7 @@ function InvoiceFacts({ invoice }: { invoice: OrderInvoice }) {
   return <div className={classes.document} data-kind="invoice">
     <h3>Factura comercial N.° {invoice.documentNumber}</h3>
     <dl>
-      <div><dt>Emitida</dt><dd><time dateTime={invoice.issuedAt}>{orderDateLabel(invoice.issuedAt)}</time></dd></div>
+      <div><dt>Emitida</dt><dd>{invoice.issuedAt ? <time dateTime={invoice.issuedAt}>{orderDateLabel(invoice.issuedAt)}</time> : "Pendiente de emisión"}</dd></div>
       <div><dt>A nombre de</dt><dd>{invoice.buyerName}<span>{identityTypeLabel(invoice.identityType)} {invoice.identityNumber}</span></dd></div>
       {billing && <div><dt>Facturación</dt><dd>{billing.line1}{billing.line2 && <>, {billing.line2}</>}<span>{[billing.city, billing.province].join(", ")}</span></dd></div>}
       <div><dt>Impuestos</dt><dd>{notAssessed ? "No calculados" : formatUsd(invoice.taxTotal)}</dd></div>
