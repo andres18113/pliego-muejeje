@@ -56,4 +56,6 @@ Backend configuration/startup is documented in [backend/README.md](backend/READM
 - [Database API contract](database-api-contract-v1.0.md)
 - [Approved Flyway archive](pliego-flyway-v1.0.zip)
 
+These documents are English translations of the approved baselines. Contract identifiers and Spanish user-facing messages remain unchanged. Only Markdown documentation inside the Flyway archive is translated; SQL migrations, test scripts, and the static validator retain their original bytes.
+
 Flyway migrations V001–V019 match the approved archive byte-for-byte. V020 and V021 are additive corrections that preserve the approved public contract and behavior.

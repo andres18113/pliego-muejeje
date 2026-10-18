@@ -1,60 +1,60 @@
 # PLIEGO — REST API Contract v1.0
 
-**Documento:** RAC-PLIEGO-001  
-**Versión:** 1.0  
-**Estado:** BASELINE APROBADA  
-**Fecha:** 2026-09-23  
-**Proyecto:** PLIEGO  
-**Tipo de documento:** Contrato REST / HTTP y seguridad de aplicación  
+**Document:** RAC-PLIEGO-001  
+**Version:** 1.0  
+**Status:** APPROVED BASELINE  
+**Date:** 2026-09-23  
+**Project:** PLIEGO  
+**Document type:** REST / HTTP and application security contract  
 **Base path:** `/api/v1`  
 **Backend:** Java 25 + Spring Boot + Spring Security  
-**Persistencia:** PostgreSQL 18 mediante Database API  
-**Frontend:** Fuera del alcance de implementación; este contrato constituye su interfaz futura.
+**Persistence:** PostgreSQL 18 through Database API  
+**Frontend:** Outside implementation scope; this contract constitutes its future interface.
 
-**Documentos fuente:**
+**Source documents:**
 - `docs/requirements/use-case-baseline-v1.0.md` — v1.1 BASELINE
 - `docs/domain/logical-erd-v1.0.md` — v1.1 BASELINE
 - `docs/domain/data-dictionary-v1.0.md` — v1.1 BASELINE
 - `docs/architecture/database-api-contract-v1.0.md` — v1.1 BASELINE
 - `docs/database/physical-model-postgresql-v1.0.md` — v1.0 BASELINE
 - `docs/database/db-routines-catalog-v1.0.md` — v1.0 BASELINE
-- Flyway Baseline v1.0 — BASELINE APROBADA, PostgreSQL 18 smoke PASS
+- Flyway Baseline v1.0 — APPROVED BASELINE, PostgreSQL 18 smoke PASS
 
 ---
 
-# 1. Propósito
+# 1. Purpose
 
-Este documento define la interfaz HTTP pública de PLIEGO v1.
+This document defines PLIEGO v1's public HTTP interface.
 
-Su objetivo es traducir las operaciones aprobadas de la Database API a un contrato REST estable sin crear una segunda capa de lógica de negocio.
+Its objective is to translate approved Database API operations into a stable REST contract without creating a second business-logic layer.
 
-El contrato fija:
+The contract specifies:
 
-- rutas;
-- métodos HTTP;
-- autenticación;
-- autorización;
+- routes;
+- HTTP methods;
+- authentication;
+- authorization;
 - JWT;
 - request DTOs;
 - response DTOs;
-- representación JSON;
-- paginación;
-- filtros;
-- ordenamiento;
-- códigos HTTP;
+- JSON representation;
+- pagination;
+- filters;
+- sorting;
+- HTTP codes;
 - Problem Details;
-- traducción de SQLSTATE;
-- reglas de retry y recovery;
-- trazabilidad endpoint → caso de uso → rutina PostgreSQL;
-- requisitos OpenAPI.
+- SQLSTATE translation;
+- retry and recovery rules;
+- endpoint → use case → PostgreSQL routine traceability;
+- OpenAPI requirements.
 
-El contrato no autoriza a Controllers o Services a reimplementar reglas ya pertenecientes a PostgreSQL.
+The contract does not authorize Controllers or Services to reimplement rules already owned by PostgreSQL.
 
 ---
 
-# 2. Principio de autoridad
+# 2. Authority principle
 
-La dirección arquitectónica obligatoria es:
+The mandatory architectural direction is:
 
 ```text
 HTTP Request
@@ -63,65 +63,65 @@ Controller
     ↓
 Application Service
     ↓
-Gateway JDBC
+JDBC Gateway
     ↓
-Database API PostgreSQL
+PostgreSQL Database API
     ↓
 SP / Function / Constraint / Trigger
 ```
 
-## 2.1 Responsabilidad de Spring Boot
+## 2.1 Spring Boot responsibility
 
-Spring Boot es responsable de:
+Spring Boot is responsible for:
 
 - HTTP;
-- serialización/deserialización JSON;
-- autenticación JWT;
-- autorización preventiva por rol;
-- validación sintáctica del request;
-- hash/verificación de contraseñas;
-- demarcación transaccional;
-- invocación JDBC de una rutina PostgreSQL;
-- traducción SQLSTATE → error de aplicación → HTTP;
+- JSON serialization/deserialization;
+- JWT authentication;
+- preventive role-based authorization;
+- syntactic request validation;
+- password hashing/verification;
+- transaction demarcation;
+- JDBC invocation of a PostgreSQL routine;
+- SQLSTATE → application error → HTTP translation;
 - OpenAPI;
-- logging técnico;
+- technical logging;
 - correlation/trace ID.
 
-## 2.2 Responsabilidad de PostgreSQL
+## 2.2 PostgreSQL responsibility
 
-PostgreSQL sigue siendo autoridad sobre:
+PostgreSQL remains the authority over:
 
-- unicidad;
+- uniqueness;
 - ownership;
-- estado real del actor;
-- asociaciones;
-- inventario;
-- carrito;
+- the actor's actual status;
+- associations;
+- inventory;
+- cart;
 - checkout;
 - snapshots;
-- totales;
-- transiciones;
-- pago simulado;
-- cancelación;
-- historial;
-- reglas multi-entidad.
+- totals;
+- transitions;
+- simulated payment;
+- cancellation;
+- history;
+- multi-entity rules.
 
-## 2.3 Regla de una llamada
+## 2.3 One-call rule
 
-Un comando REST de negocio debe producir normalmente:
+A business REST command must normally produce:
 
 ```text
 1 endpoint
 → 1 Application Service
 → 1 Gateway
-→ 1 Procedure PostgreSQL pública
+→ 1 public PostgreSQL Procedure
 ```
 
-No se permite orquestar varias operaciones de negocio desde Java para sustituir una Procedure aprobada.
+Orchestrating several business operations from Java to replace an approved Procedure is not permitted.
 
 ---
 
-# 3. Convenciones HTTP generales
+# 3. General HTTP conventions
 
 ## 3.1 Base path
 
@@ -129,37 +129,37 @@ No se permite orquestar varias operaciones de negocio desde Java para sustituir 
 /api/v1
 ```
 
-No se incluirá versión en header para v1.
+No version header shall be included for v1.
 
 ## 3.2 JSON
 
-Requests y responses normales:
+Normal requests and responses:
 
 ```http
 Content-Type: application/json
 ```
 
-Errores:
+Errors:
 
 ```http
 Content-Type: application/problem+json
 ```
 
-Codificación:
+Encoding:
 
 ```text
 UTF-8
 ```
 
-## 3.3 Naming JSON
+## 3.3 JSON naming
 
-Todos los atributos JSON utilizan:
+All JSON attributes use:
 
 ```text
 lowerCamelCase
 ```
 
-Ejemplo:
+Example:
 
 ```json
 {
@@ -169,17 +169,17 @@ Ejemplo:
 }
 ```
 
-Los nombres SQL `snake_case` no se exponen.
+SQL `snake_case` names are not exposed.
 
 ---
 
-# 4. Representación de tipos
+# 4. Type representation
 
-## 4.1 Identificadores
+## 4.1 Identifiers
 
-PostgreSQL utiliza `BIGINT`.
+PostgreSQL uses `BIGINT`.
 
-REST los serializa como **strings decimales positivos**:
+REST serializes them as **positive decimal strings**:
 
 ```json
 {
@@ -187,33 +187,33 @@ REST los serializa como **strings decimales positivos**:
 }
 ```
 
-Nunca como JSON `number`.
+Never as JSON `number`.
 
-Razón: un futuro cliente JavaScript/TypeScript no debe perder precisión por el límite de enteros seguros de IEEE-754.
+Reason: a future JavaScript/TypeScript client must not lose precision because of the IEEE-754 safe-integer limit.
 
 ### Path parameters
 
-Los IDs de ruta utilizan texto decimal:
+Route IDs use decimal text:
 
 ```text
 /api/v1/orders/123
 ```
 
-y deben cumplir:
+and must match:
 
 ```text
 ^[1-9][0-9]*$
 ```
 
-Spring convierte de forma segura a `Long`.
+Spring converts safely to `Long`.
 
 ---
 
-## 4.2 Dinero
+## 4.2 Money
 
-Todos los montos se representan externamente como **strings decimales con exactamente dos posiciones**.
+All amounts are represented externally as **decimal strings with exactly two decimal places**.
 
-Ejemplo:
+Example:
 
 ```json
 {
@@ -222,13 +222,13 @@ Ejemplo:
 }
 ```
 
-Java usa:
+Java uses:
 
 ```text
 java.math.BigDecimal
 ```
 
-No se usa:
+The following are not used:
 
 ```text
 float
@@ -237,15 +237,15 @@ Float
 Double
 ```
 
-Esto protege precisión al interoperar con JavaScript y con `NUMERIC(30,2)`.
+This protects precision when interoperating with JavaScript and `NUMERIC(30,2)`.
 
 ---
 
-## 4.3 Cantidades
+## 4.3 Quantities
 
-Cantidades y stock se exponen como JSON integer cuando pertenecen al rango de `INTEGER`.
+Quantities and stock are exposed as JSON integers when within the `INTEGER` range.
 
-Ejemplo:
+Example:
 
 ```json
 {
@@ -256,39 +256,39 @@ Ejemplo:
 
 ---
 
-## 4.4 Fechas
+## 4.4 Dates
 
-Fecha civil:
+Civil date:
 
 ```text
 YYYY-MM-DD
 ```
 
-Ejemplo:
+Example:
 
 ```json
 "publicationDate": "1949-06-08"
 ```
 
-Instantes:
+Instants:
 
 ```text
 RFC 3339 / ISO-8601 UTC
 ```
 
-Ejemplo:
+Example:
 
 ```json
 "createdAt": "2026-09-23T19:15:23.481Z"
 ```
 
-Responses usan UTC.
+Responses use UTC.
 
 ---
 
-## 4.5 Booleanos
+## 4.5 Booleans
 
-JSON boolean nativo:
+Native JSON boolean:
 
 ```json
 {
@@ -300,9 +300,9 @@ JSON boolean nativo:
 
 ## 4.6 Null
 
-Un valor opcional ausente se serializa como `null` cuando el atributo forma parte estable del DTO.
+An absent optional value is serialized as `null` when the attribute is a stable part of the DTO.
 
-Ejemplo:
+Example:
 
 ```json
 {
@@ -310,17 +310,17 @@ Ejemplo:
 }
 ```
 
-En requests `PUT`, la omisión de un atributo opcional y `null` tienen semántica equivalente:
+In `PUT` requests, omitting an optional attribute and `null` have equivalent semantics:
 
 ```text
-establecer ausencia
+set absence
 ```
 
-porque las Procedures de actualización son de reemplazo completo del conjunto mutable.
+because update Procedures fully replace the mutable set.
 
 ---
 
-# 5. Paginación
+# 5. Pagination
 
 ## 5.1 Query parameters
 
@@ -336,7 +336,7 @@ page = 0
 pageSize = 20
 ```
 
-Restricciones:
+Constraints:
 
 ```text
 page >= 0
@@ -354,19 +354,19 @@ page >= 0
 }
 ```
 
-`totalCount` se serializa como string porque PostgreSQL devuelve `BIGINT`.
+`totalCount` is serialized as a string because PostgreSQL returns `BIGINT`.
 
-No se incluye `totalPages`; el consumidor puede derivarlo.
+`totalPages` is not included; the consumer can derive it.
 
 ## 5.3 Empty result
 
-Un conjunto vacío es éxito:
+An empty set is successful:
 
 ```http
 200 OK
 ```
 
-No:
+Not:
 
 ```http
 404 Not Found
@@ -374,13 +374,13 @@ No:
 
 ---
 
-# 6. Ordenamiento
+# 6. Sorting
 
-El consumidor solo envía códigos cerrados.
+The consumer sends only closed-set codes.
 
-No se aceptan nombres arbitrarios de columnas.
+Arbitrary column names are not accepted.
 
-## Catálogo
+## Catalog
 
 ```text
 TITLE_ASC
@@ -394,95 +394,95 @@ Default:
 TITLE_ASC
 ```
 
-Cualquier otro valor:
+Any other value:
 
 ```text
 400 INVALID_ARGUMENT
 ```
 
-Las búsquedas administrativas utilizan orden fijo definido por Database API y no exponen `sort` en v1.
+Administrative searches use the fixed order defined by Database API and do not expose `sort` in v1.
 
 ---
 
-# 7. Seguridad y autenticación
+# 7. Security and authentication
 
-## 7.1 Modelo
+## 7.1 Model
 
-PLIEGO v1 utiliza autenticación:
+PLIEGO v1 uses authentication:
 
 ```text
 stateless
 Bearer JWT
-sin sesión persistida
-sin refresh token
+no persisted session
+no refresh token
 ```
 
-No existe tabla de sesiones.
+There is no session table.
 
-No existe endpoint de logout de servidor.
+There is no server logout endpoint.
 
-Logout significa eliminar el access token en el cliente.
+Logout means deleting the access token on the client.
 
-## 7.2 Estándares
+## 7.2 Standards
 
-El token utiliza JWT firmado y se transmite exclusivamente mediante:
+The token uses a signed JWT and is transmitted exclusively through:
 
 ```http
 Authorization: Bearer <token>
 ```
 
-No se acepta token en:
+Tokens are not accepted in:
 
 - query string;
 - URL;
 - request body;
-- cookie de autenticación de PLIEGO v1.
+- PLIEGO v1 authentication cookie.
 
 ## 7.3 TLS
 
-Fuera de desarrollo local, los Bearer tokens solo deben transmitirse por HTTPS.
+Outside local development, Bearer tokens must be transmitted only over HTTPS.
 
 ---
 
 # 8. JWT v1
 
-## 8.1 Algoritmo
+## 8.1 Algorithm
 
-PLIEGO v1 utiliza:
+PLIEGO v1 uses:
 
 ```text
 HS256
 ```
 
-Spring Security debe configurar una allowlist explícita:
+Spring Security must configure an explicit allowlist:
 
 ```text
 alg = HS256
 ```
 
-y rechazar:
+and reject:
 
 - `none`;
-- cualquier algoritmo distinto;
-- firmas inválidas.
+- any other algorithm;
+- invalid signatures.
 
 ## 8.2 Secret
 
-Variable de entorno:
+Environment variable:
 
 ```text
 PLIEGO_JWT_SECRET
 ```
 
-Debe contener al menos:
+Must contain at least:
 
 ```text
-32 bytes criptográficamente aleatorios
+32 cryptographically random bytes
 ```
 
-Nunca se almacena en Git.
+Never stored in Git.
 
-No debe ser una contraseña humana.
+Must not be a human password.
 
 ## 8.3 Claims
 
@@ -514,7 +514,7 @@ pliego-api
 
 ### `sub`
 
-`UsuarioId` serializado como decimal string.
+`UsuarioId` serialized as a decimal string.
 
 ### `role`
 
@@ -533,51 +533,51 @@ Expiration.
 
 ### `jti`
 
-UUID aleatorio técnico.
+Technical random UUID.
 
-No se persiste.
+Not persisted.
 
-## 8.4 Vigencia
+## 8.4 Validity
 
 TTL v1:
 
 ```text
-30 minutos
+30 minutes
 ```
 
-No existe refresh token.
+There is no refresh token.
 
-Al expirar, el usuario se autentica nuevamente.
+On expiration, the user authenticates again.
 
-## 8.5 Validación
+## 8.5 Validation
 
-Spring Security debe validar:
+Spring Security must validate:
 
-- firma;
-- algoritmo exacto;
+- signature;
+- exact algorithm;
 - `iss`;
 - `aud`;
 - `exp`;
 - `sub`;
-- role reconocido.
+- recognized role.
 
-El role del JWT sirve para autorización preventiva.
+The JWT role serves preventive authorization.
 
-PostgreSQL vuelve a validar el rol/estado real mediante `fn_assert_actor`.
+PostgreSQL revalidates the actual role/status through `fn_assert_actor`.
 
-Por tanto, alterar un claim firmado no permite saltarse las reglas de BD.
+Therefore, altering a signed claim does not allow database rules to be bypassed.
 
-## 8.6 Usuario bloqueado
+## 8.6 Blocked user
 
-Un JWT firmado aún no expirado no habilita a un usuario que posteriormente pasó a `BLOCKED`.
+A signed JWT that has not yet expired does not enable a user who subsequently became `BLOCKED`.
 
-La Database API responde:
+The Database API responds:
 
 ```text
 P1003 ACTOR_INACTIVE
 ```
 
-y REST lo traduce a:
+and REST translates it to:
 
 ```http
 401 Unauthorized
@@ -585,50 +585,50 @@ y REST lo traduce a:
 
 ---
 
-# 9. Contraseñas
+# 9. Passwords
 
 ## 9.1 Hash
 
-Spring Security utiliza:
+Spring Security uses:
 
 ```text
 BCrypt
 strength = 12
 ```
 
-PostgreSQL recibe únicamente:
+PostgreSQL receives only:
 
 ```text
 passwordHash
 ```
 
-Nunca recibe la contraseña original.
+It never receives the original password.
 
-## 9.2 Política v1
+## 9.2 v1 policy
 
-Password de registro:
+Registration password:
 
 ```text
-mínimo 8 caracteres
-máximo 72 bytes UTF-8
+minimum 8 characters
+maximum 72 UTF-8 bytes
 ```
 
-No se exige artificialmente:
+The following are not artificially imposed:
 
-- mayúscula;
-- símbolo;
-- número;
+- uppercase letter;
+- symbol;
+- number;
 
-como requisito separado.
+as separate requirements.
 
-No se permiten strings vacíos.
+Empty strings are not permitted.
 
-## 9.3 Fuera de alcance
+## 9.3 Out of scope
 
-PLIEGO v1 no incorpora:
+PLIEGO v1 does not include:
 
-- cambio de contraseña;
-- recuperación de contraseña;
+- password change;
+- password recovery;
 - MFA;
 - email verification.
 
@@ -636,56 +636,56 @@ PLIEGO v1 no incorpora:
 
 # 10. Roles
 
-## Público
+## Public
 
-No requiere token:
+No token required:
 
-- registro;
+- registration;
 - login;
-- catálogo;
-- detalle público de edición.
+- catalog;
+- public edition details.
 
 ## CUSTOMER
 
-Requiere:
+Requires:
 
 ```text
 JWT role=CUSTOMER
 ```
 
-para:
+for:
 
-- perfil;
-- direcciones;
-- carrito;
+- profile;
+- addresses;
+- cart;
 - checkout;
-- pedidos propios;
-- cancelación propia.
+- own orders;
+- own cancellation.
 
 ## ADMIN
 
-Requiere:
+Requires:
 
 ```text
 JWT role=ADMIN
 ```
 
-para:
+for:
 
-- usuarios;
-- catálogo administrativo;
-- inventario;
-- pedidos administrativos.
+- users;
+- administrative catalog;
+- inventory;
+- administrative orders.
 
-Spring aplica autorización preventiva y PostgreSQL la repite como autoridad.
+Spring applies preventive authorization, and PostgreSQL repeats it as the authority.
 
 ---
 
-# 11. Registro
+# 11. Registration
 
 ## POST `/api/v1/auth/register`
 
-**Auth:** público  
+**Auth:** public  
 **CU:** CU-AUTH-01  
 **DB:** `sp_customer_register`
 
@@ -701,14 +701,14 @@ Spring aplica autorización preventiva y PostgreSQL la repite como autoridad.
 }
 ```
 
-`phone` opcional.
+`phone` is optional.
 
 ### Spring
 
-1. valida estructura;
-2. valida policy password;
-3. genera BCrypt hash;
-4. llama una vez a `sp_customer_register`.
+1. validates structure;
+2. validates password policy;
+3. generates BCrypt hash;
+4. calls `sp_customer_register` once.
 
 ### Response
 
@@ -726,10 +726,10 @@ Spring aplica autorización preventiva y PostgreSQL la repite como autoridad.
 
 ### Errors
 
-- `400` request inválido;
+- `400` invalid request;
 - `409 P1101 EMAIL_ALREADY_EXISTS`.
 
-No inicia sesión automáticamente.
+Does not log in automatically.
 
 ---
 
@@ -737,7 +737,7 @@ No inicia sesión automáticamente.
 
 ## POST `/api/v1/auth/login`
 
-**Auth:** público  
+**Auth:** public  
 **CU:** CU-AUTH-02  
 **DB:** `fn_user_auth_data`
 
@@ -750,13 +750,13 @@ No inicia sesión automáticamente.
 }
 ```
 
-### Flujo
+### Flow
 
-1. Spring llama `fn_user_auth_data(email)`.
-2. Si no existe → auth inválida.
-3. Si state != ACTIVE → auth inválida.
-4. Spring verifica BCrypt.
-5. Genera JWT.
+1. Spring calls `fn_user_auth_data(email)`.
+2. If nonexistent → invalid auth.
+3. If state != ACTIVE → invalid auth.
+4. Spring verifies BCrypt.
+5. Generates JWT.
 
 ### Response
 
@@ -779,7 +779,7 @@ No inicia sesión automáticamente.
 
 ### Error
 
-Usuario inexistente, blocked o password incorrecto producen el mismo error externo:
+Nonexistent user, blocked user, or incorrect password produces the same external error:
 
 ```http
 401 Unauthorized
@@ -789,11 +789,11 @@ Usuario inexistente, blocked o password incorrecto producen el mismo error exter
 AUTH_INVALID_CREDENTIALS
 ```
 
-No se revela cuál condición falló.
+The failed condition is not revealed.
 
 ---
 
-# 13. Perfil CUSTOMER
+# 13. CUSTOMER profile
 
 ## GET `/api/v1/me`
 
@@ -820,7 +820,7 @@ No se revela cuál condición falló.
 **Auth:** CUSTOMER  
 **DB:** `sp_customer_update`
 
-PUT representa reemplazo completo de los atributos mutables.
+PUT represents full replacement of mutable attributes.
 
 ### Request
 
@@ -838,11 +838,11 @@ PUT representa reemplazo completo de los atributos mutables.
 204 No Content
 ```
 
-Email no puede modificarse.
+Email cannot be modified.
 
 ---
 
-# 14. Direcciones
+# 14. Addresses
 
 ## GET `/api/v1/me/addresses`
 
@@ -918,7 +918,7 @@ Response:
 **Auth:** CUSTOMER  
 **DB:** `sp_address_update`
 
-Mismo conjunto de dirección excepto `makePrimary`.
+Same address attribute set except `makePrimary`.
 
 ```http
 204 No Content
@@ -935,7 +935,7 @@ Mismo conjunto de dirección excepto `makePrimary`.
 204 No Content
 ```
 
-Segundo DELETE puede producir:
+A second DELETE may produce:
 
 ```http
 404 ADDRESS_NOT_FOUND
@@ -948,7 +948,7 @@ Segundo DELETE puede producir:
 **Auth:** CUSTOMER  
 **DB:** `sp_address_set_primary`
 
-Idempotente.
+Idempotent.
 
 ```http
 204 No Content
@@ -956,11 +956,11 @@ Idempotente.
 
 ---
 
-# 15. Catálogo público
+# 15. Public catalog
 
 ## GET `/api/v1/catalog/editions`
 
-**Auth:** público  
+**Auth:** public  
 **DB:** `fn_catalog_search`
 
 ### Query parameters
@@ -979,21 +979,21 @@ page=0
 pageSize=20
 ```
 
-### Ejemplo
+### Example
 
 ```text
 GET /api/v1/catalog/editions?category=literatura&language=es&page=0&pageSize=20
 ```
 
-### Categoría inexistente
+### Nonexistent category
 
-Slug sintácticamente válido pero desconocido:
+Syntactically valid but unknown slug:
 
 ```http
 200 OK
 ```
 
-con página vacía.
+with an empty page.
 
 ### Item
 
@@ -1023,12 +1023,12 @@ con página vacía.
 
 ## GET `/api/v1/catalog/editions/{editionId}`
 
-**Auth:** público  
+**Auth:** public  
 **DB:** `fn_edition_detail`
 
 ### Response
 
-Incluye:
+Includes:
 
 ```json
 {
@@ -1071,17 +1071,17 @@ Incluye:
 }
 ```
 
-Edición no publicable/inexistente:
+Non-publishable/nonexistent Edición:
 
 ```http
 404 Not Found
 ```
 
-El Controller transforma cero filas de la Function en 404.
+The Controller converts zero rows from the Function to 404.
 
 ---
 
-# 16. Administración de Clientes
+# 16. Customer administration
 
 ## GET `/api/v1/admin/customers`
 
@@ -1123,7 +1123,7 @@ ACTIVE
 BLOCKED
 ```
 
-Same-state es idempotente.
+Same-state is idempotent.
 
 Response:
 
@@ -1133,7 +1133,7 @@ Response:
 
 ---
 
-# 17. Administración de Autores
+# 17. Author administration
 
 ## GET `/api/v1/admin/authors`
 
@@ -1193,7 +1193,7 @@ Request:
 }
 ```
 
-Same-state idempotente.
+Same-state idempotent.
 
 ```http
 204 No Content
@@ -1201,7 +1201,7 @@ Same-state idempotente.
 
 ---
 
-# 18. Administración de Editoriales
+# 18. Publisher administration
 
 ## GET `/api/v1/admin/publishers`
 
@@ -1252,7 +1252,7 @@ Status:
 
 ---
 
-# 19. Administración de Categorías
+# 19. Category administration
 
 ## GET `/api/v1/admin/categories`
 
@@ -1289,7 +1289,7 @@ Response:
 
 → `sp_category_update`
 
-Request de reemplazo:
+Replacement request:
 
 ```json
 {
@@ -1314,7 +1314,7 @@ Request de reemplazo:
 
 ---
 
-# 20. Administración de Libros
+# 20. Book administration
 
 ## GET `/api/v1/admin/books`
 
@@ -1373,9 +1373,9 @@ Response:
 
 → `sp_book_update`
 
-Request completo con el mismo shape de create.
+Complete request with the same shape as create.
 
-`authors` y `categoryIds` reemplazan completamente asociaciones actuales.
+`authors` and `categoryIds` fully replace current associations.
 
 ```http
 204 No Content
@@ -1399,7 +1399,7 @@ Request completo con el mismo shape de create.
 
 ---
 
-# 21. Administración de Ediciones
+# 21. Edition administration
 
 ## GET `/api/v1/admin/editions`
 
@@ -1459,14 +1459,14 @@ Response:
 
 → `sp_edition_update`
 
-No acepta:
+Does not accept:
 
 ```text
 bookId
 sku
 ```
 
-porque son inmutables.
+because they are immutable.
 
 Request:
 
@@ -1504,9 +1504,9 @@ Response:
 
 ---
 
-# 22. Inventario
+# 22. Inventory
 
-Todos requieren ADMIN.
+All require ADMIN.
 
 ## GET `/api/v1/admin/inventory`
 
@@ -1634,7 +1634,7 @@ Request:
 }
 ```
 
-Same value es idempotente.
+Same value is idempotent.
 
 ```http
 204 No Content
@@ -1642,7 +1642,7 @@ Same value es idempotente.
 
 ---
 
-# 23. Carrito
+# 23. Cart
 
 CUSTOMER.
 
@@ -1650,13 +1650,13 @@ CUSTOMER.
 
 → `fn_cart_get`
 
-Siempre:
+Always:
 
 ```http
 200 OK
 ```
 
-Sin carrito físico:
+Without a physical cart:
 
 ```json
 {
@@ -1667,7 +1667,7 @@ Sin carrito físico:
 }
 ```
 
-Con carrito:
+With a cart:
 
 ```json
 {
@@ -1707,18 +1707,18 @@ Request:
 }
 ```
 
-La operación puede:
+The operation can:
 
-- crear item;
-- incrementar item existente.
+- create an item;
+- increment an existing item.
 
-Por ello retorna:
+It therefore returns:
 
 ```http
 200 OK
 ```
 
-no se intenta distinguir `201`/`200`.
+no attempt is made to distinguish `201`/`200`.
 
 Response:
 
@@ -1777,7 +1777,7 @@ Response:
 **Auth:** CUSTOMER  
 **DB:** `sp_checkout`
 
-### Request v1 académico
+### Academic v1 request
 
 ```json
 {
@@ -1801,17 +1801,17 @@ APPROVED
 REJECTED
 ```
 
-## 24.1 Consideración académica
+## 24.1 Academic consideration
 
-`simulationOutcome` existe exclusivamente porque PLIEGO v1 implementa un pago académico determinista.
+`simulationOutcome` exists exclusively because PLIEGO v1 implements deterministic academic payment.
 
-Un consumidor puede forzar `APPROVED`.
+A consumer can force `APPROVED`.
 
-Por tanto esta interfaz:
+Therefore this interface:
 
-> NO representa autorización financiera real.
+> DOES NOT represent real financial authorization.
 
-Si se incorpora una pasarela real en una versión futura, este parámetro deberá desaparecer del contrato público.
+If a real gateway is incorporated in a future version, this parameter shall disappear from the public contract.
 
 ## 24.2 APPROVED
 
@@ -1834,9 +1834,9 @@ Location: /api/v1/orders/{orderId}
 
 ## 24.3 REJECTED
 
-El rechazo es un **resultado comercial válido**, no un error HTTP.
+Rejection is a **valid commercial outcome**, not an HTTP error.
 
-También:
+Also:
 
 ```http
 201 Created
@@ -1853,11 +1853,11 @@ Location: /api/v1/orders/{orderId}
 }
 ```
 
-No se utiliza `402 Payment Required`.
+`402 Payment Required` is not used.
 
 ---
 
-# 25. Pedidos CUSTOMER
+# 25. CUSTOMER orders
 
 ## GET `/api/v1/orders`
 
@@ -1890,22 +1890,22 @@ Item:
 
 → `fn_customer_order_detail`
 
-Incluye:
+Includes:
 
-- cabecera;
-- snapshots de items;
-- dirección snapshot;
-- pago;
-- historial.
+- header;
+- item snapshots;
+- address snapshot;
+- payment;
+- history.
 
-Pedido ajeno e inexistente:
+Another customer's order and a nonexistent order:
 
 ```http
 404
 P5001 ORDER_NOT_FOUND
 ```
 
-mismo resultado, para no revelar existencia.
+same result, to avoid revealing existence.
 
 ---
 
@@ -1916,7 +1916,7 @@ mismo resultado, para no revelar existencia.
 Request body:
 
 ```text
-vacío
+empty
 ```
 
 Response:
@@ -1935,13 +1935,13 @@ Response:
 }
 ```
 
-No es operación idempotente por respuesta.
+The operation is not idempotent by response.
 
-Después de una cancelación confirmada, repetir produce conflicto.
+After a committed cancellation, repetition produces a conflict.
 
 ---
 
-# 26. Pedidos ADMIN
+# 26. ADMIN orders
 
 ## GET `/api/v1/admin/orders`
 
@@ -1958,7 +1958,7 @@ page
 pageSize
 ```
 
-`dateFrom` / `dateTo` usan RFC3339.
+`dateFrom` / `dateTo` use RFC3339.
 
 ---
 
@@ -1966,7 +1966,7 @@ pageSize
 
 → `fn_admin_order_detail`
 
-Incluye además movimientos de inventario relacionados.
+Also includes related inventory movements.
 
 ---
 
@@ -1974,7 +1974,7 @@ Incluye además movimientos de inventario relacionados.
 
 → `sp_order_change_status`
 
-Se usa `POST`, no `PUT`, porque la transición logística aprobada **no es same-state idempotente**.
+`POST` is used, not `PUT`, because the approved logistics transition **is not same-state idempotent**.
 
 Request:
 
@@ -2006,7 +2006,7 @@ Response:
 }
 ```
 
-`CANCELLED` no se acepta aquí.
+`CANCELLED` is not accepted here.
 
 ---
 
@@ -2014,18 +2014,18 @@ Response:
 
 → `sp_order_cancel`
 
-Mismo response de cancelación.
+Same cancellation response.
 
-ADMIN puede cancelar pedidos permitidos sin ownership.
+ADMIN may cancel eligible orders without ownership.
 
 ---
 
-# 27. Resumen de endpoints
+# 27. Endpoint summary
 
-| Método | Path | Auth | Database API |
+| Method | Path | Auth | Database API |
 |---|---|---|---|
-| POST | `/auth/register` | Público | sp_customer_register |
-| POST | `/auth/login` | Público | fn_user_auth_data |
+| POST | `/auth/register` | Public | sp_customer_register |
+| POST | `/auth/login` | Public | fn_user_auth_data |
 | GET | `/me` | CUSTOMER | fn_customer_profile |
 | PUT | `/me` | CUSTOMER | sp_customer_update |
 | GET | `/me/addresses` | CUSTOMER | fn_address_list |
@@ -2033,8 +2033,8 @@ ADMIN puede cancelar pedidos permitidos sin ownership.
 | PUT | `/me/addresses/{id}` | CUSTOMER | sp_address_update |
 | DELETE | `/me/addresses/{id}` | CUSTOMER | sp_address_delete |
 | PUT | `/me/addresses/{id}/primary` | CUSTOMER | sp_address_set_primary |
-| GET | `/catalog/editions` | Público | fn_catalog_search |
-| GET | `/catalog/editions/{id}` | Público | fn_edition_detail |
+| GET | `/catalog/editions` | Public | fn_catalog_search |
+| GET | `/catalog/editions/{id}` | Public | fn_edition_detail |
 | GET | `/admin/customers` | ADMIN | fn_admin_customer_search |
 | PUT | `/admin/customers/{id}/status` | ADMIN | sp_customer_set_status |
 | GET | `/admin/authors` | ADMIN | fn_admin_author_search |
@@ -2077,19 +2077,19 @@ ADMIN puede cancelar pedidos permitidos sin ownership.
 
 **Total endpoints v1: 50.**
 
-La diferencia respecto de las 49 rutinas públicas se debe a que:
+The difference from the 49 public routines is because:
 
 ```text
 sp_order_cancel
 ```
 
-se expone en un endpoint CUSTOMER y otro ADMIN.
+is exposed through one CUSTOMER endpoint and one ADMIN endpoint.
 
 ---
 
 # 28. Problem Details
 
-PLIEGO utiliza Problem Details compatible con RFC 9457.
+PLIEGO uses RFC 9457-compatible Problem Details.
 
 ## 28.1 Shape
 
@@ -2105,7 +2105,7 @@ PLIEGO utiliza Problem Details compatible con RFC 9457.
 }
 ```
 
-Campos estándar:
+Standard fields:
 
 ```text
 type
@@ -2115,31 +2115,31 @@ detail
 instance
 ```
 
-Extensiones PLIEGO:
+PLIEGO extensions:
 
 ```text
 code
 traceId
 ```
 
-## 28.2 Regla de seguridad
+## 28.2 Security rule
 
-Nunca incluir:
+Never include:
 
 - SQL;
 - constraint name;
 - stack trace;
 - password hash;
-- datos internos no necesarios;
-- detalles de recursos ajenos.
+- unnecessary internal data;
+- details of other users' resources.
 
 ---
 
-# 29. Errores HTTP propios de la capa REST
+# 29. HTTP errors originating in the REST layer
 
-No todos los errores nacen en PostgreSQL.
+Not all errors originate in PostgreSQL.
 
-## 29.1 Request inválido
+## 29.1 Invalid request
 
 ```text
 VALIDATION_ERROR
@@ -2151,9 +2151,9 @@ HTTP:
 400
 ```
 
-Campos desconocidos se rechazan (strict JSON binding normativo).
+Unknown fields are rejected (normative strict JSON binding).
 
-Puede incluir:
+May include:
 
 ```json
 {
@@ -2166,25 +2166,25 @@ Puede incluir:
 }
 ```
 
-La validación Spring es preventiva.
+Spring validation is preventive.
 
-La BD sigue siendo autoridad de negocio.
+The database remains the business authority.
 
-## 29.2 JSON inválido
+## 29.2 Invalid JSON
 
 ```text
 MALFORMED_JSON
 HTTP 400
 ```
 
-## 29.3 Credenciales
+## 29.3 Credentials
 
 ```text
 AUTH_INVALID_CREDENTIALS
 HTTP 401
 ```
 
-## 29.4 Token ausente
+## 29.4 Missing token
 
 ```text
 AUTH_REQUIRED
@@ -2197,29 +2197,29 @@ Header:
 WWW-Authenticate: Bearer
 ```
 
-## 29.5 Token inválido/expirado
+## 29.5 Invalid/expired token
 
 ```text
 AUTH_INVALID_TOKEN
 HTTP 401
 ```
 
-## 29.6 Acceso preventivamente denegado
+## 29.6 Preventively denied access
 
 ```text
 ACCESS_DENIED
 HTTP 403
 ```
 
-La BD vuelve a comprobar el rol.
+The database rechecks the role.
 
 ---
 
-# 30. Mapeo SQLSTATE → HTTP
+# 30. SQLSTATE → HTTP mapping
 
 ## 30.1 400 Bad Request
 
-| SQLSTATE | Código |
+| SQLSTATE | Code |
 |---|---|
 | P1001 | INVALID_ARGUMENT |
 | P2034 | AUTHOR_ORDER_INVALID |
@@ -2235,18 +2235,18 @@ La BD vuelve a comprobar el rol.
 
 ## 30.2 401 Unauthorized
 
-| SQLSTATE | Código |
+| SQLSTATE | Code |
 |---|---|
 | P1002 | ACTOR_NOT_FOUND |
 | P1003 | ACTOR_INACTIVE |
 
-Para endpoints autenticados ambos invalidan el contexto de autenticación.
+For authenticated endpoints, both invalidate the authentication context.
 
 ---
 
 ## 30.3 403 Forbidden
 
-| SQLSTATE | Código |
+| SQLSTATE | Code |
 |---|---|
 | P1004 | ACTOR_NOT_ADMIN |
 | P1005 | ACTOR_NOT_CUSTOMER |
@@ -2255,7 +2255,7 @@ Para endpoints autenticados ambos invalidan el contexto de autenticación.
 
 ## 30.4 404 Not Found
 
-| SQLSTATE | Código |
+| SQLSTATE | Code |
 |---|---|
 | P1102 | CUSTOMER_NOT_FOUND |
 | P1103 | ADDRESS_NOT_FOUND |
@@ -2269,13 +2269,13 @@ Para endpoints autenticados ambos invalidan el contexto de autenticación.
 | P5001 | ORDER_NOT_FOUND |
 | P5004 | CHECKOUT_ADDRESS_INVALID |
 
-`CHECKOUT_ADDRESS_INVALID` utiliza 404 porque representa una dirección inexistente o no perteneciente al usuario sin revelar ownership.
+`CHECKOUT_ADDRESS_INVALID` uses 404 because it represents a nonexistent address or one not belonging to the user without revealing ownership.
 
 ---
 
 ## 30.5 409 Conflict
 
-| SQLSTATE | Código |
+| SQLSTATE | Code |
 |---|---|
 | P1101 | EMAIL_ALREADY_EXISTS |
 | P2002 | AUTHOR_INACTIVE |
@@ -2308,7 +2308,7 @@ Para endpoints autenticados ambos invalidan el contexto de autenticación.
 PAYMENT_REFERENCE_CONFLICT
 ```
 
-Una colisión de referencia `SIM-UUID` no es una decisión que el cliente pueda corregir.
+A `SIM-UUID` reference collision is not a decision the client can correct.
 
 HTTP:
 
@@ -2322,7 +2322,7 @@ HTTP:
 IMMUTABLE_HISTORY_VIOLATION
 ```
 
-Clasificación:
+Classification:
 
 ```text
 TECHNICAL_INTEGRITY_ERROR
@@ -2334,33 +2334,33 @@ HTTP:
 500
 ```
 
-Nunca debería ocurrir mediante una llamada REST válida.
+It should never occur through a valid REST call.
 
 ### PostgreSQL 23514
 
-Si un `CHECK` escapa pese a la prevalidación:
+If a `CHECK` escapes despite prevalidation:
 
 ```text
 DatabaseContractViolationException
 HTTP 500
 ```
 
-No se convierte a `P1001`.
+It is not converted to `P1001`.
 
-### Otros SQLSTATE inesperados
+### Other unexpected SQLSTATEs
 
 ```text
 InternalServerError
 HTTP 500
 ```
 
-No se filtra el mensaje PostgreSQL al consumidor.
+The PostgreSQL message is not leaked to the consumer.
 
 ---
 
 # 31. DatabaseExceptionTranslator
 
-Debe existir una única traducción central:
+There must be a single central translation:
 
 ```text
 SQLException
@@ -2372,28 +2372,28 @@ ApplicationException
 ProblemDetail
 ```
 
-Controllers no inspeccionan SQLSTATE.
+Controllers do not inspect SQLSTATE.
 
-Gateways no deciden HTTP.
+Gateways do not decide HTTP.
 
 ---
 
-# 32. Validación HTTP
+# 32. HTTP validation
 
-Spring puede validar únicamente aspectos sintácticos/contractuales:
+Spring may validate only syntactic/contractual aspects:
 
-- requeridos;
-- string no vacío;
-- longitudes;
-- formatos básicos;
-- cantidad positiva;
-- formato enum;
-- estructura email;
-- estructura JSON;
-- IDs positivos;
-- paginación.
+- required fields;
+- nonempty string;
+- lengths;
+- basic formats;
+- positive quantity;
+- enum format;
+- email structure;
+- JSON structure;
+- positive IDs;
+- pagination.
 
-No debe decidir como autoridad:
+It must not decide as the authority:
 
 ```text
 if stock < quantity
@@ -2402,7 +2402,7 @@ if publisher inactive
 if cart belongs to customer
 ```
 
-Esas reglas permanecen en PostgreSQL.
+Those rules remain in PostgreSQL.
 
 ---
 
@@ -2410,28 +2410,28 @@ Esas reglas permanecen en PostgreSQL.
 
 ## 33.1 GET
 
-Los GET son safe/read-only y pueden reintentarse normalmente.
+GETs are safe/read-only and may normally be retried.
 
-## 33.2 PUT idempotentes
+## 33.2 Idempotent PUTs
 
-Pueden reintentarse si el cliente perdió la respuesta:
+May be retried if the client lost the response:
 
 - `/me`;
 - address update;
 - set primary;
-- status de CUSTOMER/Autor/Editorial/Categoría/Libro/Edición;
+- CUSTOMER/Autor/Editorial/Categoría/Libro/Edición status;
 - stock minimum;
-- PUT `/cart/items/{id}` (cantidad absoluta: mismo estado final);
-- DELETEs (idempotentes en efecto; el segundo retorna 404).
+- PUT `/cart/items/{id}` (absolute quantity: same final state);
+- DELETEs (idempotent in effect; the second returns 404).
 
-La operación produce el mismo estado final.
+The operation produces the same final state.
 
-## 33.3 POST no idempotentes
+## 33.3 Non-idempotent POSTs
 
-No deben reintentarse ciegamente tras timeout:
+Must not be blindly retried after a timeout:
 
 - register;
-- create catálogo;
+- catalog create;
 - inventory entry;
 - inventory adjustment;
 - cart add;
@@ -2439,146 +2439,146 @@ No deben reintentarse ciegamente tras timeout:
 - cancel;
 - order transition.
 
-## 33.4 Recovery checkout
+## 33.4 Checkout recovery
 
-Si el consumidor pierde la respuesta de:
+If the consumer loses the response to:
 
 ```text
 POST /checkout
 ```
 
-no debe volver a ejecutar el mismo POST automáticamente.
+it must not automatically execute the same POST again.
 
-Debe consultar:
+It must query:
 
 ```text
 GET /orders
 ```
 
-para resolver si apareció un nuevo Pedido.
+to determine whether a new Pedido appeared.
 
-Una mejora futura podría añadir Idempotency-Key, pero está fuera de v1.
+A future improvement could add Idempotency-Key, but it is outside v1.
 
-Tras `P5007` (colisión de referencia, con rollback total) reintentar checkout es seguro: crea otro Pedido sin duplicar efectos.
+After `P5007` (reference collision, with full rollback), retrying checkout is safe: it creates another Pedido without duplicating effects.
 
-## 33.5 Checkout rechazado
+## 33.5 Rejected checkout
 
-Un nuevo POST después de un resultado `REJECTED` representa un intento comercial nuevo y puede crear otro Pedido `CANCELLED`.
+A new POST after a `REJECTED` result represents a new commercial attempt and may create another `CANCELLED` Pedido.
 
-## 33.6 Transición logística
+## 33.6 Logistics transition
 
-Después de un timeout en:
+After a timeout on:
 
 ```text
 POST /admin/orders/{id}/transitions
 ```
 
-ADMIN debe recuperar:
+ADMIN must retrieve:
 
 ```text
 GET /admin/orders/{id}
 ```
 
-antes de decidir repetir.
+before deciding to repeat.
 
-## 33.7 Riesgos aceptados v1
+## 33.7 Accepted v1 risks
 
-- Login puede permitir enumeración de usuarios por timing (sin verificación bcrypt dummy).
-- El límite de password se valida por bytes UTF-8, no por caracteres.
-- `jti` sirve solo a correlación de logs; no existe revocación en v1.
-- Sin rate limiting, el login acepta riesgo de fuerza bruta online (mitigación futura en proxy, §45).
-- La dirección completa solo se registra con flag de debug explícito y redacción.
+- Login may allow user enumeration through timing (without dummy bcrypt verification).
+- The password limit is validated by UTF-8 bytes, not characters.
+- `jti` serves only log correlation; there is no revocation in v1.
+- Without rate limiting, login accepts the risk of online brute force (future mitigation at the proxy, §45).
+- The full address is logged only with an explicit debug flag and redaction.
 
 ---
 
 # 34. CORS
 
-CORS pertenece a configuración de deployment.
+CORS belongs to deployment configuration.
 
-Reglas v1:
+v1 rules:
 
-- allowlist explícita por environment;
-- no `*` indiscriminado para deployment autenticado;
-- permitir `Authorization`;
-- métodos según endpoints;
-- localhost permitido solamente en desarrollo.
+- explicit allowlist per environment;
+- no indiscriminate `*` for authenticated deployment;
+- allow `Authorization`;
+- methods according to endpoints;
+- localhost permitted only in development.
 
-No existe origen frontend congelado todavía.
+No frontend origin is frozen yet.
 
 ---
 
 # 35. Logging
 
-Cada request debe tener:
+Each request must have:
 
 ```text
 traceId
 ```
 
-Se registra:
+Record:
 
 - HTTP method;
 - path template;
 - status;
-- duración;
-- principal userId cuando existe;
+- duration;
+- principal userId when present;
 - Database routine;
-- SQLSTATE si falla.
+- SQLSTATE on failure.
 
-No registrar:
+Do not log:
 
 - password;
-- JWT completo;
+- full JWT;
 - PasswordHash;
 - CVV/PAN;
-- dirección completa salvo necesidad de diagnóstico controlado.
+- full address except for controlled diagnostic needs.
 
 ---
 
 # 36. OpenAPI
 
-## 36.1 Versión objetivo
+## 36.1 Target version
 
-PLIEGO documentará la API en:
+PLIEGO will document the API in:
 
 ```text
 OpenAPI 3.1.2
 ```
 
-Aunque existan versiones OpenAPI posteriores, se fija 3.1.2 como baseline de interoperabilidad para el toolchain Spring de PLIEGO v1.
+Although later OpenAPI versions exist, 3.1.2 is fixed as the interoperability baseline for the PLIEGO v1 Spring toolchain.
 
-Cambiar a una minor posterior es una decisión técnica compatible si el tooling lo permite y el contrato observable no cambia.
+Moving to a later minor version is a compatible technical decision if the tooling supports it and the observable contract does not change.
 
-## 36.2 Documento
+## 36.2 Document
 
-Debe describir:
+Must describe:
 
 - 50 endpoints;
 - Bearer JWT scheme;
 - request schemas;
 - response schemas;
 - enum values;
-- paginación;
+- pagination;
 - ProblemDetail;
-- ejemplos;
+- examples;
 - status codes;
-- roles en description;
-- formatos de ID/money.
+- roles in description;
+- ID/money formats.
 
-## 36.3 URLs de desarrollo
+## 36.3 Development URLs
 
-Recomendadas:
+Recommended:
 
 ```text
 /v3/api-docs
 /swagger-ui/index.html
 ```
 
-La ruta exacta puede ajustarse por configuración sin cambiar la API `/api/v1`.
+The exact route may be adjusted through configuration without changing the `/api/v1` API.
 
 ---
 
-# 37. DTOs compartidos
+# 37. Shared DTOs
 
 ## 37.1 `PageResponse<T>`
 
@@ -2610,13 +2610,13 @@ La ruta exacta puede ajustarse por configuración sin cambiar la API `/api/v1`.
 
 ## 37.4 `ProblemResponse`
 
-Compatible con RFC 9457.
+Compatible with RFC 9457.
 
 ---
 
-# 38. Convenciones Java DTO
+# 38. Java DTO conventions
 
-Se recomiendan Java records para DTOs inmutables de transporte:
+Java records are recommended for immutable transport DTOs:
 
 ```java
 record RegisterRequest(...)
@@ -2624,25 +2624,25 @@ record LoginRequest(...)
 record PageResponse<T>(...)
 ```
 
-Los IDs recibidos por JSON pueden modelarse como `String` en DTO y convertirse mediante un parser común a `long`, o exponerse mediante serialización configurada de `Long`.
+IDs received through JSON may be modeled as `String` in the DTO and converted through a common parser to `long`, or exposed through configured `Long` serialization.
 
-Regla observable:
+Observable rule:
 
-> JSON siempre presenta IDs como strings.
+> JSON always presents IDs as strings.
 
-Los montos se convierten:
+Amounts are converted:
 
 ```text
 JSON string ↔ BigDecimal
 ```
 
-mediante serialización explícita.
+through explicit serialization.
 
 ---
 
-# 39. Controllers por feature
+# 39. Controllers by feature
 
-Estructura recomendada:
+Recommended structure:
 
 ```text
 auth/
@@ -2672,15 +2672,15 @@ order/
   AdminOrderController
 ```
 
-No se crea un `AdminController` monolítico.
+A monolithic `AdminController` is not created.
 
 ---
 
 # 40. Gateways
 
-Cada Controller llega a un Service, y cada Service a un Gateway específico.
+Each Controller reaches a Service, and each Service a specific Gateway.
 
-Ejemplo:
+Example:
 
 ```text
 CheckoutController
@@ -2692,7 +2692,7 @@ OrderDbGateway
 sp_checkout
 ```
 
-No se permite:
+The following is not permitted:
 
 ```text
 CheckoutService
@@ -2701,15 +2701,15 @@ CheckoutService
 → PaymentDbGateway
 ```
 
-para orquestar checkout en Java.
+to orchestrate checkout in Java.
 
 ---
 
-# 41. Demarcación transaccional
+# 41. Transaction demarcation
 
-Los comandos que llaman Procedures se ejecutan dentro de una transacción Spring.
+Commands calling Procedures execute within a Spring transaction.
 
-Ejemplo conceptual:
+Conceptual example:
 
 ```java
 @Transactional
@@ -2718,53 +2718,53 @@ public CheckoutResponse checkout(...) {
 }
 ```
 
-Una llamada:
+One call:
 
 ```text
 Service → Gateway → CALL
 ```
 
-Las Functions de lectura no requieren transacción de escritura.
+Read Functions do not require a write transaction.
 
 ---
 
 # 42. Response Location
 
-Los POST que crean un recurso principal deben incluir `Location` cuando existe una URI REST natural.
+POSTs creating a primary resource must include `Location` when a natural REST URI exists.
 
-Ejemplos:
+Examples:
 
 ### Register
 
-No se expone endpoint `/users/{id}` público, por tanto `Location` no es obligatorio.
+No public `/users/{id}` endpoint is exposed, so `Location` is not mandatory.
 
 ### Create admin author
 
-Sin GET individual en v1, se omite `Location`.
+Without an individual GET in v1, `Location` is omitted.
 
 ### Checkout
 
-Sí existe GET individual:
+An individual GET does exist:
 
 ```http
 Location: /api/v1/orders/{orderId}
 ```
 
-Debe incluirse.
+It must be included.
 
 ---
 
 # 43. HTTP cache
 
-PLIEGO v1 no define caching HTTP avanzado.
+PLIEGO v1 does not define advanced HTTP caching.
 
 Defaults:
 
 - auth/customer/cart/order/admin → `Cache-Control: no-store`;
-- catálogo público puede utilizar caching futuro;
-- no se introducen ETag en v1.
+- the public catalog may use caching in the future;
+- ETags are not introduced in v1.
 
-Esto evita complejidad no requerida.
+This avoids unrequired complexity.
 
 ---
 
@@ -2772,71 +2772,71 @@ Esto evita complejidad no requerida.
 
 ## JSON body
 
-Configurar un tamaño máximo razonable a nivel de servidor.
+Configure a reasonable maximum size at server level.
 
-Recomendación v1:
+v1 recommendation:
 
 ```text
 1 MiB
 ```
 
-No existen uploads binarios.
+There are no binary uploads.
 
-Las portadas son URL, no archivos.
+Covers are URLs, not files.
 
 ## Arrays Book
 
-La Database API valida reglas de autores/categorías.
+The Database API validates author/category rules.
 
-REST debe rechazar arrays no válidos sintácticamente, pero no imponer límites arbitrarios no existentes en baseline.
+REST must reject syntactically invalid arrays, but must not impose arbitrary limits absent from the baseline.
 
 ---
 
 # 45. Rate limiting
 
-No forma parte de PLIEGO v1.
+Not part of PLIEGO v1.
 
-No se introducen Redis ni infraestructura adicional.
+Neither Redis nor additional infrastructure is introduced.
 
-Puede añadirse posteriormente en reverse proxy/gateway sin modificar contratos de negocio.
+It may be added later at a reverse proxy/gateway without modifying business contracts.
 
 ---
 
-# 46. Versionado
+# 46. Versioning
 
-El contrato se identifica mediante:
+The contract is identified by:
 
 ```text
 /api/v1
 ```
 
-Cambios compatibles:
+Compatible changes:
 
-- añadir campo response opcional;
-- añadir endpoint nuevo;
-- añadir filtro opcional.
+- add an optional response field;
+- add a new endpoint;
+- add an optional filter.
 
-Cambios incompatibles:
+Incompatible changes:
 
-- renombrar/eliminar campo obligatorio;
-- cambiar semántica de endpoint;
-- cambiar tipo observable;
-- alterar máquina de estado;
-- cambiar códigos de error existentes.
+- rename/remove a required field;
+- change endpoint semantics;
+- change an observable type;
+- alter a state machine;
+- change existing error codes.
 
-Un cambio incompatible requiere:
+An incompatible change requires:
 
 ```text
 /api/v2
 ```
 
-o gestión explícita de compatibilidad.
+or explicit compatibility management.
 
 ---
 
-# 47. Trazabilidad Endpoint → Caso de Uso
+# 47. Endpoint → Use Case traceability
 
-| Caso | Endpoint(s) |
+| Case | Endpoint(s) |
 |---|---|
 | CU-AUTH-01 | POST `/auth/register` |
 | CU-AUTH-02 | POST `/auth/login` |
@@ -2858,56 +2858,56 @@ o gestión explícita de compatibilidad.
 | CU-CART-03 | PUT `/cart/items/{id}` |
 | CU-CART-04 | DELETE `/cart/items/{id}` |
 | CU-SAL-01 | POST `/checkout` |
-| CU-PAY-01 | incluido en `/checkout` |
+| CU-PAY-01 | included in `/checkout` |
 | CU-SAL-02 | GET `/orders`, GET `/orders/{id}` |
 | CU-SAL-03 | POST `/orders/{id}/cancel` |
 | CU-ADM-SAL-01 | `/admin/orders...` |
 
-Cobertura:
+Coverage:
 
 ```text
-24 / 24 casos de uso
+24 / 24 use cases
 ```
 
 ---
 
-# 48. Trazabilidad Endpoint → Database API
+# 48. Endpoint → Database API traceability
 
-La tabla completa del §27 es normativa.
+The complete table in §27 is normative.
 
-Regla:
+Rule:
 
-> Ningún endpoint v1 de negocio puede acceder a tablas PostgreSQL directamente.
+> No v1 business endpoint may access PostgreSQL tables directly.
 
-Una nueva ruta que requiera persistencia y no tenga rutina correspondiente debe detener la implementación y pasar por gestión de cambio.
+A new route requiring persistence without a corresponding routine must stop implementation and go through change management.
 
 ---
 
-# 49. Tests mínimos REST
+# 49. Minimum REST tests
 
 ## Auth
 
-- registro éxito;
-- email duplicado 409;
-- login éxito;
-- credenciales incorrectas 401;
+- successful registration;
+- duplicate email 409;
+- successful login;
+- incorrect credentials 401;
 - blocked 401;
-- JWT expirado 401;
-- JWT algoritmo incorrecto 401;
-- CUSTOMER en admin 403;
-- ADMIN en customer-only 403/DB defense.
+- expired JWT 401;
+- incorrect JWT algorithm 401;
+- CUSTOMER on admin 403;
+- ADMIN on customer-only 403/DB defense.
 
 ## JSON / validation
 
 - malformed JSON 400;
 - unknown enum 400;
-- ID inválido 400;
+- invalid ID 400;
 - pageSize > 50 400;
-- campos desconocidos 400 (strict).
+- unknown fields 400 (strict).
 
 ## Catalog
 
-- público sin token;
+- public without token;
 - filters;
 - category unknown → 200 empty;
 - edition inactive → detail 404;
@@ -2916,7 +2916,7 @@ Una nueva ruta que requiera persistencia y no tenga rutina correspondiente debe 
 
 ## Customer
 
-- ownership de address;
+- address ownership;
 - delete;
 - primary idempotent.
 
@@ -2939,7 +2939,7 @@ Una nueva ruta que requiera persistencia y no tenga rutina correspondiente debe 
 - REJECTED → 201;
 - invalid simulationOutcome →400/P5005;
 - insufficient stock →409/P3002;
-- address ajena →404/P5004;
+- another user's address →404/P5004;
 - Location header;
 - money exact;
 - no blind retry.
@@ -2962,26 +2962,26 @@ Una nueva ruta que requiera persistencia y no tenga rutina correspondiente debe 
 
 ---
 
-# 50. Criterio de aprobación
+# 50. Approval criterion
 
-REST API Contract v1.0 pasa a `BASELINE APROBADA`. Condiciones cumplidas:
+REST API Contract v1.0 moves to `BASELINE APROBADA`. Conditions met:
 
-1. 50 rutas aceptadas;
-2. JWT HS256 + claims + TTL aceptados;
-3. password policy BCrypt aceptada;
-4. IDs como strings aceptados;
-5. money como strings aceptado;
-6. Problem Details RFC 9457 aceptado;
-7. SQLSTATE → HTTP aceptado;
-8. retry/recovery aceptado;
-9. OpenAPI 3.1.2 aceptado;
-10. sin reglas de negocio nuevas en Java.
+1. 50 routes accepted;
+2. JWT HS256 + claims + TTL accepted;
+3. BCrypt password policy accepted;
+4. IDs as strings accepted;
+5. money as strings accepted;
+6. Problem Details RFC 9457 accepted;
+7. SQLSTATE → HTTP accepted;
+8. retry/recovery accepted;
+9. OpenAPI 3.1.2 accepted;
+10. no new business rules in Java.
 
 ---
 
-# 51. Definition of Ready para implementación Spring
+# 51. Definition of Ready for Spring implementation
 
-Una feature puede entregarse a Codex/Claude cuando tenga:
+A feature may be handed to Codex/Claude when it has:
 
 - CU;
 - endpoint;
@@ -2993,62 +2993,62 @@ Una feature puede entregarse a Codex/Claude cuando tenga:
 - Problem mappings;
 - acceptance tests.
 
-Esto completa el Definition of Ready definido desde UCB.
+This completes the Definition of Ready defined in UCB.
 
 ---
 
-# 52. Estado del ciclo de diseño
+# 52. Design lifecycle status
 
-Con la aprobación de este documento:
+With this document's approval:
 
 ```text
 Use Case Baseline v1.1        BASELINE
         ↓
-DER Lógico v1.1              BASELINE
+Logical ERD v1.1             BASELINE
         ↓
-Diccionario v1.1             BASELINE
+Data Dictionary v1.1        BASELINE
         ↓
 Database API Contract v1.1   BASELINE
         ↓
-Modelo Físico v1.0           BASELINE
+Physical Model v1.0         BASELINE
         ↓
-Catálogo Rutinas v1.0        BASELINE
+Routine Catalog v1.0        BASELINE
         ↓
 Flyway Baseline v1.0         BASELINE
         ↓
 REST API Contract v1.0       BASELINE
         ↓
-IMPLEMENTACIÓN
+IMPLEMENTATION
 ```
 
-A partir de este punto, la implementación debe materializar contratos; no redefinir requisitos.
+From this point onward, implementation must materialize contracts, not redefine requirements.
 
 ---
 
-# 53. Historial
+# 53. History
 
-| Versión | Fecha | Estado | Descripción |
+| Version | Date | Status | Description |
 |---|---|---|---|
-| 1.0 | 2026-09-23 | BASELINE APROBADA | Primer contrato REST completo de PLIEGO. Define 50 endpoints, JWT stateless, representación JSON exacta, DTOs, Problem Details, mapeo SQLSTATE→HTTP, retry/recovery, OpenAPI y trazabilidad 24/24 casos de uso hacia la Database API aprobada. Patch RT-01–RT-05 aplicado; RT-06–RT-10 como riesgos aceptados. |
+| 1.0 | 2026-09-23 | APPROVED BASELINE | First complete PLIEGO REST contract. Defines 50 endpoints, stateless JWT, exact JSON representation, DTOs, Problem Details, SQLSTATE→HTTP mapping, retry/recovery, OpenAPI, and traceability of 24/24 use cases to the approved Database API. RT-01–RT-05 patch applied; RT-06–RT-10 as accepted risks. |
 
 ---
 
-# 54. Referencias
+# 54. References
 
-## Artefactos internos
+## Internal artifacts
 
 - Use Case Baseline v1.1.
-- DER Lógico v1.1.
-- Diccionario de Datos v1.1.
+- Logical ERD v1.1.
+- Data Dictionary v1.1.
 - Database API Contract v1.1.
-- Modelo Físico PostgreSQL v1.0.
-- Catálogo de Stored Procedures / Functions / Triggers v1.0.
+- PostgreSQL Physical Model v1.0.
+- Stored Procedure / Function / Trigger Catalog v1.0.
 - Flyway Baseline v1.0.
 
-## Estándares externos
+## External standards
 
 - RFC 7519 — JSON Web Token (JWT).
 - RFC 8725 / BCP 225 — JSON Web Token Best Current Practices.
 - RFC 6750 — Bearer Token Usage.
 - RFC 9457 — Problem Details for HTTP APIs.
-- OpenAPI Specification 3.1.2 — baseline de documentación de PLIEGO v1.
+- OpenAPI Specification 3.1.2 — PLIEGO v1 documentation baseline.

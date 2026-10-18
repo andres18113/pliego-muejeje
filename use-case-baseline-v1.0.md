@@ -1,75 +1,75 @@
 # PLIEGO — Use Case Baseline v1.0
 
-**Documento:** UCB-PLIEGO-001  
-**Versión:** 1.1  
-**Estado:** BASELINE APROBADA PARA DISEÑO LÓGICO  
-**Fecha:** 2026-09-23  
-**Proyecto:** PLIEGO  
-**Tipo de documento:** Especificación de casos de uso y baseline funcional  
-**Ámbito:** Backend, lógica de negocio y persistencia  
-**Frontend:** Fuera del alcance de implementación de esta baseline; la API debe permitir su incorporación posterior.  
+**Document:** UCB-PLIEGO-001  
+**Version:** 1.1  
+**Status:** BASELINE APPROVED FOR LOGICAL DESIGN  
+**Date:** 2026-09-23  
+**Project:** PLIEGO  
+**Document type:** Use case specification and functional baseline  
+**Scope:** Backend, business logic, and persistence  
+**Frontend:** Outside this baseline's implementation scope; the API must allow its later incorporation.  
 
 ---
 
-## 1. Propósito
+## 1. Purpose
 
-Este documento establece la **baseline funcional de casos de uso de PLIEGO** y constituye la fuente de verdad para las siguientes etapas del ciclo de vida:
+This document establishes the **PLIEGO functional use case baseline** and constitutes the source of truth for the following lifecycle stages:
 
-1. diseño del modelo lógico de datos;
-2. elaboración del DER;
-3. diccionario de datos;
-4. definición de reglas de negocio;
-5. diseño de la Database API de PostgreSQL;
-6. definición de Stored Procedures, Functions, Triggers y Constraints;
-7. diseño de la API REST;
-8. diseño de pruebas;
-9. implementación por Codex/Claude u otros agentes;
-10. validación y mantenimiento posterior.
+1. logical data model design;
+2. ERD development;
+3. data dictionary;
+4. business rule definition;
+5. PostgreSQL Database API design;
+6. Stored Procedure, Function, Trigger, and Constraint definition;
+7. REST API design;
+8. test design;
+9. implementation by Codex/Claude or other agents;
+10. subsequent validation and maintenance.
 
-El propósito principal es reducir la ambigüedad funcional antes del diseño físico y de la implementación. Ninguna entidad, relación, transición de estado o regla de negocio crítica debería ser incorporada posteriormente sin estar justificada por esta baseline o por una solicitud formal de cambio.
-
----
-
-## 2. Enfoque de Ingeniería de Software
-
-La especificación adopta principios de Ingeniería de Requisitos consistentes con **ISO/IEC/IEEE 29148:2018** y utiliza terminología compatible con **UML 2.5.1** para actores y casos de uso.
-
-La baseline sigue el proceso:
-
-**Elicitación → Análisis → Especificación → Validación → Baseline → Trazabilidad → Gestión del cambio**
-
-### 2.1 Criterios de calidad de los requisitos
-
-Cada requisito y caso de uso deberá ser, en la medida aplicable:
-
-- necesario;
-- inequívoco;
-- consistente;
-- factible;
-- verificable;
-- trazable;
-- suficientemente completo;
-- independiente de decisiones de implementación que no sean arquitectónicamente obligatorias.
-
-### 2.2 Lenguaje normativo
-
-En este documento:
-
-- **DEBERÁ** indica un requisito obligatorio.
-- **NO DEBERÁ** indica una prohibición obligatoria.
-- **PODRÁ** indica comportamiento permitido pero no obligatorio.
-- **FUERA DE ALCANCE** indica comportamiento deliberadamente excluido de PLIEGO v1.
+The main purpose is to reduce functional ambiguity before physical design and implementation. No critical entity, relationship, state transition, or business rule should be introduced later without justification in this baseline or a formal change request.
 
 ---
 
-## 3. Contexto del sistema
+## 2. Software Engineering approach
 
-PLIEGO es un sistema de comercio electrónico especializado en la venta de libros físicos.
+The specification adopts Requirements Engineering principles consistent with **ISO/IEC/IEEE 29148:2018** and uses **UML 2.5.1**-compatible terminology for actors and use cases.
 
-La arquitectura aprobada es:
+The baseline follows this process:
+
+**Elicitation → Analysis → Specification → Validation → Baseline → Traceability → Change management**
+
+### 2.1 Requirements quality criteria
+
+Each requirement and use case shall, as applicable, be:
+
+- necessary;
+- unambiguous;
+- consistent;
+- feasible;
+- verifiable;
+- traceable;
+- sufficiently complete;
+- independent of implementation decisions that are not architecturally mandatory.
+
+### 2.2 Normative language
+
+In this document:
+
+- **SHALL** indicates a mandatory requirement.
+- **SHALL NOT** indicates a mandatory prohibition.
+- **MAY** indicates permitted but optional behavior.
+- **OUT OF SCOPE** indicates behavior deliberately excluded from PLIEGO v1.
+
+---
+
+## 3. System context
+
+PLIEGO is an e-commerce system specializing in the sale of physical books.
+
+The approved architecture is:
 
 ```text
-Cliente API / Frontend futuro
+API client / Future frontend
             │
             │ HTTP + JSON
             ▼
@@ -85,80 +85,80 @@ Cliente API / Frontend futuro
             └── Constraints
 ```
 
-### 3.1 Principios arquitectónicos vinculantes
+### 3.1 Binding architectural principles
 
 - Backend: **Java 25 + Spring Boot**.
-- Motor de datos: **PostgreSQL**.
-- Evolución de la BD: **Flyway**.
-- No se utilizará JPA ni Hibernate.
-- Spring Boot accederá a operaciones de negocio mediante **Gateways JDBC**.
-- La lógica de negocio autoritativa residirá en PostgreSQL.
-- Controllers y Services no contendrán SQL de negocio.
-- El backend expondrá una API REST versionada bajo `/api/v1`.
-- No se implementará frontend en esta etapa.
-- La arquitectura no deberá impedir que un frontend web o móvil consuma posteriormente la misma API.
-- No se utilizará Docker.
-- Git y GitHub serán utilizados para control de versiones y colaboración.
+- Database engine: **PostgreSQL**.
+- Database evolution: **Flyway**.
+- JPA and Hibernate shall not be used.
+- Spring Boot shall access business operations through **JDBC Gateways**.
+- Authoritative business logic shall reside in PostgreSQL.
+- Controllers and Services shall not contain business SQL.
+- The backend shall expose a versioned REST API under `/api/v1`.
+- No frontend shall be implemented at this stage.
+- The architecture shall not prevent a web or mobile frontend from later consuming the same API.
+- Docker shall not be used.
+- Git and GitHub shall be used for version control and collaboration.
 
 ---
 
-## 4. Alcance funcional de PLIEGO v1
+## 4. PLIEGO v1 functional scope
 
-### 4.1 Incluido
+### 4.1 Included
 
-PLIEGO v1 incluye:
+PLIEGO v1 includes:
 
-- registro y autenticación;
-- roles `CUSTOMER` y `ADMIN`;
-- perfil del cliente;
-- direcciones;
-- autores;
-- editoriales;
-- categorías y subcategorías;
-- libros;
-- ediciones;
-- portadas y metadatos de licencia;
-- inventario por edición;
-- movimientos de inventario;
-- carrito;
+- registration and authentication;
+- `CUSTOMER` and `ADMIN` roles;
+- customer profile;
+- addresses;
+- authors;
+- publishers;
+- categories and subcategories;
+- books;
+- editions;
+- covers and license metadata;
+- inventory per edition;
+- inventory movements;
+- cart;
 - checkout;
-- pedidos;
-- historial de estados;
-- pago académico simulado;
-- cancelación;
-- devolución lógica del pago simulado;
-- API REST;
-- documentación OpenAPI;
-- migraciones Flyway;
-- auditoría funcional mínima mediante historiales;
-- GitHub y CI.
+- orders;
+- status history;
+- simulated academic payment;
+- cancellation;
+- logical refund of the simulated payment;
+- REST API;
+- OpenAPI documentation;
+- Flyway migrations;
+- minimal functional auditing through histories;
+- GitHub and CI.
 
-### 4.2 Fuera de alcance
+### 4.2 Out of scope
 
-Quedan fuera de PLIEGO v1:
+The following are excluded from PLIEGO v1:
 
 - frontend;
-- aplicación móvil;
-- múltiples sucursales;
-- múltiples bodegas;
-- proveedores y compras a proveedores;
-- reservas de stock;
+- mobile application;
+- multiple branches;
+- multiple warehouses;
+- suppliers and supplier purchases;
+- stock reservations;
 - eBooks;
-- archivos digitales;
-- recomendaciones mediante IA;
+- digital files;
+- AI recommendations;
 - wishlist;
-- reseñas;
+- reviews;
 - ratings;
-- cupones;
-- promociones;
-- impuestos configurables;
-- cálculo de costos de envío;
-- integración SRI;
-- pasarela de pago real;
-- transportistas;
-- tracking logístico;
+- coupons;
+- promotions;
+- configurable taxes;
+- shipping cost calculation;
+- SRI integration;
+- real payment gateway;
+- carriers;
+- logistics tracking;
 - marketplace;
-- microservicios;
+- microservices;
 - Redis;
 - Kafka/RabbitMQ;
 - Docker;
@@ -166,415 +166,415 @@ Quedan fuera de PLIEGO v1:
 
 ---
 
-## 5. Decisiones de dominio congeladas
+## 5. Frozen domain decisions
 
-Estas decisiones forman parte de la baseline y no deben modificarse de forma implícita durante la implementación.
+These decisions form part of the baseline and must not be modified implicitly during implementation.
 
-| Tema | Decisión PLIEGO v1 |
+| Topic | PLIEGO v1 decision |
 |---|---|
-| Libro y edición | Son conceptos distintos |
-| Unidad comercial | La **Edición** es el elemento que se vende |
-| Precio | Pertenece a la Edición |
-| ISBN | Pertenece a la Edición |
-| SKU | Pertenece a la Edición |
-| Editorial | Pertenece a la Edición |
-| Autor | Se relaciona con Libro N:M |
-| Categoría | Se relaciona con Libro N:M |
-| Categorías | Máximo dos niveles |
-| Inventario | Un inventario global por Edición |
-| Carrito | Máximo un carrito `ACTIVE` por Cliente |
-| Stock en carrito | No se reserva |
-| Precio en carrito | Precio vigente |
-| Precio en pedido | Snapshot |
-| Dirección de pedido | Snapshot |
-| Datos bibliográficos del pedido | Snapshot |
-| Pago | Simulado y síncrono |
-| Intentos de pago | Un Pago por Pedido en v1 |
-| Moneda | USD |
-| Descuentos | No existen en v1 |
-| Impuestos adicionales | No se calculan en v1 |
-| Costo de envío | 0 en v1 |
-| Total | Igual al subtotal en v1 |
-| Borrado de catálogo | Borrado lógico por estado |
-| Movimientos de inventario | Inmutables |
-| Historial de pedido | Obligatorio |
-| Admin inicial | Aprovisionado mediante configuración/migración controlada con secretos por entorno (nunca en Git); no por registro público |
+| Libro and Edición | Distinct concepts |
+| Commercial unit | **Edición** is the item sold |
+| Price | Belongs to Edición |
+| ISBN | Belongs to Edición |
+| SKU | Belongs to Edición |
+| Editorial | Belongs to Edición |
+| Autor | Related to Libro N:M |
+| Categoría | Related to Libro N:M |
+| Categories | At most two levels |
+| Inventario | One global inventory per Edición |
+| Carrito | At most one `ACTIVE` cart per Cliente |
+| Stock in cart | Not reserved |
+| Price in cart | Current price |
+| Price in order | Snapshot |
+| Order address | Snapshot |
+| Order bibliographic data | Snapshot |
+| Pago | Simulated and synchronous |
+| Payment attempts | One Pago per Pedido in v1 |
+| Currency | USD |
+| Discounts | None in v1 |
+| Additional taxes | Not calculated in v1 |
+| Shipping cost | 0 in v1 |
+| Total | Equal to subtotal in v1 |
+| Catalog deletion | Logical deletion by status |
+| Inventory movements | Immutable |
+| Order history | Mandatory |
+| Initial admin | Provisioned through controlled configuration/migration with per-environment secrets (never in Git); not through public registration |
 
 ---
 
-## 6. Actores
+## 6. Actors
 
-### ACT-01 — Visitante
+### ACT-01 — Visitor
 
-Usuario no autenticado.
+Unauthenticated user.
 
-Puede:
+Can:
 
-- registrarse;
-- autenticarse;
-- consultar catálogo;
-- buscar libros;
-- consultar el detalle de una edición.
+- register;
+- authenticate;
+- browse the catalog;
+- search for books;
+- view edition details.
 
-### ACT-02 — Cliente
+### ACT-02 — Customer
 
-Usuario autenticado con rol `CUSTOMER`.
+Authenticated user with the `CUSTOMER` role.
 
-Hereda las capacidades públicas del Visitante y además puede:
+Inherits the Visitor's public capabilities and can also:
 
-- gestionar su perfil;
-- gestionar sus direcciones;
-- gestionar su carrito;
-- realizar checkout;
-- consultar sus pedidos;
-- cancelar pedidos permitidos.
+- manage their profile;
+- manage their addresses;
+- manage their cart;
+- perform checkout;
+- view their orders;
+- cancel eligible orders.
 
-### ACT-03 — Administrador
+### ACT-03 — Administrator
 
-Usuario autenticado con rol `ADMIN`.
+Authenticated user with the `ADMIN` role.
 
-Puede:
+Can:
 
-- gestionar autores;
-- gestionar editoriales;
-- gestionar categorías;
-- gestionar libros;
-- gestionar ediciones;
-- consultar inventario;
-- registrar ajustes/entradas;
-- definir stock mínimo;
-- gestionar estados de pedidos;
-- consultar pedidos;
-- bloquear o desbloquear cuentas de clientes.
+- manage authors;
+- manage publishers;
+- manage categories;
+- manage books;
+- manage editions;
+- view inventory;
+- record adjustments/receipts;
+- set minimum stock;
+- manage order statuses;
+- view orders;
+- block or unblock customer accounts.
 
 ---
 
-## 7. Catálogo de casos de uso
+## 7. Use case catalog
 
-| ID | Caso de uso | Actor principal |
+| ID | Use case | Primary actor |
 |---|---|---|
-| CU-AUTH-01 | Registrar cliente | Visitante |
-| CU-AUTH-02 | Autenticar usuario | Visitante |
-| CU-ADM-SEC-01 | Gestionar estado de cliente | Administrador |
-| CU-CUS-01 | Gestionar perfil | Cliente |
-| CU-CUS-02 | Gestionar direcciones | Cliente |
-| CU-CAT-01 | Consultar y buscar catálogo | Visitante / Cliente |
-| CU-CAT-02 | Consultar detalle de edición | Visitante / Cliente |
-| CU-ADM-CAT-01 | Gestionar autores | Administrador |
-| CU-ADM-CAT-02 | Gestionar editoriales | Administrador |
-| CU-ADM-CAT-03 | Gestionar categorías | Administrador |
-| CU-ADM-CAT-04 | Gestionar libros | Administrador |
-| CU-ADM-CAT-05 | Gestionar ediciones | Administrador |
-| CU-INV-01 | Consultar inventario | Administrador |
-| CU-INV-02 | Registrar movimiento administrativo de inventario | Administrador |
-| CU-INV-03 | Configurar stock mínimo | Administrador |
-| CU-CART-01 | Consultar carrito | Cliente |
-| CU-CART-02 | Agregar edición al carrito | Cliente |
-| CU-CART-03 | Modificar cantidad de item | Cliente |
-| CU-CART-04 | Eliminar item del carrito | Cliente |
-| CU-SAL-01 | Realizar checkout | Cliente |
-| CU-PAY-01 | Procesar pago simulado | Sistema |
-| CU-SAL-02 | Consultar pedidos propios | Cliente |
-| CU-SAL-03 | Cancelar pedido | Cliente |
-| CU-ADM-SAL-01 | Gestionar pedidos | Administrador |
+| CU-AUTH-01 | Register customer | Visitor |
+| CU-AUTH-02 | Authenticate user | Visitor |
+| CU-ADM-SEC-01 | Manage customer status | Administrator |
+| CU-CUS-01 | Manage profile | Customer |
+| CU-CUS-02 | Manage addresses | Customer |
+| CU-CAT-01 | Browse and search catalog | Visitor / Customer |
+| CU-CAT-02 | View edition details | Visitor / Customer |
+| CU-ADM-CAT-01 | Manage authors | Administrator |
+| CU-ADM-CAT-02 | Manage publishers | Administrator |
+| CU-ADM-CAT-03 | Manage categories | Administrator |
+| CU-ADM-CAT-04 | Manage books | Administrator |
+| CU-ADM-CAT-05 | Manage editions | Administrator |
+| CU-INV-01 | View inventory | Administrator |
+| CU-INV-02 | Record administrative inventory movement | Administrator |
+| CU-INV-03 | Configure minimum stock | Administrator |
+| CU-CART-01 | View cart | Customer |
+| CU-CART-02 | Add edition to cart | Customer |
+| CU-CART-03 | Change item quantity | Customer |
+| CU-CART-04 | Remove item from cart | Customer |
+| CU-SAL-01 | Perform checkout | Customer |
+| CU-PAY-01 | Process simulated payment | System |
+| CU-SAL-02 | View own orders | Customer |
+| CU-SAL-03 | Cancel order | Customer |
+| CU-ADM-SAL-01 | Manage orders | Administrator |
 
-**Total: 24 casos de uso.**
+**Total: 24 use cases.**
 
 ---
 
-# 8. Especificación detallada de casos de uso
+# 8. Detailed use case specification
 
-## CU-AUTH-01 — Registrar cliente
+## CU-AUTH-01 — Register customer
 
-**Objetivo:** Crear una cuenta de cliente válida para PLIEGO.  
-**Actor principal:** Visitante.  
-**Disparador:** El visitante solicita crear una cuenta.
+**Objective:** Create a valid customer account for PLIEGO.  
+**Primary actor:** Visitor.  
+**Trigger:** The visitor requests account creation.
 
-### Datos de entrada
+### Input data
 
 - email;
 - password;
 - nombres;
 - apellidos;
-- teléfono opcional.
+- optional phone number.
 
-### Precondiciones
+### Preconditions
 
-- El actor no necesita estar autenticado.
-- El correo debe tener un formato sintácticamente válido.
-- La contraseña debe cumplir la política técnica definida por el backend.
+- The actor does not need to be authenticated.
+- The email must have a syntactically valid format.
+- The password must comply with the backend's technical policy.
 
-### Flujo principal
+### Main flow
 
-1. El Visitante envía la solicitud de registro.
-2. Spring Boot valida estructura y formato del request.
-3. Spring Security genera un hash seguro de la contraseña.
-4. PostgreSQL normaliza el email.
-5. PostgreSQL verifica que no exista otro Usuario con el mismo email normalizado.
-6. PostgreSQL crea el Usuario con rol `CUSTOMER`.
-7. PostgreSQL crea exactamente un Cliente asociado al Usuario.
-8. Usuario y Cliente se confirman dentro de la misma transacción.
-9. El sistema devuelve confirmación de registro.
+1. The Visitor submits the registration request.
+2. Spring Boot validates the request's structure and format.
+3. Spring Security generates a secure password hash.
+4. PostgreSQL normalizes the email.
+5. PostgreSQL verifies that no other Usuario has the same normalized email.
+6. PostgreSQL creates the Usuario with role `CUSTOMER`.
+7. PostgreSQL creates exactly one Cliente associated with the Usuario.
+8. Usuario and Cliente are committed within the same transaction.
+9. The system returns registration confirmation.
 
-### Flujos alternativos
+### Alternative flows
 
-**A1 — Email existente**
+**A1 — Existing email**
 
-1. PostgreSQL detecta un email ya registrado.
-2. La operación se rechaza.
-3. No se crea Usuario.
-4. No se crea Cliente.
+1. PostgreSQL detects an already registered email.
+2. The operation is rejected.
+3. No Usuario is created.
+4. No Cliente is created.
 
-Resultado de dominio: `EMAIL_ALREADY_EXISTS`.
+Domain result: `EMAIL_ALREADY_EXISTS`.
 
-**A2 — Datos inválidos**
+**A2 — Invalid data**
 
-La operación se rechaza sin persistencia parcial.
+The operation is rejected without partial persistence.
 
-### Postcondiciones de éxito
+### Success postconditions
 
-- Existe un Usuario.
-- Existe exactamente un Cliente asociado.
-- El Usuario posee rol `CUSTOMER`.
-- El Usuario queda en estado `ACTIVE`.
-- La contraseña nunca se almacena en texto plano.
+- A Usuario exists.
+- Exactly one associated Cliente exists.
+- The Usuario has role `CUSTOMER`.
+- The Usuario is in `ACTIVE` status.
+- The password is never stored in plaintext.
 
-### Reglas relacionadas
+### Related rules
 
 - BR-SEC-001
 - BR-SEC-002
 - BR-CUS-001
 
-### Entidades afectadas
+### Affected entities
 
 - Usuario
 - Cliente
 
-### Criterios de aceptación
+### Acceptance criteria
 
-- No pueden existir dos usuarios con el mismo email normalizado.
-- Nunca puede existir un Cliente creado por este caso sin su Usuario correspondiente.
-- Si falla la creación de Cliente, también debe revertirse la creación de Usuario.
+- Two users cannot have the same normalized email.
+- A Cliente created by this case can never exist without its corresponding Usuario.
+- If Cliente creation fails, Usuario creation must also be rolled back.
 
 ---
 
-## CU-AUTH-02 — Autenticar usuario
+## CU-AUTH-02 — Authenticate user
 
-**Objetivo:** Autenticar a un Usuario registrado y habilitado.  
-**Actor principal:** Visitante.
+**Objective:** Authenticate a registered, enabled Usuario.  
+**Primary actor:** Visitor.
 
-### Entrada
+### Input
 
 - email;
 - password.
 
-### Flujo principal
+### Main flow
 
-1. El Visitante proporciona credenciales.
-2. PostgreSQL localiza al Usuario mediante email normalizado.
-3. PostgreSQL verifica que el Usuario esté `ACTIVE`.
-4. Spring Security verifica la contraseña recibida contra el hash almacenado.
-5. Si la contraseña es válida, Spring Boot genera el mecanismo de autenticación stateless de la aplicación (token firmado, p. ej. JWT; el REST/Security contract definirá formato, claims y expiración).
-6. La respuesta identifica el rol del Usuario.
+1. The Visitor supplies credentials.
+2. PostgreSQL locates the Usuario by normalized email.
+3. PostgreSQL verifies that the Usuario is `ACTIVE`.
+4. Spring Security checks the supplied password against the stored hash.
+5. If the password is valid, Spring Boot generates the application's stateless authentication mechanism (signed token, e.g. JWT; the REST/Security contract will define format, claims, and expiration).
+6. The response identifies the Usuario's role.
 
-### Flujos alternativos
+### Alternative flows
 
-- Usuario inexistente.
-- Contraseña incorrecta.
-- Usuario bloqueado.
+- Nonexistent Usuario.
+- Incorrect password.
+- Blocked Usuario.
 
-Externamente estos escenarios podrán producir una respuesta de autenticación inválida sin revelar detalles innecesarios.
+Externally, these scenarios may produce an invalid-authentication response without revealing unnecessary details.
 
-### Postcondiciones
+### Postconditions
 
-No se modifica el dominio comercial.
+The commercial domain is not modified.
 
-### Entidades
+### Entities
 
 - Usuario
 
 ---
 
-## CU-ADM-SEC-01 — Gestionar estado de cliente
+## CU-ADM-SEC-01 — Manage customer status
 
-**Objetivo:** Permitir que un Administrador bloquee o reactive el acceso de una cuenta de cliente.  
-**Actor:** Administrador.
+**Objective:** Allow an Administrator to block or reactivate access to a customer account.  
+**Actor:** Administrator.
 
-### Precondiciones
+### Preconditions
 
-- Administrador autenticado.
-- El Usuario objetivo debe existir.
-- El Usuario objetivo debe tener rol `CUSTOMER`.
+- Authenticated Administrator.
+- The target Usuario must exist.
+- The target Usuario must have role `CUSTOMER`.
 
-### Flujo principal — Bloquear
+### Main flow — Block
 
-1. El Administrador selecciona un Cliente.
-2. El sistema identifica el Usuario asociado.
-3. PostgreSQL cambia `Usuario.estado` de `ACTIVE` a `BLOCKED`.
-4. Se confirma la operación.
+1. The Administrator selects a Cliente.
+2. The system identifies the associated Usuario.
+3. PostgreSQL changes `Usuario.estado` from `ACTIVE` to `BLOCKED`.
+4. The operation is committed.
 
-### Flujo principal — Reactivar
+### Main flow — Reactivate
 
-1. El Administrador selecciona una cuenta `BLOCKED`.
-2. PostgreSQL cambia su estado a `ACTIVE`.
-3. Se confirma la operación.
+1. The Administrator selects a `BLOCKED` account.
+2. PostgreSQL changes its status to `ACTIVE`.
+3. The operation is committed.
 
-### Reglas
+### Rules
 
-- Un Cliente bloqueado no puede autenticarse.
-- El bloqueo no elimina datos históricos.
-- El bloqueo no elimina carrito ni pedidos.
+- A blocked Cliente cannot authenticate.
+- Blocking does not delete historical data.
+- Blocking does not delete the cart or orders.
 
-### Entidades
-
-- Usuario
-- Cliente
-
----
-
-## CU-CUS-01 — Gestionar perfil
-
-**Objetivo:** Consultar o modificar los datos básicos del Cliente autenticado.  
-**Actor:** Cliente.
-
-### Precondiciones
-
-- Usuario autenticado.
-- Usuario con rol `CUSTOMER`.
-- Cliente asociado.
-
-### Operaciones permitidas
-
-- consultar nombres;
-- consultar apellidos;
-- consultar teléfono;
-- actualizar nombres;
-- actualizar apellidos;
-- actualizar teléfono.
-
-### Fuera de alcance
-
-El cambio de email y el cambio de contraseña no forman parte de PLIEGO v1.
-
-### Regla de autorización
-
-Un Cliente solo puede acceder a su propio perfil.
-
-### Entidades
+### Entities
 
 - Usuario
 - Cliente
 
 ---
 
-## CU-CUS-02 — Gestionar direcciones
+## CU-CUS-01 — Manage profile
 
-**Objetivo:** Administrar las direcciones de entrega del Cliente.  
-**Actor:** Cliente.
+**Objective:** View or modify the authenticated Cliente's basic data.  
+**Actor:** Customer.
 
-### Operaciones
+### Preconditions
 
-- listar;
-- crear;
-- actualizar;
-- eliminar;
-- definir como principal.
+- Authenticated Usuario.
+- Usuario with role `CUSTOMER`.
+- Associated Cliente.
 
-### Datos mínimos de una dirección
+### Permitted operations
+
+- view nombres;
+- view apellidos;
+- view phone number;
+- update nombres;
+- update apellidos;
+- update phone number.
+
+### Out of scope
+
+Email changes and password changes are not part of PLIEGO v1.
+
+### Authorization rule
+
+A Cliente can access only their own profile.
+
+### Entities
+
+- Usuario
+- Cliente
+
+---
+
+## CU-CUS-02 — Manage addresses
+
+**Objective:** Manage the Cliente's delivery addresses.  
+**Actor:** Customer.
+
+### Operations
+
+- list;
+- create;
+- update;
+- delete;
+- set as primary.
+
+### Minimum address data
 
 - alias;
-- destinatario;
-- dirección línea 1;
-- ciudad;
-- provincia;
-- país (`PaisCodigo` ISO 3166-1 alpha-2, p. ej. `EC`);
-- teléfono.
+- recipient;
+- address line 1;
+- city;
+- province;
+- country (`PaisCodigo` ISO 3166-1 alpha-2, e.g. `EC`);
+- phone number.
 
-### Datos opcionales
+### Optional data
 
-- dirección línea 2;
-- código postal;
-- referencia.
+- address line 2;
+- postal code;
+- reference.
 
-### Reglas
+### Rules
 
-1. Un Cliente puede tener cero o más Direcciones.
-2. Como máximo una Dirección puede ser principal.
-3. Un Cliente puede no tener dirección principal.
-4. Una Dirección solo puede ser modificada por su propietario.
-5. Establecer una Dirección como principal debe desmarcar la anterior dentro de la misma transacción.
-6. Eliminar una Dirección no modifica pedidos históricos.
-7. La Dirección puede eliminarse físicamente porque los pedidos utilizan snapshots independientes.
-8. Si la Dirección seleccionada no existe o no pertenece al Cliente en el instante transaccional del checkout, el checkout se rechaza con error de dominio.
+1. A Cliente may have zero or more Direcciones.
+2. At most one Dirección may be primary.
+3. A Cliente may have no primary address.
+4. A Dirección may be modified only by its owner.
+5. Setting a Dirección as primary must unmark the previous one within the same transaction.
+6. Deleting a Dirección does not modify historical orders.
+7. A Dirección may be physically deleted because orders use independent snapshots.
+8. If the selected Dirección does not exist or does not belong to the Cliente at the transactional instant of checkout, checkout is rejected with a domain error.
 
-### Entidades
+### Entities
 
 - Cliente
 - Direccion
 
 ---
 
-## CU-CAT-01 — Consultar y buscar catálogo
+## CU-CAT-01 — Browse and search catalog
 
-**Objetivo:** Permitir el descubrimiento de libros y ediciones comercialmente disponibles.  
-**Actores:** Visitante, Cliente.  
-**Autenticación:** No requerida.
+**Objective:** Enable discovery of commercially available books and editions.  
+**Actors:** Visitor, Customer.  
+**Authentication:** Not required.
 
-### Parámetros de búsqueda
+### Search parameters
 
-- texto de título;
-- autor;
+- title text;
+- author;
 - ISBN;
-- categoría.
+- category.
 
-### Filtros
+### Filters
 
-- categoría;
-- precio mínimo;
-- precio máximo;
-- idioma;
-- formato.
+- category;
+- minimum price;
+- maximum price;
+- language;
+- format.
 
-### Ordenamiento
+### Sorting
 
-- título ascendente;
-- precio ascendente;
-- precio descendente.
+- title ascending;
+- price ascending;
+- price descending.
 
-### Paginación
+### Pagination
 
-- tamaño por defecto: 20;
-- tamaño máximo: 50.
+- default size: 20;
+- maximum size: 50.
 
-### Flujo principal
+### Main flow
 
-1. El actor solicita el catálogo con cero o más filtros.
-2. PostgreSQL obtiene Libros y Ediciones que cumplan los criterios.
-3. Solo se consideran comercialmente publicables cuando `Libro.estado = ACTIVE` y `Edicion.estado = ACTIVE`. Un Autor, Editorial o Categoría `INACTIVE` no oculta ni invalida ediciones ya existentes; solo impide nuevas asociaciones.
-4. Se determina disponibilidad a partir de Inventario.
-5. Se aplica ordenamiento.
-6. Se aplica paginación.
-7. El sistema devuelve la página solicitada.
+1. The actor requests the catalog with zero or more filters.
+2. PostgreSQL obtains Libros and Ediciones matching the criteria.
+3. They are considered commercially publishable only when `Libro.estado = ACTIVE` and `Edicion.estado = ACTIVE`. An `INACTIVE` Autor, Editorial, or Categoría does not hide or invalidate existing editions; it only prevents new associations.
+4. Availability is determined from Inventario.
+5. Sorting is applied.
+6. Pagination is applied.
+7. The system returns the requested page.
 
-### Regla de disponibilidad
+### Availability rule
 
-Una Edición con `stock_actual = 0` puede aparecer en catálogo, pero debe informarse como no disponible.
+An Edición with `stock_actual = 0` may appear in the catalog, but must be reported as unavailable.
 
-### Resultado mínimo
+### Minimum result
 
 - editionId;
 - bookId;
-- título;
-- autores;
-- editorial;
-- ISBN cuando exista;
-- precio;
-- portada;
-- formato;
-- idioma;
-- disponibilidad.
+- title;
+- authors;
+- publisher;
+- ISBN when present;
+- price;
+- cover;
+- format;
+- language;
+- availability.
 
-### Entidades
+### Entities
 
 - Libro
 - Edicion
@@ -587,42 +587,42 @@ Una Edición con `stock_actual = 0` puede aparecer en catálogo, pero debe infor
 
 ---
 
-## CU-CAT-02 — Consultar detalle de edición
+## CU-CAT-02 — View edition details
 
-**Objetivo:** Mostrar información bibliográfica y comercial detallada de una Edición.  
-**Actores:** Visitante, Cliente.  
-**Autenticación:** No requerida.
+**Objective:** Show detailed bibliographic and commercial information for an Edición.  
+**Actors:** Visitor, Customer.  
+**Authentication:** Not required.
 
-### Entrada
+### Input
 
-- identificador de Edición.
+- Edición identifier.
 
-### Resultado
+### Result
 
-- título;
-- subtítulo;
-- sinopsis;
-- autores ordenados;
-- categorías;
-- editorial;
+- title;
+- subtitle;
+- synopsis;
+- ordered authors;
+- categories;
+- publisher;
 - ISBN;
 - SKU;
-- idioma;
-- formato;
-- número de páginas;
-- fecha de publicación;
-- precio actual;
-- portada;
-- licencia de portada;
-- fuente de portada;
-- atribución cuando aplique;
-- disponibilidad.
+- language;
+- format;
+- page count;
+- publication date;
+- current price;
+- cover;
+- cover license;
+- cover source;
+- attribution when applicable;
+- availability.
 
-### Regla
+### Rule
 
-Información administrativa de inventario no debe exponerse como parte del detalle público.
+Administrative inventory information must not be exposed as part of public details.
 
-### Entidades
+### Entities
 
 - Libro
 - Edicion
@@ -635,152 +635,152 @@ Información administrativa de inventario no debe exponerse como parte del detal
 
 ---
 
-## CU-ADM-CAT-01 — Gestionar autores
+## CU-ADM-CAT-01 — Manage authors
 
-**Objetivo:** Mantener el catálogo de Autores.  
-**Actor:** Administrador.
+**Objective:** Maintain the Autores catalog.  
+**Actor:** Administrator.
 
-### Operaciones
+### Operations
 
-- crear;
-- consultar;
-- actualizar;
-- desactivar;
-- reactivar.
+- create;
+- view;
+- update;
+- deactivate;
+- reactivate.
 
-### Datos
+### Data
 
-- nombre obligatorio;
-- biografía opcional;
-- estado.
+- required name;
+- optional biography;
+- status.
 
-### Reglas
+### Rules
 
-1. El nombre del Autor no es una clave única.
-2. Dos autores distintos pueden compartir nombre.
-3. No se realiza DELETE físico.
-4. Un Autor `INACTIVE` no puede asociarse a nuevos Libros.
-5. Desactivar un Autor no elimina relaciones históricas `LibroAutor`.
+1. The Autor's name is not a unique key.
+2. Two distinct authors may share a name.
+3. No physical DELETE is performed.
+4. An `INACTIVE` Autor cannot be associated with new Libros.
+5. Deactivating an Autor does not delete historical `LibroAutor` relationships.
 
-### Entidades
+### Entities
 
 - Autor
 - LibroAutor
 
 ---
 
-## CU-ADM-CAT-02 — Gestionar editoriales
+## CU-ADM-CAT-02 — Manage publishers
 
-**Objetivo:** Mantener el catálogo de Editoriales.  
-**Actor:** Administrador.
+**Objective:** Maintain the Editoriales catalog.  
+**Actor:** Administrator.
 
-### Operaciones
+### Operations
 
-- crear;
-- consultar;
-- actualizar;
-- desactivar;
-- reactivar.
+- create;
+- view;
+- update;
+- deactivate;
+- reactivate.
 
-### Reglas
+### Rules
 
-1. Nombre obligatorio.
-2. No se realiza DELETE físico.
-3. Una Editorial `INACTIVE` no puede asignarse a nuevas Ediciones.
-4. Desactivar una Editorial no elimina Ediciones ya existentes.
+1. Name required.
+2. No physical DELETE is performed.
+3. An `INACTIVE` Editorial cannot be assigned to new Ediciones.
+4. Deactivating an Editorial does not delete existing Ediciones.
 
-### Entidades
+### Entities
 
 - Editorial
 - Edicion
 
 ---
 
-## CU-ADM-CAT-03 — Gestionar categorías
+## CU-ADM-CAT-03 — Manage categories
 
-**Objetivo:** Mantener la clasificación temática de los Libros.  
-**Actor:** Administrador.
+**Objective:** Maintain the thematic classification of Libros.  
+**Actor:** Administrator.
 
-### Modelo jerárquico
+### Hierarchical model
 
-PLIEGO v1 admite máximo dos niveles:
+PLIEGO v1 supports at most two levels:
 
 ```text
-Categoría raíz
-└── Subcategoría
+Root category
+└── Subcategory
 ```
 
-### Datos
+### Data
 
-- nombre;
+- name;
 - slug;
-- descripción opcional;
-- parent_id opcional;
-- estado.
+- optional description;
+- optional parent_id;
+- status.
 
-### Reglas
+### Rules
 
-1. Una categoría raíz posee `parent_id = NULL`.
-2. Una subcategoría debe apuntar a una categoría raíz.
-3. Una subcategoría no puede poseer hijos.
-4. No pueden existir ciclos.
-5. `slug` debe ser único.
-6. No existe DELETE físico.
-7. Una Categoría `INACTIVE` no puede asignarse a nuevos Libros.
-8. Desactivar una categoría no elimina `LibroCategoria`.
+1. A root category has `parent_id = NULL`.
+2. A subcategory must point to a root category.
+3. A subcategory cannot have children.
+4. Cycles cannot exist.
+5. `slug` must be unique.
+6. No physical DELETE exists.
+7. An `INACTIVE` Categoría cannot be assigned to new Libros.
+8. Deactivating a category does not delete `LibroCategoria`.
 
-### Entidades
+### Entities
 
 - Categoria
 - LibroCategoria
 
 ---
 
-## CU-ADM-CAT-04 — Gestionar libros
+## CU-ADM-CAT-04 — Manage books
 
-**Objetivo:** Mantener las obras intelectuales disponibles en el catálogo.  
-**Actor:** Administrador.
+**Objective:** Maintain the intellectual works available in the catalog.  
+**Actor:** Administrator.
 
-### Datos obligatorios para creación
+### Required creation data
 
-- título;
-- al menos un Autor;
-- al menos una Categoría.
+- title;
+- at least one Autor;
+- at least one Categoría.
 
-### Datos opcionales
+### Optional data
 
-- subtítulo;
-- sinopsis.
+- subtitle;
+- synopsis.
 
-### Flujo de creación
+### Creation flow
 
-1. El Administrador proporciona datos del Libro.
-2. PostgreSQL valida que todos los Autores existan y estén `ACTIVE`.
-3. PostgreSQL valida que todas las Categorías existan y estén `ACTIVE`.
-4. PostgreSQL crea el Libro.
-5. PostgreSQL crea las asociaciones `LibroAutor`.
-6. PostgreSQL registra el orden de autoría.
-7. PostgreSQL crea las asociaciones `LibroCategoria`.
-8. Toda la operación se confirma de forma atómica.
+1. The Administrator supplies Libro data.
+2. PostgreSQL validates that all Autores exist and are `ACTIVE`.
+3. PostgreSQL validates that all Categorías exist and are `ACTIVE`.
+4. PostgreSQL creates the Libro.
+5. PostgreSQL creates the `LibroAutor` associations.
+6. PostgreSQL records authorship order.
+7. PostgreSQL creates the `LibroCategoria` associations.
+8. The entire operation is committed atomically.
 
-### Operaciones posteriores
+### Subsequent operations
 
-- actualizar metadatos;
-- modificar autores;
-- modificar orden de autoría;
-- modificar categorías;
-- desactivar;
-- reactivar.
+- update metadata;
+- change authors;
+- change authorship order;
+- change categories;
+- deactivate;
+- reactivate.
 
-### Reglas
+### Rules
 
-1. Un Libro `ACTIVE` debe poseer al menos un Autor.
-2. Un Libro `ACTIVE` debe poseer al menos una Categoría.
-3. No existe DELETE físico.
-4. Desactivar el Libro no elimina Ediciones.
-5. Si el Libro está `INACTIVE`, ninguna de sus Ediciones puede publicarse comercialmente aunque la Edición esté `ACTIVE`.
+1. An `ACTIVE` Libro must have at least one Autor.
+2. An `ACTIVE` Libro must have at least one Categoría.
+3. No physical DELETE exists.
+4. Deactivating the Libro does not delete Ediciones.
+5. If the Libro is `INACTIVE`, none of its Ediciones may be published commercially even if the Edición is `ACTIVE`.
 
-### Entidades
+### Entities
 
 - Libro
 - Autor
@@ -790,93 +790,93 @@ Categoría raíz
 
 ---
 
-## CU-ADM-CAT-05 — Gestionar ediciones
+## CU-ADM-CAT-05 — Manage editions
 
-**Objetivo:** Mantener las versiones comerciales concretas de los Libros.  
-**Actor:** Administrador.
+**Objective:** Maintain specific commercial versions of Libros.  
+**Actor:** Administrator.
 
-### Datos obligatorios
+### Required data
 
 - Libro;
 - Editorial;
 - SKU;
-- idioma;
-- formato;
-- número de páginas;
-- precio.
+- language;
+- format;
+- page count;
+- price.
 
-### Datos opcionales
+### Optional data
 
 - ISBN-13;
-- fecha de publicación;
-- portada y metadatos asociados.
+- publication date;
+- cover and associated metadata.
 
-### Formatos permitidos
+### Permitted formats
 
 - `PAPERBACK`;
 - `HARDCOVER`.
 
-### Reglas de ISBN
+### ISBN rules
 
-Si se proporciona ISBN:
+If ISBN is provided:
 
-1. debe contener 13 dígitos;
-2. debe tener checksum ISBN-13 válido;
-3. debe ser único entre Ediciones.
+1. it must contain 13 digits;
+2. it must have a valid ISBN-13 checksum;
+3. it must be unique among Ediciones.
 
-### Reglas de SKU
+### SKU rules
 
-- obligatorio;
-- único;
-- estable después de la creación.
+- required;
+- unique;
+- stable after creation.
 
-### Reglas comerciales
+### Commercial rules
 
-- precio > 0;
-- número de páginas > 0;
-- la Editorial debe estar `ACTIVE` al crear la Edición y al reasignarla;
-- el Libro debe existir (puede estar `INACTIVE`; la publicabilidad exige ambos `ACTIVE` según BR-CAT-010);
-- la Edición utiliza moneda USD.
+- price > 0;
+- page count > 0;
+- the Editorial must be `ACTIVE` when creating the Edición and when reassigning it;
+- the Libro must exist (it may be `INACTIVE`; publishability requires both to be `ACTIVE` under BR-CAT-010);
+- the Edición uses USD currency.
 
-### Portada
+### Cover
 
-Cuando existe portada se podrán registrar:
+When a cover exists, the following may be recorded:
 
 - `cover_url`;
 - `cover_license`;
 - `cover_source_url`;
 - `cover_attribution`.
 
-Si se registra una portada, su licencia y fuente deben quedar identificadas.
+If a cover is recorded, its license and source must be identified.
 
-### Creación de inventario
+### Inventory creation
 
-Al crear una Edición:
+When creating an Edición:
 
-1. PostgreSQL crea la Edición.
-2. PostgreSQL crea automáticamente su Inventario.
+1. PostgreSQL creates the Edición.
+2. PostgreSQL automatically creates its Inventario.
 3. `stock_actual = 0`.
 4. `stock_minimo = 0`.
-5. Edición e Inventario forman una operación atómica.
+5. Edición and Inventario form an atomic operation.
 
-### Operaciones posteriores
+### Subsequent operations
 
-- corregir metadatos;
-- cambiar precio;
-- actualizar portada;
-- desactivar;
-- reactivar.
+- correct metadata;
+- change price;
+- update cover;
+- deactivate;
+- reactivate.
 
-### Identidad estable
+### Stable identity
 
-Después de creada:
+After creation:
 
-- la asociación con Libro no se cambia;
-- el SKU no se cambia.
+- the association with Libro is not changed;
+- the SKU is not changed.
 
-Si se requiere representar otra edición comercial, se crea una Edición distinta.
+If another commercial edition needs to be represented, a distinct Edición is created.
 
-### Entidades
+### Entities
 
 - Libro
 - Editorial
@@ -885,40 +885,40 @@ Si se requiere representar otra edición comercial, se crea una Edición distint
 
 ---
 
-## CU-INV-01 — Consultar inventario
+## CU-INV-01 — View inventory
 
-**Objetivo:** Permitir al Administrador conocer existencias y trazabilidad.  
-**Actor:** Administrador.
+**Objective:** Allow the Administrator to know stock levels and traceability.  
+**Actor:** Administrator.
 
-### Información resumida
+### Summary information
 
-- Edición;
+- edition;
 - SKU;
 - ISBN;
-- título;
-- stock actual;
-- stock mínimo;
-- indicador de bajo stock;
-- estado de Edición.
+- title;
+- current stock;
+- minimum stock;
+- low-stock indicator;
+- Edición status.
 
-### Definición de bajo stock
+### Low-stock definition
 
 `bajo_stock = stock_minimo > 0 AND stock_actual <= stock_minimo`
 
-(`stock_minimo = 0` significa "sin umbral": una edición recién creada con `0/0` no nace en bajo stock.)
+(`stock_minimo = 0` means "no threshold": a newly created edition with `0/0` does not start in low-stock status.)
 
-### Filtros
+### Filters
 
-- edición;
-- título;
+- edition;
+- title;
 - SKU;
-- solo bajo stock.
+- low stock only.
 
-### Historial
+### History
 
-El Administrador podrá consultar los Movimientos de Inventario asociados a una Edición.
+The Administrator may view the Movimientos de Inventario associated with an Edición.
 
-### Entidades
+### Entities
 
 - Inventario
 - MovimientoInventario
@@ -927,44 +927,44 @@ El Administrador podrá consultar los Movimientos de Inventario asociados a una 
 
 ---
 
-## CU-INV-02 — Registrar movimiento administrativo de inventario
+## CU-INV-02 — Record administrative inventory movement
 
-**Objetivo:** Modificar existencias de manera explícita y trazable.  
-**Actor:** Administrador.
+**Objective:** Modify stock levels explicitly and traceably.  
+**Actor:** Administrator.
 
-### Tipos administrativos permitidos
+### Permitted administrative types
 
 - `ENTRY`;
 - `ADJUSTMENT_IN`;
 - `ADJUSTMENT_OUT`.
 
-### Tipos reservados al sistema
+### System-reserved types
 
 - `SALE`;
 - `CANCELLATION`.
 
-### Datos del movimiento
+### Movement data
 
 - Inventario;
-- tipo;
-- cantidad;
-- stock anterior;
-- stock posterior;
-- motivo;
-- fecha;
-- usuario responsable cuando aplique.
+- type;
+- quantity;
+- previous stock;
+- resulting stock;
+- reason;
+- date;
+- responsible user when applicable.
 
-### Reglas
+### Rules
 
-1. `cantidad` se almacena como valor positivo.
-2. El Tipo determina si la operación suma o resta.
-3. El stock posterior nunca puede ser negativo.
-4. Todo cambio confirmado de stock debe poseer MovimientoInventario.
-5. MovimientoInventario es inmutable.
-6. No se edita ni elimina un movimiento confirmado.
-7. Los errores se corrigen mediante un movimiento compensatorio.
+1. `cantidad` is stored as a positive value.
+2. The Tipo determines whether the operation adds or subtracts.
+3. Resulting stock can never be negative.
+4. Every committed stock change must have a MovimientoInventario.
+5. MovimientoInventario is immutable.
+6. A committed movement is neither edited nor deleted.
+7. Errors are corrected through a compensating movement.
 
-### Entidades
+### Entities
 
 - Inventario
 - MovimientoInventario
@@ -972,56 +972,56 @@ El Administrador podrá consultar los Movimientos de Inventario asociados a una 
 
 ---
 
-## CU-INV-03 — Configurar stock mínimo
+## CU-INV-03 — Configure minimum stock
 
-**Objetivo:** Definir el umbral de bajo inventario de una Edición.  
-**Actor:** Administrador.
+**Objective:** Define an Edición's low-inventory threshold.  
+**Actor:** Administrator.
 
-### Entrada
+### Input
 
-- Edición;
-- nuevo `stock_minimo`.
+- edition;
+- new `stock_minimo`.
 
-### Reglas
+### Rules
 
 - `stock_minimo >= 0`.
-- Cambiar stock mínimo no modifica stock actual.
-- No genera MovimientoInventario porque no representa una variación de existencias.
+- Changing minimum stock does not modify current stock.
+- It does not generate a MovimientoInventario because it does not represent a stock variation.
 
-### Entidades
+### Entities
 
 - Inventario
 
 ---
 
-## CU-CART-01 — Consultar carrito
+## CU-CART-01 — View cart
 
-**Objetivo:** Consultar el carrito activo del Cliente.  
-**Actor:** Cliente.
+**Objective:** View the Cliente's active cart.  
+**Actor:** Customer.
 
-### Precondiciones
+### Preconditions
 
-Cliente autenticado y habilitado.
+Authenticated and enabled Cliente.
 
-### Reglas
+### Rules
 
-1. Un Cliente puede poseer múltiples Carritos históricos.
-2. Como máximo uno puede estar `ACTIVE`.
-3. Si no existe carrito activo, se devuelve conceptualmente un carrito vacío sin crear necesariamente una fila física.
-4. Los precios mostrados corresponden al precio vigente de cada Edición.
-5. El carrito no constituye una reserva de inventario.
-6. Los items cuya Edición o Libro hayan pasado a `INACTIVE` se siguen mostrando, marcados como no disponibles; el checkout los rechaza.
-7. Agregar direcciona por `editionId`; modificar/eliminar direccionan por identificador de item dentro del carrito del Cliente.
+1. A Cliente may have multiple historical Carritos.
+2. At most one may be `ACTIVE`.
+3. If no active cart exists, a conceptually empty cart is returned without necessarily creating a physical row.
+4. Displayed prices correspond to each Edición's current price.
+5. The cart does not constitute an inventory reservation.
+6. Items whose Edición or Libro has become `INACTIVE` remain displayed, marked unavailable; checkout rejects them.
+7. Adding targets `editionId`; modifying/deleting targets the item identifier within the Cliente's cart.
 
-### Resultado
+### Result
 
 - items;
-- cantidad;
-- precio vigente;
-- subtotal por item;
-- total actual.
+- quantity;
+- current price;
+- subtotal per item;
+- current total.
 
-### Entidades
+### Entities
 
 - Cliente
 - Carrito
@@ -1030,50 +1030,50 @@ Cliente autenticado y habilitado.
 
 ---
 
-## CU-CART-02 — Agregar edición al carrito
+## CU-CART-02 — Add edition to cart
 
-**Objetivo:** Agregar una Edición comercializable al carrito activo.  
-**Actor:** Cliente.
+**Objective:** Add a marketable Edición to the active cart.  
+**Actor:** Customer.
 
-### Entrada
+### Input
 
 - editionId;
-- cantidad.
+- quantity.
 
-### Precondiciones
+### Preconditions
 
-- Cliente `ACTIVE`;
-- cantidad > 0.
+- `ACTIVE` Cliente;
+- quantity > 0.
 
-### Flujo principal
+### Main flow
 
-1. PostgreSQL localiza el Carrito `ACTIVE`.
-2. Si no existe, lo crea.
-3. PostgreSQL verifica la existencia de la Edición.
-4. Verifica `Edicion.estado = ACTIVE`.
-5. Verifica `Libro.estado = ACTIVE`.
-6. Consulta Inventario.
-7. Valida que la cantidad total solicitada no exceda `stock_actual`.
-8. Si la Edición no existe en el carrito, crea un CarritoItem.
-9. Si ya existe, incrementa su cantidad.
-10. Confirma la operación.
+1. PostgreSQL locates the `ACTIVE` Carrito.
+2. If none exists, it creates one.
+3. PostgreSQL verifies that the Edición exists.
+4. Verifies `Edicion.estado = ACTIVE`.
+5. Verifies `Libro.estado = ACTIVE`.
+6. Queries Inventario.
+7. Validates that the total requested quantity does not exceed `stock_actual`.
+8. If the Edición is not in the cart, creates a CarritoItem.
+9. If it already exists, increments its quantity.
+10. Commits the operation.
 
-### Reglas
+### Rules
 
-- Una misma Edición aparece una única vez por Carrito.
-- Restricción conceptual: `UNIQUE(carrito_id, edicion_id)`.
-- Agregar al carrito no reserva stock.
-- La disponibilidad se valida nuevamente durante checkout.
+- The same Edición appears only once per Carrito.
+- Conceptual constraint: `UNIQUE(carrito_id, edicion_id)`.
+- Adding to the cart does not reserve stock.
+- Availability is validated again during checkout.
 
-### Alternativas
+### Alternatives
 
-- Edición inexistente.
-- Libro inactivo.
-- Edición inactiva.
-- Cantidad inválida.
-- Stock insuficiente.
+- Nonexistent Edición.
+- Inactive Libro.
+- Inactive Edición.
+- Invalid quantity.
+- Insufficient stock.
 
-### Entidades
+### Entities
 
 - Carrito
 - CarritoItem
@@ -1083,26 +1083,26 @@ Cliente autenticado y habilitado.
 
 ---
 
-## CU-CART-03 — Modificar cantidad de item
+## CU-CART-03 — Change item quantity
 
-**Objetivo:** Cambiar la cantidad solicitada para una Edición ya existente en el carrito.  
-**Actor:** Cliente.
+**Objective:** Change the requested quantity for an Edición already in the cart.  
+**Actor:** Customer.
 
-### Entrada
+### Input
 
-- identificador de CarritoItem;
-- nueva cantidad.
+- CarritoItem identifier;
+- new quantity.
 
-### Reglas
+### Rules
 
-- nueva cantidad > 0;
-- nueva cantidad <= stock_actual;
-- el Carrito debe estar `ACTIVE`;
-- el Carrito debe pertenecer al Cliente autenticado.
+- new quantity > 0;
+- new quantity <= stock_actual;
+- the Carrito must be `ACTIVE`;
+- the Carrito must belong to the authenticated Cliente.
 
-Cantidad cero **no** significa eliminación. La eliminación utiliza CU-CART-04.
+Zero quantity does **not** mean deletion. Deletion uses CU-CART-04.
 
-### Entidades
+### Entities
 
 - Carrito
 - CarritoItem
@@ -1110,109 +1110,109 @@ Cantidad cero **no** significa eliminación. La eliminación utiliza CU-CART-04.
 
 ---
 
-## CU-CART-04 — Eliminar item del carrito
+## CU-CART-04 — Remove item from cart
 
-**Objetivo:** Retirar una Edición del carrito activo.  
-**Actor:** Cliente.
+**Objective:** Remove an Edición from the active cart.  
+**Actor:** Customer.
 
-### Reglas
+### Rules
 
-- el Carrito debe pertenecer al Cliente;
-- el Carrito debe estar `ACTIVE`;
-- el CarritoItem puede eliminarse físicamente;
-- eliminar el último item no elimina el Carrito;
-- el Carrito continúa `ACTIVE` y vacío.
+- the Carrito must belong to the Cliente;
+- the Carrito must be `ACTIVE`;
+- the CarritoItem may be physically deleted;
+- deleting the last item does not delete the Carrito;
+- the Carrito remains `ACTIVE` and empty.
 
-### Entidades
+### Entities
 
 - Carrito
 - CarritoItem
 
 ---
 
-## CU-SAL-01 — Realizar checkout
+## CU-SAL-01 — Perform checkout
 
-**Objetivo:** Convertir un Carrito activo en una compra consistente.  
-**Actor:** Cliente.  
-**Caso incluido:** `<<include>> CU-PAY-01 Procesar pago simulado`.
+**Objective:** Convert an active Carrito into a consistent purchase.  
+**Actor:** Customer.  
+**Included case:** `<<include>> CU-PAY-01 Procesar pago simulado`.
 
-### Entrada
+### Input
 
-- identificador de Dirección;
-- método de pago soportado.
+- Dirección identifier;
+- supported payment method.
 
-### Precondiciones
+### Preconditions
 
-- Cliente autenticado;
-- Cliente `ACTIVE`;
-- Carrito `ACTIVE`;
-- Carrito con al menos un item;
-- Dirección existente;
-- Dirección perteneciente al Cliente.
+- authenticated Cliente;
+- `ACTIVE` Cliente;
+- `ACTIVE` Carrito;
+- Carrito with at least one item;
+- existing Dirección;
+- Dirección belonging to the Cliente.
 
-### Flujo principal
+### Main flow
 
-1. PostgreSQL obtiene el Carrito `ACTIVE` del Cliente.
-2. PostgreSQL bloquea los recursos necesarios para evitar checkout concurrente inconsistente.
-3. Verifica que el carrito contenga al menos un CarritoItem.
-4. Obtiene todas las Ediciones involucradas.
-5. Valida nuevamente que cada Libro esté `ACTIVE`.
-6. Valida nuevamente que cada Edición esté `ACTIVE`.
-7. Obtiene los precios vigentes.
-8. Obtiene y bloquea los Inventarios involucrados.
-9. Verifica stock suficiente para cada item.
-10. Calcula el subtotal de cada item.
-11. Calcula el subtotal del Pedido.
-12. Define `total = subtotal`.
-13. Crea el Pedido en estado `PENDING_PAYMENT`.
-14. Registra el primer PedidoEstadoHistorial.
-15. Crea PedidoItem para cada item del carrito.
-16. Copia snapshots comerciales a PedidoItem.
-17. Copia la Dirección seleccionada a PedidoDireccion.
-18. Crea un Pago `PENDING`.
-19. Incluye CU-PAY-01.
+1. PostgreSQL obtains the Cliente's `ACTIVE` Carrito.
+2. PostgreSQL locks the resources needed to prevent inconsistent concurrent checkout.
+3. Verifies that the cart contains at least one CarritoItem.
+4. Obtains all involved Ediciones.
+5. Validates again that each Libro is `ACTIVE`.
+6. Validates again that each Edición is `ACTIVE`.
+7. Obtains current prices.
+8. Obtains and locks the involved Inventarios.
+9. Verifies sufficient stock for each item.
+10. Calculates each item's subtotal.
+11. Calculates the Pedido subtotal.
+12. Sets `total = subtotal`.
+13. Creates the Pedido in `PENDING_PAYMENT` status.
+14. Records the first PedidoEstadoHistorial.
+15. Creates a PedidoItem for each cart item.
+16. Copies commercial snapshots to PedidoItem.
+17. Copies the selected Dirección to PedidoDireccion.
+18. Creates a `PENDING` Pago.
+19. Includes CU-PAY-01.
 
-### Resultado si el pago es aprobado
+### Result if payment is approved
 
-20. Pago cambia a `APPROVED`.
-21. PostgreSQL descuenta Inventario.
-22. Por cada modificación se registra MovimientoInventario `SALE`.
-23. Pedido cambia a `CONFIRMED`.
-24. Se registra PedidoEstadoHistorial.
-25. Carrito cambia a `CHECKED_OUT`.
-26. La transacción se confirma.
+20. Pago changes to `APPROVED`.
+21. PostgreSQL deducts Inventario.
+22. A `SALE` MovimientoInventario is recorded for each modification.
+23. Pedido changes to `CONFIRMED`.
+24. PedidoEstadoHistorial is recorded.
+25. Carrito changes to `CHECKED_OUT`.
+26. The transaction is committed.
 
-### Resultado si el pago es rechazado
+### Result if payment is rejected
 
-20. Pago cambia a `REJECTED`.
-21. Pedido cambia a `CANCELLED`.
-22. Se registra PedidoEstadoHistorial.
-23. No se descuenta Inventario.
-24. Carrito permanece `ACTIVE`.
-25. La transacción confirma el resultado comercial rechazado.
+20. Pago changes to `REJECTED`.
+21. Pedido changes to `CANCELLED`.
+22. PedidoEstadoHistorial is recorded.
+23. Inventario is not deducted.
+24. Carrito remains `ACTIVE`.
+25. The transaction commits the rejected commercial outcome.
 
-### Fallo técnico
+### Technical failure
 
-Si ocurre un error técnico que impide producir un estado comercial consistente, toda la operación se revierte.
+If a technical error prevents a consistent commercial state from being produced, the entire operation is rolled back.
 
-### Reglas de atomicidad
+### Atomicity rules
 
-Nunca debe existir un resultado confirmado con:
+A committed result must never exist with:
 
-- Pedido `CONFIRMED` sin descuento de stock;
-- stock descontado sin Pedido `CONFIRMED`;
-- MovimientoInventario `SALE` sin su disminución de stock;
-- Pedido sin PedidoItem;
-- Pedido sin PedidoDireccion;
-- Pedido sin Pago.
+- a `CONFIRMED` Pedido without stock deduction;
+- deducted stock without a `CONFIRMED` Pedido;
+- a `SALE` MovimientoInventario without its stock decrease;
+- a Pedido without PedidoItem;
+- a Pedido without PedidoDireccion;
+- a Pedido without Pago.
 
-### Regla de concurrencia
+### Concurrency rule
 
-Cuando dos checkouts compiten por las últimas unidades, solo aquellos para los que exista stock suficiente pueden confirmar. El stock nunca puede volverse negativo.
+When two checkouts compete for the last units, only those for which sufficient stock exists may commit. Stock can never become negative.
 
-El Database API Contract definirá el orden de bloqueo (carrito/pedido e inventarios por `EdicionId` ordenado) y el código de error de dominio del perdedor. La demarcación transaccional vive en Spring Boot (Service/Gateway); la atomicidad de negocio vive en la rutina PostgreSQL, que ejecuta cada operación en una única transacción.
+The Database API Contract will define lock order (cart/order and inventories sorted by `EdicionId`) and the loser's domain error code. Transaction demarcation resides in Spring Boot (Service/Gateway); business atomicity resides in the PostgreSQL routine, which executes each operation in a single transaction.
 
-### Entidades
+### Entities
 
 - Cliente
 - Direccion
@@ -1230,81 +1230,81 @@ El Database API Contract definirá el orden de bloqueo (carrito/pedido e inventa
 
 ---
 
-## CU-PAY-01 — Procesar pago simulado
+## CU-PAY-01 — Process simulated payment
 
-**Objetivo:** Permitir cerrar académicamente el ciclo de compra sin integrar una pasarela externa.  
-**Actor:** Sistema.  
-**Actor iniciador:** CU-SAL-01.
+**Objective:** Allow academic completion of the purchase cycle without integrating an external gateway.  
+**Actor:** System.  
+**Initiating actor:** CU-SAL-01.
 
-### Precondiciones
+### Preconditions
 
-- existe Pedido `PENDING_PAYMENT`;
-- existe Pago `PENDING`;
-- monto del Pago = total del Pedido.
+- a `PENDING_PAYMENT` Pedido exists;
+- a `PENDING` Pago exists;
+- Pago amount = Pedido total.
 
-### Métodos soportados en v1
+### Supported methods in v1
 
 - `CARD`;
 - `TRANSFER`.
 
-### Flujo principal — Aprobado
+### Main flow — Approved
 
-1. El simulador procesa el intento académico.
-2. Produce resultado `APPROVED`.
-3. Se asigna una referencia de pago simulada.
-4. El control retorna al checkout.
+1. The simulator processes the academic attempt.
+2. Produces an `APPROVED` result.
+3. A simulated payment reference is assigned.
+4. Control returns to checkout.
 
-### Flujo alternativo — Rechazado
+### Alternative flow — Rejected
 
-1. El simulador produce `REJECTED`.
-2. Se registra la referencia o motivo académico correspondiente.
-3. El control retorna al checkout.
+1. The simulator produces `REJECTED`.
+2. The corresponding academic reference or reason is recorded.
+3. Control returns to checkout.
 
-### Reglas
+### Rules
 
-- No se almacena CVV.
-- No se almacena número completo de tarjeta.
-- El simulador no representa una pasarela financiera real.
-- El importe procesado debe coincidir con el total del Pedido.
-- El resultado (`APPROVED`/`REJECTED`) debe ser determinista y controlable desde el checkout con fines académicos y de prueba (el Database API Contract definirá el parámetro); nunca aleatorio sin semilla.
+- CVV is not stored.
+- The full card number is not stored.
+- The simulator does not represent a real financial gateway.
+- The processed amount must match the Pedido total.
+- The result (`APPROVED`/`REJECTED`) must be deterministic and controllable from checkout for academic and testing purposes (the Database API Contract will define the parameter); never unseeded random behavior.
 
-### Entidades
+### Entities
 
 - Pedido
 - Pago
 
 ---
 
-## CU-SAL-02 — Consultar pedidos propios
+## CU-SAL-02 — View own orders
 
-**Objetivo:** Permitir al Cliente consultar su historial comercial.  
-**Actor:** Cliente.
+**Objective:** Allow the Cliente to view their commercial history.  
+**Actor:** Customer.
 
-### Operaciones
+### Operations
 
-- listar pedidos;
-- consultar detalle.
+- list orders;
+- view details.
 
-### Resumen mínimo
+### Minimum summary
 
 - orderId;
-- fecha;
-- estado;
+- date;
+- status;
 - total;
-- estado de pago.
+- payment status.
 
-### Detalle mínimo
+### Minimum details
 
-- items con snapshot;
-- dirección snapshot;
+- items with snapshot;
+- address snapshot;
 - Pago;
-- historial de estados.
+- status history.
 
-### Regla de autorización
+### Authorization rule
 
-Un Cliente únicamente puede consultar sus propios Pedidos.
+A Cliente may view only their own Pedidos.
 
-### Entidades
+### Entities
 
 - Pedido
 - PedidoItem
@@ -1314,44 +1314,44 @@ Un Cliente únicamente puede consultar sus propios Pedidos.
 
 ---
 
-## CU-SAL-03 — Cancelar pedido
+## CU-SAL-03 — Cancel order
 
-**Objetivo:** Cancelar un Pedido cuando su estado todavía permite reversión comercial.  
-**Actor:** Cliente propietario.
+**Objective:** Cancel a Pedido while its status still permits commercial reversal.  
+**Actor:** Owning customer.
 
-### Estados cancelables
+### Cancellable statuses
 
 - `CONFIRMED`;
 - `PREPARING`.
 
-### Estados no cancelables
+### Non-cancellable statuses
 
-- `PENDING_PAYMENT` (ningún Pedido observable post-commit está en este estado; la guarda existe por completitud);
+- `PENDING_PAYMENT` (no post-commit observable Pedido has this status; the guard exists for completeness);
 - `SHIPPED`;
 - `DELIVERED`;
 - `CANCELLED`.
 
-### Flujo principal
+### Main flow
 
-1. PostgreSQL bloquea el Pedido.
-2. Verifica propiedad.
-3. Verifica que el estado sea cancelable.
-4. Cambia Pedido a `CANCELLED`.
-5. Por cada PedidoItem restaura al Inventario la cantidad comprada.
-6. Por cada restauración crea MovimientoInventario `CANCELLATION`.
-7. Si Pago está `APPROVED`, cambia a `REFUNDED`.
-8. Registra PedidoEstadoHistorial.
-9. Confirma la transacción.
+1. PostgreSQL locks the Pedido.
+2. Verifies ownership.
+3. Verifies that the status permits cancellation.
+4. Changes Pedido to `CANCELLED`.
+5. For each PedidoItem, restores the purchased quantity to Inventario.
+6. For each restoration, creates a `CANCELLATION` MovimientoInventario.
+7. If Pago is `APPROVED`, changes it to `REFUNDED`.
+8. Records PedidoEstadoHistorial.
+9. Commits the transaction.
 
-### Reglas
+### Rules
 
-- No se elimina el Pedido.
-- No se elimina el Pago.
-- No se eliminan PedidoItem.
-- La devolución de inventario y el cambio a `CANCELLED` son atómicos.
-- La devolución del pago es simulada en v1.
+- The Pedido is not deleted.
+- The Pago is not deleted.
+- PedidoItem records are not deleted.
+- Inventory restoration and the change to `CANCELLED` are atomic.
+- The payment refund is simulated in v1.
 
-### Entidades
+### Entities
 
 - Pedido
 - PedidoItem
@@ -1362,21 +1362,21 @@ Un Cliente únicamente puede consultar sus propios Pedidos.
 
 ---
 
-## CU-ADM-SAL-01 — Gestionar pedidos
+## CU-ADM-SAL-01 — Manage orders
 
-**Objetivo:** Permitir al Administrador consultar y avanzar el flujo logístico de los Pedidos.  
-**Actor:** Administrador.
+**Objective:** Allow the Administrator to view and advance the Pedidos logistics flow.  
+**Actor:** Administrator.
 
-### Consultas
+### Queries
 
-- todos los pedidos;
-- por estado;
-- por rango de fecha;
-- por cliente;
-- detalle;
-- historial.
+- all orders;
+- by status;
+- by date range;
+- by customer;
+- details;
+- history.
 
-### Transiciones administrativas permitidas
+### Permitted administrative transitions
 
 ```text
 CONFIRMED -> PREPARING
@@ -1387,9 +1387,9 @@ CONFIRMED -> CANCELLED
 PREPARING -> CANCELLED
 ```
 
-### Transiciones prohibidas
+### Prohibited transitions
 
-Ejemplos:
+Examples:
 
 ```text
 CONFIRMED -> DELIVERED
@@ -1398,24 +1398,24 @@ DELIVERED -> CANCELLED
 CANCELLED -> CONFIRMED
 ```
 
-### Regla de historial
+### History rule
 
-Toda transición confirmada genera PedidoEstadoHistorial con:
+Every committed transition generates PedidoEstadoHistorial with:
 
-- pedido;
-- estado anterior;
-- estado nuevo;
-- fecha;
-- origen (`USER` o `SYSTEM`);
-- Usuario actor cuando el origen es `USER` (ausente en transiciones automáticas del checkout, p. ej. resolución del pago).
+- order;
+- previous status;
+- new status;
+- date;
+- origin (`USER` or `SYSTEM`);
+- acting Usuario when origin is `USER` (absent in automatic checkout transitions, e.g. payment resolution).
 
-### Cancelación administrativa
+### Administrative cancellation
 
-Cuando el Administrador lleva un Pedido de `CONFIRMED` o `PREPARING` a `CANCELLED`, deben aplicarse las mismas reglas de restauración de inventario y refund simulado definidas en CU-SAL-03.
+When the Administrator moves a Pedido from `CONFIRMED` or `PREPARING` to `CANCELLED`, the same inventory-restoration and simulated-refund rules defined in CU-SAL-03 must apply.
 
-La transición a `CANCELLED` con efectos (restauración + refund) pertenece a una única rutina (`sp_order_cancel`); `sp_order_change_status` no implementa `CANCELLED` y la rechaza.
+The transition to `CANCELLED` with effects (restoration + refund) belongs to a single routine (`sp_order_cancel`); `sp_order_change_status` does not implement `CANCELLED` and rejects it.
 
-### Entidades
+### Entities
 
 - Pedido
 - PedidoEstadoHistorial
@@ -1427,98 +1427,98 @@ La transición a `CANCELLED` con efectos (restauración + refund) pertenece a un
 
 ---
 
-# 9. Reglas de negocio consolidadas
+# 9. Consolidated business rules
 
-## 9.1 Seguridad e identidad
+## 9.1 Security and identity
 
-| ID | Regla |
+| ID | Rule |
 |---|---|
-| BR-SEC-001 | El email normalizado de Usuario debe ser único. |
-| BR-SEC-002 | La contraseña nunca debe persistirse en texto plano. |
-| BR-SEC-003 | Solo un Usuario `ACTIVE` puede autenticarse. |
-| BR-SEC-004 | Solo ADMIN puede ejecutar operaciones administrativas. |
-| BR-SEC-005 | Un CUSTOMER solo puede operar sobre recursos propios. |
+| BR-SEC-001 | The Usuario's normalized email must be unique. |
+| BR-SEC-002 | The password must never be persisted in plaintext. |
+| BR-SEC-003 | Only an `ACTIVE` Usuario may authenticate. |
+| BR-SEC-004 | Only ADMIN may execute administrative operations. |
+| BR-SEC-005 | A CUSTOMER may operate only on their own resources. |
 
 ## 9.2 Cliente
 
-| ID | Regla |
+| ID | Rule |
 |---|---|
-| BR-CUS-001 | Todo Usuario con rol CUSTOMER debe poseer exactamente un Cliente. |
-| BR-CUS-002 | Un Cliente puede tener cero o más Direcciones. |
-| BR-CUS-003 | Como máximo una Dirección por Cliente puede ser principal. |
+| BR-CUS-001 | Every Usuario with role CUSTOMER must have exactly one Cliente. |
+| BR-CUS-002 | A Cliente may have zero or more Direcciones. |
+| BR-CUS-003 | At most one Dirección per Cliente may be primary. |
 
-## 9.3 Catálogo
+## 9.3 Catalog
 
-| ID | Regla |
+| ID | Rule |
 |---|---|
-| BR-CAT-001 | Todo Libro debe tener título. |
-| BR-CAT-002 | Un Libro ACTIVE debe tener al menos un Autor. |
-| BR-CAT-003 | Un Libro ACTIVE debe tener al menos una Categoría. |
-| BR-CAT-004 | Una Edición pertenece exactamente a un Libro. |
-| BR-CAT-005 | Una Edición pertenece exactamente a una Editorial. |
-| BR-CAT-006 | SKU es obligatorio y único. |
-| BR-CAT-007 | ISBN-13, cuando exista, debe ser válido y único. |
-| BR-CAT-008 | Precio de Edición > 0. |
-| BR-CAT-009 | Número de páginas > 0. |
-| BR-CAT-010 | Una Edición solo es publicable si Libro y Edición están ACTIVE. |
-| BR-CAT-011 | Un Libro se relaciona N:M con Autor. |
-| BR-CAT-012 | Un Libro se relaciona N:M con Categoría. |
-| BR-CAT-013 | Las categorías poseen máximo dos niveles. |
-| BR-CAT-014 | Una subcategoría no puede tener descendientes. |
-| BR-CAT-015 | El orden de autoría debe conservarse. |
+| BR-CAT-001 | Every Libro must have a title. |
+| BR-CAT-002 | An ACTIVE Libro must have at least one Autor. |
+| BR-CAT-003 | An ACTIVE Libro must have at least one Categoría. |
+| BR-CAT-004 | An Edición belongs to exactly one Libro. |
+| BR-CAT-005 | An Edición belongs to exactly one Editorial. |
+| BR-CAT-006 | SKU is required and unique. |
+| BR-CAT-007 | ISBN-13, when present, must be valid and unique. |
+| BR-CAT-008 | Edición price > 0. |
+| BR-CAT-009 | Page count > 0. |
+| BR-CAT-010 | An Edición is publishable only if Libro and Edición are ACTIVE. |
+| BR-CAT-011 | A Libro has an N:M relationship with Autor. |
+| BR-CAT-012 | A Libro has an N:M relationship with Categoría. |
+| BR-CAT-013 | Categories have at most two levels. |
+| BR-CAT-014 | A subcategory cannot have descendants. |
+| BR-CAT-015 | Authorship order must be preserved. |
 
 ## 9.4 Inventario
 
-| ID | Regla |
+| ID | Rule |
 |---|---|
-| BR-INV-001 | Cada Edición posee exactamente un Inventario en v1. |
-| BR-INV-002 | stock_actual >= 0 siempre. |
+| BR-INV-001 | Each Edición has exactly one Inventario in v1. |
+| BR-INV-002 | stock_actual >= 0 always. |
 | BR-INV-003 | stock_minimo >= 0. |
-| BR-INV-004 | Todo cambio confirmado de stock genera MovimientoInventario. |
-| BR-INV-005 | MovimientoInventario es inmutable. |
-| BR-INV-006 | SALE solo puede ser generado por el proceso de checkout. |
-| BR-INV-007 | CANCELLATION solo puede ser generado por cancelación de un Pedido previamente confirmado. |
+| BR-INV-004 | Every committed stock change generates MovimientoInventario. |
+| BR-INV-005 | MovimientoInventario is immutable. |
+| BR-INV-006 | SALE may be generated only by the checkout process. |
+| BR-INV-007 | CANCELLATION may be generated only by cancelling a previously confirmed Pedido. |
 
 ## 9.5 Carrito
 
-| ID | Regla |
+| ID | Rule |
 |---|---|
-| BR-CART-001 | Un Cliente puede tener como máximo un Carrito ACTIVE. |
-| BR-CART-002 | La cantidad de CarritoItem debe ser > 0. |
-| BR-CART-003 | La pareja (Carrito, Edición) es única. |
-| BR-CART-004 | Una Edición no comercializable no puede agregarse. |
-| BR-CART-005 | Agregar al carrito no reserva stock. |
-| BR-CART-006 | El checkout vuelve a validar stock y precio. |
+| BR-CART-001 | A Cliente may have at most one ACTIVE Carrito. |
+| BR-CART-002 | CarritoItem quantity must be > 0. |
+| BR-CART-003 | The (Carrito, Edición) pair is unique. |
+| BR-CART-004 | A non-marketable Edición cannot be added. |
+| BR-CART-005 | Adding to the cart does not reserve stock. |
+| BR-CART-006 | Checkout revalidates stock and price. |
 
 ## 9.6 Pedido
 
-| ID | Regla |
+| ID | Rule |
 |---|---|
-| BR-ORD-001 | El checkout solo opera sobre Carrito ACTIVE no vacío. |
-| BR-ORD-002 | Pedido persistido debe poseer al menos un PedidoItem. |
-| BR-ORD-003 | Pedido posee exactamente un PedidoDireccion en v1. |
-| BR-ORD-004 | Pedido posee exactamente un Pago en v1. |
-| BR-ORD-005 | PedidoItem conserva snapshots comerciales. |
-| BR-ORD-006 | PedidoDireccion conserva snapshot independiente. |
-| BR-ORD-007 | Checkout confirmado y descuento de inventario son atómicos. |
-| BR-ORD-008 | Toda transición de Pedido genera historial. |
-| BR-ORD-009 | Solo se permiten transiciones definidas por la máquina de estados. |
-| BR-ORD-010 | total = subtotal en PLIEGO v1. |
-| BR-ORD-011 | La moneda de PLIEGO v1 es USD. |
+| BR-ORD-001 | Checkout operates only on a nonempty ACTIVE Carrito. |
+| BR-ORD-002 | A persisted Pedido must have at least one PedidoItem. |
+| BR-ORD-003 | Pedido has exactly one PedidoDireccion in v1. |
+| BR-ORD-004 | Pedido has exactly one Pago in v1. |
+| BR-ORD-005 | PedidoItem preserves commercial snapshots. |
+| BR-ORD-006 | PedidoDireccion preserves an independent snapshot. |
+| BR-ORD-007 | Committed checkout and inventory deduction are atomic. |
+| BR-ORD-008 | Every Pedido transition generates history. |
+| BR-ORD-009 | Only transitions defined by the state machine are allowed. |
+| BR-ORD-010 | total = subtotal in PLIEGO v1. |
+| BR-ORD-011 | PLIEGO v1 currency is USD. |
 
 ## 9.7 Pago
 
-| ID | Regla |
+| ID | Rule |
 |---|---|
-| BR-PAY-001 | Monto del Pago debe ser igual al total del Pedido. |
-| BR-PAY-002 | Pedido no puede quedar CONFIRMED sin Pago APPROVED. |
-| BR-PAY-003 | Pago APPROVED puede pasar únicamente a REFUNDED. |
-| BR-PAY-004 | Un Pedido cancelado después de aprobación debe reflejar Pago REFUNDED. |
-| BR-PAY-005 | PLIEGO no persiste CVV ni número completo de tarjeta. |
+| BR-PAY-001 | Pago amount must equal Pedido total. |
+| BR-PAY-002 | Pedido cannot remain CONFIRMED without APPROVED Pago. |
+| BR-PAY-003 | APPROVED Pago may transition only to REFUNDED. |
+| BR-PAY-004 | A Pedido cancelled after approval must reflect REFUNDED Pago. |
+| BR-PAY-005 | PLIEGO does not persist CVV or the full card number. |
 
 ---
 
-# 10. Máquinas de estado
+# 10. State machines
 
 ## 10.1 Usuario
 
@@ -1526,9 +1526,9 @@ La transición a `CANCELLED` con efectos (restauración + refund) pertenece a un
 ACTIVE <-> BLOCKED
 ```
 
-No se define borrado físico de Usuario en v1.
+Physical deletion of Usuario is not defined in v1.
 
-## 10.2 Libro, Edición, Autor, Editorial y Categoría
+## 10.2 Libro, Edición, Autor, Editorial, and Categoría
 
 ```text
 ACTIVE <-> INACTIVE
@@ -1540,9 +1540,9 @@ ACTIVE <-> INACTIVE
 ACTIVE -> CHECKED_OUT
 ```
 
-`CHECKED_OUT` es final en v1.
+`CHECKED_OUT` is final in v1.
 
-`CANCELLED` queda fuera del dominio de Carrito en PLIEGO v1 (DD-COR-003): ningún caso de uso lo produce.
+`CANCELLED` is outside the Carrito domain in PLIEGO v1 (DD-COR-003): no use case produces it.
 
 ## 10.4 Pedido
 
@@ -1557,16 +1557,16 @@ PENDING_PAYMENT
       └--------------------> CANCELLED
 ```
 
-| Estado actual | Estado siguiente permitido |
+| Current status | Permitted next status |
 |---|---|
 | PENDING_PAYMENT | CONFIRMED, CANCELLED |
 | CONFIRMED | PREPARING, CANCELLED |
 | PREPARING | SHIPPED, CANCELLED |
 | SHIPPED | DELIVERED |
-| DELIVERED | Ninguno |
-| CANCELLED | Ninguno |
+| DELIVERED | None |
+| CANCELLED | None |
 
-`PENDING_PAYMENT` es transitorio e intra-transaccional dentro de CU-SAL-01: se crea y se resuelve a `CONFIRMED` o `CANCELLED` en la misma transacción, por lo que ningún Pedido observable post-commit permanece en `PENDING_PAYMENT`. Cada checkout confirmado persiste dos registros de historial: el inicial (`NULL -> PENDING_PAYMENT`, `SYSTEM`) y el terminal (`PENDING_PAYMENT -> CONFIRMED` o `PENDING_PAYMENT -> CANCELLED`, `SYSTEM`).
+`PENDING_PAYMENT` is transient and intra-transactional within CU-SAL-01: it is created and resolved to `CONFIRMED` or `CANCELLED` in the same transaction, so no post-commit observable Pedido remains `PENDING_PAYMENT`. Each committed checkout persists two history records: the initial (`NULL -> PENDING_PAYMENT`, `SYSTEM`) and terminal (`PENDING_PAYMENT -> CONFIRMED` or `PENDING_PAYMENT -> CANCELLED`, `SYSTEM`).
 
 ## 10.5 Pago
 
@@ -1575,39 +1575,39 @@ PENDING -> APPROVED -> REFUNDED
        \-> REJECTED
 ```
 
-`REJECTED` y `REFUNDED` son finales.
+`REJECTED` and `REFUNDED` are final.
 
 ---
 
-# 11. Política de borrado
+# 11. Deletion policy
 
-| Entidad | Política |
+| Entity | Policy |
 |---|---|
-| Usuario | No se elimina físicamente |
-| Cliente | No se elimina físicamente |
-| Direccion | DELETE físico permitido |
-| Autor | Estado ACTIVE/INACTIVE |
-| Editorial | Estado ACTIVE/INACTIVE |
-| Categoria | Estado ACTIVE/INACTIVE |
-| Libro | Estado ACTIVE/INACTIVE |
-| LibroAutor | Asociación actualizable; DELETE de relación permitido |
-| LibroCategoria | Asociación actualizable; DELETE de relación permitido |
-| Edicion | Estado ACTIVE/INACTIVE |
-| Inventario | No se elimina |
-| MovimientoInventario | Nunca se elimina |
-| Carrito | No se elimina |
-| CarritoItem | DELETE físico permitido |
-| Pedido | Nunca se elimina |
-| PedidoItem | Nunca se elimina |
-| PedidoDireccion | Nunca se elimina |
-| Pago | Nunca se elimina |
-| PedidoEstadoHistorial | Nunca se elimina |
+| Usuario | Not physically deleted |
+| Cliente | Not physically deleted |
+| Direccion | Physical DELETE allowed |
+| Autor | ACTIVE/INACTIVE status |
+| Editorial | ACTIVE/INACTIVE status |
+| Categoria | ACTIVE/INACTIVE status |
+| Libro | ACTIVE/INACTIVE status |
+| LibroAutor | Updatable association; relationship DELETE allowed |
+| LibroCategoria | Updatable association; relationship DELETE allowed |
+| Edicion | ACTIVE/INACTIVE status |
+| Inventario | Not deleted |
+| MovimientoInventario | Never deleted |
+| Carrito | Not deleted |
+| CarritoItem | Physical DELETE allowed |
+| Pedido | Never deleted |
+| PedidoItem | Never deleted |
+| PedidoDireccion | Never deleted |
+| Pago | Never deleted |
+| PedidoEstadoHistorial | Never deleted |
 
 ---
 
-# 12. Entidades de dominio derivadas
+# 12. Derived domain entities
 
-La baseline justifica las siguientes entidades persistentes:
+The baseline justifies the following persistent entities:
 
 1. Usuario
 2. Cliente
@@ -1629,11 +1629,11 @@ La baseline justifica las siguientes entidades persistentes:
 18. Pago
 19. PedidoEstadoHistorial
 
-No se autoriza añadir una nueva entidad persistente al DER sin caso de uso, requisito, regla de negocio o cambio formal que la justifique.
+Adding a new persistent entity to the ERD is not authorized without a justifying use case, requirement, business rule, or formal change.
 
 ---
 
-# 13. Cardinalidades conceptuales derivadas
+# 13. Derived conceptual cardinalities
 
 ```text
 Usuario 1 -------- 0..1 Cliente
@@ -1643,7 +1643,7 @@ Libro N ---------- M Autor
 Libro N ---------- M Categoria
 
 Categoria 0..1 --- 0..N Categoria
-(profundidad máxima = 2)
+(maximum depth = 2)
 
 Libro 1 ----------- 0..N Edicion
 Editorial 1 ------- 0..N Edicion
@@ -1664,171 +1664,171 @@ Pedido 1 ---------- 1 Pago
 Pedido 1 ---------- 1..N PedidoEstadoHistorial
 ```
 
-### Restricciones adicionales
+### Additional constraints
 
-- Usuario CUSTOMER → exactamente 1 Cliente.
-- Máximo un Carrito ACTIVE por Cliente.
+- CUSTOMER Usuario → exactly 1 Cliente.
+- At most one ACTIVE Carrito per Cliente.
 - `UNIQUE(Carrito, Edicion)`.
-- Edición → exactamente 1 Inventario.
-- Pedido generado por checkout → exactamente 1 Pago.
-- Todo Pedido debe registrar al menos su estado inicial en PedidoEstadoHistorial.
-- `Pedido.Subtotal > 0` y `Pedido.Total > 0` (derivado: al menos un item con cantidad y precio > 0).
-- `Pago.Monto > 0` (derivado: `Monto = Total`).
-- `UNIQUE(Pedido, Edicion)` en PedidoItem.
+- Edición → exactly 1 Inventario.
+- Pedido generated by checkout → exactly 1 Pago.
+- Every Pedido must record at least its initial status in PedidoEstadoHistorial.
+- `Pedido.Subtotal > 0` and `Pedido.Total > 0` (derived: at least one item with quantity and price > 0).
+- `Pago.Monto > 0` (derived: `Monto = Total`).
+- `UNIQUE(Pedido, Edicion)` in PedidoItem.
 
 ---
 
-# 14. Snapshots obligatorios
+# 14. Mandatory snapshots
 
 ## 14.1 PedidoItem
 
-Debe conservar como mínimo:
+Must preserve at least:
 
-- `edicion_id` como referencia histórica;
+- `edicion_id` as a historical reference;
 - `sku_snapshot`;
 - `isbn_snapshot`;
 - `titulo_snapshot`;
 - `autores_snapshot`;
 - `editorial_snapshot`;
 - `formato_snapshot`;
-- `idioma_snapshot` (idioma de la Edición al checkout);
+- `idioma_snapshot` (Edición language at checkout);
 - `precio_unitario`;
 - `cantidad`;
 - `subtotal`.
 
-Los snapshots son fuente histórica del Pedido. Cambios posteriores del catálogo no pueden alterar el contenido histórico.
+Snapshots are the Pedido's historical source. Later catalog changes cannot alter historical content.
 
 ## 14.2 PedidoDireccion
 
-Debe conservar como mínimo:
+Must preserve at least:
 
-- destinatario;
-- dirección línea 1;
-- dirección línea 2;
-- ciudad;
-- provincia;
-- país (`PaisCodigo` ISO 3166-1 alpha-2);
-- código postal cuando exista;
-- referencia;
-- teléfono.
+- recipient;
+- address line 1;
+- address line 2;
+- city;
+- province;
+- country (`PaisCodigo` ISO 3166-1 alpha-2);
+- postal code when present;
+- reference;
+- phone number.
 
-El alias no se copia al snapshot (etiqueta de conveniencia del Cliente). Modificar o eliminar una Dirección del Cliente no altera PedidoDireccion.
-
----
-
-# 15. Requisitos funcionales consolidados
-
-## Identidad y clientes
-
-- RF-AUTH-001 Registrar una cuenta CUSTOMER.
-- RF-AUTH-002 Impedir emails duplicados.
-- RF-AUTH-003 Autenticar usuarios.
-- RF-AUTH-004 Diferenciar CUSTOMER y ADMIN.
-- RF-SEC-001 Permitir a ADMIN bloquear/reactivar Clientes.
-- RF-CUS-001 Consultar/modificar perfil propio.
-- RF-CUS-002 Administrar direcciones propias.
-
-## Catálogo
-
-- RF-CAT-001 Consultar catálogo público.
-- RF-CAT-002 Buscar por título.
-- RF-CAT-003 Buscar por autor.
-- RF-CAT-004 Buscar por ISBN.
-- RF-CAT-005 Filtrar por categoría.
-- RF-CAT-006 Filtrar por precio, idioma y formato.
-- RF-CAT-007 Paginar resultados.
-- RF-CAT-008 Consultar detalle de Edición.
-- RF-CAT-009 Administrar Autores.
-- RF-CAT-010 Administrar Editoriales.
-- RF-CAT-011 Administrar Categorías.
-- RF-CAT-012 Administrar Libros.
-- RF-CAT-013 Administrar Ediciones.
-
-## Inventario
-
-- RF-INV-001 Mantener inventario independiente por Edición.
-- RF-INV-002 Consultar inventario.
-- RF-INV-003 Registrar entradas.
-- RF-INV-004 Registrar ajustes.
-- RF-INV-005 Impedir stock negativo.
-- RF-INV-006 Mantener historial de movimientos.
-- RF-INV-007 Configurar stock mínimo.
-
-## Carrito
-
-- RF-CART-001 Consultar carrito activo.
-- RF-CART-002 Agregar Edición.
-- RF-CART-003 Modificar cantidad.
-- RF-CART-004 Eliminar item.
-- RF-CART-005 Mantener máximo un carrito ACTIVE por Cliente.
-
-## Venta y pedidos
-
-- RF-ORD-001 Realizar checkout.
-- RF-ORD-002 Revalidar estado, precio y stock durante checkout.
-- RF-ORD-003 Descontar stock de forma transaccional.
-- RF-ORD-004 Conservar snapshots de compra.
-- RF-ORD-005 Consultar historial de pedidos propios.
-- RF-ORD-006 Consultar detalle de pedido.
-- RF-ORD-007 Controlar transiciones de estado.
-- RF-ORD-008 Permitir gestión logística administrativa.
-- RF-ORD-009 Permitir cancelación en estados válidos.
-- RF-ORD-010 Restaurar inventario durante cancelación válida.
-- RF-ORD-011 Mantener historial de estados.
-
-## Pago
-
-- RF-PAY-001 Crear Pago asociado al Pedido.
-- RF-PAY-002 Procesar resultado académico APPROVED/REJECTED.
-- RF-PAY-003 Reflejar REFUNDED en una cancelación posterior a aprobación.
-- RF-PAY-004 No almacenar datos sensibles de tarjeta.
-- RF-PAY-005 Mantener exactamente un Pago por Pedido en v1.
+The alias is not copied to the snapshot (a convenience label for the Cliente). Modifying or deleting a Cliente's Dirección does not alter PedidoDireccion.
 
 ---
 
-# 16. Requisitos no funcionales vinculantes
+# 15. Consolidated functional requirements
 
-| ID | Categoría | Requisito |
+## Identity and customers
+
+- RF-AUTH-001 Register a CUSTOMER account.
+- RF-AUTH-002 Prevent duplicate emails.
+- RF-AUTH-003 Authenticate users.
+- RF-AUTH-004 Distinguish CUSTOMER and ADMIN.
+- RF-SEC-001 Allow ADMIN to block/reactivate Clientes.
+- RF-CUS-001 View/modify own profile.
+- RF-CUS-002 Manage own addresses.
+
+## Catalog
+
+- RF-CAT-001 Browse public catalog.
+- RF-CAT-002 Search by title.
+- RF-CAT-003 Search by author.
+- RF-CAT-004 Search by ISBN.
+- RF-CAT-005 Filter by category.
+- RF-CAT-006 Filter by price, language, and format.
+- RF-CAT-007 Paginate results.
+- RF-CAT-008 View Edición details.
+- RF-CAT-009 Manage Autores.
+- RF-CAT-010 Manage Editoriales.
+- RF-CAT-011 Manage Categorías.
+- RF-CAT-012 Manage Libros.
+- RF-CAT-013 Manage Ediciones.
+
+## Inventory
+
+- RF-INV-001 Maintain independent inventory per Edición.
+- RF-INV-002 View inventory.
+- RF-INV-003 Record receipts.
+- RF-INV-004 Record adjustments.
+- RF-INV-005 Prevent negative stock.
+- RF-INV-006 Maintain movement history.
+- RF-INV-007 Configure minimum stock.
+
+## Cart
+
+- RF-CART-001 View active cart.
+- RF-CART-002 Add Edición.
+- RF-CART-003 Change quantity.
+- RF-CART-004 Remove item.
+- RF-CART-005 Maintain at most one ACTIVE cart per Cliente.
+
+## Sales and orders
+
+- RF-ORD-001 Perform checkout.
+- RF-ORD-002 Revalidate status, price, and stock during checkout.
+- RF-ORD-003 Deduct stock transactionally.
+- RF-ORD-004 Preserve purchase snapshots.
+- RF-ORD-005 View own order history.
+- RF-ORD-006 View order details.
+- RF-ORD-007 Control status transitions.
+- RF-ORD-008 Allow administrative logistics management.
+- RF-ORD-009 Allow cancellation in valid statuses.
+- RF-ORD-010 Restore inventory during valid cancellation.
+- RF-ORD-011 Maintain status history.
+
+## Payment
+
+- RF-PAY-001 Create Pago associated with Pedido.
+- RF-PAY-002 Process academic APPROVED/REJECTED result.
+- RF-PAY-003 Reflect REFUNDED on a cancellation after approval.
+- RF-PAY-004 Do not store sensitive card data.
+- RF-PAY-005 Maintain exactly one Pago per Pedido in v1.
+
+---
+
+# 16. Binding nonfunctional requirements
+
+| ID | Category | Requirement |
 |---|---|---|
-| RNF-001 | Integridad | Una operación transaccional no debe dejar persistencia parcial. |
-| RNF-002 | Concurrencia | Checkouts concurrentes no pueden producir stock negativo ni sobreventa. |
-| RNF-003 | Seguridad | Passwords nunca en texto plano. |
-| RNF-004 | Seguridad | Operaciones administrativas requieren ADMIN. |
-| RNF-005 | Autorización | CUSTOMER no accede a recursos de otro Cliente. |
-| RNF-006 | Mantenibilidad | Cambios de BD mediante Flyway. |
-| RNF-007 | Arquitectura | Separación Controller -> Service -> Gateway. |
-| RNF-008 | Arquitectura | Sin JPA/Hibernate. |
-| RNF-009 | Arquitectura | Controllers/Services sin SQL de negocio. |
-| RNF-010 | Interoperabilidad | API REST con JSON. |
-| RNF-011 | Evolución | Backend independiente del futuro frontend. |
-| RNF-012 | Trazabilidad | Todo cambio de stock posee MovimientoInventario. |
-| RNF-013 | Testabilidad | SP/functions críticos deben probar caminos exitosos y fallidos. |
-| RNF-014 | Configuración | Secretos no se almacenan en Git. |
-| RNF-015 | Rendimiento | Catálogo siempre paginado. |
-| RNF-016 | Exactitud | Dinero usa tipos decimales exactos. |
-| RNF-017 | Trazabilidad | Toda transición de Pedido posee historial. |
+| RNF-001 | Integrity | A transactional operation must not leave partial persistence. |
+| RNF-002 | Concurrency | Concurrent checkouts cannot produce negative stock or overselling. |
+| RNF-003 | Security | Passwords never in plaintext. |
+| RNF-004 | Security | Administrative operations require ADMIN. |
+| RNF-005 | Authorization | CUSTOMER does not access another Cliente's resources. |
+| RNF-006 | Maintainability | Database changes through Flyway. |
+| RNF-007 | Architecture | Controller -> Service -> Gateway separation. |
+| RNF-008 | Architecture | No JPA/Hibernate. |
+| RNF-009 | Architecture | Controllers/Services without business SQL. |
+| RNF-010 | Interoperability | REST API with JSON. |
+| RNF-011 | Evolution | Backend independent of the future frontend. |
+| RNF-012 | Traceability | Every stock change has a MovimientoInventario. |
+| RNF-013 | Testability | Critical SPs/functions must test successful and failing paths. |
+| RNF-014 | Configuration | Secrets are not stored in Git. |
+| RNF-015 | Performance | Catalog always paginated. |
+| RNF-016 | Accuracy | Money uses exact decimal types. |
+| RNF-017 | Traceability | Every Pedido transition has history. |
 
 ---
 
-# 17. Relación entre casos de uso
+# 17. Relationships between use cases
 
 ### `<<include>>`
 
-- CU-SAL-01 **incluye** CU-PAY-01.
+- CU-SAL-01 **includes** CU-PAY-01.
 
-### Reutilización de reglas
+### Rule reuse
 
-- CU-SAL-03 y la cancelación administrativa de CU-ADM-SAL-01 utilizan las mismas reglas de reversión de inventario y refund simulado.
-- CU-CART-02 y CU-CART-03 utilizan la misma autoridad de disponibilidad: Inventario.
-- CU-CAT-01 y CU-CAT-02 utilizan la misma condición de publicación comercial.
+- CU-SAL-03 and administrative cancellation in CU-ADM-SAL-01 use the same inventory-reversal and simulated-refund rules.
+- CU-CART-02 and CU-CART-03 use the same availability authority: Inventario.
+- CU-CAT-01 and CU-CAT-02 use the same commercial-publication condition.
 
-No se introducen relaciones `<<extend>>` en v1 porque no aportan claridad adicional al dominio actual.
+No `<<extend>>` relationships are introduced in v1 because they add no clarity to the current domain.
 
 ---
 
-# 18. Matriz caso de uso → entidades
+# 18. Use case → entities matrix
 
-| Caso de uso | Entidades principales |
+| Use case | Main entities |
 |---|---|
 | CU-AUTH-01 | Usuario, Cliente |
 | CU-AUTH-02 | Usuario |
@@ -1857,9 +1857,9 @@ No se introducen relaciones `<<extend>>` en v1 porque no aportan claridad adicio
 
 ---
 
-# 19. Matriz principal de trazabilidad
+# 19. Main traceability matrix
 
-| Requisito | Caso(s) de uso |
+| Requirement | Use case(s) |
 |---|---|
 | RF-AUTH-001 | CU-AUTH-01 |
 | RF-AUTH-002 | CU-AUTH-01 |
@@ -1890,9 +1890,9 @@ No se introducen relaciones `<<extend>>` en v1 porque no aportan claridad adicio
 
 ---
 
-# 20. Superficie funcional preliminar de Database API
+# 20. Preliminary Database API functional surface
 
-Esta sección **no define todavía firmas SQL**. Su propósito es demostrar que los casos de uso son implementables y preparar la siguiente etapa.
+This section **does not yet define SQL signatures**. Its purpose is to demonstrate that the use cases can be implemented and prepare the next stage.
 
 ```text
 AUTH
@@ -1957,15 +1957,15 @@ SALES
   sp_order_change_status
 ```
 
-`sp_order_cancel` es la única rutina que transiciona a `CANCELLED` con efectos; `sp_order_change_status` cubre solo el avance logístico (`CONFIRMED -> PREPARING -> SHIPPED -> DELIVERED`) y `sp_inventory_adjust` cubre `ADJUSTMENT_IN`/`ADJUSTMENT_OUT` (la entrada inicial usa `sp_inventory_entry`).
+`sp_order_cancel` is the only routine that transitions to `CANCELLED` with effects; `sp_order_change_status` covers only logistics advancement (`CONFIRMED -> PREPARING -> SHIPPED -> DELIVERED`), and `sp_inventory_adjust` covers `ADJUSTMENT_IN`/`ADJUSTMENT_OUT` (initial receipt uses `sp_inventory_entry`).
 
-La definición de parámetros, retornos, SQLSTATE y contratos transaccionales pertenece al documento **Database API Contract** posterior al DER lógico.
+Parameter, return, SQLSTATE, and transactional contract definitions belong to the **Database API Contract** document following the logical ERD.
 
 ---
 
-# 21. Entidades explícitamente excluidas del DER v1
+# 21. Entities explicitly excluded from the v1 ERD
 
-El DER v1 no deberá incluir sin aprobación formal:
+The v1 ERD shall not include the following without formal approval:
 
 - Bodega;
 - Sucursal;
@@ -1986,44 +1986,44 @@ El DER v1 no deberá incluir sin aprobación formal:
 - MarketplaceSeller;
 - Outbox;
 - Sesion;
-- RefreshToken persistido;
+- persisted RefreshToken;
 - PrecioHistorico.
 
-La ausencia es deliberada y evita sobre-modelado.
+Their absence is deliberate and prevents over-modeling.
 
 ---
 
-# 22. Definition of Ready para implementación
+# 22. Definition of Ready for implementation
 
-Un caso de uso solo podrá entregarse a Codex/Claude cuando existan:
+A use case may be handed to Codex/Claude only when the following exist:
 
-1. ID de caso de uso;
-2. requisitos asociados;
-3. reglas de negocio;
-4. entidades afectadas;
-5. precondiciones;
-6. flujo principal;
-7. flujos alternativos relevantes;
-8. postcondiciones;
-9. Database API definida;
-10. endpoint REST definido cuando aplique;
-11. criterios de aceptación;
-12. pruebas esperadas.
+1. use case ID;
+2. associated requirements;
+3. business rules;
+4. affected entities;
+5. preconditions;
+6. main flow;
+7. relevant alternative flows;
+8. postconditions;
+9. defined Database API;
+10. defined REST endpoint when applicable;
+11. acceptance criteria;
+12. expected tests.
 
-No se deberá solicitar a un agente simplemente “implementar carrito” o “hacer checkout” sin estos contratos.
+An agent shall not simply be asked to “implement cart” or “do checkout” without these contracts.
 
 ---
 
 # 23. Definition of Done
 
-Una funcionalidad se considera terminada cuando, cuando aplique, estén sincronizados:
+A feature is considered complete when the following are synchronized, where applicable:
 
 ```text
-Caso de uso
+Use case
     ↓
-Requisito
+Requirement
     ↓
-Regla de negocio
+Business rule
     ↓
 Flyway
     ↓
@@ -2033,96 +2033,96 @@ Java Gateway
     ↓
 Application Service
     ↓
-Controller REST
+REST Controller
     ↓
 OpenAPI
     ↓
-Pruebas
+Tests
     ↓
-Documentación
+Documentation
 ```
 
 ---
 
-# 24. Gestión del cambio
+# 24. Change management
 
-Esta baseline no debe editarse informalmente para adaptar el documento a una implementación ya realizada.
+This baseline must not be edited informally to adapt the document to an implementation already completed.
 
-Si durante DER, Database API o implementación aparece una necesidad que contradiga esta baseline:
+If a need contradicting this baseline emerges during ERD, Database API, or implementation work:
 
-1. identificar el caso de uso afectado;
-2. identificar requisitos y reglas afectadas;
-3. documentar el motivo;
-4. evaluar impacto en DER, BD, API y pruebas;
-5. aprobar el cambio;
-6. incrementar versión del documento;
-7. actualizar trazabilidad antes de implementar.
+1. identify the affected use case;
+2. identify affected requirements and rules;
+3. document the reason;
+4. assess impact on the ERD, database, API, and tests;
+5. approve the change;
+6. increment the document version;
+7. update traceability before implementation.
 
-Ejemplos:
+Examples:
 
-- `v1.0 -> v1.1` para correcciones compatibles;
-- `v1.x -> v2.0` para cambios relevantes de alcance o comportamiento.
-
----
-
-# 25. Criterio de cierre de la baseline
-
-La baseline se considera suficientemente cerrada para iniciar el DER cuando:
-
-- no existen actores críticos sin identificar;
-- no existen funcionalidades v1 sin caso de uso;
-- no existen entidades persistentes sin justificación funcional;
-- las cardinalidades críticas pueden derivarse;
-- los estados de las entidades transaccionales están definidos;
-- las transiciones permitidas están definidas;
-- las reglas de inventario están definidas;
-- el checkout está definido transaccionalmente;
-- el historial comercial utiliza snapshots;
-- el pago académico está delimitado;
-- las exclusiones de alcance están explícitas;
-- no existen decisiones críticas marcadas como `TBD`.
-
-**Resultado:** esta baseline cumple las condiciones anteriores y queda habilitada para derivar el **DER lógico de PLIEGO**.
+- `v1.0 -> v1.1` for compatible corrections;
+- `v1.x -> v2.0` for significant changes in scope or behavior.
 
 ---
 
-# 26. Próxima etapa autorizada
+# 25. Baseline closure criterion
 
-La siguiente etapa del ciclo de vida será:
+The baseline is considered sufficiently closed to begin the ERD when:
+
+- no critical actors remain unidentified;
+- no v1 features lack a use case;
+- no persistent entities lack functional justification;
+- critical cardinalities can be derived;
+- transactional entity statuses are defined;
+- permitted transitions are defined;
+- inventory rules are defined;
+- checkout is defined transactionally;
+- commercial history uses snapshots;
+- academic payment is delimited;
+- scope exclusions are explicit;
+- no critical decisions are marked `TBD`.
+
+**Result:** this baseline meets the preceding conditions and is authorized for deriving the **PLIEGO logical ERD**.
+
+---
+
+# 26. Next authorized stage
+
+The next lifecycle stage will be:
 
 ```text
 Use Case Baseline v1.0
         ↓
-DER lógico
+Logical ERD
         ↓
-Diccionario de datos
+Data dictionary
         ↓
 Database API Contract
         ↓
-Modelo físico PostgreSQL
+PostgreSQL physical model
         ↓
-Catálogo definitivo de SP / Functions / Triggers
+Definitive SP / Function / Trigger catalog
         ↓
-Contratos REST
+REST contracts
         ↓
-Work Orders de implementación
+Implementation Work Orders
 ```
 
-No deberán definirse tipos físicos PostgreSQL, índices ni firmas finales de Stored Procedures antes de validar el DER lógico.
+PostgreSQL physical types, indexes, and final Stored Procedure signatures shall not be defined before validating the logical ERD.
 
 ---
 
-## Historial del documento
+## Document history
 
-| Versión | Fecha | Estado | Descripción |
+| Version | Date | Status | Description |
 |---|---|---|---|
-| 1.0 | 2026-09-23 | BASELINE | Primera baseline formal de casos de uso de PLIEGO. Consolida alcance, actores, reglas, estados, cardinalidades conceptuales y trazabilidad para permitir el diseño del DER sin ambigüedad material. |
-| 1.1 | 2026-09-23 | BASELINE | Revisión arquitectónica: retroalimenta DD-COR-001/002 (país e idioma), elimina Carrito.CANCELLED, fija invariantes > 0 y unicidad Pedido/Edición, define PENDING_PAYMENT transitorio, origen USER/SYSTEM del historial, simulador determinista, auth stateless, dueño transaccional y de cancelación, visibilidad con maestros INACTIVE y bajo-stock con umbral. |
+| 1.0 | 2026-09-23 | BASELINE | First formal PLIEGO use case baseline. Consolidates scope, actors, rules, statuses, conceptual cardinalities, and traceability to enable ERD design without material ambiguity. |
+| 1.1 | 2026-09-23 | BASELINE | Architectural review: feeds back DD-COR-001/002 (country and language), removes Carrito.CANCELLED, sets > 0 invariants and Pedido/Edición uniqueness, defines transient PENDING_PAYMENT, USER/SYSTEM history origin, deterministic simulator, stateless auth, transaction and cancellation ownership, visibility with INACTIVE masters, and threshold-based low stock. |
 
 ---
 
-## Referencias metodológicas
+## Methodological references
 
 - ISO/IEC/IEEE 29148:2018 — Systems and software engineering — Life cycle processes — Requirements engineering.
 - OMG Unified Modeling Language (UML), Version 2.5.1.
-- Arquitectura aprobada del proyecto PLIEGO: Java 25, Spring Boot, PostgreSQL, Flyway, lógica de negocio centrada en BD y API REST desacoplada del futuro frontend.
+- Approved PLIEGO project architecture: Java 25, Spring Boot, PostgreSQL, Flyway, database-centered business logic, and REST API decoupled from the future frontend.
