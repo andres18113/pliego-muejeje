@@ -3,7 +3,7 @@ import { expect, test, type Page } from "@playwright/test";
 const address = { addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null,
   city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true };
 
-async function installApi(page: Page) {
+async function installApi(page: Page, postalCode: string | null = null) {
   let quantity = 2;
   const writes: { path: string; body: unknown }[] = [];
   await page.route("**/api/v1/**", async (route) => {
@@ -12,7 +12,7 @@ async function installApi(page: Page) {
     if (path === "/api/v1/auth/refresh") return json({ accessToken: "a11y-test", expiresInSeconds: 1800, user: { userId: "2", email: "ana@example.com", role: "CUSTOMER" } });
     if (path === "/api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (path === "/api/v1/reference/countries") return json([{ code: "EC", name: "Ecuador" }]);
-    if (path === "/api/v1/me/addresses" && request.method() === "GET") return json([address]);
+    if (path === "/api/v1/me/addresses" && request.method() === "GET") return json([{ ...address, postalCode }]);
     if (path === "/api/v1/me/addresses/15" && request.method() === "PUT") {
       writes.push({ path, body: request.postDataJSON() });
       return route.fulfill({ status: 204 });
@@ -71,17 +71,19 @@ for (const width of [375, 1280]) {
 
   test(`collapsed address errors reveal a labelled field and allow keyboard recovery at 200% text / ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
-    const writes = await installApi(page);
+    // A preserved value from an older projection/draft must remain recoverable.
+    // Native maxLength now prevents typing an overlong value into a new input.
+    const preservedPostalCode = "123456789012345678901";
+    const writes = await installApi(page, preservedPostalCode);
     await page.goto("/account/addresses");
     const edit = page.getByRole("button", { name: "Editar Casa" });
     await edit.focus(); await page.keyboard.press("Enter");
     const form = page.locator(".address-form");
     await expect(form).toBeVisible(); await enlargeText(page);
     const summary = form.locator("summary"), details = form.locator("details");
-    await summary.focus(); await page.keyboard.press("Enter");
     await expect(details).toHaveAttribute("open", "");
     const postal = form.getByRole("textbox", { name: "Código postal", exact: true });
-    await postal.focus(); await page.keyboard.insertText("123456789012345678901");
+    await expect(postal).toHaveValue(preservedPostalCode);
     await summary.focus(); await page.keyboard.press("Space");
     await expect(details).not.toHaveAttribute("open");
     const save = form.getByRole("button", { name: "Guardar dirección" });

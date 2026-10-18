@@ -6,10 +6,47 @@ import { json, renderPurchaseRoute, stubApi } from "@/test/purchase";
 
 const profile = { customerId: "2", email: "ana@example.invalid", firstNames: "Ana", lastNames: "Pérez", phone: "+593991234567", state: "ACTIVE", version: "0", emailVerified: true };
 function renderProfile() {
-  stubApi({ "GET /api/v1/me": () => json(profile), "GET /api/v1/me/billing-identity": () => new Response(null, { status: 204 }) });
-  return renderPurchaseRoute([{ path: "/account", element: <AccountPage /> }], "/account");
+  const api = stubApi({ "GET /api/v1/me": () => json(profile), "GET /api/v1/me/billing-identity": () => new Response(null, { status: 204 }) });
+  return { ...renderPurchaseRoute([{ path: "/account", element: <AccountPage /> }], "/account"), api };
 }
 afterEach(() => { vi.unstubAllGlobals(); sessionStorage.clear(); });
+
+it.each(["nombres", "apellidos"])("keeps rejected %s feedback on blur until an accepted edit or cancellation", async label => {
+  const { api } = renderProfile(); const user = userEvent.setup();
+  const editName = `Editar ${label}`;
+  await user.click(await screen.findByRole("button", { name: editName }));
+  const form = screen.getByRole("form", { name: editName });
+  const input = within(form).getByRole("textbox");
+  await user.clear(input); await user.type(input, "Ana1");
+  expect(input).toHaveValue("Ana");
+  const rejection = input.getAttribute("aria-describedby");
+  expect(rejection).toBeTruthy();
+  const message = document.getElementById(rejection!)!.textContent;
+  await user.tab();
+  expect(input).toHaveAttribute("aria-invalid", "true");
+  expect(input).toHaveAccessibleDescription(message!);
+  await user.click(input); await user.type(input, " María");
+  expect(input).not.toHaveAttribute("aria-invalid", "true");
+  await user.type(input, "1");
+  await user.click(within(form).getByRole("button", { name: "Cancelar" }));
+  expect(screen.queryByRole("form", { name: editName })).not.toBeInTheDocument();
+  expect(api.count("PATCH", "/api/v1/me")).toBe(0);
+  await vi.waitFor(() => expect(screen.getByRole("button", { name: editName })).toHaveFocus());
+  await user.click(screen.getByRole("button", { name: editName }));
+  expect(screen.getByRole("form", { name: editName })).not.toHaveTextContent(message!);
+});
+
+it("still validates an incomplete name on blur and clears the error after a valid edit", async () => {
+  renderProfile(); const user = userEvent.setup();
+  await user.click(await screen.findByRole("button", { name: "Editar nombres" }));
+  const input = screen.getByLabelText("Nombres");
+  await user.clear(input);
+  expect(input).not.toHaveAttribute("aria-invalid", "true");
+  await user.tab();
+  expect(input).toHaveAttribute("aria-invalid", "true");
+  await user.click(input); await user.type(input, "Ana");
+  expect(input).not.toHaveAttribute("aria-invalid", "true");
+});
 
 it("removes the pending-change notice when the user restores the original value", async () => {
   renderProfile(); const user = userEvent.setup();

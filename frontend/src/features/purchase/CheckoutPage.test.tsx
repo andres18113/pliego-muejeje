@@ -327,8 +327,10 @@ describe("CheckoutPage", () => {
     fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Escribe la fecha de caducidad en formato MM/AA.")).toBeInTheDocument();
-    expect(expiry).toHaveAttribute("aria-invalid", "true");
-    expect(expiry).toHaveFocus();
+    // Opening the recovery dialog can remount the input. Assert the live control
+    // after its focus effect, rather than the detached element used for typing.
+    expect(screen.getByLabelText("Caducidad (MM/AA)")).toHaveAttribute("aria-invalid", "true");
+    await waitFor(() => expect(screen.getByLabelText("Caducidad (MM/AA)")).toHaveFocus());
     expect(api.count("POST", "/api/v1/checkout")).toBe(0);
   });
 

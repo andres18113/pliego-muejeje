@@ -254,12 +254,13 @@ async function signInAndAdd(page: Page, api: FakePliego, screenshots?: { pending
 
 async function saveFirstAddress(page: Page) {
   await page.getByRole("button", { name: "Añadir dirección" }).click();
-  await expect(page.getByRole("dialog", { name: "Nueva dirección" })).toBeVisible();
-  await page.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
-  await page.getByLabel("Ciudad").fill("Quito");
-  await page.getByLabel("Provincia").fill("Pichincha");
-  await page.getByLabel("Teléfono de contacto").fill("0991234567");
-  await page.getByRole("button", { name: "Guardar dirección" }).click();
+  const dialog = page.getByRole("dialog", { name: "Nueva dirección" });
+  await expect(dialog).toBeVisible();
+  await dialog.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
+  await dialog.getByLabel("Ciudad", { exact: true }).fill("Quito");
+  await dialog.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+  await dialog.getByLabel("Teléfono de contacto", { exact: true }).fill("991234567");
+  await dialog.getByRole("button", { name: "Guardar dirección", exact: true }).click();
   await expect(page.locator('[data-purchase="selected-address"]')).toContainText("Av. Amazonas 100");
 }
 

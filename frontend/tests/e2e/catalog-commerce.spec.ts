@@ -127,9 +127,10 @@ test("desktop Libros: heading, persistent filters, three columns, sort and no pr
   await sort.focus();
   await page.keyboard.press("Enter");
   const list = page.getByRole("listbox", { name: "Ordenar por" });
-  await expect(list.getByRole("option")).toHaveText([/^Más vendidos/, /^Título: A–Z/, /^Precio: menor a mayor/, /^Precio: mayor a menor/]);
+  await expect(list.getByRole("option")).toHaveText([/^Más vendidos/, /^Título: A–Z/, /^Título: Z–A/, /^Precio: menor a mayor/, /^Precio: mayor a menor/]);
   await expect(list.getByRole("option", { name: "Título: A–Z" })).toHaveAttribute("aria-selected", "true");
   await page.screenshot({ path: test.info().outputPath("sort-open.png") });
+  await page.keyboard.press("ArrowDown");
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("Enter");

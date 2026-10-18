@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 import manifest from "../../../covers/generated/manifest-normalized.json" with { type: "json" };
 import { bookCardFixtures } from "../../src/dev/bookCardFixtures";
 
-async function install(page: Page, scheme: "light" | "dark", outcome: "ok" | "unconfirmed" | "confirmed-after-loss" = "ok") {
+async function install(page: Page, scheme: "light" | "dark", outcome: "ok" | "unconfirmed" | "observed-after-loss" = "ok") {
   const editions = bookCardFixtures.map((book, index) => ({ ...book, available: index % 3 !== 2, price: index === 8 ? "999999999.99" : book.price }));
   const saved = new Set(editions.map((book) => book.editionId));
   const quantities = new Map<string, number>();
@@ -140,12 +140,14 @@ test("Card cart control (Favoritos) blocks an unconfirmed add without locking fa
   expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
 });
 
-test("Card cart control (Favoritos) reconciles a lost add response from the cart read without another POST", async ({ page }) => {
-  const api = await install(page, "light", "confirmed-after-loss");
+test("Card cart control (Favoritos) reconciles the observed cart without claiming confirmation or replaying the POST", async ({ page }) => {
+  const api = await install(page, "light", "observed-after-loss");
   // The catalog card is browse-only; the shared cart control still serves Favoritos rows.
   await page.goto("/favorites"); const card = page.locator("[data-favorite-row]").first();
   await card.locator("[data-bookcard-cart]").click();
-  await expect(card.getByRole("status")).toHaveText("Agregado al carrito.");
+  await expect(card.getByText("En el carrito: 1 unidad", { exact: true })).toBeVisible();
+  await expect(card.getByRole("alert")).toHaveText("No pudimos confirmar esta acción. Al consultar, el carrito tiene 1 unidad de esta edición. Revisa el carrito antes de agregar otra copia.");
+  await expect(page.locator("[data-cart-added-notification]")).toHaveCount(0);
   expect(api.commands.filter((command) => command.path === "/cart/items")).toHaveLength(1);
 });
 

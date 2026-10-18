@@ -1,6 +1,65 @@
 import { expect, test } from "@playwright/test";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
+for (const width of [320, 1280]) {
+  test(`profile name rejection keeps Cancel clickable and Save correct at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 1000 });
+    let profile = { customerId: "2", firstNames: "Ana", lastNames: "Pérez", email: "ana@example.invalid", phone: "+593991234567", state: "ACTIVE", version: "0", emailVerified: true };
+    const writes: Record<string, unknown>[] = [];
+    await page.route("**/api/v1/**", async route => {
+      const request = route.request(), path = new URL(request.url()).pathname.replace("/api/v1", "");
+      if (path === "/auth/refresh") return route.fulfill({ json: { accessToken: "synthetic-profile-feedback", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "2", email: profile.email, role: "CUSTOMER" } } });
+      if (path === "/storefront/navigation") return route.fulfill({ json: storefrontNavigationFixture });
+      if (path === "/me/billing-identity") return route.fulfill({ status: 204 });
+      if (path === "/me" && request.method() === "PATCH") {
+        const body = request.postDataJSON(); writes.push(body);
+        profile = { ...profile, [body.field]: body.value, version: "1" };
+        return route.fulfill({ status: 204 });
+      }
+      if (path === "/me") return route.fulfill({ json: profile });
+      return route.fulfill({ json: { items: [], page: 0, pageSize: 20, totalCount: "0" } });
+    });
+
+    await page.goto("/account");
+    for (const [label, value] of [["nombres", "Ana"], ["apellidos", "Ana María"]]) {
+      const edit = page.getByRole("button", { name: `Editar ${label}`, exact: true });
+      await edit.click();
+      const form = page.getByRole("form", { name: `Editar ${label}` }), input = form.getByRole("textbox");
+      await input.fill(""); await input.pressSequentially(`${value}1`);
+      await expect(input).toHaveValue(value);
+      await expect(input).toHaveAttribute("aria-invalid", "true");
+      await expect(form.locator(".field-error:visible")).toHaveCount(1);
+      // A real pointer click blurs the input before mouseup. Clearing its error
+      // during blur used to move this button and swallow the click on mobile.
+      await form.getByRole("button", { name: "Cancelar", exact: true }).click();
+      await expect(form).toHaveCount(0);
+      await expect(edit).toBeFocused();
+      expect(writes).toHaveLength(0);
+    }
+
+    await page.getByRole("button", { name: "Editar apellidos", exact: true }).click();
+    const surname = page.getByRole("form", { name: "Editar apellidos" });
+    await expect(surname.getByRole("textbox")).toHaveValue("Pérez");
+    await expect(surname.locator(".field-error")).toHaveCount(0);
+    await expect(surname.getByText("Cambios sin guardar", { exact: true })).toHaveCount(0);
+    await surname.getByRole("button", { name: "Cancelar", exact: true }).click();
+
+    await page.getByRole("button", { name: "Editar nombres", exact: true }).click();
+    const form = page.getByRole("form", { name: "Editar nombres" }), input = form.getByRole("textbox");
+    await expect(input).toHaveValue("Ana");
+    await input.fill("Ana María");
+    await input.press("End"); await input.pressSequentially("1");
+    await expect(input).toHaveAttribute("aria-invalid", "true");
+    await input.press("Tab");
+    await expect(input).toHaveAttribute("aria-invalid", "true");
+    await form.getByRole("button", { name: "Guardar", exact: true }).click();
+    await expect(form).toHaveCount(0);
+    await expect(page.getByRole("status").filter({ hasText: "Guardamos tus nombres." })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Editar nombres", exact: true })).toBeFocused();
+    expect(writes).toEqual([{ field: "firstNames", value: "Ana María", expectedVersion: "0" }]);
+  });
+}
+
 for (const width of [320, 768, 1280]) for (const theme of ["light", "dark"]) {
   test(`profile feedback has one field error and distinct draft state at ${width}px ${theme}`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });

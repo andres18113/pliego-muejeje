@@ -210,7 +210,9 @@ function NameEditor({ field, label, profile, refetch, onExpired, onDone }: Edito
     <PersonNameInput onInputRejected={setInvalid} ref={inputRef} id={`profile-${field}-input`} className={classes.input} value={value} autoComplete={field === "firstNames" ? "given-name" : "family-name"}
       aria-invalid={Boolean(invalid) || undefined} aria-describedby={invalid ? `${inputId}-error` : undefined}
       onChange={(event) => { setValue(event.target.value); setInvalid(null); }}
-      onBlur={() => setInvalid(personNameError(value, label))} />
+      // A rejected edit leaves the accepted value unchanged. Keep its explanation
+      // until another edit or submission; removing it on blur can move the clicked action.
+      onBlur={() => setInvalid(current => current ?? personNameError(value, label))} />
     {invalid && <FieldMessage id={`${inputId}-error`} tone="error">{invalid}</FieldMessage>}
   </EditorFrame>;
 }

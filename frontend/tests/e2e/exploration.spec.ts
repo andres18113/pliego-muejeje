@@ -59,7 +59,7 @@ for (const scheme of ["light", "dark"] as const) for (const width of [320, 375, 
     await expect(page.getByRole("button", { name: "Quitar Literatura" })).toBeVisible();
     // Sort is the real contract; price orders appear only when prices differ.
     await page.getByRole("combobox", { name: "Ordenar por" }).click();
-    await expect(page.getByRole("listbox", { name: "Ordenar por" }).getByRole("option")).toHaveText([/^Más vendidos/, /^Título: A–Z/]);
+    await expect(page.getByRole("listbox", { name: "Ordenar por" }).getByRole("option")).toHaveText([/^Más vendidos/, /^Título: A–Z/, /^Título: Z–A/]);
     await page.keyboard.press("Escape");
     // Desktop keeps the filters beside the shelf; narrower widths open the same panel in a drawer.
     const desktop = width >= 1024;
@@ -110,11 +110,16 @@ test("filters and order preserve URL context, apply in place, price decimals are
   await dialog.getByRole("button", { name: "Formato" }).click();
   const formats = dialog.getByRole("group", { name: "Formato" });
   await expect(formats.getByRole("radio", { name: "Todos los formatos", exact: true })).toBeChecked();
-  await formats.getByText("Tapa dura", { exact: true }).click();
+  await formats.getByRole("radio", { name: "Tapa dura", exact: true }).click();
   await expect(page).toHaveURL(/format=HARDCOVER/);
   await expect(page).not.toHaveURL(/page=/);
-  await formats.getByText("Todos los formatos", { exact: true }).click();
+  // URL navigation starts before React commits the updated filter summary.
+  // Continue from the visible committed selection, not from the earlier URL alone.
+  await expect(dialog.getByRole("button", { name: /^Formato/ })).toContainText("Tapa dura");
+  await expect(formats.getByRole("radio", { name: "Tapa dura", exact: true })).toBeChecked();
+  await formats.getByRole("radio", { name: "Todos los formatos", exact: true }).click();
   await expect(page).not.toHaveURL(/format=/);
+  await expect(formats.getByRole("radio", { name: "Todos los formatos", exact: true })).toBeChecked();
   // Price is browsed through the sort order; a typed range is no longer offered, but shared URLs keep working.
   await expect(dialog.getByText("Precio mínimo")).toHaveCount(0);
   await page.keyboard.press("Escape");
