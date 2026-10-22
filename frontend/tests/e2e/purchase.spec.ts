@@ -216,7 +216,7 @@ async function signInAndAdd(page: Page, api: FakePliego, screenshots?: { pending
   await page.goto("/catalog/editions/42");
   await page.getByRole("link", { name: "Iniciar sesión para agregar" }).click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/catalog\/editions\/42$/);
   const addButton = page.locator("main.detail-route .button-primary");
@@ -528,7 +528,7 @@ test("a guest opening the cart returns there after signing in", async ({ page })
   await expect(page.getByRole("heading", { level: 1, name: "Inicia sesión para ver tu carrito." })).toBeVisible();
   await page.getByRole("main").getByRole("link", { name: "Iniciar sesión" }).click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
 
   await expect(page).toHaveURL(/\/cart$/);

@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
+import { fillCheckoutBilling } from "./billing-fixtures";
 
 async function installBillingApi(page: Page, loseCheckout = false) {
   const state = { posts: [] as {body:Record<string,unknown>;key:string|null}[], downloads:0 };
@@ -28,19 +29,13 @@ async function installBillingApi(page: Page, loseCheckout = false) {
   });
   return state;
 }
-async function fillFiscalData(page:Page) {
-  await page.getByLabel("Nombre para la factura").fill("Compradora Prueba");
-  await page.getByLabel("Cédula",{exact:true}).fill("0123456782");
-  await page.getByLabel("Dirección de facturación",{exact:true}).fill("Calle Fiscal de prueba");
-  await page.getByLabel("Ciudad de facturación",{exact:true}).fill("Quito");
-  await page.getByLabel("Provincia de facturación",{exact:true}).fill("Pichincha");
-}
+async function fillFiscalData(page:Page) { await fillCheckoutBilling(page); }
 test("digital nominative checkout validates identity and downloads authenticated academic PDF",async({page})=>{
   const state=await installBillingApi(page);
   await page.goto("/checkout");
   await page.getByRole("button",{name:"Transferencia bancaria"}).click();
   await page.getByRole("button",{name:"Hacer pedido"}).click();
-  await expect(page.getByText("Ingresa una cédula ecuatoriana válida de 10 dígitos")).toBeVisible();
+  await expect(page.locator("#billing-cedula-status")).toHaveText("Escribe tu cédula o RUC.");
   expect(state.posts).toHaveLength(0);
   await fillFiscalData(page);
   await page.getByRole("button",{name:"Hacer pedido"}).click();

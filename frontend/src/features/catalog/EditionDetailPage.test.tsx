@@ -1,5 +1,6 @@
 import { storefrontNavigationFixture } from "@/test/storefrontFixture";
 import { SiteHeader } from "@/app/navigation/SiteHeader";
+import { BackNavigationProvider } from "@/app/navigation/BackNavigationProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { render, screen, waitFor, within } from "@testing-library/react";
@@ -20,7 +21,8 @@ function renderDetail(initialEntry = "/catalog/editions/42?from=%2Fcatalog%3Fq%3
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const initialUrl = new URL(initialEntry, "http://localhost");
   const router = createMemoryRouter(
-    [{ path: "/catalog/editions/:editionId", element: <><SiteHeader /><EditionDetailPage /></> }],
+    [{ path: "/catalog/editions/:editionId", element: <BackNavigationProvider><SiteHeader /><EditionDetailPage /></BackNavigationProvider> },
+      { path: "/catalog", element: <BackNavigationProvider><SiteHeader /><h1>Catálogo de prueba</h1></BackNavigationProvider> }],
     { initialEntries: [{ pathname: initialUrl.pathname, search: initialUrl.search, state }] },
   );
 
@@ -151,6 +153,24 @@ describe("EditionDetailPage", () => {
     expect(screen.queryByText(/DEMO|sin identidad/)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
+  });
+
+  it("draws the one back arrow under the header, on the content edge, and leaves the wordmark alone", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse()));
+    renderDetail("/catalog/editions/42");
+    const main = await screen.findByRole("main");
+    await screen.findByRole("heading", { level: 1 });
+    const header = screen.getByTestId("site-header");
+    expect(within(header).queryByRole("button", { name: "Volver atrás" })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Volver atrás" })).toHaveLength(1);
+    const back = within(main).getByRole("button", { name: "Volver atrás" });
+    const trail = within(main).getByRole("navigation", { name: "Ruta de navegación" });
+    expect(back.compareDocumentPosition(trail) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(within(header).getByRole("link", { name: "PLIEGO, ir al inicio" }).previousElementSibling?.getAttribute("aria-label")).not.toBe("Volver atrás");
+    await userEvent.click(back);
+    expect(await screen.findByRole("heading", { name: "Catálogo de prueba" })).toBeInTheDocument();
+    // Leaving the edition releases the claim: other pages keep the arrow in the header, unchanged.
+    expect(within(screen.getByTestId("site-header")).queryByRole("button", { name: "Volver atrás" })).toBeInTheDocument();
   });
 
   it("keeps the shared header and footer while loading and after success", async () => {

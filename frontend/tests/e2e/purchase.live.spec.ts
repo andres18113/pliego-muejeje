@@ -35,7 +35,7 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await page.goto(`/catalog/editions/${edition.editionId}`);
   await page.getByRole("link", { name: "Iniciar sesión para agregar" }).click();
   await page.getByLabel("Correo electrónico").fill(email);
-  await page.getByLabel("Contraseña").fill(password);
+  await page.getByLabel("Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await page.getByRole("button", { name: "Agregar al carrito" }).click();
   await page.getByRole("link", { name: "Ver el carrito" }).click();
@@ -102,7 +102,7 @@ test("transfer checkout reads configured bank data and confirms the approved pay
   await page.goto(`/catalog/editions/${edition.editionId}`);
   await page.getByRole("link", { name: "Iniciar sesión para agregar" }).click();
   await page.getByLabel("Correo electrónico").fill(email);
-  await page.getByLabel("Contraseña").fill(password);
+  await page.getByLabel("Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await page.getByRole("button", { name: "Agregar al carrito" }).click();
   await page.getByRole("link", { name: "Ver el carrito" }).click();

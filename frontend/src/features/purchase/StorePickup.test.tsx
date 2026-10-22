@@ -34,16 +34,16 @@ describe("STORE_PICKUP transport and checkout", () => {
 
   it("switches tabs by keyboard, preserving the saved delivery address and selected pickup", async () => {
     api(); const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     const delivery = screen.getByRole("tab", { name: "Entrega" });
     delivery.focus(); await user.keyboard("{ArrowRight}");
     expect(screen.getByRole("tab", { name: "Retiro" })).toHaveFocus();
     await user.click(await screen.findByRole("radio", { name: /Punto de prueba Quito/ }));
-    expect(screen.queryByText(/Av\. Principal 123/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Av. Principal 123")).not.toBeInTheDocument();
     expect(screen.queryByTitle("Mapa de Punto de prueba Quito")).not.toBeInTheDocument();
     expect(screen.getByText(/Preparación estimada: ~37 min/)).toBeInTheDocument();
     expect(within(screen.getByRole("complementary")).queryByText(/Retiro en tienda|Punto de prueba Quito|Recepción/)).not.toBeInTheDocument();
-    await user.click(delivery); expect(await screen.findByText(/Av\. Principal 123/)).toBeInTheDocument();
+    await user.click(delivery); expect(await screen.findByText("Av. Principal 123")).toBeInTheDocument();
     await user.click(screen.getByRole("tab", { name: "Retiro" }));
     expect(screen.getByRole("button", { name: "Cambiar punto" })).toBeInTheDocument();
     expect(screen.getByText("Punto de prueba Quito")).toBeInTheDocument();
@@ -110,13 +110,13 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(screen.getByRole("tabpanel")).toHaveFocus();
     expect(screen.getByRole("button", { name: "Hacer pedido" })).toHaveAttribute("aria-disabled", "true");
     await user.click(screen.getByRole("tab", { name: "Entrega" }));
-    expect(await screen.findByText(/Av\. Principal 123/)).toBeInTheDocument();
+    expect(await screen.findByText("Av. Principal 123")).toBeInTheDocument();
   });
 
   it.each(["P5010", "P5011", "P5012"])("preserves the known backend rejection %s rather than leaving an unknown attempt", async (code) => {
-    api(); await expect(submitCheckout({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).resolves.toMatchObject({ fulfillment: { pickup: pickupSnapshot } });
+    api(); await expect(submitCheckout({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).resolves.toMatchObject({ fulfillment: { pickup: pickupSnapshot } });
     stubApi({ "POST /api/v1/checkout": () => problem(409, code, "Retiro no disponible", "Elige otro método.") });
-    await expect(submitCheckout({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440001")).rejects.toMatchObject({ name: "ApiRequestError", code });
+    await expect(submitCheckout({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440001")).rejects.toMatchObject({ name: "ApiRequestError", code });
   });
 
   it("retains immutable pickup and pricing snapshots through detail and attempt resolution", async () => {
@@ -127,7 +127,7 @@ describe("STORE_PICKUP transport and checkout", () => {
 
   it("leaves an incomplete pickup receipt unresolved rather than discarding pickup facts", async () => {
     api({ "POST /api/v1/checkout": () => json({ ...approved, fulfillment: { method: "STORE_PICKUP" } }, 201) });
-    await expect(submitCheckout({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).rejects.toMatchObject({ name: "CheckoutOutcomeUnknown" });
+    await expect(submitCheckout({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).rejects.toMatchObject({ name: "CheckoutOutcomeUnknown" });
   });
 
   it("names simultaneous location and bank failures independently for assistive technology", async () => {

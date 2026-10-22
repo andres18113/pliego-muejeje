@@ -1,5 +1,5 @@
 import { useAvailabilityFocus } from "./useAvailabilityFocus";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -10,6 +10,8 @@ import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { authLocation } from "@/features/auth/authLocation";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
+import { InPageBackButton } from "@/app/navigation/BackButton";
+import { EditionContextBar, useContextBarVisible } from "./EditionContextBar";
 import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 import { useSession } from "@/app/session";
 import { useFavoriteSessionFailure, useFavoriteStatuses } from "@/features/favorites/favoriteStatus";
@@ -73,6 +75,11 @@ export function EditionDetailPage() {
   const addedPulseTimer = useRef<number | null>(null);
   const detailHeadingRef = useRef<HTMLHeadingElement>(null);
   const [purchaseFeedback, setPurchaseFeedback] = useState<PurchaseFeedback | null>(null);
+  const wayfinding = useRef<HTMLDivElement>(null);
+  const contextBarVisible = useContextBarVisible(wayfinding);
+  const focusPageBack = useCallback(() => {
+    (wayfinding.current?.querySelector("button") ?? document.getElementById("contenido-principal"))?.focus({ preventScroll: true });
+  }, []);
   const [addedPulse, setAddedPulse] = useState(false);
   const returnHref = safeCatalogReturnHref(new URLSearchParams(location.search).get("from"));
   const currentIntent = `${location.pathname}${location.search}`;
@@ -239,10 +246,13 @@ export function EditionDetailPage() {
     return (
       <>
         <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} aria-busy="true" data-media={loadingMedia ?? undefined} data-loading>
-          <nav className={classes.trail} aria-label="Ruta de navegación">
-            <Link to="/catalog">Catálogo</Link>
-            {coverPreview ? <span aria-current="page">{coverPreview.title}</span> : <span aria-hidden="true"><i className={classes.bone} data-bone="trail" /></span>}
-          </nav>
+          <div className={classes.wayfinding}>
+            <InPageBackButton />
+            <nav className={classes.trail} aria-label="Ruta de navegación">
+              <Link to="/catalog">Catálogo</Link>
+              {coverPreview ? <span aria-current="page">{coverPreview.title}</span> : <span aria-hidden="true"><i className={classes.bone} data-bone="trail" /></span>}
+            </nav>
+          </div>
           <div className={classes.edition}>
             <div className={classes.cover}>
               {coverPreview?.url ? (
@@ -437,10 +447,18 @@ export function EditionDetailPage() {
   return (
     <>
       <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} data-media={media}>
-        <nav className={classes.trail} aria-label="Ruta de navegación">
-          <Link to="/catalog">Catálogo</Link>
-          <span aria-current="page">{title}</span>
-        </nav>
+        <EditionContextBar visible={contextBarVisible} title={title}
+          price={detail.price ? formatUsd(detail.price) : null} originalPrice={detail.offer ? formatUsd(detail.offer.originalPrice) : null}
+          cover={{ url: detail.coverUrl ?? null, license: detail.coverLicense ?? null, attribution: detail.coverAttribution ?? null }}
+          onHiddenWithFocus={focusPageBack} />
+        {/* As on product pages: the back arrow under the header, on the content's own edge — never beside the wordmark. */}
+        <div className={classes.wayfinding} ref={wayfinding}>
+          <InPageBackButton />
+          <nav className={classes.trail} aria-label="Ruta de navegación">
+            <Link to="/catalog">Catálogo</Link>
+            <span aria-current="page">{title}</span>
+          </nav>
+        </div>
 
         <article className={classes.edition} data-available={detail.available}>
           <div className={classes.cover}>

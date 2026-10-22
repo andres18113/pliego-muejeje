@@ -85,11 +85,13 @@ export interface paths {
         };
         /** Consultar mi identificación de facturación */
         get: operations["get"];
-        /** Actualizar mi identificación de facturación */
-        put: operations["put"];
+        /**
+         * Registrar mi cédula
+         * @description Registra la primera cédula. Repetir el mismo número no cambia nada; un número distinto responde P1105 y requiere una corrección.
+         */
+        put: operations["registerBillingIdentity"];
         post?: never;
-        /** Eliminar mi identificación de facturación del perfil */
-        delete: operations["delete"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -410,6 +412,26 @@ export interface paths {
          * @description Si se pierde la respuesta, consulta el detalle del pedido antes de intentar otra cancelación.
          */
         post: operations["cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/billing-identity/correction": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Corregir mi cédula
+         * @description Requiere la contraseña actual y la cédula vista. Queda registrada; las facturas anteriores no cambian.
+         */
+        post: operations["correctBillingIdentity"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1664,6 +1686,16 @@ export interface components {
             /** Format: int64 */
             restoredUnits?: number;
         };
+        BillingIdentityCorrectionRequest: {
+            type: string;
+            currentNumber: string;
+            number?: string;
+            /**
+             * Format: password
+             * @description Contraseña actual, para confirmar la corrección.
+             */
+            currentPassword: string;
+        };
         /** @description Datos completos de una dirección del cliente. */
         AddressRequest: {
             /** @example Casa */
@@ -1722,9 +1754,9 @@ export interface components {
             pickupLocationId?: string;
             /** @description Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación. */
             expectedQuoteFingerprint?: string;
-            billingIdentity?: components["schemas"]["BillingIdentity"];
-            buyerName?: string;
-            billingAddress?: components["schemas"]["InvoiceBillingAddressRequest"];
+            billingIdentity: components["schemas"]["BillingIdentity"];
+            buyerName: string;
+            billingAddress: components["schemas"]["InvoiceBillingAddressRequest"];
         };
         InvoiceBillingAddressRequest: {
             line1: string;
@@ -3106,7 +3138,7 @@ export interface operations {
             };
         };
     };
-    put: {
+    registerBillingIdentity: {
         parameters: {
             query?: never;
             header?: never;
@@ -3118,24 +3150,6 @@ export interface operations {
                 "application/json": components["schemas"]["BillingIdentityRequest"];
             };
         };
-        responses: {
-            /** @description OK */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    delete: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
         responses: {
             /** @description OK */
             200: {
@@ -3732,6 +3746,28 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
+            };
+        };
+    };
+    correctBillingIdentity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingIdentityCorrectionRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };

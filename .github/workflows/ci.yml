@@ -154,6 +154,13 @@ jobs:
           PGDATABASE=pliego_billing_upgrade_ci \
             PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_billing_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/automatic_billing_upgrade_gate.py
+      - name: Verify stored cédulas survive the required, correctable cédula and RUC upgrades
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_identity_upgrade_ci
+          PGDATABASE=pliego_identity_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_identity_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/billing_identity_upgrade_gate.py
       - name: Verify transactional email with local Mailtrap stub
         shell: bash
         run: |

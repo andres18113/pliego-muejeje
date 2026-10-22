@@ -23,7 +23,8 @@ const availableActionsSchema = z.object({ cancel: z.boolean(), changeShippingAdd
 export type OrderAvailableActions = z.infer<typeof availableActionsSchema>;
 
 export type PaymentMethod = "CARD" | "TRANSFER";
-export type CheckoutCommand = Partial<CheckoutBilling> & {
+/** Every purchase is billed: the cédula, buyer name and billing address are required (ADR 0040). */
+export type CheckoutCommand = CheckoutBilling & {
   paymentMethod: PaymentMethod;
   /** Transient; sent only for CARD and never stored by the client. */
   cardNumber?: string;
@@ -69,7 +70,8 @@ export async function submitCheckout(command: CheckoutCommand, key: string): Pro
     ? { fulfillmentMethod: command.fulfillmentMethod, pickupLocationId: command.pickupLocationId }
     : { addressId: command.addressId, fulfillmentMethod: "HOME_DELIVERY" as const };
   const body = {
-    ...(command.billingIdentity ? { billingIdentity: command.billingIdentity, buyerName: command.buyerName, billingAddress: command.billingAddress ? { ...command.billingAddress, line2: command.billingAddress.line2 ?? undefined, postalCode: command.billingAddress.postalCode ?? undefined } : undefined } : {}),
+    billingIdentity: command.billingIdentity, buyerName: command.buyerName,
+    billingAddress: { ...command.billingAddress, line2: command.billingAddress.line2 ?? undefined, postalCode: command.billingAddress.postalCode ?? undefined },
     ...destination, expectedCartId: command.expectedCartId, expectedQuoteFingerprint: command.expectedQuoteFingerprint, paymentMethod: command.paymentMethod,
     simulationOutcome: "APPROVED",
     ...(command.paymentMethod === "CARD" ? { cardNumber: command.cardNumber } : {}),
@@ -103,7 +105,9 @@ export async function submitCheckout(command: CheckoutCommand, key: string): Pro
 function isConfirmedCheckoutRejection(problem: unknown) {
   const codes = ["VALIDATION_ERROR", "MALFORMED_JSON", "INVALID_CARD_NUMBER", "AUTH_REQUIRED", "AUTH_INVALID_TOKEN",
     "AUTH_INVALID_SESSION", "ACCESS_DENIED", "P1001", "P1002", "P1003", "P1004", "P1005", "P2042", "P2043",
-    "P3001", "P3002", "P4001", "P4002", "P4005", "P5004", "P5005", "P5006", "P5007", "P5010", "P5011", "P5012", "P5013", "P1011"];
+    "P3001", "P3002", "P4001", "P4002", "P4005", "P5004", "P5005", "P5006", "P5007", "P5010", "P5011", "P5012", "P5013", "P1011",
+    // Raised before any order or attempt is written; the whole transaction rolls back (ADR 0040).
+    "P1106"];
   return codes.some((code) => hasCode(problem, code));
 }
 

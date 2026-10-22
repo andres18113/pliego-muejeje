@@ -16,3 +16,6 @@
 .back:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
 
 .primary { display: flex; align-items: center; gap: 4px; min-width: 0; }
+
+/* Under the header: the arrow's glyph, not its 44px hit area, lines up with the content's left edge. */
+.inPage { display: inline-flex; flex: none; margin-inline-start: -11px; }

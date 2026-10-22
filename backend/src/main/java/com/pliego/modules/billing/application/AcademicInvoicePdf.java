@@ -27,7 +27,7 @@ final class AcademicInvoicePdf {
         row(rows, "Dirección del emisor: " + text(s.path("issuer"), "address"));
         row(rows, "Fecha: " + date(s) + " | Pedido: " + text(s, "orderId"));
         row(rows, "Comprador: " + text(s, "buyerName"));
-        row(rows, "Cédula: " + text(s, "identityNumber"));
+        row(rows, (InvoiceRenderer.ruc(s) ? "RUC: " : "Cédula: ") + text(s, "identityNumber"));
         row(rows, "Dirección de facturación: " + address(s.path("billingAddress")));
         if (!optional(s, "buyerEmail").isEmpty()) row(rows, "Correo: " + optional(s, "buyerEmail"));
         row(rows, "Moneda: " + text(s, "currency"));

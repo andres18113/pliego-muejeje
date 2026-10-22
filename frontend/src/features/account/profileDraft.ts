@@ -6,7 +6,7 @@ const prefix = "pliego-profile-draft:";
 const pendingSaves = new Set<string>();
 const fallback = new Map<string, Draft>();
 const fields: DraftField[] = ["firstNames", "lastNames", "phone", "email"];
-function key(customerId: string, field: DraftField) { return `${prefix}${customerId}:${field}`; }
+function key(customerId: string, field: DraftField | "cedula") { return `${prefix}${customerId}:${field}`; }
 function read(customerId: string, field: DraftField): Draft | null {
   try {
     const draft = JSON.parse(sessionStorage.getItem(key(customerId, field)) ?? "null") ?? fallback.get(key(customerId, field));
@@ -82,7 +82,7 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
 }
 
 /** In-flight saves stay locked and announced when the reader leaves and returns to the editor. */
-export function useProfileSaving(customerId: string, field: DraftField) {
+export function useProfileSaving(customerId: string, field: DraftField | "cedula") {
   const saveKey = key(customerId, field);
   const saving = useSyncExternalStore(
     callback => {

@@ -124,12 +124,15 @@ for (const mixed of [false, true]) test(`${mixed ? "mixed" : "digital-only"} che
   const api = await install(page, mixed); await page.goto("/checkout");
   await expect(page.getByRole("heading", { name: "Pago", exact: true })).toBeVisible();
   if (mixed) { await expect(page.getByRole("tab", { name: "Entrega", exact: true })).toBeVisible(); await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible(); }
-  else { await expect(page.getByRole("tab", { name: "Entrega", exact: true })).toHaveCount(0); expect(api.physicalReads).toEqual([]); }
+  // A digital purchase reads no pickup points; saved addresses are read only to be offered for the invoice.
+  else { await expect(page.getByRole("tab", { name: "Entrega", exact: true })).toHaveCount(0); expect(api.physicalReads.filter(path => path !== "/api/v1/me/addresses")).toEqual([]); }
   await page.getByRole("button", { name: "Transferencia bancaria", exact: true }).click();
   await expect(page.getByText("Banco Guayaquil", { exact: true })).toBeVisible();
   await fillCheckoutBilling(page);
   await page.getByRole("button", { name: "Hacer pedido", exact: true }).click();
   await expect(page).toHaveURL(/\/orders\/700$/);
-  expect(api.checkout).toEqual([{ ...billingFixturePayload, ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
-  if (!mixed) { expect(api.physicalReads).toEqual([]); await expect(page.getByRole("region", { name: "Destino confirmado" })).toHaveCount(0); }
+  // The invoice reuses the saved address (the delivery one when there is a delivery) instead of asking again.
+  const invoiceAddress = { line1: "Av. Principal 123", line2: "", city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: "" };
+  expect(api.checkout).toEqual([{ ...billingFixturePayload, billingAddress: invoiceAddress, ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
+  if (!mixed) { expect(api.physicalReads.filter(path => path !== "/api/v1/me/addresses")).toEqual([]); await expect(page.getByRole("region", { name: "Destino confirmado" })).toHaveCount(0); }
 });

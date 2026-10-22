@@ -18,6 +18,7 @@ import uuid
 from admin_order_concurrency import fixture
 from checkout_last_unit import query
 from home_delivery_test_support import age_shipment
+from checkout_billing import billed
 
 
 def encoded(value):
@@ -37,6 +38,8 @@ def token(actor, role):
 
 
 def request(path, actor=None, role="ADMIN", method="GET", body=None):
+    if path == "/api/v1/checkout" and method == "POST" and body is not None:
+        body = billed(body)
     headers = {}
     if method == "POST" and path in ("/api/v1/checkout", "/api/v1/me/addresses"):
         headers["Idempotency-Key"] = str(uuid.uuid4())

@@ -198,8 +198,8 @@
 :global([data-mantine-color-scheme="dark"]) .flow[data-purchase-stage="checkout"] { --pf-card: #2b2d47; --pf-card-edge: rgb(255 255 255 / 8%); }
 .flow[data-purchase-stage="checkout"] .panel { gap: 14px; padding: clamp(18px, 2.2vw, 26px); border-radius: 20px; background: var(--pf-card); box-shadow: inset 0 0 0 1px var(--pf-card-edge); }
 .checkoutDestination, .checkoutPayment { font-size: 1rem; }
-.checkoutDestination .panelHead h2, .checkoutPayment .panelHead h2 { font-size: 1.5rem; font-weight: 600; line-height: 1.2; letter-spacing: -.03em; }
-.checkoutDestination .panelHead :is(button, a), .checkoutPayment .panelHead :is(button, a) { font-size: .9375rem; }
+.checkoutDestination .panelHead h2, .billing .panelHead h2, .checkoutPayment .panelHead h2 { font-size: 1.5rem; font-weight: 600; line-height: 1.2; letter-spacing: -.03em; }
+.checkoutDestination .panelHead :is(button, a), .billing .panelHead :is(button, a), .checkoutPayment .panelHead :is(button, a) { font-size: .9375rem; }
 .checkoutDestination .deliverTo { gap: 0; line-height: 1.45; }
 .checkoutDestination .deliverTo strong { font-weight: 600; }
 .checkoutDestination .panelRule, .checkoutDestination .shipmentWindow { font-size: 1rem; font-weight: 600; }
@@ -333,4 +333,39 @@
 @media (forced-colors: active) {
   .summary, .panel, .choice, .option, .addRow, .problem, .delivery, .cardDialog { border: 1px solid CanvasText; }
   .choice:has(input:checked), .option[aria-pressed="true"] { border-width: 3px; }
+}
+
+/* ---------- Factura (CheckoutBilling) ----------
+   The third decision of checkout, in the same grammar as "Entregar en": once resolved it reads as plain lines
+   with one way to change it; a field appears only for what is missing. No inner cards, rules or banners. */
+.billing { /* names the section for the shared heading sizes */ }
+.billingSet { display: grid; gap: 12px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.billingSet:disabled { opacity: .72; }
+/* Each resolved fact names itself: a small label over its value, read at a glance. */
+.billingRow { display: grid; gap: 2px; min-width: 0; }
+.billingLabel { color: var(--pf-muted); font-size: .875rem; font-weight: 600; line-height: 1.4; }
+.billingValue { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; min-width: 0; font-size: 1.0625rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
+.billingLines { display: grid; gap: 0; font-weight: 500; }
+.billingChip { display: inline-flex; align-items: flex-start; gap: 6px; padding: 3px 10px; border-radius: 8px; background: color-mix(in srgb, var(--pf-blue) 9%, transparent); color: var(--pf-blue); font-size: .9375rem; font-weight: 600; line-height: 1.4; max-width: 100%; overflow-wrap: anywhere; }
+.billingShort { color: var(--pf-ink); font-size: 1rem; font-weight: 500; }
+.billingNote { color: var(--pf-muted); font-size: .9375rem; font-weight: 400; }
+.billingNote a, .billingFix a { color: var(--pf-blue); font-weight: 600; text-underline-offset: 4px; }
+.billingFix { color: var(--error); font-size: .9375rem; font-weight: 600; }
+/* Helper lines here are read, not skimmed: the body size, not the global fine print. */
+.billing :global(.field-help), .billing :global(.field-error) { font-size: .9375rem; line-height: 1.45; }
+.billing :global(.form-field) > label { color: var(--pf-muted); font-size: .875rem; font-weight: 600; }
+@media (forced-colors: active) { .billingChip { border: 1px solid CanvasText; } }
+.billingLegend { margin: 4px 0 2px; padding: 0; color: var(--pf-ink); font-size: 1rem; font-weight: 650; }
+.billingChoices { gap: 8px; }
+.billingChoices .choice { padding: 12px 16px; border-radius: 14px; }
+.billingFields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.billingFields > legend { float: left; width: 100%; }
+.billingPending { margin: 0; color: var(--pf-muted); line-height: 1.5; }
+.billingFields > .billingLegend, .billingFields > .linkAction { grid-column: 1 / -1; }
+.billingFields > .linkAction { justify-self: start; font-size: .9375rem; }
+.billingDone { display: flex; justify-content: flex-start; }
+.digitalNote { margin: 0; color: var(--pf-muted); line-height: 1.5; }
+
+@media (max-width: 599px) {
+  .billingFields { grid-template-columns: minmax(0, 1fr); }
 }

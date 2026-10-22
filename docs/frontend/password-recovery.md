@@ -1,27 +1,27 @@
-# Restablecer contraseña desde el perfil
+# Password reset from the profile
 
-El perfil ofrece **Contraseña → Enviar enlace para restablecer**. Usa el correo vigente de `GET /api/v1/me`, no el borrador de edición ni el correo antiguo de la sesión. Mientras se actualiza el perfil, la acción permanece deshabilitada. Un correo pendiente de verificación ofrece primero el enlace existente para reenviar esa verificación.
+The profile sheet includes the **Contraseña → Cambiar** row. The row opens in place with one sentence naming the current email and the link's limits, and **Enviar enlace** / Cancelar in the action slot; the outcome appears in the row's status line. It uses the current email from `GET /api/v1/me`, never the editing draft or the session's old email; the step remounts if that email changes and discards late responses. While the profile refreshes, Enviar enlace waits. With an email pending verification, Cambiar is disabled and a quiet line under the sheet offers to resend the verification.
 
-Se reutiliza el flujo de recuperación de identidad, sin otra API ni otra regla de contraseñas:
+The identity recovery flow is reused, with no new API and no new password rule:
 
-1. El clic explícito llama a `POST /api/v1/auth/forgot-password` con el correo del perfil y `returnTo: "/account"`.
-2. El servicio transaccional existente solicita la acción mediante JDBC y la Database API. El trabajador de correo entrega el enlace.
-3. El enlace abre `/restablecer-contrasena?from=%2Faccount#token=…`. La página retira el token de la dirección y lo conserva solo en memoria. Abrir el enlace no lo consume.
-4. La persona escribe y confirma su nueva contraseña. `POST /api/v1/auth/reset-password` consume el token una sola vez y revoca las sesiones renovables anteriores.
-5. El acceso continúa mediante el inicio de sesión habitual; su acción principal conserva el regreso al perfil. No se inicia sesión automáticamente.
+1. The explicit click calls `POST /api/v1/auth/forgot-password` with the profile email and `returnTo: "/account"`.
+2. The existing transactional service requests the action through JDBC and the Database API. The mail worker delivers the link.
+3. The link opens `/restablecer-contrasena?from=%2Faccount#token=…`. The page removes the token from the address and keeps it in memory only. Opening the link does not consume it.
+4. The person types and confirms the new password. `POST /api/v1/auth/reset-password` consumes the token once and revokes previous refreshable sessions.
+5. Access continues through the usual sign-in; its main action keeps the return to the profile. There is no automatic sign-in.
 
-Los controles existentes del servidor mantienen el hash del token, vencimiento de 15 minutos, límites de solicitudes y respuesta pública genérica. La solicitud por sí sola no cambia la contraseña ni cierra la sesión. Los tokens de acceso emitidos antes del cambio conservan su vencimiento acotado; la interfaz no promete un cierre instantáneo en otros dispositivos.
+Existing server controls keep the token hash, 15-minute expiry, request limits and a generic public response. The request alone neither changes the password nor ends the session. Access tokens issued before the change keep their bounded expiry; the interface does not promise an instant sign-out on other devices.
 
-La acción del perfil bloquea clics simultáneos y espera un minuto antes de permitir otro envío explícito tras una aceptación, resultado incierto o límite de solicitudes. No realiza reintentos automáticos. «Solicitud recibida» confirma la aceptación, no la entrega del correo. Una respuesta perdida pide revisar el buzón antes de reintentar. Los resultados tardíos se descartan si cambia la cuenta, la vista o el correo mostrado. La espera visual complementa los límites del servidor.
+The profile action blocks simultaneous clicks and waits one minute before allowing another explicit request after an acceptance, an uncertain result or a rate limit. It never retries automatically. «Solicitud recibida» confirms acceptance, not delivery. A lost response asks the person to check the inbox before retrying. Late results are discarded if the account, the view or the shown email changes. The visual wait complements the server limits.
 
-Decisión alineada con la [guía de recuperación de contraseña de OWASP](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html): recuperación por un canal separado, enlace de uso único con caducidad y acceso posterior mediante el inicio de sesión normal. Se conserva la arquitectura Spring → JDBC → Database API y no se modifica el esquema.
+Decision aligned with the [OWASP Forgot Password Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Forgot_Password_Cheat_Sheet.html): recovery through a separate channel, a single-use expiring link and later access through normal sign-in. The Spring → JDBC → Database API architecture is kept and the schema is not modified.
 
-## Verificación
+## Verification
 
-- `PasswordRecovery.test.tsx`: integración con el perfil, correo vigente, clic simultáneo, reenvío manual, fallos inciertos, rechazo definitivo, límite de solicitudes, verificación pendiente y cambios de cuenta/correo durante la respuesta.
-- `backend/src/test/postgres18/password_profile_http_gate.py`: REST, PostgreSQL y entrega a un proveedor HTTP local; uso único concurrente, vencimiento, cuotas, rechazo de la contraseña anterior, acceso con la nueva y revocación de sesiones renovables. Requiere una base **desechable y migrada**, el JAR construido y las variables locales `PG*`, `PLIEGO_DB_*`, `PLIEGO_JWT_SECRET`. Ejecutar con `python3 backend/src/test/postgres18/password_profile_http_gate.py`; `--serve` ofrece una fixture de backend y buzón local para navegador. Nunca entrega correo externo.
-- Regresiones: suite completa frontend, compilación y navegador para perfil, navegación y facturación. Prueba real adicional desde el perfil hasta el correo local, restablecimiento e inicio de sesión; revisión visual en 320/768/1280 px y ambos temas.
+- `PasswordRecovery.test.tsx`: profile sheet row, opening in place, Escape/Cancelar, current email, simultaneous clicks, manual resend, uncertain failures, definite rejection, rate limit, pending verification, and account/email changes during the response.
+- `backend/src/test/postgres18/password_profile_http_gate.py`: REST, PostgreSQL and delivery to a local HTTP provider; concurrent single use, expiry, quotas, rejection of the old password, access with the new one and revocation of refreshable sessions. Requires a **disposable, migrated** database, the built JAR and the local `PG*`, `PLIEGO_DB_*`, `PLIEGO_JWT_SECRET` variables. Run with `python3 backend/src/test/postgres18/password_profile_http_gate.py`; `--serve` offers a backend and local mailbox fixture for the browser. It never delivers external mail.
+- Regressions: full frontend suite, build and browser coverage for profile, navigation and billing. An additional real run from the profile to the local mailbox, reset and sign-in; visual review at 320/768/1280 px in both themes.
 
-Evidencias locales de esta implementación: `/tmp/pliego-password-*.log` y `/tmp/pliego-password-profile-*.png`. Las fixtures usan cuentas sintéticas y no se incluyen credenciales ni tokens en el repositorio.
+Local evidence for the original implementation: `/tmp/pliego-password-*.log` and `/tmp/pliego-password-profile-*.png`. Fixtures use synthetic accounts and no credentials or tokens are included in the repository.
 
-Resultado del 17 de octubre de 2026: **898/898 pruebas frontend**, **20/20 pruebas de navegador**, compilación aprobada y prueba real completa con correo local aprobada. La revisión independiente no dejó hallazgos pendientes. El recorrido real confirmó un único envío y consumo, rechazo de la contraseña anterior, acceso con la nueva y regreso al perfil. Capturas en seis combinaciones de tamaño y tema.
+Result on 17 October 2026: **898/898 frontend tests**, **20/20 browser tests**, build approved and a full real run with local mail approved. The independent review left no open findings. The real run confirmed a single send and consumption, rejection of the old password, access with the new one and return to the profile. Screenshots in six size and theme combinations.

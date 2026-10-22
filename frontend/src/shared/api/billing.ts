@@ -1,13 +1,24 @@
 import { z } from "zod";
-import { cedulaValidationMessage, isValidEcuadorianCedula } from "@/shared/validation/cedula";
+import { identificationError, identificationType, isValidIdentification, normalizeIdentification } from "@/shared/validation/identification";
 import { personNameError } from "@/shared/validation/person";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
 
+/**
+ * A cédula or a RUC (ADR 0041). The kind follows from the complete number (10 or 13 digits), so the customer
+ * types one field; the server validates the pair again.
+ */
 export const billingIdentitySchema = z.object({
-  type: z.literal("EC_CEDULA"),
-  number: z.string().transform(value => value.replace(/^ +| +$/g, "")).refine(isValidEcuadorianCedula, cedulaValidationMessage),
+  type: z.string().optional(),
+  number: z.string(),
+}).transform(({ number }) => {
+  const value = normalizeIdentification(number);
+  return { type: identificationType(value) ?? "EC_CEDULA", number: value } as { type: "EC_CEDULA" | "EC_RUC"; number: string };
+}).superRefine((identity, context) => {
+  if (!isValidIdentification(identity.type, identity.number)) context.addIssue({ code: "custom", path: ["number"], message: identificationError(identity.number) ?? "Ingresa una cédula (10 dígitos) o un RUC (13 dígitos) válidos" });
 });
+/** What the server returns. Lenient on purpose: a number stored before ADR 0041 is shown so it can be corrected. */
+export const storedBillingIdentitySchema = z.object({ type: z.enum(["EC_CEDULA", "EC_RUC"]), number: z.string().regex(/^[0-9]{10}([0-9]{3})?$/) });
 export type BillingIdentity = z.infer<typeof billingIdentitySchema>;
 const required = (label: string, max: number) => z.string().trim().min(1, `Escribe ${label}.`).max(max, `Usa como máximo ${max} caracteres.`);
 export const billingAddressSchema = z.object({
@@ -27,6 +38,8 @@ export const checkoutBillingSchema = z.object({
   billingAddress: billingAddressSchema,
 });
 export type CheckoutBilling = z.infer<typeof checkoutBillingSchema>;
+/** What the checkout form holds before parsing (the kind of identification is derived on parse). */
+export type CheckoutBillingInput = z.input<typeof checkoutBillingSchema>;
 
 export const invoiceMetadataSchema = z.object({
   invoiceId:z.string().min(1),orderId:z.string().min(1),

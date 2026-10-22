@@ -7,9 +7,12 @@ import uuid
 
 from checkout_http_gate import token
 from checkout_last_unit import fixture, query
+from checkout_billing import billed
 
 
 def request(actor, path, method="GET", body=None, key=None):
+    if path == "/api/v1/checkout" and method == "POST" and body is not None:
+        body = billed(body)
     headers = {"Authorization": "Bearer " + token(actor)}
     if body is not None:
         headers["Content-Type"] = "application/json"

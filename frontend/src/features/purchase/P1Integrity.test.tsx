@@ -28,7 +28,7 @@ describe("P1 integrity regressions", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
     fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: /Consultar mis pedidos|Consultar resultado/ }));
@@ -79,7 +79,7 @@ describe("P1 integrity regressions", () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     expect(screen.getByRole("button", { name: "Hacer pedido" })).toBeInTheDocument();
     expect(screen.queryByLabelText("Número de tarjeta")).not.toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: /Tarjeta de crédito/ }));
@@ -201,7 +201,7 @@ describe("P1 integrity regressions", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
     fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await waitFor(() => expect(finishPreflight).toBeTypeOf("function"));

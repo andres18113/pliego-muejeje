@@ -17,6 +17,7 @@ import { Field, FieldMessage } from "@/shared/ui/Field";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
 import { stateAfterRegistration, stateAfterSignIn } from "@/features/favorites/favoriteIntent";
 import { AuthState, authFlowClasses as flow } from "./AuthFlow";
+import { PasswordInput } from "@/shared/ui/PasswordInput";
 
 const MAX_PASSWORD_UTF8_BYTES = 72;
 
@@ -170,9 +171,8 @@ export function SignInPage() {
               {errors.email && <FieldMessage tone="error" id="sign-in-email-error">{errors.email.message}</FieldMessage>}
             </Field>
             <Field controlId="sign-in-password" label="Contraseña">
-              <input
+              <PasswordInput
                 id="sign-in-password"
-                type="password"
                 autoComplete="current-password"
                 required
                 aria-required="true"
@@ -389,9 +389,8 @@ export function RegisterPage() {
                   {errors.email && <FieldMessage tone="error" id="register-email-error">{errors.email.message}</FieldMessage>}
                 </Field>
                 <Field controlId="register-password" label="Contraseña">
-                  <input
+                  <PasswordInput
                     id="register-password"
-                    type="password"
                     autoComplete="new-password"
                     required
                     aria-required="true"

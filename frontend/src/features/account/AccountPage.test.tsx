@@ -32,7 +32,9 @@ describe("customer account", () => {
     const region = await screen.findByRole("region", { name: "Perfil y datos personales" });
     expect(within(region).getByRole("heading", { level: 2, name: "Ana Pérez" })).toBeInTheDocument();
     expect(within(region).getByText(profile.email)).toBeInTheDocument();
-    expect(within(region).getByText("Sin teléfono")).toBeInTheDocument();
+    const phoneRow = within(region).getByText("Teléfono").closest("li")!;
+    expect(within(phoneRow).getByText("Sin registrar")).toHaveAttribute("data-tone", "optional");
+    expect(within(phoneRow).getByText("Opcional")).toBeInTheDocument();
     // Nothing is editable until the reader chooses a field.
     expect(within(region).queryByRole("textbox")).not.toBeInTheDocument();
     expect(within(region).getByRole("button", { name: "Editar nombres" })).toBeInTheDocument();

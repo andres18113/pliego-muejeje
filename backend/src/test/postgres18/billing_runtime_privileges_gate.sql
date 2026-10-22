@@ -14,6 +14,7 @@ BEGIN
   RAISE EXCEPTION 'probe has elevated privileges'; END IF;
  IF has_schema_privilege(current_user,'pliego','CREATE') THEN RAISE EXCEPTION 'runtime can create schema objects'; END IF;
  IF NOT pliego.fn_is_valid_ec_cedula('0012345674') THEN RAISE EXCEPTION 'runtime cannot use validator'; END IF;
+ IF NOT pliego.fn_is_valid_ec_identification('EC_RUC','1790016919001') THEN RAISE EXCEPTION 'runtime cannot use identification validator'; END IF;
  BEGIN
   PERFORM pliego.fn_invoice_artifact_metadata(-1,-1);
   RAISE EXCEPTION 'invalid actor authorized';

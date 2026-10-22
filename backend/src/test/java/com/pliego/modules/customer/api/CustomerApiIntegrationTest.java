@@ -452,7 +452,7 @@ class CustomerApiIntegrationTest {
         private long nextAddressId = 501;
         private DatabaseException failure;
         private final List<Favorite> favorites = new ArrayList<>();
-        private String passwordHash;
+        String passwordHash;
         private int changeEmailCalls;
 
         FakeCustomerGateway(DatabaseExceptionTranslator translator) {

@@ -75,8 +75,8 @@ fi
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '73:73' ]]; then
-    printf 'Expected 73 successful versioned Flyway migrations through V073; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '75:75' ]]; then
+    printf 'Expected 75 successful versioned Flyway migrations through V075; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"

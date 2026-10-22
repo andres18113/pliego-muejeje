@@ -112,7 +112,7 @@ class CheckoutApiIntegrationTest {
         mvc.perform(post("/api/v1/checkout").header("Authorization", token("100", "CUSTOMER"))
                 .header("Idempotency-Key", java.util.UUID.randomUUID().toString())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"fulfillmentMethod\":\"STORE_PICKUP\",\"pickupLocationId\":\"1\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}"))
+                .content(billed("{\"fulfillmentMethod\":\"STORE_PICKUP\",\"pickupLocationId\":\"1\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.orderState").value("CONFIRMED"));
     }
 
@@ -121,7 +121,7 @@ class CheckoutApiIntegrationTest {
         mvc.perform(post("/api/v1/checkout").header("Authorization", token("100", "CUSTOMER"))
                 .header("Idempotency-Key", UUID.randomUUID().toString())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"fulfillmentMethod\":\"DIGITAL_ONLY\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}"))
+                .content(billed("{\"fulfillmentMethod\":\"DIGITAL_ONLY\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.orderState").value("CONFIRMED"));
     }
 
@@ -130,7 +130,7 @@ class CheckoutApiIntegrationTest {
         mvc.perform(post("/api/v1/checkout").header("Authorization", token("100", "CUSTOMER"))
                 .header("Idempotency-Key", UUID.randomUUID().toString())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"fulfillmentMethod\":\"DIGITAL_ONLY\",\"addressId\":\"1\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}"))
+                .content(billed("{\"fulfillmentMethod\":\"DIGITAL_ONLY\",\"addressId\":\"1\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")))
                 .andExpect(status().isBadRequest());
     }
 
@@ -239,10 +239,10 @@ class CheckoutApiIntegrationTest {
     @Test
     void onlyVerifiedCustomerJwtCanChooseActor() throws Exception {
         String valid = "{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}";
-        mvc.perform(post("/api/v1/checkout").contentType(MediaType.APPLICATION_JSON).content(valid))
+        mvc.perform(post("/api/v1/checkout").contentType(MediaType.APPLICATION_JSON).content(billed(valid)))
                 .andExpect(status().isUnauthorized());
         mvc.perform(post("/api/v1/checkout").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", token("7", "ADMIN"))
-                        .contentType(MediaType.APPLICATION_JSON).content(valid))
+                        .contentType(MediaType.APPLICATION_JSON).content(billed(valid)))
                 .andExpect(status().isForbidden());
         perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\",\"actorUserId\":\"7\"}")
                 .andExpect(status().isBadRequest());
@@ -291,8 +291,44 @@ class CheckoutApiIntegrationTest {
     }
 
     private org.springframework.test.web.servlet.ResultActions perform(String body) throws Exception {
+        return performRaw(billed(body));
+    }
+
+    private org.springframework.test.web.servlet.ResultActions performRaw(String body) throws Exception {
         return mvc.perform(post("/api/v1/checkout").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", token("42", "CUSTOMER"))
                 .contentType(MediaType.APPLICATION_JSON).content(body));
+    }
+
+    private static final String BILLING = "\"billingIdentity\":{\"type\":\"EC_CEDULA\",\"number\":\"0912345675\"},"
+            + "\"buyerName\":\"Comprador Prueba\",\"billingAddress\":{\"line1\":\"Calle Fiscal\",\"city\":\"Quito\",\"province\":\"Pichincha\",\"countryCode\":\"EC\"}";
+
+    /** Every purchase is billed (ADR 0040): the fiscal data joins each request body. */
+    private static String billed(String body) {
+        return body.substring(0, body.lastIndexOf('}')) + "," + BILLING + "}";
+    }
+
+    @Test
+    void purchaseWithoutCedulaOrBillingDataNeverReachesDatabase() throws Exception {
+        String base = "{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"";
+        performRaw(base + "}").andExpect(status().isBadRequest())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.content().string(org.hamcrest.Matchers.containsString("Escribe tu cédula o RUC: es obligatorio para comprar.")));
+        performRaw(base + "," + BILLING.replace("\"billingIdentity\":{\"type\":\"EC_CEDULA\",\"number\":\"0912345675\"},", "") + "}")
+                .andExpect(status().isBadRequest());
+        performRaw(base + "," + BILLING.replace("\"buyerName\":\"Comprador Prueba\",", "") + "}")
+                .andExpect(status().isBadRequest());
+        assertEquals(0, gateway.calls);
+    }
+
+    @Test
+    void cedulaDifferentFromProfileKeepsCodeAndPointsToProfile() throws Exception {
+        gateway.failure = translator.translate(new SQLException("0912345675 private", "P1106"));
+        String body = perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("P1106"))
+                .andExpect(jsonPath("$.title").value("Identificación distinta a la de tu perfil"))
+                .andExpect(jsonPath("$.detail").value("La factura usa la cédula o el RUC registrado en tu perfil. Si es incorrecto, corrígelo en Mi perfil."))
+                .andReturn().getResponse().getContentAsString();
+        assertFalse(body.contains("0912345675"));
     }
 
     private String token(String actor, String role) {
@@ -335,6 +371,13 @@ class CheckoutApiIntegrationTest {
             fingerprint = null;
             failure = null;
             result = new CheckoutResult("700", "CONFIRMED", "APPROVED", new BigDecimal("39.80"), APPROVED_REFERENCE);
+        }
+
+        @Override public CheckoutResult checkoutBilled(long actorUserId, UUID key, Long addressId, String paymentMethod,
+                String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint,
+                com.pliego.modules.sales.application.PostPurchaseModels.CheckoutBilling billing) {
+            assertEquals("0912345675", billing.identityNumber());
+            return checkout(actorUserId,key,addressId,paymentMethod,paymentOutcome,cartId,fulfillmentMethod,pickupLocationId,quoteFingerprint);
         }
 
         @Override public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod,

@@ -8,11 +8,12 @@ from digital_editions_http_gate import ok
 from full_journey_http_gate import admin_token
 from checkout_last_unit import query
 from checkout_http_gate import token
+from checkout_billing import billed
 
 
 def checkout(customer, body, key, expected=201):
     request = urllib.request.Request(os.environ['CHECKOUT_BASE_URL'] + '/api/v1/checkout',
-        data=json.dumps(body).encode(), method='POST', headers={
+        data=json.dumps(billed(body)).encode(), method='POST', headers={
             'Authorization': customer, 'Content-Type': 'application/json', 'Idempotency-Key': key})
     with urllib.request.urlopen(request, timeout=20) as response:
         assert response.status == expected

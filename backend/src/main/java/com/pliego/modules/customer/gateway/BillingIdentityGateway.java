@@ -4,6 +4,6 @@ import com.pliego.modules.customer.application.BillingIdentity;
 
 public interface BillingIdentityGateway {
     BillingIdentity find(long actorUserId);
-    void set(long actorUserId, String type, String number);
-    void remove(long actorUserId);
+    void register(long actorUserId, String type, String number);
+    void correct(long actorUserId, String type, String expectedNumber, String number);
 }

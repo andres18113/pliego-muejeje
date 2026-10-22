@@ -28,7 +28,7 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await expect(page).toHaveURL(/\/sign-in\?/);
 
   await page.getByLabel("Correo electrónico").fill("lectora@example.invalid");
-  await page.getByLabel("Contraseña").fill("Lectura-segura-2026");
+  await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(`${testFrontendOrigin}/catalog`);
   await expect(firstCard.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "true");
@@ -146,7 +146,7 @@ test("shows authoritative membership after a failed mutation response", async ({
   await page.locator(".edition-item").first()
     .getByRole("button", { name: "Agregar a favoritos: Cien años de soledad" }).click();
   await page.getByLabel("Correo electrónico").fill("lectora@example.invalid");
-  await page.getByLabel("Contraseña").fill("Lectura-segura-2026");
+  await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
 
   const firstCard = page.locator(".edition-item").first();

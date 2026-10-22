@@ -9,18 +9,17 @@ const initial = (text: string | null | undefined) => {
 
 /**
  * The account's identity mark: the customer's initials on an ultramar disc, or Material `person` when there is
- * no name to draw from. Decorative — the name itself is always beside it as text. `stop` adds PLIEGO's yellow
- * full stop, for the one place the mark leads a page.
+ * no name to draw from. Decorative — the name itself is always beside it as text. It carries no status mark:
+ * a dot on an avatar reads as a state (online, unread), so the brand's full stop is not drawn here.
  */
-export function AccountMonogram({ firstNames, lastNames, size = 40, stop = false, className }: {
+export function AccountMonogram({ firstNames, lastNames, size = 40, className }: {
   firstNames?: string | null;
   lastNames?: string | null;
   size?: number;
-  stop?: boolean;
   className?: string;
 }) {
   const letters = `${initial(firstNames)}${initial(lastNames)}`;
-  return <span className={[classes.monogram, className].filter(Boolean).join(" ")} style={{ "--monogram-size": `${size / 16}rem` } as CSSProperties} data-stop={stop || undefined} aria-hidden="true">
+  return <span className={[classes.monogram, className].filter(Boolean).join(" ")} style={{ "--monogram-size": `${size / 16}rem` } as CSSProperties} aria-hidden="true">
     {letters ? <span className={classes.letters}>{letters}</span> : <MaterialSymbol name="person" size={Math.round(size * 0.56)} fill />}
   </span>;
 }

@@ -21,7 +21,7 @@ function cardFor(page: Page, editionId: string) {
 
 async function signInWithIntent(page: Page, email: string, password: string) {
   await page.getByLabel("Correo electrónico").fill(email);
-  await page.getByLabel("Contraseña").fill(password);
+  await page.getByLabel("Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
 }
 

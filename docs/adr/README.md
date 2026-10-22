@@ -42,4 +42,6 @@
 - [0036 — Conservación del origen en acciones de correo](0036-email-action-return-context.md)
 - [0037 — Cédula como atributo privado de facturación](0037-ecuador-billing-identity.md)
 - [0038 — Facturación académica automática](0038-automatic-academic-billing.md)
-- [0039 — Navegación interna segura hacia atrás](0039-safe-back-navigation.md)
+- [0039 — Safe internal back navigation](0039-safe-back-navigation.md)
+- [0040 — Identification required to buy, not editable, correctable with re-authentication](0040-required-correctable-cedula.md)
+- [0041 — Full cédula and RUC algorithm, validated live](0041-ecuador-cedula-ruc-algorithm.md)

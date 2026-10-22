@@ -7,8 +7,11 @@ import uuid
 
 from checkout_http_gate import token
 from checkout_last_unit import fixture, query
+from checkout_billing import billed
 
 def request(path, method="GET", body=None, actor=None, key=None):
+    if path == "/api/v1/checkout" and method == "POST" and body is not None:
+        body = billed(body)
     headers = {}
     if actor is not None: headers["Authorization"] = "Bearer " + token(actor)
     if key is not None: headers["Idempotency-Key"] = key

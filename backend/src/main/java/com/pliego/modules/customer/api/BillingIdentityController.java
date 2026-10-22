@@ -11,6 +11,10 @@ import com.pliego.modules.customer.application.BillingIdentityService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.Operation;
 
+/**
+ * The cédula is required to buy and is not freely editable: it is registered once and changed only
+ * by an explicit, re-authenticated correction (ADR 0040). It cannot be removed.
+ */
 @RestController
 @RequestMapping(path = "/api/v1/me/billing-identity", produces = MediaType.APPLICATION_JSON_VALUE)
 @SecurityRequirement(name = "bearerJwt")
@@ -26,15 +30,17 @@ public class BillingIdentityController {
                 : ResponseEntity.ok().header("Cache-Control", "no-store").body(result);
     }
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Actualizar mi identificación de facturación")
-    public ResponseEntity<Void> put(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody BillingIdentityRequest request) {
-        service.set(Long.parseLong(jwt.getSubject()), request.type(), request.number());
+    @Operation(summary = "Registrar mi cédula",
+            description = "Registra la primera cédula. Repetir el mismo número no cambia nada; un número distinto responde P1105 y requiere una corrección.")
+    public ResponseEntity<Void> registerBillingIdentity(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody BillingIdentityRequest request) {
+        service.register(Long.parseLong(jwt.getSubject()), request.type(), request.number());
         return ResponseEntity.noContent().header("Cache-Control", "no-store").build();
     }
-    @DeleteMapping
-    @Operation(summary = "Eliminar mi identificación de facturación del perfil")
-    public ResponseEntity<Void> delete(@AuthenticationPrincipal Jwt jwt) {
-        service.remove(Long.parseLong(jwt.getSubject()));
+    @PostMapping(path = "/correction", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "Corregir mi cédula",
+            description = "Requiere la contraseña actual y la cédula vista. Queda registrada; las facturas anteriores no cambian.")
+    public ResponseEntity<Void> correctBillingIdentity(@AuthenticationPrincipal Jwt jwt, @Valid @RequestBody BillingIdentityCorrectionRequest request) {
+        service.correct(Long.parseLong(jwt.getSubject()), request.type(), request.currentNumber(), request.number(), request.currentPassword());
         return ResponseEntity.noContent().header("Cache-Control", "no-store").build();
     }
 }

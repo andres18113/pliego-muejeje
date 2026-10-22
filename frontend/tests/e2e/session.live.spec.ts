@@ -16,7 +16,7 @@ test("restores CUSTOMER across reload and reopen, then keeps logout through relo
 
   await page.goto(`/sign-in?from=${encodeURIComponent("/account")}`);
   await page.getByLabel("Correo electrónico").fill(email);
-  await page.getByLabel("Contraseña").fill(password);
+  await page.getByLabel("Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/account$/);
   await expect(page.getByRole("heading", { level: 1, name: "Mi perfil" })).toBeVisible();

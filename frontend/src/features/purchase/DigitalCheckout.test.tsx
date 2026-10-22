@@ -1,4 +1,4 @@
-import { fillBillingFixture, billingFixturePayload } from "./billingTestFixtures";
+import { fillBillingFixture, billingFromSavedAddress } from "./billingTestFixtures";
 import { act, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -24,7 +24,7 @@ describe("digital checkout", () => {
     ]);
     stubApi({ "GET /api/v1/cart": () => json(current), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     const delivery = screen.getByRole("list", { name: "Libros de esta entrega" });
     expect(delivery).toHaveTextContent("Físico autorizado");
     expect(delivery).not.toHaveTextContent("Digital autorizado");
@@ -35,14 +35,15 @@ describe("digital checkout", () => {
     await screen.findByRole("heading", { name: "Pago" });
     expect(screen.queryByRole("tab", { name: "Retiro" })).not.toBeInTheDocument();
     formats.forEach(format => expect(screen.getByRole("complementary")).toHaveTextContent(format === "EBOOK" ? "Ebook" : "Audiolibro"));
-    expect(screen.queryByText(/Av\. Principal 123/)).not.toBeInTheDocument();
-    expect(transport.count("GET", "/api/v1/me/addresses")).toBe(0);
+    expect(screen.queryByText("Av. Principal 123")).not.toBeInTheDocument();
+    // No delivery: saved addresses are read only to be offered as the invoice address.
+    await waitFor(() => expect(transport.count("GET", "/api/v1/me/addresses")).toBe(1));
     expect(transport.count("GET", "/api/v1/pickup-locations")).toBe(0);
     await user.click(screen.getByRole("button", { name: "Transferencia bancaria" }));
     await screen.findByText("Banco Guayaquil");
     fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await screen.findByRole("heading", { name: "Pedido abierto" });
-    expect(transport.calls.find(call => call.path === "/api/v1/checkout")?.body).toEqual({ ...billingFixturePayload, fulfillmentMethod: "DIGITAL_ONLY", expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" });
+    expect(transport.calls.find(call => call.path === "/api/v1/checkout")?.body).toEqual({ ...billingFromSavedAddress, fulfillmentMethod: "DIGITAL_ONLY", expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" });
   });
 
 
@@ -50,18 +51,18 @@ describe("digital checkout", () => {
     let current = cart(["PAPERBACK", "EBOOK"]);
     stubApi({ "GET /api/v1/cart": () => json(current), "GET /api/v1/me/addresses": () => json([savedAddress]), "GET /api/v1/pickup-locations": () => json([]) });
     const user = userEvent.setup(); const { queryClient } = renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     await user.click(screen.getByRole("tab", { name: "Retiro" }));
     expect(screen.getByRole("tab", { name: "Retiro" })).toHaveAttribute("aria-selected", "true");
     current = cart(["EBOOK"]);
     await act(async () => { await queryClient.invalidateQueries({ queryKey: ["customer-cart"] }); });
     await waitFor(() => expect(screen.queryByRole("tab", { name: "Entrega" })).not.toBeInTheDocument());
-    expect(screen.queryByText(/Av\. Principal 123/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Av. Principal 123")).not.toBeInTheDocument();
   });
 
   it.each([["PAPERBACK"], ["HARDCOVER"], ["PAPERBACK", "EBOOK"], ["AUDIOBOOK", "HARDCOVER"]])("keeps pickup available when the cart includes physical %j", async (...formats) => {
     api(formats as string[]); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     expect(screen.getByRole("tab", { name: "Retiro" })).toBeEnabled();
     expect(screen.queryByText(/Esta compra digital simulada requiere una dirección/)).not.toBeInTheDocument();
   });

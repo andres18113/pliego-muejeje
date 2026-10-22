@@ -38,13 +38,21 @@ public class InvoiceRenderer {
         }
     }
 
+    /** True for a RUC buyer; anything other than a cédula or a RUC is rejected. */
+    static boolean ruc(JsonNode s) {
+        String type = text(s, "identityType");
+        if ("TAX_ID".equals(type) || "EC_RUC".equals(type)) return true;
+        if ("NATIONAL_ID".equals(type) || "EC_CEDULA".equals(type)) return false;
+        throw new IllegalArgumentException();
+    }
+
     private static void validateSnapshot(JsonNode s) {
         if (s == null || !s.isObject() || !"ISSUED".equals(text(s, "state"))
                 || !"SIMULATED".equals(text(s, "provenance"))) throw new IllegalArgumentException();
         for (String field : new String[]{"invoiceId", "orderId", "buyerName", "identityNumber", "currency"}) text(s, field);
         if (!"USD".equals(text(s, "currency"))) throw new IllegalArgumentException();
-        if (!"NATIONAL_ID".equals(text(s, "identityType")) && !"EC_CEDULA".equals(text(s, "identityType"))) throw new IllegalArgumentException();
-        if (!text(s, "identityNumber").matches("[0-9]{10}")) throw new IllegalArgumentException();
+        // A cédula is NATIONAL_ID (SRI 05) and a RUC is TAX_ID (SRI 04); ADR 0041.
+        if (!text(s, "identityNumber").matches(ruc(s) ? "[0-9]{13}" : "[0-9]{10}")) throw new IllegalArgumentException();
         if (!text(s, "documentNumber").matches("999-999-[0-9]{9}")) throw new IllegalArgumentException();
         date(s);
         for (String field : new String[]{"subtotal", "totalDiscount", "taxTotal", "shippingAmount", "total"}) amount(s, field);
@@ -120,7 +128,7 @@ public class InvoiceRenderer {
         element(w, "secuencial", sequence); element(w, "dirMatriz", text(issuer, "address"));
         w.writeEndElement();
         w.writeStartElement("infoFactura");
-        element(w, "fechaEmision", date(s)); element(w, "tipoIdentificacionComprador", "05");
+        element(w, "fechaEmision", date(s)); element(w, "tipoIdentificacionComprador", ruc(s) ? "04" : "05");
         element(w, "razonSocialComprador", text(s, "buyerName")); element(w, "identificacionComprador", text(s, "identityNumber"));
         // XSD limits this summary to 300 characters; line1 is at most 200.
         // Preserve every original component separately below, including whitespace.

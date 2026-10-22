@@ -11,6 +11,7 @@ import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { AuthState, authFlowClasses as flow } from "./AuthFlow";
 import { useEmailRequest, useEmailTokenAction } from "./emailActionHooks";
 import { emailActionLocation, safeAuthReturnHref } from "./authLocation";
+import { PasswordInput } from "@/shared/ui/PasswordInput";
 
 function useEmailReturnHref() {
   const location = useLocation();
@@ -187,11 +188,11 @@ export function ResetPasswordPage() {
             <p>Elige la contraseña nueva de tu cuenta. Este enlace se puede utilizar una sola vez.</p>
             <form className="auth-form" onSubmit={submit} noValidate aria-busy={mutation.isPending}>
               <Field controlId={`${id}-password`} label="Nueva contraseña">
-                <input id={`${id}-password`} type="password" autoComplete="new-password" value={password} disabled={mutation.isPending} aria-describedby={`${id}-password-help`} onChange={event => setPassword(event.target.value)} />
+                <PasswordInput id={`${id}-password`} autoComplete="new-password" value={password} disabled={mutation.isPending} aria-describedby={`${id}-password-help`} onChange={event => setPassword(event.target.value)} />
                 <FieldMessage tone="help" id={`${id}-password-help`}>Usa al menos 8 caracteres.</FieldMessage>
               </Field>
               <Field controlId={`${id}-confirmation`} label="Confirma tu contraseña">
-                <input id={`${id}-confirmation`} type="password" autoComplete="new-password" value={confirmation} disabled={mutation.isPending} onChange={event => setConfirmation(event.target.value)} />
+                <PasswordInput id={`${id}-confirmation`} autoComplete="new-password" value={confirmation} disabled={mutation.isPending} onChange={event => setConfirmation(event.target.value)} />
               </Field>
               {validation && <ActionError inline>{validation}</ActionError>}
               <Button type="submit" variant="primary" disabled={mutation.isPending}>{mutation.isPending ? "Guardando…" : "Restablecer contraseña"}</Button>

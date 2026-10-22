@@ -9,7 +9,7 @@ from checkout_last_unit import PSQL, fixture, query, wait_for_activity
 
 def checkout(actor, address, key, outcome='APPROVED'):
     return f"""CALL pliego.sp_checkout_billed_quoted({actor},'{key}',{address},'TRANSFER','{outcome}',NULL,
-      'HOME_DELIVERY',NULL,NULL,'EC_CEDULA','0012345674','Comprador Fiscal','Calle Fiscal',NULL,
+      'HOME_DELIVERY',NULL,NULL,'EC_CEDULA','0912345675','Comprador Fiscal','Calle Fiscal',NULL,
       'Quito','Pichincha','EC',NULL,NULL,NULL,NULL,NULL,NULL,NULL)"""
 
 

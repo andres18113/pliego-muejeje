@@ -7,10 +7,13 @@ import urllib.request
 import uuid
 from admin_orders_http_gate import token
 from checkout_last_unit import fixture, query
+from checkout_billing import billed
 
 base = os.environ["CHECKOUT_BASE_URL"]
 
 def request(path, actor=None, method="GET", body=None, key=None, role="CUSTOMER"):
+    if path == "/api/v1/checkout" and method == "POST" and body is not None:
+        body = billed(body)
     headers = {"Content-Type": "application/json"}
     if actor is not None:
         headers["Authorization"] = "Bearer " + token(actor, role)
@@ -28,13 +31,19 @@ actors, edition = fixture()
 actor, address = actors[0]
 other = actors[1][0]
 path = "/api/v1/me/billing-identity"
-identity = {"type": "EC_CEDULA", "number": "0012345674"}
+identity = {"type": "EC_CEDULA", "number": "0912345675"}
 assert request(path, actor)[0] == 204
 assert request(path, actor, "PUT", identity)[0] == 204
 status, headers, body = request(path, actor)
 assert status == 200 and json.loads(body) == identity and "no-store" in headers.get("Cache-Control", "")
 assert request(path, other)[0] == 204
 assert request(path, actor, "PUT", {**identity, "number": "0012345670"})[0] == 400
+# ADR 0040: registration never overwrites, the cédula cannot be removed, and a purchase uses it.
+assert request(path, actor, "PUT", identity)[0] == 204
+status, _, body = request(path, actor, "PUT", {**identity, "number": "1710034065"})
+assert status == 409 and json.loads(body)["code"] == "P1105" and "0912345675" not in body.decode(), body
+assert request(path, actor, "DELETE")[0] == 405
+assert query(f"SELECT count(*) FROM pliego.cliente_identificacion_evento e JOIN pliego.cliente c USING(cliente_id) WHERE c.usuario_id={actor}") == "1"
 
 payload = {"addressId": str(address), "paymentMethod": "CARD", "simulationOutcome": "APPROVED",
            "cardNumber": "4242424242424242", "billingIdentity": identity, "buyerName": "Comprador Prueba",
@@ -44,6 +53,12 @@ invalid = {**payload, "billingIdentity": {"type": "EC_CEDULA", "number": "001234
 status, _, invalid_body = request("/api/v1/checkout", actor, "POST", invalid, uuid.uuid4())
 assert status == 400 and "0012345670" not in invalid_body.decode(), "invalid identity was accepted or leaked"
 assert query(f"SELECT count(*) FROM pliego.pedido p JOIN pliego.cliente c USING(cliente_id) WHERE c.usuario_id={actor}") == "0"
+status, _, body = request("/api/v1/checkout", actor, "POST", {**payload, "billingIdentity": {"type": "EC_CEDULA", "number": "1710034065"}}, uuid.uuid4())
+assert status == 409 and json.loads(body)["code"] == "P1106", body
+assert query(f"SELECT count(*) FROM pliego.pedido p JOIN pliego.cliente c USING(cliente_id) WHERE c.usuario_id={actor}") == "0"
+unbilled = {key_: value for key_, value in payload.items() if key_ not in ("billingIdentity", "buyerName", "billingAddress")}
+status, _, body = request("/api/v1/checkout", actor, "POST", {**unbilled, "billingIdentity": None}, uuid.uuid4())
+assert status == 400, body
 status, _, body = request("/api/v1/checkout", actor, "POST", payload, key)
 assert status == 201, (status, body)
 result = json.loads(body)
@@ -57,14 +72,16 @@ status, _, body = request("/api/v1/checkout", actor, "POST", payload, key)
 assert status in (200, 201) and json.loads(body)["orderId"] == order
 assert request("/api/v1/checkout", actor, "POST", {**payload, "buyerName": "Otro Comprador"}, key)[0] == 409
 assert query(f"SELECT count(*) FROM pliego.factura WHERE pedido_id={int(order)}") == "1"
-assert request(path, actor, "DELETE")[0] == 204
+# The cédula cannot be removed after purchase (ADR 0040); the issued invoice keeps its snapshot.
+assert request(path, actor, "DELETE")[0] == 405
+assert json.loads(request(path, actor)[2])["number"] == "0912345675"
 
 deadline = time.monotonic() + 35
 while True:
     status, headers, body = request(invoice_path, actor)
     assert status == 200 and "no-store" in headers.get("Cache-Control", "")
     metadata = json.loads(body)
-    assert "0012345674" not in body.decode(), "metadata leaked identification"
+    assert "0912345675" not in body.decode(), "metadata leaked identification"
     assert metadata["provenance"] == "SIMULATED" and metadata["state"] == "ISSUED"
     if all(file["state"] == "READY" for file in metadata["files"]):
         break
@@ -116,4 +133,24 @@ status, _, body = request(unicode_path + "/files/XML", unicode_actor)
 assert status == 200 and "Ana 李".encode() in body and b"B" * 200 in body
 status, _, body = request(unicode_path + "/files/PDF", unicode_actor)
 assert status == 200 and b"[U+674E]" in body and b"/ActualText" in body
-print("Live billed checkout/profile/replay/ownership/ADMIN/private PDF+XML, pending approval and Unicode/address boundaries passed.")
+# ADR 0041: a RUC buyer is invoiced as TAX_ID with SRI code 04; an invalid RUC creates nothing.
+ruc_actors, _ = fixture()
+ruc_actor, ruc_address = ruc_actors[0]
+ruc_payload = {**payload, "addressId": str(ruc_address), "billingIdentity": {"type": "EC_RUC", "number": "1790016919001"}, "buyerName": "Sociedad Prueba"}
+status, _, body = request("/api/v1/checkout", ruc_actor, "POST", {**ruc_payload, "billingIdentity": {"type": "EC_RUC", "number": "1790016918001"}}, uuid.uuid4())
+assert status == 400 and "1790016918001" not in body.decode(), body
+status, _, body = request("/api/v1/checkout", ruc_actor, "POST", ruc_payload, uuid.uuid4())
+assert status == 201, (status, body)
+ruc_order = int(json.loads(body)["orderId"])
+assert query(f"SELECT identidad_tipo||'|'||identidad_numero FROM pliego.factura WHERE pedido_id={ruc_order}") == "TAX_ID|1790016919001"
+assert json.loads(request(path, ruc_actor)[2]) == {"type": "EC_RUC", "number": "1790016919001"}
+deadline = time.monotonic() + 35
+while True:
+    status, _, body = request(f"/api/v1/orders/{ruc_order}/invoice", ruc_actor)
+    if all(file["state"] == "READY" for file in json.loads(body)["files"]):
+        break
+    assert time.monotonic() < deadline, "RUC invoice artifacts did not complete"
+    time.sleep(0.25)
+status, _, body = request(f"/api/v1/orders/{ruc_order}/invoice/files/XML", ruc_actor)
+assert status == 200 and b"<tipoIdentificacionComprador>04</tipoIdentificacionComprador>" in body and b"1790016919001" in body
+print("Live billed checkout/profile/replay/ownership/ADMIN/private PDF+XML, pending approval and Unicode/address boundaries and RUC (TAX_ID/04) passed.")

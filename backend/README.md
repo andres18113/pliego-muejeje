@@ -4,9 +4,14 @@ Java 25 / Spring Boot backend for the approved PLIEGO REST and PostgreSQL Databa
 
 ### Academic billing and Ecuadorian identification
 
-V071–V073 add private optional profile identification, billed checkout and asynchronous
-PDF/XML artifacts. Existing internal IDs and legacy commands remain available; new
-checkout clients submit `billingIdentity`, `buyerName` and an independent `billingAddress`.
+V071–V073 add private profile identification, billed checkout and asynchronous
+PDF/XML artifacts. V074 (ADR 0040) makes the identification required to buy: every
+checkout submits `billingIdentity`, `buyerName` and an independent `billingAddress`, and
+the number must match the customer's own (the first billed purchase registers it). V075
+(ADR 0041) accepts a cédula or a RUC with the full Ecuadorian algorithm (province, third
+digit, modulo 10/11, establishment). The identification is never removed or freely
+edited; `POST /api/v1/me/billing-identity/correction` corrects it with the current
+password, audited, without changing issued invoices.
 Pending payments create a draft. ADMIN can approve with
 `POST /api/v1/admin/orders/{orderId}/approve-payment`; cancellation before approval
 invalidates the draft without refund or stock restoration. Approved purchases emit once;

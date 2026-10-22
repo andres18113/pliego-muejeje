@@ -53,8 +53,9 @@ import { CardSecurityCodeHelp } from "./CardSecurityCodeHelp";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { personNameError } from "@/shared/validation/person";
 
-import { checkoutBillingSchema, type CheckoutBilling } from "@/shared/api/billing";
-import { BillingIdentityForm } from "./BillingIdentityForm";
+import { checkoutBillingSchema, type CheckoutBillingInput } from "@/shared/api/billing";
+import type { Control, FieldErrors, UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { CheckoutBilling, useBillingSource } from "./CheckoutBilling";
 import { clearLegacyBillingIntents } from "./checkoutBillingIntent";
 
 const checkoutSchema = z.object({
@@ -143,7 +144,8 @@ function CheckoutContent() {
   const addressesQuery = useQuery({
     queryKey: addressesQueryKey,
     queryFn: ({ signal }) => listAddresses(signal),
-    enabled: cartQuery.data?.requiresPhysicalFulfillment === true,
+    // Also for pickup and digital purchases: a saved address can be the invoice address.
+    enabled: Boolean(cartQuery.data),
     meta: { authRequired: true },
     retry: (count, error) => !(error instanceof ApiRequestError && error.status < 500) && count < 1,
   });
@@ -174,6 +176,7 @@ function CheckoutContent() {
   const phone = useMediaQuery("(max-width: 599px)") ?? false;
   const [changingAddress, setChangingAddress] = useState(false);
   const [addressNotice, setAddressNotice] = useState<string | null>(null);
+  const [billingOpenRequest, setBillingOpenRequest] = useState(0);
 
   const {
     register,
@@ -199,8 +202,9 @@ function CheckoutContent() {
   useEffect(() => {
     if (!scope.isCurrent() || phase !== "idle") return;
     if (profileQuery.data && !dirtyFields.buyerName) setValue("buyerName", `${profileQuery.data.firstNames} ${profileQuery.data.lastNames}`.trim());
-    if (identityQuery.data && !dirtyFields.billingIdentity?.number) setValue("billingIdentity.number", identityQuery.data.number);
-  }, [profileQuery.data, identityQuery.data, dirtyFields.buyerName, dirtyFields.billingIdentity?.number, phase, scope, setValue]);
+    // The invoice uses the customer's own registered cédula; it is corrected only from Mi perfil.
+    if (identityQuery.data) setValue("billingIdentity.number", identityQuery.data.number, { shouldValidate: Boolean(errors.billingIdentity?.number) });
+  }, [profileQuery.data, identityQuery.data, dirtyFields.buyerName, errors.billingIdentity?.number, phase, scope, setValue]);
   const cardNumberRegistration = register("cardNumber");
   const cvvRegistration = register("cvv");
   const cardholderRegistration = register("cardholder");
@@ -224,6 +228,11 @@ function CheckoutContent() {
     if (digitalOnly && fulfillmentMethod !== "DIGITAL_ONLY") setValue("fulfillmentMethod", "DIGITAL_ONLY");
     else if (!digitalOnly && fulfillmentMethod === "DIGITAL_ONLY") setValue("fulfillmentMethod", "HOME_DELIVERY");
   }, [digitalOnly, fulfillmentMethod, setValue]);
+  // The invoice reuses the delivery address by default (CheckoutBilling); it is resolved before any early return.
+  const deliveryAddress = fulfillmentMethod === "HOME_DELIVERY"
+    ? addresses?.find((address) => address.addressId === addressId) ?? addresses?.find(address => address.primary) ?? addresses?.[0] ?? null
+    : null;
+  const billingSource = useBillingSource(addresses, deliveryAddress, fulfillmentMethod === "HOME_DELIVERY");
   const pickupLocationId = watch("pickupLocationId");
   const pickupQuery = useQuery({
     queryKey: pickupLocationsQueryKey,
@@ -310,8 +319,9 @@ function CheckoutContent() {
     } else if (invalid.addressId) {
       (document.querySelector<HTMLElement>('input[name="addressId"]') ?? document.getElementById("checkout-add-address") ?? document.getElementById("checkout-change-address"))?.focus();
     } else if (Object.keys(invalid).some(field => field === "buyerName" || field.startsWith("billing"))) {
-      const fiscalError = document.querySelector<HTMLElement>('#checkout-form [aria-invalid="true"]');
-      fiscalError?.focus();
+      // The invoice details open to show the one field to fix; nothing else changes.
+      setBillingOpenRequest(count => count + 1);
+      requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector<HTMLElement>('#checkout-billing [aria-invalid="true"]')?.focus()));
     } else if (invalid.paymentMethod) {
       setChoosingPayment(true);
       requestAnimationFrame(() => document.querySelector<HTMLElement>('[data-purchase="payment-method"]')?.focus());
@@ -549,6 +559,10 @@ function CheckoutContent() {
         detail: "Actualizamos tu carrito. Revisa los libros marcados antes de volver a intentarlo.",
         action: "cart",
       });
+    } else if (code === "P1106") {
+      const current = await identityQuery.refetch();
+      if (current.data) setValue("billingIdentity.number", current.data.number);
+      setProblem({ title: "La identificación no coincide con la de tu perfil.", detail: "Tu factura usa la cédula o el RUC registrado en tu perfil; ya lo mostramos. Si es incorrecto, corrígelo en Mi perfil. No se creó ningún pedido." });
     } else if (code === "P4005") {
       await cartQuery.refetch();
       setProblem({ title: "Tu carrito cambió y no se creó el pedido.", detail: "Actualizamos los productos, cantidades y precios. Revisa el nuevo resumen antes de confirmar otra vez." });
@@ -844,10 +858,18 @@ function CheckoutContent() {
             </>}
           </section>
           </>}
-          {digitalOnly && <p role="note">Esta compra digital no requiere entrega ni retiro. La titularidad se confirma en Mi biblioteca después del pago aprobado.</p>}
+          {digitalOnly && <p role="note" className={classes.digitalNote}>Compra digital: no necesita entrega ni retiro. La encontrarás en Mi biblioteca cuando se apruebe el pago.</p>}
+
+          <CheckoutBilling register={register as unknown as UseFormRegister<CheckoutBillingInput>} control={control as unknown as Control<CheckoutBillingInput>}
+            errors={errors as FieldErrors<CheckoutBillingInput>} setValue={setValue as unknown as UseFormSetValue<CheckoutBillingInput>}
+            getValues={getValues as unknown as UseFormGetValues<CheckoutBillingInput>} trigger={trigger as unknown as UseFormTrigger<CheckoutBillingInput>}
+            disabled={phase !== "idle" || Boolean(recovery.error)}
+            registeredNumber={identityQuery.data?.number ?? null} identityPending={identityQuery.isPending}
+            profilePending={profileQuery.isPending}
+            addresses={addresses} addressesPending={addressesQuery.isPending} deliveryAddress={deliveryAddress}
+            source={billingSource} openRequest={billingOpenRequest} />
 
           <form id="checkout-form" className={`${classes.panel} ${classes.fieldError} ${classes.checkoutPayment}`} onSubmit={submit} noValidate aria-labelledby="checkout-payment-heading">
-            <BillingIdentityForm register={register as unknown as import("react-hook-form").UseFormRegister<CheckoutBilling>} errors={errors} disabled={phase !== "idle" || Boolean(recovery.error)} />
             <div className={classes.panelHead}>
               <h2 id="checkout-payment-heading">Pago</h2>
               {methodSettled && (

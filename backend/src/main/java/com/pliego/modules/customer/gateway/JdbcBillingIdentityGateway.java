@@ -19,12 +19,12 @@ public class JdbcBillingIdentityGateway extends JdbcGatewaySupport implements Bi
                 ps -> ps.setLong(1, actorUserId),
                 rs -> rs.next() ? new BillingIdentity(rs.getString("identity_type"), rs.getString("identity_number")) : null));
     }
-    @Override public void set(long actorUserId, String type, String number) {
+    @Override public void register(long actorUserId, String type, String number) {
         withDatabaseErrorTranslation(() -> jdbc.update(
-                "CALL pliego.sp_customer_billing_identity_set(?,?,?)", actorUserId, type, number));
+                "CALL pliego.sp_customer_billing_identity_register(?,?,?)", actorUserId, type, number));
     }
-    @Override public void remove(long actorUserId) {
+    @Override public void correct(long actorUserId, String type, String expectedNumber, String number) {
         withDatabaseErrorTranslation(() -> jdbc.update(
-                "CALL pliego.sp_customer_billing_identity_remove(?)", actorUserId));
+                "CALL pliego.sp_customer_billing_identity_correct(?,?,?,?)", actorUserId, type, expectedNumber, number));
     }
 }

@@ -15,6 +15,7 @@ import urllib.request
 import uuid
 
 from checkout_last_unit import fixture, query
+from checkout_billing import billed
 
 
 def encoded(value):
@@ -40,7 +41,7 @@ def checkout(actor, address, method, outcome, card=None):
         body["cardNumber"] = card
     request = urllib.request.Request(
         os.environ["CHECKOUT_BASE_URL"] + "/api/v1/checkout",
-        data=json.dumps(body).encode(), method="POST",
+        data=json.dumps(billed(body)).encode(), method="POST",
         headers={"Idempotency-Key": str(uuid.uuid4()), "Authorization": "Bearer " + token(actor),
                  "Content-Type": "application/json"})
     try:

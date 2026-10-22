@@ -8,9 +8,12 @@ import uuid
 from checkout_last_unit import fixture, query
 from checkout_http_gate import token
 from full_journey_http_gate import admin_token
+from checkout_billing import billed
 
 
 def request(path, actor=None, method='GET', body=None, key=None, admin=False):
+    if path == '/api/v1/checkout' and method == 'POST' and body is not None:
+        body = billed(body)
     headers={'Content-Type':'application/json'}
     if actor is not None:
         headers['Authorization']='Bearer '+(admin_token(actor).removeprefix('Bearer ') if admin else token(actor))

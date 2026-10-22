@@ -57,7 +57,7 @@ async function openAddresses(page: Page) {
   await page.goto("/account/addresses");
   await page.getByRole("main").getByRole("link", { name: "Iniciar sesión" }).click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Direcciones" })).toBeVisible();
 }

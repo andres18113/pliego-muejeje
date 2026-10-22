@@ -1,5 +1,5 @@
 import { ActionIcon, Box, Drawer, Group, UnstyledButton } from "@mantine/core";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { readCatalogCriteria, safeCatalogReturnHref } from "@/features/catalog/catalogUrl";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
@@ -9,6 +9,7 @@ import { DesktopNavigation, MobileNavigation } from "./HeaderNavigation";
 import navigationClasses from "./HeaderNavigation.module.css";
 import { BrandLogo } from "@/shared/ui/BrandLogo";
 import { BackButton } from "./BackButton";
+import { BackPlacementContext } from "./BackPlacementContext";
 import { canonicalBackPath } from "./BackNavigationHistory";
 import { HeaderSearch } from "./HeaderSearch";
 import classes from "./SiteHeader.module.css";
@@ -23,6 +24,7 @@ export function SiteHeader() {
   const navigation = useStorefrontNavigation();
   const destinations = navigation.data?.sections ?? [];
   const [panel, setPanel] = useState<HeaderPanel>(null);
+  const backInPage = useContext(BackPlacementContext)?.inPage ?? false;
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
   const searchTrigger = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
@@ -110,7 +112,7 @@ export function SiteHeader() {
     return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); };
   }, [menuKey]);
 
-  return <Box component="header" ref={header} className={`${classes.header}${pathname === "/" ? ` ${homeClasses.header}` : ""}`} data-home={pathname === "/" || undefined} data-scrolled={scrolled || undefined} data-panel={menuKey ? "menu" : panel ?? undefined} data-testid="site-header">
+  return <Box component="header" ref={header} className={`${classes.header}${pathname === "/" ? ` ${homeClasses.header}` : ""}`} data-home={pathname === "/" || undefined} data-scrolled={(scrolled && !backInPage) || undefined} data-flow={backInPage || undefined} data-panel={menuKey ? "menu" : panel ?? undefined} data-testid="site-header">
     <a className={classes.skip} href="#contenido-principal" onClick={(event) => {
       const main = document.getElementById("contenido-principal");
       if (!main) return;
@@ -118,7 +120,8 @@ export function SiteHeader() {
     }}>Saltar al contenido</a>
     <Group className={classes.bar} wrap="nowrap">
       <Group className={classes.primary} wrap="nowrap" style={{ gap: 4 }}>
-        <span ref={backControl} style={{ display: "inline-flex", flexShrink: 0 }}><BackButton closeLayer={panel ? () => { setPanel(null); if (panel === "search") searchTrigger.current?.focus(); } : undefined} /></span>
+        {/* A page that draws its own arrow under the header keeps the wordmark alone; an open layer still closes here. */}
+        {(!backInPage || panel) && <span ref={backControl} style={{ display: "inline-flex", flexShrink: 0 }}><BackButton closeLayer={panel ? () => { setPanel(null); if (panel === "search") searchTrigger.current?.focus(); } : undefined} /></span>}
         <ActionIcon className={classes.menuTrigger} aria-label="Abrir navegación" aria-expanded={panel === "navigation"} aria-haspopup="dialog" onClick={() => setPanel("navigation")}><MaterialSymbol name="menu" context="header" /></ActionIcon>
         <UnstyledButton component={Link} to="/" className={classes.wordmark} aria-label="PLIEGO, ir al inicio"><BrandLogo compact="narrow" /></UnstyledButton>
       </Group>

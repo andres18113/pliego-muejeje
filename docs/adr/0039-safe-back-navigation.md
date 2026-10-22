@@ -1,11 +1,15 @@
-# ADR-0039: Retorno interno seguro en los shells de PLIEGO
+# ADR-0039: Safe internal back navigation in PLIEGO shells
 
-Fecha: 2026-10-17. Estado: aceptado por aprobación del plan de implementación.
+Date: 2026-10-17. Status: accepted with the approval of the implementation plan.
 
-Una política compartida sirve la cabecera global, la cabecera de compra y la recuperación de errores. El historial propio vive en memoria, registra keys de React Router y se reinicia al cambiar autoridad. Solo admite destinos internos conocidos; no considera `history.length` o un `from` arbitrario pruebas suficientes de seguridad. Agrupa cambios de filtros de una misma pantalla y utiliza respaldo jerárquico cuando falta una visita anterior verificable.
+One shared policy serves the global header, the purchase header and error recovery. Its own history lives in memory, records React Router keys and resets when authority changes. It only accepts known internal destinations; it does not treat `history.length` or an arbitrary `from` as sufficient proof of safety. It groups filter changes of the same screen and falls back hierarchically when there is no verifiable previous visit.
 
-Autenticación consumida, acciones con tokens y checkout confirmado no son destinos reutilizables. La navegación conserva las defensas existentes de autoridad y vida de vista: abandonar un formulario no cancela una operación enviada a PostgreSQL. Regresar nunca repite un comando de compra, carrito, pago o factura. Ante respuesta perdida se reconcilia el intento existente.
+Consumed authentication, token actions and a confirmed checkout are not reusable destinations. Navigation keeps the existing authority and view-lifetime defences: leaving a form does not cancel an operation already sent to PostgreSQL. Going back never repeats a purchase, cart, payment or invoice command. A lost response is reconciled through the existing attempt.
 
-Los mecanismos de retorno contextual reutilizan la política segura; los shells evitan flechas duplicadas. Foco y scroll siguen las políticas de navegación existentes. El botón global solo garantiza permanencia dentro de PLIEGO para su propia acción: no puede reescribir el historial externo del navegador.
+Contextual return mechanisms reuse the safe policy; shells avoid duplicate arrows. Focus and scroll follow the existing navigation policies. The global button only guarantees staying within PLIEGO for its own action: it cannot rewrite the browser's external history.
 
-Evidencia requerida: PUSH/REPLACE/POP, acceso directo, recarga, historial externo, filtros, autenticación y cambio de usuario, checkout incierto/confirmado, carrito sin comandos duplicados, teclado y shells público/compra/error.
+Required evidence: PUSH/REPLACE/POP, direct access, reload, external history, filters, authentication and user switch, uncertain/confirmed checkout, cart without duplicated commands, keyboard, and public/purchase/error shells.
+
+## Addendum 2026-10-21: placement on the edition page
+
+The edition page draws the arrow under the header, on the content edge, as product pages do. While it shows it, it claims the placement (`BackPlacementContext`) and the header leaves its slot empty; with a layer open, the header keeps its arrow to close it. On that page the header leaves with the scroll and does not compact. In the same frame the arrow's row leaves the viewport, the edition context bar appears fixed in place with the arrow — no slide, no fade — and it disappears the same way when the row returns. Exactly one arrow is ever in view and all of them use the same safe `goBack` policy. Other pages are unchanged.

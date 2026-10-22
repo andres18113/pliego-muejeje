@@ -44,7 +44,7 @@ describe("production purchase corrections", () => {
     await waitFor(() => expect(view.queryClient.getQueryData<CartDetail>(cartQueryKey)?.items[0].quantity).toBe(1));
     current = cartBody([{ quantity: 2, currentSubtotal: "37.00" }]);
     await act(async () => { await view.router.navigate("/checkout"); });
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
     const notice = await screen.findByRole("alert", { name: "Tu carrito cambió" });
     expect(notice).toHaveTextContent("18,50");
@@ -61,7 +61,7 @@ describe("production purchase corrections", () => {
     let current = cartBody([{ quantity: 1 }]);
     stubApi({ "GET /api/v1/cart": () => json(current), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     current = cartBody([{ quantity: 2, currentSubtotal: "37.00" }]);
     await act(async () => { window.dispatchEvent(new Event("focus")); });
     const notice = await screen.findByRole("alert", { name: "Tu carrito cambió" });
@@ -102,6 +102,6 @@ describe("production purchase corrections", () => {
     await waitFor(() => expect(screen.queryByRole("dialog", { name: "Nueva dirección" })).not.toBeInTheDocument());
     expect(screen.getByRole("status")).toHaveTextContent("Guardamos la dirección y la elegimos para este pedido.");
     await waitFor(() => expect(screen.getByRole("button", { name: "Cambiar dirección" })).toHaveFocus());
-    expect(screen.getByText(/Av\. Principal 123/)).toBeInTheDocument();
+    expect(screen.getByText("Av. Principal 123")).toBeInTheDocument();
   });
 });

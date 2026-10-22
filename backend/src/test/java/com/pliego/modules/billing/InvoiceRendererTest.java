@@ -167,6 +167,20 @@ class InvoiceRendererTest {
     }
 
     @Test
+    void render_ruc_buyer_shouldUseSriCode04AndLabelTheRuc() throws Exception {
+        ObjectNode ruc = snapshot(); ruc.put("identityType", "TAX_ID"); ruc.put("identityNumber", "1790016919001");
+        String xml = new String(renderer.render("XML", ruc), StandardCharsets.UTF_8);
+        assertThat(xml).contains("<tipoIdentificacionComprador>04</tipoIdentificacionComprador>", "<identificacionComprador>1790016919001</identificacionComprador>");
+        assertThat(new String(renderer.render("XML", snapshot()), StandardCharsets.UTF_8)).contains("<tipoIdentificacionComprador>05</tipoIdentificacionComprador>");
+        String pdf = decodedPdfText(new String(renderer.render("PDF", ruc), StandardCharsets.ISO_8859_1));
+        assertThat(pdf).contains("RUC: 1790016919001").doesNotContain("Cédula:");
+        for (String[] invalid : new String[][]{{"TAX_ID", "0000000018"}, {"NATIONAL_ID", "1790016919001"}, {"PASSPORT", "0000000018"}}) {
+            ObjectNode wrong = snapshot(); wrong.put("identityType", invalid[0]); wrong.put("identityNumber", invalid[1]);
+            assertThatThrownBy(() -> renderer.render("XML", wrong)).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Test
     void render_xml_invalidSchemaData_shouldFailClosed() {
         ObjectNode invalid = snapshot();
         ((ObjectNode) invalid.path("items").get(0)).put("description", "x".repeat(301));

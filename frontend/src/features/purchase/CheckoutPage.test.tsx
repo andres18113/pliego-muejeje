@@ -1,4 +1,4 @@
-import { fillBillingFixture, billingFixturePayload } from "./billingTestFixtures";
+import { fillBillingFixture, billingFromSavedAddress } from "./billingTestFixtures";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -25,7 +25,7 @@ async function choosePayment(user: ReturnType<typeof userEvent.setup>, method: "
 }
 
 async function fillCheckout(user: ReturnType<typeof userEvent.setup>, method: "Tarjeta" | "Transferencia", card?: string) {
-  await screen.findByText(/Av\. Principal 123/);
+  await screen.findByRole("heading", { name: "Pago" });
   fillBillingFixture();
   await choosePayment(user, method);
   if (card !== undefined) {
@@ -84,7 +84,7 @@ describe("CheckoutPage", () => {
   it("validates each card field when it is left, keeps untouched fields quiet, and updates a touched field as it is corrected", async () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture(); await choosePayment(user, "Tarjeta");
     const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
     const number = within(dialog).getByLabelText("Número de tarjeta");
@@ -136,7 +136,7 @@ describe("CheckoutPage", () => {
   it("does not flag an empty field that focus only passed through", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture(); await choosePayment(user, "Tarjeta");
     const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
     await user.type(within(dialog).getByLabelText("Número de tarjeta"), "4111111111111111");
@@ -149,7 +149,7 @@ describe("CheckoutPage", () => {
   it("opens concise CVV help with keyboard and returns focus without closing the card dialog", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture(); await choosePayment(user, "Tarjeta");
     expect(screen.queryByText("3 dígitos al reverso de la tarjeta; 4 en el frente si es American Express.")).not.toBeInTheDocument();
     const help = screen.getByRole("button", { name: "Ayuda sobre el código de seguridad" });
@@ -167,7 +167,7 @@ describe("CheckoutPage", () => {
   it("uses the detected American Express brand for four-digit front-of-card help", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture(); await choosePayment(user, "Tarjeta");
     await user.type(screen.getByLabelText("Número de tarjeta"), "378282246310005");
     await user.click(screen.getByRole("button", { name: "Ayuda sobre el código de seguridad" }));
@@ -183,7 +183,7 @@ describe("CheckoutPage", () => {
   it("disables placing an order until a card is confirmed or transfer is selected", async () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture();
     const pay = screen.getByRole("button", { name: "Hacer pedido" });
     expect(pay).toBeDisabled();
@@ -202,7 +202,7 @@ describe("CheckoutPage", () => {
   it("does not submit a valid card before the customer confirms using it", async () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]), "POST /api/v1/checkout": () => json(approved, 201) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture(); await choosePayment(user, "Tarjeta");
     await user.type(screen.getByLabelText("Número de tarjeta"), "4111111111111111");
     await user.type(screen.getByLabelText("Caducidad (MM/AA)"), "12/30");
@@ -221,7 +221,7 @@ describe("CheckoutPage", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture();
 
     await choosePayment(user, "Tarjeta");
@@ -240,7 +240,7 @@ describe("CheckoutPage", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture();
     await choosePayment(user, "Tarjeta");
 
@@ -342,7 +342,7 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
 
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture();
     await choosePayment(user, "Tarjeta");
     const previousMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1);
@@ -371,7 +371,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     const deliver = await screen.findByRole("tabpanel", { name: "Entrega" });
-    expect(await within(deliver).findByText(/Av\. Principal 123/)).toBeInTheDocument();
+    expect(await within(deliver).findByText("Av. Principal 123")).toBeInTheDocument();
     expect(within(deliver).queryByRole("radio")).not.toBeInTheDocument();
     expect(within(deliver).queryByLabelText("Ciudad")).not.toBeInTheDocument();
 
@@ -414,7 +414,7 @@ describe("CheckoutPage", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture();
 
     await choosePayment(user, "Tarjeta");
@@ -460,7 +460,7 @@ describe("CheckoutPage", () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
   fillBillingFixture();
     await choosePayment(user, "Tarjeta");
     const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
@@ -488,7 +488,7 @@ describe("CheckoutPage", () => {
 
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
     const post = api.calls.find((call) => call.method === "POST");
-    expect(post?.body).toEqual({ ...billingFixturePayload,
+    expect(post?.body).toEqual({ ...billingFromSavedAddress,
       fulfillmentMethod: "HOME_DELIVERY",
       addressId: "15",
       expectedCartId: "40",
@@ -580,7 +580,7 @@ describe("CheckoutPage", () => {
     fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     await screen.findByRole("heading", { name: "Pedido abierto" });
-    expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({ ...billingFixturePayload,
+    expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({ ...billingFromSavedAddress,
       fulfillmentMethod: "HOME_DELIVERY",
       addressId: "15",
       expectedCartId: "40",

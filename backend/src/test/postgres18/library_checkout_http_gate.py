@@ -8,11 +8,12 @@ from digital_editions_http_gate import ok, problem
 from full_journey_http_gate import admin_token
 from checkout_last_unit import query
 from email_verification_fixture import verify_registered_email
+from checkout_billing import billed
 
 
 def checkout(token, body, key):
     req = urllib.request.Request(os.environ['CHECKOUT_BASE_URL'].rstrip('/')+'/api/v1/checkout',
-        data=json.dumps(body).encode(), method='POST', headers={'Authorization': token,
+        data=json.dumps(billed(body)).encode(), method='POST', headers={'Authorization': token,
         'Content-Type': 'application/json', 'Idempotency-Key': key})
     try:
         with urllib.request.urlopen(req, timeout=20) as response:

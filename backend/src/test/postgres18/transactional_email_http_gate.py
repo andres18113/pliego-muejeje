@@ -23,6 +23,7 @@ import uuid
 from checkout_last_unit import fixture, query
 from checkout_http_gate import token as fixture_jwt
 from email_verification_fixture import verification_token
+from checkout_billing import billed
 
 
 class MailtrapStub(http.server.BaseHTTPRequestHandler):
@@ -57,6 +58,8 @@ def wait_for(predicate, timeout=30):
 
 
 def request(base, path, body=None, headers=None):
+    if path == '/api/v1/checkout' and body is not None:
+        body = billed(body)
     req = urllib.request.Request(base + path, data=None if body is None else json.dumps(body).encode(),
         method='GET' if body is None else 'POST', headers={'Content-Type': 'application/json', **(headers or {})})
     try:

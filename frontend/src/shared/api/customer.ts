@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { billingIdentitySchema, type BillingIdentity } from "./billing";
+import { billingIdentitySchema, storedBillingIdentitySchema, type BillingIdentity } from "./billing";
 import type { components } from "./generated";
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
@@ -162,15 +162,33 @@ export async function getBillingIdentity(signal?: AbortSignal): Promise<BillingI
   const { data, error, response } = await apiClient.GET("/api/v1/me/billing-identity", { signal });
   if (response.status === 204) return null;
   if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos consultar tu cédula", "Comprueba tu conexión e inténtalo otra vez.");
-  const parsed = billingIdentitySchema.safeParse(data);
+  const parsed = storedBillingIdentitySchema.safeParse(data);
   if (!parsed.success) throw toApiRequestError(502, {}, "No pudimos consultar tu cédula", "La respuesta del servidor está incompleta.");
   return parsed.data;
 }
-export async function setBillingIdentity(identity: BillingIdentity): Promise<void> {
-  const { error, response } = await apiClient.PUT("/api/v1/me/billing-identity", { body: billingIdentitySchema.parse(identity) });
-  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos guardar tu cédula", "Revisa el dato e inténtalo otra vez.");
+/** Thrown when the reply was lost or unreadable: callers read the cédula again before deciding, never replay blindly. */
+export class BillingIdentityOutcomeUnknown extends Error {
+  constructor() {
+    super("No pudimos confirmar si tu cédula cambió.");
+    this.name = "BillingIdentityOutcomeUnknown";
+  }
 }
-export async function removeBillingIdentity(): Promise<void> {
-  const { error, response } = await apiClient.DELETE("/api/v1/me/billing-identity");
-  if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos quitar tu cédula", "Consulta el dato actual antes de continuar.");
+
+/** Registers the first cédula. Repeating the same number changes nothing; a different stored number is P1105. */
+export async function registerBillingIdentity(identity: BillingIdentity): Promise<void> {
+  const result = await apiClient.PUT("/api/v1/me/billing-identity", { body: billingIdentitySchema.parse(identity) })
+    .catch(() => { throw new BillingIdentityOutcomeUnknown(); });
+  if (result.response.ok) return;
+  if (result.response.status >= 500) throw new BillingIdentityOutcomeUnknown();
+  throw toApiRequestError(result.response.status, result.error, "No pudimos guardar tu cédula", "Revisa el dato e inténtalo otra vez.");
+}
+
+/** A correction names the number the customer saw and confirms the current password (ADR 0040). */
+export async function correctBillingIdentity(currentNumber: string, identity: BillingIdentity, currentPassword: string): Promise<void> {
+  const { type, number } = billingIdentitySchema.parse(identity);
+  const result = await apiClient.POST("/api/v1/me/billing-identity/correction", { body: { type, currentNumber, number, currentPassword } })
+    .catch(() => { throw new BillingIdentityOutcomeUnknown(); });
+  if (result.response.ok) return;
+  if (result.response.status >= 500) throw new BillingIdentityOutcomeUnknown();
+  throw toApiRequestError(result.response.status, result.error, "No pudimos corregir tu cédula", "Revisa los datos e inténtalo otra vez.");
 }

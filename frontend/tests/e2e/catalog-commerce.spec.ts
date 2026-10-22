@@ -195,7 +195,7 @@ test("browse cards: the product opens its edition, the favorite on the cover sta
   // A guest is asked to sign in; the saved favorite comes back on the shelf without opening the edition.
   await heart.click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   const saved = page.locator("[data-bookcard]").first().getByRole("button", { name: /favoritos: Cien años de soledad/ });
   await expect(saved).toHaveAttribute("aria-pressed", "true");

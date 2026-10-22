@@ -1,30 +1,31 @@
-import { useEffect, useId, useRef, useState, type FormEvent, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { useQuery, type QueryObserverResult } from "@tanstack/react-query";
 import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { changeEmail, EmailChangeOutcomeUnknown, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import { billingIdentityQueryKey, changeEmail, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
 import { personNameSchema, personNameError, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { FieldMessage } from "@/shared/ui/Field";
 import { ReadFailure } from "@/features/purchase/CartPage";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
-import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
-import { BillingIdentityEditor } from "./BillingIdentityEditor";
-import { PasswordRecovery } from "./PasswordRecovery";
+import { Link } from "react-router-dom";
+import { CedulaEditor } from "./CedulaEditor";
+import { EditorFrame, type Result } from "./EditorFrame";
+import { PasswordRecoveryEditor, usePasswordCooldown } from "./PasswordRecovery";
 import { AccountShell } from "./AccountShell";
 import { AccountMonogram } from "@/shared/ui/AccountMonogram";
 import classes from "./profile.module.css";
 import { restoredProfileField, useProfileDraft, useProfileSaving } from "./profileDraft";
+import { PasswordInput } from "@/shared/ui/PasswordInput";
 
-type FieldKey = "firstNames" | "lastNames" | "email" | "phone";
-type Feedback = { field: FieldKey; message: string; error: boolean };
-type Result = Omit<Feedback, "field">;
+type FieldKey = "firstNames" | "lastNames" | "cedula" | "email" | "phone" | "password";
+type Feedback = { field: FieldKey } & Result;
 type Refetch = () => Promise<QueryObserverResult<CustomerProfile>>;
 
 const nameRule = personNameSchema;
@@ -43,6 +44,7 @@ function AccountContent() {
     refetchOnMount: "always",
     retry: false,
   });
+  const identityQuery = useQuery({ queryKey: billingIdentityQueryKey, queryFn: ({ signal }) => getBillingIdentity(signal), meta: { authRequired: true }, refetchOnMount: "always", retry: false });
   useEffect(() => {
     if (profileQuery.error instanceof ApiRequestError && profileQuery.error.status === 401) clear("expired");
   }, [clear, profileQuery.error]);
@@ -50,23 +52,32 @@ function AccountContent() {
   return <AccountShell title="Mi perfil" trail="Mi perfil">
     {profileQuery.isPending ? <p className="purchase-loading" role="status">Consultando tus datos…</p> : !profileQuery.data ? <ReadFailure error={profileQuery.error} title="No pudimos consultar tus datos." onRetry={() => void profileQuery.refetch()} retrying={profileQuery.isFetching} /> : <>
       {profileQuery.isError && <p className="stale-data-note" role="status">No pudimos actualizar tus datos. Se muestra la última consulta disponible. <Button variant="text" type="button" onClick={() => void profileQuery.refetch()}>Actualizar</Button></p>}
-      <Profile profile={profileQuery.data} readCurrent={!profileQuery.isError} refetch={profileQuery.refetch} onExpired={() => clear("expired")} />
-      <PasswordRecovery key={`${profileQuery.data.customerId}:${profileQuery.data.email}`} email={profileQuery.data.email} verified={profileQuery.data.emailVerified !== false} readCurrent={!profileQuery.isError && !profileQuery.isFetching} />
-      <BillingIdentityEditor />
+      <Profile profile={profileQuery.data} readCurrent={!profileQuery.isError} refetch={profileQuery.refetch} onExpired={() => clear("expired")}
+        identity={{ data: identityQuery.data, pending: identityQuery.isPending, failed: identityQuery.isError && identityQuery.data === undefined, refetch: identityQuery.refetch }}
+        passwordReadCurrent={!profileQuery.isError && !profileQuery.isFetching} />
     </>}
   </AccountShell>;
 }
+
+type IdentityState = {
+  data: import("@/shared/api/billing").BillingIdentity | null | undefined;
+  pending: boolean;
+  failed: boolean;
+  refetch: () => Promise<{ data?: import("@/shared/api/billing").BillingIdentity | null; isError: boolean }>;
+};
 
 /**
  * Identity first and read-only: the reader's avatar and name, then each piece of data as plain text.
  * One field opens for editing at a time, in place; saving or cancelling returns focus to its action.
  */
-function Profile({ profile, readCurrent, refetch, onExpired }: { profile: CustomerProfile; readCurrent: boolean; refetch: Refetch; onExpired: () => void }) {
+function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordReadCurrent }: { profile: CustomerProfile; readCurrent: boolean; refetch: Refetch; onExpired: () => void; identity: IdentityState; passwordReadCurrent: boolean }) {
   const [editing, setEditing] = useState<FieldKey | null>(() => restoredProfileField(profile.customerId));
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const editButtons = useRef<Partial<Record<FieldKey, HTMLButtonElement | null>>>({});
+  const password = usePasswordCooldown();
   const fullName = `${profile.firstNames} ${profile.lastNames}`.trim();
   const phone = profile.phone ? parsePhoneNumberFromString(profile.phone)?.formatInternational() ?? profile.phone : null;
+  const verified = profile.emailVerified !== false;
 
   function open(field: FieldKey) {
     setFeedback(null);
@@ -79,16 +90,27 @@ function Profile({ profile, readCurrent, refetch, onExpired }: { profile: Custom
   }
   const editorProps = (field: FieldKey) => ({ profile, refetch, onExpired, onDone: (result?: Result) => close(field, result) });
 
-  const rows: { field: FieldKey; label: string; value: string | null; empty?: string; editor: ReactNode }[] = [
+  const cedula: Row = identity.pending
+    ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "Consultando…", disabled: true, editor: null }
+    : identity.failed
+      ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "No pudimos consultarla.", action: "Volver a consultar", icon: "refresh", onAction: () => void identity.refetch(), editor: null }
+      : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: identity.data ? "Corregir" : "Agregar",
+          editor: <CedulaEditor customerId={profile.customerId} identity={identity.data ?? null} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
+  const rows: Row[] = [
     { field: "firstNames", label: "Nombres", value: profile.firstNames, editor: <NameEditor field="firstNames" label="nombres" {...editorProps("firstNames")} /> },
     { field: "lastNames", label: "Apellidos", value: profile.lastNames, editor: <NameEditor field="lastNames" label="apellidos" {...editorProps("lastNames")} /> },
+    cedula,
     { field: "email", label: "Correo electrónico", value: profile.email, editor: <EmailEditor {...editorProps("email")} /> },
-    { field: "phone", label: "Teléfono", value: phone, empty: "Sin teléfono", editor: <PhoneEditor {...editorProps("phone")} /> },
+    { field: "phone", label: "Teléfono", value: phone, missing: { tone: "optional", hint: "Opcional" }, editor: <PhoneEditor {...editorProps("phone")} /> },
+    verified
+      ? { field: "password", label: "Contraseña", value: "Contraseña configurada", quiet: true, action: "Cambiar", icon: "lock", disabled: !passwordReadCurrent, waiting: password.cooling,
+          editor: <PasswordRecoveryEditor key={profile.email} email={profile.email} readCurrent={passwordReadCurrent} onRequested={password.start} onDone={(result) => close("password", result)} /> }
+      : { field: "password", label: "Contraseña", value: null, empty: "Verifica tu correo para cambiarla", action: "Cambiar", icon: "lock", disabled: true, editor: null },
   ];
 
   return <section className={classes.profile} aria-label="Perfil y datos personales">
     <header className={classes.identity}>
-      <AccountMonogram firstNames={profile.firstNames} lastNames={profile.lastNames} size={76} stop />
+      <AccountMonogram firstNames={profile.firstNames} lastNames={profile.lastNames} size={76} />
       <div className={classes.identityCopy}>
         <h2 className={classes.name}>{fullName}</h2>
         <p className={classes.tagline}>Tus datos para comprar y recibir tus libros.</p>
@@ -97,21 +119,29 @@ function Profile({ profile, readCurrent, refetch, onExpired }: { profile: Custom
 
     <ul className={classes.facts}>
       {rows.map((row) => {
-        const isEditing = editing === row.field;
+        const isEditing = editing === row.field && row.editor !== null;
         const rowFeedback = feedback?.field === row.field ? feedback : null;
+        const labelsInput = row.field !== "email" && row.field !== "password";
         return <li key={row.field} className={classes.fact} data-editing={isEditing || undefined}>
           {/* While editing, the row's own label names the input; nothing else on the page moves. */}
-          {isEditing && row.field !== "email"
+          {isEditing && labelsInput
             ? <label className={classes.factLabel} htmlFor={`profile-${row.field}-input`}>{row.label}</label>
             : <span className={classes.factLabel} id={`profile-${row.field}-label`}>{row.label}</span>}
           {isEditing ? row.editor : <>
-            <p className={classes.factValue} data-empty={!row.value || undefined}>{row.value ?? row.empty}</p>
+            <p className={classes.factValue} data-empty={(!row.value || row.quiet) || undefined}>
+              {row.value ?? (row.missing
+                // Not registered yet: a chip names the state; the hint says whether and when it is needed.
+                ? <span className={classes.missing}><span className={classes.missingChip} data-tone={row.missing.tone}>Sin registrar</span><span className="visually-hidden">. </span><span className={classes.missingHint}>{row.missing.hint}</span></span>
+                : row.empty)}
+            </p>
             <Button
               ref={(element: HTMLButtonElement | null) => { editButtons.current[row.field] = element; }}
               variant="text" type="button" className={classes.edit}
-              disabled={!readCurrent || (editing !== null && !isEditing)}
-              onClick={() => open(row.field)}
-            ><MaterialSymbol name="edit" aria-hidden="true" size={18} />{row.value ? "Editar" : "Agregar"}{" "}<span className="visually-hidden">{row.label.toLowerCase()}</span></Button>
+              disabled={row.disabled || (!row.onAction && !readCurrent) || (editing !== null && !isEditing)}
+              // Waiting keeps the action focusable, so focus can return to it after a request.
+              aria-disabled={row.waiting || undefined}
+              onClick={() => { if (row.waiting) return; if (row.onAction) row.onAction(); else open(row.field); }}
+            ><MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.label[0].toLowerCase() + row.label.slice(1)}</span></Button>
           </>}
           {rowFeedback && !isEditing && <p className={`${classes.feedback} ${rowFeedback.error ? classes.feedbackError : ""}`} role={rowFeedback.error ? "alert" : "status"}>
             <MaterialSymbol name={rowFeedback.error ? "info" : "check_circle"} aria-hidden="true" size={16} />{rowFeedback.message}
@@ -119,39 +149,28 @@ function Profile({ profile, readCurrent, refetch, onExpired }: { profile: Custom
         </li>;
       })}
     </ul>
+    {!verified && readCurrent && <p className={classes.verification}>
+      Tu correo está pendiente de verificación. <Link to="/reenviar-verificacion" state={{ email: profile.email }}>Reenviar verificación de correo</Link>
+    </p>}
   </section>;
 }
+
+type Row = {
+  field: FieldKey; label: string; value: string | null; empty?: string; editor: ReactNode;
+  /** An absent value: "Sin registrar" plus whether and when it is needed. */
+  missing?: { tone: "required" | "optional"; hint: string };
+  /** Defaults follow the action: `add` creates a value that does not exist yet, `edit` changes one that does. */
+  /** A value that states a fact rather than showing data (the password is never shown). */
+  quiet?: boolean;
+  /** `lock` marks the security action of the password row. */
+  action?: string; icon?: "add" | "edit" | "lock" | "refresh"; disabled?: boolean; waiting?: boolean; onAction?: () => void;
+};
 
 interface EditorProps {
   profile: CustomerProfile;
   refetch: Refetch;
   onExpired: () => void;
   onDone: (result?: Result) => void;
-}
-
-/** One field's inline editor: its input(s) where the value was, Guardar/Cancelar where Editar was; Escape cancels. */
-function EditorFrame({ label, onSubmit, onCancel, saving, saved, children, error, notice }: {
-  label: string; onSubmit: () => void; onCancel: () => void; saving: boolean; saved: boolean; children: ReactNode; error: string | null; notice?: string;
-}) {
-  return <form className={classes.inline} noValidate aria-label={label}
-    onSubmit={(event: FormEvent) => { event.preventDefault(); if (!saving) onSubmit(); }}
-    onKeyDown={(event: KeyboardEvent) => { if (event.key === "Escape" && !saving) { event.preventDefault(); onCancel(); } }}>
-    <div className={classes.inlineFields}>
-      {children}
-      {error && <p className={`${classes.feedback} ${classes.feedbackError}`} role="alert"><MaterialSymbol name="info" aria-hidden="true" size={16} />{error}</p>}
-    </div>
-    <div className={classes.inlineActionGroup} role="group" aria-label="Acciones de edición">
-      <div className={classes.inlineActions}>
-        <button type="submit" className={classes.save} aria-disabled={saving || undefined} aria-busy={saving || undefined}>
-          <TransactionButtonLabel state={saving ? "pending" : saved ? "success" : "idle"} idle="Guardar" pending="Guardando…" success="Guardado" />
-        </button>
-        <button type="button" className={classes.cancel} aria-disabled={saving || undefined} onClick={() => { if (!saving) onCancel(); }}>Cancelar</button>
-      </div>
-      {(saving || notice) && <p className={saving ? "visually-hidden" : classes.draftNotice} role="status">
-        {saving ? "Guardando cambios." : <><MaterialSymbol name="edit" size={14} aria-hidden="true" />{notice}</>}
-      </p>}
-    </div>
-  </form>;
 }
 
 /** Save only the edited field, conditional on the version seen when its editor opened. */
@@ -344,7 +363,7 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     {errors.email && <FieldMessage id={`${emailId}-error`} tone="error">{errors.email}</FieldMessage>}
     {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace para verificar el nuevo correo.</p>}
     <label className={classes.subLabel} htmlFor={passwordId}>Contraseña actual</label>
-    <input ref={passwordRef} id={passwordId} className={classes.input} type="password" autoComplete="current-password" value={password}
+    <PasswordInput ref={passwordRef} id={passwordId} className={classes.input} autoComplete="current-password" value={password}
       aria-invalid={Boolean(errors.password) || undefined} aria-describedby={errors.password ? `${passwordId}-error` : undefined}
       onChange={(event) => { setPassword(event.target.value); setErrors(current => ({ ...current, password: undefined })); }} />
     {errors.password && <FieldMessage id={`${passwordId}-error`} tone="error">{errors.password}</FieldMessage>}
