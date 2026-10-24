@@ -44,8 +44,12 @@ fi
 application_port="${PLIEGO_PG18_APP_PORT:-18080}"
 application_pid=''
 cleanup() {
+    local result=$?
     if [[ -n "$application_pid" ]] && kill -0 "$application_pid" 2>/dev/null; then
         kill -CONT "$application_pid" 2>/dev/null || true
+        if (( result != 0 )) && [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]] && command -v jcmd >/dev/null 2>&1; then
+            timeout 10s jcmd "$application_pid" Thread.print > "$PLIEGO_GATE_LOG_DIR/jvm-threads.log" 2>&1 || true
+        fi
         kill "$application_pid" 2>/dev/null || true
         wait "$application_pid" 2>/dev/null || true
     fi
