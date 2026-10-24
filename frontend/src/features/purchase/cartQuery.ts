@@ -1,4 +1,5 @@
 import { stockReadOptions } from "@/features/catalog/stockStatusModel";
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getCartDetail } from "@/shared/api/cart";
 import { ApiRequestError } from "@/shared/api/errors";
@@ -12,7 +13,7 @@ export const cartQueryKey = ["customer-cart"] as const;
  * a recent count and is refreshed by cart invalidations after mutations.
  */
 export function useCustomerCart(enabled: boolean, { fresh = true }: { fresh?: boolean } = {}) {
-  return useQuery({
+  const query = useQuery({
     queryKey: cartQueryKey,
     ...stockReadOptions,
     queryFn: ({ signal }) => getCartDetail(signal),
@@ -22,6 +23,22 @@ export function useCustomerCart(enabled: boolean, { fresh = true }: { fresh?: bo
     refetchOnMount: fresh ? "always" : true,
     retry: (failureCount, error) => !(error instanceof ApiRequestError && error.status < 500) && failureCount < 1,
   });
+  const { refetch } = query;
+  useEffect(() => {
+    if (!enabled) return;
+    // Also cover switching between visible browser windows. Duplicate focus/visibility events
+    // share the in-flight read instead of cancelling it or starting competing reads.
+    const refreshVisibleCart = () => {
+      if (document.visibilityState !== "hidden") void refetch({ cancelRefetch: false });
+    };
+    window.addEventListener("focus", refreshVisibleCart);
+    document.addEventListener("visibilitychange", refreshVisibleCart);
+    return () => {
+      window.removeEventListener("focus", refreshVisibleCart);
+      document.removeEventListener("visibilitychange", refreshVisibleCart);
+    };
+  }, [enabled, refetch]);
+  return query;
 }
 
 export function cartUnitCount(items: { quantity: number }[]) {

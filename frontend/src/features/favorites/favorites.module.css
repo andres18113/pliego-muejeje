@@ -79,3 +79,5 @@
 }
 
 .cart[aria-disabled="true"]:not(:disabled) { cursor: progress; }
+
+.feedback .cartQuantity { color: var(--acc-ink); font-size: .9375rem; font-weight: 600; line-height: 1.4; }

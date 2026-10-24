@@ -127,9 +127,10 @@ test("desktop Libros: heading, persistent filters, three columns, sort and no pr
   await sort.focus();
   await page.keyboard.press("Enter");
   const list = page.getByRole("listbox", { name: "Ordenar por" });
-  await expect(list.getByRole("option")).toHaveText([/^Más vendidos/, /^Título: A–Z/, /^Precio: menor a mayor/, /^Precio: mayor a menor/]);
+  await expect(list.getByRole("option")).toHaveText([/^Más vendidos/, /^Título: A–Z/, /^Título: Z–A/, /^Precio: menor a mayor/, /^Precio: mayor a menor/]);
   await expect(list.getByRole("option", { name: "Título: A–Z" })).toHaveAttribute("aria-selected", "true");
   await page.screenshot({ path: test.info().outputPath("sort-open.png") });
+  await page.keyboard.press("ArrowDown");
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("ArrowDown");
   await page.keyboard.press("Enter");
@@ -194,7 +195,7 @@ test("browse cards: the product opens its edition, the favorite on the cover sta
   // A guest is asked to sign in; the saved favorite comes back on the shelf without opening the edition.
   await heart.click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   const saved = page.locator("[data-bookcard]").first().getByRole("button", { name: /favoritos: Cien años de soledad/ });
   await expect(saved).toHaveAttribute("aria-pressed", "true");

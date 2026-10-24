@@ -1,3 +1,4 @@
+import { fillBillingFixture, billingFromSavedAddress } from "./billingTestFixtures";
 import { act, fireEvent, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -24,7 +25,8 @@ async function choosePayment(user: ReturnType<typeof userEvent.setup>, method: "
 }
 
 async function fillCheckout(user: ReturnType<typeof userEvent.setup>, method: "Tarjeta" | "Transferencia", card?: string) {
-  await screen.findByText(/Av\. Principal 123/);
+  await screen.findByRole("heading", { name: "Pago" });
+  fillBillingFixture();
   await choosePayment(user, method);
   if (card !== undefined) {
     await user.type(screen.getByLabelText("Número de tarjeta"), card);
@@ -63,7 +65,7 @@ describe("CheckoutPage", () => {
       if(actor==="3" && event.type==="updated" && event.action.type==="success" && event.query.queryKey[0]===cartQueryKey[0]) crossed.push((event.query.state.data as cartApi.CartDetail).cartId!);
     });
     try {
-      await fillCheckout(user,"Transferencia"); await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+      await fillCheckout(user,"Transferencia"); fillBillingFixture(); await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
       await waitFor(()=>expect(heldRead).toBeDefined());
       await user.click(screen.getByRole("button",{name:"Entrar como Bea"}));
       await waitFor(()=>expect((view.queryClient.getQueryData(cartQueryKey) as cartApi.CartDetail)?.cartId).toBe("50"));
@@ -82,7 +84,8 @@ describe("CheckoutPage", () => {
   it("validates each card field when it is left, keeps untouched fields quiet, and updates a touched field as it is corrected", async () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture(); await choosePayment(user, "Tarjeta");
     const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
     const number = within(dialog).getByLabelText("Número de tarjeta");
     const expiry = within(dialog).getByLabelText("Caducidad (MM/AA)");
@@ -133,7 +136,8 @@ describe("CheckoutPage", () => {
   it("does not flag an empty field that focus only passed through", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture(); await choosePayment(user, "Tarjeta");
     const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
     await user.type(within(dialog).getByLabelText("Número de tarjeta"), "4111111111111111");
     await waitFor(() => expect(within(dialog).getByLabelText("Caducidad (MM/AA)")).toHaveFocus());
@@ -145,7 +149,8 @@ describe("CheckoutPage", () => {
   it("opens concise CVV help with keyboard and returns focus without closing the card dialog", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture(); await choosePayment(user, "Tarjeta");
     expect(screen.queryByText("3 dígitos al reverso de la tarjeta; 4 en el frente si es American Express.")).not.toBeInTheDocument();
     const help = screen.getByRole("button", { name: "Ayuda sobre el código de seguridad" });
     help.focus(); await user.keyboard("{Enter}");
@@ -162,7 +167,8 @@ describe("CheckoutPage", () => {
   it("uses the detected American Express brand for four-digit front-of-card help", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture(); await choosePayment(user, "Tarjeta");
     await user.type(screen.getByLabelText("Número de tarjeta"), "378282246310005");
     await user.click(screen.getByRole("button", { name: "Ayuda sobre el código de seguridad" }));
     const panel = await screen.findByRole("dialog", { name: "Código de seguridad" });
@@ -177,7 +183,8 @@ describe("CheckoutPage", () => {
   it("disables placing an order until a card is confirmed or transfer is selected", async () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture();
     const pay = screen.getByRole("button", { name: "Hacer pedido" });
     expect(pay).toBeDisabled();
     await choosePayment(user, "Tarjeta");
@@ -195,7 +202,8 @@ describe("CheckoutPage", () => {
   it("does not submit a valid card before the customer confirms using it", async () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]), "POST /api/v1/checkout": () => json(approved, 201) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/); await choosePayment(user, "Tarjeta");
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture(); await choosePayment(user, "Tarjeta");
     await user.type(screen.getByLabelText("Número de tarjeta"), "4111111111111111");
     await user.type(screen.getByLabelText("Caducidad (MM/AA)"), "12/30");
     await user.type(screen.getByLabelText("Código de seguridad"), "123");
@@ -213,7 +221,8 @@ describe("CheckoutPage", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture();
 
     await choosePayment(user, "Tarjeta");
 
@@ -231,7 +240,8 @@ describe("CheckoutPage", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture();
     await choosePayment(user, "Tarjeta");
 
     const expiry = screen.getByLabelText("Caducidad (MM/AA)");
@@ -295,7 +305,7 @@ describe("CheckoutPage", () => {
     await fillCheckout(user, "Transferencia");
     const submittedAt = Date.now();
 
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Creando tu pedido simulado…")).toBeInTheDocument();
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
@@ -314,11 +324,13 @@ describe("CheckoutPage", () => {
     const expiry = screen.getByLabelText("Caducidad (MM/AA)");
     await user.clear(expiry);
     await user.type(expiry, "1328");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Escribe la fecha de caducidad en formato MM/AA.")).toBeInTheDocument();
-    expect(expiry).toHaveAttribute("aria-invalid", "true");
-    expect(expiry).toHaveFocus();
+    // Opening the recovery dialog can remount the input. Assert the live control
+    // after its focus effect, rather than the detached element used for typing.
+    expect(screen.getByLabelText("Caducidad (MM/AA)")).toHaveAttribute("aria-invalid", "true");
+    await waitFor(() => expect(screen.getByLabelText("Caducidad (MM/AA)")).toHaveFocus());
     expect(api.count("POST", "/api/v1/checkout")).toBe(0);
   });
 
@@ -330,7 +342,8 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
 
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture();
     await choosePayment(user, "Tarjeta");
     const previousMonth = new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1);
     const expiredDigits = `${String(previousMonth.getMonth() + 1).padStart(2, "0")}${String(previousMonth.getFullYear() % 100).padStart(2, "0")}`;
@@ -358,7 +371,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     const deliver = await screen.findByRole("tabpanel", { name: "Entrega" });
-    expect(await within(deliver).findByText(/Av\. Principal 123/)).toBeInTheDocument();
+    expect(await within(deliver).findByText("Av. Principal 123")).toBeInTheDocument();
     expect(within(deliver).queryByRole("radio")).not.toBeInTheDocument();
     expect(within(deliver).queryByLabelText("Ciudad")).not.toBeInTheDocument();
 
@@ -401,7 +414,8 @@ describe("CheckoutPage", () => {
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture();
 
     await choosePayment(user, "Tarjeta");
     const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
@@ -419,13 +433,13 @@ describe("CheckoutPage", () => {
     expect(await screen.findByText("Visa-1111")).toBeInTheDocument();
     await waitFor(() => expect(screen.getByRole("button", { name: "Cambiar método de pago" })).toHaveFocus());
 
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByRole("heading", { name: "No se creó el pedido." })).toBeInTheDocument();
     expect(await screen.findByText(/No conservamos los datos de la tarjeta entre intentos/)).toBeInTheDocument();
     expect(screen.queryByText("Visa-1111")).not.toBeInTheDocument();
   });
 
-  it("opens the shared address editor, with its searchable country picker, when no address is saved", async () => {
+  it("opens the shared address editor with the supported Ecuador country fixed", async () => {
     stubApi({
       "GET /api/v1/cart": () => json(cartBody()),
       "GET /api/v1/me/addresses": () => json([]),
@@ -436,14 +450,24 @@ describe("CheckoutPage", () => {
     // Without a saved address, "Entregar en" offers the shared editor straight away.
     await user.click(await screen.findByRole("button", { name: "Añadir dirección" }));
     await screen.findByRole("dialog", { name: "Nueva dirección" });
-    const country = await screen.findByRole("combobox", { name: "País de entrega" });
-    await user.click(country);
-    const search = await screen.findByRole("combobox", { name: "Buscar país de entrega" });
-    await user.type(search, "Colom");
-    await user.keyboard("{ArrowDown}{Enter}");
+    const country = await screen.findByRole("textbox", { name: "País de entrega" });
+    expect(country).toHaveValue("Ecuador");
+    expect(country).toHaveAttribute("readonly");
+    expect(screen.queryByRole("combobox", { name: "País de entrega" })).not.toBeInTheDocument();
+  });
 
-    expect(country).toHaveTextContent("Colombia");
-    await waitFor(() => expect(screen.queryByRole("combobox", { name: "Buscar país de entrega" })).not.toBeInTheDocument());
+  it("blocks digits in the cardholder name and explains the rejected edit immediately", async () => {
+    const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText("Av. Principal 123");
+  fillBillingFixture();
+    await choosePayment(user, "Tarjeta");
+    const dialog = screen.getByRole("dialog", { name: "Tarjeta de crédito o débito" });
+    await user.type(within(dialog).getByLabelText("Nombre en la tarjeta"), "Ana7");
+    expect(within(dialog).getByLabelText("Nombre en la tarjeta")).toHaveValue("Ana");
+    expect(within(dialog).getByText(/solo.*letras/i)).toBeVisible();
+    expect(api.calls.filter(call => call.method === "POST" && call.path === "/api/v1/checkout")).toHaveLength(0);
   });
 
   it("sends one CARD checkout with the saved address and opens the created order", async () => {
@@ -460,11 +484,11 @@ describe("CheckoutPage", () => {
     expect(screen.queryByText("Pago aprobado")).not.toBeInTheDocument();
     expect(screen.getByLabelText("Número de tarjeta")).toHaveValue("4111 1111 1111 1111");
     expect(screen.getByRole("img", { name: "Visa detectada" })).toBeInTheDocument();
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
     const post = api.calls.find((call) => call.method === "POST");
-    expect(post?.body).toEqual({
+    expect(post?.body).toEqual({ ...billingFromSavedAddress,
       fulfillmentMethod: "HOME_DELIVERY",
       addressId: "15",
       expectedCartId: "40",
@@ -484,7 +508,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Tarjeta", "4111111111111112");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Este número de tarjeta no es válido. Revisa los dígitos.")).toBeInTheDocument();
     expect(screen.getByLabelText("Número de tarjeta")).toHaveFocus();
@@ -502,7 +526,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Tarjeta", "4111111111111111");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     await waitFor(() => expect(api.count("POST", "/api/v1/checkout")).toBe(1));
     expect(await screen.findByText("Número de tarjeta: El número no pasó la validación. Vuelve a escribirlo.")).toBeInTheDocument();
@@ -526,7 +550,7 @@ describe("CheckoutPage", () => {
     await user.clear(screen.getByLabelText("Código de seguridad"));
     await user.type(screen.getByLabelText("Código de seguridad"), "1234");
     await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByRole("heading", { name: "Pedido abierto" })).toBeInTheDocument();
     expect(api.calls.find((call) => call.method === "POST")?.body).toMatchObject({ cardNumber: "378282246310005" });
   });
@@ -553,10 +577,10 @@ describe("CheckoutPage", () => {
     await waitFor(() => expect(screen.queryByLabelText("Número de tarjeta")).not.toBeInTheDocument());
     expect(screen.getByRole("button", { name: /Transferencia/ })).toHaveAttribute("aria-pressed", "true");
     await user.click(screen.getByRole("button", { name: /Transferencia/ }));
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     await screen.findByRole("heading", { name: "Pedido abierto" });
-    expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({
+    expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({ ...billingFromSavedAddress,
       fulfillmentMethod: "HOME_DELIVERY",
       addressId: "15",
       expectedCartId: "40",
@@ -578,7 +602,7 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: "Consultar resultado" }));
     await waitFor(() => expect(screen.getByRole("button", { name: "Hacer pedido" })).toHaveAttribute("aria-disabled", "true"));
     expect(screen.queryByText("No se creó ningún pedido.")).not.toBeInTheDocument();
@@ -600,7 +624,7 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/checkout");
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: "Consultar resultado" }));
     expect(await screen.findByRole("heading", { name: "No se creó ningún pedido." })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Hacer pedido" })).not.toHaveAttribute("aria-disabled");
@@ -636,7 +660,7 @@ describe("CheckoutPage", () => {
     });
     const user=userEvent.setup();renderPurchaseRoute(routes,"/checkout");
     await fillCheckout(user,"Transferencia");
-    await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+    fillBillingFixture(); await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
     expect(await screen.findByRole("heading",{name:"No enviamos tu pedido."})).toBeInTheDocument();
     expect(screen.getByText(detail)).toBeInTheDocument();
     expect(api.count("POST","/api/v1/checkout")).toBe(0);
@@ -649,7 +673,7 @@ describe("CheckoutPage", () => {
     });
     const user=userEvent.setup();renderPurchaseRoute(routes,"/checkout");
     await fillCheckout(user,"Transferencia");
-    await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+    fillBillingFixture(); await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
     expect(await screen.findByRole("heading",{name:"Tu carrito cambió."})).toBeInTheDocument();
     expect(api.count("POST","/api/v1/checkout")).toBe(0);
   });
@@ -669,7 +693,7 @@ describe("CheckoutPage", () => {
     await fillCheckout(user, "Transferencia");
     const summary = screen.getByRole("complementary", { name: "Resumen del pedido" });
     expect(within(summary).getByText("Total").nextSibling).toHaveTextContent("18,50");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByRole("heading", { name: "Tu carrito cambió." })).toBeInTheDocument();
     await waitFor(() => expect(within(summary).getByText("Total").nextSibling).toHaveTextContent("19,00"));
@@ -685,7 +709,7 @@ describe("CheckoutPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes,"/checkout");
     await fillCheckout(user,"Transferencia");
-    await user.click(screen.getByRole("button",{ name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button",{ name: "Hacer pedido" }));
     expect(await screen.findByRole("heading",{ name: "Tu carrito cambió y no se creó el pedido." })).toBeInTheDocument();
     expect(api.calls.find(call => call.method === "POST" && call.path === "/api/v1/checkout")?.body).toMatchObject({ expectedQuoteFingerprint: "a".repeat(64) });
     expect(screen.getByRole("button",{ name: "Hacer pedido" })).toBeEnabled();
@@ -707,7 +731,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByRole("heading", { name: "La disponibilidad cambió y no se creó el pedido." })).toBeInTheDocument();
     // The summary renders as a mobile disclosure and a desktop aside; CSS shows one.
@@ -726,7 +750,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     expect(await screen.findByText("Esa dirección ya no está disponible. Elige otra o agrega una nueva.")).toBeInTheDocument();
   });
@@ -740,7 +764,7 @@ describe("CheckoutPage", () => {
     });
     const user=userEvent.setup(); renderPurchaseRoute(routes,"/checkout");
     await fillCheckout(user,"Transferencia");
-    await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
+    fillBillingFixture(); await user.click(screen.getByRole("button",{name:"Hacer pedido"}));
     const error=await screen.findByText("Elige un método de pago de prueba disponible.");
     expect(error).toBeInTheDocument();
     expect(screen.getByRole("group",{name:"Método de pago"})).toHaveAccessibleDescription("Elige un método de pago de prueba disponible.");
@@ -767,7 +791,7 @@ describe("CheckoutPage", () => {
     renderPurchaseRoute(routes, "/checkout");
 
     await fillCheckout(user, "Transferencia");
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
 
     await waitFor(() => expect(screen.getByRole("heading", { name: "Tu sesión ya no está activa." })).toBeInTheDocument());
   });

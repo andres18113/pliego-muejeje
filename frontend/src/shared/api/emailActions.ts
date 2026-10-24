@@ -9,9 +9,9 @@ export class EmailActionOutcomeUnknown extends Error {
   }
 }
 
-export async function requestEmailAction(purpose: "verification" | "recovery", email: string): Promise<string> {
+export async function requestEmailAction(purpose: "verification" | "recovery", email: string, returnTo?: string): Promise<string> {
   const path = purpose === "verification" ? "/api/v1/auth/resend-verification" : "/api/v1/auth/forgot-password";
-  const { data, error, response } = await apiClient.POST(path, { body: { email } })
+  const { data, error, response } = await apiClient.POST(path, { body: { email, ...(returnTo ? { returnTo } : {}) } })
     .catch(() => { throw new EmailActionOutcomeUnknown(); });
   if (response.status >= 500) throw new EmailActionOutcomeUnknown();
   if (!response.ok) throw toApiRequestError(response.status, error, "No pudimos solicitar el correo", "Comprueba tus datos e inténtalo otra vez.");

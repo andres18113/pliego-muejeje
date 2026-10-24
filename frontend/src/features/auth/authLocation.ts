@@ -4,6 +4,11 @@ export function authLocation(pathname: string, from: string) {
   return { pathname, search: new URLSearchParams({ from }).toString() };
 }
 
+/** Keep email/recovery journeys contextual while leaving ordinary sign-in links unchanged. */
+export function emailActionLocation(pathname: string, from: string) {
+  return from === "/" ? pathname : authLocation(pathname, from);
+}
+
 const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkout|(?:orders|biblioteca)(?:\/[1-9][0-9]{0,18})?)\/?$/;
 
 /**

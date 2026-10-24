@@ -30,6 +30,8 @@ class OpenApiCoverageTest {
             com.pliego.modules.sales.api.PickupLocationController.class,
             com.pliego.modules.sales.api.AdminPickupController.class,
             com.pliego.modules.customer.api.CustomerController.class,
+            com.pliego.modules.customer.api.BillingIdentityController.class,
+            com.pliego.modules.billing.api.BillingController.class,
             com.pliego.modules.customer.api.AdminCustomerController.class,
             com.pliego.modules.catalog.api.CatalogController.class, EditionOfferController.class,
             com.pliego.modules.catalog.api.AdminCatalogController.class,
@@ -64,7 +66,7 @@ class OpenApiCoverageTest {
             }
         }
         assertThat(endpoints).as("REST total including public catalog, customer favorites, post-purchase routes and email change")
-                .isEqualTo(82);
+                .isEqualTo(88);
     }
 
     @Test

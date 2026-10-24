@@ -1,5 +1,6 @@
 import { storefrontNavigationFixture } from "@/test/storefrontFixture";
 import { SiteHeader } from "@/app/navigation/SiteHeader";
+import { BackNavigationProvider } from "@/app/navigation/BackNavigationProvider";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { render, screen, waitFor, within } from "@testing-library/react";
@@ -20,7 +21,8 @@ function renderDetail(initialEntry = "/catalog/editions/42?from=%2Fcatalog%3Fq%3
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const initialUrl = new URL(initialEntry, "http://localhost");
   const router = createMemoryRouter(
-    [{ path: "/catalog/editions/:editionId", element: <><SiteHeader /><EditionDetailPage /></> }],
+    [{ path: "/catalog/editions/:editionId", element: <BackNavigationProvider><SiteHeader /><EditionDetailPage /></BackNavigationProvider> },
+      { path: "/catalog", element: <BackNavigationProvider><SiteHeader /><h1>Catálogo de prueba</h1></BackNavigationProvider> }],
     { initialEntries: [{ pathname: initialUrl.pathname, search: initialUrl.search, state }] },
   );
 
@@ -73,6 +75,26 @@ function expectSharedChrome() {
 afterEach(() => vi.unstubAllGlobals());
 
 describe("EditionDetailPage", () => {
+  it.each([["PAPERBACK", "Libro"], ["EBOOK", "eBook"], ["AUDIOBOOK", "Audiolibro"]])("names the %s medium on the edition page", async (format, label) => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse(true, { format,
+      ...(format === "AUDIOBOOK" ? { audioDurationSeconds: 3600, narrators: ["Ana Voz"] } : {}),
+    })));
+    renderDetail();
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    const identity = screen.getByRole("heading", { name: "Cien años de soledad" }).closest("header")!;
+    expect(within(identity).getByText(label, { exact: true })).toBeVisible();
+  });
+
+  it.each(["/ofertas", "/catalog?que=Cien&productType=EBOOK&page=2"])("keeps generic catalog navigation separate from contextual return to %s", async (origin) => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse()));
+    renderDetail(`/catalog/editions/42?from=${encodeURIComponent(origin)}`);
+    await screen.findByRole("heading", { name: "Cien años de soledad" });
+    const trail = within(screen.getByRole("navigation", { name: "Ruta de navegación" }));
+    expect(trail.getByRole("link", { name: "Catálogo" })).toHaveAttribute("href", "/catalog");
+    const footer = within(screen.getByRole("navigation", { name: "Navegación del pie de página" }));
+    expect(footer.getByRole("link", { name: origin === "/ofertas" ? "Volver a Ofertas" : "Volver al catálogo" })).toHaveAttribute("href", origin);
+  });
+
   const serverOffer = { offerId: "4", originalPrice: "18.50", discountAmount: "5.00", effectivePrice: "13.50", savingsAmount: "5.00", savingsPercent: "27.03", daysRemaining: 2, endingSoon: true, startsAt: "2026-01-01T00:00:00-05:00", endsAt: "2026-10-09T23:59:59-05:00", offerCopy: "Una lectura para ti", terms: "Válida hasta agotar existencias." };
   function stubOffer(overrides: Record<string, unknown>) {
     vi.stubGlobal("fetch", vi.fn((input: RequestInfo | URL) => {
@@ -131,6 +153,25 @@ describe("EditionDetailPage", () => {
     expect(screen.queryByText(/DEMO|sin identidad/)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /descargar|reproducir|escuchar/i })).not.toBeInTheDocument();
+  });
+
+  it("draws the one back arrow under the header, on the content edge, and leaves the wordmark alone", async () => {
+    vi.stubGlobal("fetch", vi.fn(async () => editionResponse()));
+    renderDetail("/catalog/editions/42");
+    const main = await screen.findByRole("main");
+    await screen.findByRole("heading", { level: 1 });
+    const header = screen.getByTestId("site-header");
+    expect(within(header).queryByRole("button", { name: "Volver atrás" })).not.toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Volver atrás" })).toHaveLength(1);
+    const back = within(main).getByRole("button", { name: "Volver atrás" });
+    const trail = within(main).getByRole("navigation", { name: "Ruta de navegación" });
+    expect(back.compareDocumentPosition(trail) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(within(header).getByRole("link", { name: "PLIEGO, ir al inicio" }).previousElementSibling?.getAttribute("aria-label")).not.toBe("Volver atrás");
+    await userEvent.click(back);
+    expect(await screen.findByRole("heading", { name: "Catálogo de prueba" })).toBeInTheDocument();
+    // Leaving the edition releases the header's claim; the header still never draws an arrow beside the wordmark.
+    expect(screen.getByTestId("site-header")).not.toHaveAttribute("data-flow");
+    expect(within(screen.getByTestId("site-header")).queryByRole("button", { name: "Volver atrás" })).not.toBeInTheDocument();
   });
 
   it("keeps the shared header and footer while loading and after success", async () => {

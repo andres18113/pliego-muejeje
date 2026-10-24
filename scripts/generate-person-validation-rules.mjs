@@ -1,4 +1,5 @@
 import { writeFileSync } from "node:fs";
+import metadata from "../frontend/node_modules/libphonenumber-js/metadata.max.json" with { type: "json" };
 
 // Pin the accepted repertoire; the resulting literal pattern is shared by JS,
 // Java and PostgreSQL rather than inheriting their differing Unicode/locale data.
@@ -18,19 +19,28 @@ function ranges(property) {
   flush(); return parts.join("");
 }
 const letters = ranges("L"), marks = ranges("M");
+const contactPatterns = metadata.countries.EC[11];
 const rules = {
-  version: "1", unicodeVersion: "17.0", maxNameCodePoints: 120, maxRecipientCodePoints: 241,
+  version: "2", unicodeVersion: "17.0", maxNameCodePoints: 120, maxRecipientCodePoints: 241,
   namePattern: `^[${letters}][${letters}${marks}]*(?:(?: +|['’‐‑-])[${letters}][${letters}${marks}]*)*$`,
   spaceSeparatorPattern: `[${ranges("Zs")}]`, outerWhitespacePattern: "^[\\t\\n\\x0b\\f\\r ]+|[\\t\\n\\x0b\\f\\r ]+$",
-  phonePresentationPattern: "^[+0-9 ().\\-\\t\\n\\r]+$", canonicalPhonePattern: "^\\+[1-9][0-9]{6,14}$", phoneMetadataVersion: "9.0.40",
+  phonePresentationPattern: "^[+0-9 ().\\-\\t\\n\\r]+$",
+  canonicalPhonePattern: `^\\+593(?:${contactPatterns[0][0]}|${contactPatterns[1][0]})$`, phoneMetadataVersion: "9.0.40",
+  phoneCountry: "EC", phoneCallingCode: "593", maxNationalPhoneDigits: 9,
   messages: {
     nameEmpty: "Escribe tus {label}.", nameTooLong: "Tus {label} no pueden superar 120 caracteres.",
     nameCharacters: "Tus {label} solo pueden contener letras, espacios, apóstrofes y guiones.",
-    phonePrefix: "Incluye el prefijo internacional, por ejemplo +593 99 123 4567.",
-    phoneCharacters: "Usa solo dígitos, espacios, paréntesis, puntos o guiones; no incluyas letras ni extensiones.",
-    phoneInvalid: "Revisa el prefijo internacional y el número: no corresponden a un teléfono válido.",
-    phoneChangedDigits: "Revisa el prefijo internacional: no incluyas el cero de marcación nacional después del código de país.",
+    phonePrefix: "Usa el prefijo de Ecuador (+593).",
+    phoneCharacters: "Escribe solo dígitos en el número de teléfono.",
+    phoneInvalid: "Revisa los dígitos: ese número no corresponde a un celular o fijo válido de Ecuador.",
+    phoneChangedDigits: "Escribe el número sin el 0 inicial; el prefijo +593 ya está incluido.",
+    phoneCountry: "Solo se aceptan teléfonos de Ecuador (+593).",
+    phoneTooLong: "El número no puede tener más de 9 dígitos.",
+    phoneMobileLength: "Un celular de Ecuador debe tener 9 dígitos y empezar con 9.",
+    phoneFixedLength: "Un fijo de Ecuador debe tener 8 dígitos, incluido el código de área.",
+    phoneStart: "Para un celular empieza con 9; para un fijo usa un código de área de 2 a 7.",
     recipientEmpty: "Escribe quién recibe el pedido.", recipientTooLong: "El destinatario no puede superar 241 caracteres.",
+    recipientCharacters: "El destinatario solo puede contener letras, espacios, apóstrofes y guiones.",
   },
 };
 writeFileSync(new URL("../shared/validation/person-rules.json", import.meta.url), JSON.stringify(rules, null, 2) + "\n");

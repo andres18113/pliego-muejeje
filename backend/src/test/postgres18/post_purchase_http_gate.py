@@ -83,10 +83,12 @@ class PostPurchaseHttpGate(unittest.TestCase):
         invoice = self.detail()["invoice"]
         self.assertEqual("ISSUED", invoice["state"])
         self.assertIsInstance(invoice["invoiceId"], str)
-        self.assertEqual("21.45", invoice["total"])
-        self.assertEqual("2.80", invoice["taxTotal"])
+        self.assertEqual("18.65", invoice["total"])
+        self.assertEqual("0.00", invoice["taxTotal"])
         self.assertEqual("Dirección de cobro", invoice["billingAddress"]["line1"])
-        self.assertEqual("ASSESSED", invoice["items"][0]["taxTreatment"])
+        self.assertEqual("NOT_ASSESSED", invoice["items"][0]["taxTreatment"])
+        self.assertIsNone(invoice["items"][0]["taxRate"])
+        self.assertEqual("0.00", invoice["items"][0]["taxAmount"])
         self.assertFalse(invoice["pdfAvailable"])
         self.assertFalse(invoice["xmlAvailable"])
         status, duplicate = request(self.admin_path + "/invoice", self.admin, method="POST", body=invoice_request)
@@ -103,7 +105,7 @@ class PostPurchaseHttpGate(unittest.TestCase):
         detail = self.detail()
         self.assertEqual(invoice, detail["invoice"])
         self.assertEqual("ISSUED", detail["creditNotes"][0]["state"])
-        self.assertEqual("21.45", detail["creditNotes"][0]["total"])
+        self.assertEqual("18.65", detail["creditNotes"][0]["total"])
 
     def test_admin_commands_reject_customer_and_invalid_input(self):
         for suffix, method, body in (("/invoice", "POST", {}), ("/credit-notes", "POST", {}),

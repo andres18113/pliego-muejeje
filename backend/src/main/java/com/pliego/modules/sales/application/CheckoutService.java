@@ -30,6 +30,14 @@ public class CheckoutService {
     }
 
     @Transactional
+    public CheckoutResult checkoutBilled(long actorUserId, UUID key, Long addressId, String paymentMethod,
+            String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId,
+            String quoteFingerprint, PostPurchaseModels.CheckoutBilling billing) {
+        return gateway.checkoutBilled(actorUserId, key, addressId, paymentMethod, paymentOutcome, cartId,
+                fulfillmentMethod, pickupLocationId, quoteFingerprint, billing);
+    }
+
+    @Transactional
     public CheckoutAttempt resolve(long actorUserId, UUID key) {
         return gateway.resolve(actorUserId, key);
     }

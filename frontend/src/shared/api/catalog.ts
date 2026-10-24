@@ -113,7 +113,7 @@ export type EditionSearch = {
   productType?: "" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
   // OpenAPI expresses these choices as a string pattern, so generated types use string.
   // Keep the frontend's finite choices aligned with that pattern, including BEST_SELLING.
-  sort: "TITLE_ASC" | "PRICE_ASC" | "PRICE_DESC" | "BEST_SELLING";
+  sort: "TITLE_ASC" | "TITLE_DESC" | "PRICE_ASC" | "PRICE_DESC" | "BEST_SELLING";
   page: number;
   pageSize: number;
 };

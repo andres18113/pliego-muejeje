@@ -15,9 +15,11 @@ import classes from "./PurchaseHeader.module.css";
 export function PurchaseHeader() {
   const { session } = useSession();
   const [accountOpened, setAccountOpened] = useState(false);
-  const place = useLocation().pathname === "/checkout" ? "Finalizar Compra" : "Carrito";
+  const location = useLocation();
+  const place = location.pathname === "/checkout" ? "Finalizar Compra" : "Carrito";
   const cart = useCustomerCart(session?.user.role === "CUSTOMER", { fresh: false });
-  const units = cart.data ? cartUnitCount(cart.data.items) : null;
+  const cachedUnits = cart.data ? cartUnitCount(cart.data.items) : null;
+  const units = cart.isError && cachedUnits === 0 ? null : cachedUnits;
 
   return (
     <Box component="header" className={`${site.header} ${classes.header}`} data-purchase-header>
@@ -28,7 +30,7 @@ export function PurchaseHeader() {
       }}>Saltar al contenido</a>
       <div className={classes.bar}>
         <UnstyledButton component={Link} to="/" className={site.wordmark} aria-label="PLIEGO, ir al inicio"><BrandLogo compact="phone" /></UnstyledButton>
-        <p className={classes.title} aria-live="polite">
+        <p className={classes.title} aria-live={location.pathname === "/cart" ? undefined : "polite"}>
           {place}{units !== null && units > 0 && <span> ({units === 1 ? "1 artículo" : `${units} artículos`})</span>}
         </p>
         <nav aria-label="Cuenta" className={classes.account}>

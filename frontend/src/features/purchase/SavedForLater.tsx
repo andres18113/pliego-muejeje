@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { stockReadOptions } from "@/features/catalog/stockStatusModel";
+import type { ConfirmedCartAddition } from "@/shared/ui/cartAdditionFeedback";
+import { CartAddedNotification, useCartAddedNotification } from "@/shared/ui/CartAddedNotification";
 import { FavoriteRow } from "@/features/favorites/FavoriteRow";
 import { ApiRequestError } from "@/shared/api/errors";
 import { favoriteListQueryKey, favoriteStatusQueryKey, listCustomerFavorites } from "@/shared/api/favorites";
@@ -20,8 +22,9 @@ const SHOWN = 4;
  * `savedQuantities`: the quantity each edition had when this visit saved it from the cart, so moving it back
  * restores the same line; `onRestored` lets the cart forget it (and withdraw a stale undo) once it is back.
  */
-export function SavedForLater({ savedQuantities, onRestored }: { savedQuantities?: ReadonlyMap<string, number>; onRestored?: (editionId: string) => void } = {}) {
+export function SavedForLater({ savedQuantities, onRestored, onCartConfirmed }: { savedQuantities?: ReadonlyMap<string, number>; onRestored?: (editionId: string) => void; onCartConfirmed?: (addition: ConfirmedCartAddition) => void } = {}) {
   const { session, clear } = useSession();
+  const cartNotice = useCartAddedNotification();
   const queryClient = useQueryClient();
   const userId = session?.user.userId ?? "";
   const query = useQuery({
@@ -41,7 +44,7 @@ export function SavedForLater({ savedQuantities, onRestored }: { savedQuantities
   return (
     <section className={classes.saved} aria-labelledby="cart-saved-heading" data-cart-saved>
       <header className={classes.savedHead}>
-        <h2 id="cart-saved-heading">Guardado para después</h2>
+        <h2 id="cart-saved-heading" tabIndex={-1}>Guardado para después</h2>
         <p>Lo que guardas para después queda en tus <Link to="/favorites">Favoritos</Link>.</p>
       </header>
       {query.isPending ? (
@@ -69,6 +72,7 @@ export function SavedForLater({ savedQuantities, onRestored }: { savedQuantities
                   onRemoved={() => void queryClient.invalidateQueries({ queryKey: ["customer-favorites", userId] })}
                   cartQuantity={savedQuantities?.get(edition.editionId)}
                   onAddedToCart={onRestored}
+                  onCartConfirmed={onCartConfirmed ?? cartNotice.show}
                 />
               </li>
             ))}
@@ -78,6 +82,7 @@ export function SavedForLater({ savedQuantities, onRestored }: { savedQuantities
           )}
         </>
       )}
+      {!onCartConfirmed && <CartAddedNotification addition={cartNotice.addition} onDismiss={cartNotice.dismiss} fallbackFocus={() => document.getElementById("cart-saved-heading")} />}
     </section>
   );
 }

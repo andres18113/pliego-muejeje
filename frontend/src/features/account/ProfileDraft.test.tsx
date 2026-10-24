@@ -2,7 +2,9 @@ import { act, fireEvent, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, expect, it, vi } from "vitest";
 import { AccountPage } from "./AccountPage";
-import { json, renderPurchaseRoute, stubApi } from "@/test/purchase";
+import { json, renderPurchaseRoute, stubApi as stubPurchaseApi } from "@/test/purchase";
+const stubApi = (routes: Parameters<typeof stubPurchaseApi>[0]) => stubPurchaseApi({"GET /api/v1/me/billing-identity": () => new Response(null, {status:204}), ...routes});
+
 const profile = { customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" };
 const routes = [{ path: "/account", element: <AccountPage /> }, { path: "/orders", element: <h1>Mis pedidos</h1> }];
 afterEach(() => { vi.unstubAllGlobals(); sessionStorage.clear(); });
@@ -30,12 +32,14 @@ it("preserves typing during save and saves the next edit against the new version
   await user.clear(input); await user.type(input, "Ana María");
   await user.click(screen.getByRole("button", { name: "Guardar" }));
   await waitFor(() => expect(api.count("PATCH", "/api/v1/me")).toBe(1));
+  const savingFeedback = screen.queryByRole("status")?.textContent ?? "";
   await user.type(input, " Isabel"); current = { ...profile, firstNames: "Ana María", version: "1" };
   await act(async () => { release(new Response(null, { status: 204 })); });
   expect(screen.getByLabelText("Nombres")).toHaveValue("Ana María Isabel"); expect(screen.getByLabelText("Nombres")).toHaveFocus();
   await user.click(screen.getByRole("button", { name: "Guardar" }));
   await waitFor(() => expect(api.calls.filter(c => c.method === "PATCH")[1]?.body).toEqual({ field: "firstNames", value: "Ana María Isabel", expectedVersion: "1" }));
   await waitFor(() => expect(screen.queryByLabelText("Nombres")).not.toBeInTheDocument());
+  expect(savingFeedback).toBe("Guardando cambios.");
 });
 
 it("retains the draft's old version after navigation instead of silently overwriting a concurrent edit", async () => {
@@ -69,7 +73,7 @@ it("updates a restored draft's version when an earlier in-flight save completes"
   expect(api.count("PATCH", "/api/v1/me")).toBe(1);
   current = { ...profile, firstNames: "Ana María", version: "1" };
   await act(async () => { release(new Response(null, { status: 204 })); });
-  await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Guardamos el dato enviado."));
+  await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Cambios nuevos sin guardar"));
   await user.click(screen.getByRole("button", { name: "Guardar" }));
   await waitFor(() => expect(api.calls.filter(c => c.method === "PATCH")[1]?.body).toMatchObject({ value: "Ana María Isabel", expectedVersion: "1" }));
 });
@@ -93,17 +97,16 @@ it("retains newer email and password input during save without storing the passw
   expect(stored).toContain("otra@example.com"); expect(stored).not.toContain("Clave-");
 });
 
-it("retains phone text and country choice when navigating away", async () => {
+it("retains Ecuador phone text when navigating away and keeps the prefix fixed", async () => {
   stubApi({ "GET /api/v1/me": () => json(profile), "GET /api/v1/reference/countries": () => json([{ code: "EC", name: "Ecuador" }, { code: "CO", name: "Colombia" }]) });
   const { router } = renderPurchaseRoute(routes, "/account"); const user = userEvent.setup();
   await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
-  await user.click(await screen.findByRole("combobox", { name: /^Prefijo internacional$/ }));
-  await user.click(await screen.findByRole("option", { name: /Colombia/ }));
-  await user.type(screen.getByLabelText("Teléfono", { exact: true }), "3001234567");
+  await user.type(screen.getByLabelText("Teléfono", { exact: true }), "991234567");
   const value = (screen.getByLabelText("Teléfono", { exact: true }) as HTMLInputElement).value;
   await act(async () => { await router.navigate("/orders"); await router.navigate("/account"); });
   expect(await screen.findByLabelText("Teléfono", { exact: true })).toHaveValue(value);
-  expect(screen.getByRole("combobox", { name: /^Prefijo internacional$/ })).toHaveTextContent("+57");
+  expect(screen.queryByRole("combobox", { name: /^Prefijo internacional$/ })).not.toBeInTheDocument();
+  expect(screen.getByText("+593")).toBeInTheDocument();
 });
 
 it("lets Escape explicitly discard a draft and recover focus", async () => {
@@ -117,13 +120,15 @@ it("lets Escape explicitly discard a draft and recover focus", async () => {
   expect(sessionStorage.getItem("pliego-profile-draft:2:firstNames")).toBeNull();
 });
 
-it("restores invalid phone text exactly so the reader can correct it", async () => {
+it("preserves a valid phone draft when rejecting pasted letters, including across navigation", async () => {
   stubApi({ "GET /api/v1/me": () => json(profile), "GET /api/v1/reference/countries": () => json([{ code: "EC", name: "Ecuador" }]) });
   const { router } = renderPurchaseRoute(routes, "/account"); const user = userEvent.setup();
   await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
-  fireEvent.change(screen.getByLabelText("Teléfono", { exact: true }), { target: { value: "123abc" } });
-  const before = (screen.getByLabelText("Teléfono", { exact: true }) as HTMLInputElement).value;
-  expect(before).toContain("abc");
+  const phone = screen.getByLabelText("Teléfono", { exact: true });
+  await user.type(phone, "991234567");
+  fireEvent.change(phone, { target: { value: "991234567abc" } });
+  expect(phone).toHaveValue("991234567");
+  expect(phone).toHaveAccessibleDescription(/solo números/);
   await act(async () => { await router.navigate("/orders"); await router.navigate("/account"); });
-  expect(await screen.findByLabelText("Teléfono", { exact: true })).toHaveValue(before);
+  expect(await screen.findByLabelText("Teléfono", { exact: true })).toHaveValue("991234567");
 });

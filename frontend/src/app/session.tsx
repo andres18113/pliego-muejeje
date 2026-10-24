@@ -1,7 +1,9 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { logoutSession, refreshSession, type LoginResponse } from "@/shared/api/auth";
+import { clearLegacyBillingIntents } from "@/shared/api/legacyBillingStorage";
 import { setApiAccessToken } from "@/shared/api/client";
+import { clearProfileDrafts } from "@/features/account/profileDraft";
 
 export type AuthenticatedUser = Required<NonNullable<LoginResponse["user"]>>;
 
@@ -40,6 +42,7 @@ export function SessionProvider({ children, restoreOnMount = true }: {
   const currentSession = useRef<AuthSession | null>(null);
   const generation = useRef(0);
   const authorityGeneration = useRef(0);
+  const bootstrapRestoration = useRef(true);
   const sessionChannel = useRef<BroadcastChannel | null>(null);
   const notifyOtherTabs = useCallback((reason: "logout" | "expired" | "changed") => {
     // Use the listening instance so BroadcastChannel never echoes a login back to this tab.
@@ -57,7 +60,11 @@ export function SessionProvider({ children, restoreOnMount = true }: {
       : currentSession.current?.user.userId === userId && currentSession.current?.user.role === role) };
   }, []);
 
-  const forgetPrivateData = useCallback(() => {
+  useEffect(() => { clearLegacyBillingIntents(); }, []);
+
+  const forgetPrivateData = useCallback((preserveDraftEmail?: string) => {
+    clearLegacyBillingIntents();
+    clearProfileDrafts(preserveDraftEmail);
     queryClient.removeQueries({ predicate: query => query.meta?.authRequired === true });
     const mutations = queryClient.getMutationCache();
     for (const mutation of mutations.getAll()) if (mutation.meta?.authRequired === true) mutations.remove(mutation);
@@ -70,6 +77,7 @@ export function SessionProvider({ children, restoreOnMount = true }: {
   }, []);
 
   const forgetSession = useCallback((reason?: "expired") => {
+    bootstrapRestoration.current = false;
     generation.current += 1;
     authorityGeneration.current += 1;
     currentSession.current = null;
@@ -81,11 +89,12 @@ export function SessionProvider({ children, restoreOnMount = true }: {
     setRestoreState("ready");
   }, [forgetPrivateData]);
 
-  const establish = useCallback((next: AuthSession) => {
+  const establish = useCallback((next: AuthSession, preserveDraftEmail?: string) => {
+    bootstrapRestoration.current = false;
     generation.current += 1;
     if (currentSession.current?.user.userId !== next.user.userId || currentSession.current?.user.role !== next.user.role) {
       authorityGeneration.current += 1;
-      forgetPrivateData();
+      forgetPrivateData(preserveDraftEmail);
     }
     currentSession.current = next;
     setApiAccessToken(next.accessToken);
@@ -119,11 +128,15 @@ export function SessionProvider({ children, restoreOnMount = true }: {
       if (hadActiveSession) notifyOtherTabs("expired");
       return false;
     }
+    // On initial cookie restoration, retain only the authenticated customer's drafts.
+    // The profile's customerId is independent of the authentication userId.
+    const preserveDraftEmail = bootstrapRestoration.current && response.user.role === "CUSTOMER"
+      ? response.user.email : undefined;
     establish({
       accessToken: response.accessToken,
       expiresAt: Date.now() + response.expiresInSeconds * 1000,
       user: response.user as AuthenticatedUser,
-    });
+    }, preserveDraftEmail);
     return true;
   }, [establish, forgetSession, notifyOtherTabs]);
 

@@ -76,7 +76,7 @@ test("customer navigates profile, address book and orders across desktop and mob
   await page.evaluate(() => document.fonts.ready);
   await page.getByRole("main").getByRole("link", { name: "Iniciar sesión" }).click();
   await page.getByLabel("Correo electrónico").fill(email);
-  await page.getByLabel("Contraseña").fill(password);
+  await page.getByLabel("Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Mi perfil" })).toBeVisible();
   await expect(page.getByRole("navigation", { name: "Secciones de mi cuenta" })).toHaveCount(0);

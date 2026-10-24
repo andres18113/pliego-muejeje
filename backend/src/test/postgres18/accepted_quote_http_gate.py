@@ -48,7 +48,7 @@ def price_changed_and_replay():
     assert all(status == 201 for status,_ in results), results
     assert results[0][1] == results[1][1], results
     order = results[0][1]
-    assert order["subtotal"] == "9.25" and order["total"] == "10.64", order
+    assert order["subtotal"] == "9.25" and order["total"] == "9.25", order
     assert query(f"SELECT stock_actual FROM pliego.inventario WHERE edicion_id={edition}") == "3"
     assert query(f"SELECT count(*) FROM pliego.pedido p JOIN pliego.cliente c USING(cliente_id) WHERE c.usuario_id={actor}") == "1"
     # A lost-response replay returns the accepted receipt despite new catalog/cart state.

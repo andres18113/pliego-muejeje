@@ -1,0 +1,5 @@
+.panel {
+  composes: panel from "./orderPage.module.css";
+  --acc-display: var(--store-display);
+}
+.document { composes: document from "./orderPage.module.css"; }

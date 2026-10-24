@@ -24,6 +24,10 @@ spring:
       fail-on-unknown-properties: true
 
 pliego:
+  billing:
+    enabled: ${PLIEGO_BILLING_ENABLED:true}
+    poll-interval: ${PLIEGO_BILLING_POLL_INTERVAL:PT5S}
+    batch-size: ${PLIEGO_BILLING_BATCH_SIZE:4}
   home-delivery:
     scheduler-enabled: ${PLIEGO_HOME_DELIVERY_SCHEDULER_ENABLED:true}
     poll-interval: ${PLIEGO_HOME_DELIVERY_POLL_INTERVAL:PT10S}

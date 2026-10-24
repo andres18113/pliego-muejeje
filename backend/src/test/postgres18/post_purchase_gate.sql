@@ -58,10 +58,10 @@ BEGIN
     invoice_before := d.invoice;
     IF d.invoice->>'state' <> 'ISSUED' OR d.invoice->>'buyerName' <> 'Comprador facturado'
        OR d.invoice->'billingAddress'->>'line1' <> 'Dirección fiscal'
-       OR (d.invoice->>'total')::NUMERIC <> 28.75
+       OR (d.invoice->>'total')::NUMERIC <> 25.00
        OR d.invoice->'items'->0->>'description' <> 'Libro histórico'
        OR (d.invoice->'items'->0->>'unitPrice')::NUMERIC <> 12.50
-       OR (d.invoice->>'taxTotal')::NUMERIC <> 3.75 THEN
+       OR (d.invoice->>'taxTotal')::NUMERIC <> 0.00 THEN
         RAISE EXCEPTION 'invoice did not preserve explicit issuance identity and purchased lines';
     END IF;
     CALL pliego.sp_customer_update(u,'Comprador','Después de emisión','+59325550111');
@@ -112,7 +112,7 @@ BEGIN
     SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
     IF d.invoice IS DISTINCT FROM invoice_before OR jsonb_array_length(d.credit_notes) <> 1
        OR d.credit_notes->0->>'state' <> 'ISSUED'
-       OR (d.credit_notes->0->>'total')::NUMERIC <> 28.75 THEN
+       OR (d.credit_notes->0->>'total')::NUMERIC <> 25.00 THEN
         RAISE EXCEPTION 'credit note rewrote invoice or lost refunded total';
     END IF;
     BEGIN

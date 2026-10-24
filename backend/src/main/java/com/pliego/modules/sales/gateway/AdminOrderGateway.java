@@ -9,6 +9,9 @@ import com.pliego.modules.sales.application.PostPurchaseModels;
 
 /** Administrative order, shipment and document access through the public Database API. */
 public interface AdminOrderGateway {
+    default void approvePayment(long actorUserId, long orderId) {
+        throw new UnsupportedOperationException("El gateway no admite aprobación de pagos pendientes.");
+    }
     void transitionShipment(long actorUserId, long orderId, String targetState);
     void updateTracking(long actorUserId, long orderId, PostPurchaseModels.Tracking tracking);
     long issueInvoice(long actorUserId, long orderId, PostPurchaseModels.IssueInvoice invoice);

@@ -6,6 +6,7 @@ import { Button, UnstyledButton } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { AppliedCriteria, CatalogHeading, CatalogToolbar, SortControl, type RemovableCriterion } from "./CatalogControls";
 import classes from "./exploration.module.css";
+import { PageWayfinding } from "@/app/navigation/BackButton";
 import { HomeFooter } from "./HomeFooter";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { describeApiError } from "@/shared/api/errors";
@@ -148,6 +149,7 @@ export function CatalogPage() {
     <div className={classes.surface} data-storefront-surface>
       <main id="contenido-principal" tabIndex={-1} className={classes.page}>
         <div className={classes.shell}>
+        <PageWayfinding className={classes.wayfinding} />
         {/* Desktop: the sort shares the heading's line, so the shelf and the filters start on the same line. */}
         <div className={classes.headingRow}>
           <CatalogHeading criteria={criteria} categories={categories} pending={isCurrentReadPending} total={activePage?.totalCountValue} />

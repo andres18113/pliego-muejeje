@@ -5,6 +5,7 @@ import type { CatalogCriteria } from "./catalogUrl";
 const sortChoices: { value: CatalogCriteria["sort"]; label: string; price?: true }[] = [
   { value: "BEST_SELLING", label: "Más vendidos" },
   { value: "TITLE_ASC", label: "Título: A–Z" },
+  { value: "TITLE_DESC", label: "Título: Z–A" },
   { value: "PRICE_ASC", label: "Precio: menor a mayor", price: true },
   { value: "PRICE_DESC", label: "Precio: mayor a menor", price: true },
 ];

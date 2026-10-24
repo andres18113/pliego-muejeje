@@ -7,8 +7,11 @@ import uuid
 
 from checkout_http_gate import token
 from checkout_last_unit import fixture, query
+from checkout_billing import billed
 
 def request(path, method="GET", body=None, actor=None, key=None):
+    if path == "/api/v1/checkout" and method == "POST" and body is not None:
+        body = billed(body)
     headers = {}
     if actor is not None: headers["Authorization"] = "Bearer " + token(actor)
     if key is not None: headers["Idempotency-Key"] = key
@@ -72,12 +75,28 @@ def phone_rule():
     assert profile["phone"]=="+593991234567",profile
     status,problem=request("/api/v1/me","PATCH",{"field":"phone","value":"+44 020 7946 0018","expectedVersion":profile["version"]},actor)
     assert status==400 and problem["violations"][0]["field"]=="value",(status,problem)
-    assert request("/api/v1/me","PATCH",{"field":"phone","value":"+44 20 7946 0018","expectedVersion":profile["version"]},actor)[0]==204
+    assert request("/api/v1/me","PATCH",{"field":"phone","value":"+44 20 7946 0018","expectedVersion":profile["version"]},actor)[0]==400
     _,after=request("/api/v1/me",actor=actor)
-    assert after["phone"]=="+442079460018",after
+    assert after==profile,after
+    assert request("/api/v1/me","PATCH",{"field":"phone","value":"+59325550134","expectedVersion":profile["version"]},actor)[0]==204
+    _,after=request("/api/v1/me",actor=actor)
+    assert after["phone"]=="+59325550134",after
+
+def delivery_scope():
+    assert request('/api/v1/reference/countries')==(200,[{'code':'EC','name':'Ecuador'}])
+    actors,_=fixture();actor,_=actors[0]
+    body={'alias':'Casa','recipient':'Ana Pérez','line1':'Calle 1','city':'Quito','province':'Pichincha',
+          'countryCode':'EC','phone':'+593991234567','makePrimary':False}
+    for field,value in [('countryCode','GB'),('phone','+442079460018'),('recipient','Ana7 Pérez')]:
+        status,problem=request('/api/v1/me/addresses','POST',{**body,field:value},actor,str(uuid.uuid4()))
+        assert status==400 and any(v['field']==field for v in problem['violations']),(status,problem)
+    status,address=request('/api/v1/me/addresses','POST',{**body,'countryCode':' ec '},actor,str(uuid.uuid4()))
+    assert status==201,(status,address)
+    update={k:v for k,v in body.items() if k!='makePrimary'}
+    assert request('/api/v1/me/addresses/'+address['addressId'],'PUT',{**update,'countryCode':'US'},actor)[0]==400
 
 if __name__=="__main__":
     import sys
-    for check in (recipient_limits,personal_names,phone_rule):
+    for check in (recipient_limits,personal_names,phone_rule,delivery_scope):
         if not sys.argv[1:] or check.__name__ in sys.argv[1:]:
             check(); print(check.__name__+" passed")

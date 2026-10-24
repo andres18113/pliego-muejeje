@@ -1,13 +1,26 @@
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { MemoryRouter } from "react-router-dom";
+import { createMemoryRouter, MemoryRouter, RouterProvider } from "react-router-dom";
 import { afterEach, expect, it, vi } from "vitest";
 import { SessionProvider } from "@/app/session";
 import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
 import { storefrontNavigationFixture } from "@/test/storefrontFixture";
 import { SiteHeader } from "./SiteHeader";
+import { BackNavigationProvider } from "./BackNavigationProvider";
 
 afterEach(() => vi.unstubAllGlobals());
+
+it("keeps the wordmark alone and linked home on every page, with no back arrow in the header", async () => {
+  vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify(richNavigation), { status: 200, headers: { "Content-Type": "application/json" } })));
+  const router = createMemoryRouter([{ path: "*", element: <BackNavigationProvider><SiteHeader /></BackNavigationProvider> }], { initialEntries: ["/"] });
+  render(<PliegoThemeProvider><QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><SessionProvider restoreOnMount={false}><RouterProvider router={router} /></SessionProvider></QueryClientProvider></PliegoThemeProvider>);
+  for (const path of ["/catalog?que=Origen&page=2", "/ayuda", "/"]) {
+    await act(async () => { await router.navigate(path); });
+    const header = screen.getByTestId("site-header");
+    expect(within(header).queryByRole("button", { name: "Volver atrás" })).not.toBeInTheDocument();
+    expect(within(header).getByRole("link", { name: "PLIEGO, ir al inicio" })).toHaveAttribute("href", "/");
+  }
+});
 
 function renderHeader(path = "/", projection = storefrontNavigationFixture) {
   vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify(projection), { status: 200, headers: { "Content-Type": "application/json" } })));

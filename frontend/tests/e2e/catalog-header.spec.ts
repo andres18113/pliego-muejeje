@@ -121,7 +121,7 @@ async function mockCustomerLogin(page: import("@playwright/test").Page) {
 async function signIn(page: import("@playwright/test").Page) {
   await page.goto("/sign-in?from=%2Fcatalog");
   await page.getByLabel("Correo electrónico").fill(customerEmail);
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/catalog$/);
 }

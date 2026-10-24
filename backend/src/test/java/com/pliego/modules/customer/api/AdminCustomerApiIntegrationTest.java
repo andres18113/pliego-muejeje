@@ -318,7 +318,7 @@ class AdminCustomerApiIntegrationTest {
             if (adminGateway.state(87) == null || "BLOCKED".equals(adminGateway.state(87))) {
                 throw translator.translate(new SQLException("private internal blocked account", "P1003"));
             }
-            return new CustomerProfile(87, "ana@example.com", "Ana", "Pérez", null, "ACTIVE");
+            return new CustomerProfile(87, "ana@example.com", "Ana", "Pérez", null, "ACTIVE", true);
         }
 
         @Override public void patchProfile(long actorUserId, long expectedVersion, String field, String value) {

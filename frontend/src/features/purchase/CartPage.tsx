@@ -1,5 +1,5 @@
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -15,6 +15,8 @@ import { ApiRequestError, fieldErrorMessages, readRecoveryDetail } from "@/share
 import { addCustomerFavorite } from "@/shared/api/favorites";
 import { QuantityPicker } from "@/shared/ui/QuantityPicker";
 import { UndoToast, type UndoToastMessage } from "@/shared/ui/UndoToast";
+import { CartAddedNotification, useCartAddedNotification } from "@/shared/ui/CartAddedNotification";
+import type { ConfirmedCartAddition } from "@/shared/ui/cartAdditionFeedback";
 import { SavedForLater } from "./SavedForLater";
 import { cartQuantityChoices, useCustomerCart } from "./cartQuery";
 import { hasSaving, toCartPricingViewModel, type CartLinePricingViewModel } from "./cartPricingViewModel";
@@ -45,16 +47,42 @@ export function CartPage() {
 }
 
 function CartContent() {
+  const cartNotice = useCartAddedNotification();
   const scope = useSessionOperationScope("cart");
   const { clear: clearSession } = useSession();
   const queryClient = useQueryClient();
   const cartQuery = useCustomerCart(true);
+  const emptyCartInvoker = useRef<{ element: HTMLElement; editionId: string; scope: SessionOperationScope } | null>(null);
   const commandLock = useRef(false);
   const toastKey = useRef(0);
   const [lineFeedback, setLineFeedback] = useState<LineFeedback | null>(null);
   const [toast, setToast] = useState<CartToast | null>(null);
   /** Quantities of lines saved for later during this visit, so moving one back restores the same line. */
   const [savedQuantities, setSavedQuantities] = useState<ReadonlyMap<string, number>>(() => new Map());
+
+  function confirmSavedAddition(addition: ConfirmedCartAddition) {
+    const active = document.activeElement;
+    // An empty cart swaps its saved collection into the populated layout after refetch.
+    // Remember only the focused add control that this successful command will replace.
+    if (cartQuery.data?.items.length === 0 && active instanceof HTMLElement && active.matches("[data-cart-saved] [data-bookcard-cart]")) {
+      const editionId = active.closest<HTMLElement>("[data-edition-id]")?.dataset.editionId;
+      if (editionId) emptyCartInvoker.current = { element: active, editionId, scope };
+    }
+    cartNotice.show(addition);
+  }
+
+  useLayoutEffect(() => {
+    const invoker = emptyCartInvoker.current;
+    if (!invoker || !cartQuery.data?.items.length) return;
+    emptyCartInvoker.current = null;
+    // Preserve focus the user moved to the notification or any other control meanwhile.
+    if (!invoker.scope.isCurrent() || invoker.element.isConnected || document.activeElement !== document.body) return;
+    const row = Array.from(document.querySelectorAll<HTMLElement>("[data-cart-saved] [data-favorite-row]"))
+      .find(candidate => candidate.dataset.editionId === invoker.editionId);
+    const target = row?.querySelector<HTMLElement>("[data-bookcard-cart]:not(:disabled), [data-bookcard-favorite]:not(:disabled)")
+      ?? document.getElementById("cart-saved-heading");
+    target?.focus({ preventScroll: true });
+  }, [cartQuery.data]);
 
   const command = useMutation({
     meta: { authRequired: true },
@@ -175,7 +203,7 @@ function CartContent() {
   /** A saved line went back to the cart from the saved list: forget its quantity and withdraw a stale undo. */
   function restoredFromSaved(editionId: string) {
     setSavedQuantities((current) => { const next = new Map(current); next.delete(editionId); return next; });
-    setToast((current) => current?.departed?.editionId === editionId ? null : current);
+    setToast(null);
   }
 
   function run(next: CartCommand) {
@@ -213,13 +241,13 @@ function CartContent() {
         <ReadFailure error={cartQuery.error} onRetry={() => void cartQuery.refetch()} retrying={cartQuery.isFetching} />
       ) : data && data.items.length === 0 ? (
         <>
-          <section className={classes.empty} aria-labelledby="cart-empty-heading">
+          {cartQuery.isError ? <ReadFailure error={cartQuery.error} onRetry={() => void cartQuery.refetch()} retrying={cartQuery.isFetching} /> : <section className={classes.empty} aria-labelledby="cart-empty-heading">
             <MaterialSymbol name="shopping_cart" size={34} />
             <h1 id="cart-empty-heading" tabIndex={-1}>Tu carrito está vacío.</h1>
             <p>Explora el catálogo para encontrar tu próxima lectura.</p>
             <ButtonLink variant="primary" to="/catalog">Ir al catálogo</ButtonLink>
-          </section>
-          <div className={cart.savedAlone}><SavedForLater savedQuantities={savedQuantities} onRestored={restoredFromSaved} /></div>
+          </section>}
+          <div className={cart.savedAlone}><SavedForLater savedQuantities={savedQuantities} onRestored={restoredFromSaved} onCartConfirmed={confirmSavedAddition} /></div>
         </>
       ) : data ? (
         <>
@@ -275,11 +303,12 @@ function CartContent() {
                   </li>
                 ))}
               </ul>
-              <SavedForLater savedQuantities={savedQuantities} onRestored={restoredFromSaved} />
+              <SavedForLater savedQuantities={savedQuantities} onRestored={restoredFromSaved} onCartConfirmed={confirmSavedAddition} />
             </section>
           </PurchaseLayout>
         </>
       ) : null}
+      <CartAddedNotification addition={cartNotice.addition} onDismiss={cartNotice.dismiss} fallbackFocus={() => document.getElementById("cart-saved-heading")} />
       <UndoToast onDismiss={() => setToast(null)} toast={toast && {
         key: toast.key,
         message: toast.message,
@@ -348,9 +377,10 @@ function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSav
             </p>
           )}
         </div>
-        <div className={cart.amount}>
-          <p className={cart.price}>
-            <span className={cart.subtotal}><span className="visually-hidden">Subtotal: </span>{formatUsd(line.currentSubtotal)}</span>
+      <div className={cart.amount}>
+        {line.requiresPhysicalFulfillment && line.quantity > 1 && <p className={cart.unitPrice}>{formatUsd(line.currentPrice)} c/u</p>}
+        <p className={cart.price}>
+          <span className={cart.subtotal}><span className={cart.subtotalLabel}>Subtotal</span> {formatUsd(line.currentSubtotal)}</span>
             {saving && pricing?.originalSubtotal && <s className={cart.was}><span className="visually-hidden">Precio anterior: </span>{pricing.originalSubtotal.formattedValue}</s>}
           </p>
         </div>

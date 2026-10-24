@@ -106,3 +106,10 @@ it("preserves backend media scope and real bestseller ordering in destinations",
   expect(criteria).toMatchObject({ productType: "PHYSICAL", sort: "BEST_SELLING" });
   expect(catalogHref(criteria)).toBe("/catalog?productType=PHYSICAL&sort=BEST_SELLING");
 });
+
+it("preserves descending titles and all filters in shareable navigation", () => {
+  const query = "?que=Análisis&category=ciencias&productType=EBOOK&language=es&minPrice=10&maxPrice=40&sort=TITLE_DESC&page=3&pageSize=2";
+  const criteria = readCatalogCriteria(query);
+  expect(criteria.sort).toBe("TITLE_DESC");
+  expect(readCatalogCriteria(new URL(catalogHref(criteria), "https://pliegolibros.com").search)).toEqual(criteria);
+});

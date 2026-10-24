@@ -1,0 +1,341 @@
+{
+  "description": "Synthetic Ecuadorian identification fixtures shared by PostgreSQL, Java and TypeScript (ADR 0041). Cédula: province 01-24 or 30, third digit 0-5, modulo 10. RUC: 13 digits; natural person = valid cédula + establishment 001-999; public sector (third digit 6) = modulo 11 over 8 digits + establishment 0001-9999; private company (third digit 9) = modulo 11 over 9 digits + establishment 001-999. Only ASCII external spaces are trimmed. Algorithm validity only: never evidence of existence or ownership.",
+  "cases": [
+    {
+      "id": "cedula-17-1",
+      "type": "EC_CEDULA",
+      "input": "1710034065",
+      "valid": true
+    },
+    {
+      "id": "cedula-01-0",
+      "type": "EC_CEDULA",
+      "input": "0102030400",
+      "valid": true
+    },
+    {
+      "id": "cedula-30-1",
+      "type": "EC_CEDULA",
+      "input": "3012345678",
+      "valid": true
+    },
+    {
+      "id": "cedula-09-1",
+      "type": "EC_CEDULA",
+      "input": "0912345675",
+      "valid": true
+    },
+    {
+      "id": "cedula-24-1",
+      "type": "EC_CEDULA",
+      "input": "2412345676",
+      "valid": true
+    },
+    {
+      "id": "cedula-01-2",
+      "type": "EC_CEDULA",
+      "input": "0123456782",
+      "valid": true
+    },
+    {
+      "id": "cedula-external-spaces",
+      "type": "EC_CEDULA",
+      "input": "  1710034065  ",
+      "valid": true
+    },
+    {
+      "id": "cedula-province-00",
+      "type": "EC_CEDULA",
+      "input": "0012345674",
+      "valid": false
+    },
+    {
+      "id": "cedula-province-25",
+      "type": "EC_CEDULA",
+      "input": "2512345675",
+      "valid": false
+    },
+    {
+      "id": "cedula-province-99",
+      "type": "EC_CEDULA",
+      "input": "9912345676",
+      "valid": false
+    },
+    {
+      "id": "cedula-third-digit-6",
+      "type": "EC_CEDULA",
+      "input": "1761234564",
+      "valid": false
+    },
+    {
+      "id": "cedula-third-digit-9",
+      "type": "EC_CEDULA",
+      "input": "1791234568",
+      "valid": false
+    },
+    {
+      "id": "cedula-wrong-check-digit",
+      "type": "EC_CEDULA",
+      "input": "1710034066",
+      "valid": false
+    },
+    {
+      "id": "cedula-null",
+      "type": "EC_CEDULA",
+      "input": null,
+      "valid": false
+    },
+    {
+      "id": "cedula-empty",
+      "type": "EC_CEDULA",
+      "input": "",
+      "valid": false
+    },
+    {
+      "id": "cedula-short",
+      "type": "EC_CEDULA",
+      "input": "171003406",
+      "valid": false
+    },
+    {
+      "id": "cedula-long",
+      "type": "EC_CEDULA",
+      "input": "17100340651",
+      "valid": false
+    },
+    {
+      "id": "cedula-internal-space",
+      "type": "EC_CEDULA",
+      "input": "17100 4065",
+      "valid": false
+    },
+    {
+      "id": "cedula-plus",
+      "type": "EC_CEDULA",
+      "input": "+710034065",
+      "valid": false
+    },
+    {
+      "id": "cedula-decimal",
+      "type": "EC_CEDULA",
+      "input": "17100340.5",
+      "valid": false
+    },
+    {
+      "id": "cedula-letter",
+      "type": "EC_CEDULA",
+      "input": "171003406a",
+      "valid": false
+    },
+    {
+      "id": "cedula-fullwidth",
+      "type": "EC_CEDULA",
+      "input": "１７１００３４０６５",
+      "valid": false
+    },
+    {
+      "id": "cedula-tab",
+      "type": "EC_CEDULA",
+      "input": "\t1710034065\t",
+      "valid": false
+    },
+    {
+      "id": "cedula-nbsp",
+      "type": "EC_CEDULA",
+      "input": " 1710034065 ",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-0",
+      "type": "EC_CEDULA",
+      "input": "0000000000",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-1",
+      "type": "EC_CEDULA",
+      "input": "1111111111",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-2",
+      "type": "EC_CEDULA",
+      "input": "2222222222",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-3",
+      "type": "EC_CEDULA",
+      "input": "3333333333",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-4",
+      "type": "EC_CEDULA",
+      "input": "4444444444",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-5",
+      "type": "EC_CEDULA",
+      "input": "5555555555",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-6",
+      "type": "EC_CEDULA",
+      "input": "6666666666",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-7",
+      "type": "EC_CEDULA",
+      "input": "7777777777",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-8",
+      "type": "EC_CEDULA",
+      "input": "8888888888",
+      "valid": false
+    },
+    {
+      "id": "cedula-repeated-9",
+      "type": "EC_CEDULA",
+      "input": "9999999999",
+      "valid": false
+    },
+    {
+      "id": "ruc-natural",
+      "type": "EC_RUC",
+      "input": "1710034065001",
+      "valid": true
+    },
+    {
+      "id": "ruc-natural-branch-002",
+      "type": "EC_RUC",
+      "input": "1710034065002",
+      "valid": true
+    },
+    {
+      "id": "ruc-natural-external-spaces",
+      "type": "EC_RUC",
+      "input": " 1710034065001 ",
+      "valid": true
+    },
+    {
+      "id": "ruc-natural-establishment-000",
+      "type": "EC_RUC",
+      "input": "1710034065000",
+      "valid": false
+    },
+    {
+      "id": "ruc-natural-invalid-cedula",
+      "type": "EC_RUC",
+      "input": "1710034066001",
+      "valid": false
+    },
+    {
+      "id": "ruc-private",
+      "type": "EC_RUC",
+      "input": "1790016919001",
+      "valid": true
+    },
+    {
+      "id": "ruc-private-2",
+      "type": "EC_RUC",
+      "input": "1791234561001",
+      "valid": true
+    },
+    {
+      "id": "ruc-private-wrong-check",
+      "type": "EC_RUC",
+      "input": "1790016918001",
+      "valid": false
+    },
+    {
+      "id": "ruc-private-establishment-000",
+      "type": "EC_RUC",
+      "input": "1790016919000",
+      "valid": false
+    },
+    {
+      "id": "ruc-public",
+      "type": "EC_RUC",
+      "input": "1760001200001",
+      "valid": true
+    },
+    {
+      "id": "ruc-public-2",
+      "type": "EC_RUC",
+      "input": "0960001110001",
+      "valid": true
+    },
+    {
+      "id": "ruc-public-wrong-check",
+      "type": "EC_RUC",
+      "input": "1760001210001",
+      "valid": false
+    },
+    {
+      "id": "ruc-public-establishment-0000",
+      "type": "EC_RUC",
+      "input": "1760001200000",
+      "valid": false
+    },
+    {
+      "id": "ruc-third-digit-7",
+      "type": "EC_RUC",
+      "input": "1770016919001",
+      "valid": false
+    },
+    {
+      "id": "ruc-third-digit-8",
+      "type": "EC_RUC",
+      "input": "1780016919001",
+      "valid": false
+    },
+    {
+      "id": "ruc-province-00",
+      "type": "EC_RUC",
+      "input": "0090016919001",
+      "valid": false
+    },
+    {
+      "id": "ruc-short",
+      "type": "EC_RUC",
+      "input": "179001691900",
+      "valid": false
+    },
+    {
+      "id": "ruc-long",
+      "type": "EC_RUC",
+      "input": "17900169190011",
+      "valid": false
+    },
+    {
+      "id": "ruc-letter",
+      "type": "EC_RUC",
+      "input": "179001691900A",
+      "valid": false
+    },
+    {
+      "id": "ruc-repeated",
+      "type": "EC_RUC",
+      "input": "1111111111111",
+      "valid": false
+    },
+    {
+      "id": "type-cedula-with-ruc-number",
+      "type": "EC_CEDULA",
+      "input": "1710034065001",
+      "valid": false
+    },
+    {
+      "id": "type-ruc-with-cedula-number",
+      "type": "EC_RUC",
+      "input": "1710034065",
+      "valid": false
+    }
+  ]
+}

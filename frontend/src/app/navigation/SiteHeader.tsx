@@ -1,5 +1,5 @@
 import { ActionIcon, Box, Drawer, Group, UnstyledButton } from "@mantine/core";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { readCatalogCriteria, safeCatalogReturnHref } from "@/features/catalog/catalogUrl";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
@@ -8,6 +8,8 @@ import { HeaderAccount, HeaderCart } from "./HeaderAccount";
 import { DesktopNavigation, MobileNavigation } from "./HeaderNavigation";
 import navigationClasses from "./HeaderNavigation.module.css";
 import { BrandLogo } from "@/shared/ui/BrandLogo";
+import { HeaderFlowContext } from "./HeaderFlowContext";
+import { canonicalBackPath } from "./BackNavigationHistory";
 import { HeaderSearch } from "./HeaderSearch";
 import classes from "./SiteHeader.module.css";
 import homeClasses from "./HomeHeader.module.css";
@@ -17,20 +19,24 @@ type HeaderPanel = "search" | "account" | "navigation" | `menu:${string}` | null
 
 export function SiteHeader() {
   const location = useLocation();
+  const pathname = canonicalBackPath(location.pathname);
   const navigation = useStorefrontNavigation();
   const destinations = navigation.data?.sections ?? [];
   const [panel, setPanel] = useState<HeaderPanel>(null);
+  const scrollsAway = useContext(HeaderFlowContext)?.scrollsAway ?? false;
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8);
   const searchTrigger = useRef<HTMLButtonElement>(null);
   const header = useRef<HTMLElement>(null);
-  const criteria = readCatalogCriteria(location.pathname === "/catalog" ? location.search
+  const criteria = readCatalogCriteria(pathname === "/catalog" ? location.search
     : new URL(safeCatalogReturnHref(new URLSearchParams(location.search).get("from")), window.location.origin).search);
-  const navigationLocation = location.pathname.startsWith("/catalog/editions/")
+  const navigationLocation = pathname.startsWith("/catalog/editions/")
     ? new URL(safeCatalogReturnHref(new URLSearchParams(location.search).get("from")), window.location.origin)
     : new URL(`${location.pathname}${location.search}`, window.location.origin);
   const selected = destinations.find((section) => {
     const destination = new URL(section.href, window.location.origin);
-    return (navigationLocation.pathname === destination.pathname || navigationLocation.pathname.startsWith(`${destination.pathname}/`))
+    const currentPath = canonicalBackPath(navigationLocation.pathname);
+    const destinationPath = canonicalBackPath(destination.pathname);
+    return (currentPath === destinationPath || currentPath.startsWith(`${destinationPath}/`))
       && [...destination.searchParams].every(([key, value]) => navigationLocation.searchParams.get(key) === value);
   })?.key;
 
@@ -93,21 +99,24 @@ export function SiteHeader() {
   // A section menu closes on a press anywhere outside its own item; Escape is handled where focus is.
   useEffect(() => {
     if (!menuKey) return;
-    const outside = (event: PointerEvent) => { if (!(event.target instanceof Element) || !event.target.closest("[data-header-menu]")) setPanel(null); };
+    const outside = (event: PointerEvent) => {
+      if (!(event.target instanceof Element) || !event.target.closest("[data-header-menu]")) setPanel(null);
+    };
     const escape = (event: KeyboardEvent) => { if (event.key === "Escape") setPanel(null); };
     document.addEventListener("pointerdown", outside);
     document.addEventListener("keydown", escape);
     return () => { document.removeEventListener("pointerdown", outside); document.removeEventListener("keydown", escape); };
   }, [menuKey]);
 
-  return <Box component="header" ref={header} className={`${classes.header}${location.pathname === "/" ? ` ${homeClasses.header}` : ""}`} data-home={location.pathname === "/" || undefined} data-scrolled={scrolled || undefined} data-panel={menuKey ? "menu" : panel ?? undefined} data-testid="site-header">
+  return <Box component="header" ref={header} className={`${classes.header}${pathname === "/" ? ` ${homeClasses.header}` : ""}`} data-home={pathname === "/" || undefined} data-scrolled={(scrolled && !scrollsAway) || undefined} data-flow={scrollsAway || undefined} data-panel={menuKey ? "menu" : panel ?? undefined} data-testid="site-header">
     <a className={classes.skip} href="#contenido-principal" onClick={(event) => {
       const main = document.getElementById("contenido-principal");
       if (!main) return;
       event.preventDefault(); main.focus(); main.scrollIntoView({ block: "start", behavior: "instant" });
     }}>Saltar al contenido</a>
     <Group className={classes.bar} wrap="nowrap">
-      <Group className={classes.primary} wrap="nowrap">
+      <Group className={classes.primary} wrap="nowrap" style={{ gap: 4 }}>
+        {/* The wordmark stands alone and always leads home; a view's back arrow lives under the header, on its content's edge. */}
         <ActionIcon className={classes.menuTrigger} aria-label="Abrir navegación" aria-expanded={panel === "navigation"} aria-haspopup="dialog" onClick={() => setPanel("navigation")}><MaterialSymbol name="menu" context="header" /></ActionIcon>
         <UnstyledButton component={Link} to="/" className={classes.wordmark} aria-label="PLIEGO, ir al inicio"><BrandLogo compact="narrow" /></UnstyledButton>
       </Group>

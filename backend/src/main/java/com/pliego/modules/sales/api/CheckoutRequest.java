@@ -26,7 +26,28 @@ public record CheckoutRequest(
         @Pattern(regexp = "^[1-9][0-9]{0,18}$", message = "El punto de retiro debe ser un identificador positivo.")
         @DecimalMax(value = "9223372036854775807", message = "El punto de retiro debe ser un identificador positivo.") String pickupLocationId,
         @Pattern(regexp = "^[0-9a-f]{64}$", message = "El resumen de compra no es válido. Consulta el carrito de nuevo.")
-        @Schema(description = "Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación.") String expectedQuoteFingerprint) {
+        @Schema(description = "Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación.") String expectedQuoteFingerprint,
+        @NotNull(message = "Escribe tu cédula o RUC: es obligatorio para comprar.")
+        @jakarta.validation.Valid BillingIdentity billingIdentity,
+        @jakarta.validation.constraints.NotBlank(message = "Escribe el nombre para la factura.")
+        @jakarta.validation.constraints.Size(max = 240, message = "El nombre del comprador no puede superar 240 caracteres.") String buyerName,
+        @NotNull(message = "Completa la dirección de facturación.")
+        @jakarta.validation.Valid PostPurchaseRequests.BillingAddress billingAddress) {
+
+    @com.pliego.foundation.validation.ValidEcuadorianIdentification
+    public record BillingIdentity(
+            @NotNull(message = "Selecciona el tipo de identificación.")
+            @Pattern(regexp = "EC_CEDULA|EC_RUC", message = "Selecciona cédula o RUC.") String type,
+            String number) implements com.pliego.foundation.validation.ValidEcuadorianIdentification.Value {
+        public BillingIdentity { number = com.pliego.foundation.validation.EcuadorianIdentification.normalized(number); }
+        @Override public String toString() { return "BillingIdentity[redacted]"; }
+    }
+
+    public CheckoutRequest(String addressId, String paymentMethod, String simulationOutcome, String cardNumber,
+            String expectedCartId, String fulfillmentMethod, String pickupLocationId, String expectedQuoteFingerprint) {
+        this(addressId, paymentMethod, simulationOutcome, cardNumber, expectedCartId, fulfillmentMethod,
+                pickupLocationId, expectedQuoteFingerprint, null, null, null);
+    }
 
     public CheckoutRequest {
         fulfillmentMethod = fulfillmentMethod == null ? "HOME_DELIVERY" : fulfillmentMethod;

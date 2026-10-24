@@ -88,6 +88,27 @@ test("authentication preserves Addresses through the sign-in/register switch", a
 for (const adaptation of ["200% text", "200% zoom", "320px reflow"] as const) {
   test(`P2 controls retain keyboard operation and readability at ${adaptation} with reduced motion`, async ({ page }, testInfo) => {
     await mockFavoritesApi(page, ["42"]);
+    let authenticated = false;
+    const session = {
+      accessToken: "test-token", tokenType: "Bearer", expiresInSeconds: 1800,
+      user: { userId: "100", email: "lectora@example.invalid", role: "CUSTOMER" },
+    };
+    // Reload restores a valid cookie; an absent session deliberately discards private drafts.
+    await page.route("**/api/v1/auth/**", route => {
+      if (route.request().method() !== "POST") return route.fallback();
+      const path = new URL(route.request().url()).pathname;
+      if (path.endsWith("/login")) {
+        authenticated = true;
+        return route.fulfill({ json: session });
+      }
+      if (path.endsWith("/refresh")) return authenticated
+        ? route.fulfill({ json: session }) : route.fulfill({ status: 204 });
+      if (path.endsWith("/logout")) {
+        authenticated = false;
+        return route.fulfill({ status: 204 });
+      }
+      return route.fallback();
+    });
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.setViewportSize({ width: adaptation === "320px reflow" ? 320 : 1280, height: 900 });
     await page.goto("/sign-in");
@@ -115,10 +136,8 @@ for (const adaptation of ["200% text", "200% zoom", "320px reflow"] as const) {
     await openAccountSection(page, "Favoritos");
     await openAccountSection(page, "Perfil");
     await expect(page.getByLabel("Nombres", { exact: true })).toHaveValue("Ana María");
-    await page.reload(); await page.getByRole("main").getByRole("link", { name: "Iniciar sesión", exact: true }).click();
-    await page.getByLabel("Correo electrónico").fill("lectora@example.invalid");
-    await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
-    await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+    await page.reload();
+    await expect(page.getByRole("heading", { level: 1, name: "Mi perfil", exact: true })).toBeVisible();
     await expect(page.getByLabel("Nombres", { exact: true })).toHaveValue("Ana María");
     await adapt();
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);

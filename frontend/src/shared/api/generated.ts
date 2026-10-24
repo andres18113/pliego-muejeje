@@ -76,6 +76,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/billing-identity": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consultar mi identificación de facturación */
+        get: operations["get"];
+        /**
+         * Registrar mi cédula
+         * @description Registra la primera cédula. Repetir el mismo número no cambia nada; un número distinto responde P1105 y requiere una corrección.
+         */
+        put: operations["registerBillingIdentity"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/addresses/{addressId}": {
         parameters: {
             query?: never;
@@ -391,6 +412,26 @@ export interface paths {
          * @description Si se pierde la respuesta, consulta el detalle del pedido antes de intentar otra cancelación.
          */
         post: operations["cancel"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/billing-identity/correction": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Corregir mi cédula
+         * @description Requiere la contraseña actual y la cédula vista. Queda registrada; las facturas anteriores no cambian.
+         */
+        post: operations["correctBillingIdentity"];
         delete?: never;
         options?: never;
         head?: never;
@@ -737,7 +778,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /** Consultar el estado de la factura académica */
+        get: operations["metadata"];
         put?: never;
         /**
          * Emitir documento comercial del pedido
@@ -784,6 +826,23 @@ export interface paths {
          * @description Si se pierde la respuesta, consulta el detalle del pedido antes de repetir.
          */
         post: operations["cancel_1"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{orderId}/approve-payment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Aprobar un pago académico pendiente y emitir su factura */
+        post: operations["approvePayment"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1258,7 +1317,7 @@ export interface paths {
             cookie?: never;
         };
         /** Consultar carrito activo */
-        get: operations["get"];
+        get: operations["get_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1296,6 +1355,57 @@ export interface paths {
         };
         /** Consultar detalle administrativo de un pedido */
         get: operations["detail_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{orderId}/invoice/files/{type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Descargar un documento académico autenticado */
+        get: operations["download"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/orders/{orderId}/invoice/files/{type}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Descargar un documento académico autenticado */
+        get: operations["download_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/orders/{orderId}/invoice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consultar el estado de la factura académica */
+        get: operations["metadata_1"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1419,6 +1529,10 @@ export interface components {
             /** @example nuevo@example.com */
             email?: string;
         };
+        BillingIdentityRequest: {
+            type: string;
+            number?: string;
+        };
         /** @description Reemplaza todos los datos mutables de la dirección. */
         AddressUpdateRequest: {
             /** @example Casa */
@@ -1433,14 +1547,17 @@ export interface components {
             city: string;
             /** @example Pichincha */
             province: string;
-            /** @example EC */
-            countryCode: string;
+            /**
+             * @example EC
+             * @enum {string}
+             */
+            countryCode: "EC";
             /** @example 170101 */
             postalCode?: string | null;
             /** @example Frente al parque */
             reference?: string | null;
             /**
-             * @description Teléfono internacional con prefijo explícito.
+             * @description Teléfono de Ecuador (+593): 9 dígitos para celular o 8 para fijo.
              * @example +59325550134
              */
             phone: string;
@@ -1569,6 +1686,16 @@ export interface components {
             /** Format: int64 */
             restoredUnits?: number;
         };
+        BillingIdentityCorrectionRequest: {
+            type: string;
+            currentNumber: string;
+            number?: string;
+            /**
+             * Format: password
+             * @description Contraseña actual, para confirmar la corrección.
+             */
+            currentPassword: string;
+        };
         /** @description Datos completos de una dirección del cliente. */
         AddressRequest: {
             /** @example Casa */
@@ -1583,14 +1710,17 @@ export interface components {
             city: string;
             /** @example Pichincha */
             province: string;
-            /** @example EC */
-            countryCode: string;
+            /**
+             * @example EC
+             * @enum {string}
+             */
+            countryCode: "EC";
             /** @example 170101 */
             postalCode?: string | null;
             /** @example Frente al parque */
             reference?: string | null;
             /**
-             * @description Teléfono internacional con prefijo explícito.
+             * @description Teléfono de Ecuador (+593): 9 dígitos para celular o 8 para fijo.
              * @example +59325550134
              */
             phone: string;
@@ -1604,6 +1734,10 @@ export interface components {
         AddressAttemptResponse: {
             state?: string;
             addressId?: string;
+        };
+        BillingIdentity: {
+            type: string;
+            number?: string;
         };
         CheckoutRequest: {
             addressId?: string;
@@ -1620,6 +1754,17 @@ export interface components {
             pickupLocationId?: string;
             /** @description Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación. */
             expectedQuoteFingerprint?: string;
+            billingIdentity: components["schemas"]["BillingIdentity"];
+            buyerName: string;
+            billingAddress: components["schemas"]["InvoiceBillingAddressRequest"];
+        };
+        InvoiceBillingAddressRequest: {
+            line1: string;
+            line2?: string;
+            city: string;
+            province: string;
+            countryCode: string;
+            postalCode?: string;
         };
         CheckoutResponse: {
             orderId?: string;
@@ -1705,6 +1850,11 @@ export interface components {
         EmailActionRequest: {
             /** Format: email */
             email: string;
+            /**
+             * @description Ruta relativa permitida para continuar después de la acción y el inicio de sesión.
+             * @example /cart
+             */
+            returnTo?: string | null;
         };
         AcceptedResponse: {
             message?: string;
@@ -1731,6 +1881,11 @@ export interface components {
              * @example +59325550134
              */
             phone?: string | null;
+            /**
+             * @description Ruta relativa permitida para continuar tras verificar el correo e iniciar sesión; nunca concede acceso.
+             * @example /cart
+             */
+            returnTo?: string | null;
         };
         RegisterResponse: {
             /** @example 100 */
@@ -1790,14 +1945,6 @@ export interface components {
         };
         CollectRequest: {
             pickupCode: string;
-        };
-        InvoiceBillingAddressRequest: {
-            line1: string;
-            line2?: string;
-            city: string;
-            province: string;
-            countryCode: string;
-            postalCode?: string;
         };
         IssueOrderInvoiceRequest: {
             documentNumber: string;
@@ -2165,6 +2312,11 @@ export interface components {
              * @example 0
              */
             version?: string;
+            /**
+             * @description Indica si el correo actual está verificado.
+             * @example true
+             */
+            emailVerified?: boolean;
         };
         LibraryAction: {
             /** @enum {string} */
@@ -2595,6 +2747,22 @@ export interface components {
             quantity?: number;
             subtotal?: string;
         };
+        FileStatus: {
+            /** @enum {string} */
+            type: "PDF" | "XML";
+            /** @enum {string} */
+            state: "PENDING" | "PROCESSING" | "READY" | "FAILED" | "UNAVAILABLE";
+        };
+        InvoiceMetadata: {
+            invoiceId: string;
+            orderId: string;
+            /** @enum {string} */
+            state: "DRAFT" | "ISSUED" | "VOID";
+            /** @enum {string} */
+            provenance: "SIMULATED" | "LEGACY";
+            documentNumber?: string | null;
+            files: components["schemas"]["FileStatus"][];
+        };
         PageResponseItem: {
             items?: components["schemas"]["Item"][];
             /** Format: int32 */
@@ -2947,6 +3115,48 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
+            };
+        };
+    };
+    get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BillingIdentity"];
+                };
+            };
+        };
+    };
+    registerBillingIdentity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingIdentityRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -3536,6 +3746,28 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
+            };
+        };
+    };
+    correctBillingIdentity: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingIdentityCorrectionRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -4165,6 +4397,28 @@ export interface operations {
             };
         };
     };
+    metadata: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceMetadata"];
+                };
+            };
+        };
+    };
     issueInvoice: {
         parameters: {
             query?: never;
@@ -4254,6 +4508,26 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
+            };
+        };
+    };
+    approvePayment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Pago aprobado de manera idempotente */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -5070,7 +5344,7 @@ export interface operations {
             };
         };
     };
-    get: {
+    get_1: {
         parameters: {
             query?: never;
             header?: never;
@@ -5144,6 +5418,76 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    download: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: string;
+                type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
+                    "application/xml": string;
+                };
+            };
+        };
+    };
+    download_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: string;
+                type: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
+                    "application/xml": string;
+                };
+            };
+        };
+    };
+    metadata_1: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceMetadata"];
                 };
             };
         };

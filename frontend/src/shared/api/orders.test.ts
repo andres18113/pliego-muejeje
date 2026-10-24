@@ -1,3 +1,4 @@
+import { billingFixturePayload } from "@/features/purchase/billingTestFixtures";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { setApiAccessToken } from "./client";
 import { ApiRequestError } from "./errors";
@@ -46,7 +47,7 @@ describe("historical order pricing snapshots", () => {
   const summaryPricing = { originalSubtotal: "83.00", savingsTotal: "15.13", currentSubtotal: "67.87", pricingSnapshotAvailable: true };
   const itemPricing = { originalPrice: "25.00", unitSavings: "6.51", originalSubtotal: "50.00", lineSavings: "13.02", pricingSnapshotAvailable: true };
   const confirmation = { orderId: "700", orderState: "CONFIRMED", paymentState: "APPROVED", subtotal: "67.87", total: "78.05", ...summaryPricing };
-  const command = { fulfillmentMethod: "DIGITAL_ONLY" as const, paymentMethod: "TRANSFER" as const };
+  const command = { ...billingFixturePayload, fulfillmentMethod: "DIGITAL_ONLY" as const, paymentMethod: "TRANSFER" as const };
 
   it("preserves checkout and resolved-confirmation snapshots", async () => {
     respond(201, confirmation);
@@ -128,7 +129,7 @@ describe("historical order pricing snapshots", () => {
 describe("checkout API", () => {
   it("forwards the accepted quote fingerprint with the original idempotency key", async () => {
     const api = stubApi({ "POST /api/v1/checkout": () => json({ orderId: "701", orderState: "CONFIRMED", paymentState: "APPROVED", total: "9.99", paymentReference: "SIM-1" },201) });
-    await submitCheckout({ addressId: "15", paymentMethod: "TRANSFER", expectedCartId: "40", expectedQuoteFingerprint: "a".repeat(64) }, "550e8400-e29b-41d4-a716-446655440000");
+    await submitCheckout({ ...billingFixturePayload, addressId: "15", paymentMethod: "TRANSFER", expectedCartId: "40", expectedQuoteFingerprint: "a".repeat(64) }, "550e8400-e29b-41d4-a716-446655440000");
     expect(api.calls[0].body).toMatchObject({ expectedCartId: "40", expectedQuoteFingerprint: "a".repeat(64) });
     expect(api.calls[0].headers.get("Idempotency-Key")).toBe("550e8400-e29b-41d4-a716-446655440000");
   });
@@ -140,39 +141,39 @@ describe("checkout API", () => {
 
   it("never sends a card number for TRANSFER", async () => {
     const fetchMock = vi.fn(async (request: Request) => {
-      expect(await request.json()).toEqual({ fulfillmentMethod: "HOME_DELIVERY", addressId: "15", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" });
+      expect(await request.json()).toEqual({ ...billingFixturePayload, fulfillmentMethod: "HOME_DELIVERY", addressId: "15", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" });
       return new Response(JSON.stringify({ orderId: "701", orderState: "CONFIRMED", paymentState: "APPROVED", total: "9.99", paymentReference: "SIM-1" }), {
         status: 201, headers: { "Content-Type": "application/json" },
       });
     });
     vi.stubGlobal("fetch", fetchMock);
 
-    await expect(submitCheckout({
+    await expect(submitCheckout({ ...billingFixturePayload,
       addressId: "15", paymentMethod: "TRANSFER", cardNumber: "4111111111111111",
     }, "550e8400-e29b-41d4-a716-446655440000")).resolves.toMatchObject({ orderId: "701", paymentState: "APPROVED" });
   });
 
   it("treats a lost response as an unknown outcome", async () => {
     vi.stubGlobal("fetch", vi.fn(async () => { throw new TypeError("Failed to fetch"); }));
-    await expect(submitCheckout({ addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
+    await expect(submitCheckout({ ...billingFixturePayload, addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
       .rejects.toBeInstanceOf(CheckoutOutcomeUnknown);
   });
 
   it("treats an unexpected 5xx as an unknown outcome", async () => {
     respond(502, { code: "INTERNAL_SERVER_ERROR", title: "Error", detail: "Falla." });
-    await expect(submitCheckout({ addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
+    await expect(submitCheckout({ ...billingFixturePayload, addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
       .rejects.toBeInstanceOf(CheckoutOutcomeUnknown);
   });
 
   it("treats P5007 as a known, rolled-back failure", async () => {
     respond(500, { code: "P5007", title: "Error interno", detail: "No se completó." });
-    await expect(submitCheckout({ addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
+    await expect(submitCheckout({ ...billingFixturePayload, addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
       .rejects.toMatchObject({ name: "ApiRequestError", status: 500, code: "P5007" } satisfies Partial<ApiRequestError>);
   });
 
   it("surfaces canonical domain codes unchanged", async () => {
     respond(409, { code: "P3002", title: "Existencias insuficientes", detail: "Uno o más libros ya no tienen existencias suficientes." });
-    await expect(submitCheckout({ addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
+    await expect(submitCheckout({ ...billingFixturePayload, addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
       .rejects.toMatchObject({ status: 409, code: "P3002" });
   });
 
@@ -193,4 +194,12 @@ describe("checkout API", () => {
     await expect(cancelOrder("700")).rejects.toBeInstanceOf(CancellationOutcomeUnknown);
     expect(fetchMock).toHaveBeenCalledTimes(1);
   });
+});
+
+it("reads a pending order invoice with no issued timestamp instead of losing the entire order", async () => {
+  const invoice={invoiceId:"8",documentNumber:"DRAFT-700",state:"DRAFT",buyerName:"Compradora Prueba",identityType:"EC_CEDULA",identityNumber:"0123456782",currency:"USD",subtotal:"37.00",taxTotal:"0.00",total:"37.00",issuedAt:null};
+  respond(200,{...orderDetailFixture(),invoice});
+  const detail=await getOrder("700");
+  expect(detail.invoice?.state).toBe("DRAFT");
+  expect(detail.invoice?.issuedAt).toBeNull();
 });

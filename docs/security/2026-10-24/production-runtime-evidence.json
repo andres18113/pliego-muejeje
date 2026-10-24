@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-24",
+  "scope": "authorized JVM-only production package update",
+  "java_package_before": "25.0.4.1.0+1-0",
+  "java_package_after": "25.0.5.0.0+8-1",
+  "running_java_after": "25.0.5+8-LTS",
+  "running_java_pid": 28272,
+  "active": true,
+  "automatic_restarts": 0,
+  "backend_frontend_release": "20261021-a298dc4",
+  "production_flyway_count": 73,
+  "production_flyway_max_version": 73,
+  "flyway_history_unchanged": true,
+  "runtime_schema_database_create_and_owner_membership": [
+    false,
+    false,
+    false,
+    false
+  ],
+  "application_credential_unit_nginx_hashes_unchanged": true,
+  "default_and_service_user_certificate_checks": "pass",
+  "custom_trust_store_override_found": false,
+  "postgres_server_version": "18.6",
+  "node_installed_on_vps": false,
+  "package_rollback_exercised": true,
+  "final_jvm_update_succeeded": true,
+  "application_dependency_release_performed": false,
+  "server_private_evidence": "/opt/pliego/deployment/runtime-security-20261024/",
+  "public_checks": [
+    {
+      "check": "frontend",
+      "status": 200
+    },
+    {
+      "check": "catalog",
+      "status": 200,
+      "valid_catalog": true
+    },
+    {
+      "check": "private-profile",
+      "status": 401
+    }
+  ]
+}

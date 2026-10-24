@@ -6,7 +6,7 @@
   /* Top of page is airier; once scrolled the bar compacts. The margin keeps the page from jumping. */
   height: 88px;
   margin: 0;
-  transition: height 200ms cubic-bezier(.32, .94, .6, 1), margin-bottom 200ms cubic-bezier(.32, .94, .6, 1);
+  transition: box-shadow 200ms cubic-bezier(.32, .94, .6, 1);
   background: var(--pliego-surface);
   color: var(--pliego-text);
 }
@@ -39,6 +39,9 @@
   --header-focus: var(--mantine-color-pliego-3);
   --header-error: var(--mantine-color-red-3);
 }
+/* A page with its own wayfinding and context bar (the edition page) lets the header leave with the scroll, as product
+   pages do: in the flow, never compacting, so the bar can take over without anything sliding. */
+.header[data-flow] { position: relative; }
 .header[data-scrolled] { height: 72px; margin-bottom: 16px; box-shadow: 0 1px 0 var(--pliego-border), 0 12px 28px -22px rgb(20 23 55 / 45%); }
 .bar.bar { position: relative; width: 100%; max-width: 1824px; height: 80px; margin-inline: auto; padding: 0 48px; border-radius: 0; background: var(--pliego-surface); gap: 24px; transition: box-shadow 200ms ease; }
 .header > .bar.bar { height: 100%; }
@@ -157,7 +160,7 @@
   .menuBookGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .moreCategories { flex-basis: 100%; }
 }
-@media (prefers-reduced-motion: reduce) { .bar.bar { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .header, .bar.bar { transition: none; } }
 @media (forced-colors: active) {
   .bar, .megaPanel, .searchTrigger { border: 1px solid CanvasText; }
   .header :focus-visible, .accountPanel :focus-visible, .overlayContent :focus-visible { outline-color: Highlight; }

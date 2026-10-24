@@ -1,5 +1,5 @@
 import { useEffect, useId, useRef, useState, type FormEvent, type ReactNode } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { z } from "zod";
 import { useSession } from "@/app/session";
 import { Button, ButtonLink } from "@/components/ui/button";
@@ -10,13 +10,21 @@ import { Field, FieldMessage } from "@/shared/ui/Field";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { AuthState, authFlowClasses as flow } from "./AuthFlow";
 import { useEmailRequest, useEmailTokenAction } from "./emailActionHooks";
+import { emailActionLocation, safeAuthReturnHref } from "./authLocation";
+import { PasswordInput } from "@/shared/ui/PasswordInput";
+
+function useEmailReturnHref() {
+  const location = useLocation();
+  return safeAuthReturnHref(new URLSearchParams(location.search).get("from"));
+}
 
 /** The page for one email action: the way back to sign-in, the name, then the form or its outcome. */
 function EmailActionFrame({ title, children }: { title: string; children: ReactNode }) {
+  const from = useEmailReturnHref();
   useEffect(() => { document.title = `${title} · PLIEGO`; }, [title]);
   return <><main className={`auth-page page-frame ${flow.page}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
     <div className="auth-content">
-      <Link to="/sign-in" className={flow.back}><MaterialSymbol name="arrow_back" /><span>Iniciar sesión</span></Link>
+      <Link to={emailActionLocation("/sign-in", from)} className={flow.back}><MaterialSymbol name="arrow_back" /><span>Iniciar sesión</span></Link>
       <h1>{title}</h1>
       {children}
     </div>
@@ -31,10 +39,11 @@ function ActionError({ children, inline = false }: { children: ReactNode; inline
 
 /** A finished link (invalid, expired or already used — the server does not tell them apart) or an outcome nobody could confirm. */
 function ActionFailure({ error, another }: { error: unknown; another: ReactNode }) {
+  const from = useEmailReturnHref();
   const uncertain = error instanceof EmailActionOutcomeUnknown;
   const finished = error instanceof ApiRequestError && error.code === "EMAIL_ACTION_INVALID";
   return <AuthState tone={finished ? "terminal" : "error"} title={uncertain ? "No sabemos si se completó" : finished ? "Este enlace ya no está disponible" : "No pudimos completarlo"}
-    actions={<>{another}{uncertain && <Link to="/sign-in">Iniciar sesión</Link>}</>}>
+    actions={<>{another}{uncertain && <Link to={emailActionLocation("/sign-in", from)}>Iniciar sesión</Link>}</>}>
     <ActionError>{failureMessage(error)}</ActionError>
   </AuthState>;
 }
@@ -55,10 +64,11 @@ export function ForgotPasswordPage() { return <EmailRequestPage purpose="recover
 function EmailRequestPage({ purpose }: { purpose: "verification" | "recovery" }) {
   const location = useLocation();
   const initialEmail = typeof location.state?.email === "string" ? location.state.email : "";
+  const from = useEmailReturnHref();
   const [email, setEmail] = useState(initialEmail);
   const [validation, setValidation] = useState<string | null>(null);
   const id = useId();
-  const mutation = useEmailRequest(purpose);
+  const mutation = useEmailRequest(purpose, from);
   const lock = useRef(false);
   const title = purpose === "verification" ? "Reenviar verificación" : "Recuperar contraseña";
   const label = purpose === "verification" ? "Solicitar enlace de verificación" : "Solicitar recuperación";
@@ -75,9 +85,7 @@ function EmailRequestPage({ purpose }: { purpose: "verification" | "recovery" })
   }
   const uncertain = mutation.isError && mutation.error instanceof EmailActionOutcomeUnknown;
   return <EmailActionFrame title={title}>
-    {!mutation.isSuccess && <p>{purpose === "verification"
-      ? "Escribe el correo de tu cuenta. Si la cuenta cumple los requisitos, recibirás un enlace para verificarla."
-      : "Escribe el correo de tu cuenta. Si la cuenta cumple los requisitos, recibirás un enlace para elegir una contraseña nueva."}</p>}
+    {!mutation.isSuccess && <p>Escribe el correo de tu cuenta.</p>}
     <form className={`auth-form${mutation.isSuccess ? ` ${flow.settled}` : ""}`} onSubmit={submit} noValidate aria-busy={mutation.isPending}>
       <Field controlId={id} label="Correo electrónico">
         <input id={id} type="email" autoComplete="email" autoCapitalize="none" maxLength={254} value={email} disabled={blocked}
@@ -90,39 +98,59 @@ function EmailRequestPage({ purpose }: { purpose: "verification" | "recovery" })
     </form>
     {mutation.isSuccess && <AuthState tone="waiting" scene title="Revisa tu correo">
       <p role="status">{mutation.data}</p>
-      <p>Mira también la carpeta de correo no deseado. Espera un minuto antes de volver a solicitar un enlace; puedes abrir esta página de nuevo si necesitas otra solicitud.</p>
+      <p>Revisa también el correo no deseado. Para pedir otro enlace, espera un minuto y vuelve a abrir esta página.</p>
     </AuthState>}
-    {uncertain && <AuthState tone="error" title="No sabemos si se envió" actions={<Link to="/sign-in">Iniciar sesión</Link>}>
+    {uncertain && <AuthState tone="error" title="No sabemos si se envió" actions={<Link to={emailActionLocation("/sign-in", from)}>Iniciar sesión</Link>}>
       <ActionError>{failureMessage(mutation.error)}</ActionError>
-      <p>Espera un minuto antes de volver a solicitar un enlace. Puedes abrir esta página de nuevo si necesitas otra solicitud.</p>
+      <p>Para pedir otro enlace, espera un minuto y vuelve a abrir esta página.</p>
     </AuthState>}
   </EmailActionFrame>;
 }
 
 export function VerifyEmailPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const navigation = useNavigation();
+  const from = useEmailReturnHref();
   const { token, mutation } = useEmailTokenAction("verification");
-  const lock = useRef(false);
-  async function verify() {
-    if (lock.current || !token) return;
-    lock.current = true;
-    try { await mutation.mutateAsync({ token }); } catch { /* Mutation exposes the failure. */ }
-    finally { lock.current = false; }
-  }
-  const another = <Link to="/reenviar-verificacion">Solicitar otro enlace</Link>;
-  return <EmailActionFrame title="Verificar correo">
-    {mutation.isSuccess ? <AuthState tone="success" title="Correo verificado" actions={<ButtonLink variant="primary" to="/sign-in">Iniciar sesión</ButtonLink>}>
-      <p role="status">Tu correo está verificado. Ya puedes iniciar sesión.</p>
+  const attempted = useRef("");
+  const verify = mutation.mutate;
+  const idle = mutation.isIdle;
+  useEffect(() => {
+    if (!token) {
+      if (idle) attempted.current = "";
+      return;
+    }
+    // Synchronous identity guard also survives Strict Mode's repeated effects.
+    // Never replay an uncertain response just because the page rerenders.
+    if (attempted.current === token) return;
+    attempted.current = token;
+    verify({ token });
+  }, [token, verify, idle]);
+  const verified = mutation.isSuccess;
+  useEffect(() => {
+    // Let the confirmation be read, then continue without another required click.
+    // A new fragment belongs to a new verification, even before its effect resets
+    // the previous result. Leaving this view always cancels the return.
+    if (!verified || location.hash || navigation.state !== "idle") return;
+    const timer = window.setTimeout(() => navigate(from, { replace: true }), 1200);
+    return () => window.clearTimeout(timer);
+  }, [verified, location.hash, navigation.state, from, navigate]);
+  const another = <Link to={emailActionLocation("/reenviar-verificacion", from)}>Solicitar otro enlace</Link>;
+  return <EmailActionFrame title="Verificación de correo">
+    {mutation.isSuccess ? <AuthState tone="success" title="Correo verificado" actions={<ButtonLink variant="primary" to={from} replace>Continuar</ButtonLink>}>
+      <p role="status">{from === "/" ? "Abriendo el inicio…" : "Volviendo a donde estabas…"}</p>
     </AuthState>
       : mutation.isError ? <ActionFailure error={mutation.error} another={another} />
-        : !token ? <MissingLink another={another}>Abre el enlace completo del correo para verificar tu cuenta.</MissingLink>
-          : <AuthState tone="info" symbol="mail" title="Confirma que este correo es tuyo"
-            actions={<><Button variant="primary" disabled={mutation.isPending} aria-busy={mutation.isPending || undefined} onClick={() => void verify()}>{mutation.isPending ? "Verificando…" : "Verificar correo"}</Button>{another}</>}>
-            <p>Confirma la verificación de tu correo. Este enlace se puede utilizar una sola vez.</p>
+        : !token && !mutation.isPending ? <MissingLink another={another}>Abre el enlace completo del correo para verificar tu cuenta.</MissingLink>
+          : <AuthState tone="info" symbol="mail" title="Verificando tu correo">
+            <p role="status">Estamos comprobando el enlace…</p>
           </AuthState>}
   </EmailActionFrame>;
 }
 
 export function ResetPasswordPage() {
+  const from = useEmailReturnHref();
   const { token, mutation } = useEmailTokenAction("recovery");
   const { session, captureAuthority, clear } = useSession();
   const [password, setPassword] = useState("");
@@ -145,10 +173,14 @@ export function ResetPasswordPage() {
     } catch { /* Mutation exposes the failure. */ }
     finally { setPassword(""); setConfirmation(""); lock.current = false; }
   }
-  const another = <Link to="/recuperar-contrasena">Solicitar otro enlace</Link>;
+  const another = <Link to={emailActionLocation("/recuperar-contrasena", from)}>Solicitar otro enlace</Link>;
   return <EmailActionFrame title="Restablecer contraseña">
-    {mutation.isSuccess ? <AuthState tone="success" title="Contraseña actualizada" actions={<ButtonLink variant="primary" to="/sign-in">Iniciar sesión</ButtonLink>}>
-      <p role="status">Tu contraseña cambió. Inicia sesión de nuevo; las sesiones anteriores ya no se renovarán.</p>
+    {mutation.isSuccess ? <AuthState tone="success" title="Contraseña actualizada" actions={<ButtonLink variant="primary" to={emailActionLocation("/sign-in", from)}>Iniciar sesión</ButtonLink>}>
+      <p role="status">Inicia sesión con tu nueva contraseña.</p>
+      <details>
+        <summary>Seguridad de tu cuenta</summary>
+        <p>El acceso en otros dispositivos puede seguir activo hasta que caduque o se vuelva a comprobar la sesión. Para continuar, será necesario iniciar sesión de nuevo.</p>
+      </details>
     </AuthState>
       : mutation.isError ? <ActionFailure error={mutation.error} another={another} />
         : !token ? <MissingLink another={another}>Abre el enlace completo del correo para restablecer tu contraseña.</MissingLink>
@@ -156,11 +188,11 @@ export function ResetPasswordPage() {
             <p>Elige la contraseña nueva de tu cuenta. Este enlace se puede utilizar una sola vez.</p>
             <form className="auth-form" onSubmit={submit} noValidate aria-busy={mutation.isPending}>
               <Field controlId={`${id}-password`} label="Nueva contraseña">
-                <input id={`${id}-password`} type="password" autoComplete="new-password" value={password} disabled={mutation.isPending} aria-describedby={`${id}-password-help`} onChange={event => setPassword(event.target.value)} />
+                <PasswordInput id={`${id}-password`} autoComplete="new-password" value={password} disabled={mutation.isPending} aria-describedby={`${id}-password-help`} onChange={event => setPassword(event.target.value)} />
                 <FieldMessage tone="help" id={`${id}-password-help`}>Usa al menos 8 caracteres.</FieldMessage>
               </Field>
               <Field controlId={`${id}-confirmation`} label="Confirma tu contraseña">
-                <input id={`${id}-confirmation`} type="password" autoComplete="new-password" value={confirmation} disabled={mutation.isPending} onChange={event => setConfirmation(event.target.value)} />
+                <PasswordInput id={`${id}-confirmation`} autoComplete="new-password" value={confirmation} disabled={mutation.isPending} onChange={event => setConfirmation(event.target.value)} />
               </Field>
               {validation && <ActionError inline>{validation}</ActionError>}
               <Button type="submit" variant="primary" disabled={mutation.isPending}>{mutation.isPending ? "Guardando…" : "Restablecer contraseña"}</Button>

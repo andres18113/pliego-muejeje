@@ -1,3 +1,4 @@
+import { fillBillingFixture, billingFixturePayload } from "./billingTestFixtures";
 import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
@@ -33,16 +34,16 @@ describe("STORE_PICKUP transport and checkout", () => {
 
   it("switches tabs by keyboard, preserving the saved delivery address and selected pickup", async () => {
     api(); const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
-    await screen.findByText(/Av\. Principal 123/);
+    await screen.findByText("Av. Principal 123");
     const delivery = screen.getByRole("tab", { name: "Entrega" });
     delivery.focus(); await user.keyboard("{ArrowRight}");
     expect(screen.getByRole("tab", { name: "Retiro" })).toHaveFocus();
     await user.click(await screen.findByRole("radio", { name: /Punto de prueba Quito/ }));
-    expect(screen.queryByText(/Av\. Principal 123/)).not.toBeInTheDocument();
+    expect(screen.queryByText("Av. Principal 123")).not.toBeInTheDocument();
     expect(screen.queryByTitle("Mapa de Punto de prueba Quito")).not.toBeInTheDocument();
     expect(screen.getByText(/Preparación estimada: ~37 min/)).toBeInTheDocument();
     expect(within(screen.getByRole("complementary")).queryByText(/Retiro en tienda|Punto de prueba Quito|Recepción/)).not.toBeInTheDocument();
-    await user.click(delivery); expect(await screen.findByText(/Av\. Principal 123/)).toBeInTheDocument();
+    await user.click(delivery); expect(await screen.findByText("Av. Principal 123")).toBeInTheDocument();
     await user.click(screen.getByRole("tab", { name: "Retiro" }));
     expect(screen.getByRole("button", { name: "Cambiar punto" })).toBeInTheDocument();
     expect(screen.getByText("Punto de prueba Quito")).toBeInTheDocument();
@@ -62,11 +63,11 @@ describe("STORE_PICKUP transport and checkout", () => {
       await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
       await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
     }
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     const posts = transport.calls.filter(call => call.path === "/api/v1/checkout");
     expect(posts).toHaveLength(1);
-    expect(posts[0].body).toEqual({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", expectedCartId: "40", paymentMethod: method,
+    expect(posts[0].body).toEqual({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", expectedCartId: "40", paymentMethod: method,
       simulationOutcome: "APPROVED", ...(method === "CARD" ? { cardNumber: "4111111111111111" } : {}) });
     expect(posts[0].headers.get("Idempotency-Key")).toMatch(/^[0-9a-f-]{36}$/);
     expect(screen.getByText(/Presenta la confirmación enviada a tu correo/)).toBeInTheDocument();
@@ -88,7 +89,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
     await user.click(await screen.findByRole("tab", { name: "Retiro" }));
     const second = await screen.findByRole("radio", { name: /Segundo punto/ }); await transfer(user);
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("Elige un punto de retiro.")).toBeInTheDocument();
     expect(transport.count("POST", "/api/v1/checkout")).toBe(0);
     expect(screen.getAllByRole("radio")[0]).toHaveFocus();
@@ -109,13 +110,13 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(screen.getByRole("tabpanel")).toHaveFocus();
     expect(screen.getByRole("button", { name: "Hacer pedido" })).toHaveAttribute("aria-disabled", "true");
     await user.click(screen.getByRole("tab", { name: "Entrega" }));
-    expect(await screen.findByText(/Av\. Principal 123/)).toBeInTheDocument();
+    expect(await screen.findByText("Av. Principal 123")).toBeInTheDocument();
   });
 
   it.each(["P5010", "P5011", "P5012"])("preserves the known backend rejection %s rather than leaving an unknown attempt", async (code) => {
-    api(); await expect(submitCheckout({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).resolves.toMatchObject({ fulfillment: { pickup: pickupSnapshot } });
+    api(); await expect(submitCheckout({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).resolves.toMatchObject({ fulfillment: { pickup: pickupSnapshot } });
     stubApi({ "POST /api/v1/checkout": () => problem(409, code, "Retiro no disponible", "Elige otro método.") });
-    await expect(submitCheckout({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440001")).rejects.toMatchObject({ name: "ApiRequestError", code });
+    await expect(submitCheckout({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440001")).rejects.toMatchObject({ name: "ApiRequestError", code });
   });
 
   it("retains immutable pickup and pricing snapshots through detail and attempt resolution", async () => {
@@ -126,7 +127,7 @@ describe("STORE_PICKUP transport and checkout", () => {
 
   it("leaves an incomplete pickup receipt unresolved rather than discarding pickup facts", async () => {
     api({ "POST /api/v1/checkout": () => json({ ...approved, fulfillment: { method: "STORE_PICKUP" } }, 201) });
-    await expect(submitCheckout({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).rejects.toMatchObject({ name: "CheckoutOutcomeUnknown" });
+    await expect(submitCheckout({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000")).rejects.toMatchObject({ name: "CheckoutOutcomeUnknown" });
   });
 
   it("names simultaneous location and bank failures independently for assistive technology", async () => {
@@ -143,7 +144,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     const transport = api({ "POST /api/v1/checkout": () => { throw new TypeError("Failed to fetch"); },
       "POST /api/v1/checkout/attempts/*/resolve": () => json({ state: "CREATED", order: approved }) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout"); await selectPickup(user); await transfer(user);
-    await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: /Consultar resultado/ }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     expect(transport.calls.filter(call => call.method === "POST" && call.path === "/api/v1/checkout")).toHaveLength(1);

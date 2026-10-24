@@ -1,3 +1,4 @@
+import { fillCheckoutBilling } from "./billing-fixtures";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
@@ -68,6 +69,7 @@ for (const [fulfillment, payment, width] of [["STORE_PICKUP", "CARD", 1440], ["S
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
     await page.screenshot({ path: info.outputPath(`${fulfillment}-${payment}-checkout.png`), fullPage: true, animations: "disabled" });
     const responsePromise = page.waitForResponse(response => new URL(response.url()).pathname === "/api/v1/checkout" && response.request().method() === "POST");
+    await fillCheckoutBilling(page);
     await page.getByRole("button", { name: "Hacer pedido" }).click();
     const response = await responsePromise; expect(response.status()).toBe(201);
     const command = response.request().postDataJSON();

@@ -275,7 +275,7 @@ async function mockCustomerLogin(page: import("@playwright/test").Page, role: "C
 async function signInFromEdition(page: import("@playwright/test").Page, role: "CUSTOMER" | "ADMIN" = "CUSTOMER") {
   await page.getByRole("link", { name: "Iniciar sesión para agregar" }).click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(role === "ADMIN" ? /\/admin$/ : /\/catalog\/editions\/42/);
 }
@@ -769,14 +769,14 @@ test("sign-in returns to the storefront without exposing the email in its header
   await page.getByLabel("Nombres").fill("Ana María");
   await page.getByLabel("Apellidos").fill("Pérez López");
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Crear cuenta" }).click();
   await expect(page.getByRole("heading", { name: "Revisa tu correo" })).toBeVisible();
 
   await page.getByRole("link", { name: "Iniciar sesión" }).last().click();
   await expect(page).toHaveURL(/\/sign-in\?/);
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL("/");
   await expect(page.getByTestId("site-header").getByRole("button", { name: "Menú de cuenta" })).toBeVisible();

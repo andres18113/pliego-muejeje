@@ -1,7 +1,7 @@
 import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { json, problem, renderPurchaseRoute, savedAddress, stubApi } from "@/test/purchase";
+import { json, problem, renderPurchaseRoute, savedAddress, stubApi as stubPurchaseApi } from "@/test/purchase";
 import { AccountPage } from "./AccountPage";
 import { AddressBookPage } from "./AddressBook";
 import { useSession } from "@/app/session";
@@ -11,7 +11,9 @@ const routes = [
   { path: "/account/addresses", element: <AddressBookPage /> },
   { path: "/orders", element: <h1>Mis pedidos</h1> },
 ];
-const profile = { customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" };
+const stubApi = (routes: Parameters<typeof stubPurchaseApi>[0]) => stubPurchaseApi({"GET /api/v1/me/billing-identity": () => new Response(null, {status:204}), ...routes});
+
+const profile = { customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0", emailVerified: true };
 
 describe("customer account", () => {
   afterEach(() => vi.unstubAllGlobals());
@@ -20,7 +22,7 @@ describe("customer account", () => {
     const api = stubApi({});
     renderPurchaseRoute(routes, "/account", { role: null });
     expect(await screen.findByRole("heading", { name: "Inicia sesión para ver tu cuenta." })).toHaveFocus();
-    expect(api.count("GET", "/api/v1/me")).toBe(0);
+    expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/me").length).toBe(0);
   });
 
   it("shows a read-only profile without loading addresses and gives account navigation", async () => {
@@ -30,7 +32,9 @@ describe("customer account", () => {
     const region = await screen.findByRole("region", { name: "Perfil y datos personales" });
     expect(within(region).getByRole("heading", { level: 2, name: "Ana Pérez" })).toBeInTheDocument();
     expect(within(region).getByText(profile.email)).toBeInTheDocument();
-    expect(within(region).getByText("Sin teléfono")).toBeInTheDocument();
+    const phoneRow = within(region).getByText("Teléfono").closest("li")!;
+    expect(within(phoneRow).getByText("Sin registrar")).toHaveAttribute("data-tone", "optional");
+    expect(within(phoneRow).getByText("Opcional")).toBeInTheDocument();
     // Nothing is editable until the reader chooses a field.
     expect(within(region).queryByRole("textbox")).not.toBeInTheDocument();
     expect(within(region).getByRole("button", { name: "Editar nombres" })).toBeInTheDocument();
@@ -39,6 +43,60 @@ describe("customer account", () => {
     // The header's account menu moves between Account pages; the page adds no second navigation.
     expect(screen.queryByRole("navigation", { name: "Secciones de mi cuenta" })).not.toBeInTheDocument();
     expect(api.count("GET", "/api/v1/me/addresses")).toBe(0);
+  });
+
+  it.each([true, undefined, null])("hides verification help unless the current email is explicitly unverified (%s)", async (emailVerified) => {
+    stubApi({ "GET /api/v1/me": () => json({ ...profile, emailVerified }) });
+    renderPurchaseRoute(routes, "/account");
+    await screen.findByRole("region", { name: "Perfil y datos personales" });
+    expect(screen.queryByRole("link", { name: "Reenviar verificación de correo" })).not.toBeInTheDocument();
+  });
+
+  it("keeps verification help for an explicitly unverified current email", async () => {
+    stubApi({ "GET /api/v1/me": () => json({ ...profile, emailVerified: false }) });
+    const { router } = renderPurchaseRoute([...routes, { path: "/reenviar-verificacion", element: <h1>Reenviar verificación</h1> }], "/account");
+    const link = await screen.findByRole("link", { name: "Reenviar verificación de correo" });
+    await userEvent.click(link);
+    expect(router.state.location.pathname).toBe("/reenviar-verificacion");
+    expect(router.state.location.state).toEqual({ email: profile.email });
+  });
+
+  it("rejects invalid name characters immediately and validates incomplete phones on blur", async () => {
+    const api = stubApi({ "GET /api/v1/me": () => json(profile) });
+    renderPurchaseRoute(routes, "/account");
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("button", { name: "Editar nombres" }));
+    const names = screen.getByLabelText("Nombres");
+    await user.clear(names); await user.type(names, "Ana7");
+    expect(names).toHaveValue("Ana");
+    expect(names).toHaveAccessibleDescription(/letras|números/);
+    await user.click(screen.getByRole("button", { name: "Cancelar" }));
+    await user.click(screen.getByRole("button", { name: "Agregar teléfono" }));
+    const phone = screen.getByLabelText("Teléfono");
+    await waitFor(() => expect(phone).toBeEnabled());
+    await user.type(phone, "99");
+    expect(phone).not.toHaveAttribute("aria-invalid", "true");
+    await user.tab();
+    expect(phone).toHaveAttribute("aria-invalid", "true");
+    expect(phone).toHaveAccessibleDescription(/9 dígitos/);
+    expect(api.count("PATCH", "/api/v1/me")).toBe(0);
+  });
+
+  it("edits Ecuador phones without depending on the former country picker lookup", async () => {
+    const api = stubApi({
+      "GET /api/v1/me": () => json(profile),
+      "GET /api/v1/reference/countries": () => problem(503, "SERVICE_UNAVAILABLE", "No disponible", "Inténtalo otra vez."),
+    });
+    renderPurchaseRoute(routes, "/account");
+    const user = userEvent.setup();
+    await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
+    const phone = screen.getByLabelText("Teléfono");
+    expect(phone).toBeEnabled();
+    await user.type(phone, "99");
+    expect(phone).not.toHaveAttribute("aria-invalid", "true");
+    await user.tab();
+    expect(phone).toHaveAccessibleDescription(/9 dígitos/);
+    expect(api.count("GET", "/api/v1/reference/countries")).toBe(0);
   });
 
   it("edits one name field at a time and returns focus to its action", async () => {
@@ -87,9 +145,9 @@ describe("customer account", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar teléfono" }));
     const phone = await screen.findByLabelText("Teléfono");
     await waitFor(() => expect(phone).toBeEnabled());
-    await user.type(phone, "123");
+    await user.type(phone, "99");
     await user.click(screen.getByRole("button", { name: "Guardar" }));
-    expect(await screen.findByText("Revisa el prefijo internacional y el número: no corresponden a un teléfono válido.")).toBeInTheDocument();
+    expect(phone).toHaveAccessibleDescription(/9 dígitos/);
     expect(api.count("PATCH", "/api/v1/me")).toBe(0);
     await user.clear(phone);
     await user.type(phone, "0991234567");
@@ -100,16 +158,17 @@ describe("customer account", () => {
 
   it("changes the sign-in email only with the current password", async () => {
     const api = stubApi({
-      "GET /api/v1/me": [() => json(profile), () => json({ ...profile, email: "nueva@example.com" })],
+      "GET /api/v1/me": [() => json(profile), () => json({ ...profile, email: "nueva@example.com", emailVerified: false })],
       "PUT /api/v1/me/email": [
         () => problem(400, "CURRENT_PASSWORD_INVALID", "Contraseña incorrecta", "La contraseña actual no es correcta."),
         () => problem(409, "P1101", "Correo ya registrado", "Ya existe una cuenta con ese correo electrónico."),
-        () => json({ email: "nueva@example.com" }),
+        () => json({ email: "nueva@example.com", emailVerified: false }),
       ],
     });
     renderPurchaseRoute(routes, "/account");
     const user = userEvent.setup();
     await user.click(await screen.findByRole("button", { name: "Editar correo electrónico" }));
+    expect(screen.queryByRole("link", { name: "Reenviar verificación de correo" })).not.toBeInTheDocument();
     const email = screen.getByLabelText("Nuevo correo");
     expect(email).toHaveFocus();
     await user.type(email, "Nueva@Example.com");
@@ -128,9 +187,10 @@ describe("customer account", () => {
     expect(await screen.findByText("Ya existe una cuenta con ese correo.")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Guardar" }));
-    expect(await screen.findByText("Verifica nueva@example.com con el enlace enviado. Las sesiones anteriores ya no se renovarán.")).toBeInTheDocument();
+    expect(await screen.findByText("Correo actualizado. Revisa nueva@example.com para verificarlo.")).toBeInTheDocument();
     expect(api.calls.filter((call) => call.method === "PUT").at(-1)?.body).toEqual({ newEmail: "Nueva@Example.com", currentPassword: "Lectura-segura-2026" });
-    expect(screen.getByText("nueva@example.com")).toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Perfil y datos personales" })).getByText("nueva@example.com")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Reenviar verificación de correo" })).toHaveAttribute("href", "/reenviar-verificacion");
   });
 
   it("does not restore a cleared session when a pending email change finishes", async () => {
@@ -155,7 +215,7 @@ describe("customer account", () => {
     await user.click(screen.getByRole("button", { name: "Cerrar sesión externa" }));
     expect(screen.getByLabelText("Estado de sesión")).toHaveTextContent("Sin sesión");
     await act(async () => { finishChange(json({ email: "nueva@example.com" })); await changeResponse; });
-    expect(api.count("GET", "/api/v1/me")).toBe(1);
+    expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/me").length).toBe(1);
     expect(screen.getByLabelText("Estado de sesión")).toHaveTextContent("Sin sesión");
     expect(screen.getByRole("heading", { name: "Inicia sesión para ver tu cuenta." })).toBeInTheDocument();
   });
@@ -191,7 +251,7 @@ describe("customer account", () => {
     }));
   });
 
-  it("searches backend countries and stores only the ISO code", async () => {
+  it("limits delivery to Ecuador without changing the approved address fields", async () => {
     const api = stubApi({
       "GET /api/v1/me/addresses": () => json([]),
       "POST /api/v1/me/addresses": () => json({ addressId: "16" }, 201),
@@ -201,16 +261,14 @@ describe("customer account", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar dirección" }));
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Calle 10");
-    await user.type(screen.getByLabelText("Ciudad"), "Bogotá");
-    await user.type(screen.getByLabelText("Provincia"), "Cundinamarca");
-    await user.click(screen.getByRole("combobox", { name: "País de entrega" }));
-    const countrySearch = await screen.findByRole("combobox", { name: "Buscar país de entrega" });
-    await user.type(countrySearch, "Colom");
-    await user.keyboard("{ArrowDown}{Enter}");
-    expect(screen.getByRole("combobox", { name: "País de entrega" })).toHaveTextContent("Colombia");
-    await user.type(screen.getByLabelText("Teléfono de contacto"), "3001234567");
+    await user.type(screen.getByLabelText("Ciudad"), "Quito");
+    await user.type(screen.getByLabelText("Provincia"), "Pichincha");
+    expect(screen.getByLabelText("País de entrega")).toHaveValue("Ecuador");
+    expect(screen.getByLabelText("País de entrega")).toHaveAttribute("readonly");
+    expect(screen.queryByRole("combobox", { name: "País de entrega" })).not.toBeInTheDocument();
+    await user.type(screen.getByLabelText("Teléfono de contacto"), "991234567");
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
-    await waitFor(() => expect(api.calls.find((call) => call.method === "POST")?.body).toMatchObject({ countryCode: "CO", phone: "+573001234567" }));
+    await waitFor(() => expect(api.calls.find((call) => call.method === "POST")?.body).toMatchObject({ countryCode: "EC", phone: "+593991234567" }));
   });
 
   it("requires confirmation before deleting an address", async () => {

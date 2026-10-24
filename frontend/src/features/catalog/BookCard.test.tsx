@@ -17,6 +17,15 @@ function setup(options: Partial<Parameters<typeof BookCard>[0]> = {}) {
 }
 
 describe("BookCard controlled contract", () => {
+  it.each([
+    ["PAPERBACK", "Libro"], ["HARDCOVER", "Libro"], ["EBOOK", "eBook"], ["AUDIOBOOK", "Audiolibro"],
+  ] as const)("identifies %s visibly and accessibly on a mixed catalog card", (format, label) => {
+    setup({ book: toBookCardData({ ...edition, format }), cart: undefined });
+    const link = screen.getByRole("link");
+    expect(screen.getByText(label, { exact: true })).toBeVisible();
+    expect(link).toHaveAccessibleName(new RegExp(label));
+  });
+
   it("has one native navigation link with complete edition identity and description", () => {
     setup();
     expect(screen.getAllByRole("link")).toHaveLength(1);
@@ -25,7 +34,7 @@ describe("BookCard controlled contract", () => {
     expect(screen.queryByText("Rústica · Español")).not.toBeInTheDocument();
     expect(screen.getByText("Disponible")).toBeVisible();
     expect(screen.getByRole("heading")).toHaveAttribute("data-line-clamp", "true");
-    expect(screen.getByRole("link")).toHaveAccessibleName(`Ver edición: ${edition.title}. Limusa Wiley, Rústica · Español`);
+    expect(screen.getByRole("link")).toHaveAccessibleName(`Ver edición: ${edition.title}. Limusa Wiley, Libro. Rústica · Español`);
     expect(screen.getByRole("link")).toHaveAccessibleDescription(/William E\. Boyce, Richard C\. DiPrima.*999\.999\.999,99.*Disponible/);
     expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent(edition.title);
     expect(screen.getByText(edition.authors)).toHaveAttribute("data-line-clamp", "true");

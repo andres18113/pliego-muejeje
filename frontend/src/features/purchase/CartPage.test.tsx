@@ -61,7 +61,7 @@ describe("CartPage", () => {
     // Without a backend breakdown the summary shows only the server total: nothing is derived here.
     expect(screen.getByText("Total").nextSibling).toHaveTextContent("37,00");
     expect(screen.queryByText(/IVA/)).not.toBeInTheDocument();
-    expect(screen.queryByText("Subtotal")).not.toBeInTheDocument();
+    expect(within(screen.getByRole("complementary", { name: "Resumen del pedido" })).queryByText("Subtotal")).not.toBeInTheDocument();
   });
 
   it("shows the commercial breakdown exactly as the backend reports it", async () => {

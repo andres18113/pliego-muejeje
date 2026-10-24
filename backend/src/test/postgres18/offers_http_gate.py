@@ -59,9 +59,9 @@ def main():
     assert ok('/api/v1/me/favorites', customer)['items'][0]['price'] == '15.00'
     ok('/api/v1/cart/items', customer, 'POST', {'editionId': edition, 'quantity': 1})
     cart = ok('/api/v1/cart', customer)
-    assert cart['items'][0]['currentPrice'] == '15.00' and cart['subtotal'] == '15.00' and cart['taxAmount'] == '2.25' and cart['total'] == '17.25', cart
+    assert cart['items'][0]['currentPrice'] == '15.00' and cart['subtotal'] == '15.00' and cart['taxRate'] == '0.00' and cart['taxAmount'] == '0.00' and cart['total'] == '15.00', cart
     order = ok('/api/v1/checkout', customer, 'POST', {'fulfillmentMethod': 'DIGITAL_ONLY', 'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}, 201)
-    assert order['subtotal'] == '15.00' and order['taxAmount'] == '2.25' and order['total'] == '17.25', order
+    assert order['subtotal'] == '15.00' and order['taxRate'] == '0.00' and order['taxAmount'] == '0.00' and order['total'] == '15.00', order
     bought = ok('/api/v1/orders/'+order['orderId'], customer)
     assert bought['items'][0]['unitPrice'] == '15.00' and bought['items'][0]['format'] == 'EBOOK'
     problem(endpoint, admin, 'PUT', {**offer, 'offerPrice': '25.00'}, 'P1001')
@@ -74,7 +74,7 @@ def main():
     detail = ok('/api/v1/catalog/editions/'+edition)
     assert detail['price'] == '20.00' and detail['offer'] is None, detail
     bought = ok('/api/v1/orders/'+order['orderId'], customer)
-    assert bought['items'][0]['unitPrice'] == '15.00' and bought['total'] == '17.25', bought
+    assert bought['items'][0]['unitPrice'] == '15.00' and bought['total'] == '15.00', bought
     ok(endpoint, admin, 'PUT', {**offer, 'startsAt': (now-timedelta(days=2)).isoformat(), 'endsAt': (now-timedelta(days=1)).isoformat()}, 204)
     assert ok('/api/v1/catalog/editions/'+edition)['offer'] is None
     print('Offers HTTP gate passed: admin lifecycle, public metadata/filter/pagination, Spanish validation and authentication.')

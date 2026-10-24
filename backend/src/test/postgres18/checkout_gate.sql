@@ -31,7 +31,7 @@ BEGIN
     CALL pliego.sp_inventory_entry(v_admin,v_edition2,5,'fixture',v_movement,v_before,v_after);
     CALL pliego.sp_customer_register('i8-gate-customer@pliego.local','fixture-hash',
         'Cliente','Prueba',NULL,v_user,v_customer,v_user_state);
-    CALL pliego.sp_address_create(v_user,'Casa','Cliente I8','Calle I8',NULL,
+    CALL pliego.sp_address_create(v_user,'Casa','Cliente Prueba','Calle I8',NULL,
         'Quito','Pichincha','EC',NULL,'Referencia I8','+59325550134',TRUE,v_address);
     CALL pliego.sp_cart_add_item(v_user,v_edition1,2,v_cart,v_item,v_quantity);
     CALL pliego.sp_cart_add_item(v_user,v_edition2,1,v_cart,v_item,v_quantity);
@@ -40,7 +40,7 @@ BEGIN
         v_order,v_order_state,v_payment_state,v_total,v_reference);
 
     IF v_order_state <> 'CONFIRMED' OR v_payment_state <> 'APPROVED'
-       OR v_total <> 49.85
+       OR v_total <> 43.35
        OR v_reference !~ '^SIM-[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$'
        OR (SELECT count(*) FROM pliego.pedido WHERE cliente_id=v_customer) <> 1
        OR (SELECT count(*) FROM pliego.pago WHERE pedido_id=v_order) <> 1
@@ -64,7 +64,7 @@ BEGIN
            AND editorial_snapshot='Editorial I8' AND formato_snapshot='HARDCOVER'
            AND idioma_snapshot='es' AND precio_unitario=12.35 AND cantidad=1 AND subtotal=12.35) <> 1
        OR (SELECT count(*) FROM pliego.pedido_direccion WHERE pedido_id=v_order
-           AND destinatario='Cliente I8' AND direccion_linea1='Calle I8'
+           AND destinatario='Cliente Prueba' AND direccion_linea1='Calle I8'
            AND ciudad='Quito' AND provincia='Pichincha' AND pais_codigo='EC'
            AND referencia='Referencia I8' AND telefono='+59325550134') <> 1 THEN
         RAISE EXCEPTION 'APPROVED checkout persisted effects do not match contract';
@@ -75,7 +75,7 @@ BEGIN
         v_rejected_order,v_order_state,v_payment_state,v_total,v_reference);
 
     IF v_order_state <> 'CANCELLED' OR v_payment_state <> 'REJECTED'
-       OR v_reference IS NOT NULL OR v_total <> 17.83
+       OR v_reference IS NOT NULL OR v_total <> 15.50
        OR (SELECT count(*) FROM pliego.pedido WHERE cliente_id=v_customer) <> 2
        OR (SELECT count(*) FROM pliego.pago WHERE pedido_id=v_rejected_order) <> 1
        OR (SELECT estado FROM pliego.pedido WHERE pedido_id=v_rejected_order) <> 'CANCELLED'
@@ -89,7 +89,7 @@ BEGIN
        OR (SELECT count(*) FROM pliego.pedido_item WHERE pedido_id=v_rejected_order
            AND sku_snapshot='I8-GATE-1' AND precio_unitario=15.50 AND cantidad=1 AND subtotal=15.50) <> 1
        OR (SELECT count(*) FROM pliego.pedido_direccion WHERE pedido_id=v_rejected_order
-           AND destinatario='Cliente I8' AND direccion_linea1='Calle I8') <> 1 THEN
+           AND destinatario='Cliente Prueba' AND direccion_linea1='Calle I8') <> 1 THEN
         RAISE EXCEPTION 'REJECTED checkout persisted effects do not match contract';
     END IF;
 END;

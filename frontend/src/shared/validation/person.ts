@@ -46,10 +46,26 @@ export function phoneError(value: string, required = false) {
   if (!phonePresentation.test(presentation)) return rules.messages.phoneCharacters;
   const canonical = normalizePhonePresentation(presentation);
   if (!canonical.startsWith("+")) return rules.messages.phonePrefix;
+  if (!canonical.startsWith("+593")) return rules.messages.phoneCountry;
+  const national = canonical.slice(4);
+  if (national.startsWith("0")) return rules.messages.phoneChangedDigits;
+  if (!/^[0-9]+$/.test(national)) return rules.messages.phoneCharacters;
+  if (national.length > rules.maxNationalPhoneDigits) return rules.messages.phoneTooLong;
+  if (national.startsWith("9") && national.length !== 9) return rules.messages.phoneMobileLength;
+  if (/^[2-7]/.test(national) && national.length !== 8) return rules.messages.phoneFixedLength;
+  if (!/^[2-7]|^9/.test(national)) return rules.messages.phoneStart;
   if (!canonicalPhone.test(canonical)) return rules.messages.phoneInvalid;
   const parsed = parsePhoneNumberFromString(canonical);
   if (parsed && parsed.number !== canonical) return rules.messages.phoneChangedDigits;
-  return parsed?.isValid() ? null : rules.messages.phoneInvalid;
+  return parsed?.country === "EC" && parsed.isValid() && ["FIXED_LINE", "MOBILE", "FIXED_LINE_OR_MOBILE"].includes(parsed.getType() ?? "")
+    ? null : rules.messages.phoneInvalid;
+}
+
+/** Allow partial names while editing, preserving the pinned Unicode repertoire. */
+export function personNameInputError(value: string, maxLength = rules.maxNameCodePoints) {
+  if ([...value.normalize("NFC")].length > maxLength) return `No puedes escribir más de ${maxLength} caracteres.`;
+  const letters = normalizePersonName(value).replace(/[ '’‐‑-]/gu, "");
+  return letters && !namePattern.test(letters) ? "Usa solo letras, espacios, apóstrofes y guiones." : null;
 }
 
 export const optionalPhoneSchema = z.string().superRefine((value, context) => {
@@ -59,5 +75,6 @@ export const optionalPhoneSchema = z.string().superRefine((value, context) => {
 
 export function recipientError(value: string) {
   if (!value.trim()) return recipientEmptyMessage;
-  return [...value.trim()].length > maxRecipientLength ? recipientTooLongMessage : null;
+  if ([...normalizePersonName(value)].length > maxRecipientLength) return recipientTooLongMessage;
+  return namePattern.test(normalizePersonName(value)) ? null : rules.messages.recipientCharacters;
 }

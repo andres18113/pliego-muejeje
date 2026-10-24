@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 import com.pliego.modules.identity.application.EmailActionTokens;
+import com.pliego.modules.identity.application.AuthReturnPaths;
 import com.pliego.modules.notifications.application.MailLayout.Fact;
 import com.pliego.modules.notifications.application.MailLayout.Item;
 
@@ -38,7 +39,9 @@ public final class MailTemplates {
  private MailMessage emailAction(String type,JsonNode data,String base) {
   boolean verify="VERIFY_EMAIL".equals(type);
   // Fragment keeps the credential out of ordinary web access logs and Referer headers.
-  String url=base+(verify?"/verificar-correo":"/restablecer-contrasena")+"#token="+tokens.derive(type,data.path("nonce").asText());
+  String returnTo=AuthReturnPaths.safeOrNull(data.path("returnTo").asText(null));
+  String context=returnTo==null?"":"?from="+java.net.URLEncoder.encode(returnTo,java.nio.charset.StandardCharsets.UTF_8);
+  String url=base+(verify?"/verificar-correo":"/restablecer-contrasena")+context+"#token="+tokens.derive(type,data.path("nonce").asText());
   String subject=verify?"Verifica tu correo en PLIEGO":"Restablece tu contraseña en PLIEGO";
   var mail=new MailLayout(verify?"Confirma tu dirección de correo para terminar de configurar tu cuenta.":"Elige una contraseña nueva para tu cuenta.",base)
    .heading(verify?"Verifica tu correo":"Restablece tu contraseña")

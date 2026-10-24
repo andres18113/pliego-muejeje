@@ -2,6 +2,40 @@
 
 Java 25 / Spring Boot backend for the approved PLIEGO REST and PostgreSQL Database API contracts.
 
+### Academic billing and Ecuadorian identification
+
+V071–V073 add private profile identification, billed checkout and asynchronous
+PDF/XML artifacts. V074 (ADR 0040) makes the identification required to buy: every
+checkout submits `billingIdentity`, `buyerName` and an independent `billingAddress`, and
+the number must match the customer's own (the first billed purchase registers it). V075
+(ADR 0041) accepts a cédula or a RUC with the full Ecuadorian algorithm (province, third
+digit, modulo 10/11, establishment). The identification is never removed or freely
+edited; `POST /api/v1/me/billing-identity/correction` corrects it with the current
+password, audited, without changing issued invoices.
+Pending payments create a draft. ADMIN can approve with
+`POST /api/v1/admin/orders/{orderId}/approve-payment`; cancellation before approval
+invalidates the draft without refund or stock restoration. Approved purchases emit once;
+refunded purchases preserve the invoice and append one full credit note.
+
+`PLIEGO_BILLING_ENABLED` defaults to `true`, `PLIEGO_BILLING_POLL_INTERVAL` to `PT5S`,
+and `PLIEGO_BILLING_BATCH_SIZE` to `4` (1–100). Restart after changing settings.
+Disable the worker while deliberately starting historical Flyway targets before V073.
+Derived files use private immutable PostgreSQL bytea storage, a 10 MiB cap, SHA-256,
+leased claims and at most five attempts. Download through authenticated invoice endpoints;
+never expose storage keys. A generation error does not repeat or undo the purchase.
+
+These are academic documents with no fiscal validity: no SRI calls, signature or certificate.
+XML validates offline against the recorded SRI 1.1.0 schema. PDF uses a visible `[U+HEX]`
+fallback for characters outside WinAnsi and preserves original text in ActualText and XML.
+See [ADR-0038](../docs/adr/0038-automatic-academic-billing.md) and
+[runtime privileges](../docs/deployment/billing-runtime-privileges.md) for limits.
+
+The PostgreSQL CI runner includes identity, automatic billing, leases, concurrency and
+live HTTP gates. Run `automatic_billing_upgrade_gate.py` separately on an **empty disposable
+database**, with the usual PG/backend environment, to verify Flyway 66→70→73 and history.
+Run `billing_runtime_privileges_gate.sql` only as an administrator on a disposable cluster;
+its temporary role/grants roll back. No test requires Docker or a real mail/SRI provider.
+
 V039 adds transactional email through a PostgreSQL outbox and Mailtrap, account verification and password recovery. See [configuration, endpoints, retries and local stub verification](../docs/backend/transactional-email.md). New registrations require email verification before login; existing accounts retain access.
 
 V040 adds basic STORE_PICKUP on existing fulfillment; V041 adds authoritative configured IVA15% monetary projections. See [pickup/pricing contracts, lifecycle and validation](../docs/backend/store-pickup-and-pricing.md). HOME_DELIVERY clients retain their existing request shape; frontend must display the database-provided monetary values.

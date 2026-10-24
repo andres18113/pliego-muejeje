@@ -14,9 +14,11 @@ public class EmailActionService {
   this.gateway=gateway; this.tokens=tokens; this.passwords=passwords;
  }
  @Transactional
- public void request(String email,String purpose,String remoteAddress) {
+ public void request(String email,String purpose,String remoteAddress,String returnTo) {
   var credential=tokens.issue(purpose);
-  gateway.requestEmailAction(email,purpose,credential.hash(),credential.nonce(),EmailActionTokens.hash(remoteAddress));
+  boolean enqueued=gateway.requestEmailAction(email,purpose,credential.hash(),credential.nonce(),EmailActionTokens.hash(remoteAddress));
+  String safePath=AuthReturnPaths.safeOrNull(returnTo);
+  if(enqueued&&safePath!=null)gateway.setEmailActionReturnPath(credential.nonce(),safePath);
  }
  @Transactional
  public void verifyChangedEmail(long userId) {

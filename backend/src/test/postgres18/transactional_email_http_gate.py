@@ -23,6 +23,7 @@ import uuid
 from checkout_last_unit import fixture, query
 from checkout_http_gate import token as fixture_jwt
 from email_verification_fixture import verification_token
+from checkout_billing import billed
 
 
 class MailtrapStub(http.server.BaseHTTPRequestHandler):
@@ -57,6 +58,8 @@ def wait_for(predicate, timeout=30):
 
 
 def request(base, path, body=None, headers=None):
+    if path == '/api/v1/checkout' and body is not None:
+        body = billed(body)
     req = urllib.request.Request(base + path, data=None if body is None else json.dumps(body).encode(),
         method='GET' if body is None else 'POST', headers={'Content-Type': 'application/json', **(headers or {})})
     try:
@@ -191,7 +194,7 @@ def main():
             assert prep_mail[0][0]['subject'] == f'Pedido N.º {oid}: en preparación'
             assert 'Estamos preparando tu pedido' in prep_mail[0][0]['text']
             assert query(f"SELECT id_mensaje_proveedor FROM pliego.correo_outbox WHERE correo_id={prep_id}") == prep_mail[0][1]
-            assert 'Cantidad: 1' in accepted_payload['text'] and 'Total pagado: $ 8,34' in accepted_payload['text']
+            assert 'Cantidad: 1' in accepted_payload['text'] and 'Total pagado: $ 7,25' in accepted_payload['text']
             assert f'/orders/{oid}' in accepted_payload['html']
             assert query(f"SELECT intentos FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{oid}'") == '2'
             # Same sender/outbox and one ORDER_CONFIRMED event, adapted to real pickup snapshot.
@@ -204,14 +207,14 @@ def main():
                            'paymentMethod': 'TRANSFER', 'simulationOutcome': 'APPROVED'}
             status, _, pickup_order = request(base, '/api/v1/checkout', pickup_body,
                 {'Authorization': 'Bearer ' + fixture_jwt(pickup_actor), 'Idempotency-Key': str(uuid.uuid4())})
-            assert status == 201 and pickup_order['total'] == '8.34'
+            assert status == 201 and pickup_order['total'] == '7.25'
             pickup_id = pickup_order['orderId']
             wait_for(lambda: query(f"SELECT estado FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:{pickup_id}'") == 'SENT')
             mails = [p for status, p, _ in MailtrapStub.deliveries if status == 200 and p['subject'] == f'Tu pedido N.º {pickup_id} está confirmado']
             assert len(mails) == 1
             assert location['name'] in mails[0]['text'] and location['address'] in mails[0]['text']
             assert pickup_order['fulfillment']['pickup']['pickupCode'] in mails[0]['text']
-            assert 'Presenta esta confirmación' in mails[0]['text'] and 'IVA (15 %): $ 1,09' in mails[0]['text']
+            assert 'Presenta esta confirmación' in mails[0]['text'] and 'IVA (0 %): $ 0,00' in mails[0]['text']
             print('Transactional email HTTP gate passed: verification/reset/BCrypt/session revocation/concurrent single-use/checkout isolation/outbox retry/provider stub/server restart catch-up/lifecycle status snapshot')
         finally:
             backend.terminate()

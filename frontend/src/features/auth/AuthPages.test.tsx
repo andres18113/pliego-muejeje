@@ -52,7 +52,8 @@ async function completeRegistration(user: ReturnType<typeof userEvent.setup>, ph
   await user.type(screen.getByLabelText("Contraseña"), "lecturaSegura123");
   if (phone) {
     await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
-    await user.type(screen.getByLabelText(/Teléfono/), phone);
+    await user.click(screen.getByLabelText(/Teléfono/));
+    await user.paste(phone);
   }
 }
 
@@ -62,6 +63,47 @@ afterEach(() => {
 });
 
 describe("authentication forms", () => {
+  it("sends and preserves the cart origin while explaining that verification precedes sign-in", async () => {
+    mockRegister.mockResolvedValueOnce({ customerId: "7", userId: "7", state: "PENDING_VERIFICATION" });
+    renderAuth("/register?from=%2Fcart");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
+    expect(mockRegister).toHaveBeenCalledWith(expect.objectContaining({ returnTo: "/cart" }));
+    expect(screen.getByRole("link", { name: "Reenviar verificación" })).toHaveAttribute("href", "/reenviar-verificacion?from=%2Fcart");
+    expect(screen.getByText(/Después de verificarlo/)).toHaveTextContent("volver a tu carrito");
+  });
+  describe.each(["/sign-in", "/register"])("contextual returns from %s", (authPath) => {
+    it.each([
+      ["/", "Volver al inicio"],
+      ["/catalog?que=Cien&productType=EBOOK&page=2#resultados", "Volver al catálogo"],
+      ["/ofertas?productType=EBOOK", "Volver a Ofertas"],
+      ["/favorites?page=1", "Volver a Favoritos"],
+      ["/cart?source=edition#items", "Volver al carrito"],
+      ["/checkout?method=TRANSFER#payment", "Volver a finalizar la compra"],
+      ["/account/", "Volver a mi cuenta"],
+      ["/account/addresses?view=all#primary", "Volver a mis direcciones"],
+      ["/orders?page=2", "Volver a mis pedidos"],
+      ["/orders/123/", "Volver al pedido"],
+      ["/biblioteca?productType=EBOOK&page=1", "Volver a mi biblioteca"],
+      ["/biblioteca/123", "Volver a la edición de mi biblioteca"],
+    ])("preserves and truthfully labels the allowed destination %s", (destination, label) => {
+      renderAuth(`${authPath}?from=${encodeURIComponent(destination)}`);
+      expect(within(screen.getByRole("main")).getByRole("link", { name: label })).toHaveAttribute("href", destination);
+      expect(within(screen.getByRole("navigation", { name: "Navegación del pie de página" })).getByRole("link", { name: label })).toHaveAttribute("href", destination);
+    });
+  });
+
+  it.each(["/sign-in", "/register"])("names the return to an edition from %s without losing its offers origin", (path) => {
+    const editionHref = "/catalog/editions/250?from=%2Fofertas";
+    renderAuth(`${path}?from=${encodeURIComponent(editionHref)}`);
+    const main = within(screen.getByRole("main"));
+    expect(main.getByRole("link", { name: "Volver a la edición" })).toHaveAttribute("href", editionHref);
+    const footer = within(screen.getByRole("navigation", { name: "Navegación del pie de página" }));
+    expect(footer.getByRole("link", { name: "Volver a la edición" })).toHaveAttribute("href", editionHref);
+  });
+
   it("turns an unverified sign-in into direction, carrying the address to the resend page", async () => {
     mockLogin.mockRejectedValueOnce(new ApiRequestError(403, "EMAIL_NOT_VERIFIED", "Verifica tu correo", "Abre el enlace que enviamos antes de iniciar sesión."));
     renderAuth("/sign-in");
@@ -132,6 +174,21 @@ describe("authentication forms", () => {
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
+  it("rejects name digits while typing and caps national phone input before submission", async () => {
+    renderAuth("/register");
+    const user = userEvent.setup();
+    const names = screen.getByLabelText("Nombres");
+    await user.type(names, "Ana7");
+    expect(names).toHaveValue("Ana");
+    expect(names).toHaveAccessibleDescription(/letras|números/);
+    await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
+    const phone = screen.getByLabelText(/Teléfono/);
+    await user.type(phone, "9912345678");
+    expect(phone).toHaveValue("991234567");
+    expect(screen.queryByRole("combobox", { name: /país/i })).not.toBeInTheDocument();
+    expect(mockRegister).not.toHaveBeenCalled();
+  });
+
   it("accepts trimmed single-character Unicode names within the API limits", async () => {
     const user = userEvent.setup();
     mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
@@ -175,17 +232,13 @@ describe("authentication forms", () => {
     }));
   });
 
-  it("rejects names longer than the API maximum of 120 characters", async () => {
-    const user = userEvent.setup();
+  it("prevents names exceeding 120 characters and explains the rejected input immediately", async () => {
     renderAuth("/register");
-
-    fireEvent.change(screen.getByLabelText("Nombres"), { target: { value: "a".repeat(121) } });
-    await user.type(screen.getByLabelText("Apellidos"), "Pérez");
-    await user.type(screen.getByLabelText("Correo electrónico"), "ana@example.com");
-    await user.type(screen.getByLabelText("Contraseña"), "lecturaSegura123");
-    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
-
-    expect(await screen.findByText("Tus nombres no pueden superar 120 caracteres.")).toBeInTheDocument();
+    const names = screen.getByLabelText("Nombres");
+    fireEvent.change(names, { target: { value: "a".repeat(120) } });
+    fireEvent.change(names, { target: { value: "a".repeat(121) } });
+    expect(names).toHaveValue("a".repeat(120));
+    expect(names).toHaveAccessibleDescription(/120/);
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
@@ -201,17 +254,69 @@ describe("authentication forms", () => {
     expect(mockRegister).not.toHaveBeenCalled();
   });
 
-  it("rejects phone punctuation outside the backend normalization contract", async () => {
+  it("rejects phone letters and extensions at input time without changing the number", async () => {
     const user = userEvent.setup();
     renderAuth("/register");
-    await completeRegistration(user, "+593#25550134");
-    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
-
+    await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
     const phone = screen.getByLabelText(/Teléfono/);
-    expect(await screen.findByText("Usa solo dígitos, espacios, paréntesis, puntos o guiones; no incluyas letras ni extensiones.")).toBeInTheDocument();
-    expect(phone).toHaveAttribute("aria-describedby", "register-phone-error");
-    await waitFor(() => expect(phone).toHaveFocus());
+    await user.click(phone); await user.paste("+593#25550134");
+    expect(phone).toHaveValue("");
+    expect(phone).toHaveAccessibleDescription("Usa solo números.");
     expect(mockRegister).not.toHaveBeenCalled();
+  });
+
+  it("validates phone length on blur and submit with one message and keyboard recovery", async () => {
+    renderAuth("/register");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
+    const phone = screen.getByLabelText(/Teléfono/);
+    await user.type(phone, "99");
+    expect(phone).not.toHaveAttribute("aria-invalid", "true");
+    expect(phone).toHaveAccessibleDescription(/991234567/);
+    await user.tab();
+    expect(phone).toHaveAttribute("aria-invalid", "true");
+    expect(phone).toHaveAccessibleDescription(/9 dígitos/);
+    const field = phone.closest(".form-field")!;
+    expect(field.querySelectorAll(".field-error, .field-help")).toHaveLength(1);
+    await user.type(phone, "a");
+    expect(phone).toHaveValue("99");
+    expect(phone).toHaveAccessibleDescription(/solo números/i);
+    expect(phone).not.toHaveAccessibleDescription(/9 dígitos/);
+    expect(field.querySelectorAll(".field-error, .field-help")).toHaveLength(1);
+    await user.type(phone, "1");
+    expect(phone).not.toHaveAttribute("aria-invalid", "true");
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    await waitFor(() => expect(phone).toHaveFocus());
+    expect(phone).toHaveAccessibleDescription(/9 dígitos/);
+    expect(mockRegister).not.toHaveBeenCalled();
+  });
+
+  it("can remove an invalid optional phone and submit without that number", async () => {
+    mockRegister.mockResolvedValueOnce({ customerId: "7", userId: "7", state: "PENDING_VERIFICATION" });
+    renderAuth("/register");
+    const user = userEvent.setup();
+    await completeRegistration(user, "+59399");
+    await user.tab();
+    expect(screen.getByLabelText(/Teléfono/)).toHaveAttribute("aria-invalid", "true");
+    await user.click(screen.getByRole("button", { name: "Quitar teléfono" }));
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeVisible();
+    expect(mockRegister).toHaveBeenCalledWith(expect.objectContaining({ phone: undefined }));
+  });
+
+  it("clears rejected phone feedback when removing and adding the optional phone again", async () => {
+    renderAuth("/register");
+    const user = userEvent.setup();
+    await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
+    const phone = screen.getByLabelText(/Teléfono/);
+    await user.click(phone); await user.paste("+593991234567 ext 4");
+    expect(phone).toHaveAccessibleDescription(/solo números/);
+    await user.click(screen.getByRole("button", { name: "Quitar teléfono" }));
+    await user.click(screen.getByRole("button", { name: "Añadir teléfono (opcional)" }));
+    expect(screen.getByLabelText(/Teléfono/)).toHaveValue("");
+    expect(screen.getByLabelText(/Teléfono/)).not.toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByLabelText(/Teléfono/)).not.toHaveAccessibleDescription(/Usa solo números/);
   });
 
   it("normalizes names, email, and formatted phone before registering, then requires sign-in", async () => {

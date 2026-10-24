@@ -255,7 +255,7 @@ class CatalogApiIntegrationTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"TITLE_ASC", "PRICE_ASC", "PRICE_DESC"})
+    @ValueSource(strings = {"TITLE_ASC", "TITLE_DESC", "PRICE_ASC", "PRICE_DESC", "BEST_SELLING"})
     void supportsEachApprovedSortMode(String sort) throws Exception {
         mvc.perform(get("/api/v1/catalog/editions").param("sort", sort))
                 .andExpect(status().isOk());

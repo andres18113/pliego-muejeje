@@ -74,8 +74,8 @@ public class CatalogController {
                     message = "El formato debe ser PAPERBACK, HARDCOVER, EBOOK o AUDIOBOOK.") String format,
             @RequestParam(required = false) @Pattern(regexp = "PHYSICAL|EBOOK|AUDIOBOOK",
                     message = "El tipo de producto debe ser PHYSICAL, EBOOK o AUDIOBOOK.") String productType,
-            @RequestParam(defaultValue = "TITLE_ASC") @Pattern(regexp = "TITLE_ASC|PRICE_ASC|PRICE_DESC|BEST_SELLING",
-                    message = "El orden debe ser TITLE_ASC, PRICE_ASC, PRICE_DESC o BEST_SELLING.") String sort,
+            @RequestParam(defaultValue = "TITLE_ASC") @Pattern(regexp = "TITLE_ASC|TITLE_DESC|PRICE_ASC|PRICE_DESC|BEST_SELLING",
+                    message = "El orden debe ser TITLE_ASC, TITLE_DESC, PRICE_ASC, PRICE_DESC o BEST_SELLING.") String sort,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @jakarta.validation.constraints.Max(50) int pageSize) {
         CatalogQuery catalogQuery = new CatalogQuery(query, title, author, isbn13, category, minPrice, maxPrice,

@@ -84,10 +84,11 @@
 
 * { box-sizing: border-box; }
 
-html { min-width: 320px; scroll-behavior: auto; }
+/* Browser zoom and a classic scrollbar can leave less than 320px of usable width. */
+html { min-width: 0; scroll-behavior: auto; }
 
 body {
-  min-width: 320px;
+  min-width: 0;
   margin: 0;
   background: var(--paper);
   color: var(--ink);
@@ -471,3 +472,26 @@ input[type="radio"],input[type="checkbox"] { accent-color: var(--pine); }
 #root > main { flex: 1 0 auto; }
 /* Main is focusable only as the skip link's target; it is a region, not a control, so it draws no ring. */
 #contenido-principal:focus { outline: none; }
+
+/* Password reveal (shared/ui/PasswordInput): the Material eye sits inside the field's end, on every password field. */
+.password-input { position: relative; display: block; width: 100%; min-width: 0; }
+.password-input .password-input__control { padding-inline-end: 48px; }
+.password-input__toggle {
+  position: absolute; top: 50%; right: 4px; display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0;
+  border: 0; border-radius: 999px; background: transparent; color: color-mix(in srgb, currentColor 72%, transparent);
+  cursor: pointer; transform: translateY(-50%); transition: background-color 130ms ease, color 130ms ease;
+}
+.password-input__toggle:hover:not(:disabled) { background: color-mix(in srgb, currentColor 8%, transparent); color: inherit; }
+.password-input__toggle[aria-pressed="true"] { color: var(--store-blue, #283da8); }
+.password-input__toggle:focus-visible { outline: 3px solid var(--focus); outline-offset: 0; }
+.password-input__toggle:disabled { opacity: .45; cursor: not-allowed; }
+@media (prefers-reduced-motion: reduce) { .password-input__toggle { transition: none; } }
+@media (forced-colors: active) { .password-input__toggle[aria-pressed="true"] { color: Highlight; } }
+
+/* Live cédula/RUC verdict (shared/ui/IdentificationStatus): help is muted, an error is the field error, and a
+   valid number is the semantic success green with Material check_circle. */
+.identification-status { display: flex; align-items: flex-start; gap: 4px; }
+.identification-status > .material-symbol { flex: none; margin-top: 1px; }
+.identification-status.identification-status[data-tone="success"] { color: #1e7a3c; font-weight: 600; }
+:root[data-mantine-color-scheme="dark"] .identification-status.identification-status[data-tone="success"] { color: #8fdca6; }
+@media (forced-colors: active) { .identification-status.identification-status[data-tone="success"] { color: CanvasText; } }

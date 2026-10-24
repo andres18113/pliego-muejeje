@@ -109,7 +109,7 @@ function normalizeCatalogCriteria(criteria: CatalogCriteria): CatalogCriteria {
     language,
     format: criteria.format === "PAPERBACK" || criteria.format === "HARDCOVER" || criteria.format === "EBOOK" || criteria.format === "AUDIOBOOK" ? criteria.format : "",
     ...(criteria.productType === "PHYSICAL" || criteria.productType === "EBOOK" || criteria.productType === "AUDIOBOOK" ? { productType: criteria.productType } : {}),
-    sort: criteria.sort === "PRICE_ASC" || criteria.sort === "PRICE_DESC" || criteria.sort === "BEST_SELLING" ? criteria.sort : "TITLE_ASC",
+    sort: criteria.sort === "TITLE_DESC" || criteria.sort === "PRICE_ASC" || criteria.sort === "PRICE_DESC" || criteria.sort === "BEST_SELLING" ? criteria.sort : "TITLE_ASC",
     page: Number.isInteger(criteria.page) && criteria.page >= 0 && criteria.page <= 2_147_483_647
       ? criteria.page
       : 0,

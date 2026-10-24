@@ -15,6 +15,7 @@ import urllib.request
 import uuid
 
 from checkout_last_unit import fixture, query
+from checkout_billing import billed
 
 
 def encoded(value):
@@ -40,7 +41,7 @@ def checkout(actor, address, method, outcome, card=None):
         body["cardNumber"] = card
     request = urllib.request.Request(
         os.environ["CHECKOUT_BASE_URL"] + "/api/v1/checkout",
-        data=json.dumps(body).encode(), method="POST",
+        data=json.dumps(billed(body)).encode(), method="POST",
         headers={"Idempotency-Key": str(uuid.uuid4()), "Authorization": "Bearer " + token(actor),
                  "Content-Type": "application/json"})
     try:
@@ -66,7 +67,7 @@ def main():
     assert status == 201, (status, result)
     assert headers["Location"] == "/api/v1/orders/" + result["orderId"]
     assert result["orderState"] == "CONFIRMED" and result["paymentState"] == "APPROVED"
-    assert result["total"] == "8.34" and result["paymentReference"].startswith("SIM-")
+    assert result["total"] == "7.25" and result["paymentReference"].startswith("SIM-")
     assert "cardNumber" not in result and "4242424242424242" not in json.dumps(result)
     assert query(f"SELECT stock_actual FROM pliego.inventario WHERE edicion_id={edition}") == "0"
     assert query(f"SELECT count(*) FROM pliego.movimiento_inventario WHERE edicion_id={edition} AND tipo='SALE'") == "1"
@@ -77,7 +78,7 @@ def main():
     assert status == 201, (status, result)
     assert headers["Location"] == "/api/v1/orders/" + result["orderId"]
     assert result["orderState"] == "CANCELLED" and result["paymentState"] == "REJECTED"
-    assert result["total"] == "8.34" and result["paymentReference"] is None
+    assert result["total"] == "7.25" and result["paymentReference"] is None
     assert query(f"SELECT stock_actual FROM pliego.inventario WHERE edicion_id={rejected_edition}") == "1"
     assert query(f"SELECT count(*) FROM pliego.movimiento_inventario WHERE edicion_id={rejected_edition} AND tipo='SALE'") == "0"
     print("PostgreSQL 18 HTTP gate passed: CARD validation, APPROVED, REJECTED, Location, exact total, persisted effects")

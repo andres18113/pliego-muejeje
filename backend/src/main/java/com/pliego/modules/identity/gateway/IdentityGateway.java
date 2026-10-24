@@ -9,6 +9,8 @@ public interface IdentityGateway {
 
     boolean requestEmailAction(String email, String purpose, String tokenHash, String nonce, String requestHash);
 
+    void setEmailActionReturnPath(String nonce, String returnPath);
+
     boolean consumeEmailAction(String purpose, String tokenHash, String passwordHash);
 
     void enqueueEmailVerification(long userId, String tokenHash, String nonce);

@@ -223,7 +223,7 @@ describe("CatalogPage", () => {
 
     renderCatalog();
 
-    const link = await screen.findByRole("link", { name: "Ver edición: Don Quijote de la Mancha. Editorial Ejemplo, Rústica · Español" });
+    const link = await screen.findByRole("link", { name: "Ver edición: Don Quijote de la Mancha. Editorial Ejemplo, Libro. Rústica · Español" });
     const image = link.querySelector("img")!;
     expect(image).toHaveAttribute("alt", "");
     expect(image).toHaveAttribute("src", coverUrl);

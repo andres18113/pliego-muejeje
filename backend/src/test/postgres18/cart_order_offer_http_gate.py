@@ -8,11 +8,12 @@ from digital_editions_http_gate import ok
 from full_journey_http_gate import admin_token
 from checkout_last_unit import query
 from checkout_http_gate import token
+from checkout_billing import billed
 
 
 def checkout(customer, body, key, expected=201):
     request = urllib.request.Request(os.environ['CHECKOUT_BASE_URL'] + '/api/v1/checkout',
-        data=json.dumps(body).encode(), method='POST', headers={
+        data=json.dumps(billed(body)).encode(), method='POST', headers={
             'Authorization': customer, 'Content-Type': 'application/json', 'Idempotency-Key': key})
     with urllib.request.urlopen(request, timeout=20) as response:
         assert response.status == expected
@@ -54,7 +55,7 @@ def main():
     cart = ok('/api/v1/cart', customer)
     assert cart['originalSubtotal'] == '214.88' and cart['savingsTotal'] == '40.98'
     assert cart['currentSubtotal'] == cart['subtotal'] == '173.90'
-    assert cart['taxAmount'] == '26.09' and cart['total'] == '199.99'
+    assert cart['taxRate'] == '0.00' and cart['taxAmount'] == '0.00' and cart['total'] == '173.90'
     physical = next(x for x in cart['items'] if x['editionId'] == editions[0])
     assert physical['originalPrice'] == '79.95' and physical['unitSavings'] == '15.99'
     assert physical['originalSubtotal'] == '159.90' and physical['lineSavings'] == '31.98'
@@ -65,7 +66,7 @@ def main():
     result = checkout(customer, payload, key)
     pricing = {name: result[name] for name in ('originalSubtotal', 'savingsTotal', 'currentSubtotal', 'subtotal', 'taxAmount', 'shippingAmount', 'total', 'pricingSnapshotAvailable')}
     assert pricing == {'originalSubtotal': '214.88', 'savingsTotal': '40.98', 'currentSubtotal': '173.90',
-        'subtotal': '173.90', 'taxAmount': '26.09', 'shippingAmount': '0.00', 'total': '199.99', 'pricingSnapshotAvailable': True}
+        'subtotal': '173.90', 'taxAmount': '0.00', 'shippingAmount': '0.00', 'total': '173.90', 'pricingSnapshotAvailable': True}
     detail = ok('/api/v1/orders/' + result['orderId'], customer)
     summary = next(x for x in ok('/api/v1/orders', customer)['items'] if x['orderId'] == result['orderId'])
     for response in (detail, summary):
@@ -90,7 +91,7 @@ def main():
     new_cart = ok('/api/v1/cart', customer)
     assert new_cart['originalSubtotal'] == new_cart['currentSubtotal'] == '79.95'
     assert new_cart['savingsTotal'] == new_cart['items'][0]['unitSavings'] == '0.00'
-    assert new_cart['taxAmount'] == '11.99' and new_cart['total'] == '91.94'
+    assert new_cart['taxRate'] == '0.00' and new_cart['taxAmount'] == '0.00' and new_cart['total'] == '79.95'
     ok('/api/v1/orders/' + result['orderId'] + '/cancel', customer, 'POST', expected=200)
     cancelled = ok('/api/v1/orders/' + result['orderId'], customer)
     assert cancelled['items'] == lines_before and all(cancelled[name] == value for name, value in pricing.items())

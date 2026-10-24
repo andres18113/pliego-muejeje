@@ -34,7 +34,7 @@ public class CustomerService {
     public CustomerProfile getProfile(long actorUserId) {
         CustomerGateway.CustomerProfile profile = customerGateway.findProfile(actorUserId);
         return new CustomerProfile(profile.customerId(), profile.email(), profile.firstNames(), profile.lastNames(),
-                profile.phone(), profile.state(), profile.version());
+                profile.phone(), profile.state(), profile.version(), profile.emailVerified());
     }
 
     @Transactional

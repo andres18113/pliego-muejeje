@@ -10,7 +10,7 @@
   --offers-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
   --offers-hairline: color-mix(in srgb, var(--store-ink, #252740) 20%, transparent);
   --offers-ease: cubic-bezier(.32, .94, .6, 1);
-  display: grid; gap: 16px; max-width: 1240px; min-width: 0; padding-top: clamp(24px, 4vw, 56px); padding-bottom: 64px; color: var(--offers-ink);
+  display: grid; gap: 16px; max-width: 1240px; min-width: 0; padding-top: 8px; padding-bottom: 64px; color: var(--offers-ink);
 }
 :global([data-mantine-color-scheme="dark"]) .page { --offers-blue: var(--store-link, #c5bcff); --offers-blue-hover: #d8d1ff; --offers-on-blue: var(--store-ink, #252740); --offers-mist: #2e2b4d; --offers-line: #3d3964; --offers-hairline: rgb(255 255 255 / 22%); }
 .page:focus { outline: none; }

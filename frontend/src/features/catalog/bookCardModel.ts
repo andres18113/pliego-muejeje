@@ -3,7 +3,7 @@ import type { To } from "react-router-dom";
 import type { EditionSummary } from "@/shared/api/catalog";
 import { resolveStockStatus, type StockAvailability } from "./stockStatusModel";
 import { formatAuthorNames, formatEdition, formatLanguage, formatUsd } from "./formatters";
-import type { CatalogMedia } from "./catalogMedia";
+import { mediaCue, mediaOfFormat, type CatalogMedia } from "./catalogMedia";
 import { toOfferViewModel } from "./offersViewModel";
 
 export type BookCardEditionSource = Pick<EditionSummary, "editionId" | "title" | "authors" | "publisher" | "format" | "language" | "price" | "available" | "coverUrl" | "coverLicense" | "coverAttribution" | "offer">;
@@ -12,6 +12,7 @@ export interface BookCardData {
   title: string;
   authors: string;
   publisher: string;
+  formatLabel: string;
   editionLabel: string;
   priceLabel: string;
   originalPriceLabel?: string;
@@ -56,6 +57,7 @@ export interface BookCardProps {
 
 export function toBookCardData(edition: BookCardEditionSource): BookCardData {
   return { id: edition.editionId, title: edition.title, authors: formatAuthorNames(edition.authors), publisher: edition.publisher,
+    formatLabel: mediaCue(mediaOfFormat(edition.format)).label,
     editionLabel: `${formatEdition(edition.format)} · ${formatLanguage(edition.language)}`,
     priceLabel: formatUsd(edition.price), available: edition.available,
     ...(edition.offer ? { originalPriceLabel: formatUsd(edition.offer.originalPrice), discountLabel: formatUsd(edition.offer.savingsAmount), offer: toOfferViewModel(edition.offer) } : {}),

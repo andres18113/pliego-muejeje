@@ -2,7 +2,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { isSupportedCountry, parsePhoneNumberFromString, type CountryCode } from "libphonenumber-js/max";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { createAddress, resolveAddress, AddressOutcomeUnknown, getProfile, profileQueryKey, updateAddress, type CustomerAddress } from "@/shared/api/customer";
@@ -11,7 +10,9 @@ import { beginPendingAttempt, clearPendingAttempt, readPendingAttempt } from "@/
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { useCountries } from "@/shared/api/reference";
 import { Field, FieldMessage } from "@/shared/ui/Field";
-import { CountryPicker } from "@/shared/ui/CountryPicker";
+import { CountryFlag } from "@/shared/ui/CountryFlag";
+import { PersonNameInput } from "@/shared/ui/PersonNameInput";
+import countryClasses from "@/shared/ui/CountryPicker.module.css";
 import { useSessionOperationScope } from "@/app/sessionOperation";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
 import { phoneError, normalizePhonePresentation, normalizePersonName, recipientError } from "@/shared/validation/person";
@@ -34,26 +35,29 @@ const addressSchema = z.object({
   line2: optional(200),
   city: required("la ciudad", 100),
   province: required("la provincia", 100),
-  countryCode: z.string().trim().length(2, "Elige un país."),
+  countryCode: z.literal("EC", "Las entregas están disponibles únicamente en Ecuador."),
   postalCode: optional(20),
   reference: optional(300),
-  phone: z.string().trim().min(1, "Escribe un teléfono de contacto."),
+  phone: z.string().superRefine((value, context) => {
+    const message = phoneError(value, true);
+    if (message) context.addIssue({ code: "custom", message });
+  }),
   makePrimary: z.boolean(),
 });
 
 type AddressValues = z.infer<typeof addressSchema>;
 
-const fields: { name: Exclude<keyof AddressValues, "makePrimary" | "countryCode" | "phone" | "recipient">; label: string; optional?: boolean; autoComplete?: string; inputMode?: "tel" | "text" }[] = [
-  { name: "alias", label: "Nombre de la dirección" },
-  { name: "line1", label: "Dirección", autoComplete: "address-line1" },
-  { name: "city", label: "Ciudad", autoComplete: "address-level2" },
-  { name: "province", label: "Provincia", autoComplete: "address-level1" },
+const fields: { name: Exclude<keyof AddressValues, "makePrimary" | "countryCode" | "phone" | "recipient">; label: string; maxLength: number; optional?: boolean; autoComplete?: string; inputMode?: "tel" | "text" }[] = [
+  { name: "alias", label: "Nombre de la dirección", maxLength: 80 },
+  { name: "line1", label: "Dirección", maxLength: 200, autoComplete: "address-line1" },
+  { name: "city", label: "Ciudad", maxLength: 100, autoComplete: "address-level2" },
+  { name: "province", label: "Provincia", maxLength: 100, autoComplete: "address-level1" },
 ];
 
 const optionalFields: typeof fields = [
-  { name: "line2", label: "Piso, departamento u oficina", optional: true, autoComplete: "address-line2" },
-  { name: "postalCode", label: "Código postal", optional: true, autoComplete: "postal-code" },
-  { name: "reference", label: "Referencia para la entrega", optional: true },
+  { name: "line2", label: "Piso, departamento u oficina", maxLength: 200, optional: true, autoComplete: "address-line2" },
+  { name: "postalCode", label: "Código postal", maxLength: 20, optional: true, autoComplete: "postal-code" },
+  { name: "reference", label: "Referencia para la entrega", maxLength: 300, optional: true },
 ];
 
 export function AddressForm({
@@ -99,9 +103,6 @@ export function AddressForm({
   const [detailsOpen, setDetailsOpen] = useState(Boolean(address?.line2 || address?.postalCode || address?.reference));
   const [problem, setProblem] = useState<string | null>(recovery.error ?? (recovery.key ? "Hay una dirección pendiente de confirmar. Consulta el resultado antes de crear otra." : null));
   const countries = useCountries();
-  const initialPhoneCountry = parsePhoneNumberFromString(address?.phone ?? "")?.country
-    ?? (address?.countryCode && isSupportedCountry(address.countryCode) ? address.countryCode : "EC");
-  const [phoneCountry, setPhoneCountry] = useState<CountryCode>(initialPhoneCountry as CountryCode);
   const profile = useQuery({ queryKey: profileQueryKey, queryFn: ({ signal }) => getProfile(signal), staleTime: 60_000, meta: { authRequired: true } });
   useEffect(() => { if (focusOnMount) headingRef.current?.focus({ preventScroll: true }); }, [focusOnMount]);
   const {
@@ -111,6 +112,7 @@ export function AddressForm({
     setError,
     setFocus,
     setValue,
+    clearErrors,
     formState: { errors, isSubmitting, isDirty },
   } = useForm<AddressValues>({
     resolver: zodResolver(addressSchema),
@@ -120,7 +122,7 @@ export function AddressForm({
       line2: address?.line2 ?? "",
       city: address?.city ?? "",
       province: address?.province ?? "",
-      countryCode: address?.countryCode ?? "EC",
+      countryCode: "EC",
       postalCode: address?.postalCode ?? "",
       reference: address?.reference ?? "",
       phone: address?.phone ?? "",
@@ -129,7 +131,6 @@ export function AddressForm({
   });
   // The problem is reported above the fields: bring it into view when the form has been scrolled past it.
   useEffect(() => { if (problem) problemRef.current?.scrollIntoView?.({ block: "nearest" }); }, [problem]);
-  const countryCode = watch("countryCode") as CountryCode;
   const busy = isSubmitting || resolving;
   useLayoutEffect(() => {
     if (!invalidFocus || busy || disabled || !scope.isCurrent()) return;
@@ -176,6 +177,10 @@ export function AddressForm({
   // Rendered outside the checkout <form>, so it submits through its own handler.
   const save = handleSubmit(async (values) => {
     if (lock.current || disabled || !scope.isCurrent()) return;
+    if (address && address.countryCode !== "EC") {
+      setProblem("Esta dirección está fuera de Ecuador. Crea una nueva dirección de entrega en Ecuador.");
+      return;
+    }
     const phoneProblem=phoneError(values.phone,true);
     if (phoneProblem) {
       setError("phone", { message: phoneProblem }, { shouldFocus: true });
@@ -200,7 +205,7 @@ export function AddressForm({
         alias: values.alias,
         recipient,
         line1: values.line1,
-        countryCode: values.countryCode.toUpperCase(),
+        countryCode: values.countryCode,
         city: values.city,
         province: values.province,
         phone: normalizePhonePresentation(values.phone),
@@ -263,6 +268,8 @@ export function AddressForm({
       lock.current = false;
     }
   }, (invalid) => {
+    // The composite phone input has no RHF ref; restore the same first-error focus.
+    if (Object.keys(invalid)[0] === "phone") setInvalidFocus("phone");
     const hiddenInvalid = optionalFields.find((field) => invalid[field.name]);
     const details = optionalDetailsRef.current;
     if (!hiddenInvalid || !details || details.open) return;
@@ -288,8 +295,12 @@ export function AddressForm({
         role="alert"
       >{problem}</p>}
       {showRecipient && <Field controlId="address-recipient" label="Quién recibe el pedido">
-        <input id="address-recipient" type="text" disabled={disabled} aria-invalid={Boolean(errors.recipient) || undefined}
-          aria-describedby={errors.recipient ? "address-recipient-error" : undefined} {...register("recipient")} />
+        <PersonNameInput maxLength={241} onInputRejected={(message) => setError("recipient", { type: "validate", message })} id="address-recipient" type="text" disabled={disabled} aria-invalid={Boolean(errors.recipient) || undefined}
+          aria-describedby={errors.recipient ? "address-recipient-error" : undefined} {...register("recipient", { onChange: (event) => {
+            const message = recipientError(event.target.value);
+            if (message) setError("recipient", { type: "validate", message });
+            else clearErrors("recipient");
+          } })} />
         {errors.recipient && <FieldMessage id="address-recipient-error" tone="error">{errors.recipient.message}</FieldMessage>}
       </Field>}
       <div className="address-form-grid">
@@ -308,6 +319,7 @@ export function AddressForm({
                 type="text"
                 inputMode={field.inputMode}
                 autoComplete={field.autoComplete}
+                maxLength={field.maxLength}
                 aria-invalid={Boolean(error) || undefined}
                 aria-describedby={error ? `${id}-error` : undefined}
                 disabled={disabled}
@@ -318,10 +330,13 @@ export function AddressForm({
           );
         })}
         <div className="form-field">
-          <CountryPicker id="address-countryCode" label="País de entrega" className="delivery-country-trigger" countries={countries.data ?? []} value={countryCode} onChange={(code) => {
-            setValue("countryCode", code, { shouldDirty: true, shouldValidate: true });
-            if (isSupportedCountry(code)) setPhoneCountry(code as CountryCode);
-          }} disabled={disabled || countries.isPending || countries.isError} invalid={Boolean(errors.countryCode)} describedBy={errors.countryCode ? "address-country-error" : undefined} />
+          <label htmlFor="address-countryCode">País de entrega</label>
+          <div className={`country-picker-trigger delivery-country-trigger ${countryClasses.trigger}`} style={{ cursor: "default" }}>
+            <CountryFlag code="EC" className={countryClasses.flag} />
+            <input id="address-countryCode" aria-label="País de entrega" value="Ecuador" readOnly
+              className={countryClasses.valueText} style={{ border: 0, padding: 0, minHeight: 0, background: "transparent", cursor: "default" }} aria-describedby="address-country-help" />
+          </div>
+          <FieldMessage id="address-country-help" tone="help">Entregas únicamente en Ecuador.</FieldMessage>
           {countries.isError && <FieldMessage tone="error">No pudimos consultar los países. Actualiza la página para continuar.</FieldMessage>}
           {errors.countryCode && <FieldMessage id="address-country-error" tone="error">{errors.countryCode.message}</FieldMessage>}
         </div>
@@ -330,15 +345,22 @@ export function AddressForm({
             id="address-phone"
             label="Teléfono de contacto"
             countries={countries.data ?? []}
-            countryCode={phoneCountry}
+            countryCode="EC"
             value={phone || undefined}
-            onCountryChange={(code) => setPhoneCountry(code as CountryCode)}
-            onChange={(value) => setValue("phone", value ?? "", { shouldDirty: true, shouldValidate: true })}
+            onCountryChange={() => undefined}
+            onChange={(value) => {
+              const next = value ?? "";
+              setValue("phone", next, { shouldDirty: true });
+              clearErrors("phone");
+            }}
+            onBlur={() => {
+              const message = phoneError(phone, true);
+              if (message) setError("phone", { type: "validate", message });
+              else clearErrors("phone");
+            }}
             disabled={disabled || countries.isPending || countries.isError}
-            invalid={Boolean(errors.phone)}
-            describedBy={errors.phone ? "address-phone-error" : undefined}
+            error={errors.phone?.message}
           />
-          {errors.phone && <FieldMessage id="address-phone-error" tone="error">{errors.phone.message}</FieldMessage>}
         </Field>
       </div>
       <details ref={optionalDetailsRef} className="address-optional-details" open={detailsOpen}
@@ -349,7 +371,7 @@ export function AddressForm({
             const id = `address-${field.name}`;
             const error = errors[field.name]?.message;
             return <Field key={field.name} controlId={id} label={field.label}>
-              <input id={id} type="text" autoComplete={field.autoComplete} aria-invalid={Boolean(error) || undefined} aria-describedby={error ? `${id}-error` : undefined} disabled={disabled} {...register(field.name)} />
+              <input id={id} type="text" maxLength={field.maxLength} autoComplete={field.autoComplete} aria-invalid={Boolean(error) || undefined} aria-describedby={error ? `${id}-error` : undefined} disabled={disabled} {...register(field.name)} />
               {error && <FieldMessage id={`${id}-error`} tone="error">{error}</FieldMessage>}
             </Field>;
           })}

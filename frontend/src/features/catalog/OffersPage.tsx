@@ -5,6 +5,7 @@ import type { OffersCriteria } from "@/shared/api/catalog";
 import { ChoicePicker } from "@/shared/ui/ChoicePicker";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
+import { PageWayfinding } from "@/app/navigation/BackButton";
 import { EditionGrid } from "./EditionGrid";
 import { EditionLoadingGrid } from "./EditionLoadingGrid";
 import { readCatalogCriteria } from "./catalogUrl";
@@ -55,6 +56,7 @@ export function OffersPage() {
   useEffect(() => { document.title = "Ofertas · PLIEGO"; }, []);
   return <>
     <main className={`page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
+      <PageWayfinding />
       <header className={classes.masthead}>
         <p className={classes.eyebrow}>Ofertas especiales</p>
         <h1 className={classes.title}>Descubre las últimas ofertas.</h1>

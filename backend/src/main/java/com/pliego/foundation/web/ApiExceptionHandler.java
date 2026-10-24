@@ -106,6 +106,13 @@ public final class ApiExceptionHandler {
                 HttpStatus.NOT_FOUND, "El recurso solicitado no está disponible.");
     }
 
+    /** A retired or unsupported method is a client error, never an internal one. */
+    @ExceptionHandler(org.springframework.web.HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ProblemDetail> methodNotAllowed(HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "METHOD_NOT_ALLOWED", "Operación no disponible",
+                HttpStatus.METHOD_NOT_ALLOWED, "Esta operación no está disponible para este recurso.");
+    }
+
     @ExceptionHandler(EditionNotFoundException.class)
     public ResponseEntity<ProblemDetail> publicEditionNotFound(EditionNotFoundException exception,
             HttpServletRequest request) {
@@ -248,6 +255,8 @@ public final class ApiExceptionHandler {
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "Acceso denegado";
             case EMAIL_ALREADY_EXISTS -> "Correo ya registrado";
             case CUSTOMER_NOT_FOUND -> "Perfil no encontrado";
+            case BILLING_IDENTITY_CONFLICT -> "Tu identificación cambió";
+            case BILLING_IDENTITY_MISMATCH -> "Identificación distinta a la de tu perfil";
             case ADDRESS_NOT_FOUND -> "Dirección no encontrada";
             case AUTHOR_NOT_FOUND -> "Autor no encontrado";
             case AUTHOR_INACTIVE -> "Autor no disponible";
@@ -392,6 +401,8 @@ public final class ApiExceptionHandler {
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "No tienes permiso para realizar esta operación.";
             case EMAIL_ALREADY_EXISTS -> "Ya existe una cuenta con ese correo electrónico.";
             case CUSTOMER_NOT_FOUND -> "El perfil solicitado no está disponible.";
+            case BILLING_IDENTITY_CONFLICT -> "La identificación de tu perfil no es la que estabas viendo. Revisa la actual antes de continuar.";
+            case BILLING_IDENTITY_MISMATCH -> "La factura usa la cédula o el RUC registrado en tu perfil. Si es incorrecto, corrígelo en Mi perfil.";
             case ADDRESS_NOT_FOUND -> "La dirección solicitada no existe o no está disponible para tu cuenta.";
             case LIBRARY_ITEM_NOT_FOUND -> "El título solicitado no existe o no pertenece a tu biblioteca.";
             case PICKUP_LOCATION_NOT_FOUND -> "El punto de retiro seleccionado no existe.";

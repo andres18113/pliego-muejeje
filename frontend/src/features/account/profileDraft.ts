@@ -6,7 +6,30 @@ const prefix = "pliego-profile-draft:";
 const pendingSaves = new Set<string>();
 const fallback = new Map<string, Draft>();
 const fields: DraftField[] = ["firstNames", "lastNames", "phone", "email"];
-function key(customerId: string, field: DraftField) { return `${prefix}${customerId}:${field}`; }
+export function clearProfileDrafts(preserveEmail?: string) {
+  const belongsToRestoredCustomer = (storedKey: string, draft: Draft | null) => preserveEmail !== undefined
+    && draft?.original?.email === preserveEmail
+    && typeof draft.value === "string" && typeof draft.original.version === "string"
+    && fields.some(field => storedKey === key(draft.original.customerId, field));
+  for (const [storedKey, draft] of fallback) {
+    if (!belongsToRestoredCustomer(storedKey, draft)) fallback.delete(storedKey);
+  }
+  try {
+    const storedKeys: string[] = [];
+    for (let index = 0; index < sessionStorage.length; index++) {
+      const storedKey = sessionStorage.key(index);
+      if (storedKey?.startsWith(prefix)) storedKeys.push(storedKey);
+    }
+    for (const storedKey of storedKeys) {
+      let draft: Draft | null = null;
+      try { draft = JSON.parse(sessionStorage.getItem(storedKey) ?? "null"); } catch { /* Discard malformed drafts. */ }
+      if (!belongsToRestoredCustomer(storedKey, draft)) sessionStorage.removeItem(storedKey);
+    }
+  } catch {
+    // Storage may be unavailable; the in-memory copy has already been forgotten.
+  }
+}
+function key(customerId: string, field: DraftField | "cedula") { return `${prefix}${customerId}:${field}`; }
 function read(customerId: string, field: DraftField): Draft | null {
   try {
     const draft = JSON.parse(sessionStorage.getItem(key(customerId, field)) ?? "null") ?? fallback.get(key(customerId, field));
@@ -33,7 +56,7 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
   const [value, updateValue] = useState(draft?.value ?? initial);
   const latest = useRef(value);
   const country = useRef(draft?.country);
-  const [notice, setNotice] = useState(draft ? "Recuperamos tu borrador sin guardar." : "");
+  const [notice, setNotice] = useState(draft ? "Borrador recuperado" : "");
   const currentProfile = useRef(profile);
   currentProfile.current = profile;
   useEffect(() => {
@@ -42,10 +65,10 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
       const stored = read(profile.customerId, field);
       if (stored && stored.original.version !== original.current.version) {
         original.current = stored.original;
-        setNotice("Guardamos el dato enviado. Tienes cambios nuevos sin guardar.");
+        setNotice("Cambios nuevos sin guardar");
       } else if (!stored) {
         original.current = currentProfile.current;
-        setNotice("El dato enviado se guardó.");
+        setNotice("Cambios guardados");
       }
     }
     window.addEventListener("pliego-profile-draft", changed);
@@ -58,12 +81,12 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
     latest.current = next;
     updateValue(next);
     write(profile.customerId, field, { value: next, original: original.current, country: country.current });
-    setNotice("Tienes cambios sin guardar. Conservamos tu borrador si sales de esta página.");
+    setNotice(next === initial ? "" : "Cambios sin guardar");
   }
   function setCountry(next: string) {
     country.current = next;
     write(profile.customerId, field, { value: latest.current, original: original.current, country: next });
-    setNotice("Tienes cambios sin guardar. Conservamos tu borrador si sales de esta página.");
+    setNotice("Cambios sin guardar");
   }
   function cancel() { write(profile.customerId, field, null); }
   function complete(submitted: string, current?: CustomerProfile, keepEditing = false) {
@@ -75,14 +98,14 @@ export function useProfileDraft(profile: CustomerProfile, field: DraftField, ini
     if (remaining === submitted && !keepEditing) { cancel(); return true; }
     if (current) original.current = current;
     write(profile.customerId, field, { value: remaining, original: original.current, country: stored?.country ?? country.current });
-    setNotice("Guardamos el dato enviado. Tienes cambios nuevos sin guardar.");
+    setNotice("Cambios nuevos sin guardar");
     return false;
   }
   return { value, setValue, original, notice, cancel, complete, country, setCountry };
 }
 
 /** In-flight saves stay locked and announced when the reader leaves and returns to the editor. */
-export function useProfileSaving(customerId: string, field: DraftField) {
+export function useProfileSaving(customerId: string, field: DraftField | "cedula") {
   const saveKey = key(customerId, field);
   const saving = useSyncExternalStore(
     callback => {

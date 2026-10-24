@@ -4,6 +4,7 @@ import type { HelpCriteria } from "@/shared/api/help";
 import { MaterialSymbol, type MaterialSymbolName } from "@/shared/ui/MaterialSymbol";
 import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
+import { PageWayfinding } from "@/app/navigation/BackButton";
 import { useHelpArticle, useHelpArticles, useHelpCategories } from "./helpQuery";
 import classes from "./help.module.css";
 
@@ -35,6 +36,7 @@ export function HelpPage() {
   useEffect(() => { document.title = "Ayuda · PLIEGO"; }, []);
   return <>
     <main className={`page-frame ${classes.page} ${classes.landing}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
+      <PageWayfinding className={classes.landingWayfinding} />
       <header className={classes.masthead}>
         <h1 className={classes.title}>Estamos aquí para ayudarte.</h1>
       </header>
@@ -93,6 +95,9 @@ export function HelpArticlePage() {
   const state = query.viewState;
   const article = state.status === "ready" ? state.data : null;
   const topic = article ? categories.data?.find(category => category.slug === article.categorySlug) : undefined;
+  // Two published results suffice to find a resource besides this article.
+  const related = useHelpArticles({ query: "", category: article?.categorySlug ?? "", applicability: "", page: 0, pageSize: 2 }, Boolean(article));
+  const hasRelatedResource = !related.isError && related.data?.items.some(resource => resource.slug !== article?.slug);
   useEffect(() => { document.title = article ? `${article.title} · Ayuda · PLIEGO` : "Ayuda · PLIEGO"; }, [article]);
   return <>
     <main className={`page-frame ${classes.page} ${classes.reading}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
@@ -122,7 +127,7 @@ export function HelpArticlePage() {
         <aside className={classes.onward} aria-label="Más ayuda">
           <h2>¿Necesitas algo más?</h2>
           <div className={classes.onwardLinks}>
-            {topic && <Link to={`/ayuda?category=${encodeURIComponent(topic.slug)}`}>Más sobre {topic.title}</Link>}
+            {topic && hasRelatedResource && <Link to={`/ayuda?category=${encodeURIComponent(topic.slug)}`}>Más sobre {topic.title}</Link>}
             <Link to="/ayuda">Ver todos los recursos de Ayuda</Link>
           </div>
         </aside>

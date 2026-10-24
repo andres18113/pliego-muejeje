@@ -8,6 +8,8 @@ frontend/dist/
 frontend/test-results/
 frontend/test-results-visual/
 frontend/test-results-polish/
+frontend/playwright-report/
+frontend/blob-report/
 
 # IDEs
 .idea/
@@ -33,5 +35,21 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Local agent skills and their nested repositories
-.agents/
+# Share the PLIEGO deployment skill; keep other agent skills/repositories local.
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/pliego-deploy/
+/.codex/hooks.json
+
+# Local reference screenshots (product assets live under frontend/ and covers/)
+/PLIEGO TRANSFERENCIA.png
+/google_pantalla.png
+/notion-login.png
+/pliego-libro.png
+/pliego-login.png
+/pliego-oss.png
+/pliego-p1.png
+/pliego-sin-backend.png
+/pliego_banderas.png
+/spaceship_banderas.png

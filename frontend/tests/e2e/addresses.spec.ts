@@ -57,7 +57,7 @@ async function openAddresses(page: Page) {
   await page.goto("/account/addresses");
   await page.getByRole("main").getByRole("link", { name: "Iniciar sesión" }).click();
   await page.getByLabel("Correo electrónico").fill("ana@example.com");
-  await page.getByLabel("Contraseña").fill("lectura-segura");
+  await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Direcciones" })).toBeVisible();
 }
@@ -134,15 +134,17 @@ test("address editing opens over the list, guards typed data and returns focus",
   await expect(editOffice).toBeFocused();
   expect(api.puts).toBe(0);
 
-  // The country list closes on Escape without closing the editor.
+  // Delivery is fixed to Ecuador; focusing the country never opens a second editor.
   await editOffice.click();
   await expect(editor.getByLabel("Ciudad")).toHaveValue("Quito");
-  await editor.getByRole("combobox", { name: "País de entrega", exact: true }).click();
-  await expect(page.getByRole("combobox", { name: "Buscar país de entrega" })).toBeVisible();
+  const country = editor.getByLabel("País de entrega", { exact: true });
+  await expect(country).toHaveValue("Ecuador");
+  await expect(country).toHaveAttribute("readonly", "");
+  await expect(country).toHaveAccessibleDescription("Entregas únicamente en Ecuador.");
+  await country.focus();
+  await expect(country).toBeFocused();
+  await expect(editor.getByRole("combobox", { name: /país/i })).toHaveCount(0);
   await shot(page, "desktop-country");
-  await page.keyboard.press("Escape");
-  await expect(page.getByRole("combobox", { name: "Buscar país de entrega" })).toBeHidden();
-  await page.waitForTimeout(400);
   await expect(editor).toBeVisible();
 
   // Validation errors stay in the editor and are recoverable.
@@ -163,6 +165,7 @@ test("address editing opens over the list, guards typed data and returns focus",
   await editor.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(editor).toBeHidden();
   await expect(page.getByText("Guardamos los cambios de la dirección.")).toBeFocused();
+  expect(api.addresses.find(address => address.addressId === "16")?.countryCode).toBe("EC");
   await expect(page.getByText("Cuenca, Pichincha, Ecuador")).toBeVisible();
   expect(api.puts).toBe(1);
 
@@ -184,12 +187,13 @@ test("address editing opens over the list, guards typed data and returns focus",
   await creator.getByLabel("Dirección", { exact: true }).fill("Calle Larga 8");
   await creator.getByLabel("Ciudad").fill("Cuenca");
   await creator.getByLabel("Provincia").fill("Azuay");
-  await creator.getByLabel("Teléfono de contacto").fill("0991234567");
+  await creator.getByLabel("Teléfono de contacto").fill("991234567");
   await creator.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(creator).toBeHidden();
   await expect(page.getByText("Guardamos la dirección. Ya puedes elegirla al finalizar una compra.")).toBeVisible();
   await expect(page.getByRole("heading", { level: 3, name: "Taller" })).toBeVisible();
   expect(api.posts).toBe(1);
+  expect(api.addresses.find(address => address.alias === "Taller")).toMatchObject({ countryCode: "EC", phone: "+593991234567" });
   await shot(page, "desktop-after-add");
 });
 
@@ -218,17 +222,20 @@ for (const viewport of [{ name: "phone", width: 390, height: 844 }, { name: "sma
     await expect(editor.getByLabel("Ciudad")).toBeInViewport({ ratio: 1 });
     await shot(page, `${viewport.name}-validation`);
 
-    await editor.getByRole("combobox", { name: "País de entrega", exact: true }).click();
-    await expect(page.getByRole("combobox", { name: "Buscar país de entrega" })).toBeVisible();
+    const country = editor.getByLabel("País de entrega", { exact: true });
+    await expect(country).toHaveValue("Ecuador");
+    await expect(country).toHaveAttribute("readonly", "");
+    await expect(editor.getByRole("combobox", { name: /país/i })).toHaveCount(0);
+    await country.focus();
+    await expect(country).toBeFocused();
     await shot(page, `${viewport.name}-country`);
-    await page.keyboard.press("Escape");
-    await page.waitForTimeout(400);
     await expect(editor).toBeVisible();
 
     await editor.getByLabel("Ciudad").fill("Ambato");
     await editor.getByRole("button", { name: "Guardar dirección" }).click();
     await expect(editor).toBeHidden();
     await expect(page.getByText("Ambato, Pichincha, Ecuador")).toBeVisible();
+    expect(api.addresses.find(address => address.addressId === "16")?.countryCode).toBe("EC");
   });
 }
 

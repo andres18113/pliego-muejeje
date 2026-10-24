@@ -14,7 +14,7 @@ import classes from "./addresses.module.css";
  * the same way — never while a request is in flight, and never over typed data without asking. The caller
  * owns what is being edited, what happens after a save, and where focus returns.
  */
-export function AddressEditorDialog({ opened, opening, address, firstAddress, disabled, onClose, onSaved, onUncertain, onSessionExpired }: {
+export function AddressEditorDialog({ opened, opening, address, firstAddress, disabled, onClose, onSaved, onUncertain, onSessionExpired, onExitTransitionEnd }: {
   opened: boolean;
   /** Changes with every opening so each one gets a fresh form. */
   opening: number;
@@ -27,6 +27,8 @@ export function AddressEditorDialog({ opened, opening, address, firstAddress, di
   onSaved: (addressId: string) => Promise<void> | void;
   onUncertain: () => Promise<void> | void;
   onSessionExpired: () => void;
+  /** Restore success focus only after the exiting dialog releases its focus trap. */
+  onExitTransitionEnd?: () => void;
 }) {
   const phone = useMediaQuery("(max-width: 599px)");
   const reduceMotion = useReducedMotion();
@@ -54,6 +56,7 @@ export function AddressEditorDialog({ opened, opening, address, firstAddress, di
   return <>
     <Modal.Root opened={opened} onClose={requestClose} fullScreen={phone} size={680} yOffset="max(24px, 6dvh)"
       returnFocus={false} closeOnEscape={false}
+      onExitTransitionEnd={onExitTransitionEnd}
       // Escape is read here, not on the window: a country or prefix list opened from the form (its own layer,
       // outside this element) takes its Escape without also closing the editor.
       onKeyDown={(event) => {

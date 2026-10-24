@@ -10,4 +10,9 @@ public interface CheckoutGateway {
     CheckoutAttempt resolve(long actorUserId, UUID key);
     CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
             Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint);
+    default CheckoutResult checkoutBilled(long actorUserId, UUID key, Long addressId, String paymentMethod,
+            String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId,
+            String quoteFingerprint, com.pliego.modules.sales.application.PostPurchaseModels.CheckoutBilling billing) {
+        throw new UnsupportedOperationException("El gateway no admite facturación automática.");
+    }
 }

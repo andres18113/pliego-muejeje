@@ -1,209 +1,209 @@
 # PLIEGO — Database API Contract v1.0
 
-**Documento:** DAC-PLIEGO-001  
-**Versión:** 1.1  
-**Estado:** BASELINE APROBADA  
-**Fecha:** 2026-09-23  
-**Proyecto:** PLIEGO  
-**Tipo de documento:** Contrato de interfaz Spring Boot ↔ PostgreSQL  
-**Documentos fuente:**  
-- `docs/requirements/use-case-baseline-v1.0.md` — versión interna 1.1, BASELINE APROBADA  
-- `docs/domain/logical-erd-v1.0.md` — versión interna 1.1, BASELINE APROBADA  
-- `docs/domain/data-dictionary-v1.0.md` — versión interna 1.1, BASELINE APROBADA  
+**Document:** DAC-PLIEGO-001  
+**Version:** 1.1  
+**Status:** APPROVED BASELINE  
+**Date:** 2026-09-23  
+**Project:** PLIEGO  
+**Document type:** Spring Boot ↔ PostgreSQL interface contract  
+**Source documents:**  
+- `docs/requirements/use-case-baseline-v1.0.md` — internal version 1.1, APPROVED BASELINE  
+- `docs/domain/logical-erd-v1.0.md` — internal version 1.1, APPROVED BASELINE  
+- `docs/domain/data-dictionary-v1.0.md` — internal version 1.1, APPROVED BASELINE  
 
-**Ámbito:** Database API pública consumida por el backend Spring Boot  
-**Siguiente artefacto:** Modelo Físico PostgreSQL v1.0  
+**Scope:** Public Database API consumed by the Spring Boot backend  
+**Next artifact:** PostgreSQL Physical Model v1.0  
 
 ---
 
-# 1. Propósito
+# 1. Purpose
 
-Este documento define el contrato formal entre el backend Java/Spring Boot y PostgreSQL para PLIEGO v1.
+This document defines the formal contract between the Java/Spring Boot backend and PostgreSQL for PLIEGO v1.
 
-Su objetivo es eliminar la ambigüedad restante antes de diseñar el modelo físico y antes de implementar Stored Procedures, Functions, Triggers, Constraints, Gateways Java y endpoints REST.
+Its purpose is to eliminate remaining ambiguity before designing the physical model and implementing Stored Procedures, Functions, Triggers, Constraints, Java Gateways and REST endpoints.
 
-La Database API determina:
+The Database API determines:
 
-- qué rutinas PostgreSQL puede invocar Java;
-- cuáles son comandos y cuáles consultas;
-- parámetros lógicos de entrada;
-- resultados lógicos;
-- autoridad de actor y propiedad;
-- comportamiento transaccional;
-- reglas de concurrencia;
-- orden de bloqueo;
-- errores de dominio;
-- semántica de idempotencia;
-- entidades leídas y modificadas;
-- invariantes que cada rutina debe preservar;
-- trazabilidad a casos de uso;
-- límites entre rutinas públicas e implementación interna.
+- which PostgreSQL routines Java may invoke;
+- which are commands and which are queries;
+- logical input parameters;
+- logical results;
+- actor authority and ownership;
+- transactional behavior;
+- concurrency rules;
+- lock ordering;
+- domain errors;
+- idempotency semantics;
+- entities read and modified;
+- invariants each routine must preserve;
+- use-case traceability;
+- boundaries between public routines and internal implementation.
 
-Este documento **no define todavía**:
+This document **does not yet define**:
 
-- tipos físicos PostgreSQL definitivos;
-- nombres de tablas físicas definitivos;
-- tamaños físicos de columnas;
-- índices definitivos;
+- final PostgreSQL physical types;
+- final physical table names;
+- physical column sizes;
+- final indexes;
 - DDL;
-- sintaxis PL/pgSQL completa;
-- mapping REST/HTTP definitivo;
-- DTO Java definitivos;
-- OpenAPI definitivo.
+- complete PL/pgSQL syntax;
+- final REST/HTTP mapping;
+- final Java DTOs;
+- final OpenAPI.
 
 ---
 
-# 2. Resultado de la auditoría previa
+# 2. Prior audit results
 
-Se revisaron de forma cruzada UCB v1.1, DER Lógico v1.1 y Diccionario de Datos v1.1.
+UCB v1.1, Logical ERD v1.1 and Data Dictionary v1.1 were cross-reviewed.
 
-## 2.1 Resultado general
+## 2.1 Overall result
 
-No se encontraron defectos estructurales que obliguen a:
+No structural defects were found that require:
 
-- agregar entidades;
-- eliminar entidades;
-- cambiar cardinalidades;
-- modificar el alcance de PLIEGO v1;
-- modificar las máquinas de estado aprobadas.
+- adding entities;
+- removing entities;
+- changing cardinalities;
+- modifying PLIEGO v1 scope;
+- modifying the approved state machines.
 
-Las **19 entidades persistentes** permanecen estables.
+The **19 persistent entities** remain stable.
 
-La baseline puede avanzar al Database API Contract.
+The baseline can advance to the Database API Contract.
 
-## 2.2 Hallazgos residuales
+## 2.2 Residual findings
 
-### DAC-AUD-001 — Rango lógico de `Idioma`
+### DAC-AUD-001 — Logical range of `Idioma`
 
-El Diccionario establece globalmente:
+The Dictionary establishes globally:
 
 ```text
-ISO 639-1       -> 2 caracteres
-ISO 639-2/T     -> 3 caracteres cuando no exista 639-1
+ISO 639-1       -> 2 characters
+ISO 639-2/T     -> 3 characters when 639-1 is unavailable
 ```
 
-pero la fila de `Edicion.Idioma` conserva la descripción antigua:
+but the `Edicion.Idioma` row retains the old description:
 
 ```text
-Código idioma; 2 caracteres
+Language code; 2 characters
 ```
 
-### Resolución normativa
+### Normative resolution
 
-Este contrato fija:
+This contract establishes:
 
 ```text
-LanguageCode := código canónico de 2 o 3 letras minúsculas
+LanguageCode := canonical code of 2 or 3 lowercase letters
 ```
 
-con preferencia:
+with preference for:
 
-1. ISO 639-1 cuando exista;
-2. ISO 639-2/T cuando no exista ISO 639-1.
+1. ISO 639-1 when available;
+2. ISO 639-2/T when ISO 639-1 is unavailable.
 
-`PedidoItem.Idioma_Snapshot` conserva exactamente el código canónico vigente en checkout.
+`PedidoItem.Idioma_Snapshot` preserves exactly the canonical code current at checkout.
 
-**Impacto:** corrección editorial menor pendiente en el Diccionario. No cambia el DER.
+**Impact:** minor editorial correction pending in the Dictionary. The ERD is unchanged.
 
 ---
 
-### DAC-AUD-002 — Estado editorial obsoleto en DER §30
+### DAC-AUD-002 — Outdated editorial status in ERD §30
 
-El DER v1.1 tiene cabecera `BASELINE APROBADA`, pero conserva una frase heredada:
+ERD v1.1 has a `BASELINE APROBADA` header, but retains a legacy phrase:
 
 ```text
-queda como candidato a baseline
+remains a baseline candidate
 ```
 
-### Resolución
+### Resolution
 
-La cabecera y el historial v1.1 son autoritativos.
+The v1.1 header and history are authoritative.
 
-**Estado válido:** `BASELINE APROBADA`.
+**Valid status:** `BASELINE APROBADA` (APPROVED BASELINE).
 
-No existe impacto funcional.
-
----
-
-### DAC-AUD-003 — Consultas administrativas ausentes en la superficie preliminar
-
-Los casos de uso administrativos incluyen `consultar`, mientras la superficie preliminar del UCB listaba principalmente rutinas de escritura para Autor, Editorial, Categoría, Libro y Edición.
-
-### Resolución
-
-La Database API incorpora Functions administrativas de consulta para:
-
-- clientes;
-- autores;
-- editoriales;
-- categorías;
-- libros;
-- ediciones.
-
-No se añade alcance: estas Functions materializan operaciones ya aprobadas.
+There is no functional impact.
 
 ---
 
-### DAC-AUD-004 — Estado inicial de maestros de catálogo no fijado uniformemente
+### DAC-AUD-003 — Administrative queries missing from the preliminary surface
 
-El modelo exige `Estado`, pero los casos de creación no especifican uniformemente si el estado debe recibirse como parámetro.
+Administrative use cases include `consultar` (querying), while the preliminary UCB surface mainly listed write routines for Autor, Editorial, Categoría, Libro and Edición.
 
-### Resolución
+### Resolution
 
-Para reducir complejidad:
+The Database API incorporates administrative query Functions for:
+
+- customers;
+- authors;
+- publishers;
+- categories;
+- books;
+- editions.
+
+No scope is added: these Functions implement already approved operations.
+
+---
+
+### DAC-AUD-004 — Initial catalog master-record status not uniformly established
+
+The model requires `Estado`, but creation cases do not uniformly specify whether status must be received as a parameter.
+
+### Resolution
+
+To reduce complexity:
 
 ```text
-Autor nuevo       -> ACTIVE
-Editorial nueva   -> ACTIVE
-Categoria nueva   -> ACTIVE
-Libro nuevo       -> ACTIVE
-Edicion nueva     -> ACTIVE
+New Autor       -> ACTIVE
+New Editorial   -> ACTIVE
+New Categoria   -> ACTIVE
+New Libro       -> ACTIVE
+New Edicion     -> ACTIVE
 ```
 
-El estado no forma parte de los procedimientos `create`.
+Status is not part of the `create` procedures.
 
-Para crear un registro y posteriormente dejarlo inactivo se utiliza su procedimiento `set_status`.
+To create a record and subsequently make it inactive, use its `set_status` procedure.
 
-Esta decisión mantiene una sola vía para cambios de estado.
-
----
-
-### DAC-AUD-005 — Semántica transaccional pendiente de concreción
-
-La UCB establece que Spring demarca la transacción y PostgreSQL atomiza la operación, pero no fija el comportamiento exacto de las rutinas.
-
-### Resolución
-
-- Spring Boot inicia/confirma/revierte la transacción de cada comando.
-- Cada comando de negocio llama **exactamente una Procedure pública**.
-- Las Procedures públicas de PLIEGO **no ejecutan `COMMIT` ni `ROLLBACK`**.
-- Una excepción de dominio aborta la operación y provoca rollback.
-- Un pago simulado `REJECTED` es un **resultado comercial válido**, no una excepción; el Pedido `CANCELLED` y Pago `REJECTED` se confirman.
+This decision retains a single path for status changes.
 
 ---
 
-### DAC-AUD-006 — Semántica del filtro de categoría
+### DAC-AUD-005 — Transactional semantics awaiting specification
 
-La UCB define filtro por categoría, pero no especifica el comportamiento al filtrar por una categoría raíz.
+The UCB states that Spring demarcates the transaction and PostgreSQL makes the operation atomic, but does not establish the routines' exact behavior.
 
-### Resolución
+### Resolution
 
-En catálogo público:
-
-- filtro por subcategoría → coincidencia exacta;
-- filtro por categoría raíz → Libros asociados a esa raíz **o a cualquiera de sus subcategorías directas**.
-
-La jerarquía máxima de dos niveles hace esta regla simple y determinista.
+- Spring Boot starts/commits/rolls back each command's transaction.
+- Each business command calls **exactly one public Procedure**.
+- PLIEGO public Procedures **do not execute `COMMIT` or `ROLLBACK`**.
+- A domain exception aborts the operation and causes rollback.
+- A simulated `REJECTED` payment is a **valid business outcome**, not an exception; the `CANCELLED` Pedido and `REJECTED` Pago are committed.
 
 ---
 
-# 3. Principios vinculantes de la Database API
+### DAC-AUD-006 — Category filter semantics
 
-## 3.1 Única frontera de persistencia
+The UCB defines filtering by category, but does not specify behavior when filtering by a root category.
 
-Spring Boot no accede directamente a tablas.
+### Resolution
 
-La dirección válida es:
+In the public catalog:
+
+- subcategory filter → exact match;
+- root category filter → Libros associated with that root **or any of its direct subcategories**.
+
+The maximum two-level hierarchy makes this rule simple and deterministic.
+
+---
+
+# 3. Binding Database API principles
+
+## 3.1 Single persistence boundary
+
+Spring Boot does not access tables directly.
+
+The valid direction is:
 
 ```text
 Controller
@@ -214,38 +214,38 @@ Gateway
     ↓
 Procedure / Function PostgreSQL
     ↓
-tablas y lógica interna
+tables and internal logic
 ```
 
-Queda prohibido en Java implementar SQL de negocio con:
+Implementing business SQL in Java using the following is prohibited:
 
-- `SELECT` sobre tablas;
+- `SELECT` on tables;
 - `INSERT`;
 - `UPDATE`;
 - `DELETE`;
-- joins de negocio;
-- lógica de stock;
-- lógica de pedido;
-- transiciones de estado;
-- cálculo de totales desde tablas.
+- business joins;
+- stock logic;
+- order logic;
+- state transitions;
+- calculating totals from tables.
 
-El Gateway puede contener únicamente la infraestructura necesaria para invocar una rutina PostgreSQL nominalmente identificada.
+The Gateway may contain only the infrastructure needed to invoke a PostgreSQL routine identified by name.
 
 ---
 
-## 3.2 Comandos y consultas
+## 3.2 Commands and queries
 
 ### Procedure
 
-Una Procedure representa un **comando** que puede modificar estado.
+A Procedure represents a **command** that may modify state.
 
-Convención:
+Convention:
 
 ```text
 sp_<dominio>_<accion>
 ```
 
-Ejemplo:
+Example:
 
 ```text
 sp_cart_add_item
@@ -255,15 +255,15 @@ sp_order_cancel
 
 ### Function
 
-Una Function pública representa una **consulta** y no debe producir efectos persistentes.
+A public Function represents a **query** and must not produce persistent effects.
 
-Convención:
+Convention:
 
 ```text
 fn_<dominio>_<consulta>
 ```
 
-Ejemplo:
+Example:
 
 ```text
 fn_catalog_search
@@ -273,9 +273,9 @@ fn_customer_orders
 
 ---
 
-## 3.3 Una operación de negocio = una llamada pública
+## 3.3 One business operation = one public call
 
-Ejemplo correcto:
+Correct example:
 
 ```text
 POST /checkout
@@ -283,7 +283,7 @@ POST /checkout
 sp_checkout(...)
 ```
 
-Ejemplo prohibido:
+Prohibited example:
 
 ```text
 Java -> fn_stock(...)
@@ -292,103 +292,103 @@ Java -> sp_create_order(...)
 Java -> sp_reduce_stock(...)
 ```
 
-La orquestación del negocio debe permanecer en PostgreSQL.
+Business orchestration must remain in PostgreSQL.
 
 ---
 
-## 3.4 Rutinas públicas versus internas
+## 3.4 Public versus internal routines
 
-### Públicas
+### Public
 
-Son las únicas que Java puede invocar.
+These are the only routines Java may invoke.
 
-Este documento las define expresamente.
+This document defines them explicitly.
 
-### Internas
+### Internal
 
-PostgreSQL podrá implementar helpers internos para:
+PostgreSQL may implement internal helpers for:
 
-- normalización;
-- checksum ISBN;
-- validación de actor;
-- cálculo de totales;
-- simulación de pago;
-- transición de estados;
-- construcción de snapshots;
-- actualización de timestamps;
-- otras operaciones repetidas.
+- normalization;
+- ISBN checksum;
+- actor validation;
+- total calculation;
+- payment simulation;
+- state transitions;
+- snapshot construction;
+- timestamp updates;
+- other repeated operations.
 
-Las rutinas internas:
+Internal routines:
 
-- no forman parte del contrato Java;
-- no deben ser invocadas directamente por Gateways;
-- pueden modificarse sin cambiar el contrato mientras conserven el comportamiento observable.
+- are not part of the Java contract;
+- must not be invoked directly by Gateways;
+- may change without changing the contract as long as they preserve observable behavior.
 
 ---
 
-## 3.5 Seguridad de ejecución
+## 3.5 Execution security
 
-PLIEGO v1 no introduce un modelo complejo de seguridad propia de PostgreSQL.
+PLIEGO v1 does not introduce a complex PostgreSQL-specific security model.
 
-Regla:
+Rule:
 
 ```text
 SECURITY INVOKER
 ```
 
-es el comportamiento esperado de las rutinas.
+is the expected behavior of routines.
 
-`SECURITY DEFINER` **no se utilizará por defecto**.
+`SECURITY DEFINER` **will not be used by default**.
 
-Solo podrá incorporarse posteriormente si aparece una necesidad concreta y documentada.
+It may only be incorporated later if a concrete, documented need arises.
 
 ---
 
-# 4. Tipos lógicos del contrato
+# 4. Logical contract types
 
-Los siguientes tipos son abstractos. El Modelo Físico PostgreSQL definirá su representación concreta.
+The following types are abstract. The PostgreSQL Physical Model will define their concrete representation.
 
-| Tipo lógico | Significado |
+| Logical type | Meaning |
 |---|---|
-| `Id` | Identificador interno |
-| `Text` | Texto UTF-8 |
-| `Email` | Email de entrada |
-| `EmailCanonical` | Email normalizado |
-| `Phone` | Teléfono canónico |
-| `Code` | Código controlado |
-| `Slug` | Slug canónico |
-| `SKU` | SKU canónico |
-| `ISBN13` | ISBN-13 canónico |
-| `LanguageCode` | ISO 639-1 o ISO 639-2/T canónico |
+| `Id` | Internal identifier |
+| `Text` | UTF-8 text |
+| `Email` | Input email |
+| `EmailCanonical` | Normalized email |
+| `Phone` | Canonical phone number |
+| `Code` | Controlled code |
+| `Slug` | Canonical slug |
+| `SKU` | Canonical SKU |
+| `ISBN13` | Canonical ISBN-13 |
+| `LanguageCode` | Canonical ISO 639-1 or ISO 639-2/T |
 | `CountryCode` | ISO 3166-1 alpha-2 |
-| `PositiveInt` | Entero > 0 |
-| `NonNegativeInt` | Entero >= 0 |
-| `MoneyUSD` | Decimal exacto USD, dos decimales |
-| `Boolean` | verdadero/falso |
-| `Date` | Fecha civil |
-| `Instant` | Instante absoluto |
+| `PositiveInt` | Integer > 0 |
+| `NonNegativeInt` | Integer >= 0 |
+| `MoneyUSD` | Exact USD decimal, two decimal places |
+| `Boolean` | true/false |
+| `Date` | Calendar date |
+| `Instant` | Absolute instant |
 | `Url` | URL/URI |
-| `StatusCode` | Valor de máquina de estados |
-| `IdList` | Colección ordenada/no ordenada de IDs según contrato |
-| `AuthorAssignmentList` | Colección de `(AuthorId, Order)` |
-| `Record` | Resultado lógico compuesto |
-| `RecordSet` | Conjunto ordenado de resultados |
+| `StatusCode` | State-machine value |
+| `IdList` | Ordered/unordered collection of IDs as specified by contract |
+| `AuthorAssignmentList` | Collection of `(AuthorId, Order)` |
+| `Record` | Composite logical result |
+| `RecordSet` | Ordered result set |
 
-La representación de `IdList`, `AuthorAssignmentList` y estructuras complejas será fijada por el Modelo Físico PostgreSQL.
+The representation of `IdList`, `AuthorAssignmentList` and complex structures will be established by the PostgreSQL Physical Model.
 
 ---
 
-# 5. Convenciones de parámetros
+# 5. Parameter conventions
 
-## 5.1 Prefijos
+## 5.1 Prefixes
 
-Parámetros de entrada:
+Input parameters:
 
 ```text
 p_<nombre>
 ```
 
-Parámetros/resultados de salida:
+Output parameters/results:
 
 ```text
 o_<nombre>
@@ -396,118 +396,118 @@ o_<nombre>
 
 ---
 
-## 5.2 Actor autenticado
+## 5.2 Authenticated actor
 
-Toda operación privada recibe:
+Every private operation receives:
 
 ```text
 p_actor_user_id : Id
 ```
 
-Este valor:
+This value:
 
-- procede de la identidad autenticada de Spring Security;
-- **no** se acepta desde el body controlado por el cliente;
-- corresponde a `Usuario.UsuarioId`.
+- comes from the authenticated Spring Security identity;
+- is **not** accepted from the client-controlled body;
+- corresponds to `Usuario.UsuarioId`.
 
-PostgreSQL resuelve a partir de él:
+PostgreSQL resolves from it:
 
-- existencia;
-- estado;
-- rol;
-- Cliente asociado;
-- propiedad de recursos.
+- existence;
+- status;
+- role;
+- associated Cliente;
+- resource ownership.
 
-Esto evita que Java tenga que pasar `ClienteId` como fuente de autorización.
-
----
-
-## 5.3 Parámetros opcionales
-
-Un parámetro opcional `null` significa:
-
-```text
-criterio ausente
-```
-
-en Functions de búsqueda.
-
-En Procedures de actualización se utiliza la semántica de **reemplazo completo del conjunto mutable**, no PATCH implícito.
-
-Por tanto:
-
-- `null` en un campo opcional significa “establecer ausencia”;
-- no significa “mantener valor previo”.
-
-El backend debe leer/enviar el estado completo de los atributos mutables cuando invoque una Procedure `update`. Toda `update` revalida las invariantes estructurales de su `create` correspondiente.
-
-Esto elimina la ambigüedad entre:
-
-```text
-no modificar
-```
-
-y:
-
-```text
-establecer NULL
-```
+This prevents Java from having to pass `ClienteId` as the source of authorization.
 
 ---
 
-# 6. Convenciones de paginación
+## 5.3 Optional parameters
 
-Functions que devuelven colecciones paginadas reciben:
+An optional `null` parameter means:
+
+```text
+criterion absent
+```
+
+in search Functions.
+
+Update Procedures use **full replacement of the mutable set** semantics, not implicit PATCH.
+
+Therefore:
+
+- `null` in an optional field means “set absence”;
+- it does not mean “retain previous value”.
+
+The backend must read/send the full state of mutable attributes when invoking an `update` Procedure. Every `update` revalidates the structural invariants of its corresponding `create`.
+
+This eliminates the ambiguity between:
+
+```text
+do not modify
+```
+
+and:
+
+```text
+set NULL
+```
+
+---
+
+# 6. Pagination conventions
+
+Functions returning paginated collections receive:
 
 ```text
 p_page      : NonNegativeInt
 p_page_size : PositiveInt
 ```
 
-Reglas:
+Rules:
 
 ```text
 p_page >= 0
 1 <= p_page_size <= 50
 ```
 
-`p_page` es **base cero**.
+`p_page` is **zero-based**.
 
-Ejemplo:
+Example:
 
 ```text
 p_page = 0
 p_page_size = 20
 ```
 
-representa la primera página.
+represents the first page.
 
-Toda fila de una consulta paginada incluye conceptualmente:
+Every row of a paginated query conceptually includes:
 
 ```text
 total_count
 ```
 
-para evitar una segunda consulta de conteo.
+to avoid a second count query.
 
-Cuando no existan resultados:
+When there are no results:
 
 ```text
-RecordSet vacío
+empty RecordSet
 total_count = 0
 ```
 
-El mapping físico exacto del total será definido en el Modelo Físico.
+The exact physical mapping of the total will be defined in the Physical Model.
 
 ---
 
-# 7. Convenciones de ordenamiento
+# 7. Sorting conventions
 
-Las Functions no reciben fragmentos SQL libres.
+Functions do not receive unrestricted SQL fragments.
 
-Reciben códigos cerrados.
+They receive predefined codes.
 
-Ejemplo de catálogo:
+Catalog example:
 
 ```text
 TITLE_ASC
@@ -515,50 +515,50 @@ PRICE_ASC
 PRICE_DESC
 ```
 
-Cualquier código no reconocido produce:
+Any unrecognized code produces:
 
 ```text
 P1001 INVALID_ARGUMENT
 ```
 
-Esto evita SQL dinámico controlado por el consumidor.
+This prevents consumer-controlled dynamic SQL.
 
-Si el consumidor no especifica sort, REST suministra `TITLE_ASC`.
+If the consumer does not specify a sort, REST supplies `TITLE_ASC`.
 
 ---
 
-# 8. Autoridad y autorización
+# 8. Authority and authorization
 
-## 8.1 Validación técnica en Spring
+## 8.1 Technical validation in Spring
 
-Spring Security puede bloquear previamente:
+Spring Security may block in advance:
 
-- ausencia de autenticación;
-- endpoint administrativo sin rol esperado.
+- absence of authentication;
+- an administrative endpoint without the expected role.
 
-## 8.2 Autoridad definitiva en PostgreSQL
+## 8.2 Final authority in PostgreSQL
 
-Las rutinas privadas vuelven a validar:
+Private routines revalidate:
 
-- existencia del actor;
+- actor existence;
 - `Usuario.Estado = ACTIVE`;
-- rol;
-- asociación Cliente cuando corresponda;
-- propiedad del recurso.
+- role;
+- Cliente association when applicable;
+- resource ownership.
 
-Incluye lectura y cancelación de pedidos propios: un `BLOCKED` no opera su carrito ni sus pedidos; la intervención pasa por ADMIN.
+This includes reading and cancelling one's own orders: a `BLOCKED` user cannot operate their cart or orders; intervention goes through ADMIN.
 
-La validación en Spring no reemplaza a PostgreSQL.
+Spring validation does not replace PostgreSQL.
 
 ---
 
-# 9. Contrato transaccional
+# 9. Transaction contract
 
-## 9.1 Procedures mutantes
+## 9.1 Mutating Procedures
 
-Toda Procedure pública mutante debe ejecutarse dentro de una transacción iniciada por Spring.
+Every mutating public Procedure must execute within a Spring-initiated transaction.
 
-Patrón:
+Pattern:
 
 ```text
 Spring BEGIN
@@ -566,55 +566,55 @@ Spring BEGIN
 Spring COMMIT
 ```
 
-Si PostgreSQL genera una excepción:
+If PostgreSQL raises an exception:
 
 ```text
 Spring ROLLBACK
 ```
 
-## 9.2 Regla de las Procedures
+## 9.2 Procedure rule
 
-Las Procedures públicas:
+Public Procedures:
 
-- no ejecutan `COMMIT`;
-- no ejecutan `ROLLBACK`;
-- no fragmentan una operación de negocio en varias transacciones.
+- do not execute `COMMIT`;
+- do not execute `ROLLBACK`;
+- do not split a business operation across multiple transactions.
 
-La atomicidad se consigue porque toda su lógica ocurre dentro de la transacción del caller.
+Atomicity is achieved because all their logic occurs within the caller's transaction.
 
-## 9.3 Functions de consulta
+## 9.3 Query Functions
 
-Las Functions públicas son de solo lectura.
+Public Functions are read-only.
 
-No deben producir:
+They must not produce:
 
 - inserts;
 - updates;
 - deletes;
-- transiciones;
-- efectos secundarios persistentes.
+- transitions;
+- persistent side effects.
 
-## 9.4 Excepción versus resultado comercial
+## 9.4 Exception versus business outcome
 
-### Excepción
+### Exception
 
-Ejemplos:
+Examples:
 
-- stock insuficiente;
-- edición inexistente;
-- actor no autorizado;
-- dirección inválida;
-- transición imposible.
+- insufficient stock;
+- nonexistent edition;
+- unauthorized actor;
+- invalid address;
+- impossible transition.
 
-Resultado:
+Result:
 
 ```text
 ROLLBACK
 ```
 
-### Resultado comercial válido
+### Valid business outcome
 
-Pago simulado rechazado:
+Simulated payment rejected:
 
 ```text
 Pedido = CANCELLED
@@ -622,277 +622,277 @@ Pago = REJECTED
 Carrito = ACTIVE
 ```
 
-Resultado:
+Result:
 
 ```text
 COMMIT
 ```
 
-No se lanza excepción por el rechazo simulado.
+No exception is thrown for simulated rejection.
 
 ---
 
-# 10. Modelo de errores de dominio
+# 10. Domain error model
 
-## 10.1 Regla general
+## 10.1 General rule
 
-Las rutinas públicas deben exponer errores esperados mediante SQLSTATE estable de cinco caracteres.
+Public routines must expose expected errors through a stable five-character SQLSTATE.
 
-Formato recomendado:
+Recommended format:
 
 ```text
 Pxxxx
 ```
 
-El backend debe decidir por:
+The backend must decide based on:
 
 ```text
 SQLSTATE
 ```
 
-y **no** por comparación de mensajes humanos.
+and **not** by comparing human-readable messages.
 
-El mensaje podrá incluir un código simbólico estable.
+The message may include a stable symbolic code.
 
-Ejemplo conceptual:
+Conceptual example:
 
 ```text
 SQLSTATE: P3002
 MESSAGE:  INSUFFICIENT_STOCK
 ```
 
-Errores inesperados de PostgreSQL que no formen parte de esta tabla se consideran fallos técnicos.
+Unexpected PostgreSQL errors outside this table are considered technical failures.
 
 ---
 
-## 10.2 Catálogo de SQLSTATE de dominio
+## 10.2 Domain SQLSTATE catalog
 
-### Generales / actor
+### General / actor
 
-| SQLSTATE | Código simbólico | Semántica |
+| SQLSTATE | Symbolic code | Semantics |
 |---|---|---|
-| P1001 | INVALID_ARGUMENT | Parámetro fuera del contrato |
-| P1002 | ACTOR_NOT_FOUND | Usuario actor inexistente |
-| P1003 | ACTOR_INACTIVE | Usuario actor no está ACTIVE |
-| P1004 | ACTOR_NOT_ADMIN | Operación exige ADMIN |
-| P1005 | ACTOR_NOT_CUSTOMER | Operación exige CUSTOMER |
+| P1001 | INVALID_ARGUMENT | Parameter outside the contract |
+| P1002 | ACTOR_NOT_FOUND | Actor Usuario does not exist |
+| P1003 | ACTOR_INACTIVE | Actor Usuario is not ACTIVE |
+| P1004 | ACTOR_NOT_ADMIN | Operation requires ADMIN |
+| P1005 | ACTOR_NOT_CUSTOMER | Operation requires CUSTOMER |
 
-### Identidad / cliente
+### Identity / customer
 
-| SQLSTATE | Código | Semántica |
+| SQLSTATE | Code | Semantics |
 |---|---|---|
-| P1101 | EMAIL_ALREADY_EXISTS | Email normalizado ya registrado |
-| P1102 | CUSTOMER_NOT_FOUND | Perfil CUSTOMER inexistente |
-| P1103 | ADDRESS_NOT_FOUND | Dirección inexistente o no visible para el actor |
+| P1101 | EMAIL_ALREADY_EXISTS | Normalized email already registered |
+| P1102 | CUSTOMER_NOT_FOUND | CUSTOMER profile does not exist |
+| P1103 | ADDRESS_NOT_FOUND | Address does not exist or is not visible to the actor |
 
-### Catálogo
+### Catalog
 
-| SQLSTATE | Código | Semántica |
+| SQLSTATE | Code | Semantics |
 |---|---|---|
-| P2001 | AUTHOR_NOT_FOUND | Autor inexistente |
-| P2002 | AUTHOR_INACTIVE | Autor nuevo en asociación está INACTIVE |
-| P2011 | PUBLISHER_NOT_FOUND | Editorial inexistente |
-| P2012 | PUBLISHER_INACTIVE | Editorial nueva/asignada está INACTIVE |
-| P2021 | CATEGORY_NOT_FOUND | Categoría inexistente |
-| P2022 | CATEGORY_INACTIVE | Categoría nueva en asociación está INACTIVE |
-| P2023 | CATEGORY_INVALID_HIERARCHY | Padre/ciclo/profundidad inválidos |
-| P2024 | CATEGORY_SLUG_EXISTS | Slug ya existente |
-| P2031 | BOOK_NOT_FOUND | Libro inexistente |
-| P2032 | BOOK_REQUIRES_AUTHOR | Libro ACTIVE quedaría sin autor |
-| P2033 | BOOK_REQUIRES_CATEGORY | Libro ACTIVE quedaría sin categoría |
-| P2034 | AUTHOR_ORDER_INVALID | Orden de autoría inválido/duplicado |
-| P2041 | EDITION_NOT_FOUND | Edición inexistente |
-| P2042 | EDITION_INACTIVE | Edición INACTIVE para operación comercial |
-| P2043 | BOOK_INACTIVE | Libro INACTIVE para operación comercial |
-| P2044 | SKU_ALREADY_EXISTS | SKU duplicado |
-| P2045 | ISBN_ALREADY_EXISTS | ISBN duplicado |
-| P2046 | ISBN_INVALID | Formato/checksum ISBN inválido |
-| P2047 | COVER_METADATA_INVALID | Metadatos/licencia de portada incoherentes |
-| P2048 | EDITION_DATA_INVALID | Datos de edición fuera de invariantes |
+| P2001 | AUTHOR_NOT_FOUND | Autor does not exist |
+| P2002 | AUTHOR_INACTIVE | New Autor in association is INACTIVE |
+| P2011 | PUBLISHER_NOT_FOUND | Editorial does not exist |
+| P2012 | PUBLISHER_INACTIVE | New/assigned Editorial is INACTIVE |
+| P2021 | CATEGORY_NOT_FOUND | Category does not exist |
+| P2022 | CATEGORY_INACTIVE | New category in association is INACTIVE |
+| P2023 | CATEGORY_INVALID_HIERARCHY | Invalid parent/cycle/depth |
+| P2024 | CATEGORY_SLUG_EXISTS | Slug already exists |
+| P2031 | BOOK_NOT_FOUND | Libro does not exist |
+| P2032 | BOOK_REQUIRES_AUTHOR | ACTIVE Libro would have no author |
+| P2033 | BOOK_REQUIRES_CATEGORY | ACTIVE Libro would have no category |
+| P2034 | AUTHOR_ORDER_INVALID | Invalid/duplicate authorship order |
+| P2041 | EDITION_NOT_FOUND | Edition does not exist |
+| P2042 | EDITION_INACTIVE | Edition is INACTIVE for business operation |
+| P2043 | BOOK_INACTIVE | Libro is INACTIVE for business operation |
+| P2044 | SKU_ALREADY_EXISTS | Duplicate SKU |
+| P2045 | ISBN_ALREADY_EXISTS | Duplicate ISBN |
+| P2046 | ISBN_INVALID | Invalid ISBN format/checksum |
+| P2047 | COVER_METADATA_INVALID | Inconsistent cover metadata/license |
+| P2048 | EDITION_DATA_INVALID | Edition data violates invariants |
 
-### Inventario
+### Inventory
 
-| SQLSTATE | Código | Semántica |
+| SQLSTATE | Code | Semantics |
 |---|---|---|
-| P3001 | INVENTORY_NOT_FOUND | Inventario de Edición inexistente |
-| P3002 | INSUFFICIENT_STOCK | Stock insuficiente |
-| P3003 | STOCK_QUANTITY_INVALID | Cantidad de movimiento inválida |
-| P3004 | STOCK_MINIMUM_INVALID | Stock mínimo inválido |
-| P3005 | STOCK_MOVEMENT_DUPLICATE | SALE/CANCELLATION ya aplicado |
-| P3006 | SALE_REQUIRED_FOR_CANCELLATION | CANCELLATION sin SALE previo |
+| P3001 | INVENTORY_NOT_FOUND | Edition Inventario does not exist |
+| P3002 | INSUFFICIENT_STOCK | Insufficient stock |
+| P3003 | STOCK_QUANTITY_INVALID | Invalid movement quantity |
+| P3004 | STOCK_MINIMUM_INVALID | Invalid minimum stock |
+| P3005 | STOCK_MOVEMENT_DUPLICATE | SALE/CANCELLATION already applied |
+| P3006 | SALE_REQUIRED_FOR_CANCELLATION | CANCELLATION without prior SALE |
 
-### Carrito
+### Cart
 
-| SQLSTATE | Código | Semántica |
+| SQLSTATE | Code | Semantics |
 |---|---|---|
-| P4001 | CART_NOT_ACTIVE | No existe/ya no está activo el carrito requerido |
-| P4002 | CART_EMPTY | Checkout sobre carrito vacío |
-| P4003 | CART_ITEM_NOT_FOUND | Item inexistente o no perteneciente al actor |
-| P4004 | CART_QUANTITY_INVALID | Cantidad <= 0 o fuera del contrato |
+| P4001 | CART_NOT_ACTIVE | Required cart does not exist/is no longer active |
+| P4002 | CART_EMPTY | Checkout on empty cart |
+| P4003 | CART_ITEM_NOT_FOUND | Item does not exist or does not belong to the actor |
+| P4004 | CART_QUANTITY_INVALID | Quantity <= 0 or outside the contract |
 
-### Pedido / pago
+### Order / payment
 
-| SQLSTATE | Código | Semántica |
+| SQLSTATE | Code | Semantics |
 |---|---|---|
-| P5001 | ORDER_NOT_FOUND | Pedido inexistente o no visible al CUSTOMER |
-| P5002 | ORDER_INVALID_TRANSITION | Transición logística no permitida |
-| P5003 | ORDER_NOT_CANCELLABLE | Estado actual no admite cancelación |
-| P5004 | CHECKOUT_ADDRESS_INVALID | Dirección inexistente/no pertenece al Cliente |
-| P5005 | PAYMENT_OUTCOME_INVALID | Resultado del simulador no reconocido |
-| P5006 | PAYMENT_STATE_INVALID | Estado de Pago incompatible |
-| P5007 | PAYMENT_REFERENCE_CONFLICT | Referencia de Pago duplicada |
+| P5001 | ORDER_NOT_FOUND | Pedido does not exist or is not visible to CUSTOMER |
+| P5002 | ORDER_INVALID_TRANSITION | Logistics transition not allowed |
+| P5003 | ORDER_NOT_CANCELLABLE | Current state does not allow cancellation |
+| P5004 | CHECKOUT_ADDRESS_INVALID | Address does not exist/does not belong to Cliente |
+| P5005 | PAYMENT_OUTCOME_INVALID | Unrecognized simulator outcome |
+| P5006 | PAYMENT_STATE_INVALID | Incompatible Pago state |
+| P5007 | PAYMENT_REFERENCE_CONFLICT | Duplicate Pago reference |
 
 ---
 
-## 10.3 Normalización de errores de constraint
+## 10.3 Constraint error normalization
 
-Si una carrera concurrente produce una violación de constraint estándar para una regla que posee código de dominio, la rutina deberá normalizarla al SQLSTATE de dominio correspondiente según el mapa obligatorio:
+If a concurrent race produces a standard constraint violation for a rule with a domain code, the routine must normalize it to the corresponding domain SQLSTATE using the mandatory mapping:
 
 ```text
-email duplicado                    -> P1101
-SKU duplicado                      -> P2044
-ISBN duplicado                     -> P2045
-slug duplicado                     -> P2024
-referencia de pago duplicada       -> P5007
-SALE/CANCELLATION duplicado        -> P3005
-segundo Carrito ACTIVE             -> releer el existente; si no puede, P4001
-segunda dirección principal        -> serializar/desmarcar; P1001 solo si no puede cumplir
-historial inicial duplicado        -> fallo técnico (no expuesto por API válida)
+duplicate email                   -> P1101
+duplicate SKU                     -> P2044
+duplicate ISBN                    -> P2045
+duplicate slug                    -> P2024
+duplicate payment reference       -> P5007
+duplicate SALE/CANCELLATION        -> P3005
+second ACTIVE Carrito             -> reread the existing one; if unable, P4001
+second primary address            -> serialize/unmark; P1001 only if unable to comply
+duplicate initial history         -> technical failure (not exposed through a valid API)
 ```
 
-## 10.4 Matriz rutina → SQLSTATE
+## 10.4 Routine → SQLSTATE matrix
 
-Códigos aplicables por rutina o grupo (más blanket de actor §8.2 donde corresponda):
+Applicable codes per routine or group (plus the blanket actor checks in §8.2 where applicable):
 
-| Rutina / grupo | Códigos aplicables |
+| Routine / group | Applicable codes |
 |---|---|
 | `sp_customer_register` | P1001, P1101 |
-| `fn_user_auth_data` | ninguno (vacío por diseño) |
-| Searches administrativas | P1001, P1002, P1003, P1004 |
+| `fn_user_auth_data` | none (empty by design) |
+| Administrative searches | P1001, P1002, P1003, P1004 |
 | `sp_customer_set_status` | P1001, P1002, P1003, P1004, P1102 |
 | `fn_customer_profile`, `fn_address_list`, `fn_cart_get` | P1002, P1003, P1005 |
 | `sp_customer_update` | P1001, P1002, P1003, P1005, P1102 |
 | Address create/update/delete/set_primary | P1001, P1103 |
-| `fn_catalog_search`, `fn_edition_detail` | P1001 (sort/enum); slug desconocido → 0 filas |
-| Admin catálogo create/update/set_status | blanket ADMIN, NOT_FOUND de su entidad, unicidades, invariantes de create también en update |
-| Inventory entry/adjust/set_minimum | P2041, P3001 defensivo, P3003, P3002 (adjust-out), P3004 |
+| `fn_catalog_search`, `fn_edition_detail` | P1001 (sort/enum); unknown slug → 0 rows |
+| Catalog admin create/update/set_status | blanket ADMIN checks, entity NOT_FOUND, uniqueness, create invariants also on update |
+| Inventory entry/adjust/set_minimum | P2041, defensive P3001, P3003, P3002 (adjust-out), P3004 |
 | Cart add/update/remove | P2041, P2042, P2043, P3002, P4001, P4003, P4004 |
 | `sp_checkout` | P1001, P4001, P4002, P5004, P2042, P2043, P3002, P5005 |
-| `sp_order_cancel` | P5001, P5003, P3005, P3006, P5006 (CUSTOMER propietario o ADMIN) |
+| `sp_order_cancel` | P5001, P5003, P3005, P3006, P5006 (owning CUSTOMER or ADMIN) |
 | `sp_order_change_status` | P5001, P5002 |
-| Order queries (customer/admin) | P1002, P1003, P1004/P1005 según rol; P5001 en detalle ajeno/inexistente |
+| Order queries (customer/admin) | P1002, P1003, P1004/P1005 by role; P5001 for someone else's/nonexistent detail |
 
-## 10.5 Error técnico de integridad
+## 10.5 Technical integrity error
 
-| SQLSTATE | Código | Clasificación |
+| SQLSTATE | Code | Classification |
 |---|---|---|
 | P9001 | IMMUTABLE_HISTORY_VIOLATION | TECHNICAL_INTEGRITY_ERROR |
 
-No es error de dominio. HTTP futuro: 500. Un endpoint correcto nunca lo produce; `DatabaseExceptionTranslator` debe conocerlo.
+Not a domain error. Future HTTP: 500. A correct endpoint never produces it; `DatabaseExceptionTranslator` must recognize it.
 
 ---
 
-# 11. Concurrencia y orden de bloqueo
+# 11. Concurrency and lock ordering
 
-## 11.1 Principio
+## 11.1 Principle
 
-Toda operación que modifique recursos compartidos debe:
+Every operation modifying shared resources must:
 
-1. validar el recurso;
-2. adquirir locks en un orden determinista;
-3. realizar cambios;
-4. preservar invariantes;
-5. terminar sin depender de locks externos a la transacción.
+1. validate the resource;
+2. acquire locks in a deterministic order;
+3. make changes;
+4. preserve invariants;
+5. finish without depending on locks external to the transaction.
 
-El estado del actor se valida al inicio; un bloqueo concurrente posterior no aborta la operación en curso (aplica a nuevas invocaciones).
+Actor status is validated at the start; a subsequent concurrent block does not abort the ongoing operation (it applies to new invocations).
 
 ---
 
-## 11.2 Carrito
+## 11.2 Cart
 
-Las Procedures:
+The Procedures:
 
 - `sp_cart_add_item`;
 - `sp_cart_update_item`;
 - `sp_cart_remove_item`;
 - `sp_checkout`;
 
-deben serializar modificaciones concurrentes al mismo Carrito.
+must serialize concurrent modifications to the same Carrito.
 
-Regla:
+Rule:
 
 ```text
-primero: Carrito ACTIVE del Cliente -> FOR UPDATE
+first: Cliente's ACTIVE Carrito -> FOR UPDATE
 ```
 
-Si no existe al agregar:
+If none exists when adding:
 
-- la creación debe ser segura ante dos solicitudes concurrentes;
-- la restricción de “máximo un ACTIVE” es la defensa final;
-- la rutina debe resolver el conflicto dejando exactamente un Carrito ACTIVE.
+- creation must be safe against two concurrent requests;
+- the “at most one ACTIVE” constraint is the final defense;
+- the routine must resolve the conflict leaving exactly one ACTIVE Carrito.
 
 ---
 
 ## 11.3 Checkout
 
-Orden lógico de locking:
+Logical locking order:
 
 ```text
-1. Usuario/Cliente actor validado
+1. Usuario/Cliente actor validated
 2. Carrito ACTIVE                     FOR UPDATE
-3. Dirección seleccionada             lock de lectura que impida DELETE durante snapshot
-4. Items del carrito
-5. Inventarios, ordenados por EdicionId ASC   FOR UPDATE
-6. crear Pedido/Pago/snapshots/movimientos
+3. Selected Dirección                read lock preventing DELETE during snapshot
+4. Cart items
+5. Inventarios, ordered by EdicionId ASC     FOR UPDATE
+6. create Pedido/Pago/snapshots/movements
 ```
 
-Los Inventarios **siempre** se bloquean en `EdicionId` ascendente para reducir riesgo de deadlock entre checkouts que comparten varias Ediciones.
+Inventarios are **always** locked in ascending `EdicionId` order to reduce deadlock risk between checkouts sharing multiple editions.
 
-Una vez adquiridos:
+Once acquired:
 
-- se revalida stock;
-- se actualiza el inventario;
-- se crean los movimientos correspondientes.
+- stock is revalidated;
+- inventory is updated;
+- corresponding movements are created.
 
 ---
 
-## 11.4 Inventario administrativo
+## 11.4 Administrative inventory
 
-`sp_inventory_entry` y `sp_inventory_adjust`:
+`sp_inventory_entry` and `sp_inventory_adjust`:
 
 ```text
 Inventario objetivo -> FOR UPDATE
 ```
 
-antes de calcular `StockAnterior` y `StockPosterior`.
+before calculating `StockAnterior` and `StockPosterior`.
 
 ---
 
-## 11.5 Cancelación
+## 11.5 Cancellation
 
 `sp_order_cancel`:
 
 ```text
 1. Pedido                         FOR UPDATE
-2. Pago asociado
-3. Inventarios de PedidoItem,
-   ordenados por EdicionId ASC    FOR UPDATE
-4. restauración + movimientos
-5. refund simulado
-6. historial
+2. Associated Pago
+3. Inventarios from PedidoItem,
+   ordered by EdicionId ASC      FOR UPDATE
+4. restoration + movements
+5. simulated refund
+6. history
 ```
 
-Dos cancelaciones concurrentes no pueden restaurar dos veces el mismo stock.
+Two concurrent cancellations cannot restore the same stock twice.
 
-La unicidad de `(PedidoId, EdicionId, CANCELLATION)` constituye defensa adicional.
+Uniqueness of `(PedidoId, EdicionId, CANCELLATION)` provides additional defense.
 
 ---
 
-## 11.6 Dirección principal
+## 11.6 Primary address
 
-Operaciones que puedan cambiar la dirección principal serializan sobre el Cliente propietario antes de modificar flags de sus Direcciones.
+Operations that may change the primary address serialize on the owning Cliente before modifying flags on its Direcciones.
 
-Así se preserva:
+This preserves:
 
 ```text
 COUNT(Direccion WHERE EsPrincipal) <= 1
@@ -900,25 +900,25 @@ COUNT(Direccion WHERE EsPrincipal) <= 1
 
 ---
 
-## 11.7 Libro y relaciones
+## 11.7 Libro and relationships
 
-`sp_book_update` bloquea el Libro antes de reemplazar:
+`sp_book_update` locks the Libro before replacing:
 
-- metadatos;
-- autorías;
-- categorías.
+- metadata;
+- authorships;
+- categories.
 
-El reemplazo completo ocurre en una única transacción.
+Full replacement occurs in a single transaction.
 
 ---
 
-# 12. Idempotencia
+# 12. Idempotency
 
-PLIEGO v1 no incorpora infraestructura general de `Idempotency-Key`.
+PLIEGO v1 does not incorporate general `Idempotency-Key` infrastructure.
 
-## 12.1 Operaciones naturalmente idempotentes
+## 12.1 Naturally idempotent operations
 
-Son idempotentes respecto al estado final:
+These are idempotent with respect to final state:
 
 - `sp_customer_set_status`;
 - `sp_author_set_status`;
@@ -929,113 +929,113 @@ Son idempotentes respecto al estado final:
 - `sp_inventory_set_minimum`;
 - `sp_address_set_primary`.
 
-Solicitar nuevamente el mismo estado válido produce éxito sin efectos adicionales.
+Requesting the same valid state again succeeds without additional effects.
 
-## 12.2 Operaciones no idempotentes
+## 12.2 Non-idempotent operations
 
-Ejemplos:
+Examples:
 
-- registrar cliente;
-- crear autor/editorial/categoría/libro/edición;
-- entrada de inventario;
-- ajuste de inventario;
-- agregar unidades al carrito;
-- checkout rechazado.
+- registering a customer;
+- creating an author/publisher/category/book/edition;
+- inventory entry;
+- inventory adjustment;
+- adding units to the cart;
+- rejected checkout.
 
-El caller no debe reintentarlas automáticamente como si fueran idempotentes.
+The caller must not automatically retry them as if they were idempotent.
 
-## 12.3 Checkout aprobado
+## 12.3 Approved checkout
 
-Una vez que el checkout de un Carrito termina `APPROVED`:
+Once checkout for a Carrito ends as `APPROVED`:
 
 ```text
 Carrito -> CHECKED_OUT
 ```
 
-por lo que una segunda llamada no puede generar otra compra desde el mismo carrito.
+so a second call cannot generate another purchase from the same cart.
 
-## 12.4 Checkout rechazado
+## 12.4 Rejected checkout
 
-Pago `REJECTED` mantiene el Carrito `ACTIVE`.
+A `REJECTED` Pago keeps the Carrito `ACTIVE`.
 
-Una nueva llamada representa **un nuevo intento comercial** y puede generar otro Pedido `CANCELLED`.
+A new call represents **a new business attempt** and may generate another `CANCELLED` Pedido.
 
-Esto es comportamiento intencional de v1.
+This is intentional v1 behavior.
 
-## 12.5 Retry tras timeout
+## 12.5 Retry after timeout
 
-La política de retry/recovery tras timeout o resultado desconocido pertenece al REST API Contract: prohibido reejecutar comandos no idempotentes a ciegas después de perder la respuesta.
+The retry/recovery policy after a timeout or unknown outcome belongs to the REST API Contract: blindly reexecuting non-idempotent commands after losing the response is prohibited.
 
 ---
 
-# 13. Contrato del simulador de pago
+# 13. Payment simulator contract
 
-## 13.1 Alcance
+## 13.1 Scope
 
-No existe pasarela externa.
+There is no external gateway.
 
-La simulación ocurre dentro del flujo de `sp_checkout`.
+Simulation occurs within the `sp_checkout` flow.
 
-## 13.2 Parámetro determinista
+## 13.2 Deterministic parameter
 
-`sp_checkout` recibe:
+`sp_checkout` receives:
 
 ```text
 p_payment_outcome : Code
 ```
 
-Valores admitidos:
+Allowed values:
 
 ```text
 APPROVED
 REJECTED
 ```
 
-No se permite resultado aleatorio.
+Random outcomes are not allowed.
 
-Este parámetro es **técnico/académico** y no representa autorización financiera real.
+This parameter is **technical/academic** and does not represent real financial authorization.
 
-El REST/Security Contract decidirá si se expone directamente en ambientes académicos o si Spring lo obtiene de configuración de prueba.
+The REST/Security Contract will decide whether it is exposed directly in academic environments or obtained by Spring from test configuration.
 
-## 13.3 Resultado APPROVED
+## 13.3 APPROVED outcome
 
-Debe producir:
+It must produce:
 
 ```text
 Pago.Estado   = APPROVED
 Pedido.Estado = CONFIRMED
 Carrito       = CHECKED_OUT
-stock         = descontado
-SALE          = creado por item
+stock         = deducted
+SALE          = created per item
 ```
 
-`Pago.Referencia` es obligatoria y única. Formato: `SIM-<UUIDv4>` (generado por PostgreSQL).
+`Pago.Referencia` is mandatory and unique. Format: `SIM-<UUIDv4>` (generated by PostgreSQL).
 
-## 13.4 Resultado REJECTED
+## 13.4 REJECTED outcome
 
-Debe producir:
+It must produce:
 
 ```text
 Pago.Estado   = REJECTED
 Pedido.Estado = CANCELLED
 Carrito       = ACTIVE
-stock         = sin cambios
-SALE          = ninguno
+stock         = unchanged
+SALE          = none
 ```
 
-Puede registrar `DetalleResultado`. Referencia = NULL en v1 (exigido por CHECK).
+It may record `DetalleResultado`. Reference = NULL in v1 (required by CHECK).
 
 ## 13.5 Refund
 
-No existe operación de pago pública independiente.
+There is no separate public payment operation.
 
-`REFUNDED` solo se produce desde:
+`REFUNDED` is only produced through:
 
 ```text
 sp_order_cancel
 ```
 
-cuando el Pedido tenía Pago `APPROVED`.
+when the Pedido had an `APPROVED` Pago.
 
 ---
 
@@ -1043,15 +1043,15 @@ cuando el Pedido tenía Pago `APPROVED`.
 
 ## 14.1 `sp_customer_register`
 
-### Tipo
+### Type
 
-Procedure pública.
+Public Procedure.
 
-### Caso de uso
+### Use case
 
 CU-AUTH-01.
 
-### Firma lógica
+### Logical signature
 
 ```text
 sp_customer_register(
@@ -1067,36 +1067,36 @@ sp_customer_register(
     o_user_state    : StatusCode
 ```
 
-### Autoridad
+### Authority
 
-Pública; no requiere actor autenticado.
+Public; no authenticated actor required.
 
-### Responsabilidades
+### Responsibilities
 
-1. normalizar email;
-2. comprobar unicidad;
-3. validar valores no vacíos;
-4. crear Usuario:
-   - rol `CUSTOMER`;
-   - estado `ACTIVE`;
-5. crear Cliente;
-6. preservar relación 1:1;
-7. confirmar ambas inserciones atómicamente.
+1. normalize email;
+2. check uniqueness;
+3. validate nonempty values;
+4. create Usuario:
+   - role `CUSTOMER`;
+   - status `ACTIVE`;
+5. create Cliente;
+6. preserve the 1:1 relationship;
+7. commit both inserts atomically.
 
-### No hace
+### Does not perform
 
-- hashing de password;
-- envío de correo;
-- creación de sesión/token.
+- password hashing;
+- sending email;
+- session/token creation.
 
-El hash llega desde Spring Security.
+The hash comes from Spring Security.
 
-### Errores
+### Errors
 
 - P1001 INVALID_ARGUMENT
 - P1101 EMAIL_ALREADY_EXISTS
 
-### Escrituras
+### Writes
 
 - Usuario
 - Cliente
@@ -1105,15 +1105,15 @@ El hash llega desde Spring Security.
 
 ## 14.2 `fn_user_auth_data`
 
-### Tipo
+### Type
 
-Function pública de consulta.
+Public query Function.
 
-### Caso de uso
+### Use case
 
 CU-AUTH-02.
 
-### Firma lógica
+### Logical signature
 
 ```text
 fn_user_auth_data(
@@ -1122,7 +1122,7 @@ fn_user_auth_data(
 -> UserAuthRecord?
 ```
 
-### Resultado
+### Result
 
 ```text
 user_id
@@ -1132,22 +1132,22 @@ role
 state
 ```
 
-### Semántica
+### Semantics
 
-- normaliza email;
-- si no existe, devuelve cero resultados;
-- no genera error `USER_NOT_FOUND`;
-- no verifica contraseña;
-- no genera token.
+- normalizes email;
+- returns zero results if it does not exist;
+- does not raise a `USER_NOT_FOUND` error;
+- does not verify the password;
+- does not generate a token.
 
 Spring Security:
 
-1. obtiene el record;
-2. valida `state`;
-3. verifica password contra hash;
-4. genera token stateless.
+1. retrieves the record;
+2. validates `state`;
+3. verifies the password against the hash;
+4. generates a stateless token.
 
-### Lecturas
+### Reads
 
 - Usuario
 
@@ -1155,15 +1155,15 @@ Spring Security:
 
 ## 14.3 `fn_admin_customer_search`
 
-### Tipo
+### Type
 
-Function administrativa.
+Administrative Function.
 
-### Caso de uso
+### Use case
 
 CU-ADM-SEC-01.
 
-### Firma lógica
+### Logical signature
 
 ```text
 fn_admin_customer_search(
@@ -1176,15 +1176,15 @@ fn_admin_customer_search(
 -> RecordSet<CustomerAdminSummary>
 ```
 
-### Filtros
+### Filters
 
-`p_query` puede coincidir con:
+`p_query` may match:
 
 - email;
-- nombres;
-- apellidos.
+- first names;
+- last names.
 
-### Resultado mínimo
+### Minimum result
 
 ```text
 user_id
@@ -1198,11 +1198,11 @@ created_at
 total_count
 ```
 
-### Autoridad
+### Authority
 
 Actor `ACTIVE` + `ADMIN`.
 
-### Errores
+### Errors
 
 - P1001
 - P1002
@@ -1213,15 +1213,15 @@ Actor `ACTIVE` + `ADMIN`.
 
 ## 14.4 `sp_customer_set_status`
 
-### Tipo
+### Type
 
-Procedure administrativa.
+Administrative Procedure.
 
-### Caso de uso
+### Use case
 
 CU-ADM-SEC-01.
 
-### Firma lógica
+### Logical signature
 
 ```text
 sp_customer_set_status(
@@ -1235,17 +1235,17 @@ sp_customer_set_status(
     o_effective_state: UsuarioEstado
 ```
 
-### Reglas
+### Rules
 
-- actor ADMIN ACTIVE;
-- target debe existir;
-- target debe ser CUSTOMER;
-- estados válidos: ACTIVE/BLOCKED;
-- no borra carrito;
-- no altera pedidos;
-- solicitar el mismo estado es éxito idempotente.
+- ACTIVE ADMIN actor;
+- target must exist;
+- target must be CUSTOMER;
+- valid states: ACTIVE/BLOCKED;
+- does not delete the cart;
+- does not alter orders;
+- requesting the same state is idempotent success.
 
-### Errores
+### Errors
 
 - P1001
 - P1002
@@ -1253,7 +1253,7 @@ sp_customer_set_status(
 - P1004
 - P1102
 
-### Escrituras
+### Writes
 
 - Usuario
 
@@ -1270,7 +1270,7 @@ fn_customer_profile(
 -> CustomerProfile
 ```
 
-Resultado:
+Result:
 
 ```text
 customer_id
@@ -1301,14 +1301,14 @@ sp_customer_update(
 -> CustomerProfile
 ```
 
-Semántica:
+Semantics:
 
-- reemplaza el conjunto mutable del perfil;
-- no modifica email;
-- no modifica rol;
-- no modifica estado.
+- replaces the profile's mutable set;
+- does not modify email;
+- does not modify role;
+- does not modify status.
 
-Errores:
+Errors:
 
 - P1001
 - P1002
@@ -1327,7 +1327,7 @@ fn_address_list(
 -> RecordSet<AddressRecord>
 ```
 
-Resultado:
+Result:
 
 ```text
 address_id
@@ -1344,10 +1344,10 @@ phone
 is_primary
 ```
 
-Orden recomendado:
+Recommended order:
 
-1. principal primero;
-2. creación ascendente o alias como criterio estable definido en modelo físico.
+1. primary first;
+2. ascending creation order or alias as a stable criterion defined in the physical model.
 
 ---
 
@@ -1372,11 +1372,11 @@ sp_address_create(
     o_address_id    : Id
 ```
 
-Si `p_make_primary = true`:
+If `p_make_primary = true`:
 
-- desmarca la principal anterior;
-- marca la nueva;
-- todo en una transacción.
+- unmarks the previous primary;
+- marks the new one;
+- all in one transaction.
 
 ---
 
@@ -1399,17 +1399,17 @@ sp_address_update(
 )
 ```
 
-`EsPrincipal` no se modifica aquí.
+`EsPrincipal` is not modified here.
 
-Se usa `sp_address_set_primary`.
+Use `sp_address_set_primary`.
 
-Si la dirección no pertenece al actor, la rutina responde:
+If the address does not belong to the actor, the routine responds:
 
 ```text
 P1103 ADDRESS_NOT_FOUND
 ```
 
-para no exponer propiedad ajena.
+to avoid exposing someone else's ownership.
 
 ---
 
@@ -1422,14 +1422,14 @@ sp_address_delete(
 )
 ```
 
-Reglas:
+Rules:
 
-- solo propietario;
-- DELETE físico permitido;
-- si era principal, es válido quedar con cero principales;
-- no altera PedidoDireccion.
+- owner only;
+- physical DELETE allowed;
+- if it was primary, having zero primary addresses afterward is valid;
+- does not alter PedidoDireccion.
 
-Errores:
+Errors:
 
 - P1103 ADDRESS_NOT_FOUND
 
@@ -1444,28 +1444,28 @@ sp_address_set_primary(
 )
 ```
 
-Reglas:
+Rules:
 
-- solo propietario;
-- serializa cambios de direcciones principales del Cliente;
-- deja exactamente esa Dirección como principal;
-- repetir sobre la principal actual es éxito idempotente.
+- owner only;
+- serializes changes to the Cliente's primary addresses;
+- leaves exactly that Dirección as primary;
+- repeating on the current primary is idempotent success.
 
 ---
 
-# 16. Database API — Catálogo público
+# 16. Database API — Public catalog
 
 ## 16.1 `fn_catalog_search`
 
-### Tipo
+### Type
 
-Function pública.
+Public Function.
 
-### Casos de uso
+### Use cases
 
 CU-CAT-01.
 
-### Firma lógica
+### Logical signature
 
 ```text
 fn_catalog_search(
@@ -1484,59 +1484,59 @@ fn_catalog_search(
 -> RecordSet<CatalogEditionSummary>
 ```
 
-### Semántica de filtros
+### Filter semantics
 
-Todos los filtros suministrados se combinan mediante AND.
+All supplied filters are combined using AND.
 
-#### Título
+#### Title
 
-Coincidencia parcial, insensible a mayúsculas/minúsculas.
+Case-insensitive partial match.
 
 #### Autor
 
-Coincidencia parcial sobre `Autor.Nombre`, insensible a mayúsculas/minúsculas.
+Case-insensitive partial match on `Autor.Nombre`.
 
 #### ISBN
 
-Coincidencia exacta canónica.
+Exact canonical match.
 
-#### Categoría
+#### Category
 
-Si slug identifica:
+If the slug identifies:
 
-- subcategoría → asociación exacta;
-- raíz → asociación a la raíz o a cualquier subcategoría directa.
+- a subcategory → exact association;
+- a root → association with the root or any direct subcategory.
 
-Slug desconocido → 0 filas, sin error.
+Unknown slug → 0 rows, no error.
 
-#### Precio
+#### Price
 
 ```text
 p_price_min <= Edicion.Precio <= p_price_max
 ```
 
-cuando correspondan.
+where applicable.
 
-### Publicabilidad
+### Publishability
 
-Solo devuelve:
+Only returns:
 
 ```text
 Libro ACTIVE
 AND Edicion ACTIVE
 ```
 
-Autor/Editorial/Categoria inactivos previamente asociados no ocultan la edición.
+Previously associated inactive Autor/Editorial/Categoria records do not hide the edition.
 
-### Disponibilidad
+### Availability
 
 ```text
 available = StockActual > 0
 ```
 
-Stock cero no elimina el resultado.
+Zero stock does not remove the result.
 
-### Resultado mínimo
+### Minimum result
 
 ```text
 edition_id
@@ -1555,7 +1555,7 @@ available
 total_count
 ```
 
-No expone `StockActual` exacto en la API pública.
+Does not expose exact `StockActual` in the public API.
 
 ---
 
@@ -1568,17 +1568,17 @@ fn_edition_detail(
 -> EditionPublicDetail?
 ```
 
-Solo devuelve una Edición publicable.
+Only returns a publishable edition.
 
-Si:
+If:
 
-- no existe;
-- Libro INACTIVE;
-- Edicion INACTIVE;
+- it does not exist;
+- Libro is INACTIVE;
+- Edicion is INACTIVE;
 
-devuelve cero resultados.
+returns zero results.
 
-Resultado:
+Result:
 
 ```text
 edition_id
@@ -1605,17 +1605,17 @@ available
 
 ---
 
-# 17. Database API — Administración de catálogo
+# 17. Database API — Catalog administration
 
-## 17.1 Consultas administrativas
+## 17.1 Administrative queries
 
-Todas requieren:
+All require:
 
 ```text
 p_actor_user_id -> ACTIVE ADMIN
 ```
 
-y soportan paginación cuando el conjunto puede crecer.
+and support pagination when the set may grow.
 
 ### `fn_admin_author_search`
 
@@ -1656,7 +1656,7 @@ fn_admin_category_search(
 -> RecordSet<CategoryAdminRecord>
 ```
 
-Debe incluir información del padre cuando exista.
+Must include parent information when one exists.
 
 ### `fn_admin_book_search`
 
@@ -1671,12 +1671,12 @@ fn_admin_book_search(
 -> RecordSet<BookAdminRecord>
 ```
 
-Cada BookAdminRecord debe incluir:
+Each BookAdminRecord must include:
 
-- datos del Libro;
-- autores con IDs y `OrdenAutoria`;
-- categorías con IDs;
-- estado.
+- Libro data;
+- authors with IDs and `OrdenAutoria`;
+- categories with IDs;
+- status.
 
 ### `fn_admin_edition_search`
 
@@ -1692,13 +1692,13 @@ fn_admin_edition_search(
 -> RecordSet<EditionAdminRecord>
 ```
 
-`p_query` puede coincidir con:
+`p_query` may match:
 
 - SKU;
 - ISBN;
-- título.
+- title.
 
-Debe devolver los campos mutables necesarios para administración.
+Must return the mutable fields needed for administration.
 
 ---
 
@@ -1716,7 +1716,7 @@ sp_author_create(
     o_author_id     : Id
 ```
 
-Estado inicial:
+Initial status:
 
 ```text
 ACTIVE
@@ -1743,11 +1743,11 @@ sp_author_set_status(
 )
 ```
 
-Reglas:
+Rules:
 
-- no elimina LibroAutor;
-- inactivar no oculta automáticamente Libros;
-- mismo estado = éxito idempotente.
+- does not delete LibroAutor;
+- deactivation does not automatically hide Libros;
+- same state = idempotent success.
 
 ---
 
@@ -1765,7 +1765,7 @@ sp_publisher_create(
     o_publisher_id  : Id
 ```
 
-Estado inicial `ACTIVE`.
+Initial status `ACTIVE`.
 
 ### `sp_publisher_update`
 
@@ -1788,11 +1788,11 @@ sp_publisher_set_status(
 )
 ```
 
-No modifica automáticamente Ediciones existentes.
+Does not automatically modify existing editions.
 
 ---
 
-## 17.4 Categoría
+## 17.4 Category
 
 ### `sp_category_create`
 
@@ -1808,14 +1808,14 @@ sp_category_create(
     o_category_id      : Id
 ```
 
-Estado inicial `ACTIVE`.
+Initial status `ACTIVE`.
 
-Valida:
+Validates:
 
-- slug global;
-- padre existente;
-- padre raíz;
-- no profundidad > 2.
+- global slug;
+- existing parent;
+- root parent;
+- no depth > 2.
 
 ### `sp_category_update`
 
@@ -1830,7 +1830,7 @@ sp_category_update(
 )
 ```
 
-Si una categoría raíz posee hijos no puede convertirse en subcategoría, porque crearía profundidad inválida.
+If a root category has children, it cannot become a subcategory because that would create invalid depth.
 
 ### `sp_category_set_status`
 
@@ -1842,7 +1842,7 @@ sp_category_set_status(
 )
 ```
 
-No elimina LibroCategoria.
+Does not delete LibroCategoria.
 
 ---
 
@@ -1850,19 +1850,19 @@ No elimina LibroCategoria.
 
 ### AuthorAssignmentList
 
-Cada entrada contiene:
+Each entry contains:
 
 ```text
 author_id
 order
 ```
 
-Reglas:
+Rules:
 
-- IDs no repetidos;
+- no repeated IDs;
 - `order > 0`;
-- order no repetido;
-- orden no necesita ser contiguo.
+- no repeated order;
+- order need not be contiguous.
 
 ### `sp_book_create`
 
@@ -1879,18 +1879,18 @@ sp_book_create(
     o_book_id       : Id
 ```
 
-Estado inicial `ACTIVE`.
+Initial status `ACTIVE`.
 
-Requiere:
+Requires:
 
 ```text
 >= 1 author
 >= 1 category
 ```
 
-Todos los Autores y Categorías introducidos deben estar `ACTIVE`.
+All introduced Autores and categories must be `ACTIVE`.
 
-Crea atómicamente:
+Atomically creates:
 
 - Libro;
 - LibroAutor;
@@ -1910,13 +1910,13 @@ sp_book_update(
 )
 ```
 
-Semántica:
+Semantics:
 
-- reemplaza el conjunto actual de autores y categorías;
-- reordena autoría dentro de una transacción;
-- una asociación INACTIVE ya existente puede conservarse;
-- un Autor/Categoría INACTIVE que no estaba previamente asociado no puede introducirse;
-- si Libro está `ACTIVE`, la lista final debe conservar al menos un Autor y una Categoría.
+- replaces the current set of authors and categories;
+- reorders authorship within a transaction;
+- an existing INACTIVE association may be retained;
+- an INACTIVE Autor/category not previously associated cannot be introduced;
+- if Libro is `ACTIVE`, the final list must retain at least one Autor and one category.
 
 ### `sp_book_set_status`
 
@@ -1928,18 +1928,18 @@ sp_book_set_status(
 )
 ```
 
-Para pasar a `ACTIVE`:
+To transition to `ACTIVE`:
 
 ```text
 >= 1 LibroAutor
 >= 1 LibroCategoria
 ```
 
-No cambia estado de Ediciones.
+Does not change edition status.
 
 ---
 
-## 17.6 Edición
+## 17.6 Edition
 
 ### `sp_edition_create`
 
@@ -1964,24 +1964,24 @@ sp_edition_create(
     o_edition_id           : Id
 ```
 
-Estado inicial:
+Initial status:
 
 ```text
 ACTIVE
 ```
 
-Reglas:
+Rules:
 
-- Libro debe existir; puede estar INACTIVE.
-- Editorial debe estar ACTIVE.
-- SKU único.
-- ISBN opcional válido y único.
-- LanguageCode 2 o 3 letras canónicas.
-- precio > 0.
-- páginas > 0.
-- portada cumple matriz de licencia.
+- Libro must exist; it may be INACTIVE.
+- Editorial must be ACTIVE.
+- Unique SKU.
+- Optional ISBN must be valid and unique.
+- LanguageCode has 2 or 3 canonical letters.
+- price > 0.
+- pages > 0.
+- cover complies with the license matrix.
 
-Crea en una misma transacción:
+Creates in the same transaction:
 
 ```text
 Edicion
@@ -2008,14 +2008,14 @@ sp_edition_update(
 )
 ```
 
-No puede modificar:
+Cannot modify:
 
 - LibroId;
 - SKU.
 
-Si cambia `PublisherId`, el nuevo Publisher debe estar ACTIVE.
+If `PublisherId` changes, the new Publisher must be ACTIVE.
 
-Si conserva el Publisher actual aunque éste esté INACTIVE, la actualización de otros metadatos sigue siendo válida.
+If it retains the current Publisher even when INACTIVE, updating other metadata remains valid.
 
 ### `sp_edition_set_status`
 
@@ -2027,11 +2027,11 @@ sp_edition_set_status(
 )
 ```
 
-No cambia Libro.
+Does not change Libro.
 
 ---
 
-# 18. Database API — Inventario
+# 18. Database API — Inventory
 
 ## 18.1 `fn_inventory_search`
 
@@ -2050,7 +2050,7 @@ fn_inventory_search(
 
 Actor: ADMIN ACTIVE.
 
-Resultado:
+Result:
 
 ```text
 edition_id
@@ -2088,13 +2088,13 @@ fn_inventory_movements(
 -> RecordSet<InventoryMovementRecord>
 ```
 
-Orden:
+Order:
 
 ```text
 Fecha DESC
 ```
 
-con criterio secundario estable por ID.
+with a stable secondary criterion by ID.
 
 ---
 
@@ -2115,7 +2115,7 @@ sp_inventory_entry(
 
 Actor ADMIN.
 
-Tipo generado:
+Generated type:
 
 ```text
 ENTRY
@@ -2145,20 +2145,20 @@ sp_inventory_adjust(
     o_stock_after   : NonNegativeInt
 ```
 
-`p_adjustment_type` únicamente:
+`p_adjustment_type` only allows:
 
 ```text
 ADJUSTMENT_IN
 ADJUSTMENT_OUT
 ```
 
-No admite:
+Does not allow:
 
 - ENTRY;
 - SALE;
 - CANCELLATION.
 
-`ADJUSTMENT_OUT` nunca deja stock negativo.
+`ADJUSTMENT_OUT` never leaves negative stock.
 
 ---
 
@@ -2174,17 +2174,17 @@ sp_inventory_set_minimum(
     o_stock_minimum : NonNegativeInt
 ```
 
-No genera MovimientoInventario.
+Does not generate MovimientoInventario.
 
-`0` significa:
+`0` means:
 
 ```text
-sin umbral de bajo stock
+no low-stock threshold
 ```
 
 ---
 
-# 19. Database API — Carrito
+# 19. Database API — Cart
 
 ## 19.1 `fn_cart_get`
 
@@ -2197,9 +2197,9 @@ fn_cart_get(
 
 Actor ACTIVE CUSTOMER.
 
-### Si existe Carrito ACTIVE
+### If an ACTIVE Carrito exists
 
-Devuelve:
+Returns:
 
 ```text
 cart_id
@@ -2208,7 +2208,7 @@ items[]
 total_current
 ```
 
-Cada item incluye:
+Each item includes:
 
 ```text
 cart_item_id
@@ -2224,9 +2224,9 @@ available
 unavailability_reason?
 ```
 
-### Si no existe Carrito ACTIVE
+### If no ACTIVE Carrito exists
 
-Devuelve conceptualmente:
+Conceptually returns:
 
 ```text
 cart_id = null
@@ -2235,15 +2235,15 @@ items = []
 total_current = 0
 ```
 
-No crea un Carrito.
+Does not create a Carrito.
 
-### Item inactivado
+### Deactivated item
 
-Si Libro o Edición pasó a INACTIVE:
+If Libro or edition became INACTIVE:
 
-- el item no se oculta;
+- the item is not hidden;
 - `available = false`;
-- checkout lo rechazará.
+- checkout will reject it.
 
 ---
 
@@ -2261,20 +2261,20 @@ sp_cart_add_item(
     o_quantity      : PositiveInt
 ```
 
-Flujo:
+Flow:
 
-1. actor CUSTOMER ACTIVE;
-2. obtiene/crea Carrito ACTIVE;
-3. bloquea Carrito;
-4. valida Libro ACTIVE;
-5. valida Edicion ACTIVE;
-6. valida stock actual;
-7. inserta item o incrementa cantidad;
-8. valida cantidad total <= stock actual.
+1. ACTIVE CUSTOMER actor;
+2. gets/creates ACTIVE Carrito;
+3. locks Carrito;
+4. validates ACTIVE Libro;
+5. validates ACTIVE Edicion;
+6. validates current stock;
+7. inserts item or increments quantity;
+8. validates total quantity <= current stock.
 
-No reserva stock.
+Does not reserve stock.
 
-Errores relevantes:
+Relevant errors:
 
 - P2041
 - P2042
@@ -2298,14 +2298,14 @@ sp_cart_update_item(
     o_quantity      : PositiveInt
 ```
 
-Reglas:
+Rules:
 
-- item pertenece al Carrito ACTIVE del actor;
-- cantidad > 0;
-- cantidad <= stock actual;
-- no reserva stock.
+- item belongs to the actor's ACTIVE Carrito;
+- quantity > 0;
+- quantity <= current stock;
+- does not reserve stock.
 
-Si item ajeno/inexistente:
+If item belongs to someone else/does not exist:
 
 ```text
 P4003 CART_ITEM_NOT_FOUND
@@ -2322,11 +2322,11 @@ sp_cart_remove_item(
 )
 ```
 
-Reglas:
+Rules:
 
-- solo Carrito ACTIVE propio;
-- DELETE físico del item;
-- si queda vacío, Carrito continúa ACTIVE.
+- own ACTIVE Carrito only;
+- physical DELETE of the item;
+- if left empty, Carrito remains ACTIVE.
 
 ---
 
@@ -2334,16 +2334,16 @@ Reglas:
 
 ## 20.1 `sp_checkout`
 
-### Tipo
+### Type
 
-Procedure crítica.
+Critical Procedure.
 
-### Casos de uso
+### Use cases
 
 - CU-SAL-01
-- incluye CU-PAY-01
+- includes CU-PAY-01
 
-### Firma lógica
+### Logical signature
 
 ```text
 sp_checkout(
@@ -2360,69 +2360,69 @@ sp_checkout(
     o_payment_reference : Text?
 ```
 
-### Precondiciones
+### Preconditions
 
-- actor ACTIVE CUSTOMER;
-- Dirección existe y pertenece al actor;
-- Carrito ACTIVE;
-- Carrito no vacío.
+- ACTIVE CUSTOMER actor;
+- Dirección exists and belongs to the actor;
+- ACTIVE Carrito;
+- nonempty Carrito.
 
-### Bloqueo
+### Locking
 
 1. Carrito FOR UPDATE.
-2. Dirección protegida contra DELETE durante snapshot.
-3. Inventarios por `EdicionId ASC` FOR UPDATE.
+2. Dirección protected against DELETE during snapshot.
+3. Inventarios by `EdicionId ASC` FOR UPDATE.
 
-### Revalidaciones
+### Revalidations
 
-Para cada item:
+For each item:
 
 ```text
 Libro ACTIVE
 Edicion ACTIVE
 Cantidad > 0
 StockActual >= Cantidad
-Precio actual > 0
+current Precio > 0
 ```
 
 ### Snapshots
 
-Cada PedidoItem copia:
+Each PedidoItem copies:
 
 - SKU;
 - ISBN;
-- título;
-- autores en orden;
-- editorial;
-- formato;
-- idioma;
-- precio unitario;
-- cantidad;
+- title;
+- authors in order;
+- publisher;
+- format;
+- language;
+- unit price;
+- quantity;
 - subtotal.
 
-PedidoDireccion copia:
+PedidoDireccion copies:
 
-- destinatario;
-- dirección 1/2;
-- ciudad;
-- provincia;
-- país;
-- código postal;
-- referencia;
-- teléfono.
+- recipient;
+- address 1/2;
+- city;
+- province;
+- country;
+- postal code;
+- reference;
+- phone.
 
-No copia Alias.
+Does not copy Alias.
 
-### Historial
+### History
 
-Siempre crea:
+Always creates:
 
 ```text
 NULL -> PENDING_PAYMENT
 Origen = SYSTEM
 ```
 
-Luego, en la misma transacción:
+Then, in the same transaction:
 
 #### APPROVED
 
@@ -2441,9 +2441,9 @@ Origen = SYSTEM
 ### APPROVED
 
 - Pago APPROVED;
-- Referencia obligatoria y única;
-- un SALE por PedidoItem;
-- stock descontado;
+- mandatory and unique Referencia;
+- one SALE per PedidoItem;
+- stock deducted;
 - Pedido CONFIRMED;
 - Carrito CHECKED_OUT.
 
@@ -2451,13 +2451,13 @@ Origen = SYSTEM
 
 - Pago REJECTED;
 - Pedido CANCELLED;
-- sin SALE;
-- stock sin cambios;
+- no SALE;
+- stock unchanged;
 - Carrito ACTIVE.
 
-### Errores
+### Errors
 
-Entre otros:
+Among others:
 
 - P4001 CART_NOT_ACTIVE
 - P4002 CART_EMPTY
@@ -2467,9 +2467,9 @@ Entre otros:
 - P3002 INSUFFICIENT_STOCK
 - P5005 PAYMENT_OUTCOME_INVALID
 
-### Atomicidad
+### Atomicity
 
-Cualquier error de dominio/técnico antes del resultado final provoca rollback total.
+Any domain/technical error before the final outcome causes a full rollback.
 
 ---
 
@@ -2484,13 +2484,13 @@ fn_customer_orders(
 -> RecordSet<CustomerOrderSummary>
 ```
 
-Orden predeterminado:
+Default order:
 
 ```text
 FechaCreacion DESC
 ```
 
-Resultado:
+Result:
 
 ```text
 order_id
@@ -2501,15 +2501,15 @@ payment_state
 total_count
 ```
 
-Incluye pedidos:
+Includes orders:
 
-- confirmados;
-- en logística;
-- entregados;
-- cancelados por rechazo;
-- cancelados posteriormente.
+- confirmed;
+- in logistics;
+- delivered;
+- cancelled by rejection;
+- cancelled afterward.
 
-Nunca devuelve pedidos de otro Cliente.
+Never returns another Cliente's orders.
 
 ---
 
@@ -2523,7 +2523,7 @@ fn_customer_order_detail(
 -> CustomerOrderDetail?
 ```
 
-Resultado:
+Result:
 
 ```text
 order header
@@ -2533,23 +2533,23 @@ payment
 state history
 ```
 
-Pedido inexistente o ajeno:
+Pedido does not exist or belongs to someone else:
 
 ```text
 P5001 ORDER_NOT_FOUND
 ```
 
-No se distingue externamente la existencia de un pedido ajeno.
+The existence of someone else's order is not distinguished externally.
 
 ---
 
 ## 20.4 `sp_order_cancel`
 
-### Propósito
+### Purpose
 
-Única rutina pública propietaria de la transición hacia `CANCELLED` después de un pago aprobado.
+The only public routine owning the transition to `CANCELLED` after an approved payment.
 
-### Firma
+### Signature
 
 ```text
 sp_order_cancel(
@@ -2564,49 +2564,49 @@ sp_order_cancel(
     o_restored_units: NonNegativeInt
 ```
 
-### Actores admitidos
+### Allowed actors
 
 #### CUSTOMER
 
-- debe ser propietario del Pedido.
+- must own the Pedido.
 
 #### ADMIN
 
-- puede cancelar cualquier Pedido permitido.
+- may cancel any permitted Pedido.
 
-### Estados de origen
+### Source states
 
 ```text
 CONFIRMED
 PREPARING
 ```
 
-### Procedimiento
+### Procedure
 
-1. bloquear Pedido;
-2. validar actor;
-3. validar estado;
-4. obtener PedidoItems;
-5. bloquear Inventarios por EdicionId ASC;
-6. verificar que exista SALE previo por cada item;
-7. restaurar stock;
-8. crear CANCELLATION por item;
+1. lock Pedido;
+2. validate actor;
+3. validate state;
+4. retrieve PedidoItems;
+5. lock Inventarios by EdicionId ASC;
+6. verify a prior SALE exists for each item;
+7. restore stock;
+8. create CANCELLATION per item;
 9. Pago APPROVED -> REFUNDED;
 10. Pedido -> CANCELLED;
-11. crear historial:
+11. create history:
     - Origen USER;
     - UsuarioActorId = actor;
-12. confirmar.
+12. commit.
 
-### Defensa contra duplicado
+### Duplicate defense
 
-Para cada Edición:
+For each edition:
 
 ```text
-máximo 1 CANCELLATION por Pedido
+maximum 1 CANCELLATION per Pedido
 ```
 
-### Errores
+### Errors
 
 - P5001 ORDER_NOT_FOUND
 - P5003 ORDER_NOT_CANCELLABLE
@@ -2633,7 +2633,7 @@ fn_admin_orders(
 
 Actor ADMIN.
 
-Orden predeterminado:
+Default order:
 
 ```text
 FechaCreacion DESC
@@ -2651,24 +2651,24 @@ fn_admin_order_detail(
 -> AdminOrderDetail?
 ```
 
-Incluye:
+Includes:
 
-- Cliente básico;
+- basic Cliente data;
 - Pedido;
 - snapshots;
 - Pago;
-- historial;
-- movimientos SALE/CANCELLATION asociados.
+- history;
+- associated SALE/CANCELLATION movements.
 
 ---
 
 ## 20.7 `sp_order_change_status`
 
-### Propósito
+### Purpose
 
-Avance logístico únicamente.
+Logistics advancement only.
 
-### Firma
+### Signature
 
 ```text
 sp_order_change_status(
@@ -2686,7 +2686,7 @@ sp_order_change_status(
 
 ADMIN ACTIVE.
 
-### Transiciones permitidas
+### Allowed transitions
 
 ```text
 CONFIRMED -> PREPARING
@@ -2694,76 +2694,76 @@ PREPARING -> SHIPPED
 SHIPPED -> DELIVERED
 ```
 
-### Prohibición explícita
+### Explicit prohibition
 
-No admite:
+Does not allow:
 
 ```text
 CANCELLED
 ```
 
-Para cancelar se utiliza exclusivamente:
+Cancellation exclusively uses:
 
 ```text
 sp_order_cancel
 ```
 
-### Historial
+### History
 
-Cada éxito añade:
+Each success adds:
 
 ```text
 Origen = USER
 UsuarioActorId = p_actor_user_id
 ```
 
-### Errores
+### Errors
 
 - P5001
 - P5002
 
 ---
 
-# 21. Database API — Pago
+# 21. Database API — Payment
 
-PLIEGO v1 **no expone Procedures públicas específicas de Pago**.
+PLIEGO v1 **does not expose dedicated public Pago Procedures**.
 
-Justificación:
+Rationale:
 
-- `PENDING -> APPROVED/REJECTED` pertenece a `sp_checkout`;
-- `APPROVED -> REFUNDED` pertenece a `sp_order_cancel`;
-- ningún caso de uso permite alterar Pago de forma independiente.
+- `PENDING -> APPROVED/REJECTED` belongs to `sp_checkout`;
+- `APPROVED -> REFUNDED` belongs to `sp_order_cancel`;
+- no use case allows altering Pago independently.
 
-Esta decisión evita un segundo escritor de la máquina de estados de Pago.
+This decision prevents a second writer of the Pago state machine.
 
-Las operaciones de Pago internas de PostgreSQL no forman parte del contrato Java.
+Internal PostgreSQL Pago operations are not part of the Java contract.
 
 ---
 
-# 22. Matriz actor → rutinas
+# 22. Actor → routine matrix
 
-| Grupo | Público | CUSTOMER | ADMIN |
+| Group | Public | CUSTOMER | ADMIN |
 |---|---:|---:|---:|
-| Registro | Sí | — | — |
-| Auth data | Sí | — | — |
-| Catálogo público | Sí | Sí | Sí |
-| Perfil Cliente | — | Sí | — |
-| Direcciones | — | Sí | — |
-| Admin clientes | — | — | Sí |
-| Admin catálogo | — | — | Sí |
-| Inventario | — | — | Sí |
-| Carrito | — | Sí | — |
-| Checkout | — | Sí | — |
-| Pedidos propios | — | Sí | — |
-| Cancelar pedido propio | — | Sí | — |
-| Cancelar pedido administrativo | — | — | Sí |
-| Gestión logística | — | — | Sí |
+| Registration | Yes | — | — |
+| Auth data | Yes | — | — |
+| Public catalog | Yes | Yes | Yes |
+| Cliente profile | — | Yes | — |
+| Addresses | — | Yes | — |
+| Customer admin | — | — | Yes |
+| Catalog admin | — | — | Yes |
+| Inventory | — | — | Yes |
+| Cart | — | Yes | — |
+| Checkout | — | Yes | — |
+| Own orders | — | Yes | — |
+| Cancel own order | — | Yes | — |
+| Administrative order cancellation | — | — | Yes |
+| Logistics management | — | — | Yes |
 
 ---
 
-# 23. Matriz caso de uso → Database API
+# 23. Use case → Database API matrix
 
-| Caso de uso | Rutina(s) pública(s) |
+| Use case | Public routine(s) |
 |---|---|
 | CU-AUTH-01 | `sp_customer_register` |
 | CU-AUTH-02 | `fn_user_auth_data` |
@@ -2785,18 +2785,18 @@ Las operaciones de Pago internas de PostgreSQL no forman parte del contrato Java
 | CU-CART-03 | `sp_cart_update_item` |
 | CU-CART-04 | `sp_cart_remove_item` |
 | CU-SAL-01 | `sp_checkout` |
-| CU-PAY-01 | Interno a `sp_checkout`; sin rutina pública independiente |
+| CU-PAY-01 | Internal to `sp_checkout`; no separate public routine |
 | CU-SAL-02 | `fn_customer_orders`, `fn_customer_order_detail` |
 | CU-SAL-03 | `sp_order_cancel` |
 | CU-ADM-SAL-01 | `fn_admin_orders`, `fn_admin_order_detail`, `sp_order_change_status`, `sp_order_cancel` |
 
-Todos los 24 casos de uso tienen cobertura de Database API.
+All 24 use cases have Database API coverage.
 
 ---
 
-# 24. Matriz de rutinas → entidades
+# 24. Routine → entity matrix
 
-| Rutina / grupo | Lee | Escribe |
+| Routine / group | Reads | Writes |
 |---|---|---|
 | `sp_customer_register` | Usuario | Usuario, Cliente |
 | `fn_user_auth_data` | Usuario | — |
@@ -2806,86 +2806,86 @@ Todos los 24 casos de uso tienen cobertura de Database API.
 | `sp_customer_update` | Usuario, Cliente | Cliente |
 | Address API | Usuario, Cliente, Direccion | Direccion |
 | `fn_catalog_search` | Libro, Autor, LibroAutor, Categoria, LibroCategoria, Editorial, Edicion, Inventario | — |
-| `fn_edition_detail` | catálogo + Inventario | — |
+| `fn_edition_detail` | catalog + Inventario | — |
 | Admin Author | Usuario, Autor | Autor |
 | Admin Publisher | Usuario, Editorial | Editorial |
 | Admin Category | Usuario, Categoria | Categoria |
 | Admin Book | Usuario, Libro, Autor, LibroAutor, Categoria, LibroCategoria | Libro, LibroAutor, LibroCategoria |
-| Admin Edition | Usuario, Libro, Editorial, Edicion, Inventario | Edicion, Inventario al crear |
+| Admin Edition | Usuario, Libro, Editorial, Edicion, Inventario | Edicion, Inventario on creation |
 | Inventory query | Usuario, Libro, Edicion, Inventario, MovimientoInventario | — |
 | Inventory commands | Usuario, Inventario | Inventario, MovimientoInventario |
 | Cart query | Usuario, Cliente, Carrito, CarritoItem, Libro, Edicion, Inventario | — |
 | Cart commands | Usuario, Cliente, Carrito, CarritoItem, Libro, Edicion, Inventario | Carrito, CarritoItem |
 | `sp_checkout` | Usuario, Cliente, Direccion, Carrito, CarritoItem, Libro, Edicion, Editorial, Autor, LibroAutor, Inventario | Pedido, PedidoItem, PedidoDireccion, Pago, PedidoEstadoHistorial, Inventario, MovimientoInventario, Carrito |
-| Order queries | Pedido y dependencias | — |
+| Order queries | Pedido and dependencies | — |
 | `sp_order_cancel` | Usuario, Pedido, PedidoItem, Pago, Inventario, MovimientoInventario | Pedido, Pago, Inventario, MovimientoInventario, PedidoEstadoHistorial |
 | `sp_order_change_status` | Usuario, Pedido | Pedido, PedidoEstadoHistorial |
 
 ---
 
-# 25. Invariantes por técnica preferida
+# 25. Invariants by preferred technique
 
-La técnica definitiva se fijará en el Modelo Físico, pero este contrato asigna responsabilidad.
+The final technique will be established in the Physical Model, but this contract assigns responsibility.
 
 ## 25.1 Constraints
 
-Preferidos para:
+Preferred for:
 
 - PK;
 - FK;
 - NOT NULL;
-- unicidad;
-- cantidades positivas;
-- stock no negativo;
-- precios/montos positivos;
-- valores de dominio simples.
+- uniqueness;
+- positive quantities;
+- nonnegative stock;
+- positive prices/amounts;
+- simple domain values.
 
 ## 25.2 Procedures
 
-Autoridad para:
+Authority for:
 
-- reglas multi-entidad;
+- multi-entity rules;
 - ownership;
-- estados;
-- carrito;
+- states;
+- cart;
 - checkout;
-- inventario;
-- cancelación;
+- inventory;
+- cancellation;
 - snapshots;
-- creación atómica de Edicion + Inventario;
-- reemplazo de asociaciones de Libro.
+- atomic creation of Edicion + Inventario;
+- replacement of Libro associations.
 
 ## 25.3 Functions
 
-Autoridad para:
+Authority for:
 
-- búsqueda;
-- vistas compuestas;
-- cálculos de lectura;
-- disponibilidad;
-- totales de visualización.
+- search;
+- composite views;
+- read calculations;
+- availability;
+- display totals.
 
 ## 25.4 Triggers
 
-Solo se utilizarán cuando aporten una garantía transversal clara.
+They will only be used when they provide a clear cross-cutting guarantee.
 
-Candidatos aceptables:
+Acceptable candidates:
 
 - `FechaActualizacion`;
-- protección de invariantes imposibles de expresar mediante CHECK;
-- protección de estructuras append-only si el modelo físico la considera necesaria.
+- protecting invariants impossible to express through CHECK;
+- protecting append-only structures if the physical model considers it necessary.
 
-No se utilizarán cadenas complejas de triggers para implementar checkout o cancelación.
+Complex trigger chains will not be used to implement checkout or cancellation.
 
 ---
 
-# 26. Reglas de implementación Java
+# 26. Java implementation rules
 
 ## 26.1 Gateway
 
-Cada módulo Java tendrá Gateways específicos.
+Each Java module will have dedicated Gateways.
 
-Ejemplos:
+Examples:
 
 ```text
 CustomerDbGateway
@@ -2895,42 +2895,42 @@ CartDbGateway
 OrderDbGateway
 ```
 
-## 26.2 Permitido
+## 26.2 Allowed
 
 - `SimpleJdbcCall`;
 - `CallableStatement`;
-- infraestructura equivalente para invocar Functions/Procedures;
-- mapping de resultados a records/DTOs Java;
-- traducción de SQLSTATE a excepciones de aplicación.
+- equivalent infrastructure for invoking Functions/Procedures;
+- mapping results to Java records/DTOs;
+- translating SQLSTATE into application exceptions.
 
-## 26.3 Prohibido
+## 26.3 Prohibited
 
 - `JpaRepository`;
 - `EntityManager`;
-- entidades JPA;
+- JPA entities;
 - Hibernate;
-- SQL contra tablas;
-- lógica de joins en Java;
-- recalcular reglas de negocio como autoridad;
-- `float`/`double`/`Float`/`Double` para dinero (usar `java.math.BigDecimal` ↔ `NUMERIC`).
+- SQL against tables;
+- join logic in Java;
+- recalculating business rules as the authority;
+- `float`/`double`/`Float`/`Double` for money (use `java.math.BigDecimal` ↔ `NUMERIC`).
 
 ## 26.4 Transaction boundary
 
-Las operaciones de comando deben ejecutarse con demarcación transaccional Spring.
+Command operations must execute with Spring transaction demarcation.
 
-Una operación de negocio pública debe realizar una sola llamada Database API.
+A public business operation must make a single Database API call.
 
 ---
 
-# 27. Traducción de errores en Java
+# 27. Error translation in Java
 
-Se implementará un componente único, conceptualmente:
+A single component will be implemented, conceptually:
 
 ```text
 DatabaseExceptionTranslator
 ```
 
-Responsabilidad:
+Responsibility:
 
 ```text
 SQLException
@@ -2940,7 +2940,7 @@ SQLSTATE
 Domain/Application Exception
 ```
 
-Ejemplo:
+Example:
 
 ```text
 P3002
@@ -2948,205 +2948,205 @@ P3002
 InsufficientStockException
 ```
 
-Controllers no deben inspeccionar directamente SQLException.
+Controllers must not inspect SQLException directly.
 
-Un `23514 CHECK_VIOLATION` que llegue al Gateway se traduce a `DatabaseContractViolationException` (fallo técnico / HTTP 500). No se traduce automáticamente a `P1001` para no ocultar bugs internos.
+A `23514 CHECK_VIOLATION` reaching the Gateway is translated to `DatabaseContractViolationException` (technical failure / HTTP 500). It is not automatically translated to `P1001`, to avoid hiding internal bugs.
 
-El mapeo final a HTTP pertenece al REST API Contract.
+The final HTTP mapping belongs to the REST API Contract.
 
 ---
 
-# 28. Observabilidad mínima
+# 28. Minimum observability
 
-Cada Gateway debe registrar de forma segura:
+Each Gateway must safely log:
 
-- nombre de rutina;
-- duración;
-- éxito/fallo;
-- SQLSTATE cuando falle;
-- correlation/request ID si existe.
+- routine name;
+- duration;
+- success/failure;
+- SQLSTATE on failure;
+- correlation/request ID if present.
 
-No debe registrar:
+It must not log:
 
 - PasswordHash;
-- contraseña;
-- datos completos de dirección sin necesidad;
-- datos sensibles inexistentes de tarjeta.
+- password;
+- full address data unnecessarily;
+- nonexistent sensitive card data.
 
-No se requiere infraestructura adicional.
-
----
-
-# 29. Reglas de evolución del contrato
-
-## 29.1 Cambio compatible
-
-Ejemplos:
-
-- agregar un campo de salida opcional;
-- agregar Function administrativa nueva;
-- optimizar implementación interna.
-
-Puede mantenerse versión 1.x.
-
-## 29.2 Cambio incompatible
-
-Ejemplos:
-
-- eliminar parámetro obligatorio;
-- cambiar significado de un parámetro;
-- cambiar regla de atomicidad;
-- cambiar máquina de estados;
-- cambiar cardinalidad persistente.
-
-Requiere:
-
-1. gestión de cambio;
-2. revisión de UCB/DER/DD;
-3. nueva versión de contrato;
-4. migración compatible.
-
-## 29.3 Rutinas internas
-
-Pueden cambiar libremente si preservan el contrato observable de las rutinas públicas.
+No additional infrastructure is required.
 
 ---
 
-# 30. Criterios mínimos de prueba por rutina
+# 29. Contract evolution rules
+
+## 29.1 Compatible change
+
+Examples:
+
+- adding an optional output field;
+- adding a new administrative Function;
+- optimizing internal implementation.
+
+Version 1.x may be retained.
+
+## 29.2 Incompatible change
+
+Examples:
+
+- removing a mandatory parameter;
+- changing a parameter's meaning;
+- changing the atomicity rule;
+- changing the state machine;
+- changing persistent cardinality.
+
+Requires:
+
+1. change management;
+2. UCB/ERD/DD review;
+3. new contract version;
+4. compatible migration.
+
+## 29.3 Internal routines
+
+They may change freely if they preserve the observable contract of public routines.
+
+---
+
+# 30. Minimum test criteria per routine
 
 ## 30.1 Functions
 
-Cada Function debe probar:
+Each Function must test:
 
-- resultado esperado;
-- filtros;
-- paginación;
-- vacío;
-- actor inválido cuando aplique;
-- ownership cuando aplique.
+- expected result;
+- filters;
+- pagination;
+- empty results;
+- invalid actor when applicable;
+- ownership when applicable.
 
-## 30.2 Procedures CRUD
+## 30.2 CRUD Procedures
 
-Deben probar:
+Must test:
 
-- éxito;
-- entidad inexistente;
-- actor incorrecto;
-- datos inválidos;
-- unicidad;
+- success;
+- nonexistent entity;
+- incorrect actor;
+- invalid data;
+- uniqueness;
 - rollback.
 
-## 30.3 Inventario
+## 30.3 Inventory
 
-Debe probar:
+Must test:
 
-- entrada;
-- ajuste in;
-- ajuste out;
-- stock insuficiente;
-- movimiento creado;
-- concurrencia.
+- entry;
+- adjustment in;
+- adjustment out;
+- insufficient stock;
+- movement created;
+- concurrency.
 
-## 30.4 Carrito
+## 30.4 Cart
 
-Debe probar:
+Must test:
 
-- creación implícita del carrito;
-- item nuevo;
-- incremento del mismo item;
-- cantidad inválida;
-- stock insuficiente;
-- item inactivado;
+- implicit cart creation;
+- new item;
+- incrementing the same item;
+- invalid quantity;
+- insufficient stock;
+- deactivated item;
 - ownership;
-- dos solicitudes concurrentes de creación de carrito.
+- two concurrent cart creation requests.
 
 ## 30.5 Checkout
 
-Obligatorio probar:
+Mandatory tests:
 
 1. APPROVED;
 2. REJECTED;
-3. carrito vacío;
-4. edición inactiva;
-5. libro inactivo;
-6. dirección inexistente;
-7. dirección ajena;
-8. stock insuficiente;
-9. precio vigente usado;
-10. snapshots correctos;
-11. dos historiales;
-12. SALE por item solo en APPROVED;
-13. Carrito CHECKED_OUT solo en APPROVED;
-14. concurrencia por última unidad;
-15. rollback ante fallo técnico.
+3. empty cart;
+4. inactive edition;
+5. inactive book;
+6. nonexistent address;
+7. someone else's address;
+8. insufficient stock;
+9. current price used;
+10. correct snapshots;
+11. two history records;
+12. SALE per item only on APPROVED;
+13. CHECKED_OUT Carrito only on APPROVED;
+14. concurrency for the last unit;
+15. rollback on technical failure.
 
-## 30.6 Cancelación
+## 30.6 Cancellation
 
-Obligatorio probar:
+Mandatory tests:
 
-- CUSTOMER propietario;
-- CUSTOMER ajeno;
+- owning CUSTOMER;
+- non-owning CUSTOMER;
 - ADMIN;
 - CONFIRMED;
 - PREPARING;
-- SHIPPED rechazado;
-- DELIVERED rechazado;
-- restauración exacta;
-- un CANCELLATION por item;
+- SHIPPED rejected;
+- DELIVERED rejected;
+- exact restoration;
+- one CANCELLATION per item;
 - REFUNDED;
-- segundo intento no duplica stock.
+- second attempt does not duplicate stock.
 
 ---
 
-# 31. Pruebas de concurrencia obligatorias
+# 31. Mandatory concurrency tests
 
-## 31.1 Última unidad
+## 31.1 Last unit
 
 ```text
 Stock = 1
 
-Checkout A: cantidad 1
-Checkout B: cantidad 1
+Checkout A: quantity 1
+Checkout B: quantity 1
 ```
 
-Resultado requerido:
+Required result:
 
 ```text
-exactamente uno CONFIRMED
-el otro -> P3002 INSUFFICIENT_STOCK
-Stock final = 0
+exactly one CONFIRMED
+the other -> P3002 INSUFFICIENT_STOCK
+Final Stock = 0
 ```
 
-Nunca:
+Never:
 
 ```text
 Stock < 0
 ```
 
-## 31.2 Dos altas de carrito
+## 31.2 Two cart creations
 
-Dos llamadas concurrentes de `sp_cart_add_item` para Cliente sin Carrito.
+Two concurrent calls to `sp_cart_add_item` for a Cliente without a Carrito.
 
-Resultado:
-
-```text
-exactamente un Carrito ACTIVE
-```
-
-## 31.3 Doble cancelación
-
-Dos llamadas concurrentes de `sp_order_cancel`.
-
-Resultado:
+Result:
 
 ```text
-stock restaurado una sola vez
-un CANCELLATION por Edición
+exactly one ACTIVE Carrito
 ```
 
-## 31.4 Ajustes concurrentes
+## 31.3 Double cancellation
 
-Dos ajustes sobre el mismo Inventario deben serializarse y cada Movimiento debe reflejar un par correcto:
+Two concurrent calls to `sp_order_cancel`.
+
+Result:
+
+```text
+stock restored only once
+one CANCELLATION per edition
+```
+
+## 31.4 Concurrent adjustments
+
+Two adjustments to the same Inventario must serialize, and each Movimiento must reflect a correct pair:
 
 ```text
 StockAnterior -> StockPosterior
@@ -3154,83 +3154,83 @@ StockAnterior -> StockPosterior
 
 ---
 
-# 32. Reglas que el Modelo Físico deberá resolver
+# 32. Rules the Physical Model must resolve
 
-El siguiente artefacto debe convertir este contrato a decisiones PostgreSQL concretas.
+The next artifact must turn this contract into concrete PostgreSQL decisions.
 
-Debe fijar:
+It must establish:
 
-1. tipos de ID;
-2. tipos de dinero;
-3. representación de dominios;
-4. tipo físico de LanguageCode 2/3;
-5. arrays/JSON/composite types para colecciones de entrada;
-6. representación de resultados compuestos;
-7. índices;
-8. índices parciales;
+1. ID types;
+2. money types;
+3. domain representation;
+4. physical type for 2/3-character LanguageCode;
+5. arrays/JSON/composite types for input collections;
+6. composite result representation;
+7. indexes;
+8. partial indexes;
 9. constraints;
-10. FKs y `ON DELETE`;
+10. FKs and `ON DELETE`;
 11. timestamps;
-12. naming físico;
-13. procedimiento para unicidad de dirección principal;
-14. máximo un Carrito ACTIVE;
-15. unicidad condicional ISBN;
-16. unicidad condicional Pago.Referencia;
-17. unicidad SALE/CANCELLATION;
-18. locks concretos;
-19. funciones auxiliares;
-20. triggers mínimos;
+12. physical naming;
+13. procedure for primary-address uniqueness;
+14. at most one ACTIVE Carrito;
+15. conditional ISBN uniqueness;
+16. conditional Pago.Referencia uniqueness;
+17. SALE/CANCELLATION uniqueness;
+18. concrete locks;
+19. helper functions;
+20. minimum triggers;
 21. Flyway layout.
 
 ---
 
-# 33. Decisiones explícitamente no tomadas aquí
+# 33. Decisions explicitly not made here
 
-Este contrato no determina todavía:
+This contract does not yet determine:
 
 - `BIGINT` versus UUID;
-- `VARCHAR(n)` exacto;
+- exact `VARCHAR(n)`;
 - PostgreSQL ENUM versus CHECK;
-- JSONB versus arrays/composite types para listas;
-- implementación exacta de búsqueda textual;
-- índices trigram/full-text;
-- nombres físicos de constraints;
-- detalles OpenAPI;
-- expiración/claims del JWT;
-- algoritmos exactos de password hashing;
+- JSONB versus arrays/composite types for lists;
+- exact text-search implementation;
+- trigram/full-text indexes;
+- physical constraint names;
+- OpenAPI details;
+- JWT expiration/claims;
+- exact password-hashing algorithms;
 - CORS;
 - frontend.
 
 ---
 
-# 34. Validación de completitud
+# 34. Completeness validation
 
-| Pregunta | Resultado |
+| Question | Result |
 |---|---|
-| ¿Los 24 casos de uso tienen Database API? | Sí |
-| ¿Las consultas administrativas faltantes fueron cubiertas? | Sí |
-| ¿Existe un único escritor público de CANCELLED post-pago? | Sí: `sp_order_cancel` |
-| ¿Existe un único escritor público del avance logístico? | Sí: `sp_order_change_status` |
-| ¿Pago tiene writers públicos independientes? | No |
-| ¿Checkout es una sola llamada? | Sí |
-| ¿Las reglas de stock permanecen en PostgreSQL? | Sí |
-| ¿Se define locking determinista? | Sí |
-| ¿Pago simulado es determinista? | Sí |
-| ¿Se diferencia rechazo comercial de fallo técnico? | Sí |
-| ¿Los errores tienen contrato estable? | Sí |
-| ¿Java necesita SQL de negocio contra tablas? | No |
-| ¿Se requiere SECURITY DEFINER? | No |
-| ¿Se incorporaron nuevas entidades? | No |
-| ¿Se introdujo frontend? | No |
-| ¿Quedan decisiones estructurales críticas TBD? | No |
+| Do all 24 use cases have a Database API? | Yes |
+| Were the missing administrative queries covered? | Yes |
+| Is there a single public writer of post-payment CANCELLED? | Yes: `sp_order_cancel` |
+| Is there a single public writer of logistics advancement? | Yes: `sp_order_change_status` |
+| Does Pago have independent public writers? | No |
+| Is checkout a single call? | Yes |
+| Do stock rules remain in PostgreSQL? | Yes |
+| Is deterministic locking defined? | Yes |
+| Is simulated payment deterministic? | Yes |
+| Is business rejection distinguished from technical failure? | Yes |
+| Do errors have a stable contract? | Yes |
+| Does Java need business SQL against tables? | No |
+| Is SECURITY DEFINER required? | No |
+| Were new entities incorporated? | No |
+| Was a frontend introduced? | No |
+| Are critical structural decisions still TBD? | No |
 
 ---
 
-# 35. Definition of Ready para Modelo Físico
+# 35. Definition of Ready for the Physical Model
 
-El Modelo Físico PostgreSQL puede comenzar cuando este contrato sea aprobado.
+The PostgreSQL Physical Model may begin when this contract is approved.
 
-Debe recibir como entradas:
+It must receive as inputs:
 
 ```text
 UCB v1.1
@@ -3239,79 +3239,79 @@ DD v1.1
 Database API Contract v1.0
 ```
 
-No podrá alterar silenciosamente:
+It must not silently alter:
 
-- firma semántica de rutinas;
-- máquinas de estado;
-- errores;
+- semantic routine signatures;
+- state machines;
+- errors;
 - ownership;
-- locking lógico;
-- atomicidad;
-- resultados comerciales.
+- logical locking;
+- atomicity;
+- business outcomes.
 
-Si una limitación física exige cambiar estos puntos, se debe volver a este contrato mediante gestión de cambio.
+If a physical limitation requires changing these points, this contract must be revisited through change management.
 
 ---
 
-# 36. Correcciones menores recomendadas a artefactos previos
+# 36. Minor corrections recommended for prior artifacts
 
-Antes o durante la aprobación formal de este contrato se recomienda aplicar dos erratas editoriales:
+Before or during formal approval of this contract, applying two editorial errata is recommended:
 
 ### DD v1.1
 
-Cambiar:
+Change:
 
 ```text
-Edicion.Idioma — Código idioma; 2 caracteres
+Edicion.Idioma — Language code; 2 characters
 ```
 
-por:
+to:
 
 ```text
-Edicion.Idioma — LanguageCode; 2 o 3 caracteres
+Edicion.Idioma — LanguageCode; 2 or 3 characters
 ```
 
-de acuerdo con §5.5.
+in accordance with §5.5.
 
 ### DER v1.1
 
-Cambiar en §30:
+Change in §30:
 
 ```text
-queda como candidato a baseline
+remains a baseline candidate
 ```
 
-por:
+to:
 
 ```text
-permanece como BASELINE APROBADA
+remains an APPROVED BASELINE
 ```
 
-Estas correcciones no justifican versión mayor ni modifican comportamiento.
+These corrections do not justify a major version or modify behavior.
 
 ---
 
-# 37. Historial del documento
+# 37. Document history
 
-| Versión | Fecha | Estado | Descripción |
+| Version | Date | Status | Description |
 |---|---|---|---|
-| 1.0 | 2026-09-23 | CANDIDATO A BASELINE | Primer contrato formal de Database API. Audita UCB/DER/DD v1.1, fija autoridad Spring↔PostgreSQL, Procedures/Functions públicas, transacciones, locking, SQLSTATE, simulador de pago y trazabilidad completa a casos de uso. |
-| 1.1 | 2026-09-23 | BASELINE APROBADA | Absorbe B1–B9: matriz rutina→SQLSTATE (§10.4), mapa de normalización obligatorio, blanket explícito para bloqueados, slug desconocido → vacío, update revalida create, BigDecimal, SIM-UUID y REJECTED NULL, retry diferido al REST, carrera de bloqueo aceptada, default TITLE_ASC. Añade P9001 técnico y política 23514. |
+| 1.0 | 2026-09-23 | BASELINE CANDIDATE | First formal Database API contract. Audits UCB/ERD/DD v1.1, establishes Spring↔PostgreSQL authority, public Procedures/Functions, transactions, locking, SQLSTATE, payment simulator and full use-case traceability. |
+| 1.1 | 2026-09-23 | APPROVED BASELINE | Incorporates B1–B9: routine→SQLSTATE matrix (§10.4), mandatory normalization mapping, explicit blanket checks for blocked users, unknown slug → empty, update revalidates create, BigDecimal, SIM-UUID and REJECTED NULL, retry deferred to REST, accepted blocking race, TITLE_ASC default. Adds technical P9001 and 23514 policy. |
 
 ---
 
-# 38. Referencias
+# 38. References
 
-## Artefactos PLIEGO
+## PLIEGO artifacts
 
-- `docs/requirements/use-case-baseline-v1.0.md` — versión interna 1.1.
-- `docs/domain/logical-erd-v1.0.md` — versión interna 1.1.
-- `docs/domain/data-dictionary-v1.0.md` — versión interna 1.1.
+- `docs/requirements/use-case-baseline-v1.0.md` — internal version 1.1.
+- `docs/domain/logical-erd-v1.0.md` — internal version 1.1.
+- `docs/domain/data-dictionary-v1.0.md` — internal version 1.1.
 
-## Referencias técnicas
+## Technical references
 
 - PostgreSQL 18 — PL/pgSQL Errors and Messages (`RAISE`, SQLSTATE).
 - PostgreSQL 18 — PL/pgSQL Transaction Management.
 - PostgreSQL 18 — Data Consistency Checks at the Application Level / row locking.
 - PostgreSQL 18 — `CREATE PROCEDURE`.
-- Arquitectura aprobada de PLIEGO: Java 25 + Spring Boot + PostgreSQL + Flyway; sin ORM; lógica de negocio autoritativa en PostgreSQL; frontend posterior.
+- Approved PLIEGO architecture: Java 25 + Spring Boot + PostgreSQL + Flyway; no ORM; authoritative business logic in PostgreSQL; frontend later.

@@ -1,196 +1,196 @@
-# PLIEGO — Diccionario de Datos v1.0
+# PLIEGO — Data Dictionary v1.0
 
-**Documento:** DD-PLIEGO-001  
-**Versión:** 1.1  
-**Estado:** BASELINE APROBADA  
-**Fecha:** 2026-09-23  
-**Proyecto:** PLIEGO  
-**Tipo de documento:** Diccionario de datos lógico y especificación semántica de atributos  
-**Documentos fuente:**
+**Document:** DD-PLIEGO-001  
+**Version:** 1.1  
+**Status:** APPROVED BASELINE  
+**Date:** 2026-09-23  
+**Project:** PLIEGO  
+**Document type:** Logical data dictionary and semantic attribute specification  
+**Source documents:**
 
 - `docs/requirements/use-case-baseline-v1.0.md`
 - `docs/domain/logical-erd-v1.0.md`
 
-**Ámbito:** Dominio persistente de PLIEGO v1  
-**Siguiente artefacto:** Database API Contract v1.0 / Modelo físico PostgreSQL
+**Scope:** PLIEGO v1 persistent domain  
+**Next artifact:** Database API Contract v1.0 / PostgreSQL physical model
 
 ---
 
-# 1. Propósito
+# 1. Purpose
 
-Este documento fija el significado, dominio, obligatoriedad, mutabilidad, sensibilidad y reglas de validación de los datos persistentes de **PLIEGO v1**.
+This document establishes the meaning, domain, requiredness, mutability, sensitivity and validation rules of **PLIEGO v1** persistent data.
 
-El Diccionario de Datos constituye la tercera fuente estructural del diseño, después de la *Use Case Baseline v1.0* y del *DER Lógico v1.0*. Su función es eliminar ambigüedades antes de seleccionar tipos físicos de PostgreSQL y antes de definir Stored Procedures, Functions, Triggers, Constraints e índices.
+The Data Dictionary is the third structural design source, after the *Use Case Baseline v1.0* and *Logical ERD v1.0*. Its role is to eliminate ambiguities before selecting PostgreSQL physical types and defining Stored Procedures, Functions, Triggers, Constraints and indexes.
 
-Este documento deberá permitir que dos implementadores distintos construyan el mismo modelo físico sin tener que reinterpretar:
+This document must enable two different implementers to build the same physical model without having to reinterpret:
 
-- qué significa cada atributo;
-- cuándo puede ser nulo;
-- cuál es su fuente de verdad;
-- qué valores son válidos;
-- qué datos son históricos;
-- qué datos pueden modificarse;
-- qué valores deben ser únicos;
-- qué campos son derivados;
-- qué reglas requieren validación inter-entidad.
+- what each attribute means;
+- when it may be null;
+- what its source of truth is;
+- which values are valid;
+- which data is historical;
+- which data may be modified;
+- which values must be unique;
+- which fields are derived;
+- which rules require cross-entity validation.
 
 ---
 
-# 2. Metodología de derivación
+# 2. Derivation methodology
 
-El diccionario se obtiene mediante:
+The dictionary is obtained through:
 
 ```text
 Use Case Baseline v1.0
         ↓
-DER Lógico v1.0
+Logical ERD v1.0
         ↓
-Auditoría de consistencia
+Consistency audit
         ↓
-Resolución de defectos
+Defect resolution
         ↓
-Definición semántica de datos
+Semantic data definition
         ↓
-Diccionario de Datos v1.0
+Data Dictionary v1.0
 ```
 
-Se aplican los siguientes principios de Ingeniería de Software:
+The following Software Engineering principles apply:
 
-1. **Trazabilidad:** todo atributo debe justificar su existencia por una necesidad del dominio, una regla o un caso de uso.
-2. **Unicidad semántica:** un mismo concepto mutable no debe tener dos fuentes autoritativas.
-3. **Normalización:** los datos maestros permanecen normalizados; solo se permiten snapshots históricos expresamente justificados.
-4. **Verificabilidad:** toda regla de atributo debe poder convertirse posteriormente en una prueba o constraint.
-5. **Mínima complejidad suficiente:** no se agregan catálogos o entidades que PLIEGO v1 no necesita.
-6. **Historia estable:** los hechos comerciales confirmados no se reescriben a partir de datos maestros actuales.
-7. **Separación lógica/física:** todavía no se fijan `BIGINT`, `VARCHAR`, `NUMERIC`, `TIMESTAMPTZ`, índices ni sintaxis PostgreSQL definitiva.
+1. **Traceability:** every attribute must justify its existence through a domain need, rule or use case.
+2. **Semantic uniqueness:** the same mutable concept must not have two authoritative sources.
+3. **Normalization:** master data remains normalized; only expressly justified historical snapshots are allowed.
+4. **Verifiability:** every attribute rule must subsequently be convertible into a test or constraint.
+5. **Minimum sufficient complexity:** no catalogs or entities are added that PLIEGO v1 does not need.
+6. **Stable history:** committed commercial facts are not rewritten from current master data.
+7. **Logical/physical separation:** `BIGINT`, `VARCHAR`, `NUMERIC`, `TIMESTAMPTZ`, indexes and final PostgreSQL syntax are not yet established.
 
 ---
 
-# 3. Resultado de la auditoría de consistencia
+# 3. Consistency audit result
 
-Antes de definir los atributos se auditó la coherencia entre la Use Case Baseline y el DER lógico. Se encontraron los siguientes defectos, omisiones o ambigüedades.
+Before defining attributes, consistency between the Use Case Baseline and logical ERD was audited. The following defects, omissions or ambiguities were found.
 
-## 3.1 Correcciones normativas
+## 3.1 Normative corrections
 
-| ID | Hallazgo | Resolución para PLIEGO v1 | Impacto |
+| ID | Finding | Resolution for PLIEGO v1 | Impact |
 |---|---|---|---|
-| DD-COR-001 | `Direccion` y `PedidoDireccion` no identificaban país. Esto deja ambiguo el significado de provincia/ciudad y limita evolución futura. | Se incorpora `PaisCodigo` obligatorio en ambas entidades, usando código ISO de país. | DER lógico deberá reflejar el atributo en su siguiente revisión. |
-| DD-COR-002 | `PedidoItem` preservaba formato, ISBN y editorial, pero no el idioma de la Edición aunque `Edicion.Idioma` puede corregirse. | Se incorpora `IdiomaSnapshot` obligatorio. | DER lógico deberá reflejar el atributo. |
-| DD-COR-003 | `Carrito.CANCELLED` estaba modelado aunque ningún caso de uso v1 produce ese estado y la propia baseline lo reservaba para futuro. | Se elimina `CANCELLED` del dominio de Carrito v1. Estados: `ACTIVE`, `CHECKED_OUT`. | Corrección de UCB/DER en siguiente revisión. Reduce estado muerto. |
-| DD-COR-004 | DER permitía `Pedido.Subtotal >= 0` y `Pago.Monto >= 0`, pero todo Pedido tiene al menos un item, con cantidad y precio positivos. | `Pedido.Subtotal > 0`, `Pedido.Total > 0` y `Pago.Monto > 0`. | Corrige invariantes numéricas. |
-| DD-COR-005 | No se declaró unicidad de una Edición dentro de Pedido, aunque Pedido se deriva de un Carrito donde la Edición es única. | `PedidoId + EdicionId` es clave alternativa en `PedidoItem`. | Evita líneas duplicadas para la misma edición. |
-| DD-COR-006 | La relación Pedido–Pago estaba definida, pero no la compatibilidad completa de sus estados. | Se fija una matriz válida Pedido/Pago. | Regla inter-entidad obligatoria. |
-| DD-COR-007 | `MovimientoInventario` no fijaba protección contra duplicar `SALE` o `CANCELLATION` de la misma Edición en un Pedido. | Para movimientos de Pedido, `(PedidoId, EdicionId, Tipo)` debe ser único. | Refuerza trazabilidad e idempotencia lógica. |
-| DD-COR-008 | `MovimientoInventario.Motivo` era ambiguo para movimientos administrativos. | `Motivo` es obligatorio en `ENTRY`, `ADJUSTMENT_IN` y `ADJUSTMENT_OUT`; no es obligatorio en movimientos automáticos. | Mejora auditoría. |
-| DD-COR-009 | No estaba definida la semántica de entidades maestras inactivas ya relacionadas. | Inactivar Autor/Editorial/Categoría impide nuevas asociaciones, pero no borra ni oculta automáticamente relaciones históricas existentes. | Evita efectos cascada no deseados. |
-| DD-COR-010 | No se había definido normalización de email, SKU y códigos. | Se fijan representaciones canónicas lógicas. | Elimina ambigüedad de unicidad. |
-| DD-COR-011 | `Pago.Referencia` carecía de semántica de duplicados. | Si existe, debe identificar de forma única el resultado de pago simulado. | Añade clave alternativa condicional. |
-| DD-COR-012 | `AutoresSnapshot` podía interpretarse como lista multivaluada no atómica. | Se define como **cadena de presentación histórica atómica**, construida en orden de autoría y separada de forma determinista. | Mantiene la excepción histórica compatible con el modelo relacional. |
+| DD-COR-001 | `Direccion` and `PedidoDireccion` did not identify the country. This leaves province/city meaning ambiguous and limits future evolution. | Mandatory `PaisCodigo` is added to both entities, using an ISO country code. | The logical ERD must reflect the attribute in its next revision. |
+| DD-COR-002 | `PedidoItem` preserved format, ISBN and publisher, but not the Edicion's language, although `Edicion.Idioma` may be corrected. | Mandatory `IdiomaSnapshot` is added. | The logical ERD must reflect the attribute. |
+| DD-COR-003 | `Carrito.CANCELLED` was modeled although no v1 use case produces that state and the baseline itself reserved it for the future. | `CANCELLED` is removed from the Carrito v1 domain. States: `ACTIVE`, `CHECKED_OUT`. | UCB/ERD correction in the next revision. Reduces dead state. |
+| DD-COR-004 | The ERD allowed `Pedido.Subtotal >= 0` and `Pago.Monto >= 0`, but every Pedido has at least one item, with positive quantity and price. | `Pedido.Subtotal > 0`, `Pedido.Total > 0` and `Pago.Monto > 0`. | Corrects numerical invariants. |
+| DD-COR-005 | Uniqueness of an Edicion within Pedido was not declared, although Pedido derives from a Carrito where Edicion is unique. | `PedidoId + EdicionId` is an alternate key in `PedidoItem`. | Avoids duplicate lines for the same edition. |
+| DD-COR-006 | The Pedido–Pago relationship was defined, but not the full compatibility of their states. | A valid Pedido/Pago matrix is established. | Mandatory cross-entity rule. |
+| DD-COR-007 | `MovimientoInventario` did not establish protection against duplicate `SALE` or `CANCELLATION` for the same Edicion in a Pedido. | For Pedido movements, `(PedidoId, EdicionId, Tipo)` must be unique. | Strengthens traceability and logical idempotence. |
+| DD-COR-008 | `MovimientoInventario.Motivo` was ambiguous for administrative movements. | `Motivo` is mandatory for `ENTRY`, `ADJUSTMENT_IN` and `ADJUSTMENT_OUT`; it is not mandatory for automatic movements. | Improves auditing. |
+| DD-COR-009 | The semantics of already associated inactive master entities were undefined. | Deactivating Autor/Editorial/Categoria prevents new associations, but does not automatically delete or hide existing historical relationships. | Avoids unwanted cascade effects. |
+| DD-COR-010 | Normalization of email, SKU and codes had not been defined. | Logical canonical representations are established. | Eliminates uniqueness ambiguity. |
+| DD-COR-011 | `Pago.Referencia` lacked duplicate semantics. | When present, it must uniquely identify the simulated payment result. | Adds a conditional alternate key. |
+| DD-COR-012 | `AutoresSnapshot` could be interpreted as a non-atomic multivalued list. | Defined as an **atomic historical display string**, constructed in authorship order and separated deterministically. | Keeps the historical exception compatible with the relational model. |
 
-Estas correcciones no amplían el alcance funcional del proyecto; cierran ambigüedades necesarias para que el modelo físico pueda derivarse sin interpretación adicional.
+These corrections do not extend the project's functional scope; they resolve ambiguities necessary to derive the physical model without further interpretation.
 
-## 3.2 Decisiones revisadas y mantenidas
+## 3.2 Reviewed and retained decisions
 
-Los siguientes puntos fueron revisados y **no se consideran defectos**:
+The following items were reviewed and **are not considered defects**:
 
-- `Autor.Nombre` no es único: dos autores reales pueden compartir nombre.
-- `Libro.Titulo` no es único: distintas obras o versiones bibliográficas pueden compartir título.
-- `Editorial.Nombre` no se declara único en el modelo lógico; la identidad oficial de una editorial no debe inferirse exclusivamente de su nombre.
-- `Carrito` no reserva stock: la disponibilidad se revalida en checkout.
-- Pedido no requiere FK a Carrito: un intento rechazado puede dejar el Carrito activo para un nuevo checkout.
-- `PedidoDireccion` no referencia la Dirección original: el snapshot debe ser independiente.
-- `PedidoItem` conserva FK histórica a Edición porque Edición no se elimina físicamente.
-- La moneda no requiere entidad propia en v1 porque todo el sistema opera en USD.
+- `Autor.Nombre` is not unique: two real authors may share a name.
+- `Libro.Titulo` is not unique: distinct works or bibliographic versions may share a title.
+- `Editorial.Nombre` is not declared unique in the logical model; a publisher's official identity must not be inferred exclusively from its name.
+- `Carrito` does not reserve stock: availability is revalidated at checkout.
+- Pedido does not require an FK to Carrito: a rejected attempt may leave Carrito active for a new checkout.
+- `PedidoDireccion` does not reference the original Direccion: the snapshot must be independent.
+- `PedidoItem` retains a historical FK to Edicion because Edicion is not physically deleted.
+- Currency does not require its own entity in v1 because the entire system operates in USD.
 
 ---
 
-# 4. Convenciones del diccionario
+# 4. Dictionary conventions
 
-## 4.1 Obligatoriedad
+## 4.1 Requiredness
 
-- **M:** obligatorio; no puede carecer de valor.
-- **O:** opcional; puede estar ausente.
-- **C:** condicional; obligatorio únicamente cuando se cumple una condición especificada.
-- **D:** derivado; se obtiene de otros datos y no es fuente primaria de verdad.
+- **M:** mandatory; cannot lack a value.
+- **O:** optional; may be absent.
+- **C:** conditional; mandatory only when a specified condition is met.
+- **D:** derived; obtained from other data and not a primary source of truth.
 
-## 4.2 Mutabilidad
+## 4.2 Mutability
 
-- **I:** inmutable después de creada la entidad.
-- **M:** mutable mediante un caso de uso autorizado.
-- **R:** mutable de forma restringida por máquina de estados o procedimiento específico.
-- **S:** administrado automáticamente por el sistema.
-- **A:** append-only; una vez creado no se modifica ni elimina.
-- **D:** derivado; no se actualiza de manera independiente.
+- **I:** immutable after entity creation.
+- **M:** mutable through an authorized use case.
+- **R:** restrictively mutable through a state machine or specific procedure.
+- **S:** automatically managed by the system.
+- **A:** append-only; neither modified nor deleted once created.
+- **D:** derived; not updated independently.
 
-## 4.3 Clasificación de sensibilidad
+## 4.3 Sensitivity classification
 
-- **PUB:** dato público de catálogo.
-- **INT:** dato interno no sensible.
-- **PER:** dato personal del Cliente.
-- **AUT:** credencial o material de autenticación sensible.
-- **COM:** dato histórico/comercial interno.
+- **PUB:** public catalog data.
+- **INT:** nonsensitive internal data.
+- **PER:** Cliente personal data.
+- **AUT:** sensitive credential or authentication material.
+- **COM:** internal historical/commercial data.
 
-La clasificación orienta exposición en APIs y logs; no constituye todavía un modelo completo de seguridad.
+Classification guides API and log exposure; it does not yet constitute a complete security model.
 
-## 4.4 Dominios lógicos de tipo
+## 4.4 Logical type domains
 
-| Dominio lógico | Significado |
+| Logical domain | Meaning |
 |---|---|
-| Identificador | Identidad interna sin significado comercial |
-| Texto corto | Cadena breve controlada |
-| Texto medio | Cadena descriptiva moderada |
-| Texto largo | Texto narrativo |
-| Código | Valor canónico de conjunto controlado |
-| Email | Dirección de correo normalizada |
-| Teléfono | Número de contacto representado como texto canónico |
-| Entero no negativo | 0 o mayor |
-| Entero positivo | 1 o mayor |
-| Importe USD | Valor monetario decimal exacto con máximo 2 decimales |
-| Booleano | verdadero/falso |
-| Fecha | Fecha civil sin hora |
-| Instante | Fecha y hora absoluta de evento; semánticamente UTC |
-| URL/URI | Referencia a recurso externo o servido por la aplicación |
+| Identifier | Internal identity without commercial meaning |
+| Short text | Controlled short string |
+| Medium text | Moderately descriptive string |
+| Long text | Narrative text |
+| Code | Canonical value from a controlled set |
+| Email | Normalized email address |
+| Phone | Contact number represented as canonical text |
+| Nonnegative integer | 0 or greater |
+| Positive integer | 1 or greater |
+| USD amount | Exact decimal monetary value with at most 2 decimal places |
+| Boolean | true/false |
+| Date | Civil date without time |
+| Instant | Absolute event date and time; semantically UTC |
+| URL/URI | Reference to an external resource or one served by the application |
 
-No se deducen todavía tipos PostgreSQL de estos dominios.
+PostgreSQL types are not yet inferred from these domains.
 
 ---
 
-# 5. Reglas globales de representación
+# 5. Global representation rules
 
 ## 5.1 Strings
 
-- Los valores obligatorios no pueden ser `null`, vacíos ni contener únicamente espacios.
-- Los valores de entrada deben eliminar espacios exteriores antes de persistirse.
-- Para campos opcionales, una cadena vacía se interpreta como ausencia y debe normalizarse a `null`.
-- Los textos de presentación conservan mayúsculas/minúsculas del usuario salvo campos con representación canónica.
+- Mandatory values cannot be `null`, empty or whitespace-only.
+- Input values must have surrounding whitespace removed before persistence.
+- For optional fields, an empty string is interpreted as absence and must be normalized to `null`.
+- Display text preserves user capitalization except for fields with a canonical representation.
 
 ## 5.2 Email
 
-`EmailNormalizado` se obtiene mediante:
+`EmailNormalizado` is obtained through:
 
-1. eliminación de espacios exteriores;
-2. conversión a minúsculas.
+1. removing surrounding whitespace;
+2. converting to lowercase.
 
-No se intentará reescribir semánticamente el dominio ni la parte local más allá de esta normalización en v1.
+No attempt will be made in v1 to semantically rewrite the domain or local part beyond this normalization.
 
-Ejemplo:
+Example:
 
 ```text
-Entrada:  Usuario@Ejemplo.COM
+Input:    Usuario@Ejemplo.COM
 Canon:    usuario@ejemplo.com
 ```
 
 ## 5.3 SKU
 
-Representación canónica:
+Canonical representation:
 
-- sin espacios exteriores;
-- mayúsculas;
-- longitud conceptual: 1–64 caracteres;
-- caracteres permitidos: letras ASCII, dígitos, punto, guion y guion bajo;
-- debe iniciar con letra o dígito.
+- without surrounding whitespace;
+- uppercase;
+- conceptual length: 1–64 characters;
+- allowed characters: ASCII letters, digits, period, hyphen and underscore;
+- must start with a letter or digit.
 
-Ejemplo válido:
+Valid example:
 
 ```text
 PLG-LIT-000042
@@ -198,18 +198,18 @@ PLG-LIT-000042
 
 ## 5.4 ISBN-13
 
-Cuando exista:
+When present:
 
-- exactamente 13 dígitos;
-- se conserva como texto para no perder ceros iniciales;
-- debe superar el checksum ISBN-13;
-- es único globalmente entre Ediciones.
+- exactly 13 digits;
+- retained as text to preserve leading zeros;
+- must pass the ISBN-13 checksum;
+- globally unique across Ediciones.
 
-## 5.5 Idioma
+## 5.5 Language
 
-Se representa mediante código ISO 639-1 en minúsculas; si el idioma carece de código 639-1, se usa ISO 639-2/T en minúsculas.
+Represented by a lowercase ISO 639-1 code; if the language lacks a 639-1 code, lowercase ISO 639-2/T is used.
 
-Ejemplos:
+Examples:
 
 ```text
 es
@@ -217,11 +217,11 @@ en
 fr
 ```
 
-## 5.6 País
+## 5.6 Country
 
-`PaisCodigo` usa código ISO 3166-1 alpha-2 en mayúsculas. La lista válida es cerrada y vive en el constraint/check del modelo físico; ampliarla requiere cambio formal.
+`PaisCodigo` uses uppercase ISO 3166-1 alpha-2 codes. The valid list is closed and lives in the physical model's constraint/check; extending it requires a formal change.
 
-Ejemplos:
+Examples:
 
 ```text
 EC
@@ -229,43 +229,43 @@ CO
 PE
 ```
 
-## 5.7 Dinero
+## 5.7 Money
 
-- PLIEGO v1 opera en USD.
-- Los importes son decimales exactos.
-- Máximo dos posiciones decimales.
-- No se utilizan `float`/`double` como fuente monetaria.
+- PLIEGO v1 operates in USD.
+- Amounts are exact decimals.
+- At most two decimal places.
+- `float`/`double` are not used as monetary sources.
 
 ## 5.8 Timestamps
 
-Todos los atributos `FechaCreacion`, `FechaActualizacion` y fechas de eventos representan un instante absoluto.
+All `FechaCreacion`, `FechaActualizacion` and event-date attributes represent an absolute instant.
 
-Semánticamente se manejan en UTC; conversión a zona horaria de interfaz es responsabilidad de la capa de presentación futura.
+Semantically, they are handled in UTC; conversion to the interface time zone is the responsibility of the future presentation layer.
 
-## 5.9 Fechas civiles
+## 5.9 Civil dates
 
-`FechaPublicacion` representa una fecha editorial, no un instante. No se aplica conversión de zona horaria.
+`FechaPublicacion` represents a publication date, not an instant. No time zone conversion applies.
 
-## 5.10 Teléfono
+## 5.10 Phone
 
-Representación canónica:
+Canonical representation:
 
-1. eliminar espacios exteriores y separadores de presentación (`espacios`, `-`, `.`, `(`, `)`);
-2. conservar `+` inicial cuando corresponda;
-3. conservar el resto como dígitos.
+1. remove surrounding whitespace and display separators (`espacios`, `-`, `.`, `(`, `)`);
+2. retain an initial `+` when applicable;
+3. retain the remainder as digits.
 
-Ejemplo:
+Example:
 
 ```text
-Entrada:  +593 (2) 555-0134
+Input:    +593 (2) 555-0134
 Canon:    +59325550134
 ```
 
-El teléfono es dato de contacto, no clave de identidad: no impone unicidad.
+The phone number is contact data, not an identity key: it imposes no uniqueness.
 
 ---
 
-# 6. Dominios controlados
+# 6. Controlled domains
 
 ## 6.1 UsuarioRol
 
@@ -283,7 +283,7 @@ BLOCKED
 
 ## 6.3 EstadoCatalogo
 
-Aplica a Autor, Editorial, Categoria, Libro y Edicion.
+Applies to Autor, Editorial, Categoria, Libro and Edicion.
 
 ```text
 ACTIVE
@@ -299,7 +299,7 @@ HARDCOVER
 
 ## 6.5 LicenciaPortada
 
-PLIEGO v1 admite portadas cuya reutilización esté documentada mediante uno de los siguientes códigos:
+PLIEGO v1 permits covers whose reuse is documented through one of the following codes:
 
 ```text
 PUBLIC_DOMAIN
@@ -309,7 +309,7 @@ CC_BY_SA
 OWNED
 ```
 
-No se incorporan licencias incompatibles con el uso previsto del e-commerce sin modificar previamente este dominio y revisar sus condiciones.
+Licenses incompatible with the intended e-commerce use are not incorporated without first modifying this domain and reviewing their terms.
 
 ## 6.6 TipoMovimientoInventario
 
@@ -323,14 +323,14 @@ CANCELLATION
 
 ## 6.7 EstadoCarrito
 
-**Corrección DD-COR-003:**
+**Correction DD-COR-003:**
 
 ```text
 ACTIVE
 CHECKED_OUT
 ```
 
-`CANCELLED` queda fuera de PLIEGO v1 porque no existe caso de uso que lo produzca.
+`CANCELLED` is outside PLIEGO v1 because no use case produces it.
 
 ## 6.8 EstadoPedido
 
@@ -368,360 +368,360 @@ SYSTEM
 
 ---
 
-# 7. Entidad Usuario
+# 7. Usuario entity
 
-## 7.1 Definición
+## 7.1 Definition
 
-Identidad autenticable dentro de PLIEGO.
+Authenticatable identity within PLIEGO.
 
-## 7.2 Claves
+## 7.2 Keys
 
-- PK lógica: `UsuarioId`.
+- Logical PK: `UsuarioId`.
 - AK: `EmailNormalizado`.
 
-## 7.3 Atributos
+## 7.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| UsuarioId | M | Identificador | I | INT | Identificador interno. No posee significado de negocio. |
-| EmailNormalizado | M | Email; 3–254 caracteres | I v1 | PER | Identidad de acceso. Debe ser única tras normalización trim + lowercase. No existe cambio de email en v1. |
-| PasswordHash | M | Texto técnico no vacío | I v1 | AUT | Resultado de algoritmo de password hashing administrado por Spring Security. Nunca contiene password en claro. No se expone en APIs. |
-| Rol | M | UsuarioRol | I | INT | Define `CUSTOMER` o `ADMIN`. No existe cambio de rol en v1. |
-| Estado | M | UsuarioEstado | R | INT | `ACTIVE` al crear; ADMIN puede alternar Cliente entre `ACTIVE` y `BLOCKED`. |
-| FechaCreacion | M | Instante | S | INT | Momento en que se creó el Usuario. Inmutable. |
-| FechaActualizacion | M | Instante | S | INT | Momento del último cambio persistente del Usuario. |
+| UsuarioId | M | Identifier | I | INT | Internal identifier. Has no business meaning. |
+| EmailNormalizado | M | Email; 3–254 characters | I v1 | PER | Login identity. Must be unique after trim + lowercase normalization. Email changes do not exist in v1. |
+| PasswordHash | M | Nonempty technical text | I v1 | AUT | Result of a password-hashing algorithm managed by Spring Security. Never contains a plaintext password. Not exposed in APIs. |
+| Rol | M | UsuarioRol | I | INT | Defines `CUSTOMER` or `ADMIN`. Role changes do not exist in v1. |
+| Estado | M | UsuarioEstado | R | INT | `ACTIVE` on creation; ADMIN may switch Cliente between `ACTIVE` and `BLOCKED`. |
+| FechaCreacion | M | Instant | S | INT | Time when Usuario was created. Immutable. |
+| FechaActualizacion | M | Instant | S | INT | Time of the last persistent Usuario change. |
 
-## 7.4 Invariantes
+## 7.4 Invariants
 
-- `EmailNormalizado` único.
-- Usuario `CUSTOMER` debe tener exactamente un Cliente.
-- Usuario `ADMIN` no posee Cliente en PLIEGO v1.
-- `BLOCKED` impide autenticación, pero no elimina historia comercial.
+- `EmailNormalizado` unique.
+- `CUSTOMER` Usuario must have exactly one Cliente.
+- `ADMIN` Usuario has no Cliente in PLIEGO v1.
+- `BLOCKED` prevents authentication but does not delete commercial history.
 
 ---
 
-# 8. Entidad Cliente
+# 8. Cliente entity
 
-## 8.1 Definición
+## 8.1 Definition
 
-Perfil comercial de un Usuario con rol `CUSTOMER`.
+Commercial profile of a Usuario with role `CUSTOMER`.
 
-## 8.2 Claves
+## 8.2 Keys
 
 - PK: `ClienteId`.
 - AK: `UsuarioId`.
 
-## 8.3 Atributos
+## 8.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| ClienteId | M | Identificador | I | INT | Identificador interno del perfil. |
-| UsuarioId | M | FK Usuario | I | INT | Debe apuntar a Usuario con rol `CUSTOMER`. Único. |
-| Nombres | M | Texto corto; 1–120 | M | PER | Nombres del Cliente. No puede quedar en blanco. |
-| Apellidos | M | Texto corto; 1–120 | M | PER | Apellidos del Cliente. No puede quedar en blanco. |
-| Telefono | O | Teléfono; 7–20 | M | PER | Contacto general. Si existe, se normaliza eliminando separadores de presentación no significativos y conservando `+` inicial cuando corresponda. |
-| FechaCreacion | M | Instante | S | INT | Creación del perfil. |
-| FechaActualizacion | M | Instante | S | INT | Última actualización del perfil. |
+| ClienteId | M | Identifier | I | INT | Internal profile identifier. |
+| UsuarioId | M | FK Usuario | I | INT | Must point to a Usuario with role `CUSTOMER`. Unique. |
+| Nombres | M | Short text; 1–120 | M | PER | Cliente's given names. Cannot be blank. |
+| Apellidos | M | Short text; 1–120 | M | PER | Cliente's surnames. Cannot be blank. |
+| Telefono | O | Phone; 7–20 | M | PER | General contact. When present, normalized by removing insignificant display separators and retaining an initial `+` when applicable. |
+| FechaCreacion | M | Instant | S | INT | Profile creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest profile update. |
 
-## 8.4 Invariantes
+## 8.4 Invariants
 
-- `UsuarioId` no puede compartirse entre Clientes.
-- Los nombres y apellidos son datos de presentación, no claves de identidad.
+- `UsuarioId` cannot be shared between Clientes.
+- Given names and surnames are display data, not identity keys.
 
 ---
 
-# 9. Entidad Direccion
+# 9. Direccion entity
 
-## 9.1 Definición
+## 9.1 Definition
 
-Dirección reutilizable registrada por un Cliente para seleccionar durante checkout.
+Reusable address registered by a Cliente for selection during checkout.
 
-## 9.2 Claves
+## 9.2 Keys
 
 - PK: `DireccionId`.
 
-## 9.3 Atributos
+## 9.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| DireccionId | M | Identificador | I | INT | Identificador interno. |
-| ClienteId | M | FK Cliente | I | INT | Propietario de la Dirección. |
-| Alias | M | Texto corto; 1–80 | M | PER | Etiqueta de conveniencia, p. ej. `Casa` o `Trabajo`. No es única. |
-| Destinatario | M | Texto corto; 1–200 | M | PER | Persona que recibirá el pedido. |
-| DireccionLinea1 | M | Texto medio; 1–200 | M | PER | Dirección principal de entrega. |
-| DireccionLinea2 | O | Texto medio; máx. 200 | M | PER | Complemento de dirección. |
-| Ciudad | M | Texto corto; 1–100 | M | PER | Ciudad/localidad. |
-| Provincia | M | Texto corto; 1–100 | M | PER | Provincia/estado/región administrativa. |
-| PaisCodigo | M | Código ISO país; 2 caracteres | M | PER | **Incorporado por DD-COR-001.** Código ISO 3166-1 alpha-2. |
-| CodigoPostal | O | Texto corto; máx. 20 | M | PER | Código postal cuando aplique. Se trata como texto. |
-| Referencia | O | Texto medio; máx. 300 | M | PER | Indicaciones adicionales para localizar la dirección. |
-| Telefono | M | Teléfono; 7–20 | M | PER | Teléfono de contacto de entrega. |
-| EsPrincipal | M | Booleano | M | INT | Indica si es la dirección principal actual. |
-| FechaCreacion | M | Instante | S | INT | Creación. |
-| FechaActualizacion | M | Instante | S | INT | Última modificación. |
+| DireccionId | M | Identifier | I | INT | Internal identifier. |
+| ClienteId | M | FK Cliente | I | INT | Address owner. |
+| Alias | M | Short text; 1–80 | M | PER | Convenience label, e.g. `Casa` or `Trabajo`. Not unique. |
+| Destinatario | M | Short text; 1–200 | M | PER | Person who will receive the order. |
+| DireccionLinea1 | M | Medium text; 1–200 | M | PER | Primary delivery address. |
+| DireccionLinea2 | O | Medium text; max. 200 | M | PER | Additional address information. |
+| Ciudad | M | Short text; 1–100 | M | PER | Ciudad/localidad. |
+| Provincia | M | Short text; 1–100 | M | PER | Province/state/administrative region. |
+| PaisCodigo | M | ISO country code; 2 characters | M | PER | **Added by DD-COR-001.** ISO 3166-1 alpha-2 code. |
+| CodigoPostal | O | Short text; max. 20 | M | PER | Postal code where applicable. Treated as text. |
+| Referencia | O | Medium text; max. 300 | M | PER | Additional directions for locating the address. |
+| Telefono | M | Phone; 7–20 | M | PER | Delivery contact phone number. |
+| EsPrincipal | M | Boolean | M | INT | Indicates whether it is the current primary address. |
+| FechaCreacion | M | Instant | S | INT | Creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest modification. |
 
-## 9.4 Invariantes
+## 9.4 Invariants
 
-- Una Dirección pertenece exactamente a un Cliente.
-- Por Cliente, como máximo una Dirección tiene `EsPrincipal = true`.
-- Es válido que un Cliente no tenga Dirección principal.
-- Eliminar una Dirección no afecta pedidos previos.
+- A Direccion belongs to exactly one Cliente.
+- Per Cliente, at most one Direccion has `EsPrincipal = true`.
+- It is valid for a Cliente to have no primary Direccion.
+- Deleting a Direccion does not affect previous orders.
 
 ---
 
-# 10. Entidad Autor
+# 10. Autor entity
 
-## 10.1 Definición
+## 10.1 Definition
 
-Persona o identidad autoral asociable a uno o más Libros.
+Person or authorial identity associable with one or more Libros.
 
-## 10.2 Claves
+## 10.2 Keys
 
 - PK: `AutorId`.
-- El nombre **no** es clave alternativa.
+- The name is **not** an alternate key.
 
-## 10.3 Atributos
+## 10.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| AutorId | M | Identificador | I | PUB | Identificador interno. |
-| Nombre | M | Texto corto; 1–200 | M | PUB | Nombre de presentación del Autor. Puede repetirse entre autores distintos. |
-| Biografia | O | Texto largo; máx. conceptual 5.000 | M | PUB | Reseña biográfica. |
-| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` o `INACTIVE`. |
-| FechaCreacion | M | Instante | S | INT | Creación del registro. |
-| FechaActualizacion | M | Instante | S | INT | Última modificación. |
+| AutorId | M | Identifier | I | PUB | Internal identifier. |
+| Nombre | M | Short text; 1–200 | M | PUB | Autor display name. May be repeated among different authors. |
+| Biografia | O | Long text; conceptual max. 5.000 | M | PUB | Biographical overview. |
+| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` or `INACTIVE`. |
+| FechaCreacion | M | Instant | S | INT | Record creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest modification. |
 
-## 10.4 Semántica de inactivación
+## 10.4 Deactivation semantics
 
-Un Autor `INACTIVE`:
+An `INACTIVE` Autor:
 
-- no puede añadirse a una nueva relación `LibroAutor`;
-- conserva sus relaciones existentes;
-- puede seguir siendo mostrado como autor de un Libro ya relacionado;
-- no elimina ni inactiva automáticamente Libros.
+- cannot be added to a new `LibroAutor` relationship;
+- retains existing relationships;
+- may still be displayed as the author of an already associated Libro;
+- does not automatically delete or deactivate Libros.
 
 ---
 
-# 11. Entidad Editorial
+# 11. Editorial entity
 
-## 11.1 Definición
+## 11.1 Definition
 
-Organización editorial responsable de una Edición.
+Publishing organization responsible for an Edicion.
 
-## 11.2 Claves
+## 11.2 Keys
 
 - PK: `EditorialId`.
-- `Nombre` no se considera clave única en v1.
+- `Nombre` is not considered a unique key in v1.
 
-## 11.3 Atributos
+## 11.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| EditorialId | M | Identificador | I | PUB | Identificador interno. |
-| Nombre | M | Texto corto; 1–200 | M | PUB | Nombre de la Editorial. |
-| Descripcion | O | Texto medio; máx. 2.000 | M | PUB | Descripción opcional. |
-| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` o `INACTIVE`. |
-| FechaCreacion | M | Instante | S | INT | Creación. |
-| FechaActualizacion | M | Instante | S | INT | Última modificación. |
+| EditorialId | M | Identifier | I | PUB | Internal identifier. |
+| Nombre | M | Short text; 1–200 | M | PUB | Editorial name. |
+| Descripcion | O | Medium text; max. 2.000 | M | PUB | Optional description. |
+| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` or `INACTIVE`. |
+| FechaCreacion | M | Instant | S | INT | Creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest modification. |
 
-## 11.4 Semántica de inactivación
+## 11.4 Deactivation semantics
 
-Una Editorial `INACTIVE`:
+An `INACTIVE` Editorial:
 
-- no puede asignarse a nuevas Ediciones;
-- conserva Ediciones ya relacionadas;
-- su nombre puede seguir mostrándose en Ediciones existentes;
-- no hace que una Edición existente pase automáticamente a `INACTIVE`.
+- cannot be assigned to new Ediciones;
+- retains already associated Ediciones;
+- its name may still be displayed in existing Ediciones;
+- does not automatically make an existing Edicion `INACTIVE`.
 
 ---
 
-# 12. Entidad Categoria
+# 12. Categoria entity
 
-## 12.1 Definición
+## 12.1 Definition
 
-Clasificación temática de Libros con jerarquía máxima de dos niveles.
+Thematic classification of Libros with a maximum two-level hierarchy.
 
-## 12.2 Claves
+## 12.2 Keys
 
 - PK: `CategoriaId`.
 - AK: `Slug`.
 
-## 12.3 Atributos
+## 12.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| CategoriaId | M | Identificador | I | PUB | Identificador interno. |
-| CategoriaPadreId | O | FK Categoria | R | INT | Ausente para categoría raíz; presente para subcategoría. |
-| Nombre | M | Texto corto; 1–120 | M | PUB | Nombre visible. |
-| Slug | M | Código textual; 1–140 | M | PUB | Identificador legible único. Se normaliza a minúsculas, sin espacios exteriores y con separador `-`. |
-| Descripcion | O | Texto medio; máx. 1.000 | M | PUB | Descripción temática. |
-| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` o `INACTIVE`. |
-| FechaCreacion | M | Instante | S | INT | Creación. |
-| FechaActualizacion | M | Instante | S | INT | Última modificación. |
+| CategoriaId | M | Identifier | I | PUB | Internal identifier. |
+| CategoriaPadreId | O | FK Categoria | R | INT | Absent for a root category; present for a subcategory. |
+| Nombre | M | Short text; 1–120 | M | PUB | Visible name. |
+| Slug | M | Text code; 1–140 | M | PUB | Unique human-readable identifier. Normalized to lowercase, without surrounding whitespace and with `-` as separator. |
+| Descripcion | O | Medium text; max. 1.000 | M | PUB | Thematic description. |
+| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` or `INACTIVE`. |
+| FechaCreacion | M | Instant | S | INT | Creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest modification. |
 
-## 12.4 Invariantes
+## 12.4 Invariants
 
-- `Slug` único globalmente.
-- Categoría raíz: `CategoriaPadreId = null`.
-- Subcategoría: `CategoriaPadreId != null` y el padre debe ser raíz.
-- Una subcategoría no puede poseer hijos.
-- No puede referenciarse a sí misma.
-- No pueden existir ciclos.
-- Profundidad máxima: 2.
+- `Slug` globally unique.
+- Root category: `CategoriaPadreId = null`.
+- Subcategory: `CategoriaPadreId != null` and the parent must be a root.
+- A subcategory cannot have children.
+- Cannot reference itself.
+- Cycles cannot exist.
+- Maximum depth: 2.
 
-## 12.5 Semántica de inactivación
+## 12.5 Deactivation semantics
 
-- No puede incorporarse a nuevas asociaciones `LibroCategoria`.
-- Asociaciones existentes permanecen.
-- La inactivación no desactiva automáticamente Libros.
-- La categoría inactiva no debe ofrecerse como opción de clasificación nueva en interfaces administrativas futuras.
+- Cannot be added to new `LibroCategoria` associations.
+- Existing associations remain.
+- Deactivation does not automatically deactivate Libros.
+- The inactive category must not be offered as a new classification option in future administrative interfaces.
 
 ---
 
-# 13. Entidad Libro
+# 13. Libro entity
 
-## 13.1 Definición
+## 13.1 Definition
 
-Obra bibliográfica abstracta, independiente de sus versiones comerciales.
+Abstract bibliographic work, independent of its commercial versions.
 
-## 13.2 Claves
+## 13.2 Keys
 
 - PK: `LibroId`.
-- Título no es único.
+- Title is not unique.
 
-## 13.3 Atributos
+## 13.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| LibroId | M | Identificador | I | PUB | Identificador interno de la obra. |
-| Titulo | M | Texto medio; 1–300 | M | PUB | Título principal de la obra. |
-| Subtitulo | O | Texto medio; máx. 300 | M | PUB | Subtítulo, cuando exista. |
-| Sinopsis | O | Texto largo; máx. conceptual 10.000 | M | PUB | Descripción/resumen de la obra. |
-| Estado | M | EstadoCatalogo | R | PUB | Control de disponibilidad comercial a nivel de obra. |
-| FechaCreacion | M | Instante | S | INT | Creación. |
-| FechaActualizacion | M | Instante | S | INT | Último cambio. |
+| LibroId | M | Identifier | I | PUB | Internal work identifier. |
+| Titulo | M | Medium text; 1–300 | M | PUB | Main title of the work. |
+| Subtitulo | O | Medium text; max. 300 | M | PUB | Subtitle, when present. |
+| Sinopsis | O | Long text; conceptual max. 10.000 | M | PUB | Description/summary of the work. |
+| Estado | M | EstadoCatalogo | R | PUB | Commercial availability control at work level. |
+| FechaCreacion | M | Instant | S | INT | Creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest change. |
 
-## 13.4 Invariantes
+## 13.4 Invariants
 
-Para `Libro.Estado = ACTIVE`:
+For `Libro.Estado = ACTIVE`:
 
-- debe existir al menos un `LibroAutor`;
-- debe existir al menos un `LibroCategoria`.
+- at least one `LibroAutor` must exist;
+- at least one `LibroCategoria` must exist.
 
-La inactivación del Libro hace que ninguna de sus Ediciones sea publicable, sin modificar el estado individual de esas Ediciones.
+Deactivating Libro makes none of its Ediciones publishable, without changing those Ediciones' individual states.
 
 ---
 
-# 14. Entidad LibroAutor
+# 14. LibroAutor entity
 
-## 14.1 Definición
+## 14.1 Definition
 
-Asociación N:M entre Libro y Autor, incluyendo orden de presentación autoral.
+N:M association between Libro and Autor, including author display order.
 
-## 14.2 Claves
+## 14.2 Keys
 
-- PK compuesta: `(LibroId, AutorId)`.
+- Composite PK: `(LibroId, AutorId)`.
 - AK: `(LibroId, OrdenAutoria)`.
 
-## 14.3 Atributos
+## 14.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| LibroId | M | FK Libro | I en la relación | PUB | Libro participante. |
-| AutorId | M | FK Autor | I en la relación | PUB | Autor participante. |
-| OrdenAutoria | M | Entero positivo | M | PUB | Posición usada para mostrar autores. Valores únicos dentro del Libro. |
+| LibroId | M | FK Libro | I within the relationship | PUB | Participating Libro. |
+| AutorId | M | FK Autor | I within the relationship | PUB | Participating Autor. |
+| OrdenAutoria | M | Positive integer | M | PUB | Position used to display authors. Values unique within Libro. |
 
-## 14.4 Reglas
+## 14.4 Rules
 
-- No puede existir dos veces la misma pareja Libro/Autor.
+- The same Libro/Autor pair cannot exist twice.
 - `OrdenAutoria > 0`.
-- No pueden repetirse posiciones dentro de un Libro.
-- No se exige que la secuencia sea contigua; el orden relativo se obtiene ascendentemente.
-- Un Autor nuevo en la relación debe estar `ACTIVE`.
+- Positions cannot be repeated within a Libro.
+- The sequence need not be contiguous; relative order is obtained in ascending order.
+- An Autor newly added to the relationship must be `ACTIVE`.
 
 ---
 
-# 15. Entidad LibroCategoria
+# 15. LibroCategoria entity
 
-## 15.1 Definición
+## 15.1 Definition
 
-Asociación N:M entre Libro y Categoria.
+N:M association between Libro and Categoria.
 
-## 15.2 Claves
+## 15.2 Keys
 
-- PK compuesta: `(LibroId, CategoriaId)`.
+- Composite PK: `(LibroId, CategoriaId)`.
 
-## 15.3 Atributos
+## 15.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| LibroId | M | FK Libro | I en la relación | PUB | Libro clasificado. |
-| CategoriaId | M | FK Categoria | I en la relación | PUB | Categoría asignada. |
+| LibroId | M | FK Libro | I within the relationship | PUB | Classified Libro. |
+| CategoriaId | M | FK Categoria | I within the relationship | PUB | Assigned Categoria. |
 
-## 15.4 Reglas
+## 15.4 Rules
 
-- No se duplica la misma asociación.
-- Una Categoría incorporada a una nueva asociación debe estar `ACTIVE`.
+- The same association is not duplicated.
+- A Categoria added to a new association must be `ACTIVE`.
 
 ---
 
-# 16. Entidad Edicion
+# 16. Edicion entity
 
-## 16.1 Definición
+## 16.1 Definition
 
-Versión comercial física concreta de un Libro. Es la unidad que PLIEGO vende, valora e inventaría.
+Specific physical commercial version of a Libro. This is the unit that PLIEGO sells, prices and inventories.
 
-## 16.2 Claves
+## 16.2 Keys
 
 - PK: `EdicionId`.
 - AK: `SKU`.
-- AK condicional: `ISBN13` cuando exista.
+- Conditional AK: `ISBN13` when present.
 
-## 16.3 Atributos
+## 16.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| EdicionId | M | Identificador | I | PUB | Identificador interno. |
-| LibroId | M | FK Libro | I | PUB | Obra a la que pertenece. No puede cambiar después de crear la Edición. |
-| EditorialId | M | FK Editorial | M | PUB | Editorial actual de la Edición. Editorial nueva debe estar `ACTIVE`. |
-| SKU | M | Código SKU; 1–64 | I | PUB | Identificador comercial interno, canónico y único. |
-| ISBN13 | O | 13 dígitos | M restringida | PUB | ISBN de la Edición. Si existe, checksum válido y único. Puede corregirse administrativamente. |
-| Idioma | M | LanguageCode; 2 o 3 caracteres | M | PUB | Idioma principal del contenido. Canon en minúsculas (ISO 639-1 o 639-2/T). |
-| Formato | M | FormatoEdicion | M | PUB | `PAPERBACK` o `HARDCOVER`. |
-| NumeroPaginas | M | Entero positivo; rango conceptual 1–100.000 | M | PUB | Número de páginas de la Edición. |
-| FechaPublicacion | O | Fecha | M | PUB | Fecha editorial. No determina por sí sola disponibilidad comercial en v1. |
-| Precio | M | Importe USD; 0.01–999,999,999.99 | M | PUB | Precio vigente. Fuente de verdad del carrito activo. |
-| PortadaUrl | O | URL/URI; máx. conceptual 2.048 | M | PUB | Localización de la imagen de portada. No contiene binario. |
-| PortadaLicencia | C | LicenciaPortada | M | PUB | Obligatoria si existe `PortadaUrl`. |
-| PortadaFuenteUrl | C | URL/URI; máx. 2.048 | M | PUB | Obligatoria si existe `PortadaUrl`; identifica procedencia documentada. |
-| PortadaAtribucion | O | Texto medio; máx. 500 | M | PUB | Texto de atribución cuando la licencia o fuente lo requiera. |
-| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` o `INACTIVE`. |
-| FechaCreacion | M | Instante | S | INT | Creación. |
-| FechaActualizacion | M | Instante | S | INT | Último cambio. |
+| EdicionId | M | Identifier | I | PUB | Internal identifier. |
+| LibroId | M | FK Libro | I | PUB | Work to which it belongs. Cannot change after Edicion creation. |
+| EditorialId | M | FK Editorial | M | PUB | Current Editorial of the Edicion. A new Editorial must be `ACTIVE`. |
+| SKU | M | SKU code; 1–64 | I | PUB | Internal, canonical and unique commercial identifier. |
+| ISBN13 | O | 13 digits | Restricted M | PUB | Edicion ISBN. When present, valid checksum and unique. May be corrected administratively. |
+| Idioma | M | LanguageCode; 2 or 3 characters | M | PUB | Main content language. Lowercase canonical form (ISO 639-1 or 639-2/T). |
+| Formato | M | FormatoEdicion | M | PUB | `PAPERBACK` or `HARDCOVER`. |
+| NumeroPaginas | M | Positive integer; conceptual range 1–100.000 | M | PUB | Number of pages in the Edicion. |
+| FechaPublicacion | O | Date | M | PUB | Publication date. Does not alone determine commercial availability in v1. |
+| Precio | M | USD amount; 0.01–999,999,999.99 | M | PUB | Current price. Source of truth for the active cart. |
+| PortadaUrl | O | URL/URI; conceptual max. 2.048 | M | PUB | Cover image location. Does not contain binary data. |
+| PortadaLicencia | C | LicenciaPortada | M | PUB | Required if `PortadaUrl` exists. |
+| PortadaFuenteUrl | C | URL/URI; max. 2.048 | M | PUB | Required if `PortadaUrl` exists; identifies documented provenance. |
+| PortadaAtribucion | O | Medium text; max. 500 | M | PUB | Attribution text when required by the license or source. |
+| Estado | M | EstadoCatalogo | R | PUB | `ACTIVE` or `INACTIVE`. |
+| FechaCreacion | M | Instant | S | INT | Creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest change. |
 
-## 16.4 Reglas condicionales de portada
+## 16.4 Conditional cover rules
 
 ```text
 PortadaUrl IS NULL
-=> PortadaLicencia, PortadaFuenteUrl y PortadaAtribucion pueden ser null
+=> PortadaLicencia, PortadaFuenteUrl and PortadaAtribucion may be null
 
 PortadaUrl IS NOT NULL
-=> PortadaLicencia obligatorio
-=> PortadaFuenteUrl obligatorio
+=> PortadaLicencia required
+=> PortadaFuenteUrl required
 ```
 
-`PortadaAtribucion` es obligatoria con `CC_BY` y `CC_BY_SA`; opcional con `PUBLIC_DOMAIN`, `CC0` y `OWNED` (recomendada cuando la fuente la proporcione). Eliminar `PortadaUrl` obliga a nulificar `PortadaLicencia`, `PortadaFuenteUrl` y `PortadaAtribucion`.
+`PortadaAtribucion` is mandatory with `CC_BY` and `CC_BY_SA`; optional with `PUBLIC_DOMAIN`, `CC0` and `OWNED` (recommended when provided by the source). Removing `PortadaUrl` requires setting `PortadaLicencia`, `PortadaFuenteUrl` and `PortadaAtribucion` to null.
 
-## 16.5 Publicabilidad
+## 16.5 Publishability
 
-Una Edición es publicable cuando:
+An Edicion is publishable when:
 
 ```text
 Edicion.Estado = ACTIVE
 AND Libro.Estado = ACTIVE
 ```
 
-La disponibilidad de compra requiere adicionalmente:
+Purchase availability additionally requires:
 
 ```text
 Inventario.StockActual > 0
@@ -729,82 +729,82 @@ Inventario.StockActual > 0
 
 ---
 
-# 17. Entidad Inventario
+# 17. Inventario entity
 
-## 17.1 Definición
+## 17.1 Definition
 
-Fuente única de verdad del stock actual de una Edición en PLIEGO v1.
+Single source of truth for an Edicion's current stock in PLIEGO v1.
 
-## 17.2 Claves
+## 17.2 Keys
 
-- PK lógica compartida: `EdicionId`.
+- Shared logical PK: `EdicionId`.
 - FK: `EdicionId -> Edicion`.
 
-## 17.3 Atributos
+## 17.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| EdicionId | M | FK/identificador | I | INT | Identifica a la Edición cuyo inventario representa. |
-| StockActual | M | Entero no negativo | R | INT | Unidades existentes actualmente. Solo cambia por operaciones autorizadas de inventario, venta o cancelación. |
-| StockMinimo | M | Entero no negativo | M | INT | Umbral administrativo para indicador de bajo stock. |
-| FechaActualizacion | M | Instante | S | INT | Último cambio de `StockActual` o `StockMinimo`. |
+| EdicionId | M | FK/identificador | I | INT | Identifies the Edicion whose inventory it represents. |
+| StockActual | M | Nonnegative integer | R | INT | Currently existing units. Changes only through authorized inventory, sale or cancellation operations. |
+| StockMinimo | M | Nonnegative integer | M | INT | Administrative threshold for the low-stock indicator. |
+| FechaActualizacion | M | Instant | S | INT | Latest change to `StockActual` or `StockMinimo`. |
 
-## 17.4 Valores iniciales
+## 17.4 Initial values
 
-Al crear Edicion:
+When creating Edicion:
 
 ```text
 StockActual = 0
 StockMinimo = 0
 ```
 
-## 17.5 Dato derivado
+## 17.5 Derived datum
 
 ```text
 BajoStock = StockMinimo > 0 AND StockActual <= StockMinimo
 ```
 
-`BajoStock` no requiere almacenamiento independiente. (`StockMinimo = 0` significa "sin umbral".)
+`BajoStock` does not require independent storage. (`StockMinimo = 0` means "no threshold".)
 
 ---
 
-# 18. Entidad MovimientoInventario
+# 18. MovimientoInventario entity
 
-## 18.1 Definición
+## 18.1 Definition
 
-Evento inmutable que explica cada cambio confirmado en `Inventario.StockActual`.
+Immutable event explaining every committed change to `Inventario.StockActual`.
 
-## 18.2 Claves
+## 18.2 Keys
 
 - PK: `MovimientoInventarioId`.
-- AK condicional para movimientos de Pedido: `(PedidoId, EdicionId, Tipo)`.
+- Conditional AK for Pedido movements: `(PedidoId, EdicionId, Tipo)`.
 
-## 18.3 Atributos
+## 18.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| MovimientoInventarioId | M | Identificador | I | COM | Identificador del evento. |
-| EdicionId | M | FK Inventario/Edicion | A | COM | Inventario afectado. |
-| PedidoId | C | FK Pedido | A | COM | Obligatorio para `SALE` y `CANCELLATION`; ausente para movimientos administrativos. |
-| UsuarioActorId | C | FK Usuario | A | INT | Obligatorio para movimientos administrativos; debe corresponder a ADMIN. Ausente en movimientos automáticos de venta/cancelación. |
-| Tipo | M | TipoMovimientoInventario | A | COM | Naturaleza del cambio. |
-| Cantidad | M | Entero positivo | A | COM | Magnitud absoluta del movimiento; nunca se almacena negativa. |
-| StockAnterior | M | Entero no negativo | A | COM | Stock inmediatamente anterior al evento. |
-| StockPosterior | M | Entero no negativo | A | COM | Stock inmediatamente posterior. |
-| Motivo | C | Texto medio; 1–500 | A | COM | Obligatorio en `ENTRY`, `ADJUSTMENT_IN`, `ADJUSTMENT_OUT`. Opcional en movimientos automáticos. |
-| Fecha | M | Instante | A | COM | Momento en que el movimiento fue confirmado. |
+| MovimientoInventarioId | M | Identifier | I | COM | Event identifier. |
+| EdicionId | M | FK Inventario/Edicion | A | COM | Affected Inventario. |
+| PedidoId | C | FK Pedido | A | COM | Required for `SALE` and `CANCELLATION`; absent for administrative movements. |
+| UsuarioActorId | C | FK Usuario | A | INT | Required for administrative movements; must correspond to ADMIN. Absent for automatic sale/cancellation movements. |
+| Tipo | M | TipoMovimientoInventario | A | COM | Nature of the change. |
+| Cantidad | M | Positive integer | A | COM | Absolute movement magnitude; never stored as negative. |
+| StockAnterior | M | Nonnegative integer | A | COM | Stock immediately before the event. |
+| StockPosterior | M | Nonnegative integer | A | COM | Stock immediately afterward. |
+| Motivo | C | Medium text; 1–500 | A | COM | Required for `ENTRY`, `ADJUSTMENT_IN`, `ADJUSTMENT_OUT`. Optional for automatic movements. |
+| Fecha | M | Instant | A | COM | Time when the movement was committed. |
 
-## 18.4 Reglas por tipo
+## 18.4 Rules by type
 
-| Tipo | PedidoId | UsuarioActorId | Motivo | Efecto |
+| Tipo | PedidoId | UsuarioActorId | Motivo | Effect |
 |---|---|---|---|---|
-| ENTRY | null | obligatorio ADMIN | obligatorio | suma |
-| ADJUSTMENT_IN | null | obligatorio ADMIN | obligatorio | suma |
-| ADJUSTMENT_OUT | null | obligatorio ADMIN | obligatorio | resta |
-| SALE | obligatorio | null | opcional | resta |
-| CANCELLATION | obligatorio | null | opcional | suma |
+| ENTRY | null | required ADMIN | required | adds |
+| ADJUSTMENT_IN | null | required ADMIN | required | adds |
+| ADJUSTMENT_OUT | null | required ADMIN | required | subtracts |
+| SALE | required | null | optional | subtracts |
+| CANCELLATION | required | null | optional | adds |
 
-## 18.5 Invariantes aritméticas
+## 18.5 Arithmetic invariants
 
 ```text
 ENTRY / ADJUSTMENT_IN / CANCELLATION:
@@ -814,7 +814,7 @@ ADJUSTMENT_OUT / SALE:
 StockPosterior = StockAnterior - Cantidad
 ```
 
-Siempre:
+Always:
 
 ```text
 Cantidad > 0
@@ -822,75 +822,75 @@ StockAnterior >= 0
 StockPosterior >= 0
 ```
 
-## 18.6 Inmutabilidad
+## 18.6 Immutability
 
-Todos los atributos son append-only. Un MovimientoInventario confirmado no se modifica ni elimina.
+All attributes are append-only. A committed MovimientoInventario is neither modified nor deleted.
 
 ---
 
-# 19. Entidad Carrito
+# 19. Carrito entity
 
-## 19.1 Definición
+## 19.1 Definition
 
-Agrupador temporal de intención de compra de un Cliente.
+Temporary grouping of a Cliente's purchase intent.
 
-## 19.2 Claves
+## 19.2 Keys
 
 - PK: `CarritoId`.
-- Regla de unicidad condicional: como máximo un Carrito `ACTIVE` por Cliente.
+- Conditional uniqueness rule: at most one `ACTIVE` Carrito per Cliente.
 
-## 19.3 Atributos
+## 19.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| CarritoId | M | Identificador | I | INT | Identificador interno. |
+| CarritoId | M | Identifier | I | INT | Internal identifier. |
 | ClienteId | M | FK Cliente | I | INT | Propietario. |
-| Estado | M | EstadoCarrito | R | INT | `ACTIVE` o `CHECKED_OUT`. |
-| FechaCreacion | M | Instante | S | INT | Creación física del Carrito. |
-| FechaActualizacion | M | Instante | S | INT | Última modificación de estado o contenido relevante. |
+| Estado | M | EstadoCarrito | R | INT | `ACTIVE` or `CHECKED_OUT`. |
+| FechaCreacion | M | Instant | S | INT | Physical Carrito creation. |
+| FechaActualizacion | M | Instant | S | INT | Latest change to state or relevant content. |
 
-## 19.4 Estados
+## 19.4 States
 
 ```text
 ACTIVE -> CHECKED_OUT
 ```
 
-`CHECKED_OUT` es final.
+`CHECKED_OUT` is final.
 
-Un checkout rechazado por pago **no** cambia el Carrito; permanece `ACTIVE`.
+A checkout rejected due to payment does **not** change Carrito; it remains `ACTIVE`.
 
 ---
 
-# 20. Entidad CarritoItem
+# 20. CarritoItem entity
 
-## 20.1 Definición
+## 20.1 Definition
 
-Una Edición seleccionada y su cantidad dentro de un Carrito.
+A selected Edicion and its quantity within a Carrito.
 
-## 20.2 Claves
+## 20.2 Keys
 
 - PK: `CarritoItemId`.
 - AK: `(CarritoId, EdicionId)`.
 
-## 20.3 Atributos
+## 20.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| CarritoItemId | M | Identificador | I | INT | Identificador del item. |
-| CarritoId | M | FK Carrito | I | INT | Carrito propietario. |
-| EdicionId | M | FK Edicion | I | PUB | Edición solicitada. |
-| Cantidad | M | Entero positivo | M | INT | Unidades solicitadas. Debe ser > 0. |
-| FechaCreacion | M | Instante | S | INT | Primera incorporación del item. |
-| FechaActualizacion | M | Instante | S | INT | Último cambio de cantidad. |
+| CarritoItemId | M | Identifier | I | INT | Item identifier. |
+| CarritoId | M | FK Carrito | I | INT | Owning Carrito. |
+| EdicionId | M | FK Edicion | I | PUB | Requested Edicion. |
+| Cantidad | M | Positive integer | M | INT | Requested units. Must be > 0. |
+| FechaCreacion | M | Instant | S | INT | First addition of the item. |
+| FechaActualizacion | M | Instant | S | INT | Latest quantity change. |
 
-## 20.4 Reglas
+## 20.4 Rules
 
-- Un CarritoItem solo puede modificarse mientras su Carrito está `ACTIVE`.
-- Al agregar/modificar se valida `Cantidad <= StockActual` en ese instante.
-- Esta condición no garantiza stock hasta checkout.
-- No almacena precio como fuente de verdad.
+- A CarritoItem may only be modified while its Carrito is `ACTIVE`.
+- When adding/modifying, `Cantidad <= StockActual` is validated at that instant.
+- This condition does not guarantee stock until checkout.
+- Does not store price as a source of truth.
 
-## 20.5 Datos derivados en consulta
+## 20.5 Query-derived data
 
 ```text
 PrecioActual = Edicion.Precio
@@ -899,40 +899,40 @@ SubtotalActual = Cantidad × PrecioActual
 
 ---
 
-# 21. Entidad Pedido
+# 21. Pedido entity
 
-## 21.1 Definición
+## 21.1 Definition
 
-Transacción comercial persistida creada durante checkout.
+Persisted commercial transaction created during checkout.
 
-## 21.2 Claves
+## 21.2 Keys
 
 - PK: `PedidoId`.
 
-## 21.3 Atributos
+## 21.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| PedidoId | M | Identificador | I | COM | Identificador interno del Pedido. |
-| ClienteId | M | FK Cliente | I | COM | Cliente propietario. |
-| Estado | M | EstadoPedido | R | COM | Estado actual según máquina de estados. |
-| Subtotal | M | Importe USD > 0 | I | COM | Suma histórica de subtotales de PedidoItem. |
-| Total | M | Importe USD > 0 | I | COM | Total comercial. En v1 debe ser igual a Subtotal. |
-| FechaCreacion | M | Instante | S | COM | Instante de creación del Pedido en checkout. |
-| FechaActualizacion | M | Instante | S | COM | Último cambio de estado del Pedido. |
+| PedidoId | M | Identifier | I | COM | Internal Pedido identifier. |
+| ClienteId | M | FK Cliente | I | COM | Owning Cliente. |
+| Estado | M | EstadoPedido | R | COM | Current state according to the state machine. |
+| Subtotal | M | USD amount > 0 | I | COM | Historical sum of PedidoItem subtotals. |
+| Total | M | USD amount > 0 | I | COM | Commercial total. In v1 it must equal Subtotal. |
+| FechaCreacion | M | Instant | S | COM | Instant of Pedido creation at checkout. |
+| FechaActualizacion | M | Instant | S | COM | Latest Pedido state change. |
 
-## 21.4 Invariantes
+## 21.4 Invariants
 
-- Debe tener al menos un PedidoItem.
-- Debe tener exactamente un PedidoDireccion.
-- Debe tener exactamente un Pago.
-- Debe tener al menos un PedidoEstadoHistorial.
+- Must have at least one PedidoItem.
+- Must have exactly one PedidoDireccion.
+- Must have exactly one Pago.
+- Must have at least one PedidoEstadoHistorial.
 - `Subtotal > 0`.
 - `Total > 0`.
-- `Total = Subtotal` en v1.
-- Moneda implícita: USD.
+- `Total = Subtotal` in v1.
+- Implicit currency: USD.
 
-## 21.5 Estados permitidos
+## 21.5 Allowed states
 
 ```text
 PENDING_PAYMENT
@@ -943,40 +943,40 @@ DELIVERED
 CANCELLED
 ```
 
-Las transiciones están definidas en la Use Case Baseline y en la sección de reglas inter-entidad de este documento.
+Transitions are defined in the Use Case Baseline and in this document's cross-entity rules section.
 
 ---
 
-# 22. Entidad PedidoItem
+# 22. PedidoItem entity
 
-## 22.1 Definición
+## 22.1 Definition
 
-Línea comercial inmutable de un Pedido. Mantiene referencia a Edicion y snapshots suficientes para preservar qué fue comprado aunque el catálogo cambie.
+Immutable commercial line of a Pedido. Retains a reference to Edicion and sufficient snapshots to preserve what was purchased even if the catalog changes.
 
-## 22.2 Claves
+## 22.2 Keys
 
 - PK: `PedidoItemId`.
-- **AK incorporada por DD-COR-005:** `(PedidoId, EdicionId)`.
+- **AK added by DD-COR-005:** `(PedidoId, EdicionId)`.
 
-## 22.3 Atributos
+## 22.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| PedidoItemId | M | Identificador | I | COM | Identificador interno. |
-| PedidoId | M | FK Pedido | A | COM | Pedido propietario. |
-| EdicionId | M | FK Edicion | A | COM | Referencia histórica a la Edición adquirida. |
-| SKU_Snapshot | M | Código SKU | A | COM | Copia exacta del SKU al checkout. |
-| ISBN_Snapshot | O | 13 dígitos | A | COM | Copia del ISBN; null si la Edición no poseía ISBN. |
-| Titulo_Snapshot | M | Texto medio; 1–300 | A | COM | Título mostrado al momento de compra. |
-| Autores_Snapshot | M | Texto medio; 1–1.000 | A | COM | Cadena histórica de autores, ordenada por `OrdenAutoria` y separada de forma determinista por `; `. |
-| Editorial_Snapshot | M | Texto corto; 1–200 | A | COM | Nombre de Editorial al checkout. |
-| Formato_Snapshot | M | FormatoEdicion | A | COM | Formato comprado. |
-| Idioma_Snapshot | M | Código idioma | A | COM | **Incorporado por DD-COR-002.** Idioma comprado. |
-| PrecioUnitario | M | Importe USD > 0 | A | COM | Precio de una unidad al checkout. |
-| Cantidad | M | Entero positivo | A | COM | Unidades compradas. |
-| Subtotal | M | Importe USD > 0 | A | COM | `PrecioUnitario × Cantidad`. |
+| PedidoItemId | M | Identifier | I | COM | Internal identifier. |
+| PedidoId | M | FK Pedido | A | COM | Owning Pedido. |
+| EdicionId | M | FK Edicion | A | COM | Historical reference to the purchased Edicion. |
+| SKU_Snapshot | M | SKU code | A | COM | Exact SKU copy at checkout. |
+| ISBN_Snapshot | O | 13 digits | A | COM | ISBN copy; null if the Edicion had no ISBN. |
+| Titulo_Snapshot | M | Medium text; 1–300 | A | COM | Title displayed at purchase time. |
+| Autores_Snapshot | M | Medium text; 1–1.000 | A | COM | Historical author string, ordered by `OrdenAutoria` and separated deterministically by `; `. |
+| Editorial_Snapshot | M | Short text; 1–200 | A | COM | Editorial name at checkout. |
+| Formato_Snapshot | M | FormatoEdicion | A | COM | Purchased format. |
+| Idioma_Snapshot | M | Language code | A | COM | **Added by DD-COR-002.** Purchased language. |
+| PrecioUnitario | M | USD amount > 0 | A | COM | Price of one unit at checkout. |
+| Cantidad | M | Positive integer | A | COM | Purchased units. |
+| Subtotal | M | USD amount > 0 | A | COM | `PrecioUnitario × Cantidad`. |
 
-## 22.4 Invariantes
+## 22.4 Invariants
 
 ```text
 Cantidad > 0
@@ -984,125 +984,125 @@ PrecioUnitario > 0
 Subtotal = PrecioUnitario × Cantidad
 ```
 
-Una Edición aparece como máximo una vez dentro del mismo Pedido.
+An Edicion appears at most once within the same Pedido.
 
-## 22.5 Semántica de snapshots
+## 22.5 Snapshot semantics
 
-Los snapshots:
+Snapshots:
 
-- se obtienen dentro de la misma operación de checkout;
-- no se recalculan posteriormente;
-- no son fuente de verdad del catálogo;
-- son fuente de verdad histórica del Pedido.
+- are obtained within the same checkout operation;
+- are not subsequently recalculated;
+- they are not the catalog's source of truth;
+- are the Pedido's historical source of truth.
 
-No se considera necesario capturar `NumeroPaginas`, `FechaPublicacion` o `PortadaUrl` para la verdad transaccional de v1.
+Capturing `NumeroPaginas`, `FechaPublicacion` or `PortadaUrl` is not considered necessary for v1 transactional truth.
 
 ---
 
-# 23. Entidad PedidoDireccion
+# 23. PedidoDireccion entity
 
-## 23.1 Definición
+## 23.1 Definition
 
-Snapshot inmutable de la Dirección seleccionada durante checkout.
+Immutable snapshot of the Direccion selected during checkout.
 
-## 23.2 Claves
+## 23.2 Keys
 
-- PK/FK lógica compartida: `PedidoId`.
+- Shared logical PK/FK: `PedidoId`.
 
-## 23.3 Atributos
+## 23.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| PedidoId | M | FK Pedido | A | COM | Pedido al que pertenece el snapshot. |
-| Destinatario | M | Texto corto; 1–200 | A | PER/COM | Copia de destinatario. |
-| DireccionLinea1 | M | Texto medio; 1–200 | A | PER/COM | Copia de dirección principal. |
-| DireccionLinea2 | O | Texto medio; máx. 200 | A | PER/COM | Copia de complemento. |
-| Ciudad | M | Texto corto; 1–100 | A | PER/COM | Copia de ciudad. |
-| Provincia | M | Texto corto; 1–100 | A | PER/COM | Copia de provincia/región. |
-| PaisCodigo | M | Código ISO país; 2 caracteres | A | PER/COM | **Incorporado por DD-COR-001.** País de entrega al checkout. |
-| CodigoPostal | O | Texto corto; máx. 20 | A | PER/COM | Copia de código postal. |
-| Referencia | O | Texto medio; máx. 300 | A | PER/COM | Copia de referencia. |
-| Telefono | M | Teléfono; 7–20 | A | PER/COM | Teléfono de contacto de entrega. |
+| PedidoId | M | FK Pedido | A | COM | Pedido to which the snapshot belongs. |
+| Destinatario | M | Short text; 1–200 | A | PER/COM | Recipient copy. |
+| DireccionLinea1 | M | Medium text; 1–200 | A | PER/COM | Primary address copy. |
+| DireccionLinea2 | O | Medium text; max. 200 | A | PER/COM | Additional address information copy. |
+| Ciudad | M | Short text; 1–100 | A | PER/COM | City copy. |
+| Provincia | M | Short text; 1–100 | A | PER/COM | Province/region copy. |
+| PaisCodigo | M | ISO country code; 2 characters | A | PER/COM | **Added by DD-COR-001.** Delivery country at checkout. |
+| CodigoPostal | O | Short text; max. 20 | A | PER/COM | Postal code copy. |
+| Referencia | O | Medium text; max. 300 | A | PER/COM | Reference copy. |
+| Telefono | M | Phone; 7–20 | A | PER/COM | Delivery contact phone number. |
 
-## 23.4 Reglas
+## 23.4 Rules
 
-- No existe FK hacia Direccion.
-- Se genera a partir de una Dirección que pertenece al Cliente del Pedido.
-- Después del checkout no se modifica.
-- Borrar o editar la Dirección original no afecta este snapshot.
+- There is no FK to Direccion.
+- Generated from a Direccion belonging to the Pedido's Cliente.
+- Not modified after checkout.
+- Deleting or editing the original Direccion does not affect this snapshot.
 
 ---
 
-# 24. Entidad Pago
+# 24. Pago entity
 
-## 24.1 Definición
+## 24.1 Definition
 
-Resultado del único intento de pago simulado asociado a un Pedido en PLIEGO v1.
+Result of the single simulated payment attempt associated with a Pedido in PLIEGO v1.
 
-## 24.2 Claves
+## 24.2 Keys
 
 - PK: `PagoId`.
 - AK: `PedidoId`.
-- AK condicional: `Referencia` cuando exista.
+- Conditional AK: `Referencia` when present.
 
-## 24.3 Atributos
+## 24.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| PagoId | M | Identificador | I | COM | Identificador del Pago. |
-| PedidoId | M | FK Pedido | I | COM | Debe ser único: un Pago por Pedido. |
-| Metodo | M | MetodoPago | I | COM | `CARD` o `TRANSFER`. |
-| Estado | M | EstadoPago | R | COM | Estado del intento de pago. |
-| Monto | M | Importe USD > 0 | I | COM | Debe ser exactamente igual a Pedido.Total. |
-| Referencia | O | Texto corto; 1–100 | R | COM | Referencia generada por el simulador. Si existe, es única. |
-| DetalleResultado | O | Texto medio; máx. 500 | R | COM | Explicación académica del resultado, sin datos sensibles de tarjeta. |
-| FechaCreacion | M | Instante | S | COM | Creación como `PENDING`. |
-| FechaActualizacion | M | Instante | S | COM | Último cambio de estado. |
+| PagoId | M | Identifier | I | COM | Pago identifier. |
+| PedidoId | M | FK Pedido | I | COM | Must be unique: one Pago per Pedido. |
+| Metodo | M | MetodoPago | I | COM | `CARD` or `TRANSFER`. |
+| Estado | M | EstadoPago | R | COM | Payment attempt state. |
+| Monto | M | USD amount > 0 | I | COM | Must exactly equal Pedido.Total. |
+| Referencia | O | Short text; 1–100 | R | COM | Reference generated by the simulator. When present, unique. |
+| DetalleResultado | O | Medium text; max. 500 | R | COM | Academic explanation of the result, without sensitive card data. |
+| FechaCreacion | M | Instant | S | COM | Created as `PENDING`. |
+| FechaActualizacion | M | Instant | S | COM | Latest state change. |
 
-## 24.4 Máquina de estados
+## 24.4 State machine
 
 ```text
 PENDING -> APPROVED -> REFUNDED
        \-> REJECTED
 ```
 
-## 24.5 Restricciones
+## 24.5 Constraints
 
-- No almacena CVV.
-- No almacena PAN/número completo de tarjeta.
+- Does not store CVV.
+- Does not store PAN/complete card number.
 - `Monto > 0`.
 - `Monto = Pedido.Total`.
-- `Referencia` es obligatoria en `APPROVED`, opcional en `REJECTED` (el motivo vive en `DetalleResultado`); nace `null` en `PENDING` y queda inmutable tras la resolución; `REFUNDED` no la modifica.
-- `APPROVED` puede cambiar únicamente a `REFUNDED`.
-- `REJECTED` y `REFUNDED` son finales.
+- `Referencia` is mandatory in `APPROVED`, optional in `REJECTED` (the reason lives in `DetalleResultado`); initially `null` in `PENDING` and immutable after resolution; `REFUNDED` does not modify it.
+- `APPROVED` can change only to `REFUNDED`.
+- `REJECTED` and `REFUNDED` are final.
 
 ---
 
-# 25. Entidad PedidoEstadoHistorial
+# 25. PedidoEstadoHistorial entity
 
-## 25.1 Definición
+## 25.1 Definition
 
-Registro append-only de creación y transiciones de estado de Pedido.
+Append-only record of Pedido creation and state transitions.
 
-## 25.2 Claves
+## 25.2 Keys
 
 - PK: `PedidoEstadoHistorialId`.
 
-## 25.3 Atributos
+## 25.3 Attributes
 
-| Atributo | Obl. | Dominio / rango conceptual | Mut. | Sens. | Definición y reglas |
+| Attribute | Required | Domain / conceptual range | Mut. | Sens. | Definition and rules |
 |---|---:|---|---|---|---|
-| PedidoEstadoHistorialId | M | Identificador | I | COM | Identificador del evento histórico. |
-| PedidoId | M | FK Pedido | A | COM | Pedido afectado. |
-| UsuarioActorId | C | FK Usuario | A | INT | Obligatorio cuando `Origen = USER`; ausente cuando `Origen = SYSTEM`. |
-| Origen | M | OrigenTransicionPedido | A | COM | Indica si la transición fue causada por usuario o sistema. |
-| EstadoAnterior | O/C | EstadoPedido | A | COM | `null` exclusivamente para el primer registro del Pedido. |
-| EstadoNuevo | M | EstadoPedido | A | COM | Estado establecido por el evento. |
-| Fecha | M | Instante | A | COM | Momento de la transición. |
+| PedidoEstadoHistorialId | M | Identifier | I | COM | Historical event identifier. |
+| PedidoId | M | FK Pedido | A | COM | Affected Pedido. |
+| UsuarioActorId | C | FK Usuario | A | INT | Required when `Origen = USER`; absent when `Origen = SYSTEM`. |
+| Origen | M | OrigenTransicionPedido | A | COM | Indicates whether the transition was caused by a user or the system. |
+| EstadoAnterior | O/C | EstadoPedido | A | COM | `null` exclusively for the Pedido's first record. |
+| EstadoNuevo | M | EstadoPedido | A | COM | State established by the event. |
+| Fecha | M | Instant | A | COM | Transition time. |
 
-## 25.4 Reglas
+## 25.4 Rules
 
-### Registro inicial
+### Initial record
 
 ```text
 EstadoAnterior = null
@@ -1111,7 +1111,7 @@ Origen = SYSTEM
 UsuarioActorId = null
 ```
 
-### Transición automática de pago aprobado
+### Automatic approved-payment transition
 
 ```text
 PENDING_PAYMENT -> CONFIRMED
@@ -1119,7 +1119,7 @@ Origen = SYSTEM
 UsuarioActorId = null
 ```
 
-### Transición automática de pago rechazado
+### Automatic rejected-payment transition
 
 ```text
 PENDING_PAYMENT -> CANCELLED
@@ -1127,38 +1127,38 @@ Origen = SYSTEM
 UsuarioActorId = null
 ```
 
-### Transiciones administrativas
+### Administrative transitions
 
 ```text
 Origen = USER
-UsuarioActorId = ADMIN que realizó la operación
+UsuarioActorId = ADMIN who performed the operation
 ```
 
-### Cancelación por Cliente
+### Cancellation by Cliente
 
 ```text
 Origen = USER
-UsuarioActorId = Usuario CUSTOMER propietario del Pedido
+UsuarioActorId = CUSTOMER Usuario owning the Pedido
 ```
 
-Todo registro es inmutable.
+Every record is immutable.
 
 ---
 
-# 26. Matriz de compatibilidad Pedido–Pago
+# 26. Pedido–Pago compatibility matrix
 
-La combinación de estados debe ser coherente.
+The combination of states must be consistent.
 
-| Estado Pedido | Estados de Pago compatibles | Observación |
+| Pedido state | Compatible Pago states | Observation |
 |---|---|---|
-| PENDING_PAYMENT | PENDING | Estado transitorio intra-transaccional dentro de checkout; nunca observable post-commit |
-| CONFIRMED | APPROVED | Compra confirmada |
-| PREPARING | APPROVED | Pedido pagado en preparación |
-| SHIPPED | APPROVED | Pedido pagado enviado |
-| DELIVERED | APPROVED | Pedido pagado entregado |
-| CANCELLED | REJECTED, REFUNDED | Rechazo inicial o cancelación posterior a pago aprobado |
+| PENDING_PAYMENT | PENDING | Transient intra-transactional state within checkout; never observable post-commit |
+| CONFIRMED | APPROVED | Confirmed purchase |
+| PREPARING | APPROVED | Paid Pedido being prepared |
+| SHIPPED | APPROVED | Paid Pedido shipped |
+| DELIVERED | APPROVED | Paid Pedido delivered |
+| CANCELLED | REJECTED, REFUNDED | Initial rejection or cancellation after approved payment |
 
-No son válidos, entre otros:
+Invalid combinations include:
 
 ```text
 CONFIRMED + PENDING
@@ -1169,13 +1169,13 @@ CANCELLED + APPROVED
 CANCELLED + PENDING
 ```
 
-La transición de cancelación desde `CONFIRMED`/`PREPARING` debe actualizar Pago a `REFUNDED` dentro de la misma operación de negocio.
+The cancellation transition from `CONFIRMED`/`PREPARING` must update Pago to `REFUNDED` within the same business operation.
 
 ---
 
-# 27. Reglas de consistencia entre Pedido y sus dependencias
+# 27. Consistency rules between Pedido and its dependencies
 
-Para todo Pedido persistido al completar la operación de checkout debe cumplirse:
+For every Pedido persisted upon completion of the checkout operation, the following must hold:
 
 ```text
 COUNT(PedidoItem) >= 1
@@ -1184,7 +1184,7 @@ COUNT(Pago) = 1
 COUNT(PedidoEstadoHistorial) >= 1
 ```
 
-Además:
+Additionally:
 
 ```text
 Pedido.Subtotal = SUM(PedidoItem.Subtotal)
@@ -1192,7 +1192,7 @@ Pedido.Total = Pedido.Subtotal
 Pago.Monto = Pedido.Total
 ```
 
-Para cada PedidoItem:
+For each PedidoItem:
 
 ```text
 PedidoItem.Subtotal = PedidoItem.PrecioUnitario × PedidoItem.Cantidad
@@ -1200,65 +1200,65 @@ PedidoItem.Subtotal = PedidoItem.PrecioUnitario × PedidoItem.Cantidad
 
 ---
 
-# 28. Reglas de consistencia de inventario
+# 28. Inventory consistency rules
 
-## 28.1 Fuente de verdad
+## 28.1 Source of truth
 
-`Inventario.StockActual` es el estado presente.
+`Inventario.StockActual` is the present state.
 
-`MovimientoInventario` explica la historia de variaciones confirmadas.
+`MovimientoInventario` explains the history of committed variations.
 
-No debe existir otro atributo `Stock` en:
+No other `Stock` attribute must exist in:
 
 - Libro;
 - Edicion;
 - CarritoItem;
 - PedidoItem.
 
-## 28.2 Operación administrativa
+## 28.2 Administrative operation
 
-Cambio de stock y MovimientoInventario deben producirse en una misma transacción.
+Stock change and MovimientoInventario must occur in the same transaction.
 
-## 28.3 Venta
+## 28.3 Sale
 
-Por cada PedidoItem confirmado se produce exactamente un movimiento `SALE` para la misma Edicion.
+For each committed PedidoItem, exactly one `SALE` movement is produced for the same Edicion.
 
-## 28.4 Cancelación
+## 28.4 Cancellation
 
-Por cada PedidoItem de un Pedido cancelado después de aprobación se produce exactamente un movimiento `CANCELLATION` para la misma Edicion. Cada `CANCELLATION` requiere el `SALE` previo del mismo `(PedidoId, EdicionId)`; los pedidos `CANCELLED` por rechazo inicial (sin `SALE`) no generan `CANCELLATION`.
+For each PedidoItem of a Pedido cancelled after approval, exactly one `CANCELLATION` movement is produced for the same Edicion. Each `CANCELLATION` requires the previous `SALE` for the same `(PedidoId, EdicionId)`; `CANCELLED` orders due to initial rejection (without `SALE`) do not generate `CANCELLATION`.
 
-## 28.5 Identidad de movimientos de pedido
+## 28.5 Identity of order movements
 
-Para el mismo Pedido y Edicion:
+For the same Pedido and Edicion:
 
-- máximo un `SALE`;
-- máximo un `CANCELLATION`.
+- at most one `SALE`;
+- at most one `CANCELLATION`.
 
-Esto evita aplicar dos veces la misma salida o restauración.
+This prevents applying the same outgoing movement or restoration twice.
 
 ---
 
-# 29. Reglas de consistencia de catálogo
+# 29. Catalog consistency rules
 
-## 29.1 Libro activo
+## 29.1 Active Libro
 
-Un Libro `ACTIVE` debe conservar:
+An `ACTIVE` Libro must retain:
 
 ```text
 >= 1 LibroAutor
 >= 1 LibroCategoria
 ```
 
-El estado `INACTIVE` de un Autor o Categoria asociado no elimina esa asociación ni obliga a desactivar el Libro.
+The `INACTIVE` state of an associated Autor or Categoria does not delete that association or require Libro deactivation.
 
-## 29.2 Edición publicable
+## 29.2 Publishable Edicion
 
 ```text
 Libro.Estado = ACTIVE
 AND Edicion.Estado = ACTIVE
 ```
 
-## 29.3 Edición comprable
+## 29.3 Purchasable Edicion
 
 ```text
 Libro.Estado = ACTIVE
@@ -1266,59 +1266,59 @@ AND Edicion.Estado = ACTIVE
 AND Inventario.StockActual > 0
 ```
 
-## 29.4 Editorial inactiva
+## 29.4 Inactive Editorial
 
-Una Editorial inactiva:
+An inactive Editorial:
 
-- no puede asociarse a una nueva Edición;
-- no invalida automáticamente Ediciones ya existentes.
+- cannot be associated with a new Edicion;
+- does not automatically invalidate existing Ediciones.
 
 ---
 
-# 30. Datos derivados y no persistentes como fuente de verdad
+# 30. Derived data not persisted as sources of truth
 
-| Dato | Derivación |
+| Datum | Derivation |
 |---|---|
-| Libro disponible para una Edición | Libro ACTIVE + Edicion ACTIVE + StockActual > 0 |
-| Bajo stock | StockMinimo > 0 AND StockActual <= StockMinimo |
-| Precio actual de CarritoItem | Edicion.Precio |
-| Subtotal actual de CarritoItem | Cantidad × Edicion.Precio |
-| Total actual de Carrito | suma de subtotales actuales |
-| Nombre completo Cliente | Nombres + Apellidos |
-| Total Pedido | suma de PedidoItem.Subtotal; en v1 coincide con Subtotal |
+| Libro available for an Edicion | Libro ACTIVE + Edicion ACTIVE + StockActual > 0 |
+| Low stock | StockMinimo > 0 AND StockActual <= StockMinimo |
+| Current CarritoItem price | Edicion.Precio |
+| Current CarritoItem subtotal | Cantidad × Edicion.Precio |
+| Current Carrito total | sum of current subtotals |
+| Cliente full name | Nombres + Apellidos |
+| Pedido total | sum of PedidoItem.Subtotal; in v1 equals Subtotal |
 
-Estos datos pueden devolverse desde Functions/queries de la Database API, pero no deben convertirse en fuentes duplicadas de verdad sin una decisión posterior explícita.
+This data may be returned by Database API Functions/queries, but must not become duplicate sources of truth without an explicit subsequent decision.
 
 ---
 
-# 31. Atributos históricos versus datos maestros
+# 31. Historical attributes versus master data
 
-| Concepto actual | Fuente maestra | Snapshot histórico |
+| Current concept | Master source | Historical snapshot |
 |---|---|---|
-| Título | Libro.Titulo | PedidoItem.Titulo_Snapshot |
-| Autores | Autor + LibroAutor | PedidoItem.Autores_Snapshot |
+| Title | Libro.Titulo | PedidoItem.Titulo_Snapshot |
+| Authors | Autor + LibroAutor | PedidoItem.Autores_Snapshot |
 | Editorial | Editorial.Nombre | PedidoItem.Editorial_Snapshot |
 | SKU | Edicion.SKU | PedidoItem.SKU_Snapshot |
 | ISBN | Edicion.ISBN13 | PedidoItem.ISBN_Snapshot |
-| Formato | Edicion.Formato | PedidoItem.Formato_Snapshot |
-| Idioma | Edicion.Idioma | PedidoItem.Idioma_Snapshot |
-| Precio | Edicion.Precio | PedidoItem.PrecioUnitario |
-| Dirección | Direccion | PedidoDireccion |
-| Estado de Pedido | Pedido.Estado | PedidoEstadoHistorial |
-| Stock | Inventario.StockActual | MovimientoInventario antes/después |
+| Format | Edicion.Formato | PedidoItem.Formato_Snapshot |
+| Language | Edicion.Idioma | PedidoItem.Idioma_Snapshot |
+| Price | Edicion.Precio | PedidoItem.PrecioUnitario |
+| Address | Direccion | PedidoDireccion |
+| Pedido state | Pedido.Estado | PedidoEstadoHistorial |
+| Stock | Inventario.StockActual | MovimientoInventario before/after |
 
-Los snapshots no deben sincronizarse cuando cambia la fuente maestra.
+Snapshots must not be synchronized when the master source changes.
 
 ---
 
-# 32. Nulabilidad consolidada
+# 32. Consolidated nullability
 
-## Nunca nulos
+## Never null
 
-Entre otros:
+Including:
 
-- identificadores PK;
-- referencias obligatorias;
+- PK identifiers;
+- mandatory references;
 - Usuario.EmailNormalizado;
 - Usuario.PasswordHash;
 - Cliente.Nombres/Apellidos;
@@ -1331,12 +1331,12 @@ Entre otros:
 - Carrito.Estado;
 - CarritoItem.Cantidad;
 - Pedido.Estado/Subtotal/Total;
-- PedidoItem snapshots obligatorios;
-- PedidoDireccion datos mínimos;
+- required PedidoItem snapshots;
+- minimum PedidoDireccion data;
 - Pago.Metodo/Estado/Monto;
 - PedidoEstadoHistorial.Origen/EstadoNuevo/Fecha.
 
-## Nulos permitidos por naturaleza
+## Nulls allowed by nature
 
 - Cliente.Telefono;
 - Direccion.Linea2;
@@ -1350,14 +1350,14 @@ Entre otros:
 - Libro.Sinopsis;
 - Edicion.ISBN13;
 - Edicion.FechaPublicacion;
-- Portada* cuando no existe portada;
+- Portada* when no cover exists;
 - PedidoItem.ISBN_Snapshot;
 - PedidoDireccion.Linea2/CodigoPostal/Referencia;
-- Pago.Referencia antes del resultado;
+- Pago.Referencia before the result;
 - Pago.DetalleResultado;
-- PedidoEstadoHistorial.EstadoAnterior solo para primer evento.
+- PedidoEstadoHistorial.EstadoAnterior only for the first event.
 
-## Nulos condicionales
+## Conditional nulls
 
 - MovimientoInventario.PedidoId;
 - MovimientoInventario.UsuarioActorId;
@@ -1366,270 +1366,270 @@ Entre otros:
 - Edicion.PortadaFuenteUrl;
 - PedidoEstadoHistorial.UsuarioActorId.
 
-Las condiciones están definidas en las entidades correspondientes.
+Conditions are defined in the corresponding entities.
 
 ---
 
-# 33. Mutabilidad consolidada
+# 33. Consolidated mutability
 
-## Inmutables o históricos
+## Immutable or historical
 
 - IDs;
 - Usuario.Rol;
 - Edicion.LibroId;
 - Edicion.SKU;
-- todo MovimientoInventario confirmado;
+- every committed MovimientoInventario;
 - Pedido.ClienteId;
 - Pedido.Subtotal/Total;
-- todo PedidoItem;
-- todo PedidoDireccion;
+- all PedidoItem;
+- all PedidoDireccion;
 - Pago.PedidoId/Metodo/Monto;
-- todo PedidoEstadoHistorial.
+- all PedidoEstadoHistorial.
 
-## Mutables controlados
+## Controlled mutable data
 
 - Usuario.Estado;
-- datos de Cliente;
+- Cliente data;
 - Direccion;
 - Autor;
 - Editorial;
 - Categoria;
 - Libro;
-- metadatos permitidos de Edicion;
+- permitted Edicion metadata;
 - Edicion.Precio;
 - Inventario.StockMinimo;
 - CarritoItem.Cantidad;
-- estados de Carrito, Pedido y Pago según sus máquinas.
+- Carrito, Pedido and Pago states according to their machines.
 
-## Mutabilidad operativa de stock
+## Operational stock mutability
 
-`Inventario.StockActual` no se edita como dato maestro; cambia únicamente como efecto de procedimientos de inventario/venta/cancelación que generen MovimientoInventario.
+`Inventario.StockActual` is not edited as master data; it changes only as an effect of inventory/sale/cancellation procedures that generate MovimientoInventario.
 
 ---
 
-# 34. Validaciones de formato versus reglas de negocio
+# 34. Format validations versus business rules
 
-## 34.1 Validaciones de formato
+## 34.1 Format validations
 
-Pueden existir también en Spring Boot para proteger el contrato HTTP:
+May also exist in Spring Boot to protect the HTTP contract:
 
-- string no vacío;
-- longitud máxima;
-- estructura básica de email;
-- entero positivo;
-- formato de código.
+- nonempty string;
+- maximum length;
+- basic email structure;
+- positive integer;
+- code format.
 
-## 34.2 Autoridad de negocio
+## 34.2 Business authority
 
-PostgreSQL sigue siendo autoridad sobre:
+PostgreSQL remains authoritative over:
 
-- unicidad de email/SKU/ISBN/slug;
-- checksum ISBN;
-- estado de entidades;
-- asociaciones válidas;
+- email/SKU/ISBN/slug uniqueness;
+- ISBN checksum;
+- entity states;
+- valid associations;
 - stock;
-- propiedad de carrito/pedido/direcciones;
-- totales;
-- transiciones;
+- cart/order/address ownership;
+- totals;
+- transitions;
 - snapshots;
-- movimientos;
-- compatibilidad Pedido/Pago.
+- movements;
+- Pedido/Pago compatibility.
 
-Una validación equivalente en frontend o Java es únicamente preventiva y no sustituye la regla del motor.
+Equivalent frontend or Java validation is only preventive and does not replace the database engine's rule.
 
 ---
 
-# 35. Datos que nunca deben exponerse en respuestas públicas
+# 35. Data that must never be exposed in public responses
 
 - `PasswordHash`;
-- identificadores internos de autenticación que no sean necesarios;
-- datos personales de otro Cliente;
-- direcciones de otro Cliente;
-- PedidoDireccion de otro Cliente;
-- motivos internos de movimientos administrativos salvo endpoint administrativo;
-- información técnica no necesaria del simulador de pago.
+- unnecessary internal authentication identifiers;
+- another Cliente's personal data;
+- another Cliente's addresses;
+- another Cliente's PedidoDireccion;
+- internal reasons for administrative movements except through an administrative endpoint;
+- unnecessary technical information from the payment simulator.
 
-Los datos de catálogo clasificados `PUB` pueden formar parte de APIs públicas según el caso de uso.
+Catalog data classified as `PUB` may be part of public APIs according to the use case.
 
 ---
 
-# 36. Datos que no se modelan en PLIEGO v1
+# 36. Data not modeled in PLIEGO v1
 
-El diccionario confirma la ausencia deliberada de:
+The dictionary confirms the deliberate absence of:
 
 - `BodegaId`;
 - `SucursalId`;
-- proveedor;
-- costo de adquisición;
-- stock reservado;
-- impuesto;
-- descuento;
-- cupón;
-- costo de envío;
+- supplier;
+- acquisition cost;
+- reserved stock;
+- tax;
+- discount;
+- coupon;
+- shipping cost;
 - tracking;
-- factura fiscal;
-- archivo eBook;
-- reseña/rating;
+- tax invoice;
+- eBook file;
+- review/rating;
 - wishlist;
-- refresh token persistido;
-- sesión de usuario;
-- tarjeta bancaria completa;
+- persisted refresh token;
+- user session;
+- complete bank card;
 - CVV.
 
-Su ausencia no debe ser compensada con columnas improvisadas durante implementación.
+Their absence must not be compensated with improvised columns during implementation.
 
 ---
 
-# 37. Matriz de claves lógicas revisada
+# 37. Revised logical key matrix
 
-| Entidad | PK | AK / unicidad |
+| Entity | PK | AK / uniqueness |
 |---|---|---|
 | Usuario | UsuarioId | EmailNormalizado |
 | Cliente | ClienteId | UsuarioId |
-| Direccion | DireccionId | máximo una principal por Cliente |
+| Direccion | DireccionId | at most one primary address per Cliente |
 | Autor | AutorId | — |
 | Editorial | EditorialId | — |
 | Categoria | CategoriaId | Slug |
 | Libro | LibroId | — |
 | LibroAutor | LibroId + AutorId | LibroId + OrdenAutoria |
 | LibroCategoria | LibroId + CategoriaId | — |
-| Edicion | EdicionId | SKU; ISBN13 si existe |
+| Edicion | EdicionId | SKU; ISBN13 if present |
 | Inventario | EdicionId | — |
-| MovimientoInventario | MovimientoInventarioId | PedidoId + EdicionId + Tipo para SALE/CANCELLATION |
-| Carrito | CarritoId | máximo un ACTIVE por Cliente |
+| MovimientoInventario | MovimientoInventarioId | PedidoId + EdicionId + Tipo for SALE/CANCELLATION |
+| Carrito | CarritoId | at most one ACTIVE per Cliente |
 | CarritoItem | CarritoItemId | CarritoId + EdicionId |
 | Pedido | PedidoId | — |
 | PedidoItem | PedidoItemId | PedidoId + EdicionId |
 | PedidoDireccion | PedidoId | — |
-| Pago | PagoId | PedidoId; Referencia si existe |
+| Pago | PagoId | PedidoId; Referencia if present |
 | PedidoEstadoHistorial | PedidoEstadoHistorialId | — |
 
 ---
 
-# 38. Matriz de responsabilidad sobre cambios
+# 38. Change responsibility matrix
 
-| Dato | Operación autorizada |
+| Datum | Authorized operation |
 |---|---|
-| Usuario.Estado | Gestión administrativa de cliente |
-| Cliente.* | Gestión de perfil |
-| Direccion.* | Gestión de direcciones |
-| Autor/Editorial/Categoria/Libro/Edicion | Gestión administrativa de catálogo |
-| Inventario.StockMinimo | Configurar stock mínimo |
-| Inventario.StockActual | SP de entrada/ajuste/checkout/cancelación |
-| MovimientoInventario | Solo creación dentro de operación que cambia stock |
-| Carrito | Gestión de carrito / checkout |
-| CarritoItem | Gestión de carrito |
-| Pedido.Estado | Checkout / cancelación / gestión administrativa |
-| PedidoItem | Solo creación en checkout |
-| PedidoDireccion | Solo creación en checkout |
-| Pago | Checkout / cancelación posterior |
-| PedidoEstadoHistorial | Solo append por transición de Pedido |
+| Usuario.Estado | Administrative customer management |
+| Cliente.* | Profile management |
+| Direccion.* | Address management |
+| Autor/Editorial/Categoria/Libro/Edicion | Administrative catalog management |
+| Inventario.StockMinimo | Configure minimum stock |
+| Inventario.StockActual | Entry/adjustment/checkout/cancellation SP |
+| MovimientoInventario | Creation only within the stock-changing operation |
+| Carrito | Cart management / checkout |
+| CarritoItem | Cart management |
+| Pedido.Estado | Checkout / cancellation / administrative management |
+| PedidoItem | Creation only at checkout |
+| PedidoDireccion | Creation only at checkout |
+| Pago | Checkout / subsequent cancellation |
+| PedidoEstadoHistorial | Append only upon Pedido transition |
 
 ---
 
-# 39. Reglas para el futuro modelo físico
+# 39. Rules for the future physical model
 
-El modelo físico deberá preservar como mínimo:
+The physical model must preserve at least:
 
-1. unicidad de EmailNormalizado;
-2. unicidad de SKU;
-3. unicidad condicional de ISBN13;
-4. unicidad de Categoria.Slug;
-5. unicidad Libro/Autor;
-6. unicidad Libro/OrdenAutoria;
-7. unicidad Libro/Categoria;
-8. relación 1:1 Edicion/Inventario;
-9. máximo un Carrito ACTIVE por Cliente;
-10. unicidad Carrito/Edicion;
-11. unicidad Pedido/Edicion en PedidoItem;
-12. relación 1:1 Pedido/PedidoDireccion;
-13. relación 1:1 Pedido/Pago;
-14. unicidad de Referencia de Pago cuando exista;
-15. unicidad Pedido/Edicion/Tipo para movimientos `SALE` y `CANCELLATION`;
-16. cantidades enteras positivas donde corresponda;
-17. stock no negativo;
-18. precios y montos positivos;
-19. categorías con máximo dos niveles;
-20. transiciones de estado válidas;
-21. compatibilidad Pedido/Pago;
-22. condiciones de nulabilidad establecidas en este diccionario.
+1. EmailNormalizado uniqueness;
+2. SKU uniqueness;
+3. conditional ISBN13 uniqueness;
+4. Categoria.Slug uniqueness;
+5. Libro/Autor uniqueness;
+6. Libro/OrdenAutoria uniqueness;
+7. Libro/Categoria uniqueness;
+8. 1:1 Edicion/Inventario relationship;
+9. at most one ACTIVE Carrito per Cliente;
+10. Carrito/Edicion uniqueness;
+11. Pedido/Edicion uniqueness in PedidoItem;
+12. 1:1 Pedido/PedidoDireccion relationship;
+13. 1:1 Pedido/Pago relationship;
+14. Pago Referencia uniqueness when present;
+15. Pedido/Edicion/Tipo uniqueness for `SALE` and `CANCELLATION` movements;
+16. positive integer quantities where applicable;
+17. nonnegative stock;
+18. positive prices and amounts;
+19. categories with at most two levels;
+20. valid state transitions;
+21. Pedido/Pago compatibility;
+22. nullability conditions established in this dictionary.
 
-La técnica física concreta (`UNIQUE`, `CHECK`, índice parcial, trigger, Function o SP) se decidirá en el Modelo Físico / Database API Contract.
+The specific physical technique (`UNIQUE`, `CHECK`, partial index, trigger, Function or SP) will be decided in the Physical Model / Database API Contract.
 
 ---
 
-# 40. Trazabilidad de correcciones hacia artefactos anteriores
+# 40. Correction traceability to earlier artifacts
 
-La revisión v1.1 incorpora lo siguiente (trazabilidad de correcciones hacia artefactos anteriores):
+Revision v1.1 incorporates the following (correction traceability to earlier artifacts):
 
-| Corrección | UCB | DER |
+| Correction | UCB | ERD |
 |---|---|---|
-| PaisCodigo en Direccion/PedidoDireccion | actualización menor | sí |
-| IdiomaSnapshot en PedidoItem | actualización menor | sí |
-| Quitar Carrito.CANCELLED de v1 | sí | sí |
-| Totales/montos estrictamente > 0 | sí, si aparece >= 0 | sí |
-| AK PedidoId+EdicionId | no funcional | sí |
-| Matriz Pedido/Pago | aclaración | sí |
-| AK movimientos SALE/CANCELLATION | no funcional | sí |
-| Motivo obligatorio en movimientos administrativos | aclaración | sí |
-| Semántica de inactivación de maestros | aclaración | sí |
-| Normalización de email/SKU/códigos | aclaración | sí |
-| Referencia Pago única si existe | no funcional | sí |
-| AutoresSnapshot como cadena histórica atómica y ordenada | aclaración | sí |
+| PaisCodigo in Direccion/PedidoDireccion | minor update | yes |
+| IdiomaSnapshot in PedidoItem | minor update | yes |
+| Remove Carrito.CANCELLED from v1 | yes | yes |
+| Totals/amounts strictly > 0 | yes, if >= 0 appears | yes |
+| AK PedidoId+EdicionId | nonfunctional | yes |
+| Pedido/Pago matrix | clarification | yes |
+| SALE/CANCELLATION movement AK | nonfunctional | yes |
+| Required Motivo for administrative movements | clarification | yes |
+| Master entity deactivation semantics | clarification | yes |
+| Email/SKU/code normalization | clarification | yes |
+| Pago Referencia unique when present | nonfunctional | yes |
+| AutoresSnapshot as an atomic, ordered historical string | clarification | yes |
 
-Estas modificaciones son compatibles con el alcance v1 y no requieren nuevas entidades. Los rangos conceptuales superiores (p. ej. precio máximo, páginas, longitudes) son guardas técnicas aceptadas en esta baseline.
+These modifications are compatible with v1 scope and require no new entities. Upper conceptual bounds (e.g. maximum price, pages, lengths) are technical guards accepted in this baseline.
 
 ---
 
-# 41. Validación de completitud del diccionario
+# 41. Dictionary completeness validation
 
-| Pregunta | Resultado |
+| Question | Result |
 |---|---|
-| ¿Las 19 entidades del DER poseen definición? | Sí |
-| ¿Todo atributo posee significado inequívoco? | Sí |
-| ¿Se distingue obligatorio/opcional/condicional? | Sí |
-| ¿Se fijaron rangos conceptuales relevantes? | Sí |
-| ¿Se fijó mutabilidad? | Sí |
-| ¿Se identificaron datos sensibles? | Sí |
-| ¿Se fijó normalización de identificadores comerciales? | Sí |
-| ¿Se preserva historial comercial? | Sí |
-| ¿Se resolvió país en direcciones? | Sí |
-| ¿Se resolvió idioma histórico de PedidoItem? | Sí |
-| ¿Pedido y Pago poseen compatibilidad de estados? | Sí |
-| ¿Se evita duplicar una Edición en Pedido? | Sí |
-| ¿Se evita aplicar dos veces SALE/CANCELLATION? | Sí |
-| ¿Se eliminó un estado de Carrito no sustentado por caso de uso? | Sí |
-| ¿Se introdujeron nuevas entidades fuera del alcance? | No |
-| ¿Se seleccionaron prematuramente tipos PostgreSQL? | No |
-| ¿Quedan TBD críticos de semántica de datos? | No |
+| Do all 19 ERD entities have definitions? | Yes |
+| Does every attribute have an unambiguous meaning? | Yes |
+| Are mandatory/optional/conditional distinguished? | Yes |
+| Have relevant conceptual ranges been established? | Yes |
+| Has mutability been established? | Yes |
+| Has sensitive data been identified? | Yes |
+| Has normalization of commercial identifiers been established? | Yes |
+| Is commercial history preserved? | Yes |
+| Has country in addresses been resolved? | Yes |
+| Has PedidoItem historical language been resolved? | Yes |
+| Do Pedido and Pago have compatible states? | Yes |
+| Is duplicate Edicion within Pedido prevented? | Yes |
+| Is applying SALE/CANCELLATION twice prevented? | Yes |
+| Was a Carrito state unsupported by any use case removed? | Yes |
+| Were new out-of-scope entities introduced? | No |
+| Were PostgreSQL types selected prematurely? | No |
+| Do critical data-semantics TBDs remain? | No |
 
 ---
 
-# 42. Criterio de aprobación
+# 42. Approval criterion
 
-El Diccionario de Datos v1.1 pasa a estado **BASELINE APROBADA**: las correcciones `DD-COR-001` a `DD-COR-012` quedan aceptadas y retroalimentadas a la revisión v1.1 de:
+The Data Dictionary v1.1 moves to **APPROVED BASELINE** status: corrections `DD-COR-001` through `DD-COR-012` are accepted and fed back into revision v1.1 of:
 
 - Use Case Baseline;
-- DER Lógico.
+- Logical ERD.
 
-Una vez aprobadas, la semántica de los datos no deberá modificarse durante la implementación para adaptarla al código. Cualquier cambio deberá seguir gestión de cambio y trazabilidad.
+Once approved, data semantics must not be modified during implementation to suit the code. Any change must follow change management and traceability.
 
 ---
 
-# 43. Próxima etapa
+# 43. Next stage
 
-Con el Diccionario de Datos validado, la secuencia recomendada es:
+With the Data Dictionary validated, the recommended sequence is:
 
 ```text
 Use Case Baseline
         ↓
-DER Lógico
+Logical ERD
         ↓
-Diccionario de Datos
+Data Dictionary
         ↓
 Database API Contract
         ↓
-Modelo físico PostgreSQL
+PostgreSQL physical model
         ↓
 Flyway
         ↓
@@ -1637,37 +1637,37 @@ SP / Functions / Triggers
         ↓
 REST API Contract
         ↓
-Implementación
+Implementation
 ```
 
-El siguiente documento, **Database API Contract v1.0**, deberá definir por caso de uso:
+The next document, **Database API Contract v1.0**, must define per use case:
 
-- rutina pública de PostgreSQL;
-- tipo: Procedure o Function;
-- parámetros de entrada;
-- resultado;
-- códigos de error de dominio;
-- transacción;
-- tablas/entidades afectadas;
-- invariantes ejecutadas;
-- permisos funcionales esperados;
-- idempotencia/concurrencia donde corresponda.
+- public PostgreSQL routine;
+- type: Procedure or Function;
+- input parameters;
+- result;
+- domain error codes;
+- transaction;
+- affected tables/entities;
+- enforced invariants;
+- expected functional permissions;
+- idempotency/concurrency where applicable.
 
 ---
 
-# 44. Historial del documento
+# 44. Document history
 
-| Versión | Fecha | Estado | Descripción |
+| Version | Date | Status | Description |
 |---|---|---|---|
-| 1.0 | 2026-09-23 | CANDIDATO A BASELINE | Primer diccionario formal de PLIEGO. Audita UCB v1.0 y DER Lógico v1.0, define semántica de las 19 entidades y resuelve doce defectos/ambigüedades antes del modelo físico. |
-| 1.1 | 2026-09-23 | BASELINE | Revisión arquitectónica: cierra teléfono/idioma/país canónicos, atribución de portada, ciclo de vida de Referencia, matriz CANCELLED+PENDING inválido, CANCELLATION exige SALE previo, bajo-stock con umbral y trazabilidad DD-COR-012; retroalimenta UCB/DER a v1.1. |
+| 1.0 | 2026-09-23 | BASELINE CANDIDATE | First formal PLIEGO dictionary. Audits UCB v1.0 and Logical ERD v1.0, defines semantics for all 19 entities and resolves twelve defects/ambiguities before the physical model. |
+| 1.1 | 2026-09-23 | BASELINE | Architectural review: finalizes canonical phone/language/country, cover attribution, Referencia lifecycle, invalid CANCELLED+PENDING matrix, CANCELLATION requiring previous SALE, low stock with threshold and DD-COR-012 traceability; feeds back into UCB/ERD v1.1. |
 
 ---
 
-# 45. Referencias del proyecto
+# 45. Project references
 
 - `docs/requirements/use-case-baseline-v1.0.md`
 - `docs/domain/logical-erd-v1.0.md`
-- Architecture Baseline de PLIEGO: Java 25 + Spring Boot + PostgreSQL + Flyway; lógica de negocio centrada en PostgreSQL; sin ORM; frontend posterior y desacoplado.
+- PLIEGO Architecture Baseline: Java 25 + Spring Boot + PostgreSQL + Flyway; PostgreSQL-centered business logic; no ORM; frontend implemented later and decoupled.
 - ISO/IEC/IEEE 29148:2018 — Requirements Engineering.
-- OMG UML 2.5.1 — referencia de modelado conceptual.
+- OMG UML 2.5.1 — conceptual modeling reference.

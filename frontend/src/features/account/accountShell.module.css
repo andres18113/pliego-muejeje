@@ -39,8 +39,10 @@
 :global(.purchase-route):has(> .shell) { padding-top: 0; }
 /* Orientation, not navigation: one quiet line at the page's start — "Inicio" (a link with a 44px target
    that keeps the line compact) | the current page, muted. The bar is drawn, so it is never read aloud. */
-/* Every Account page starts its trail on the same centered 760px axis as its title (Mi perfil's reading column). */
-.trail { justify-self: center; width: min(100%, 760px); min-width: 0; margin: 14px 0 16px; }
+/* Every Account page starts its wayfinding — the back arrow, then the trail — on the same centered 760px axis as
+   its title (Mi perfil's reading column), as the edition page does on its own axis. */
+.wayfinding { justify-self: center; width: min(100%, 760px); margin: 8px 0 2px; }
+.trail { flex: 1 1 auto; min-width: 0; }
 .trail ol { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; color: var(--acc-muted); font-size: .9375rem; font-weight: 500; line-height: 1.5rem; }
 .trail li { display: inline-flex; align-items: center; min-width: 0; }
 .trail li + li::before { content: ""; width: 1.5px; height: 1em; margin-inline: 12px; background: currentColor; opacity: .55; }

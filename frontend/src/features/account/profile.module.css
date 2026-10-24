@@ -7,13 +7,14 @@
 
 .identity {
   display: grid; justify-items: center; gap: 14px; width: min(100%, 760px); min-width: 0;
-  --monogram-ground: var(--acc-paper); padding: 4px clamp(20px, 4vw, 40px) 10px; text-align: center;
+  padding: 4px clamp(20px, 4vw, 40px) 10px; text-align: center;
 }
 .identityCopy { display: grid; gap: 4px; min-width: 0; }
 .name { max-width: 20ch; margin: 0; color: var(--acc-ink); font: 700 clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem)/1.04 var(--acc-display); letter-spacing: -.05em; overflow-wrap: anywhere; text-wrap: balance; }
 .tagline { margin: 0; color: var(--acc-muted); font-size: 1rem; line-height: 1.45; text-wrap: balance; }
 
-/* Read-only facts: one paper sheet; on desktop each field is one line — label, value, action. */
+/* Read-only facts: one paper sheet; on desktop each field is one line — label, value, action.
+   Nombres, Apellidos, Cédula, Correo, Teléfono and Contraseña share it. */
 .facts { display: grid; width: min(100%, 760px); min-width: 0; margin: 0; padding: 4px clamp(16px, 3vw, 28px); border-radius: 24px; background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line); list-style: none; }
 .fact {
   display: grid; grid-template-columns: minmax(8.5rem, 10rem) minmax(0, 1fr) auto; grid-template-areas: "label value action" ". feedback feedback";
@@ -23,15 +24,28 @@
 .factLabel { grid-area: label; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .factValue { grid-area: value; margin: 0; min-width: 0; color: var(--acc-ink); font-size: 1.0625rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .factValue[data-empty] { color: var(--acc-muted); font-weight: 400; }
+.mask { letter-spacing: .12em; }
+/* An absent value names its state with one small chip (the Ofertas chip grammar: flat, 8px radius) and says whether
+   it is needed. Required uses the shared pale red; optional the quiet neutral. Never a second action colour. */
+.missing { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.missingChip {
+  --missing-required-bg: #fce8e6; --missing-required-ink: #8c1d18; --missing-optional-bg: #ecebe4; --missing-optional-ink: #4a4b5c;
+  display: inline-flex; align-items: center; padding: 2px 9px; border-radius: 8px; font-size: .8125rem; font-weight: 600; line-height: 1.4; white-space: nowrap;
+}
+:global([data-mantine-color-scheme="dark"]) .missingChip { --missing-required-bg: #4a2225; --missing-required-ink: #ffd9d5; --missing-optional-bg: #33354f; --missing-optional-ink: #d9d6e6; }
+.missingChip[data-tone="required"] { background: var(--missing-required-bg); color: var(--missing-required-ink); }
+.missingChip[data-tone="optional"] { background: var(--missing-optional-bg); color: var(--missing-optional-ink); }
+.missingHint { color: var(--acc-muted); font-size: .9375rem; font-weight: 400; }
+@media (forced-colors: active) { .missingChip { border: 1px solid CanvasText; } }
 
 .edit.edit {
   grid-area: action; display: inline-flex; align-items: center; gap: 6px; justify-self: end; min-height: 44px; margin-right: -10px; padding: 0 12px 0 10px;
   border: 0; border-radius: 999px; background: transparent; color: var(--acc-blue); font-weight: 600; text-decoration: none;
   transition: background-color 140ms var(--acc-ease);
 }
-.edit.edit:hover:not(:disabled) { background: var(--acc-hover); color: var(--acc-blue); }
+.edit.edit:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--acc-hover); color: var(--acc-blue); }
 .edit.edit:focus-visible, .save:focus-visible, .cancel:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
-.edit.edit:disabled { color: var(--acc-muted); opacity: .45; cursor: not-allowed; }
+.edit.edit:disabled, .edit.edit[aria-disabled="true"] { color: var(--acc-muted); opacity: .45; cursor: not-allowed; }
 
 /* Inline edit: the form occupies the value and action cells of the same row. */
 .inline { grid-column: value / action; grid-row: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; column-gap: 20px; min-width: 0; }
@@ -39,6 +53,7 @@
 .fact[data-editing] .factLabel { padding-top: 11px; color: var(--acc-blue); }
 .inlineFields { display: grid; gap: 6px; min-width: 0; max-width: 26rem; }
 .inlineActions { display: flex; align-items: center; gap: 4px; margin-right: -10px; min-height: 44px; }
+.inlineActionGroup { display: grid; gap: 6px; align-content: start; }
 
 /* The value becomes a rounded field in the same place: the PLIEGO pill (as the header's search field),
    paper surface and hairline edge; its text starts exactly where the read-only value stood. */
@@ -55,6 +70,15 @@
 /* A second field's label speaks like the row labels; every helper line (note, help, error, draft) like one helper. */
 .subLabel { margin-top: 6px; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .inlineNote { margin: 2px 0 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+.securityDisclosure { color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+.securityDisclosure > summary { width: fit-content; min-height: 44px; padding-block: 12px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.securityDisclosure > summary:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }
+.securityDisclosure > p { margin: 0 0 6px; }
+/* The Contraseña row's one step: what will happen, in the value's place, before Enviar enlace. */
+.inlineText { max-width: 44ch; margin: 0; padding-top: 10px; color: var(--acc-muted); font-size: .9375rem; line-height: 1.5; overflow-wrap: anywhere; }
+.inlineText > strong { color: var(--acc-ink); font-weight: 500; }
+/* The cédula read back in the confirmation, large enough to compare digit by digit. Portalled: no Account tokens. */
+.confirmNumber.confirmNumber { margin: 4px 0 12px; font: 700 clamp(1.5rem, 1.3rem + 1vw, 1.875rem)/1.1 var(--store-display); letter-spacing: .06em; font-variant-numeric: tabular-nums; }
 .inlineFields :global(.field-error), .inlineFields :global(.field-help) { font-size: .8125rem; line-height: 1.4; }
 .inlineFields :global(.field-error) { color: var(--error, #9b2c2c); font-weight: 600; }
 .inlineFields :global(.field-help) { color: var(--acc-muted); }
@@ -79,7 +103,8 @@
 
 .feedback { grid-area: feedback; display: flex; align-items: center; gap: 6px; margin: 2px 0 0; color: var(--acc-ink); font-size: .875rem; line-height: 1.4; overflow-wrap: anywhere; }
 .inlineFields > .feedback { grid-area: auto; font-size: .8125rem; }
-.draftNotice { grid-area: auto; grid-column: 1 / -1; max-width: 45ch; color: var(--acc-muted); font-size: .8125rem; }
+.draftNotice { display: flex; align-items: start; gap: 4px; max-width: 24ch; margin: 0; color: var(--acc-muted); font-size: .75rem; line-height: 1.4; }
+.draftNotice :global(.material-symbol) { flex: none; margin-top: 1px; }
 .feedback :global(.material-symbol) { flex: none; color: var(--acc-blue); }
 .feedbackError { color: var(--error, #9b2c2c); }
 .feedbackError :global(.material-symbol) { color: currentColor; }
@@ -105,3 +130,6 @@
 .verification { justify-self: center; width: min(100%, 760px); margin: -8px 0 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.5; text-align: center; text-wrap: pretty; }
 .verification a { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 .verification a:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+
+/* An action that waits for current data reads as unavailable, not as working. */
+.save[aria-disabled="true"]:not([aria-busy="true"]) { opacity: .55; cursor: not-allowed; }

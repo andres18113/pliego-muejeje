@@ -103,11 +103,59 @@ class CustomerApiIntegrationTest {
     }
 
     @Test
+    void deliveryCountriesExposeOnlyEcuador() throws Exception {
+        mvc.perform(get("/api/v1/reference/countries"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].code").value("EC"))
+                .andExpect(jsonPath("$[0].name").value("Ecuador"));
+    }
+
+    @Test
+    void newAddressesRejectForeignCountryForeignPhoneAndDigitRecipients() throws Exception {
+        for (String invalid : List.of(ADDRESS.replace("\"EC\"", "\"GB\""),
+                ADDRESS.replace("+59325550134", "+442079460018"),
+                ADDRESS.replace("Ana Pérez", "Ana7 Pérez"))) {
+            mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
+                    .contentType(MediaType.APPLICATION_JSON).content(invalid))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
+        }
+        assertTrue(gateway.addresses.isEmpty());
+    }
+
+    @Test
+    void supportedCountryIsNormalizedAndForeignAddressUpdateIsRejected() throws Exception {
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
+                .contentType(MediaType.APPLICATION_JSON).content(ADDRESS.replace("\"EC\"", "\" ec \"")))
+                .andExpect(status().isCreated());
+        assertEquals("EC", gateway.addresses.getFirst().countryCode());
+        long id = gateway.addresses.getFirst().addressId();
+        mvc.perform(put("/api/v1/me/addresses/" + id).header("Authorization", customerToken("100"))
+                .contentType(MediaType.APPLICATION_JSON).content(ADDRESS_UPDATE.replace("\"EC\"", "\"US\"")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.violations[0].field").value("countryCode"));
+        assertEquals("Casa", gateway.addresses.getFirst().alias());
+    }
+
+    @Test
+    void profileExposesUnverifiedCurrentEmailEvenWhileAccountIsActive() throws Exception {
+        CustomerProfile current = gateway.profile;
+        gateway.profile = new CustomerProfile(current.customerId(), current.email(), current.firstNames(),
+                current.lastNames(), current.phone(), current.state(), current.version(), false);
+        mvc.perform(get("/api/v1/me").header("Authorization", customerToken("100")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.state").value("ACTIVE"))
+                .andExpect(jsonPath("$.emailVerified").value(false));
+    }
+
+    @Test
     void getsAndReplacesOwnProfileUsingOnlyJwtSubject() throws Exception {
         mvc.perform(get("/api/v1/me").header("Authorization", customerToken("100")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.customerId").value("87"))
                 .andExpect(jsonPath("$.email").value("ana@example.com"))
+                .andExpect(jsonPath("$.emailVerified").value(true))
                 .andExpect(jsonPath("$.firstNames").value("Ana María"));
         assertEquals(100L, gateway.lastActorUserId);
 
@@ -272,14 +320,14 @@ class CustomerApiIntegrationTest {
                 .andExpect(jsonPath("$.title").value("Datos inválidos"))
                 .andExpect(jsonPath("$.detail").value("Revisa los datos enviados e intenta nuevamente."))
                 .andExpect(jsonPath("$.traceId").isNotEmpty()).andReturn().getResponse().getContentAsString();
-        assertTrue(invalid.contains("El código de país debe tener dos letras."));
+        assertTrue(invalid.contains("Las entregas están disponibles únicamente en Ecuador."));
 
         String invalidPhone = ADDRESS.replace("+59325550134", "phone");
         mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString()).header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON).content(invalidPhone))
                 .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
                 .andExpect(result -> assertTrue(result.getResponse().getContentAsString()
-                        .contains("Usa solo dígitos, espacios, paréntesis, puntos o guiones; no incluyas letras ni extensiones.")));
+                        .contains("Escribe solo dígitos en el número de teléfono.")));
 
         mvc.perform(put("/api/v1/me").header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON)
@@ -319,7 +367,8 @@ class CustomerApiIntegrationTest {
                         .value("#/components/schemas/CustomerFavoritePage"))
                 .andExpect(jsonPath("$.paths['/api/v1/me/favorites/status'].get").exists())
                 .andExpect(jsonPath("$.paths['/api/v1/me/favorites/{editionId}'].put").exists())
-                .andExpect(jsonPath("$.paths['/api/v1/me/favorites/{editionId}'].delete").exists());
+                .andExpect(jsonPath("$.paths['/api/v1/me/favorites/{editionId}'].delete").exists())
+                .andExpect(jsonPath("$.components.schemas.CustomerProfile.properties.emailVerified.type").value("boolean"));
     }
 
     @Test
@@ -398,12 +447,12 @@ class CustomerApiIntegrationTest {
         private final DatabaseExceptionTranslator translator;
         private final List<CustomerAddress> addresses = new ArrayList<>();
         private CustomerProfile profile = new CustomerProfile(87, "ana@example.com", "Ana María", "Pérez López",
-                "+59325550134", "ACTIVE");
+                "+59325550134", "ACTIVE", true);
         private long lastActorUserId;
         private long nextAddressId = 501;
         private DatabaseException failure;
         private final List<Favorite> favorites = new ArrayList<>();
-        private String passwordHash;
+        String passwordHash;
         private int changeEmailCalls;
 
         FakeCustomerGateway(DatabaseExceptionTranslator translator) {
@@ -412,7 +461,7 @@ class CustomerApiIntegrationTest {
 
         void reset() {
             addresses.clear();
-            profile = new CustomerProfile(87, "ana@example.com", "Ana María", "Pérez López", "+59325550134", "ACTIVE");
+            profile = new CustomerProfile(87, "ana@example.com", "Ana María", "Pérez López", "+59325550134", "ACTIVE", true);
             lastActorUserId = 0;
             nextAddressId = 501;
             failure = null;
@@ -444,7 +493,7 @@ class CustomerApiIntegrationTest {
         @Override public void updateProfile(long actorUserId, long expectedVersion, String firstNames, String lastNames, String phone) {
             beforeCall(actorUserId);
             profile = new CustomerProfile(profile.customerId(), profile.email(), firstNames, lastNames, phone,
-                    profile.state());
+                    profile.state(), profile.emailVerified());
         }
 
         @Override public String passwordHash(long actorUserId) {
@@ -460,7 +509,7 @@ class CustomerApiIntegrationTest {
                 throw translator.translate(new SQLException("private unique constraint uq_usuario_email", "P1101"));
             }
             profile = new CustomerProfile(profile.customerId(), normalized, profile.firstNames(), profile.lastNames(),
-                    profile.phone(), profile.state());
+                    profile.phone(), profile.state(), normalized.equals(profile.email()) && profile.emailVerified());
             return normalized;
         }
 

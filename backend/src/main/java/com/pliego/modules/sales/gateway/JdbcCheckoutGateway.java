@@ -20,6 +20,7 @@ import java.util.UUID;
 public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutGateway {
 
     private static final String CHECKOUT = "CALL pliego.sp_checkout_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String CHECKOUT_BILLED = "CALL pliego.sp_checkout_billed_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final JdbcTemplate jdbcTemplate;
     private final tools.jackson.databind.ObjectMapper objectMapper;
 
@@ -39,8 +40,21 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
     @Override
     public CheckoutResult checkout(long actorUserId, UUID key, Long addressId, String paymentMethod, String paymentOutcome,
             Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint) {
+        return executeCheckout(actorUserId,key,addressId,paymentMethod,paymentOutcome,cartId,fulfillmentMethod,pickupLocationId,quoteFingerprint,null);
+    }
+
+    @Override
+    public CheckoutResult checkoutBilled(long actorUserId, UUID key, Long addressId, String paymentMethod,
+            String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId,
+            String quoteFingerprint, com.pliego.modules.sales.application.PostPurchaseModels.CheckoutBilling billing) {
+        return executeCheckout(actorUserId,key,addressId,paymentMethod,paymentOutcome,cartId,fulfillmentMethod,pickupLocationId,quoteFingerprint,billing);
+    }
+
+    private CheckoutResult executeCheckout(long actorUserId, UUID key, Long addressId, String paymentMethod,
+            String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId,
+            String quoteFingerprint, com.pliego.modules.sales.application.PostPurchaseModels.CheckoutBilling billing) {
         return withDatabaseErrorTranslation(() -> jdbcTemplate.execute((ConnectionCallback<CheckoutResult>) connection -> {
-            try (PreparedStatement statement = connection.prepareStatement(CHECKOUT)) {
+            try (PreparedStatement statement = connection.prepareStatement(billing == null ? CHECKOUT : CHECKOUT_BILLED)) {
                 statement.setLong(1, actorUserId);
                 statement.setObject(2, key);
                 if (addressId == null) statement.setNull(3, Types.BIGINT); else statement.setLong(3, addressId);
@@ -50,11 +64,25 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                 statement.setString(7, fulfillmentMethod);
                 if (pickupLocationId == null) statement.setNull(8, Types.BIGINT); else statement.setLong(8, pickupLocationId);
                 statement.setString(9, quoteFingerprint);
-                statement.setNull(10, Types.BIGINT);
-                statement.setNull(11, Types.VARCHAR);
-                statement.setNull(12, Types.VARCHAR);
-                statement.setNull(13, Types.NUMERIC);
-                statement.setNull(14, Types.VARCHAR);
+                int outputStart = 10;
+                if (billing != null) {
+                    statement.setString(10, billing.identityType());
+                    statement.setString(11, billing.identityNumber());
+                    statement.setString(12, billing.buyerName());
+                    statement.setString(13, billing.address().line1());
+                    statement.setString(14, billing.address().line2());
+                    statement.setString(15, billing.address().city());
+                    statement.setString(16, billing.address().province());
+                    statement.setString(17, billing.address().countryCode());
+                    statement.setString(18, billing.address().postalCode());
+                    outputStart = 19;
+                    statement.setNull(24, Types.BIGINT);
+                }
+                statement.setNull(outputStart, Types.BIGINT);
+                statement.setNull(outputStart + 1, Types.VARCHAR);
+                statement.setNull(outputStart + 2, Types.VARCHAR);
+                statement.setNull(outputStart + 3, Types.NUMERIC);
+                statement.setNull(outputStart + 4, Types.VARCHAR);
                 try (ResultSet output = statement.executeQuery()) {
                     if (!output.next()) throw new SQLException("Checkout Procedure returned no output", "02000");
                     return new CheckoutResult(Long.toString(output.getLong("o_order_id")),

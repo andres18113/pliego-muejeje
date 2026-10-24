@@ -19,7 +19,7 @@ Human-facing REST error and validation feedback is in Spanish. Machine-readable 
 
 ## Build and run
 
-Install Java 25, Maven, Node.js/npm, curl, and PostgreSQL 18. To start the local database, backend, and frontend together, use the idempotent stack script:
+Install Java 25.0.5 or a later compatible Java 25 security update, Maven, Node.js 24.22.1 or a later Node.js 24 security update, curl, and PostgreSQL 18.6 or later on the 18.x line. Runtime pins are in `.java-version` and `.nvmrc`. Before building or releasing, run `java scripts/security/CheckCerts.java` to verify the active JVM trust store against CVE-2026-91403; a version number alone is insufficient. See the [October 2026 security report](docs/security/2026-10-24/README.md). To start the local database, backend, and frontend together, use the idempotent stack script:
 
 ```bash
 cd frontend && npm ci
@@ -55,5 +55,7 @@ Backend configuration/startup is documented in [backend/README.md](backend/READM
 - [REST API contract](rest-api-contract-v1.0.md)
 - [Database API contract](database-api-contract-v1.0.md)
 - [Approved Flyway archive](pliego-flyway-v1.0.zip)
+
+These documents are English translations of the approved baselines. Contract identifiers and Spanish user-facing messages remain unchanged. Only Markdown documentation inside the Flyway archive is translated; SQL migrations, test scripts, and the static validator retain their original bytes.
 
 Flyway migrations V001–V019 match the approved archive byte-for-byte. V020 and V021 are additive corrections that preserve the approved public contract and behavior.

@@ -1,3 +1,4 @@
+import { fillCheckoutBilling } from "./billing-fixtures";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { pickupLocation, pickupOrder } from "../../src/test/pickup";
@@ -34,7 +35,7 @@ async function install(page: Page) {
   await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
   await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
   await expect(page).toHaveURL(/\/checkout$/);
-  await expect(page.getByText("Av. Principal 123")).toBeVisible();
+  await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible();
   return { posts, locations: (state: typeof locationState) => { locationState = state; } };
 }
 async function choosePickup(page: Page) {
@@ -86,7 +87,7 @@ for (const width of [1440, 1024, 768, 390, 320]) {
     await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveCount(0);
     await noOverflow(page); await axe(page);
     await page.screenshot({ path: info.outputPath(`pickup-${width}.png`), fullPage: true });
-    await delivery.click(); await expect(page.getByText("Av. Principal 123")).toBeVisible();
+    await delivery.click(); await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible();
     await expect(destination).toContainText("Entrega a domicilio");
     await expect(summary.locator("dt")).toHaveText(["Subtotal", "IVA (15 %)", "Gastos de envío", "Total"]);
     await page.getByRole("tab", { name: "Retiro", exact: true }).click();
@@ -118,7 +119,7 @@ test("loading error, retry, multiple locations and empty-state recovery", async 
   await expect(page.getByRole("button", { name: "Hacer pedido" })).toHaveAttribute("aria-disabled", "true");
   expect(api.posts).toHaveLength(0);
   await page.getByRole("tab", { name: "Entrega", exact: true }).click();
-  await expect(page.getByText("Av. Principal 123")).toBeVisible();
+  await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible();
 });
 
 for (const payment of ["CARD", "TRANSFER"] as const) {
@@ -141,6 +142,7 @@ for (const payment of ["CARD", "TRANSFER"] as const) {
       await expect(page.getByText("Banco Guayaquil")).toBeVisible();
     }
     await expect(page.getByRole("button", { name: "Hacer pedido" })).toBeEnabled();
+    await fillCheckoutBilling(page);
     await page.getByRole("button", { name: "Hacer pedido" }).click();
     await expect(page.getByRole("heading", { level: 1 })).toBeFocused();
     await expect(page.getByText("P-ABC234")).toBeVisible();

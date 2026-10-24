@@ -48,10 +48,13 @@ public class AuthService {
 
     @Transactional
     public RegistrationResult register(String email, String password, String firstNames, String lastNames,
-            String phone) {
+            String phone, String returnTo) {
         String passwordHash = passwordEncoder.encode(password);
         var credential = emailTokens.issue("VERIFY_EMAIL");
-        return identityGateway.register(email, passwordHash, firstNames, lastNames, phone, credential.hash(), credential.nonce());
+        RegistrationResult result = identityGateway.register(email, passwordHash, firstNames, lastNames, phone, credential.hash(), credential.nonce());
+        String safePath = AuthReturnPaths.safeOrNull(returnTo);
+        if (safePath != null) identityGateway.setEmailActionReturnPath(credential.nonce(), safePath);
+        return result;
     }
 
     @Transactional
