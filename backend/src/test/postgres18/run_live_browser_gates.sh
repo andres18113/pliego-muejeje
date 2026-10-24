@@ -11,12 +11,18 @@ frontend_url="http://127.0.0.1:$frontend_port"
 api_pid=''
 frontend_pid=''
 cleanup() {
+    local result=$?
     for pid in "$frontend_pid" "$api_pid"; do
         if [[ -n "$pid" ]] && kill -0 "$pid" 2>/dev/null; then
             kill "$pid" 2>/dev/null || true
             wait "$pid" 2>/dev/null || true
         fi
     done
+    if (( result != 0 )) && [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]]; then
+        mkdir -p "$PLIEGO_GATE_LOG_DIR"
+        cp -R "$work_dir" "$PLIEGO_GATE_LOG_DIR/live-browser-failure"
+        printf 'Live browser failure evidence retained at %s/live-browser-failure\n' "$PLIEGO_GATE_LOG_DIR" >&2
+    fi
     rm -rf "$work_dir"
 }
 trap cleanup EXIT
@@ -56,10 +62,10 @@ BEGIN
 END $$;
 SQL
 
-PLIEGO_API_PROXY_TARGET="$api_url" "$repo_dir/frontend/node_modules/.bin/vite" "$repo_dir/frontend" \
+PLIEGO_VITE_CACHE_DIR="$work_dir/vite-cache" PLIEGO_API_PROXY_TARGET="$api_url" "$repo_dir/frontend/node_modules/.bin/vite" "$repo_dir/frontend" \
     --host 127.0.0.1 --port "$frontend_port" --strictPort >"$work_dir/frontend.log" 2>&1 &
 frontend_pid=$!
 wait_for "$frontend_url/" "$frontend_pid" "$work_dir/frontend.log"
 cd "$repo_dir/frontend"
 PLIEGO_E2E_LIVE=1 PLIEGO_E2E_BASE_URL="$frontend_url" PLIEGO_API_BASE_URL="$api_url" \
-    npx playwright test tests/e2e/digital-physical-contract.live.spec.ts tests/e2e/purchase.live.spec.ts --workers=1 --output="$work_dir/results"
+    npx playwright test tests/e2e/digital-physical-contract.live.spec.ts tests/e2e/purchase.live.spec.ts tests/e2e/session.live.spec.ts --workers=1 --output="$work_dir/results"

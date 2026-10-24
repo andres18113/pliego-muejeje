@@ -1,0 +1,4 @@
+interface:
+  display_name: "PLIEGO Production Deployment"
+  short_description: "Deploy PLIEGO with verified artifacts and rollback"
+  default_prompt: "Use $pliego-deploy to review and deploy the requested PLIEGO release within the user's authorized scope."

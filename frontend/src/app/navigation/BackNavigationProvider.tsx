@@ -2,7 +2,7 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState, type ReactNode
 import { Navigate, useLocation, useNavigate, useNavigationType } from "react-router-dom";
 import { useSession } from "@/app/session";
 import { BackNavigationContext } from "./BackNavigationContext";
-import { BackPlacementContext } from "./BackPlacementContext";
+import { HeaderFlowContext } from "./HeaderFlowContext";
 import { BackNavigationHistory, backFallback, canonicalBackPath } from "./BackNavigationHistory";
 
 export function BackNavigationProvider({ children }: { children: ReactNode }) {
@@ -14,9 +14,9 @@ export function BackNavigationProvider({ children }: { children: ReactNode }) {
   const authority = `${session ? `${session.user.role}:${session.user.userId}` : "guest"}:${authorityVersion}`;
   const [snapshot, setSnapshot] = useState<{ key: string; authority: string; previous: { href: string; delta: number } | null; retired: boolean } | null>(null);
   const moving = useRef(false);
-  const [inPageClaims, setInPageClaims] = useState(0);
-  const claim = useCallback(() => { setInPageClaims(count => count + 1); return () => setInPageClaims(count => count - 1); }, []);
-  const placement = useMemo(() => ({ inPage: inPageClaims > 0, claim }), [inPageClaims, claim]);
+  const [flowClaims, setFlowClaims] = useState(0);
+  const claim = useCallback(() => { setFlowClaims(count => count + 1); return () => setFlowClaims(count => count - 1); }, []);
+  const headerFlow = useMemo(() => ({ scrollsAway: flowClaims > 0, claim }), [flowClaims, claim]);
   const view = useMemo(() => ({ key: location.key, authority }), [location.key, authority]);
   const liveView = useRef(view);
   useLayoutEffect(() => {
@@ -39,8 +39,8 @@ export function BackNavigationProvider({ children }: { children: ReactNode }) {
   // A native POP to retired checkout must not mount its command-capable page.
   const retired = history.isRetired(location.key) || current?.retired;
   return <BackNavigationContext.Provider value={{ canGoBack: !!current?.previous || pathname !== fallback, fallback, goBack }}>
-    <BackPlacementContext.Provider value={placement}>
+    <HeaderFlowContext.Provider value={headerFlow}>
       {retired ? <Navigate to={pathname === "/checkout" ? "/cart" : "/"} replace /> : children}
-    </BackPlacementContext.Provider>
+    </HeaderFlowContext.Provider>
   </BackNavigationContext.Provider>;
 }

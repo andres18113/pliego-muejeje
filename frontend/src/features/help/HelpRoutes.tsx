@@ -4,6 +4,7 @@ import type { HelpCriteria } from "@/shared/api/help";
 import { MaterialSymbol, type MaterialSymbolName } from "@/shared/ui/MaterialSymbol";
 import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
+import { PageWayfinding } from "@/app/navigation/BackButton";
 import { useHelpArticle, useHelpArticles, useHelpCategories } from "./helpQuery";
 import classes from "./help.module.css";
 
@@ -35,6 +36,7 @@ export function HelpPage() {
   useEffect(() => { document.title = "Ayuda · PLIEGO"; }, []);
   return <>
     <main className={`page-frame ${classes.page} ${classes.landing}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
+      <PageWayfinding className={classes.landingWayfinding} />
       <header className={classes.masthead}>
         <h1 className={classes.title}>Estamos aquí para ayudarte.</h1>
       </header>

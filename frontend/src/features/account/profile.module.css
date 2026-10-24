@@ -24,6 +24,7 @@
 .factLabel { grid-area: label; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .factValue { grid-area: value; margin: 0; min-width: 0; color: var(--acc-ink); font-size: 1.0625rem; font-weight: 500; line-height: 1.35; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .factValue[data-empty] { color: var(--acc-muted); font-weight: 400; }
+.mask { letter-spacing: .12em; }
 /* An absent value names its state with one small chip (the Ofertas chip grammar: flat, 8px radius) and says whether
    it is needed. Required uses the shared pale red; optional the quiet neutral. Never a second action colour. */
 .missing { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }

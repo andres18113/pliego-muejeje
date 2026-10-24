@@ -247,7 +247,7 @@ export function EditionDetailPage() {
       <>
         <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} aria-busy="true" data-media={loadingMedia ?? undefined} data-loading>
           <div className={classes.wayfinding}>
-            <InPageBackButton />
+            <InPageBackButton headerScrollsAway />
             <nav className={classes.trail} aria-label="Ruta de navegación">
               <Link to="/catalog">Catálogo</Link>
               {coverPreview ? <span aria-current="page">{coverPreview.title}</span> : <span aria-hidden="true"><i className={classes.bone} data-bone="trail" /></span>}
@@ -453,7 +453,7 @@ export function EditionDetailPage() {
           onHiddenWithFocus={focusPageBack} />
         {/* As on product pages: the back arrow under the header, on the content's own edge — never beside the wordmark. */}
         <div className={classes.wayfinding} ref={wayfinding}>
-          <InPageBackButton />
+          <InPageBackButton headerScrollsAway />
           <nav className={classes.trail} aria-label="Ruta de navegación">
             <Link to="/catalog">Catálogo</Link>
             <span aria-current="page">{title}</span>

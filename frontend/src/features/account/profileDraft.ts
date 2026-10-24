@@ -6,6 +6,29 @@ const prefix = "pliego-profile-draft:";
 const pendingSaves = new Set<string>();
 const fallback = new Map<string, Draft>();
 const fields: DraftField[] = ["firstNames", "lastNames", "phone", "email"];
+export function clearProfileDrafts(preserveEmail?: string) {
+  const belongsToRestoredCustomer = (storedKey: string, draft: Draft | null) => preserveEmail !== undefined
+    && draft?.original?.email === preserveEmail
+    && typeof draft.value === "string" && typeof draft.original.version === "string"
+    && fields.some(field => storedKey === key(draft.original.customerId, field));
+  for (const [storedKey, draft] of fallback) {
+    if (!belongsToRestoredCustomer(storedKey, draft)) fallback.delete(storedKey);
+  }
+  try {
+    const storedKeys: string[] = [];
+    for (let index = 0; index < sessionStorage.length; index++) {
+      const storedKey = sessionStorage.key(index);
+      if (storedKey?.startsWith(prefix)) storedKeys.push(storedKey);
+    }
+    for (const storedKey of storedKeys) {
+      let draft: Draft | null = null;
+      try { draft = JSON.parse(sessionStorage.getItem(storedKey) ?? "null"); } catch { /* Discard malformed drafts. */ }
+      if (!belongsToRestoredCustomer(storedKey, draft)) sessionStorage.removeItem(storedKey);
+    }
+  } catch {
+    // Storage may be unavailable; the in-memory copy has already been forgotten.
+  }
+}
 function key(customerId: string, field: DraftField | "cedula") { return `${prefix}${customerId}:${field}`; }
 function read(customerId: string, field: DraftField): Draft | null {
   try {

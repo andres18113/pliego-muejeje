@@ -169,8 +169,9 @@ describe("EditionDetailPage", () => {
     expect(within(header).getByRole("link", { name: "PLIEGO, ir al inicio" }).previousElementSibling?.getAttribute("aria-label")).not.toBe("Volver atrás");
     await userEvent.click(back);
     expect(await screen.findByRole("heading", { name: "Catálogo de prueba" })).toBeInTheDocument();
-    // Leaving the edition releases the claim: other pages keep the arrow in the header, unchanged.
-    expect(within(screen.getByTestId("site-header")).queryByRole("button", { name: "Volver atrás" })).toBeInTheDocument();
+    // Leaving the edition releases the header's claim; the header still never draws an arrow beside the wordmark.
+    expect(screen.getByTestId("site-header")).not.toHaveAttribute("data-flow");
+    expect(within(screen.getByTestId("site-header")).queryByRole("button", { name: "Volver atrás" })).not.toBeInTheDocument();
   });
 
   it("keeps the shared header and footer while loading and after success", async () => {

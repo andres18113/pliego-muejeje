@@ -4,11 +4,9 @@ import { Link, useLocation } from "react-router-dom";
 import { useSession } from "@/app/session";
 import { cartUnitCount, useCustomerCart } from "@/features/purchase/cartQuery";
 import { BrandLogo } from "@/shared/ui/BrandLogo";
-import { BackButton } from "./BackButton";
 import { HeaderAccount } from "./HeaderAccount";
 import site from "./SiteHeader.module.css";
 import classes from "./PurchaseHeader.module.css";
-import backClasses from "./BackNavigation.module.css";
 
 /**
  * The focused header of the purchase flow: the wordmark, where the customer is, and their account.
@@ -31,8 +29,7 @@ export function PurchaseHeader() {
         event.preventDefault(); main.focus(); main.scrollIntoView({ block: "start", behavior: "instant" });
       }}>Saltar al contenido</a>
       <div className={classes.bar}>
-        <div className={backClasses.primary}><BackButton closeLayer={accountOpened ? () => setAccountOpened(false) : undefined} />
-        <UnstyledButton component={Link} to="/" className={site.wordmark} aria-label="PLIEGO, ir al inicio"><BrandLogo compact="phone" /></UnstyledButton></div>
+        <UnstyledButton component={Link} to="/" className={site.wordmark} aria-label="PLIEGO, ir al inicio"><BrandLogo compact="phone" /></UnstyledButton>
         <p className={classes.title} aria-live={location.pathname === "/cart" ? undefined : "polite"}>
           {place}{units !== null && units > 0 && <span> ({units === 1 ? "1 artículo" : `${units} artículos`})</span>}
         </p>

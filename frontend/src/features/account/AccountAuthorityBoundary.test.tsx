@@ -8,7 +8,7 @@ import { readPendingAttempt } from "@/shared/api/attemptStorage";
 import type { CustomerProfile } from "@/shared/api/customer";
 import { json, renderPurchaseRoute, stubApi } from "@/test/purchase";
 import { AccountPage } from "@/features/account/AccountPage";
-import { useProfileDraft } from "@/features/account/profileDraft";
+import { restoredProfileField, useProfileDraft } from "@/features/account/profileDraft";
 
 const profileA: CustomerProfile = {
   customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez",
@@ -75,7 +75,7 @@ describe("account command authority boundaries", () => {
     }
   });
 
-  it("does not refetch Bea's profile or overwrite Ana's draft when Ana's pending save completes", async () => {
+  it("does not refetch Bea's profile or restore Ana's erased draft when Ana's pending save completes", async () => {
     let finish!: (response: Response) => void;
     const pending = new Promise<Response>(resolve => { finish = resolve; });
     const api = stubApi({
@@ -92,8 +92,11 @@ describe("account command authority boundaries", () => {
     await waitFor(() => expect(api.count("PATCH", "/api/v1/me")).toBe(1));
     await user.clear(input);
     await user.type(input, "Ana Elena");
+    expect(JSON.parse(sessionStorage.getItem(draftKey)!).value).toBe("Ana Elena");
     await user.click(screen.getByRole("button", { name: "Cambiar a Bea" }));
     await waitFor(() => expect(within(screen.getByRole("region", { name: "Perfil y datos personales" })).getByText(profileB.email)).toBeInTheDocument());
+    expect(sessionStorage.getItem(draftKey)).toBeNull();
+    expect(restoredProfileField(profileA.customerId)).toBeNull();
     // The save lock reports completion even when its originating editor was unmounted.
     let removeListener = () => {};
     const completed = new Promise<void>(resolve => {
@@ -109,9 +112,8 @@ describe("account command authority boundaries", () => {
         await pending;
         await completed;
       });
-      const stored = JSON.parse(sessionStorage.getItem(draftKey)!);
-      expect(stored.value).toBe("Ana Elena");
-      expect(stored.original).toEqual(profileA);
+      expect(sessionStorage.getItem(draftKey)).toBeNull();
+      expect(restoredProfileField(profileA.customerId)).toBeNull();
       expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/me").length).toBe(2);
       expect(within(screen.getByRole("region", { name: "Perfil y datos personales" })).getByText(profileB.email)).toBeInTheDocument();
       expect(screen.queryByText("Guardamos tus nombres.")).not.toBeInTheDocument();

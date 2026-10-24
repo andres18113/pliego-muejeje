@@ -4,6 +4,8 @@
 .page { min-height: 65vh; }
 :global(html):has(.surface), :global(body):has(.surface) { background: var(--pliego-surface); }
 .shell { width: min(calc(100% - 96px), 1440px); margin-inline: auto; padding-block: 4px 96px; }
+/* As on the edition page: the view's back arrow under the header, on the shelf's left edge. */
+.wayfinding { margin-bottom: 4px; }
 .surface :global([data-bookcard-link]), .surface :global([data-bookcard-favorite]), .surface :global([data-bookcard-cart]) { scroll-margin-top: 104px; }
 
 /* Opening: a real catalog heading, not a banner. The collection's name in ink display type, the

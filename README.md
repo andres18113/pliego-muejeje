@@ -19,7 +19,7 @@ Human-facing REST error and validation feedback is in Spanish. Machine-readable 
 
 ## Build and run
 
-Install Java 25, Maven, Node.js/npm, curl, and PostgreSQL 18. To start the local database, backend, and frontend together, use the idempotent stack script:
+Install Java 25.0.5 or a later compatible Java 25 security update, Maven, Node.js 24.22.1 or a later Node.js 24 security update, curl, and PostgreSQL 18.6 or later on the 18.x line. Runtime pins are in `.java-version` and `.nvmrc`. Before building or releasing, run `java scripts/security/CheckCerts.java` to verify the active JVM trust store against CVE-2026-91403; a version number alone is insufficient. See the [October 2026 security report](docs/security/2026-10-24/README.md). To start the local database, backend, and frontend together, use the idempotent stack script:
 
 ```bash
 cd frontend && npm ci

@@ -10,29 +10,16 @@ import { BackNavigationProvider } from "./BackNavigationProvider";
 
 afterEach(() => vi.unstubAllGlobals());
 
-it("closes the menu on a full pointerdown/click on back, then navigates on the next activation", async () => {
+it("keeps the wordmark alone and linked home on every page, with no back arrow in the header", async () => {
   vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify(richNavigation), { status: 200, headers: { "Content-Type": "application/json" } })));
-  const router = createMemoryRouter([{ path: "*", element: <BackNavigationProvider><SiteHeader /></BackNavigationProvider> }], { initialEntries: ["/ayuda"] });
+  const router = createMemoryRouter([{ path: "*", element: <BackNavigationProvider><SiteHeader /></BackNavigationProvider> }], { initialEntries: ["/"] });
   render(<PliegoThemeProvider><QueryClientProvider client={new QueryClient({ defaultOptions: { queries: { retry: false } } })}><SessionProvider restoreOnMount={false}><RouterProvider router={router} /></SessionProvider></QueryClientProvider></PliegoThemeProvider>);
-  await act(async () => { await router.navigate("/catalog?que=Origen&page=2"); });
-  fireEvent.click(await screen.findByRole("button", { name: "Libros" }));
-  expect(screen.getByRole("region", { name: "Menú de Libros" })).toBeInTheDocument();
-  const back = screen.getByRole("button", { name: "Volver atrás" });
-  fireEvent.pointerDown(back);
-  fireEvent.mouseDown(back);
-  back.focus();
-  fireEvent.pointerUp(back);
-  fireEvent.mouseUp(back);
-  fireEvent.click(back);
-  expect(screen.queryByRole("region", { name: "Menú de Libros" })).not.toBeInTheDocument();
-  expect(router.state.location.pathname + router.state.location.search).toBe("/catalog?que=Origen&page=2");
-  expect(back).toHaveFocus();
-  fireEvent.pointerDown(back);
-  fireEvent.mouseDown(back);
-  fireEvent.pointerUp(back);
-  fireEvent.mouseUp(back);
-  fireEvent.click(back);
-  expect(router.state.location.pathname).toBe("/ayuda");
+  for (const path of ["/catalog?que=Origen&page=2", "/ayuda", "/"]) {
+    await act(async () => { await router.navigate(path); });
+    const header = screen.getByTestId("site-header");
+    expect(within(header).queryByRole("button", { name: "Volver atrás" })).not.toBeInTheDocument();
+    expect(within(header).getByRole("link", { name: "PLIEGO, ir al inicio" })).toHaveAttribute("href", "/");
+  }
 });
 
 function renderHeader(path = "/", projection = storefrontNavigationFixture) {

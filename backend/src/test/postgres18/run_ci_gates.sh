@@ -45,6 +45,7 @@ application_port="${PLIEGO_PG18_APP_PORT:-18080}"
 application_pid=''
 cleanup() {
     if [[ -n "$application_pid" ]] && kill -0 "$application_pid" 2>/dev/null; then
+        kill -CONT "$application_pid" 2>/dev/null || true
         kill "$application_pid" 2>/dev/null || true
         wait "$application_pid" 2>/dev/null || true
     fi
@@ -89,7 +90,20 @@ done
 for gate in checkout_last_unit.py order_cancel_concurrency.py address_primary_concurrency.py \
     admin_order_concurrency.py register_email_concurrency.py p1_integrity_concurrency.py person_validation_database_gate.py transactional_email_concurrency.py store_pickup_concurrency.py home_delivery_lifecycle_gate.py offers_concurrency.py order_offer_snapshot_concurrency.py automatic_billing_concurrency.py ecuador_cedula_cases_gate.py invoice_artifacts_gate.py invoice_artifacts_concurrency.py; do
     printf 'Running %s\n' "$gate"
-    timeout 180s python3 "$script_dir/$gate"
+    if [[ "$gate" == invoice_artifacts_concurrency.py ]]; then
+        # Keep the scheduled artifact worker from competing with the two test workers.
+        # HTTP/worker behavior is exercised separately after this database-only race.
+        kill -STOP "$application_pid"
+        if timeout 180s python3 "$script_dir/$gate"; then
+            kill -CONT "$application_pid"
+        else
+            status=$?
+            kill -CONT "$application_pid"
+            exit "$status"
+        fi
+    else
+        timeout 180s python3 "$script_dir/$gate"
+    fi
 done
 
 for gate in checkout_http_gate.py customer_orders_http_gate.py admin_orders_http_gate.py \

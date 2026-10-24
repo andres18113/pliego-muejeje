@@ -35,8 +35,11 @@ __pycache__/
 .DS_Store
 Thumbs.db
 
-# Local agent skills and their nested repositories
-.agents/
+# Share the PLIEGO deployment skill; keep other agent skills/repositories local.
+.agents/*
+!.agents/skills/
+.agents/skills/*
+!.agents/skills/pliego-deploy/
 /.codex/hooks.json
 
 # Local reference screenshots (product assets live under frontend/ and covers/)

@@ -148,8 +148,10 @@ it("keeps the pencil for changing a value, the plus for adding one, and a specif
   expect(screen.getByRole("button", { name: "Agregar teléfono" })).toHaveTextContent(/^addAgregar/);
   expect(screen.getByRole("button", { name: "Editar nombres" })).toHaveTextContent(/^editEditar/);
   expect(screen.getByRole("button", { name: "Cambiar contraseña" })).toHaveTextContent(/^lockCambiar/);
-  expect(screen.getByText("Contraseña configurada")).toBeVisible();
-  expect(screen.queryByText("••••••••")).not.toBeInTheDocument();
+  // A fixed eight-dot mask for the eye, the row's state for assistive technology.
+  expect(screen.getByText("••••••••")).toHaveAttribute("aria-hidden", "true");
+  expect(screen.getByText("••••••••").parentElement).toHaveTextContent(/^••••••••Contraseña configurada$/);
+  expect(screen.getByText("Contraseña configurada")).toHaveClass("visually-hidden");
   const names = screen.getAllByRole("button").filter(button => button.closest("ul")).map(button => button.textContent?.replace(/^(add|edit|lock|refresh)/, ""));
   expect(names).toEqual(["Editar nombres", "Editar apellidos", "Corregir cédula o RUC", "Editar correo electrónico", "Agregar teléfono", "Cambiar contraseña"]);
   expect(new Set(names).size).toBe(names.length);

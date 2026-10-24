@@ -21,24 +21,29 @@ async function install(page: Page, customer = false) {
 
 for (const width of [320, 375, 768, 1440]) {
   for (const theme of ["light", "dark"]) {
-    test(`safe direct fallback in both headers at ${width}px ${theme}`, async ({ page }) => {
+    test(`one back arrow under the header, never beside the wordmark, at ${width}px ${theme}`, async ({ page }) => {
       await page.setViewportSize({ width, height: 900 });
       await page.addInitScript(value => localStorage.setItem("mantine-color-scheme-value", value), theme);
       const commands = await install(page, true);
       await page.goto("/cart");
-      const back = page.getByRole("button", { name: "Volver atrás", exact: true });
+      const purchaseHeader = page.locator("[data-purchase-header]");
+      await expect(purchaseHeader).toBeVisible();
+      await expect(purchaseHeader.getByRole("link", { name: "PLIEGO, ir al inicio" })).toHaveAttribute("href", "/");
+      await expect(page.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
+      await page.goto("/catalog");
+      const header = page.getByTestId("site-header");
+      await expect(header.getByRole("link", { name: "PLIEGO, ir al inicio" })).toHaveAttribute("href", "/");
+      await expect(header.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
+      const back = page.getByRole("main").getByRole("button", { name: "Volver atrás", exact: true });
       await expect(back).toHaveCount(1);
       await expect(back).toBeVisible();
-      const bounds = await back.boundingBox();
-      expect(bounds!.width).toBeGreaterThanOrEqual(44);
-      await expect(page.locator("[data-purchase-header]")).toBeVisible();
+      const bounds = (await back.boundingBox())!, bar = (await header.boundingBox())!;
+      expect(bounds.width).toBeGreaterThanOrEqual(44);
+      expect(bounds.y).toBeGreaterThanOrEqual(bar.y + bar.height - 1);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
       await back.click();
-      await expect(page).toHaveURL(/\/catalog$/);
-      await expect(page.getByTestId("site-header")).toBeVisible();
-      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
-      await page.reload();
-      await expect(page.getByRole("button", { name: "Volver atrás", exact: true })).toBeVisible();
+      await expect(page).toHaveURL(/\/$/);
+      await expect(page.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
       expect(commands).toEqual([]);
     });
   }
@@ -57,10 +62,11 @@ test("global arrow skips catalog filter entries and retains the internal screen"
   expect(commands).toEqual([]);
 });
 
-test("unknown route fallback stays inside PLIEGO and root hides the arrow", async ({ page }) => {
+test("unknown route recovers home through its own link and no arrow is drawn there or on the root", async ({ page }) => {
   const commands = await install(page);
   await page.goto("/no-existe");
-  await page.getByRole("button", { name: "Volver atrás", exact: true }).click();
+  await expect(page.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
+  await page.getByRole("link", { name: /Ir al inicio/ }).click();
   await expect(page).toHaveURL(/\/$/);
   await expect(page.getByRole("button", { name: "Volver atrás", exact: true })).toHaveCount(0);
   expect(commands).toEqual([]);

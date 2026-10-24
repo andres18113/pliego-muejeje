@@ -1,9 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, renderHook, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SessionProvider, useSession, type AuthSession } from "./session";
 import { logoutSession, refreshSession } from "@/shared/api/auth";
 import { apiClient, setApiAccessToken } from "@/shared/api/client";
+import { restoredProfileField, useProfileDraft } from "@/features/account/profileDraft";
 
 vi.mock("@/shared/api/auth", () => ({
   logoutSession: vi.fn(),
@@ -26,7 +27,7 @@ function Probe() {
   );
 }
 
-function renderSession() {
+function renderSession(reactStrictMode = false) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   return render(
     <QueryClientProvider client={queryClient}>
@@ -34,6 +35,7 @@ function renderSession() {
         <Probe />
       </SessionProvider>
     </QueryClientProvider>,
+    { reactStrictMode },
   );
 }
 
@@ -77,6 +79,34 @@ describe("persistent session restoration", () => {
     fireEvent.click(screen.getByRole("button", { name: "Forzar restauración" }));
     expect(await screen.findByText("Sesión vencida")).toBeInTheDocument();
     expect(mockRefresh).toHaveBeenCalledTimes(2);
+  });
+
+  it.each([false, true])("restores this customer's draft after bootstrap while removing other customers' drafts (StrictMode %s)", async (strictMode) => {
+    const profile = { customerId: "87", email: "ana@example.com", firstNames: "Ana", lastNames: "Lectora", phone: null, state: "ACTIVE" as const, version: "1" };
+    const ownKey = "pliego-profile-draft:87:firstNames";
+    const ownDraft = JSON.stringify({ value: "Ana Elena", original: profile });
+    sessionStorage.setItem(ownKey, ownDraft);
+    // Customer IDs and authenticated user IDs come from independent database sequences.
+    sessionStorage.setItem("pliego-profile-draft:100:email", JSON.stringify({ value: "private@example.com", original: { ...profile, customerId: "100", email: "bea@example.com" } }));
+    sessionStorage.setItem("catalog-scroll", "120");
+    mockRefresh.mockResolvedValueOnce(restoredSession());
+    if (strictMode) mockRefresh.mockResolvedValueOnce(restoredSession());
+    renderSession(strictMode);
+
+    expect(await screen.findByText("CUSTOMER:ana@example.com")).toBeInTheDocument();
+    expect(sessionStorage.getItem(ownKey)).toBe(ownDraft);
+    expect(restoredProfileField("87")).toBe("firstNames");
+    expect(restoredProfileField("100")).toBeNull();
+    expect(sessionStorage.getItem("pliego-profile-draft:100:email")).toBeNull();
+    expect(sessionStorage.getItem("catalog-scroll")).toBe("120");
+  });
+
+  it("forgets persisted drafts when bootstrap finds no valid cookie session", async () => {
+    sessionStorage.setItem("pliego-profile-draft:87:firstNames", JSON.stringify({ value: "Ana Elena", original: { customerId: "87", email: "ana@example.com", version: "1" } }));
+    mockRefresh.mockResolvedValueOnce(null);
+    renderSession();
+    expect(await screen.findByText("Guest")).toBeInTheDocument();
+    expect(sessionStorage.getItem("pliego-profile-draft:87:firstNames")).toBeNull();
   });
 
   it("revokes the backend session before clearing the local authenticated state", async () => {
@@ -157,6 +187,49 @@ describe("session identity boundaries", () => {
     expect(screen.getByText("bea@example.com")).toBeInTheDocument();
     expect(boundary.client.getQueryData(["customer-profile"])).toBeUndefined();
     expect(boundary.client.getQueryData(["catalog"])).toEqual({ title: "Libro público" });
+  });
+
+  it.each(["logout", "clear", "replace", "expired"] as const)("forgets profile drafts on %s while preserving unrelated session storage", async (change) => {
+    const boundary = setupBoundary();
+    act(() => boundary.controls.establish(identity("100", "ana@example.com")));
+    const profile = { customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Lectora", phone: "+593991234567", state: "ACTIVE" as const, version: "1" };
+    const editor = renderHook(() => useProfileDraft(profile, "firstNames", profile.firstNames));
+    act(() => editor.result.current.setValue("Nombre privado"));
+    editor.unmount();
+    sessionStorage.setItem("catalog-scroll", "120");
+    expect(restoredProfileField("100")).toBe("firstNames");
+
+    // Leaving an editor and rotating this identity's bearer retain its draft.
+    act(() => boundary.controls.establish({ ...identity("100", "ana@example.com"), accessToken: "rotated" }));
+    expect(restoredProfileField("100")).toBe("firstNames");
+
+    if (change === "logout") await act(async () => { await boundary.controls.logout(); });
+    else if (change === "clear") act(() => boundary.controls.clear());
+    else if (change === "replace") act(() => boundary.controls.establish(identity("200", "bea@example.com")));
+    else {
+      mockRefresh.mockResolvedValueOnce(null);
+      await act(async () => { await boundary.controls.retryRestore(); });
+    }
+    expect(restoredProfileField("100")).toBeNull();
+    expect(sessionStorage.getItem("pliego-profile-draft:100:firstNames")).toBeNull();
+    expect(sessionStorage.getItem("catalog-scroll")).toBe("120");
+  });
+
+  it("forgets profile drafts held in memory when browser storage is unavailable", async () => {
+    const boundary = setupBoundary();
+    act(() => boundary.controls.establish(identity("100", "ana@example.com")));
+    const profile = { customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Lectora", phone: null, state: "ACTIVE" as const, version: "1" };
+    const editor = renderHook(() => useProfileDraft(profile, "email", profile.email));
+    const blockedStorage = vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new DOMException("Storage unavailable", "SecurityError"); });
+    try {
+      act(() => editor.result.current.setValue("private-draft@example.com"));
+      editor.unmount();
+      expect(restoredProfileField("100")).toBe("email");
+      await act(async () => { await boundary.controls.logout(); });
+      expect(restoredProfileField("100")).toBeNull();
+    } finally {
+      blockedStorage.mockRestore();
+    }
   });
 
   it.each(["clear", "replace"] as const)("ignores a pending restore after %s changes the session", async (change) => {

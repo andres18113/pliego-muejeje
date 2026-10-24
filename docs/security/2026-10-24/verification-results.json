@@ -1,0 +1,73 @@
+{
+  "cutoff": "2026-10-24",
+  "java_build_test": "Temurin 25.0.5+8",
+  "node_build_test": "24.22.1",
+  "maven_clean_verify": {
+    "exit": 0,
+    "tests": 291,
+    "failures": 0,
+    "log": "/tmp/pliego-security/backend/final-verify.log"
+  },
+  "frontend_build_typecheck": {
+    "exit": 0,
+    "log": "/tmp/pliego-security/frontend/claude-final-build.log"
+  },
+  "frontend_unit": {
+    "exit": 0,
+    "files": 87,
+    "tests": 1015,
+    "failures": 0,
+    "log": "/tmp/pliego-security/frontend/claude-final-unit-tests.log"
+  },
+  "playwright_complete": {
+    "exit": 0,
+    "registered": 415,
+    "passed": 328,
+    "skipped_opt_in": 87,
+    "failed": 0,
+    "duration_minutes": 16.4,
+    "workers": 1,
+    "log": "/tmp/pliego-security/frontend/acceptance-playwright-full.log"
+  },
+  "native_postgresql_gate": {
+    "exit": 0,
+    "postgres": "18.6",
+    "flyway": 75,
+    "log": "/tmp/pliego-security/integration/ci-gates-complete-final.log"
+  },
+  "native_browser_purchase_session": {
+    "exit": 0,
+    "passed": 5,
+    "failed": 0,
+    "log": "/tmp/pliego-security/integration/browser-session-final.log"
+  },
+  "python": {
+    "exit": 0,
+    "tests": 132,
+    "audit_packages": 36,
+    "known_vulnerabilities": 0,
+    "image_fixtures_byte_identical": 8
+  },
+  "npm_audit": {
+    "root": 0,
+    "frontend": 0
+  },
+  "maven_osv": {
+    "application_and_test_matches": 0,
+    "dormant_site_plugin_matches": 4,
+    "additional_vendor_jetty_findings": "see backend-findings.md"
+  },
+  "application_dependency_release_performed": false,
+  "historical_failures_retained": true,
+  "hosted_github_actions_executed_during_initial_audit": false,
+  "push_followup": {
+    "authorized_target": "main",
+    "pre_push_maven_tests": 291,
+    "pre_push_python_tests": 132,
+    "pre_push_frontend_status": "WSL native V8 worker crashes in normal, documented-workaround and unsandboxed runs; earlier complete acceptance source fingerprints unchanged",
+    "normal_completed_tests": 1013,
+    "unsandboxed_completed_tests": 1007,
+    "hosted_ci_status": "verify exact pushed commit; result and URL reported in push handoff",
+    "logs": "/tmp/pliego-security/push/"
+  }
+}

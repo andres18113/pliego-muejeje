@@ -103,7 +103,7 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
     { field: "email", label: "Correo electrónico", value: profile.email, editor: <EmailEditor {...editorProps("email")} /> },
     { field: "phone", label: "Teléfono", value: phone, missing: { tone: "optional", hint: "Opcional" }, editor: <PhoneEditor {...editorProps("phone")} /> },
     verified
-      ? { field: "password", label: "Contraseña", value: "Contraseña configurada", quiet: true, action: "Cambiar", icon: "lock", disabled: !passwordReadCurrent, waiting: password.cooling,
+      ? { field: "password", label: "Contraseña", value: "Contraseña configurada", masked: true, action: "Cambiar", icon: "lock", disabled: !passwordReadCurrent, waiting: password.cooling,
           editor: <PasswordRecoveryEditor key={profile.email} email={profile.email} readCurrent={passwordReadCurrent} onRequested={password.start} onDone={(result) => close("password", result)} /> }
       : { field: "password", label: "Contraseña", value: null, empty: "Verifica tu correo para cambiarla", action: "Cambiar", icon: "lock", disabled: true, editor: null },
   ];
@@ -128,8 +128,11 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
             ? <label className={classes.factLabel} htmlFor={`profile-${row.field}-input`}>{row.label}</label>
             : <span className={classes.factLabel} id={`profile-${row.field}-label`}>{row.label}</span>}
           {isEditing ? row.editor : <>
-            <p className={classes.factValue} data-empty={(!row.value || row.quiet) || undefined}>
-              {row.value ?? (row.missing
+            <p className={classes.factValue} data-empty={!row.value || undefined}>
+              {row.masked && row.value
+                // A fixed mask, never the password's length; the row still reads its state aloud.
+                ? <><span className={classes.mask} aria-hidden="true">{PASSWORD_MASK}</span><span className="visually-hidden">{row.value}</span></>
+                : row.value ?? (row.missing
                 // Not registered yet: a chip names the state; the hint says whether and when it is needed.
                 ? <span className={classes.missing}><span className={classes.missingChip} data-tone={row.missing.tone}>Sin registrar</span><span className="visually-hidden">. </span><span className={classes.missingHint}>{row.missing.hint}</span></span>
                 : row.empty)}
@@ -155,13 +158,15 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
   </section>;
 }
 
+const PASSWORD_MASK = "••••••••";
+
 type Row = {
   field: FieldKey; label: string; value: string | null; empty?: string; editor: ReactNode;
   /** An absent value: "Sin registrar" plus whether and when it is needed. */
   missing?: { tone: "required" | "optional"; hint: string };
   /** Defaults follow the action: `add` creates a value that does not exist yet, `edit` changes one that does. */
-  /** A value that states a fact rather than showing data (the password is never shown). */
-  quiet?: boolean;
+  /** The password: `value` is read aloud, the eye sees a fixed mask (the password itself is never shown). */
+  masked?: boolean;
   /** `lock` marks the security action of the password row. */
   action?: string; icon?: "add" | "edit" | "lock" | "refresh"; disabled?: boolean; waiting?: boolean; onAction?: () => void;
 };

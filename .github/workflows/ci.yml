@@ -19,6 +19,7 @@ jobs:
       - name: Install cover pipeline dependencies
         run: |
           python3 -m venv .venv-covers
+          .venv-covers/bin/python -m pip install --upgrade pip==26.2.2
           .venv-covers/bin/python -m pip install -r scripts/requirements-covers.txt
       - name: Run all Python catalog and cover tests
         run: .venv-covers/bin/python -m unittest discover -s scripts -p 'test_*.py'
@@ -33,13 +34,20 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up Node.js 24
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '24'
+          node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - name: Install frontend dependencies
         run: npm ci
+      - name: Audit frontend dependencies
+        run: npm audit --audit-level=low
+      - name: Install and audit root dependencies
+        working-directory: .
+        run: |
+          npm ci
+          npm audit --audit-level=low
       - name: Typecheck frontend
         run: npm run typecheck
       - name: Build frontend
@@ -71,12 +79,14 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up Java 25
-        uses: actions/setup-java@de7274f081f381c8f8158605e0321c36c376e2e6 # v6.0.1
+        uses: actions/setup-java@b843ebf9b913146b38da2eaa7aeddf76074ae1ad # v6.1.0
         with:
           distribution: temurin
-          java-version: '25'
+          java-version-file: .java-version
           cache: maven
           cache-dependency-path: backend/pom.xml
+      - name: Check Java trust roots for CVE-2026-91403
+        run: java scripts/security/CheckCerts.java
       - name: Verify backend
         working-directory: backend
         run: mvn --batch-mode --no-transfer-progress verify
@@ -125,12 +135,12 @@ jobs:
           CREATE ROLE pliego LOGIN PASSWORD :'ci_password';
           SQL
           sudo -u postgres createdb -p 55432 --owner=pliego pliego
-          psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180000" \
+          psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180006" \
             | grep -qx t
       - name: Set up Node.js for live browser contracts
-        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '24'
+          node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: frontend/package-lock.json
       - name: Install live browser dependencies

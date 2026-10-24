@@ -7,3 +7,4 @@
 - Keep cross-cutting database and error handling in `com.pliego.foundation`. Record material architecture changes in `docs/adr/`.
 - Human-facing REST error titles, details, validation messages, and authentication feedback are in Spanish; keep machine-readable codes and approved SQLSTATE mappings stable.
 - Never commit credentials, real passwords, or local environment files.
+- For production release preparation, deployment or rollback, use [.agents/skills/pliego-deploy/SKILL.md](.agents/skills/pliego-deploy/SKILL.md) and the canonical [production runbook](docs/deployment/production-runbook.md). Respect the user's existing authorization and scope; the guide does not itself authorize production changes.

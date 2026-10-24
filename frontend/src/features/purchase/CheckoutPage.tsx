@@ -57,6 +57,7 @@ import { checkoutBillingSchema, type CheckoutBillingInput } from "@/shared/api/b
 import type { Control, FieldErrors, UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { CheckoutBilling, useBillingSource } from "./CheckoutBilling";
 import { clearLegacyBillingIntents } from "./checkoutBillingIntent";
+import { PageWayfinding } from "@/app/navigation/BackButton";
 
 const checkoutSchema = z.object({
   ...checkoutBillingSchema.shape,
@@ -1114,8 +1115,9 @@ function CheckoutContent() {
 }
 
 /** The purchase header names the place ("Pago (n artículos)"); the page keeps its heading for assistive technology. */
+/** The page's opening: the back arrow under the purchase header (the wordmark stands alone), then its name. */
 function CheckoutHeading() {
-  return <h1 className="visually-hidden">Finalizar compra</h1>;
+  return <><PageWayfinding /><h1 className="visually-hidden">Finalizar compra</h1></>;
 }
 
 function positionAfterDigits(value: string, digitCount: number) {
