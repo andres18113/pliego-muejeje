@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.pliego.modules.billing.application.BillingService;
 import com.pliego.modules.billing.application.InvoiceDownload;
@@ -43,14 +44,22 @@ public class BillingController {
     }
 
     @GetMapping("/files/{type}")
-    @io.swagger.v3.oas.annotations.Operation(summary = "Descargar un documento académico autenticado")
+    @io.swagger.v3.oas.annotations.Operation(summary = "Descargar un documento académico autenticado",
+            description = "Se entrega como adjunto por defecto. disposition=inline permite visualizar únicamente PDF; XML siempre se descarga como adjunto.")
     @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", content = {
             @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/pdf", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary")),
             @io.swagger.v3.oas.annotations.media.Content(mediaType = "application/xml", schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", format = "binary"))})
     public ResponseEntity<?> download(@AuthenticationPrincipal Jwt jwt,
             @io.swagger.v3.oas.annotations.Parameter(schema = @io.swagger.v3.oas.annotations.media.Schema(type = "string", pattern = "^[1-9][0-9]*$"))
             @PathVariable @Positive long orderId,
-            @PathVariable @Pattern(regexp = "PDF|XML", message = "El formato debe ser PDF o XML.") String type) {
+            @PathVariable @Pattern(regexp = "PDF|XML", message = "El formato debe ser PDF o XML.") String type,
+            @io.swagger.v3.oas.annotations.Parameter(description = "Presentación del archivo; inline solo admite PDF.",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(allowableValues = {"attachment", "inline"}, defaultValue = "attachment"))
+            @RequestParam(defaultValue = "attachment") String disposition) {
+        if (!"attachment".equals(disposition) && !("inline".equals(disposition) && "PDF".equals(type))) {
+            return problem(HttpStatus.BAD_REQUEST, "VALIDATION_ERROR", "Datos inválidos",
+                    "La presentación debe ser attachment o inline. La visualización inline solo está disponible para PDF.");
+        }
         InvoiceDownload file = service.download(Long.parseLong(jwt.getSubject()), orderId, type);
         if (file == null) {
             JsonNode metadata = service.metadata(Long.parseLong(jwt.getSubject()), orderId);
@@ -63,7 +72,7 @@ public class BillingController {
         }
         return ResponseEntity.ok().cacheControl(CacheControl.noStore())
                 .contentType(MediaType.parseMediaType(file.mimeType()))
-                .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+                .header(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.builder(disposition)
                         .filename(file.fileName(), StandardCharsets.UTF_8).build().toString())
                 .header("X-Content-Type-Options", "nosniff")
                 .contentLength(file.content().length).body(file.content());

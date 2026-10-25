@@ -291,6 +291,8 @@ public final class ApiExceptionHandler {
             case CART_QUOTE_CHANGED -> "El carrito cambió";
             case ORDER_NOT_FOUND -> "Pedido no encontrado";
             case ORDER_INVALID_TRANSITION -> "Cambio de estado del pedido inválido";
+            case DIGITAL_ALREADY_OWNED -> "Ya tienes esta edición digital";
+            case DIGITAL_PURCHASE_PENDING -> "Compra digital pendiente";
             case LIBRARY_ITEM_NOT_FOUND -> "Título de biblioteca no disponible";
             case ORDER_NOT_CANCELLABLE -> "Pedido no cancelable";
             case CHECKOUT_ADDRESS_INVALID -> "Dirección no disponible";
@@ -404,6 +406,8 @@ public final class ApiExceptionHandler {
             case BILLING_IDENTITY_CONFLICT -> "La identificación de tu perfil no es la que estabas viendo. Revisa la actual antes de continuar.";
             case BILLING_IDENTITY_MISMATCH -> "La factura usa la cédula o el RUC registrado en tu perfil. Si es incorrecto, corrígelo en Mi perfil.";
             case ADDRESS_NOT_FOUND -> "La dirección solicitada no existe o no está disponible para tu cuenta.";
+            case DIGITAL_ALREADY_OWNED -> "Esta edición digital ya está en tu biblioteca. Puedes consultarla sin volver a comprarla.";
+            case DIGITAL_PURCHASE_PENDING -> "Ya tienes un pedido abierto con esta edición digital. Revisa ese pedido antes de intentar otra compra.";
             case LIBRARY_ITEM_NOT_FOUND -> "El título solicitado no existe o no pertenece a tu biblioteca.";
             case PICKUP_LOCATION_NOT_FOUND -> "El punto de retiro seleccionado no existe.";
             case PICKUP_LOCATION_INACTIVE -> "El punto de retiro está inactivo. Selecciona otro.";

@@ -320,6 +320,23 @@ class CartApiIntegrationTest {
     }
 
     @Test
+    void digitalOwnershipConflictsUseStableCodesAndSpanishFeedback() throws Exception {
+        String[][] cases = {
+                {"P6002", "Ya tienes esta edición digital", "Esta edición digital ya está en tu biblioteca. Puedes consultarla sin volver a comprarla."},
+                {"P6003", "Compra digital pendiente", "Ya tienes un pedido abierto con esta edición digital. Revisa ese pedido antes de intentar otra compra."}
+        };
+        for (String[] error : cases) {
+            gateway.failure = databaseFailure(error[0]);
+            mvc.perform(post("/api/v1/cart/items").header("Authorization", customerToken("42"))
+                            .contentType(MediaType.APPLICATION_JSON).content(ADD_BODY))
+                    .andExpect(status().isConflict())
+                    .andExpect(jsonPath("$.code").value(error[0]))
+                    .andExpect(jsonPath("$.title").value(error[1]))
+                    .andExpect(jsonPath("$.detail").value(error[2]));
+        }
+    }
+
+    @Test
     void invalidQuantityUsesDatabaseCodeAndSpanishFeedback() throws Exception {
         gateway.failure = databaseFailure("P4004");
         mvc.perform(post("/api/v1/cart/items").header("Authorization", customerToken("42"))

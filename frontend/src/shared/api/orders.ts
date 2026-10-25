@@ -107,7 +107,9 @@ function isConfirmedCheckoutRejection(problem: unknown) {
     "AUTH_INVALID_SESSION", "ACCESS_DENIED", "P1001", "P1002", "P1003", "P1004", "P1005", "P2042", "P2043",
     "P3001", "P3002", "P4001", "P4002", "P4005", "P5004", "P5005", "P5006", "P5007", "P5010", "P5011", "P5012", "P5013", "P1011",
     // Raised before any order or attempt is written; the whole transaction rolls back (ADR 0040).
-    "P1106"];
+    "P1106",
+    // Digital ownership/open-order conflicts roll back before commercial effects (ADR 0042).
+    "P6002", "P6003"];
   return codes.some((code) => hasCode(problem, code));
 }
 
@@ -288,6 +290,13 @@ export type OrderShipment = z.infer<typeof shipmentSchema>;
 export type OrderInvoice = z.infer<typeof invoiceSchema>;
 export type OrderCreditNote = z.infer<typeof creditNoteSchema>;
 
+/** Per purchase source; AVAILABLE means ownership, not content delivery. */
+const digitalAccessSchema = z.discriminatedUnion("state", [
+  z.object({ state: z.literal("AVAILABLE"), ownedItemId: z.string().regex(/^[1-9]\d*$/) }),
+  z.object({ state: z.enum(["PENDING_PAYMENT", "REVOKED", "UNAVAILABLE"]), ownedItemId: z.null() }),
+]);
+export type OrderItemDigitalAccess = z.infer<typeof digitalAccessSchema>;
+
 const orderDetailSchema = z.object({
   ...orderPricingFields,
   orderId: z.string().min(1),
@@ -314,7 +323,11 @@ const orderDetailSchema = z.object({
     lineSavings: moneySchema.nullish(),
     pricingSnapshotAvailable: z.boolean().optional(),
     requiresPhysicalFulfillment: z.boolean(),
-  })),
+    // Absent only for older servers; never infer access from the parent order/payment.
+    digitalAccess: digitalAccessSchema.nullable().optional(),
+  }).refine(item => item.digitalAccess === undefined || (item.requiresPhysicalFulfillment
+    ? item.digitalAccess === null : item.digitalAccess !== null),
+    "El acceso digital no corresponde al tipo de línea.")),
   address: z.object({
     recipient: z.string(),
     line1: z.string(),

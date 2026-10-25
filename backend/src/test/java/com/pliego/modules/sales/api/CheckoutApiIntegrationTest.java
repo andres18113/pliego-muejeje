@@ -264,6 +264,8 @@ class CheckoutApiIntegrationTest {
     void databaseErrorsPreserveCodesAndUseSafeSpanishFeedback(CapturedOutput output) throws Exception {
         record Case(String state, int status, String title, String detail) { }
         Case[] cases = {
+                new Case("P6002", 409, "Ya tienes esta edición digital", "Esta edición digital ya está en tu biblioteca. Puedes consultarla sin volver a comprarla."),
+                new Case("P6003", 409, "Compra digital pendiente", "Ya tienes un pedido abierto con esta edición digital. Revisa ese pedido antes de intentar otra compra."),
                 new Case("P4001", 409, "Carrito no disponible", "No hay un carrito activo para finalizar la compra."),
                 new Case("P4002", 409, "Carrito vacío", "Agrega al menos un libro antes de finalizar la compra."),
                 new Case("P2042", 409, "Edición no disponible", "Una de las ediciones del carrito ya no está disponible."),

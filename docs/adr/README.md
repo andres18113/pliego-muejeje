@@ -45,3 +45,5 @@
 - [0039 — Safe internal back navigation](0039-safe-back-navigation.md)
 - [0040 — Identification required to buy, not editable, correctable with re-authentication](0040-required-correctable-cedula.md)
 - [0041 — Full cédula and RUC algorithm, validated live](0041-ecuador-cedula-ruc-algorithm.md)
+
+- [0042 — One active digital copy per customer account](0042-single-digital-copy-per-customer.md)

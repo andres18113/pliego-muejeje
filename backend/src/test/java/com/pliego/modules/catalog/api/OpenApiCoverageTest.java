@@ -42,7 +42,8 @@ class OpenApiCoverageTest {
             com.pliego.modules.sales.api.AdminOrderController.class,
             com.pliego.modules.storefront.api.StorefrontController.class,
             com.pliego.modules.help.api.HelpController.class,
-            com.pliego.modules.library.api.LibraryController.class);
+            com.pliego.modules.library.api.LibraryController.class,
+            com.pliego.modules.library.api.DigitalEligibilityController.class);
 
     private static boolean isEndpoint(Method method) {
         return method.isAnnotationPresent(GetMapping.class)
@@ -66,7 +67,7 @@ class OpenApiCoverageTest {
             }
         }
         assertThat(endpoints).as("REST total including public catalog, customer favorites, post-purchase routes and email change")
-                .isEqualTo(88);
+                .isEqualTo(89);
     }
 
     @Test

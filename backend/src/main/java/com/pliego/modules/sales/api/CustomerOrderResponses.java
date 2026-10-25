@@ -2,6 +2,7 @@ package com.pliego.modules.sales.api;
 
 import java.util.List;
 import com.pliego.modules.sales.application.PostPurchaseModels;
+import com.pliego.modules.sales.application.OrderModels.DigitalAccess;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 /** Customer order representations; identifiers and money are JSON strings. */
@@ -77,7 +78,20 @@ public final class CustomerOrderResponses {
             @Schema(nullable = true, description = "Ahorro unitario guardado al comprar; null si falta el snapshot histórico.") String unitSavings,
             @Schema(nullable = true, description = "Subtotal original de la línea guardado al comprar; null si falta el snapshot histórico.") String originalSubtotal,
             @Schema(nullable = true, description = "Ahorro total de la línea guardado al comprar; null si falta el snapshot histórico.") String lineSavings,
-            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Indica si esta línea conserva el snapshot de precios originales y ahorros de la compra.") boolean pricingSnapshotAvailable) {
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "Indica si esta línea conserva el snapshot de precios originales y ahorros de la compra.") boolean pricingSnapshotAvailable,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED, nullable = true,
+                    schemaResolution = Schema.SchemaResolution.INLINE, types = {"object", "null"},
+                    description = "Propiedad digital de esta fuente de compra; null en líneas físicas.")
+            DigitalAccess digitalAccess) {
+        public Item(String orderItemId, String editionId, String sku, String isbn,
+                String title, String authors, String publisher, String format, String language,
+                String unitPrice, int quantity, String subtotal, boolean requiresPhysicalFulfillment,
+                String originalPrice, String unitSavings, String originalSubtotal, String lineSavings,
+                boolean pricingSnapshotAvailable) {
+            this(orderItemId, editionId, sku, isbn, title, authors, publisher, format, language,
+                    unitPrice, quantity, subtotal, requiresPhysicalFulfillment, originalPrice, unitSavings,
+                    originalSubtotal, lineSavings, pricingSnapshotAvailable, null);
+        }
         public Item(String orderItemId, String editionId, String sku, String isbn,
                 String title, String authors, String publisher, String format, String language,
                 String unitPrice, int quantity, String subtotal, boolean requiresPhysicalFulfillment) {

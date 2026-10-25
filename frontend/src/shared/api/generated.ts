@@ -1141,6 +1141,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/digital-eligibility": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar elegibilidad de compra digital
+         * @description Entre 1 y 50 ediciones por petición. Devuelve cada ID una vez, en orden de primera aparición. Ediciones inexistentes, físicas o inactivas no son comprables. Solo consulta datos del cliente autenticado; la confirmación vuelve a validar.
+         */
+        get: operations["getDigitalEligibility"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/help/categories": {
         parameters: {
             query?: never;
@@ -1370,7 +1390,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Descargar un documento académico autenticado */
+        /**
+         * Descargar un documento académico autenticado
+         * @description Se entrega como adjunto por defecto. disposition=inline permite visualizar únicamente PDF; XML siempre se descarga como adjunto.
+         */
         get: operations["download"];
         put?: never;
         post?: never;
@@ -1387,7 +1410,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Descargar un documento académico autenticado */
+        /**
+         * Descargar un documento académico autenticado
+         * @description Se entrega como adjunto por defecto. disposition=inline permite visualizar únicamente PDF; XML siempre se descarga como adjunto.
+         */
         get: operations["download_1"];
         put?: never;
         post?: never;
@@ -2218,6 +2244,13 @@ export interface components {
             lineSavings?: string | null;
             /** @description Indica si esta línea conserva el snapshot de precios originales y ahorros de la compra. */
             pricingSnapshotAvailable: boolean;
+            /** @description Propiedad digital de esta fuente de compra; null en líneas físicas. */
+            digitalAccess: {
+                /** @enum {string} */
+                state: "PENDING_PAYMENT" | "AVAILABLE" | "REVOKED" | "UNAVAILABLE";
+                /** @description Identificador para /biblioteca/{id}; solo está presente si esta fuente está AVAILABLE. */
+                ownedItemId: string | null;
+            } | null;
         };
         ElectronicIssuance: {
             provider?: string;
@@ -2400,6 +2433,18 @@ export interface components {
         CustomerFavoriteStatus: {
             editionId?: string;
             favorite?: boolean;
+        };
+        DigitalEligibility: {
+            editionId?: string;
+            owned: boolean;
+            /** @description Identificador de Mi biblioteca para /biblioteca/{id}; null si no tiene un grant activo. */
+            ownedItemId?: string | null;
+            pendingOrder: boolean;
+            /** @description Pedido digital abierto para /orders/{id}; null sin pedido bloqueante. Si hay varios históricos, devuelve el menor ID. */
+            pendingOrderId?: string | null;
+            inCart: boolean;
+            /** @description Edición digital activa sin propiedad ni pedido abierto. Estar en el carrito no impide comprar. Checkout vuelve a validar dentro de su transacción. */
+            purchasable: boolean;
         };
         CustomerAddress: {
             /** @example 15 */
@@ -2637,11 +2682,11 @@ export interface components {
             currentSubtotal?: string;
             available?: boolean;
             /**
-             * @description SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida; null si está disponible.
+             * @description SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida, P6002 edición digital propia, P6003 compra digital pendiente; null si está disponible.
              * @example P3002
              * @enum {string|null}
              */
-            unavailabilityReason?: "P2043" | "P2042" | "P3002" | "P4004" | null;
+            unavailabilityReason?: "P2043" | "P2042" | "P3002" | "P4004" | "P6002" | "P6003" | null;
             /** @enum {string} */
             format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
             requiresPhysicalFulfillment: boolean;
@@ -5070,6 +5115,47 @@ export interface operations {
             };
         };
     };
+    getDigitalEligibility: {
+        parameters: {
+            query: {
+                /** @description Entre 1 y 50 identificadores de edición positivos. */
+                editionIds: number[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Elegibilidad de cada edición solicitada */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["DigitalEligibility"][];
+                };
+            };
+            /** @description Lista de ediciones inválida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Autenticación requerida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     listHelpCategories: {
         parameters: {
             query?: never;
@@ -5424,7 +5510,10 @@ export interface operations {
     };
     download: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Presentación del archivo; inline solo admite PDF. */
+                disposition?: "attachment" | "inline";
+            };
             header?: never;
             path: {
                 orderId: string;
@@ -5448,7 +5537,10 @@ export interface operations {
     };
     download_1: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description Presentación del archivo; inline solo admite PDF. */
+                disposition?: "attachment" | "inline";
+            };
             header?: never;
             path: {
                 orderId: string;

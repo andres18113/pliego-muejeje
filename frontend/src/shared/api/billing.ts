@@ -56,8 +56,9 @@ export async function getInvoiceMetadata(orderId:string,signal?:AbortSignal):Pro
   if(!parsed.success || parsed.data.orderId!==orderId) throw toApiRequestError(502,{},"No pudimos consultar los documentos","La respuesta del servidor está incompleta.");
   return parsed.data;
 }
-export async function getInvoiceFile(orderId:string,type:InvoiceFileType,signal?:AbortSignal):Promise<Blob> {
-  const {data,error,response}=await apiClient.GET("/api/v1/orders/{orderId}/invoice/files/{type}",{params:{path:{orderId,type}},parseAs:"blob",signal,headers:{Accept:type==="PDF" ? "application/pdf" : "application/xml"},cache:"no-store"});
+/** `inline` asks for a PDF meant to be viewed rather than saved; the default stays an attachment. */
+export async function getInvoiceFile(orderId:string,type:InvoiceFileType,signal?:AbortSignal,disposition?:"inline"|"attachment"):Promise<Blob> {
+  const {data,error,response}=await apiClient.GET("/api/v1/orders/{orderId}/invoice/files/{type}",{params:{path:{orderId,type},...(disposition ? {query:{disposition}} : {})},parseAs:"blob",signal,headers:{Accept:type==="PDF" ? "application/pdf" : "application/xml"},cache:"no-store"});
   if(!response.ok) throw toApiRequestError(response.status,error,"No pudimos descargar el documento","El documento puede seguir en preparación. Actualiza sus datos y vuelve a consultar.");
   const mime=response.headers.get("Content-Type")?.split(";")[0].trim();
   if(!data || data.size===0 || mime!==(type==="PDF"?"application/pdf":"application/xml")) throw toApiRequestError(502,{},"No pudimos descargar el documento","El archivo recibido está incompleto. Vuelve a consultar los documentos.");

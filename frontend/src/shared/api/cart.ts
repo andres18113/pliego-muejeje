@@ -44,7 +44,7 @@ const cartDetailSchema = z.object({
     requiresPhysicalFulfillment: z.boolean(),
     quantityEditable: z.boolean(),
     format: editionFormatSchema.optional(),
-    unavailabilityReason: z.enum(stockUnavailabilityReasons).nullable().catch(null),
+    unavailabilityReason: z.enum([...stockUnavailabilityReasons, "P6002", "P6003"]).nullable().catch(null),
   })),
   totalCurrent: moneySchema,
   /** Subtotal before offers, total savings and discounted subtotal, all supplied by the Database API. */

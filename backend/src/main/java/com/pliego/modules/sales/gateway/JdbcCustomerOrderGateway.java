@@ -17,6 +17,7 @@ import com.pliego.foundation.database.JdbcGatewaySupport;
 import com.pliego.modules.sales.application.OrderModels.Address;
 import com.pliego.modules.sales.application.OrderModels.Cancellation;
 import com.pliego.modules.sales.application.OrderModels.Detail;
+import com.pliego.modules.sales.application.OrderModels.DigitalAccess;
 import com.pliego.modules.sales.application.OrderModels.History;
 import com.pliego.modules.sales.application.OrderModels.Item;
 import com.pliego.modules.sales.application.OrderModels.Page;
@@ -163,7 +164,11 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
                     item.path("quantity").intValue(), decimal(item, "subtotal"),
                     item.path("requiresPhysicalFulfillment").booleanValue(), decimal(item, "originalPrice"),
                     decimal(item, "unitSavings"), decimal(item, "originalSubtotal"), decimal(item, "lineSavings"),
-                    item.path("pricingSnapshotAvailable").booleanValue()));
+                    item.path("pricingSnapshotAvailable").booleanValue(),
+                    item.path("digitalAccess").isObject()
+                            ? new DigitalAccess(
+                                    text(item.path("digitalAccess"), "state"), text(item.path("digitalAccess"), "ownedItemId"))
+                            : null));
         }
         return List.copyOf(result);
     }
