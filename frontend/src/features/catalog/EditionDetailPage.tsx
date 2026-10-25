@@ -1,3 +1,5 @@
+import { useDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
+import { digitalEditionState } from "@/features/library/digitalPurchaseState";
 import { useAvailabilityFocus } from "./useAvailabilityFocus";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -13,6 +15,8 @@ import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
 import { InPageBackButton } from "@/app/navigation/BackButton";
 import { EditionContextBar, useContextBarVisible } from "./EditionContextBar";
 import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
+import { useCartPreview } from "@/features/purchase/CartPreview";
+import { useMediaQuery } from "@mantine/hooks";
 import { useSession } from "@/app/session";
 import { useFavoriteSessionFailure, useFavoriteStatuses } from "@/features/favorites/favoriteStatus";
 import { FavoriteButton } from "./FavoriteButton";
@@ -80,6 +84,15 @@ export function EditionDetailPage() {
   const focusPageBack = useCallback(() => {
     (wayfinding.current?.querySelector("button") ?? document.getElementById("contenido-principal"))?.focus({ preventScroll: true });
   }, []);
+  const buySection = useRef<HTMLElement>(null);
+  const cartPreview = useCartPreview();
+  /** Where the current add started: the bar's add answers with the cart drawer, since the scene's feedback may be out of view. */
+  const addSource = useRef<"page" | "bar">("page");
+  // The bar's label is short on phones, where it shares the bar with the title, price and jacket.
+  const phone = useMediaQuery("(max-width: 599px)");
+  const revealPurchase = useCallback(() => {
+    requestAnimationFrame(() => buySection.current?.scrollIntoView({ block: "center" }));
+  }, []);
   const [addedPulse, setAddedPulse] = useState(false);
   const returnHref = safeCatalogReturnHref(new URLSearchParams(location.search).get("from"));
   const currentIntent = `${location.pathname}${location.search}`;
@@ -106,6 +119,9 @@ export function EditionDetailPage() {
     staleTime: 30_000,
     retry: (failureCount, error) => !(error instanceof ApiRequestError && error.status === 404) && failureCount < 1,
   });
+  const digitalCustomer = Boolean(customerId && isDigitalFormat(detailQuery.data?.format));
+  const eligibilityQuery = useDigitalEligibility(digitalCustomer ? [editionId] : []);
+  const digitalState = digitalCustomer ? digitalEditionState(eligibilityQuery.byEdition.get(editionId)) : null;
   const safeCoverSourceHref = safeExternalHttpHref(detailQuery.data?.coverSourceUrl);
   const addToCartMutation = useMutation({
     mutationFn: async () => {
@@ -126,9 +142,12 @@ export function EditionDetailPage() {
       if (addedPulseTimer.current !== null) window.clearTimeout(addedPulseTimer.current);
       addedPulseTimer.current = window.setTimeout(() => setAddedPulse(false), 1_100);
       setPurchaseFeedback({ kind: "success", message: alreadyInCart ? "Esta edición digital ya está en tu carrito." : addedQuantityMessage(quantity) });
+      if (addSource.current === "bar") cartPreview?.open(editionId);
     },
     onError: async (error: Error) => {
       await keepAddFeedbackVisible(addAttemptStartedAt.current);
+      // A problem is explained in the purchase scene: bring it back into view (the bar then steps aside).
+      if (addSource.current === "bar") revealPurchase();
       if (error instanceof ApiRequestError && error.status === 401) {
         clearSession("expired");
         setPurchaseFeedback({
@@ -145,6 +164,7 @@ export function EditionDetailPage() {
           message: availabilityMessage,
         });
         await detailQuery.refetch();
+        if (digitalCustomer) await eligibilityQuery.refetch();
         return;
       }
 
@@ -211,7 +231,12 @@ export function EditionDetailPage() {
       });
     },
   });
-  const stockFocus = useAvailabilityFocus(!detailQuery.error && Boolean(detailQuery.data?.available), () => document.getElementById("detail-error-heading") ?? detailHeadingRef.current, () => detailHeadingRef.current);
+  const canKeepAddFocus = !detailQuery.error && Boolean(detailQuery.data?.available) && !digitalState;
+  const stockFocus = useAvailabilityFocus(canKeepAddFocus,
+    () => document.getElementById("edition-digital-destination") ?? document.getElementById("detail-error-heading") ?? detailHeadingRef.current,
+    () => detailHeadingRef.current);
+  const contextFocus = useAvailabilityFocus(canKeepAddFocus,
+    () => document.getElementById("context-digital-destination") ?? document.getElementById("edition-digital-destination") ?? detailHeadingRef.current);
   const detail = detailQuery.data;
   // The same urgency as the Ofertas cards: only when the server's own days left are five or fewer.
   const urgency = detail?.offer ? offerUrgencyLabel(detail.offer.daysRemaining) : null;
@@ -312,9 +337,10 @@ export function EditionDetailPage() {
   const customerSession = session?.user.role === "CUSTOMER";
   const adminSession = session?.user.role === "ADMIN";
 
-  function addToCart() {
+  function addToCart(source: "page" | "bar" = "page") {
     if (!purchasingAvailable || addLock.current || addToCartMutation.isPending || cartCheckMutation.isPending || purchaseFeedback?.kind === "unknown") return;
     addLock.current = true;
+    addSource.current = source;
     addAttemptStartedAt.current = Date.now();
     setAddedPulse(false);
     if (addedPulseTimer.current !== null) window.clearTimeout(addedPulseTimer.current);
@@ -341,7 +367,12 @@ export function EditionDetailPage() {
                 className={classes.favorite}
               />
   );
-  const purchase = !purchasingAvailable ? (
+  const purchase = digitalState ? (
+    <>
+      <p className="detail-purchase-feedback" role="status">{digitalState.message}</p>
+      <ButtonLink id="edition-digital-destination" variant="secondary" to={digitalState.href}>{digitalState.label}</ButtonLink>
+    </>
+  ) : !purchasingAvailable ? (
                 <p
                   className={`detail-purchase-feedback${purchaseFeedback?.kind === "unavailable" || !detail.available ? " detail-purchase-feedback--unavailable" : ""}`}
                   role="status"
@@ -368,7 +399,7 @@ export function EditionDetailPage() {
                   <Button
                     variant="primary"
                     type="button"
-                    onClick={addToCart}
+                    onClick={() => addToCart()}
                     {...stockFocus}
                     aria-describedby="edition-stock"
                     aria-disabled={addToCartMutation.isPending || cartCheckMutation.isPending || purchaseFeedback?.kind === "unknown"}
@@ -432,6 +463,37 @@ export function EditionDetailPage() {
                 </>
               );
 
+  // The bar's action mirrors the scene's for the same session and stock, with the same mutation and state.
+  const contextAction = digitalState ? (
+    <ButtonLink id="context-digital-destination" variant="primary" className={`${classes.contextAction} ${classes.contextDigitalAction}`} to={digitalState.href}>
+      {phone ? digitalState.compactLabel : digitalState.label}
+    </ButtonLink>
+  ) : !purchasingAvailable ? <span className={classes.contextUnavailable}>No disponible</span>
+    : customerSession ? (
+      <Button
+        variant="primary"
+        type="button"
+        className={`${classes.contextAction}${digitalCustomer ? ` ${classes.contextDigitalAction}` : ""}`}
+        {...contextFocus}
+        // While the cart's state is unknown, the scene holds the way to check it.
+        onClick={() => purchaseFeedback?.kind === "unknown" ? revealPurchase() : addToCart("bar")}
+        aria-disabled={addToCartMutation.isPending || cartCheckMutation.isPending || undefined}
+        aria-busy={addToCartMutation.isPending}
+      >
+        <TransactionButtonLabel
+          state={addToCartMutation.isPending ? "pending" : addedPulse ? "success" : "idle"}
+          idle={phone ? "Agregar" : "Agregar al carrito"}
+          pending="Agregando…"
+          success="Agregado"
+          reserve={phone ? "Agregando…" : "Agregar al carrito"}
+        />
+      </Button>
+    ) : adminSession ? null
+    : <ButtonLink variant="primary" className={classes.contextAction} to={authLocation("/sign-in", currentIntent)}>
+      {/* One inline label, so the button's own gap never doubles the space before the phone-hidden words. */}
+      <span>Iniciar sesión<span className={classes.contextLong}> para agregar</span></span>
+    </ButtonLink>;
+
   const facts = [
     publisher ? ["Editorial", publisher] : null,
     // Digital formats carry their one technical detail (file format, running time) beside the medium.
@@ -449,8 +511,7 @@ export function EditionDetailPage() {
       <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} data-media={media}>
         <EditionContextBar visible={contextBarVisible} title={title}
           price={detail.price ? formatUsd(detail.price) : null} originalPrice={detail.offer ? formatUsd(detail.offer.originalPrice) : null}
-          cover={{ url: detail.coverUrl ?? null, license: detail.coverLicense ?? null, attribution: detail.coverAttribution ?? null }}
-          onHiddenWithFocus={focusPageBack} />
+          action={contextAction} onHiddenWithFocus={focusPageBack} />
         {/* As on product pages: the back arrow under the header, on the content's own edge — never beside the wordmark. */}
         <div className={classes.wayfinding} ref={wayfinding}>
           <InPageBackButton headerScrollsAway />
@@ -484,7 +545,7 @@ export function EditionDetailPage() {
             {authors && <p className={classes.authors}>{authors}</p>}
           </header>
 
-          <section className={classes.buy} aria-label="Compra">
+          <section className={classes.buy} aria-label="Compra" ref={buySection}>
             {/* With an offer: price, then the offer's two chips as one group, then availability on its own quiet line. */}
             <div className={classes.offer} data-offer={detail.offer ? "" : undefined}>
               <div className={classes.priceLine}>

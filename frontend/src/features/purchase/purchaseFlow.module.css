@@ -59,6 +59,8 @@
 
 /* Cart (Google Store cart): a compact centred pair — the lines in white cards beside a white summary card — on
    a warm grey ground one step deeper than the flow's sheet, so the white surfaces read as grouped objects. */
+/* Checkout opens on "Volver al carrito", 8px under the header like every child page's way back. */
+:global(.purchase-route):has(.flow[data-purchase-stage="checkout"]) { padding-top: 0; }
 :global(html):has(.flow[data-purchase-stage="cart"]), :global(body):has(.flow[data-purchase-stage="cart"]) { background: #f1f0eb; }
 :global(html[data-mantine-color-scheme="dark"]):has(.flow[data-purchase-stage="cart"]), :global([data-mantine-color-scheme="dark"] body):has(.flow[data-purchase-stage="cart"]) { background: #22243b; }
 /* The body's 14px is fixed; restating it in rem lets the cart's inherited text follow the reader's text size. */
@@ -131,6 +133,7 @@
 .problem { display: grid; gap: 6px; justify-items: start; max-width: 46rem; padding: 16px 18px; border-radius: 18px; background: color-mix(in srgb, var(--error) 6%, var(--pf-sheet)); box-shadow: inset 0 0 0 1.5px var(--error); }
 .problem h2 { margin: 0; color: var(--error); font-size: 1.0625rem; font-weight: 650; }
 .problem p { margin: 0; line-height: 1.5; }
+.problemActions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px; }
 .problem a { color: var(--pf-blue); font-weight: 600; }
 .problem :global(.button) { margin-top: 6px; }
 .problem:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 3px; }

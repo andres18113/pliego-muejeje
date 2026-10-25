@@ -40,6 +40,8 @@
 .quantity { min-width: 0; margin-left: -10px; }
 /* A fixed quantity (digital editions) reads like the quiet picker's face, without the chevron. */
 .quantityStatic { display: flex; align-items: center; min-height: 44px; margin: 0 0 0 10px; color: var(--pf-ink); font-size: 1rem; font-variant-numeric: tabular-nums; }
+/* The digital rule sits where the picker would, in the caption's quiet tone. */
+.quantityDigital { display: flex; align-items: center; min-height: 44px; margin: 0 0 0 10px; color: var(--pf-muted); font-size: .9375rem; }
 .quantityCaption { color: var(--pf-muted); }
 .quantityValue { margin-left: 4px; font-weight: 650; }
 
@@ -56,7 +58,7 @@
 .problem > * { margin-top: 0; }
 
 .actions { grid-area: actions; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 4px 28px; min-width: 0; }
-.actions :global(.text-button) { min-height: 44px; color: var(--pf-blue); }
+.actions :global(.text-button) { display: inline-flex; align-items: center; min-height: 44px; color: var(--pf-blue); }
 
 /* Auto-placed under the unit, so an empty one leaves no row behind. */
 /* The line's offer saving as one compact pale-green chip under its actions, sized to its words (the server's

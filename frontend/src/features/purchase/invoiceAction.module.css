@@ -1,0 +1,8 @@
+/* One invoice action beside the order's payment facts: the shared outlined button with Material `receipt_long`. */
+.action { display: grid; gap: 6px; justify-items: start; min-width: 0; }
+.button.button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+/* The button face's tight tracking closes the "r f" pair in "Ver factura"; a touch of word space keeps two words. */
+.button.button span { word-spacing: .12em; }
+.button[aria-disabled="true"] { cursor: progress; opacity: .72; }
+.notice { margin: 0; color: var(--pliego-text-muted); font-size: .875rem; line-height: 1.4; }
+.legacy { margin: 0; color: var(--pliego-text-muted); font-size: .9375rem; }

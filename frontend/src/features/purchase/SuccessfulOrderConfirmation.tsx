@@ -13,6 +13,7 @@ import { openingHoursLabel } from "./PickupLocationPicker";
 import { PurchaseFlow } from "./PurchaseFlow";
 import { deliveryWindowLabel, ivaLabel, paymentMethodLabel } from "./purchaseText";
 import { hasSaving } from "./cartPricingViewModel";
+import { InvoiceAction } from "./InvoiceAction";
 import { toOrderPricingViewModel, type OrderLinePricingViewModel } from "./orderPricingViewModel";
 import classes from "./confirmation.module.css";
 
@@ -111,7 +112,11 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
               <div className={classes.total} data-purchase="total"><dt>{summarySaving ? "Total pagado" : "Total"}</dt><dd>{formatUsd(order.total)}</dd></div>
             </dl>
           </div>
-          <Link className={classes.orderAction} to={`/orders/${order.orderId}`} replace state={null}>Ver pedido completo</Link>
+          {/* The order's one invoice action, beside the way to the full order; files and their states stay out of view. */}
+          <div className={classes.orderActions}>
+            <Link className={classes.orderAction} to={`/orders/${order.orderId}`} replace state={null}>Ver pedido completo</Link>
+            <InvoiceAction orderId={order.orderId} issued={Boolean(order.invoice)} />
+          </div>
         </section>
 
         {hasPhysicalFulfillment && <section className={classes.fulfillment} aria-labelledby="confirmation-fulfillment-heading" data-confirmation="fulfillment">
@@ -136,8 +141,13 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
         </section>}
         {digitalItems.length > 0 && <section className={classes.digital} aria-labelledby="confirmation-digital-heading"><h2 id="confirmation-digital-heading">Compras digitales</h2><ul>{digitalItems.map(item => {
           const saving = lineSaving(item.orderItemId);
-          return <li key={item.orderItemId}>{item.title} · Cantidad: {item.quantity}{saving && <> <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span></>}</li>;
-        })}</ul><p>La titularidad se registra en tu cuenta después del pago aprobado.</p><ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca</ButtonLink></section>}
+          // Each title's own access from the server (V077): digital titles are not shipped, they join Mi biblioteca.
+          const access = item.digitalAccess?.state;
+          return <li key={item.orderItemId}>
+            <span>{item.title} · Cantidad: {item.quantity}{saving && <> <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span></>}</span>
+            {access && <span className={classes.access} data-state={access}><MaterialSymbol name={access === "AVAILABLE" ? "check_circle" : access === "PENDING_PAYMENT" ? "schedule" : "block"} size={18} aria-hidden="true" />{access === "AVAILABLE" ? "Ya está en Mi biblioteca" : access === "PENDING_PAYMENT" ? "Se añadirá a Mi biblioteca cuando se apruebe el pago" : "Sin acceso en Mi biblioteca"}</span>}
+          </li>;
+        })}</ul>{hasPhysicalFulfillment && <p>No se envían con los libros impresos: quedan en tu cuenta.</p>}<ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca</ButtonLink></section>}
       </div>
       <Link className={classes.continue} to="/catalog">Seguir explorando el catálogo</Link>
     </div>

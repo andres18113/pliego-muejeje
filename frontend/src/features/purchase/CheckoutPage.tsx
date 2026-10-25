@@ -32,7 +32,8 @@ import { DinersClubLogoIcon } from "react-svg-credit-card-payment-icons/dinerscl
 import { MastercardLogoIcon } from "react-svg-credit-card-payment-icons/mastercard";
 import { VisaLogoIcon } from "react-svg-credit-card-payment-icons/visa";
 import { AddressEditorDialog } from "@/features/account/AddressEditorDialog";
-import { cartQueryKey, useCustomerCart } from "./cartQuery";
+import { cartQueryKey, isSingleDigitalCopy, useCustomerCart } from "./cartQuery";
+import { DigitalCopyNote } from "./DigitalCopyNote";
 import { ReadFailure } from "./CartPage";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import { fulfillmentMethodLabel, type CheckoutFulfillmentMethod, checkoutFulfillmentMethods } from "./fulfillment";
@@ -57,7 +58,10 @@ import { checkoutBillingSchema, type CheckoutBillingInput } from "@/shared/api/b
 import type { Control, FieldErrors, UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { CheckoutBilling, useBillingSource } from "./CheckoutBilling";
 import { clearLegacyBillingIntents } from "./checkoutBillingIntent";
-import { PageWayfinding } from "@/app/navigation/BackButton";
+import { useDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
+import { digitalConflictDestination, isDigitalConflict, type DigitalConflict } from "@/features/library/digitalPurchaseState";
+import { DigitalConflictLink } from "@/features/library/DigitalConflictLink";
+import { ParentLink } from "@/shared/ui/ParentLink";
 
 const checkoutSchema = z.object({
   ...checkoutBillingSchema.shape,
@@ -100,8 +104,8 @@ const checkoutSchema = z.object({
 });
 
 type CheckoutValues = z.input<typeof checkoutSchema>;
-type Phase = "idle" | "checking" | "submitting" | "unknown" | "reconciling";
-type Problem = { title: string; detail: string; action?: "cart" };
+type Phase = "idle" | "checking" | "submitting" | "unknown" | "reconciling" | "blocked";
+type Problem = { title: string; detail: string; action?: "cart"; digitalConflict?: DigitalConflict };
 const supportedCardBrands: CardBrand[] = ["visa", "mastercard", "amex", "diners"];
 const cardBrandNames: Record<CardBrand, string> = { visa: "Visa", mastercard: "Mastercard", amex: "American Express", diners: "Diners Club" };
 const cardFieldOrder = ["cardNumber", "expiration", "cvv", "cardholder"] as const;
@@ -156,6 +160,16 @@ function CheckoutContent() {
   const problemRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>(recovery.key ? "unknown" : "idle");
   const [problem, setProblem] = useState<Problem | null>(recovery.error ? { title: "No enviamos tu pedido.", detail: recovery.error } : null);
+  const eligibilityQuery = useDigitalEligibility((cartQuery.data?.items ?? []).filter(item =>
+    problem?.digitalConflict ? !item.requiresPhysicalFulfillment : !item.available && isDigitalConflict(item.unavailabilityReason)
+  ).map(item => item.editionId));
+  const conflictMatches = eligibilityQuery.data?.filter(item => problem?.digitalConflict === "P6002" ? item.owned : item.pendingOrder) ?? [];
+  const conflictDestinations = problem?.digitalConflict ? [...new Map(
+    (conflictMatches.length ? conflictMatches : [undefined]).map(item => {
+      const destination = digitalConflictDestination(problem.digitalConflict!, item);
+      return [destination.href, destination] as const;
+    })
+  ).values()] : [];
   const [addressEditor, setAddressEditor] = useState({ opened: false, opening: 0 });
   const addressTrigger = useRef<HTMLElement | null>(null);
   const savedAddressFocusPending = useRef(false);
@@ -553,7 +567,12 @@ function CheckoutContent() {
     });
     if(fields.length) { requestAnimationFrame(() => focusFirstInvalid({[fields[0]]:true})); return; }
     // Canonical SQLSTATE wire codes; see API amendment v1.0.3.
-    if (availabilityConflictMessage(code)) {
+    if (isDigitalConflict(code)) {
+      // A definitive refusal ends this attempt, even if a stale cart read still looks purchasable.
+      setPhase("blocked");
+      setProblem({ title: availabilityConflictMessage(code)!, detail: "No se creó ningún pedido. Revisa esta edición antes de continuar desde el carrito.", action: "cart", digitalConflict: code });
+      await cartQuery.refetch();
+    } else if (availabilityConflictMessage(code)) {
       await cartQuery.refetch();
       setProblem({
         title: "La disponibilidad cambió y no se creó el pedido.",
@@ -639,7 +658,7 @@ function CheckoutContent() {
   const selectedAddress = addresses?.find((address) => address.addressId === addressId)
     ?? addresses?.find(address => address.primary) ?? addresses?.[0];
   // The customer must settle payment first; submitting still validates the destination and current data.
-  const submitBlocked = Boolean(recovery.error) || busy || phase === "unknown" || phase === "reconciling" || unavailable
+  const submitBlocked = Boolean(recovery.error) || busy || phase === "unknown" || phase === "reconciling" || phase === "blocked" || unavailable
     || cartReviewRequired || cartQuery.isFetching
     || !paymentReady
     || cart.items.length === 0
@@ -675,7 +694,10 @@ function CheckoutContent() {
         <div className={classes.problem} role="alert" tabIndex={-1} ref={problemRef}>
           <h2>{problem.title}</h2>
           <p>{problem.detail}</p>
-          {problem.action === "cart" && <Link to="/cart">Revisar el carrito</Link>}
+          {(conflictDestinations.length > 0 || problem.action === "cart") && <div className={classes.problemActions}>
+            {conflictDestinations.map(destination => <ButtonLink key={destination.href} variant="text" to={destination.href}>{destination.label}</ButtonLink>)}
+            {problem.action === "cart" && <Link to="/cart">Revisar el carrito</Link>}
+          </div>}
         </div>
       )}
 
@@ -705,12 +727,17 @@ function CheckoutContent() {
             return {
               key: item.cartItemId,
               title: item.title,
-              meta: [item.format ? formatEdition(item.format) : null, `${unitsLabel(item.quantity)} × ${formatUsd(item.currentPrice)}`].filter(Boolean).join(" · "),
+              // A digital copy names its rule with the same note as the cart (its price is the line's amount);
+              // physical lines read units × price.
+              meta: isSingleDigitalCopy(item)
+                ? <>{item.format && `${formatEdition(item.format)} · `}<DigitalCopyNote /></>
+                : [item.format ? formatEdition(item.format) : null, `${unitsLabel(item.quantity)} × ${formatUsd(item.currentPrice)}`].filter(Boolean).join(" · "),
               amount: formatUsd(item.currentSubtotal),
               was: saving && linePricing?.originalSubtotal ? linePricing.originalSubtotal.formattedValue : undefined,
               extra: saving || stock ? <>
                 {saving && <p className={classes.summaryLineSaving}><MaterialSymbol name="sell" size={16} aria-hidden="true" /><span>Ahorras {saving.formattedValue}</span></p>}
                 {stock}
+                {!item.available && <DigitalConflictLink reason={item.unavailabilityReason} eligibility={eligibilityQuery.byEdition.get(item.editionId)} />}
               </> : undefined,
             };
           })}
@@ -747,7 +774,7 @@ function CheckoutContent() {
             type="submit"
             form="checkout-form"
             aria-label={busy ? "Procesando compra" : submitLabel}
-            disabled={unavailable || !paymentReady}
+            disabled={unavailable || !paymentReady || phase === "blocked"}
             {...stockFocus}
             aria-describedby={unavailable ? "checkout-stock-blocker" : undefined}
             aria-disabled={submitBlocked || undefined}
@@ -1115,9 +1142,9 @@ function CheckoutContent() {
 }
 
 /** The purchase header names the place ("Pago (n artículos)"); the page keeps its heading for assistive technology. */
-/** The page's opening: the back arrow under the purchase header (the wordmark stands alone), then its name. */
+/** The page's opening: the way back to the cart under the purchase header, then its name. */
 function CheckoutHeading() {
-  return <><PageWayfinding /><h1 className="visually-hidden">Finalizar compra</h1></>;
+  return <><ParentLink to="/cart">Volver al carrito</ParentLink><h1 className="visually-hidden">Finalizar compra</h1></>;
 }
 
 function positionAfterDigits(value: string, digitCount: number) {

@@ -15,7 +15,9 @@ describe("CartPage", () => {
     renderPurchaseRoute(routes, "/cart");
     await screen.findByRole("link", { name: "Cien años de soledad" });
     expect(screen.queryByRole("combobox", { name: "Cantidad de Cien años de soledad" })).not.toBeInTheDocument();
-    expect(screen.getByText("Cantidad: 1")).toBeInTheDocument();
+    // The rule, not an unexplained count that cannot change.
+    expect(screen.getByText("Copia digital individual")).toBeInTheDocument();
+    expect(screen.queryByText("Cantidad: 1")).not.toBeInTheDocument();
     expect(screen.getByText(format === "EBOOK" ? "Ebook" : "Audiolibro")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Continuar con la compra" })).toBeInTheDocument();
   });
@@ -24,7 +26,7 @@ describe("CartPage", () => {
     renderPurchaseRoute(routes, "/cart");
     await screen.findByRole("link", { name: "Cien años de soledad" });
     expect(screen.queryByRole("combobox", { name: "Cantidad de Cien años de soledad" })).not.toBeInTheDocument();
-    expect(screen.getByText("Cantidad: 1")).toBeInTheDocument();
+    expect(screen.getByText("Copia digital individual")).toBeInTheDocument();
   });
   it("keeps a malformed digital quantity repairable through the server capability", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody([{
@@ -354,4 +356,18 @@ describe("CartPage", () => {
 
     expect(await screen.findByRole("heading", { name: "Esta página no está disponible para tu cuenta." })).toBeInTheDocument();
   });
+});
+
+it.each([
+  ["P6002", "Ya está en tu biblioteca", "Ver en Mi biblioteca", "/biblioteca/800"],
+  ["P6003", "Tienes un pedido abierto con esta edición", "Ver pedido", "/orders/900"],
+])("provides a way out for a blocked %s line without checkout", async (code, message, label, href) => {
+  stubApi({ "GET /api/v1/cart": () => json(cartBody([{ format: "EBOOK", available: false, unavailabilityReason: code }])),
+    "GET /api/v1/me/digital-eligibility": () => json([{ editionId: "42", owned: code === "P6002", ownedItemId: code === "P6002" ? "800" : null, pendingOrder: code === "P6003", pendingOrderId: code === "P6003" ? "900" : null, inCart: true, purchasable: false }]) });
+  renderPurchaseRoute(routes, "/cart");
+  expect(await screen.findByText(message)).toBeInTheDocument();
+  expect(await screen.findByRole("link", { name: label })).toHaveAttribute("href", href);
+  expect(screen.getByRole("button", { name: "Quitar Cien años de soledad del carrito" })).toBeInTheDocument();
+  expect(screen.getByText("Copia digital individual")).toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: "Continuar con la compra" })).not.toBeInTheDocument();
 });

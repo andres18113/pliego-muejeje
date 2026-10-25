@@ -6,6 +6,9 @@ import { useMediaQuery, useReducedMotion } from "@mantine/hooks";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { BookCover } from "@/features/catalog/BookCover";
+import { useBlockedDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
+import type { DigitalEligibility } from "@/shared/api/digitalEligibility";
+import { DigitalConflictLink } from "@/features/library/DigitalConflictLink";
 import { StockStatus } from "@/features/catalog/StockStatus";
 import { resolveStockStatus } from "@/features/catalog/stockStatusModel";
 import { formatEdition, formatUsd } from "@/features/catalog/formatters";
@@ -13,7 +16,9 @@ import { updateCartItemQuantity, type CartLine } from "@/shared/api/cart";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { QuantityPicker } from "@/shared/ui/QuantityPicker";
-import { cartQuantityChoices, useCustomerCart } from "./cartQuery";
+import { cartQuantityChoices, isSingleDigitalCopy, useCustomerCart } from "./cartQuery";
+import { DigitalCopyNote } from "./DigitalCopyNote";
+import { hasSaving, toCartPricingViewModel, type CartLinePricingViewModel } from "./cartPricingViewModel";
 import { ivaLabel, unitsLabel } from "./purchaseText";
 import classes from "./cartPreview.module.css";
 
@@ -59,6 +64,7 @@ function CartPreviewContent({ addedEditionId }: { addedEditionId: string | null 
   const { clear: clearSession } = useSession();
   // The add already re-read the cart; this read only refreshes when that copy is old.
   const cartQuery = useCustomerCart(true, { fresh: false });
+  const digitalEligibility = useBlockedDigitalEligibility(cartQuery.data?.items);
   const [feedback, setFeedback] = useState<{ cartItemId: string; tone: "success" | "error"; message: string } | null>(null);
   const change = useMutation({
     mutationFn: ({ line, quantity }: { line: CartLine; quantity: number }) => updateCartItemQuantity(line.cartItemId, quantity),
@@ -90,8 +96,14 @@ function CartPreviewContent({ addedEditionId }: { addedEditionId: string | null 
 
   const added = data.items.find((line) => line.editionId === addedEditionId);
   const blocked = data.items.some((line) => !resolveStockStatus(line).canAddToCart);
-  const totals = [
-    ...(data.subtotal ? [{ label: "Subtotal", value: formatUsd(data.subtotal) }] : []),
+  // As in the cart: with the server's saving, the subtotal before offers and that saving; otherwise the plain subtotal.
+  const pricing = toCartPricingViewModel(data);
+  const summarySaving = pricing.summary.savingsTotal && hasSaving(pricing.summary.savingsTotal.rawValue) ? pricing.summary.savingsTotal : null;
+  const totals: { label: string; value: string; tone?: "savings" }[] = [
+    ...(summarySaving && pricing.summary.originalSubtotal
+      ? [{ label: "Subtotal", value: pricing.summary.originalSubtotal.formattedValue },
+        { label: "Ahorro total hoy", value: `-${summarySaving.formattedValue}`, tone: "savings" as const }]
+      : data.subtotal ? [{ label: "Subtotal", value: formatUsd(data.subtotal) }] : []),
     ...(data.taxAmount ? [{ label: ivaLabel(data.taxRate), value: formatUsd(data.taxAmount) }] : []),
     ...(data.shippingAmount ? [{ label: "Envío", value: formatUsd(data.shippingAmount) }] : []),
   ];
@@ -106,7 +118,7 @@ function CartPreviewContent({ addedEditionId }: { addedEditionId: string | null 
       {cartQuery.isError && <p className={classes.notice} role="alert">No pudimos actualizar el carrito. Lo que ves puede estar desactualizado.</p>}
       <ul className={classes.lines} aria-label="Libros en tu carrito">
         {data.items.map((line) => <li key={line.cartItemId}>
-          <PreviewLine line={line} added={line.editionId === addedEditionId} busy={change.isPending}
+          <PreviewLine eligibility={digitalEligibility.byEdition.get(line.editionId)} line={line} pricing={pricing.lines.find((entry) => entry.cartItemId === line.cartItemId)} added={line.editionId === addedEditionId} busy={change.isPending}
             feedback={feedback?.cartItemId === line.cartItemId ? feedback : null}
             onQuantity={(quantity) => { if (change.isPending) return; setFeedback(null); change.mutate({ line, quantity }); }} />
         </li>)}
@@ -114,7 +126,7 @@ function CartPreviewContent({ addedEditionId }: { addedEditionId: string | null 
     </div>
     <div className={classes.footer}>
       <dl className={classes.totals}>
-        {totals.map((row) => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
+        {totals.map((row) => <div key={row.label} data-tone={row.tone}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
         <div className={classes.total}><dt>Total</dt><dd>{formatUsd(data.total ?? data.totalCurrent)}</dd></div>
       </dl>
       {blocked && <p className={classes.blocker} role="status">Ajusta o quita los libros no disponibles en el carrito para continuar con la compra.</p>}
@@ -126,12 +138,15 @@ function CartPreviewContent({ addedEditionId }: { addedEditionId: string | null 
   </>;
 }
 
-function PreviewLine({ line, added, busy, feedback, onQuantity }: {
-  line: CartLine; added: boolean; busy: boolean;
+function PreviewLine({ line, eligibility, pricing, added, busy, feedback, onQuantity }: {
+  eligibility?: DigitalEligibility;
+  line: CartLine; pricing: CartLinePricingViewModel | undefined; added: boolean; busy: boolean;
   feedback: { tone: "success" | "error"; message: string } | null; onQuantity: (quantity: number) => void;
 }) {
   const stock = resolveStockStatus(line);
   const statusId = `cart-preview-status-${line.cartItemId}`;
+  // The server's line saving (already for this quantity): today's subtotal leads, the one before the offer struck.
+  const saving = pricing?.lineSavings && hasSaving(pricing.lineSavings.rawValue) ? pricing.lineSavings : null;
   return <article className={classes.line} data-added={added || undefined} aria-busy={busy || undefined}>
     <Link className={classes.cover} to={`/catalog/editions/${line.editionId}`} tabIndex={-1} aria-hidden="true">
       <BookCover url={line.coverUrl} license={null} attribution={null} title={line.title} size="compact" />
@@ -141,11 +156,15 @@ function PreviewLine({ line, added, busy, feedback, onQuantity }: {
       {line.authors && <p className={classes.muted}>{line.authors}</p>}
       {line.format && <p className={classes.muted}>{formatEdition(line.format)}</p>}
       {!stock.canAddToCart && <StockStatus available={line.available} unavailabilityReason={line.unavailabilityReason} size="compact" />}
+      {!line.available && <DigitalConflictLink reason={line.unavailabilityReason} eligibility={eligibility} />}
       <div className={classes.buy}>
         {stock.canChangeQuantity && line.quantityEditable
           ? <QuantityPicker label={`Cantidad de ${line.title}`} describedBy={statusId} value={line.quantity} choices={cartQuantityChoices(line)} busy={busy} onChange={onQuantity} />
-          : <p className={classes.muted}>Cantidad: {line.quantity}</p>}
-        <p className={classes.subtotal}><span className="visually-hidden">Subtotal: </span>{formatUsd(line.currentSubtotal)}</p>
+          : <p className={classes.muted}>{isSingleDigitalCopy(line) ? <DigitalCopyNote /> : `Cant. ${line.quantity}`}</p>}
+        <p className={classes.subtotal}>
+          {saving && pricing?.originalSubtotal && <s className={classes.was}><span className="visually-hidden">Precio anterior: </span>{pricing.originalSubtotal.formattedValue}</s>}
+          <span><span className="visually-hidden">Subtotal: </span>{formatUsd(line.currentSubtotal)}</span>
+        </p>
       </div>
       <p id={statusId} className={classes.feedback} data-tone={feedback?.tone}>
         {feedback && <span role={feedback.tone === "error" ? "alert" : "status"}>{feedback.message}</span>}

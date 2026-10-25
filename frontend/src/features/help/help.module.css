@@ -15,9 +15,7 @@
 :global(html[data-mantine-color-scheme="dark"]):has(.page), :global([data-mantine-color-scheme="dark"] body):has(.page) { background: #22243b; }
 
 /* Landing: spacious, centred, one thing at a time. */
-.landing { max-width: 1120px; gap: clamp(36px, 6vw, 64px); padding-top: 8px; }
-/* The back arrow sits under the header as on Ofertas: 16px over the masthead, not the landing's wide gap. */
-.landingWayfinding { margin-bottom: calc(16px - clamp(36px, 6vw, 64px)); }
+.landing { max-width: 1120px; gap: clamp(36px, 6vw, 64px); padding-top: clamp(36px, 7vw, 88px); }
 .masthead { display: grid; justify-items: center; min-width: 0; text-align: center; }
 .title { max-width: 16ch; margin: 0; color: var(--help-ink); font: 600 clamp(2.25rem, 1.4rem + 4.2vw, 4rem)/1.04 var(--store-display); letter-spacing: -.045em; text-wrap: balance; overflow-wrap: anywhere; }
 .title:focus { outline: none; }
@@ -80,11 +78,7 @@
 .article.pending span:nth-child(4) { width: 84%; }
 
 /* Article: one reading column. */
-.reading { max-width: 720px; gap: 8px; }
-.back { display: inline-flex; align-items: center; gap: 8px; justify-self: start; min-height: 44px; color: var(--help-ink); font-size: .9375rem; font-weight: 500; text-decoration: none; }
-.back span:last-child { text-decoration: underline; text-underline-offset: 4px; }
-.back:hover { color: var(--help-blue); }
-.back:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
+.reading { max-width: 720px; gap: 8px; padding-top: 0; }
 .article { min-width: 0; padding-top: 8px; }
 .article p { margin: 0; }
 .context { display: flex; flex-wrap: wrap; align-items: center; gap: 2px 14px; color: var(--help-muted); font-size: .9375rem; line-height: 1.5; }

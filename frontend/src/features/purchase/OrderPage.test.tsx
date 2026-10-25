@@ -274,25 +274,85 @@ describe("OrderPage", () => {
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).not.toBeInTheDocument();
   });
 
-  it("shows an issued invoice without claiming electronic authorization or downloads", async () => {
-    stubApi({ "GET /api/v1/orders/700": () => json(order({
-      orderState: "DELIVERED", shipment: shipment("DELIVERED", { deliveredAt: "2026-10-07T17:00:00Z" }),
-      availableActions: { cancel: false, changeShippingAddress: false },
-      invoice: {
+  const issuedInvoice = {
         invoiceId: "5", documentNumber: "PLG-0005", state: "ISSUED", buyerName: "Ana Pérez", identityType: "NATIONAL_ID", identityNumber: "1712345678",
         buyerEmail: null, currency: "USD", subtotal: "37.00", taxTotal: "0.00", total: "37.00", issuedAt: "2026-09-28T10:00:00Z",
         billingAddress: { line1: "Av. Principal 123", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null },
-        items: [{ invoiceItemId: "1", orderItemId: "1", description: "Cien años de soledad", quantity: 2, unitPrice: "18.50", subtotal: "37.00", taxTreatment: "NOT_ASSESSED", taxRate: null, taxAmount: "0.00", total: "37.00" }],
-        electronicIssuance: null, pdfAvailable: false, xmlAvailable: false,
-      },
-    })) });
+        items: [], electronicIssuance: null, pdfAvailable: true, xmlAvailable: true,
+      };
+  const metadata = (pdf: string) => json({ invoiceId: "5", orderId: "700", state: "ISSUED", provenance: "SIMULATED", documentNumber: "PLG-0005",
+    files: [{ type: "PDF", state: pdf }, { type: "XML", state: pdf }] });
+
+  it("offers one Ver factura action and no document states, files or simulation notice on the page", async () => {
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ invoice: issuedInvoice })), "GET /api/v1/orders/700/invoice": () => metadata("READY") });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByRole("heading", { level: 2, name: "Entregado" })).toBeInTheDocument();
-    expect(screen.getByRole("heading", { name: "Factura comercial N.° PLG-0005" })).toBeInTheDocument();
-    expect(screen.getByText("No calculados")).toBeInTheDocument();
-    expect(screen.getByText("Aún no disponible")).toBeInTheDocument();
-    expect(screen.getByText(/todavía no es un comprobante electrónico autorizado/)).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /PDF|XML|Descargar/ })).not.toBeInTheDocument();
+    const action = await screen.findByRole("button", { name: "Ver factura" });
+    expect(action).not.toHaveAttribute("aria-disabled");
+    expect(screen.getAllByRole("button", { name: /factura/i })).toHaveLength(1);
+    expect(screen.queryByRole("heading", { name: /Documentos de facturación|Factura comercial/ })).not.toBeInTheDocument();
+    expect(screen.queryByText(/PDF|XML|Descargar|Actualizar documentos|SIMULACIÓN ACADÉMICA|Estado: Emitida/)).not.toBeInTheDocument();
+  });
+
+  it("waits quietly while the PDF is prepared and offers nothing when there is no issued invoice", async () => {
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ invoice: issuedInvoice })), "GET /api/v1/orders/700/invoice": () => metadata("PROCESSING") });
+    const { unmount } = renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByRole("button", { name: "Preparando factura…" })).toHaveAttribute("aria-disabled", "true");
+    unmount();
+    stubApi({ "GET /api/v1/orders/700": () => json(order()) });
+    renderPurchaseRoute(routes, "/orders/700");
+    await screen.findByRole("heading", { name: "Pago" });
+    expect(screen.queryByRole("button", { name: /factura/i })).not.toBeInTheDocument();
+  });
+
+  it("opens the invoice PDF inline in a tab opened by the press", async () => {
+    const api = stubApi({
+      "GET /api/v1/orders/700": () => json(order({ invoice: issuedInvoice })), "GET /api/v1/orders/700/invoice": () => metadata("READY"),
+      "GET /api/v1/orders/700/invoice/files/PDF": () => new Response(new Blob(["%PDF-1.7"], { type: "application/pdf" }), { status: 200, headers: { "Content-Type": "application/pdf" } }),
+    });
+    const tab = { opener: {}, closed: false, close: vi.fn(), document: { title: "" }, location: { href: "" } };
+    const openSpy = vi.spyOn(window, "open").mockReturnValue(tab as unknown as Window);
+    vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: vi.fn(() => "blob:invoice"), revokeObjectURL: vi.fn() }));
+    renderPurchaseRoute(routes, "/orders/700");
+    await userEvent.click(await screen.findByRole("button", { name: "Ver factura" }));
+    await waitFor(() => expect(tab.location.href).toBe("blob:invoice"));
+    expect(openSpy).toHaveBeenCalledWith("", "_blank");
+    expect(tab.opener).toBeNull();
+    expect(api.calls.find((call) => call.path.startsWith("/api/v1/orders/700/invoice/files/PDF"))?.path).toBe("/api/v1/orders/700/invoice/files/PDF?disposition=inline");
+    openSpy.mockRestore();
+  });
+
+  it("names a credit note in one line beside the invoice action", async () => {
+    stubApi({
+      "GET /api/v1/orders/700": () => json(order({ orderState: "CANCELLED", purchaseState: "CANCELLED", payment: refunded, shipment: shipment("CANCELLED"), invoice: issuedInvoice,
+        creditNotes: [{ creditNoteId: "3", invoiceId: "5", documentNumber: "NC-0003", state: "ISSUED", reason: "Cancelación del pedido", subtotal: "37.00", taxRate: "0.00", taxTotal: "0.00", shippingAmount: "0.00", total: "37.00", issuedAt: "2026-09-29T10:00:00Z" }],
+        availableActions: { cancel: false, changeShippingAddress: false } })),
+      "GET /api/v1/orders/700/invoice": () => metadata("READY"),
+    });
+    renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByText(/Nota de crédito N.° NC-0003/)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Ver factura" })).toBeInTheDocument();
+  });
+
+  it("keeps printed books in the shipment and gives a mixed order's digital titles their own access section", async () => {
+    const mixed = order({
+      subtotal: "45.49", total: "45.49",
+      items: [
+        { ...order().items[0], quantity: 1, subtotal: "18.50", digitalAccess: null },
+        { ...order().items[0], orderItemId: "2", editionId: "108", title: "Cómo comportarse en la multitud", requiresPhysicalFulfillment: false, format: "AUDIOBOOK", unitPrice: "26.99", quantity: 1, subtotal: "26.99", digitalAccess: { state: "AVAILABLE", ownedItemId: "81" } },
+      ],
+      shipment: shipment("PREPARING"),
+    });
+    stubApi({ "GET /api/v1/orders/700": () => json(mixed) });
+    renderPurchaseRoute(routes, "/orders/700");
+    const printed = await screen.findByRole("list", { name: "Libros impresos del pedido" });
+    expect(within(printed).getByText("Cien años de soledad")).toBeInTheDocument();
+    expect(within(printed).queryByText("Cómo comportarse en la multitud")).not.toBeInTheDocument();
+    const digital = screen.getByRole("region", { name: "Acceso digital" });
+    expect(within(digital).getByText("Cómo comportarse en la multitud")).toBeInTheDocument();
+    expect(within(digital).getByText("En Mi biblioteca")).toBeInTheDocument();
+    expect(within(digital).getByRole("link", { name: "Ver en Mi biblioteca" })).toHaveAttribute("href", "/biblioteca/81");
+    // Cancelling a paid mixed order refunds it whole and revokes its digital titles (verified backend rule).
+    expect(screen.getByText(/se reembolsará el pago completo, se liberarán los libros impresos y los títulos digitales saldrán de Mi biblioteca/)).toBeInTheDocument();
   });
 
   it("cancels a digital purchase inside its window and then shows the server's cancelled state", async () => {

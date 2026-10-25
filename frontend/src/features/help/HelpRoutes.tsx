@@ -4,9 +4,9 @@ import type { HelpCriteria } from "@/shared/api/help";
 import { MaterialSymbol, type MaterialSymbolName } from "@/shared/ui/MaterialSymbol";
 import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
-import { PageWayfinding } from "@/app/navigation/BackButton";
 import { useHelpArticle, useHelpArticles, useHelpCategories } from "./helpQuery";
 import classes from "./help.module.css";
+import { ParentLink } from "@/shared/ui/ParentLink";
 
 const applicabilityLabels = { GENERAL: "General", PHYSICAL: "Libros físicos", EBOOK: "eBooks", AUDIOBOOK: "Audiolibros" } as const;
 
@@ -36,7 +36,6 @@ export function HelpPage() {
   useEffect(() => { document.title = "Ayuda · PLIEGO"; }, []);
   return <>
     <main className={`page-frame ${classes.page} ${classes.landing}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
-      <PageWayfinding className={classes.landingWayfinding} />
       <header className={classes.masthead}>
         <h1 className={classes.title}>Estamos aquí para ayudarte.</h1>
       </header>
@@ -101,7 +100,7 @@ export function HelpArticlePage() {
   useEffect(() => { document.title = article ? `${article.title} · Ayuda · PLIEGO` : "Ayuda · PLIEGO"; }, [article]);
   return <>
     <main className={`page-frame ${classes.page} ${classes.reading}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
-      <Link to="/ayuda" className={classes.back}><MaterialSymbol name="arrow_back" /><span>Volver a Ayuda</span></Link>
+      <ParentLink to="/ayuda">Volver a Ayuda</ParentLink>
       {state.status === "loading" && <>
         <p className="visually-hidden" role="status">Cargando artículo…</p>
         <div className={`${classes.article} ${classes.pending}`} aria-hidden="true"><span /><span /><span /><span /></div>

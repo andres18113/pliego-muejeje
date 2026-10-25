@@ -5,6 +5,8 @@ const reasons: Record<StockUnavailabilityReason, string> = {
   P3002: "No hay existencias suficientes para esta cantidad.",
   P2042: "Esta edición ya no está a la venta.",
   P2043: "Este libro ya no está a la venta.",
+  P6002: "Ya está en tu biblioteca",
+  P6003: "Tienes un pedido abierto con esta edición",
   P4004: "Las ediciones digitales admiten una unidad por edición.",
 };
 
@@ -24,6 +26,7 @@ export function resolveStockStatus({ available, unavailabilityReason }: StockAva
 
 /** A command conflict is feedback about that attempt, not an edition stock boolean. */
 export function availabilityConflictMessage(code: string | null | undefined): string | null {
+  if (code === "P6002" || code === "P6003") return reasons[code];
   if (code === "P3002") return "No hay existencias suficientes para esta cantidad en tu carrito.";
   if (code === "P2042") return "La edición no estaba a la venta al enviar la solicitud.";
   if (code === "P2043") return "El libro no estaba a la venta al enviar la solicitud.";

@@ -9,6 +9,7 @@ import { acquiredDateLabel, editionFacts, mediaSymbol, titlesCountLabel } from "
 import { useOwnedItem, useOwnedItems } from "./libraryQuery";
 import { libraryFilters, libraryRoutes, type OwnedItemViewModel } from "./libraryViewModel";
 import classes from "./library.module.css";
+import { ParentLink } from "@/shared/ui/ParentLink";
 
 /** Ownership verification only. Reader/player/content capabilities are explicitly outside scope. */
 export function LibraryPage() {
@@ -103,7 +104,7 @@ function OwnedItemDetail({ ownedItemId }: { ownedItemId: string }) {
   const query = useOwnedItem(ownedItemId);
   const state = query.viewState;
   return <div className={`account-page ${classes.page}`} data-storefront-surface>
-    <Link to={libraryRoutes.list} className={classes.back}><MaterialSymbol name="arrow_back" /><span>Volver a Mi biblioteca</span></Link>
+    <ParentLink to={libraryRoutes.list}>Volver a Mi biblioteca</ParentLink>
 
     {state.status === "loading" && <>
       <p className="visually-hidden" role="status">Cargando adquisición…</p>

@@ -1,0 +1,5 @@
+/* One grammar on every child page: ink words underlined (never the arrow), a 44px target, 8px under the header. */
+.link { display: inline-flex; align-items: center; gap: 8px; justify-self: start; align-self: start; min-height: 44px; margin-top: 8px; color: var(--pliego-text); font-size: .9375rem; font-weight: 500; text-decoration: none; }
+.link > span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.link:hover { color: var(--store-link); }
+.link:focus-visible { outline: 3px solid var(--store-link); outline-offset: 2px; border-radius: 4px; }

@@ -69,10 +69,8 @@
 
 /* Detail */
 .page { composes: shell from "../account/accountShell.module.css"; width: 100%; max-width: 920px; margin-inline: auto; }
-.back { display: inline-flex; align-items: center; gap: 8px; justify-self: start; min-height: 44px; margin: 6px 0 12px; color: var(--acc-ink); font-size: .9375rem; font-weight: 500; text-decoration: none; }
-.back span:last-child { text-decoration: underline; text-underline-offset: 4px; }
-.back:hover { color: var(--acc-blue); }
-.back:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+/* The way back to Mi biblioteca keeps its 12px from the ownership scene below. */
+.page > a:first-child { margin-bottom: 12px; }
 
 .detail { display: grid; gap: clamp(28px, 4vw, 44px); min-width: 0; }
 .scene {

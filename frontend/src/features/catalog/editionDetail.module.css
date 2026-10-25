@@ -64,41 +64,48 @@
 .trail span::before { content: ""; display: inline-block; width: 1.5px; height: 1em; margin-inline: 12px; background: currentColor; opacity: .55; vertical-align: -.12em; }
 
 
-/* The edition's context bar (EditionContextBar): fixed at the top once the page's wayfinding row has scrolled away —
-   the site header has already left with the scroll here. It appears and disappears in place, with no slide or fade,
-   at the compact header's height (72px, 60px below 1280px, 56px below 600px), on the header's own surface and edge.
-   Back and title lead; today's price and the jacket close. */
+/* The edition's context bar (EditionContextBar): once the page's wayfinding row has scrolled away — the site header has
+   already left with the scroll here — a floating pill is simply there, inset from the viewport's edges on PLIEGO's white
+   card surface with a hairline and a soft shadow. It appears and disappears in place, with no slide or fade. Back and
+   title lead; today's price (the previous one struck after it) and the scene's own action close, grouped. */
 .contextBar {
-  /* The site header's own surface and edge (SiteHeader.module.css), not the page's form surface. */
-  --ctx-surface: var(--store-paper, #f6f5f0); --ctx-edge: #d4d2dc;
-  position: fixed; inset: 0 0 auto; z-index: 61; height: 72px;
-  background: var(--ctx-surface); color: var(--ed-ink);
-  box-shadow: 0 1px 0 var(--ctx-edge), 0 12px 28px -22px rgb(20 23 55 / 45%);
+  --ctx-surface: #fff; --ctx-edge: color-mix(in srgb, var(--ed-ink) 10%, transparent);
+  position: fixed; inset: 16px 32px auto; z-index: 61; max-width: 1760px; height: 64px; margin-inline: auto;
+  border-radius: 999px; background: var(--ctx-surface); color: var(--ed-ink);
+  box-shadow: 0 0 0 1px var(--ctx-edge), 0 2px 4px rgb(20 23 55 / 6%), 0 12px 32px -12px rgb(20 23 55 / 28%);
 }
-:global([data-mantine-color-scheme="dark"]) .contextBar { --ctx-surface: #22243b; --ctx-edge: #4e506b; }
-.contextInner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 100%; max-width: 1824px; margin-inline: auto; padding: 0 48px; }
-.contextLead { display: flex; align-items: center; gap: 8px; min-width: 0; }
-.contextLead > button { margin-inline-start: -11px; }
+:global([data-mantine-color-scheme="dark"]) .contextBar { --ctx-surface: #2b2d47; --ctx-edge: rgb(255 255 255 / 10%); }
+.contextInner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 100%; padding: 0 8px 0 10px; }
+.contextLead { display: flex; align-items: center; gap: 4px; min-width: 0; }
 .contextTitle { min-width: 0; margin: 0; overflow: hidden; color: var(--ed-ink); font-size: 1.0625rem; font-weight: 600; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
-.contextTrail { display: flex; flex: none; align-items: center; gap: 14px; }
+.contextTrail { display: flex; flex: none; align-items: center; gap: 16px; }
 .contextPrice { display: flex; align-items: baseline; gap: 8px; margin: 0; color: var(--ed-ink); font: 700 1.25rem/1 var(--store-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .contextWas { color: var(--ed-muted); font: 500 .875rem/1 var(--pliego-font, inherit); letter-spacing: 0; }
-.contextCover { display: block; flex: none; width: 32px; }
-.contextCover :global(.book-cover) { width: 32px; }
-@media (max-width: 1279px) {
-  .contextBar { height: 60px; }
-  .contextInner { padding: 0 24px; gap: 16px; }
+/* The scene's "Agregar al carrito" at bar size: the same ultramar fill, as a pill inside the pill (PLIEGO's pill CTA),
+   48px tall with 8px of air to the bar's edge. Its label keeps its width through pending and "Agregado". */
+.contextAction.contextAction { flex: none; min-height: 48px; padding: 10px 24px; border-radius: 999px; background: var(--ed-action); color: var(--ed-on-action); font-size: .9375rem; white-space: nowrap; }
+.contextAction.contextAction:hover { background: var(--ed-action-hover); color: var(--ed-on-action); }
+.contextAction.contextAction:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 3px; }
+.contextDigitalAction.contextDigitalAction { width: 208px; }
+.contextUnavailable { flex: none; padding-inline-end: 16px; color: var(--ed-muted); font-size: .9375rem; font-weight: 500; white-space: nowrap; }
+@media (max-width: 1023px) {
+  .contextBar { inset-inline: 24px; }
 }
+/* Phones: the same pill, 8px from the edges; the action keeps its short label and the struck price steps out. */
 @media (max-width: 599px) {
-  .contextBar { height: 56px; }
-  .contextInner { padding: 0 16px; gap: 12px; }
+  .contextBar { inset: 8px 8px auto; height: 56px; }
+  .contextInner { gap: 10px; padding: 0 6px 0 4px; }
+  .contextLead { gap: 0; }
   .contextTitle { font-size: .9375rem; }
+  .contextTrail { gap: 10px; }
   .contextPrice { font-size: 1.0625rem; }
   .contextWas { display: none; }
-  .contextCover { width: 28px; }
-  .contextCover :global(.book-cover) { width: 28px; }
+  .contextAction.contextAction { min-height: 44px; padding: 8px 16px; font-size: .875rem; }
+  .contextDigitalAction.contextDigitalAction { width: 120px; padding-inline: 10px; }
+  .contextUnavailable { padding-inline-end: 10px; font-size: .875rem; }
+  .contextLong { display: none; }
 }
-@media (forced-colors: active) { .contextBar { border-bottom: 1px solid CanvasText; } }
+@media (forced-colors: active) { .contextBar { border: 1px solid CanvasText; } }
 
 .edition {
   display: grid; grid-template-columns: minmax(220px, 340px) minmax(0, 1fr); align-items: start;

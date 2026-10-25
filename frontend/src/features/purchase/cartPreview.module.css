@@ -30,7 +30,9 @@
 .line[data-added] h3 a::after { content: ""; display: inline-block; width: .38em; height: .38em; margin-left: .3em; border-radius: 50%; background: var(--store-yellow); vertical-align: .05em; }
 .muted { margin: 0; color: var(--pliego-text-muted); font-size: .8125rem; line-height: 1.4; overflow-wrap: anywhere; }
 .buy { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-top: 8px; }
-.subtotal { margin: 0 0 0 auto; font: 650 1.0625rem/1.2 var(--store-display); font-variant-numeric: tabular-nums; }
+.subtotal { display: flex; align-items: baseline; gap: 8px; margin: 0 0 0 auto; font: 650 1.0625rem/1.2 var(--store-display); font-variant-numeric: tabular-nums; }
+/* An offer's previous amount: quieter and struck, beside today's — the cart's own grammar. */
+.was { color: var(--pliego-text-muted); font: 500 .875rem/1.2 var(--pliego-font, inherit); }
 .feedback { margin: 4px 0 0; color: var(--pliego-text-muted); font-size: .8125rem; }
 .feedback:empty { display: none; }
 .feedback[data-tone="error"] { color: var(--mantine-color-red-8); }
@@ -40,6 +42,8 @@
 .totals { display: grid; gap: 4px; margin: 0 0 16px; }
 .totals div { display: flex; justify-content: space-between; gap: 16px; color: var(--pliego-text-muted); font-size: .875rem; font-variant-numeric: tabular-nums; }
 .totals dt, .totals dd { margin: 0; }
+.totals [data-tone="savings"] { --preview-savings: #1e7a3c; color: var(--preview-savings); }
+:global([data-mantine-color-scheme="dark"]) .totals [data-tone="savings"] { --preview-savings: #8fdca6; }
 .totals .total { margin-top: 4px; color: var(--pliego-text); font-size: 1rem; font-weight: 650; }
 .totals .total dd { font: 650 1.25rem/1.2 var(--store-display); }
 .blocker { margin: 0 0 12px; color: var(--pliego-text-muted); font-size: .875rem; }

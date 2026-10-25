@@ -70,3 +70,59 @@ it("hides the checkout action while a line cannot be bought", async () => {
   expect(await within(drawer).findByText(/Ajusta o quita los libros no disponibles/)).toBeInTheDocument();
   expect(within(drawer).queryByRole("link", { name: "Continuar con la compra" })).not.toBeInTheDocument();
 });
+
+it("shows the server's offer as the cart does: today's line subtotal with the previous one struck, and the saving once", async () => {
+  const offerCart = { ...cartBody([{ currentSubtotal: "25.95", originalPrice: "32.00", unitSavings: "6.05", originalSubtotal: "32.00", lineSavings: "6.05" }], "25.95"),
+    originalSubtotal: "32.00", savingsTotal: "6.05", currentSubtotal: "25.95", subtotal: "25.95", taxAmount: "0.00", shippingAmount: "0.00", total: "25.95" };
+  stubApi({ "GET /api/v1/cart": () => json(offerCart), "POST /api/v1/cart/items": () => json({ cartItemId: "100", quantity: 1 }) });
+  show();
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole("button", { name: "Agregar 42" }));
+  const drawer = await screen.findByRole("dialog", { name: "Tu carrito" });
+  const line = within(within(drawer).getByRole("list", { name: "Libros en tu carrito" })).getByRole("article");
+  expect(within(line).getByText(/32,00/, { selector: "s" })).toHaveTextContent("Precio anterior");
+  expect(within(line).getByText(/25,95/)).toBeInTheDocument();
+  const totals = within(drawer).getByText("Ahorro total hoy").closest("dl")!;
+  expect(within(totals).getByText("Subtotal").nextSibling).toHaveTextContent(/32,00/);
+  expect(within(totals).getByText("Ahorro total hoy").nextSibling).toHaveTextContent(/-\$\s6,05/);
+  // The total is the server's, already discounted: the saving is shown, never subtracted again.
+  expect(within(totals).getByText("Total").nextSibling).toHaveTextContent(/25,95/);
+});
+
+it("keeps the plain subtotal and no saving when the cart has no offer", async () => {
+  stubApi({ "GET /api/v1/cart": () => json({ ...cartBody([{}], "18.50"), subtotal: "18.50", total: "18.50" }), "POST /api/v1/cart/items": () => json({ cartItemId: "100", quantity: 1 }) });
+  show();
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole("button", { name: "Agregar 42" }));
+  const drawer = await screen.findByRole("dialog", { name: "Tu carrito" });
+  await within(drawer).findByText("Subtotal");
+  expect(within(drawer).queryByText("Ahorro total hoy")).not.toBeInTheDocument();
+  expect(drawer.querySelector("s")).toBeNull();
+});
+
+it("states the digital rule in place of a fixed count, and keeps the picker for physical books", async () => {
+  stubApi({
+    "GET /api/v1/cart": () => json(cartBody([{}, { format: "AUDIOBOOK", currentSubtotal: "26.99" }])),
+    "POST /api/v1/cart/items": () => json({ cartItemId: "100", quantity: 1 }),
+  });
+  show();
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole("button", { name: "Agregar 42" }));
+  const drawer = await screen.findByRole("dialog", { name: "Tu carrito" });
+  const [physical, digital] = within(within(drawer).getByRole("list", { name: "Libros en tu carrito" })).getAllByRole("article");
+  expect(within(physical).getByRole("combobox", { name: "Cantidad de Cien años de soledad" })).toBeInTheDocument();
+  expect(within(digital).getByText("Copia digital individual")).toBeInTheDocument();
+  expect(within(digital).queryByText("Cantidad: 1")).not.toBeInTheDocument();
+  expect(within(digital).queryByRole("combobox")).not.toBeInTheDocument();
+});
+
+it.each(["P6002", "P6003"])("links a blocked digital %s line to its acquisition without checkout", async code => {
+  stubApi({ "GET /api/v1/cart": () => json(cartBody([{ format: "EBOOK", available: false, unavailabilityReason: code }])), "POST /api/v1/cart/items": () => json({ cartItemId: "100", quantity: 1 }),
+    "GET /api/v1/me/digital-eligibility": () => json([{ editionId: "42", owned: code === "P6002", ownedItemId: "800", pendingOrder: code === "P6003", pendingOrderId: "900", inCart: true, purchasable: false }]) });
+  show();
+  await userEvent.setup().click(await screen.findByRole("button", { name: "Agregar 42" }));
+  const drawer = await screen.findByRole("dialog", { name: "Tu carrito" });
+  expect(await within(drawer).findByRole("link", { name: code === "P6002" ? "Ver en Mi biblioteca" : "Ver pedido" })).toHaveAttribute("href", code === "P6002" ? "/biblioteca/800" : "/orders/900");
+  expect(within(drawer).getByText("Copia digital individual")).toBeInTheDocument();
+  expect(within(drawer).queryByRole("link", { name: "Continuar con la compra" })).not.toBeInTheDocument();
+});

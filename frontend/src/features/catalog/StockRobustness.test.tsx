@@ -65,3 +65,21 @@ it("natively disables checkout for a cart with an unavailable line", async () =>
   renderPurchaseRoute([{ path: "/checkout", element: <CheckoutPage /> }], "/checkout");
   expect(await screen.findByRole("button", { name: "Hacer pedido" })).toBeDisabled();
 });
+
+it.each(["P6002", "P6003"])("explains %s in favorites and saved-for-later rows", async code => {
+  const routes = [{ path: "/favorites", element: <FavoritesPage /> }, { path: "/cart", element: <CartPage /> }];
+  stubApi({
+    "GET /api/v1/me/favorites": () => json({ items: [{ ...book, format: "EBOOK", favoritedAt: "2026-10-04T12:00:00Z" }], page: 0, pageSize: 20, totalCount: "1" }),
+    "GET /api/v1/cart": () => json(cartBody([])),
+    "POST /api/v1/cart/items": () => problem(409, code, "Genérico", "Genérico"),
+  });
+  const view = renderPurchaseRoute(routes, "/favorites");
+  await userEvent.setup().click(await screen.findByRole("button", { name: "Agregar al carrito: Libro de prueba" }));
+  await screen.findByText(code === "P6002" ? "Ya está en tu biblioteca" : "Tienes un pedido abierto con esta edición");
+  expect(screen.queryByText(/Genérico/)).not.toBeInTheDocument();
+  view.unmount();
+  renderPurchaseRoute(routes, "/cart");
+  await userEvent.setup().click(await screen.findByRole("button", { name: "Agregar al carrito: Libro de prueba" }));
+  await screen.findByText(code === "P6002" ? "Ya está en tu biblioteca" : "Tienes un pedido abierto con esta edición");
+  expect(screen.queryByText(/Genérico/)).not.toBeInTheDocument();
+});

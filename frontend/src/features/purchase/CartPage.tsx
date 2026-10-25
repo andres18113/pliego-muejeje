@@ -6,7 +6,10 @@ import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { BookCover } from "@/features/catalog/BookCover";
-import { resolveStockStatus } from "@/features/catalog/stockStatusModel";
+import { availabilityConflictMessage, resolveStockStatus } from "@/features/catalog/stockStatusModel";
+import { useBlockedDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
+import type { DigitalEligibility } from "@/shared/api/digitalEligibility";
+import { DigitalConflictLink } from "@/features/library/DigitalConflictLink";
 import { StockStatus } from "@/features/catalog/StockStatus";
 import surface from "@/features/catalog/availabilitySurface.module.css";
 import { formatEdition, formatUsd } from "@/features/catalog/formatters";
@@ -18,7 +21,8 @@ import { UndoToast, type UndoToastMessage } from "@/shared/ui/UndoToast";
 import { CartAddedNotification, useCartAddedNotification } from "@/shared/ui/CartAddedNotification";
 import type { ConfirmedCartAddition } from "@/shared/ui/cartAdditionFeedback";
 import { SavedForLater } from "./SavedForLater";
-import { cartQuantityChoices, useCustomerCart } from "./cartQuery";
+import { cartQuantityChoices, isSingleDigitalCopy, useCustomerCart } from "./cartQuery";
+import { DigitalCopyNote } from "./DigitalCopyNote";
 import { hasSaving, toCartPricingViewModel, type CartLinePricingViewModel } from "./cartPricingViewModel";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import { ivaLabel, unitsLabel } from "./purchaseText";
@@ -52,6 +56,7 @@ function CartContent() {
   const { clear: clearSession } = useSession();
   const queryClient = useQueryClient();
   const cartQuery = useCustomerCart(true);
+  const digitalEligibility = useBlockedDigitalEligibility(cartQuery.data?.items);
   const emptyCartInvoker = useRef<{ element: HTMLElement; editionId: string; scope: SessionOperationScope } | null>(null);
   const commandLock = useRef(false);
   const toastKey = useRef(0);
@@ -175,7 +180,7 @@ function CartContent() {
       const definitive = error instanceof ApiRequestError && error.status < 500;
       setToast({
         key: ++toastKey.current,
-        message: definitive ? "Ya no se puede devolver al carrito" : "No pudimos confirmar el cambio. Consulta el carrito antes de volver a añadirlo.",
+        message: (error instanceof ApiRequestError ? availabilityConflictMessage(error.code) : null) ?? (definitive ? "Ya no se puede devolver al carrito" : "No pudimos confirmar el cambio. Consulta el carrito antes de volver a añadirlo."),
         detail: departed.title,
         ...(definitive ? {} : { departed, unknownOutcome: true }),
       });
@@ -291,6 +296,7 @@ function CartContent() {
                 {data.items.map((line) => (
                   <li key={line.cartItemId}>
                     <CartLineItem
+                      eligibility={digitalEligibility.byEdition.get(line.editionId)}
                       line={line}
                       pricing={pricing?.lines.find((linePricing) => linePricing.cartItemId === line.cartItemId)}
                       busy={busyLineId === line.cartItemId}
@@ -329,8 +335,9 @@ function CartContent() {
 }
 
 /** One purchase unit: the book, what it costs at this quantity, its availability and its own actions. */
-function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSave, onRemove }: {
+function CartLineItem({ line, eligibility, pricing, busy, locked, feedback, onQuantity, onSave, onRemove }: {
   line: CartLine;
+  eligibility?: DigitalEligibility;
   pricing?: CartLinePricingViewModel;
   busy: boolean;
   locked: boolean;
@@ -369,6 +376,9 @@ function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSav
               onChange={onQuantity}
               appearance="quiet"
             />
+          ) : isSingleDigitalCopy(line) ? (
+            // A digital copy is one per account: a short label and its explanation in place of a count that cannot change.
+            <p className={cart.quantityDigital}><DigitalCopyNote /></p>
           ) : (
             // Read like the picker beside it ("Cant. 1"); assistive technology hears the full word.
             <p className={cart.quantityStatic}>
@@ -390,6 +400,7 @@ function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSav
         <StockStatus available={line.available} unavailabilityReason={line.unavailabilityReason} id={stockId} className={surface.status} />
       </div>}
       <div className={cart.actions}>
+        <DigitalConflictLink reason={!line.available ? line.unavailabilityReason : null} eligibility={eligibility} />
         <Button variant="text" type="button" aria-label={`Guardar ${line.title} para después`} aria-disabled={locked || undefined} onClick={() => !locked && onSave()}>
           Guardar para después
         </Button>
