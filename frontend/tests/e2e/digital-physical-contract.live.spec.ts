@@ -88,15 +88,16 @@ test("live physical and digital purchase controls keep cart quantities and clean
       await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
       await expect(page.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
       if (format !== "PAPERBACK") {
-        await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
-        await expect(page.getByText("Esta edición digital ya está en tu carrito.")).toBeAttached();
+        // A digital edition already in the cart offers the cart instead of a second add (the server also refuses one).
+        await expect(page.getByText("Ya está en tu carrito", { exact: true })).toBeVisible();
+        await expect(page.getByRole("region", { name: "Compra" }).getByRole("button", { name: "Agregar al carrito", exact: true })).toHaveCount(0);
       }
       await page.getByRole("link", { name: "Ver el carrito", exact: true }).click();
       await expect(page.getByRole("link", { name: edition.title, exact: true }).first()).toBeVisible();
       if (format === "PAPERBACK") await expect(page.getByRole("combobox", { name: `Cantidad de ${edition.title}` })).toBeVisible();
       else {
         await expect(page.getByRole("combobox", { name: `Cantidad de ${edition.title}` })).toHaveCount(0);
-        await expect(page.getByText("Cantidad: 1", { exact: true })).toHaveCount(1);
+        await expect(page.getByText("Copia digital individual", { exact: true })).toHaveCount(1);
       }
       const response = await page.request.get("/api/v1/cart", { headers });
       const cart = await response.json();
