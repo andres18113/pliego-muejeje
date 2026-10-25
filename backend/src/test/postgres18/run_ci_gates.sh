@@ -50,6 +50,15 @@ cleanup() {
         if (( result != 0 )) && [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]] && command -v jcmd >/dev/null 2>&1; then
             timeout 10s jcmd "$application_pid" Thread.print > "$PLIEGO_GATE_LOG_DIR/jvm-threads.log" 2>&1 || true
         fi
+        # While a blocked request still waits: every session, what blocks it, and the advisory locks held or awaited.
+        if (( result != 0 )) && [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]] && command -v psql >/dev/null 2>&1; then
+            timeout 15s psql -X -At -F ' | ' -c "SELECT pid, application_name, state, wait_event_type, wait_event,
+                    pg_blocking_pids(pid), now() - xact_start AS xact_age, left(regexp_replace(query, '\s+', ' ', 'g'), 300)
+                FROM pg_stat_activity WHERE datname = current_database() AND pid <> pg_backend_pid() ORDER BY xact_start NULLS LAST" \
+                -c "SELECT l.pid, l.locktype, l.mode, l.granted, l.classid, l.objid, l.objsubid
+                FROM pg_locks l WHERE l.locktype = 'advisory' OR NOT l.granted ORDER BY l.granted, l.pid" \
+                > "$PLIEGO_GATE_LOG_DIR/postgres-locks.log" 2>&1 || true
+        fi
         kill "$application_pid" 2>/dev/null || true
         wait "$application_pid" 2>/dev/null || true
     fi
