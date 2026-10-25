@@ -89,8 +89,8 @@ fi
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '78:78' ]]; then
-    printf 'Expected 78 successful versioned Flyway migrations through V078; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '79:79' ]]; then
+    printf 'Expected 79 successful versioned Flyway migrations through V079; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"
@@ -127,6 +127,12 @@ done
 
 PLIEGO_TEST_API_BASE_URL="$application_url" timeout 180s python3 "$script_dir/auth_session_http_gate.py"
 timeout 180s python3 "$script_dir/auth_adversarial_http_gate.py"
+printf 'Running customer_query_plan_gate.py\n'
+plan_gate_args=()
+if [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]]; then
+    plan_gate_args=(--output "$PLIEGO_GATE_LOG_DIR/customer-query-plans.json")
+fi
+timeout 180s python3 "$script_dir/customer_query_plan_gate.py" "${plan_gate_args[@]}"
 printf 'PostgreSQL 18 SQL, concurrency, HTTP, and Flyway gates passed.\n'
 if [[ "${PLIEGO_RUN_LIVE_BROWSER:-0}" == 1 ]]; then
     kill "$application_pid"
