@@ -34,7 +34,7 @@ def address_replay():
     actor, _ = actors[0]
     key = str(uuid.uuid4())
     body = {"alias": "Trabajo", "recipient": "Cliente Conc", "line1": "Calle Reintento",
-            "line2": None, "city": "Quito", "province": "Pichincha", "countryCode": "EC",
+            "line2": None, "provinceId": "17", "cityId": "893", "countryCode": "EC",
             "postalCode": None, "reference": None, "phone": "+59325550134", "makePrimary": True}
     first_status, first = request(actor, "/api/v1/me/addresses", "POST", body, key)
     second_status, second = request(actor, "/api/v1/me/addresses", "POST", body, key)

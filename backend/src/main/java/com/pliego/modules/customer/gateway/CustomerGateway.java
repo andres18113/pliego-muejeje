@@ -45,11 +45,11 @@ public interface CustomerGateway {
     }
 
     record CustomerAddress(long addressId, String alias, String recipient, String line1, String line2,
-            String city, String province, String countryCode, String postalCode, String reference, String phone,
-            boolean primary) {
+            String city, String province, Long provinceId, Long cityId, boolean cityNeedsReview,
+            String countryCode, String postalCode, String reference, String phone, boolean primary) {
     }
 
-    record AddressData(String alias, String recipient, String line1, String line2, String city, String province,
-            String countryCode, String postalCode, String reference, String phone) {
+    record AddressData(String alias, String recipient, String line1, String line2, Long provinceId, Long cityId,
+            String city, String province, String countryCode, String postalCode, String reference, String phone) {
     }
 }

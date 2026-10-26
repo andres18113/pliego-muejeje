@@ -1,6 +1,7 @@
 import { fillCheckoutBilling } from "./billing-fixtures";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
+import { quitoIds } from "./geo-fixtures";
 
 // Opt-in fixture contains only a disposable test account; supply it through the test runner environment.
 const env = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env ?? {};
@@ -24,7 +25,8 @@ for (const [fulfillment, payment, width] of [["STORE_PICKUP", "CARD", 1440], ["S
     let addresses = await (await request.get(`${api}/me/addresses`, { headers })).json();
     if (fulfillment === "HOME_DELIVERY" && addresses.length === 0) {
       const address = await request.post(`${api}/me/addresses`, { headers: { ...headers, "Idempotency-Key": crypto.randomUUID() }, data: {
-        alias: "Casa de prueba", recipient: "Lectora Prueba", line1: "Calle de prueba 123", city: "Quito", province: "Pichincha",
+        alias: "Casa de prueba", recipient: "Lectora Prueba", line1: "Calle de prueba 123",
+        provinceId: quitoIds.provinceId, cityId: quitoIds.cityId,
         countryCode: "EC", phone: "+593992345678", makePrimary: true,
       } }); expect(address.status(), JSON.stringify(await address.json())).toBe(201);
       addresses = await (await request.get(`${api}/me/addresses`, { headers })).json();

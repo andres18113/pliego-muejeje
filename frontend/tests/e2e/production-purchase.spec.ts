@@ -1,4 +1,5 @@
 import { fillCheckoutBilling } from "./billing-fixtures";
+import { choosePlace, geoResponse, quitoIds, withPlaceNames } from "./geo-fixtures";
 import { chromium, expect, test, type BrowserContext, type Page } from "@playwright/test";
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
@@ -23,6 +24,7 @@ async function installPurchaseApi(context: BrowserContext, initialQuantity: Quan
     const request = route.request();
     const url = new URL(request.url());
     const path = url.pathname.replace("/api/v1", "");
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const method = request.method();
     const ok = (json: unknown, status = 200) => route.fulfill({ status, json });
     if (path === "/auth/refresh" && method === "POST") return ok({ accessToken: "browser-fixture-token", tokenType: "Bearer", expiresInSeconds: 1800,
@@ -56,7 +58,7 @@ async function installPurchaseApi(context: BrowserContext, initialQuantity: Quan
     if (path === "/me/addresses" && method === "POST") {
       state.addressPosts++;
       const body = request.postDataJSON();
-      state.addresses.push({ ...body, addressId: "15", primary: true, line2: body.line2 ?? null,
+      state.addresses.push({ ...withPlaceNames(body), addressId: "15", primary: true, line2: body.line2 ?? null,
         postalCode: body.postalCode ?? null, reference: body.reference ?? null });
       return ok({ addressId: "15" }, 201);
     }
@@ -85,7 +87,7 @@ for (const width of [320, 390, 768, 1280]) {
   test(`Cardholder name rejects digits while typing at ${width}px`, async ({ context, page }) => {
     const state = await installPurchaseApi(context);
     state.addresses.push({ addressId: "15", alias: "Casa", recipient: "Lectora Prueba", line1: "Calle de prueba 123", line2: null,
-      city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567", primary: true });
+      city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567", primary: true });
     await page.setViewportSize({ width, height: 900 });
     await page.goto("/checkout");
     await page.getByRole("button", { name: "Tarjeta de crédito o débito", exact: true }).click();
@@ -129,8 +131,7 @@ for (const width of [320, 390, 768, 1280]) {
     await expect(add).toBeFocused();
     await add.click();
     await dialog.getByLabel("Dirección", { exact: true }).fill("Calle de prueba 123");
-    await dialog.getByLabel("Ciudad", { exact: true }).fill("Quito");
-    await dialog.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+    await choosePlace(page, dialog);
     await dialog.getByLabel("Teléfono de contacto", { exact: true }).fill("991234567");
     await dialog.getByRole("button", { name: "Guardar dirección", exact: true }).click();
     await expect(dialog).toHaveCount(0);
@@ -167,7 +168,7 @@ test("ACCT-01 two real tabs converge on activation and require a fresh checkout 
     const page = await context.newPage();
     const state = await installPurchaseApi(context);
     state.addresses.push({ addressId: "15", alias: "Casa", recipient: "Lectora Prueba", line1: "Calle de prueba 123", line2: null,
-      city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567", primary: true });
+      city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567", primary: true });
     await page.goto("/cart?test-tab=a");
     const secondTab = await context.newPage();
     await secondTab.goto("/cart?test-tab=b");

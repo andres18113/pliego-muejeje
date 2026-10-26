@@ -230,6 +230,10 @@ new constraints before migration. Example: a new cedula check may preserve legac
 rows but block a later UPDATE of an invalid legacy DRAFT invoice. Report such a
 conflict before changing data; never manufacture an identity to satisfy it.
 
+Before the first release that applies V082 (INEC province/city catalog), also record
+`SELECT count(*) FROM pliego.direccion` and `SELECT count(*) FROM pliego.ubicacion_retiro`;
+acceptance compares them with ADR-0044's read-only `needs_review` counts after migration.
+
 Useful remote commands (inspect/filter outputs before sharing):
 
 ```bash
@@ -461,6 +465,7 @@ past counts such as 425 editions, 73 migrations or a previous test total.
 | Service | Active and enabled, intended user/group/JVM/pool; no unexpected restarts or startup errors |
 | DB/Flyway | Correct DB/PG18, all planned migrations successful, historical checksums intact, restricted runtime has no owner membership or CREATE |
 | Functional API | `GET /api/v1/catalog/editions?page=0&pageSize=1` returns valid DB-backed data; no dedicated Actuator/health endpoint is assumed |
+| Geographic inputs | If an authorized smoke check writes an address, checkout billing address or invoice address, read the public province/city catalog and submit the selected `provinceId`/`cityId` pair; verify public `Bucay` → General Antonio Elizalde and `Playas` → General Villamil aliases. After V082, report the read-only `needs_review` counts from ADR-0044 (saved addresses and pickup locations left with null catalog IDs) next to the preflight totals; they keep their text and stay deliverable, so a count is information, never a reason to edit customer data |
 | Public API/site | HTTPS via Cloudflare; canonical `www` redirect retains path/query and final response is 200; SPA direct navigation/reload works |
 | Catalog | Counts plausible vs preflight; whole-set sort/page/filter behavior if affected, visible formats and decoding images on `covers.pliegolibros.com` |
 | Browser | Relevant affected flows at mobile/desktop; normally 320, 390, 1280, plus 768/real zoom when responsive changes warrant it; no new JS/network errors |

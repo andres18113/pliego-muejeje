@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { geoResponse } from "./geo-fixtures";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 import { fillCheckoutBilling } from "./billing-fixtures";
 
@@ -6,6 +7,7 @@ async function installBillingApi(page: Page, loseCheckout = false) {
   const state = { posts: [] as {body:Record<string,unknown>;key:string|null}[], downloads:0 };
   await page.route("**/api/v1/**", async route => {
     const request=route.request(), url=new URL(request.url()), path=url.pathname.replace("/api/v1", "");
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const method=request.method();
     const ok=(body:unknown,status=200)=>route.fulfill({json:body,status});
     if(path==="/auth/refresh") return ok({accessToken:"synthetic-billing-token",tokenType:"Bearer",expiresInSeconds:1800,user:{userId:"2",email:"billing@example.test",role:"CUSTOMER"}});
@@ -45,7 +47,7 @@ test("digital nominative checkout validates identity and downloads authenticated
   await expect(invoiceAction).toBeVisible();
   await expect(page.getByText("SIMULACIÓN ACADÉMICA — SIN VALIDEZ TRIBUTARIA")).toHaveCount(0);
   expect(state.posts).toHaveLength(1);
-  expect(state.posts[0]).toMatchObject({body:{fulfillmentMethod:"DIGITAL_ONLY",billingIdentity:{type:"EC_CEDULA",number:"0123456782"},buyerName:"Compradora Prueba",billingAddress:{line1:"Calle Fiscal de prueba",city:"Quito",province:"Pichincha",countryCode:"EC"}}});
+  expect(state.posts[0]).toMatchObject({body:{fulfillmentMethod:"DIGITAL_ONLY",billingIdentity:{type:"EC_CEDULA",number:"0123456782"},buyerName:"Compradora Prueba",billingAddress:{line1:"Calle Fiscal de prueba",provinceId:"17",cityId:"893",countryCode:"EC"}}});
   expect(state.posts[0].key).toMatch(/^[0-9a-f-]{36}$/);
   await expect(page.getByRole("button",{name:/Descargar (PDF|XML)/})).toHaveCount(0);
   // The press opens a tab and fetches the authenticated PDF once, to view inline.

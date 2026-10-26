@@ -89,13 +89,13 @@ fi
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '79:79' ]]; then
-    printf 'Expected 79 successful versioned Flyway migrations through V079; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '82:82' ]]; then
+    printf 'Expected 82 successful versioned Flyway migrations through V082; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"
 
-for gate in checkout_gate.sql customer_orders_gate.sql admin_orders_gate.sql catalog_public_categories_gate.sql catalog_public_filter_options_gate.sql catalog_cover_delivery_gate.sql cart_unavailability_codes_gate.sql catalog_global_search_gate.sql catalog_search_fold_gate.sql catalog_contract_gate.sql catalog_filter_facets_gate.sql catalog_filter_scope_gate.sql digital_editions_gate.sql post_purchase_gate.sql customer_email_change_gate.sql customer_profile_verification_gate.sql ecuador_contact_policy_gate.sql numeric_validation_gate.sql transactional_email_gate.sql mail_completion_gate.sql mixed_checkout_rollback_gate.sql store_pickup_gate.sql monetary_projection_gate.sql ecuador_zero_tax_gate.sql delivery_window_gate.sql offers_gate.sql cart_offer_projection_gate.sql order_offer_snapshot_gate.sql digital_ownership_gate.sql digital_single_copy_gate.sql storefront_help_gate.sql purchase_line_capabilities_gate.sql catalog_spanish_order_gate.sql email_action_return_context_gate.sql ecuador_cedula_gate.sql automatic_billing_gate.sql post_purchase_digital_access_gate.sql; do
+for gate in geo_catalog_gate.sql geo_alias_gate.sql checkout_gate.sql customer_orders_gate.sql admin_orders_gate.sql catalog_public_categories_gate.sql catalog_public_filter_options_gate.sql catalog_cover_delivery_gate.sql cart_unavailability_codes_gate.sql catalog_global_search_gate.sql catalog_search_fold_gate.sql catalog_contract_gate.sql catalog_filter_facets_gate.sql catalog_filter_scope_gate.sql digital_editions_gate.sql post_purchase_gate.sql customer_email_change_gate.sql customer_profile_verification_gate.sql ecuador_contact_policy_gate.sql numeric_validation_gate.sql transactional_email_gate.sql mail_completion_gate.sql mixed_checkout_rollback_gate.sql store_pickup_gate.sql monetary_projection_gate.sql ecuador_zero_tax_gate.sql delivery_window_gate.sql offers_gate.sql cart_offer_projection_gate.sql order_offer_snapshot_gate.sql digital_ownership_gate.sql digital_single_copy_gate.sql storefront_help_gate.sql purchase_line_capabilities_gate.sql catalog_spanish_order_gate.sql email_action_return_context_gate.sql ecuador_cedula_gate.sql billing_identity_corrections_gate.sql checkout_billing_recipient_gate.sql automatic_billing_gate.sql post_purchase_digital_access_gate.sql; do
     printf 'Running %s\n' "$gate"
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done
@@ -119,8 +119,8 @@ for gate in checkout_last_unit.py order_cancel_concurrency.py address_primary_co
     fi
 done
 
-for gate in checkout_http_gate.py customer_orders_http_gate.py admin_orders_http_gate.py \
-    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py accepted_quote_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py home_delivery_http_gate.py offers_http_gate.py cart_order_offer_http_gate.py library_checkout_http_gate.py storefront_help_http_gate.py automatic_billing_http_gate.py digital_single_copy_http_gate.py digital_mixed_single_copy_http_gate.py catalog_search_fold_http_gate.py post_purchase_digital_access_http_gate.py post_purchase_invoice_http_gate.py; do
+for gate in geo_catalog_http_gate.py geo_alias_http_gate.py checkout_http_gate.py customer_orders_http_gate.py admin_orders_http_gate.py \
+    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py accepted_quote_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py home_delivery_http_gate.py offers_http_gate.py cart_order_offer_http_gate.py library_checkout_http_gate.py storefront_help_http_gate.py automatic_billing_http_gate.py checkout_billing_recipient_http_gate.py billing_identity_corrections_http_gate.py digital_single_copy_http_gate.py digital_mixed_single_copy_http_gate.py catalog_search_fold_http_gate.py post_purchase_digital_access_http_gate.py post_purchase_invoice_http_gate.py; do
     printf 'Running %s\n' "$gate"
     timeout 180s python3 "$script_dir/$gate"
 done

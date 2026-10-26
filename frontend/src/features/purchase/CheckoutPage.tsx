@@ -54,8 +54,8 @@ import { CardSecurityCodeHelp } from "./CardSecurityCodeHelp";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { personNameError } from "@/shared/validation/person";
 
-import { checkoutBillingSchema, type CheckoutBillingInput } from "@/shared/api/billing";
-import type { Control, FieldErrors, UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { checkoutBillingRefinement, checkoutBillingSchema, refineCheckoutBilling, type CheckoutBillingInput } from "@/shared/api/billing";
+import type { Control, FieldErrors, UseFormClearErrors, UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { CheckoutBilling, useBillingSource } from "./CheckoutBilling";
 import { clearLegacyBillingIntents } from "./checkoutBillingIntent";
 import { useDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
@@ -73,7 +73,10 @@ const checkoutSchema = z.object({
   expiration: z.string(),
   cvv: z.string(),
   cardholder: z.string(),
-}).superRefine((values, context) => {
+})
+  // Spreading the billing shape drops its own refinement: the buyer-name rule is applied here as well.
+  .superRefine(refineCheckoutBilling, checkoutBillingRefinement)
+  .superRefine((values, context) => {
   if (values.fulfillmentMethod === "HOME_DELIVERY" && !values.addressId) {
     context.addIssue({ code: "custom", path: ["addressId"], message: "Elige una dirección de entrega." });
   }
@@ -208,7 +211,7 @@ function CheckoutContent() {
     formState: { errors, dirtyFields },
   } = useForm<CheckoutValues>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { billingIdentity: { type: "EC_CEDULA", number: "" }, buyerName: "", billingAddress: { line1: "", line2: "", city: "", province: "", countryCode: "EC", postalCode: "" }, fulfillmentMethod: "HOME_DELIVERY", addressId: "", pickupLocationId: "", paymentMethod: undefined, cardNumber: "", expiration: "", cvv: "", cardholder: "" },
+    defaultValues: { billingRecipient: "ACCOUNT", billingIdentity: { type: "EC_CEDULA", number: "" }, buyerName: "", billingAddress: { line1: "", line2: "", provinceId: "", cityId: "", countryCode: "EC", postalCode: "" }, fulfillmentMethod: "HOME_DELIVERY", addressId: "", pickupLocationId: "", paymentMethod: undefined, cardNumber: "", expiration: "", cvv: "", cardholder: "" },
     // Focus is placed explicitly: the address choice may have no input to focus yet.
     shouldFocusError: false,
   });
@@ -216,10 +219,12 @@ function CheckoutContent() {
   const identityQuery = useQuery({queryKey: billingIdentityQueryKey, queryFn: ({signal}) => getBillingIdentity(signal), meta:{authRequired:true}, retry:false});
   useEffect(() => {
     if (!scope.isCurrent() || phase !== "idle") return;
+    // Another recipient's name and number are the customer's own typing: a refreshed profile never overwrites them.
+    if (getValues("billingRecipient") === "OTHER") return;
     if (profileQuery.data && !dirtyFields.buyerName) setValue("buyerName", `${profileQuery.data.firstNames} ${profileQuery.data.lastNames}`.trim());
-    // The invoice uses the customer's own registered cédula; it is corrected only from Mi perfil.
+    // The account's invoice uses the customer's own registered cédula; it is corrected only from Mi perfil.
     if (identityQuery.data) setValue("billingIdentity.number", identityQuery.data.number, { shouldValidate: Boolean(errors.billingIdentity?.number) });
-  }, [profileQuery.data, identityQuery.data, dirtyFields.buyerName, errors.billingIdentity?.number, phase, scope, setValue]);
+  }, [profileQuery.data, identityQuery.data, dirtyFields.buyerName, errors.billingIdentity?.number, phase, scope, setValue, getValues]);
   const cardNumberRegistration = register("cardNumber");
   const cvvRegistration = register("cvv");
   const cardholderRegistration = register("cardholder");
@@ -556,7 +561,7 @@ function CheckoutContent() {
     pendingKey.current = null;
     setPhase("idle");
     const code = error.code;
-    const fields=(["addressId","pickupLocationId","fulfillmentMethod","paymentMethod","cardNumber","buyerName","billingIdentity.number","billingIdentity.type","billingAddress.line1","billingAddress.line2","billingAddress.city","billingAddress.province","billingAddress.countryCode","billingAddress.postalCode"] as const).filter((field) => {
+    const fields=(["addressId","pickupLocationId","fulfillmentMethod","paymentMethod","cardNumber","buyerName","billingIdentity.number","billingIdentity.type","billingAddress.line1","billingAddress.line2","billingAddress.provinceId","billingAddress.cityId","billingAddress.countryCode","billingAddress.postalCode"] as const).filter((field) => {
       const message=fieldErrorMessages(error,field);
       if(message) {
         setError(field,{type:"server",message});
@@ -582,7 +587,7 @@ function CheckoutContent() {
     } else if (code === "P1106") {
       const current = await identityQuery.refetch();
       if (current.data) setValue("billingIdentity.number", current.data.number);
-      setProblem({ title: "La identificación no coincide con la de tu perfil.", detail: "Tu factura usa la cédula o el RUC registrado en tu perfil; ya lo mostramos. Si es incorrecto, corrígelo en Mi perfil. No se creó ningún pedido." });
+      setProblem({ title: "La identificación no coincide con la de tu perfil.", detail: "Tu factura usa la cédula o el RUC registrado en tu perfil; ya lo mostramos. Si es incorrecto, corrígelo en Mi perfil; si la factura es para otra persona o empresa, elígelo en Factura. No se creó ningún pedido." });
     } else if (code === "P4005") {
       await cartQuery.refetch();
       setProblem({ title: "Tu carrito cambió y no se creó el pedido.", detail: "Actualizamos los productos, cantidades y precios. Revisa el nuevo resumen antes de confirmar otra vez." });
@@ -891,6 +896,8 @@ function CheckoutContent() {
           <CheckoutBilling register={register as unknown as UseFormRegister<CheckoutBillingInput>} control={control as unknown as Control<CheckoutBillingInput>}
             errors={errors as FieldErrors<CheckoutBillingInput>} setValue={setValue as unknown as UseFormSetValue<CheckoutBillingInput>}
             getValues={getValues as unknown as UseFormGetValues<CheckoutBillingInput>} trigger={trigger as unknown as UseFormTrigger<CheckoutBillingInput>}
+            clearErrors={clearErrors as unknown as UseFormClearErrors<CheckoutBillingInput>}
+            accountName={profileQuery.data ? `${profileQuery.data.firstNames} ${profileQuery.data.lastNames}`.trim() : ""}
             disabled={phase !== "idle" || Boolean(recovery.error)}
             registeredNumber={identityQuery.data?.number ?? null} identityPending={identityQuery.isPending}
             profilePending={profileQuery.isPending}

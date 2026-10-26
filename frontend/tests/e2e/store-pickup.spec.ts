@@ -1,4 +1,5 @@
 import { fillCheckoutBilling } from "./billing-fixtures";
+import { geoResponse, quitoIds } from "./geo-fixtures";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { pickupLocation, pickupOrder } from "../../src/test/pickup";
@@ -9,12 +10,13 @@ async function install(page: Page) {
   await page.route("https://www.openstreetmap.org/**", route => route.fulfill({ contentType: "text/html", body: "<!doctype html><html lang='es'><title>Mapa de prueba</title><body>Mapa</body></html>" }));
   await page.route("**/api/v1/**", async route => {
     const request = route.request(); const path = new URL(request.url()).pathname;
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const json = (body: unknown, status = 200) => route.fulfill({ status, json: body });
     if (path === "/api/v1/auth/refresh") return route.fulfill({ status: 204 });
     if (path === "/api/v1/auth/login") return json({ accessToken: "e2e-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "ana@example.com", role: "CUSTOMER" } });
     if (path === "/api/v1/me") return json({ customerId: "100", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (path === "/api/v1/me/addresses") return json([{ addressId: "15", alias: "Casa", recipient: "Ana Pérez", line1: "Av. Principal 123", line2: null,
-      city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]);
+      city: "Quito", province: "Pichincha", ...quitoIds, countryCode: "EC", postalCode: null, reference: null, phone: "+59325550134", primary: true }]);
     if (path === "/api/v1/cart") return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 1, digitalItemCount: 0, subtotal: "18.50", taxRate: "15.00", taxAmount: "2.78", shippingAmount: "0.00", total: "21.28", totalCurrent: "21.28",
       estimatedDeliveryFrom: "2026-10-05", estimatedDeliveryTo: "2026-10-07", items: [{ cartItemId: "1", editionId: "42", title: "Cien años de soledad", authors: "Gabriel García Márquez", sku: "TEST-42", coverUrl: null,
         requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 1, currentPrice: "18.50", currentSubtotal: "18.50", available: true, unavailabilityReason: null }] });

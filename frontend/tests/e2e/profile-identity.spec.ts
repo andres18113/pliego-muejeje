@@ -1,16 +1,34 @@
 import { expect, test, type Page } from "@playwright/test";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
-/** Mi perfil keeps the cédula and the password as rows of its one sheet (ADR 0040). */
-async function stub(page: Page, initialCedula: string | null) {
+// Dialogs open without their pop transition, so screenshots show the settled sheet.
+test.use({ reducedMotion: "reduce" });
+
+/** Mi perfil keeps the cédula and the password as rows of its one sheet (ADR 0040, 0043). */
+async function stub(page: Page, initialCedula: string | null, { used = false } = {}) {
   let cedula = initialCedula;
+  let correction: Record<string, unknown> | null = null;
   const writes: { method: string; path: string; body: unknown }[] = [];
   const profile = { customerId: "2", firstNames: "Andrés", lastNames: "Ramírez", email: "lector@example.invalid", phone: "+593999999999", state: "ACTIVE", version: "0", emailVerified: true };
   await page.route("**/api/v1/**", async route => {
     const request = route.request(), path = new URL(request.url()).pathname.replace("/api/v1", "");
     if (path === "/auth/refresh") return route.fulfill({ json: { accessToken: "synthetic-profile-identity", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "2", email: profile.email, role: "CUSTOMER" } } });
     if (path === "/storefront/navigation") return route.fulfill({ json: storefrontNavigationFixture });
-    if (path === "/me/billing-identity" && request.method() === "GET") return cedula ? route.fulfill({ json: { type: "EC_CEDULA", number: cedula } }) : route.fulfill({ status: 204 });
+    if (path === "/me/billing-identity" && request.method() === "GET") return cedula
+      ? route.fulfill({ json: { type: cedula.length === 13 ? "EC_RUC" : "EC_CEDULA", number: cedula, used, correctionMode: used ? "REQUEST" : "DIRECT", correctionRequest: correction } })
+      : route.fulfill({ status: 204 });
+    if (path === "/me/billing-identity/correction-requests") {
+      const body = request.postDataJSON() as { type: string; number: string; reasonCode: string };
+      writes.push({ method: request.method(), path, body });
+      correction = { id: "17", status: "PENDING", proposedType: body.type, proposedNumber: body.number, reasonCode: body.reasonCode,
+        createdAt: "2026-10-25T17:00:00Z", dueAt: "2026-11-09T17:00:00Z", decidedAt: null, decisionReason: null };
+      return route.fulfill({ status: 201, json: correction });
+    }
+    if (path === "/me/billing-identity/correction-requests/17/withdraw") {
+      writes.push({ method: request.method(), path, body: null });
+      correction = null;
+      return route.fulfill({ status: 204 });
+    }
     if (path.startsWith("/me/billing-identity") || path === "/auth/forgot-password") {
       const body = request.postDataJSON() as { number?: string };
       writes.push({ method: request.method(), path, body });
@@ -42,7 +60,7 @@ for (const width of [320, 768, 1280]) {
     const dialog = page.getByRole("dialog", { name: "¿Es correcta tu cédula?" });
     await expect(dialog.getByText("1710034065")).toBeVisible();
     await page.screenshot({ path: testInfo.outputPath(`cedula-confirm-${width}.png`) });
-    await dialog.getByRole("button", { name: "Guardar cédula" }).click();
+    await dialog.getByRole("button", { name: "Confirmar cédula" }).click();
     await expect(page.getByRole("status").filter({ hasText: "Guardamos tu cédula." })).toBeVisible();
     await expect(sheet.getByText("1710034065")).toBeVisible();
     await expect(page.getByRole("button", { name: "Corregir cédula o RUC", exact: true })).toBeFocused();
@@ -58,20 +76,53 @@ for (const width of [320, 768, 1280]) {
   });
 }
 
-test("a correction asks for the current password and never removes the cédula", async ({ page }) => {
+test("a number on no invoice is corrected in place, without a password, and never removed", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 1280, height: 900 });
   const writes = await stub(page, "0912345675");
   await page.goto("/account");
   await page.getByRole("button", { name: "Corregir cédula o RUC", exact: true }).click();
   const form = page.getByRole("form", { name: "Corregir cédula o RUC" });
-  await form.getByLabel("Cédula o RUC").pressSequentially("1710034065");
-  await form.getByLabel("Contraseña actual").fill("synthetic-current-password");
+  const input = form.getByLabel("Cédula o RUC");
+  await expect(input).toHaveValue("0912345675");
+  await expect(input).not.toHaveAttribute("aria-invalid", "true");
+  await expect(form.getByLabel("Contraseña actual")).toHaveCount(0);
+  await page.screenshot({ path: testInfo.outputPath("cedula-correct-direct-1280.png") });
+  await input.fill("1710034065");
   await form.getByRole("button", { name: "Corregir", exact: true }).click();
   await page.getByRole("dialog", { name: "¿Corregir tu identificación?" }).getByRole("button", { name: "Sí, corregir" }).click();
   await expect(page.getByRole("status").filter({ hasText: "Corregimos tu identificación." })).toBeVisible();
-  expect(writes).toEqual([{ method: "POST", path: "/me/billing-identity/correction", body: { type: "EC_CEDULA", currentNumber: "0912345675", number: "1710034065", currentPassword: "synthetic-current-password" } }]);
+  expect(writes).toEqual([{ method: "POST", path: "/me/billing-identity/correction", body: { type: "EC_CEDULA", currentNumber: "0912345675", number: "1710034065" } }]);
   await expect(page.getByRole("button", { name: /Quitar/ })).toHaveCount(0);
 });
+
+for (const width of [320, 1280]) {
+  test(`a number already on an invoice goes to review and can be withdrawn at ${width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 });
+    const writes = await stub(page, "0912345675", { used: true });
+    await page.goto("/account");
+    await page.getByRole("button", { name: "Corregir cédula o RUC", exact: true }).click();
+    const form = page.getByRole("form", { name: "Corregir cédula o RUC" });
+    await form.getByLabel("Cédula o RUC").fill("1710034065");
+    await expect(form.getByText("Ya figura en una factura: revisaremos la corrección antes de aplicarla.")).toBeVisible();
+    await form.getByRole("radio", { name: "Lo escribí mal" }).check();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    await page.screenshot({ path: testInfo.outputPath(`cedula-request-open-${width}.png`), fullPage: true });
+    await form.getByRole("button", { name: "Corregir", exact: true }).click();
+    const dialog = page.getByRole("dialog", { name: "¿Enviar la corrección?" });
+    await expect(dialog.getByText("1710034065")).toBeVisible();
+    await page.screenshot({ path: testInfo.outputPath(`cedula-request-confirm-${width}.png`) });
+    await dialog.getByRole("button", { name: "Enviar solicitud" }).click();
+    await expect(page.getByRole("status").filter({ hasText: "Enviamos tu solicitud." })).toBeVisible();
+    const sheet = page.locator("ul").filter({ has: page.getByText("Nombres", { exact: true }) });
+    await expect(sheet.getByText("En revisión")).toBeVisible();
+    await expect(sheet.getByText("0912345675")).toBeVisible();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+    await page.screenshot({ path: testInfo.outputPath(`cedula-request-pending-${width}.png`), fullPage: true });
+    await page.getByRole("button", { name: "Retirar solicitud de corrección de la cédula o RUC" }).click();
+    await expect(page.getByRole("status").filter({ hasText: "Retiraste la solicitud." })).toBeVisible();
+    expect(writes.map(write => `${write.method} ${write.path}`)).toEqual(["POST /me/billing-identity/correction-requests", "POST /me/billing-identity/correction-requests/17/withdraw"]);
+  });
+}
 
 for (const width of [320, 1280]) {
   test(`the cédula/RUC field accepts only digits, at most 13, from keyboard and clipboard at ${width}px`, async ({ page, context }) => {

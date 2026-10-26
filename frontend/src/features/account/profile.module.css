@@ -34,8 +34,13 @@
 }
 :global([data-mantine-color-scheme="dark"]) .missingChip { --missing-required-bg: #4a2225; --missing-required-ink: #ffd9d5; --missing-optional-bg: #33354f; --missing-optional-ink: #d9d6e6; }
 .missingChip[data-tone="required"] { background: var(--missing-required-bg); color: var(--missing-required-ink); }
-.missingChip[data-tone="optional"] { background: var(--missing-optional-bg); color: var(--missing-optional-ink); }
+.missingChip[data-tone="optional"], .missingChip[data-tone="review"] { background: var(--missing-optional-bg); color: var(--missing-optional-ink); }
 .missingHint { color: var(--acc-muted); font-size: .9375rem; font-weight: 400; }
+/* A state under a stored value (a correction in review, a recent decision): one quiet line, the value stays first. */
+.valueDetail { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 4px 10px; margin-top: 4px; color: var(--acc-muted); font-size: .9375rem; font-weight: 400; line-height: 1.4; }
+.valueDetail > :global(.material-symbol) { flex: none; margin-top: 2px; color: var(--acc-blue); }
+.valueDetail > span:last-child { flex: 1 1 18ch; min-width: 0; }
+.detailNumber { color: var(--acc-ink); font-weight: 500; font-variant-numeric: tabular-nums; }
 @media (forced-colors: active) { .missingChip { border: 1px solid CanvasText; } }
 
 .edit.edit {
@@ -70,6 +75,13 @@
 /* A second field's label speaks like the row labels; every helper line (note, help, error, draft) like one helper. */
 .subLabel { margin-top: 6px; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .inlineNote { margin: 2px 0 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+/* The one choice a correction request asks for: two plain options on one line, wrapping on narrow rows. */
+.reasons { min-width: 0; margin: 0; padding: 0; border: 0; }
+.reasons > legend { padding: 0; }
+.reasonOptions { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
+.reason { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--acc-ink); font-size: .9375rem; cursor: pointer; }
+.reason > input { width: 18px; height: 18px; margin: 0; accent-color: var(--acc-blue); }
+.reason > input:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
 .securityDisclosure { color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
 .securityDisclosure > summary { width: fit-content; min-height: 44px; padding-block: 12px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .securityDisclosure > summary:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }

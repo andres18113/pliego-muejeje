@@ -53,7 +53,7 @@ def main():
     customer = 'Bearer ' + ok('/api/v1/auth/login', None, 'POST', {'email': customer_email, 'password': 'Offers-fixture-1'})['accessToken']
     problem(endpoint, customer, 'PUT', offer, 'ACCESS_DENIED', 403)
     address = ok('/api/v1/me/addresses', customer, 'POST', {'alias': 'Casa', 'recipient': 'Cliente Ofertas', 'line1': 'Calle Ofertas',
-        'line2': None, 'city': 'Quito', 'province': 'Pichincha', 'countryCode': 'EC', 'postalCode': None, 'reference': None,
+        'line2': None, 'provinceId': '17', 'cityId': '893', 'countryCode': 'EC', 'postalCode': None, 'reference': None,
         'phone': '+59325550134', 'makePrimary': True}, 201)['addressId']
     ok('/api/v1/me/favorites/'+edition, customer, 'PUT', expected=204)
     assert ok('/api/v1/me/favorites', customer)['items'][0]['price'] == '15.00'

@@ -50,7 +50,7 @@ describe("digital checkout", () => {
     expect(transport.count("GET", "/api/v1/pickup-locations")).toBe(0);
     await user.click(screen.getByRole("button", { name: "Transferencia bancaria" }));
     await screen.findByText("Banco Guayaquil");
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await screen.findByRole("heading", { name: "Pedido abierto" });
     expect(transport.calls.find(call => call.path === "/api/v1/checkout")?.body).toEqual({ ...billingFromSavedAddress, fulfillmentMethod: "DIGITAL_ONLY", expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" });
   });
@@ -86,7 +86,7 @@ it.each(["P6002", "P6003"])("explains acceptance %s with a recovery link and pre
   renderPurchaseRoute(routes, "/checkout");
   await user.click(await screen.findByRole("button", { name: "Transferencia bancaria" }));
   await screen.findByText("Banco Guayaquil");
-  fillBillingFixture();
+  await fillBillingFixture();
   await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
   await screen.findByText(code === "P6002" ? "Ya está en tu biblioteca" : "Tienes un pedido abierto con esta edición");
   const link = await screen.findByRole("link", { name: code === "P6002" ? "Ver en Mi biblioteca" : "Ver pedido" });

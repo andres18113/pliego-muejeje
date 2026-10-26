@@ -241,10 +241,12 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
     @Override
     public long issueInvoice(long actorUserId,long orderId,PostPurchaseModels.IssueInvoice invoice) {
         var address=invoice.billingAddress();
+        Object provinceValue=address.provinceId()==null?address.city():address.provinceId();
+        Object cityValue=address.cityId()==null?address.province():address.cityId();
         return command("CALL pliego.sp_invoice_issue(?,?,?,?,?,?,?,?,?,?,?,?,?,?)","o_invoice_id",
                 actorUserId,orderId,invoice.documentNumber(),invoice.buyerName(),invoice.identityType(),
-                invoice.identityNumber(),invoice.buyerEmail(),address.line1(),address.line2(),address.city(),
-                address.province(),address.countryCode(),address.postalCode());
+                invoice.identityNumber(),invoice.buyerEmail(),address.line1(),address.line2(),provinceValue,
+                cityValue,address.countryCode(),address.postalCode());
     }
 
     @Override

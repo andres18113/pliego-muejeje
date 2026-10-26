@@ -1,5 +1,5 @@
 {
-  "description": "Synthetic Ecuadorian identification fixtures shared by PostgreSQL, Java and TypeScript (ADR 0041). Cédula: province 01-24 or 30, third digit 0-5, modulo 10. RUC: 13 digits; natural person = valid cédula + establishment 001-999; public sector (third digit 6) = modulo 11 over 8 digits + establishment 0001-9999; private company (third digit 9) = modulo 11 over 9 digits + establishment 001-999. Only ASCII external spaces are trimmed. Algorithm validity only: never evidence of existence or ownership.",
+  "description": "Synthetic Ecuadorian identification fixtures shared by PostgreSQL, Java and TypeScript (ADR 0041, 0043). Cédula: province 01-24 or 30, third digit 0-5, modulo 10. RUC: 13 digits; natural person = valid cédula + establishment 001-999; public sector (third digit 6) = establishment 0001-9999; private company (third digit 9) = establishment 001-999; no modulo-11 check digit for either, per SRI guidance (ADR 0043). Only ASCII external spaces are trimmed. Algorithm validity only: never evidence of existence or ownership.",
   "cases": [
     {
       "id": "cedula-17-1",
@@ -248,10 +248,10 @@
       "valid": true
     },
     {
-      "id": "ruc-private-wrong-check",
+      "id": "ruc-private-no-check-digit",
       "type": "EC_RUC",
       "input": "1790016918001",
-      "valid": false
+      "valid": true
     },
     {
       "id": "ruc-private-establishment-000",
@@ -272,10 +272,10 @@
       "valid": true
     },
     {
-      "id": "ruc-public-wrong-check",
+      "id": "ruc-public-no-check-digit",
       "type": "EC_RUC",
       "input": "1760001210001",
-      "valid": false
+      "valid": true
     },
     {
       "id": "ruc-public-establishment-0000",

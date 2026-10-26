@@ -33,10 +33,12 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
     private static final String PASSWORD_HASH_QUERY = "SELECT pliego.fn_customer_password_hash(?) AS password_hash";
     private static final String EMAIL_CHANGE_CALL = "CALL pliego.sp_customer_change_email(?,?,?)";
     private static final String ADDRESS_LIST_QUERY = "SELECT address_id, alias, recipient, line1, line2, city, "
-            + "province, country_code, postal_code, reference, phone, is_primary "
+            + "province, province_id, city_id, city_needs_review, country_code, postal_code, reference, phone, is_primary "
             + "FROM pliego.fn_address_list(?)";
     private static final String ADDRESS_CREATE_CALL = "CALL pliego.sp_address_create_idempotent(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String ADDRESS_CREATE_LEGACY_CALL = "CALL pliego.sp_address_create_idempotent(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String ADDRESS_UPDATE_CALL = "CALL pliego.sp_address_update(?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String ADDRESS_UPDATE_LEGACY_CALL = "CALL pliego.sp_address_update(?,?,?,?,?,?,?,?,?,?,?,?)";
     private static final String ADDRESS_DELETE_CALL = "CALL pliego.sp_address_delete(?,?)";
     private static final String ADDRESS_SET_PRIMARY_CALL = "CALL pliego.sp_address_set_primary(?,?)";
     private static final String FAVORITES_QUERY = "SELECT edition_id, book_id, title, authors, publisher, price, "
@@ -126,7 +128,8 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
                 statement -> statement.setLong(1, actorUserId), (results, rowNumber) -> new CustomerAddress(
                         results.getLong("address_id"), results.getString("alias"), results.getString("recipient"),
                         results.getString("line1"), results.getString("line2"), results.getString("city"),
-                        results.getString("province"), results.getString("country_code"),
+                        results.getString("province"), nullableLong(results,"province_id"),nullableLong(results,"city_id"),
+                        results.getBoolean("city_needs_review"),results.getString("country_code"),
                         results.getString("postal_code"), results.getString("reference"),
                         results.getString("phone"), results.getBoolean("is_primary"))));
     }
@@ -135,7 +138,8 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
     public long createAddress(long actorUserId, UUID key, AddressData address, boolean makePrimary) {
         return withDatabaseErrorTranslation(() -> jdbcTemplate.execute(
                 (ConnectionCallback<Long>) connection -> {
-                    try (PreparedStatement statement = connection.prepareStatement(ADDRESS_CREATE_CALL)) {
+                    String call = address.provinceId() == null ? ADDRESS_CREATE_LEGACY_CALL : ADDRESS_CREATE_CALL;
+                    try (PreparedStatement statement = connection.prepareStatement(call)) {
                         statement.setLong(1, actorUserId);
                         statement.setObject(2, key);
                         bindAddress(statement, 3, address);
@@ -153,7 +157,8 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
 
     @Override
     public void updateAddress(long actorUserId, long addressId, AddressData address) {
-        executeNoOutput(ADDRESS_UPDATE_CALL, statement -> {
+        String call = address.provinceId() == null ? ADDRESS_UPDATE_LEGACY_CALL : ADDRESS_UPDATE_CALL;
+        executeNoOutput(call, statement -> {
             statement.setLong(1, actorUserId);
             statement.setLong(2, addressId);
             bindAddress(statement, 3, address);
@@ -249,12 +254,22 @@ public class JdbcCustomerGateway extends JdbcGatewaySupport implements CustomerG
         statement.setString(firstIndex + 1, address.recipient());
         statement.setString(firstIndex + 2, address.line1());
         setNullableString(statement, firstIndex + 3, address.line2());
-        statement.setString(firstIndex + 4, address.city());
-        statement.setString(firstIndex + 5, address.province());
+        if (address.provinceId() == null) {
+            statement.setString(firstIndex + 4, address.city());
+            statement.setString(firstIndex + 5, address.province());
+        } else {
+            statement.setLong(firstIndex + 4, address.provinceId());
+            statement.setLong(firstIndex + 5, address.cityId());
+        }
         statement.setString(firstIndex + 6, address.countryCode());
         setNullableString(statement, firstIndex + 7, address.postalCode());
         setNullableString(statement, firstIndex + 8, address.reference());
         statement.setString(firstIndex + 9, address.phone());
+    }
+
+    private static Long nullableLong(ResultSet results,String column) throws SQLException {
+        long value=results.getLong(column);
+        return results.wasNull()?null:value;
     }
 
     private static void setNullableString(PreparedStatement statement, int index, String value) throws SQLException {

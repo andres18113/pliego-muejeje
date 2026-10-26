@@ -58,6 +58,13 @@
 .destructive.destructive:hover:not([aria-disabled="true"]) { border-color: var(--cd-danger-hover); background: var(--cd-danger-hover); color: var(--cd-on-fill); }
 .destructive.destructive:active:not([aria-disabled="true"]) { border-color: var(--cd-danger-press); background: var(--cd-danger-press); }
 .actions [aria-disabled="true"] { cursor: progress; opacity: .7; }
+
+/* Read-back: the sheet exists to check one value, so the value is its centre. Title, value and sentence align on
+   it, and the two answers are balanced pills; on a phone they stack at full width, the decisive one first. */
+.readBack .title.title, .readBack .body.body { text-align: center; }
+.readBack .actions { justify-content: center; }
+.dialog.readBack .actions > * { flex: 1 1 9.5rem; max-width: 12.5rem; padding-inline: 20px; border-radius: 999px; }
+@media (max-width: 420px) { .dialog.readBack .actions > * { max-width: none; } }
 /* Focus is a ring around the answer, never a new fill: the answer keeps its own colour. */
 .dialog :focus-visible { outline: 3px solid var(--cd-focus); outline-offset: 2px; box-shadow: none; }
 

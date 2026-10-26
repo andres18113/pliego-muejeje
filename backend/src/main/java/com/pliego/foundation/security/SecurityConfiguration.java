@@ -83,6 +83,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/v1/catalog/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/storefront/**", "/api/v1/help/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/reference/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/geo/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/v1/pickup-locations").permitAll()
                         .requestMatchers("/v3/api-docs", "/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**")
                         .permitAll()

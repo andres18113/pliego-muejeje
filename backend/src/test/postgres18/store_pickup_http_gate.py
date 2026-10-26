@@ -34,6 +34,7 @@ def main():
     assert status==200 and locations
     location=next(p for p in locations if 'PUCE' in p['name'])
     assert location['active'] and location['preparationMinutes']==25
+    assert location['provinceId']=='17' and location['cityId']=='893' and not location['cityNeedsReview']
     assert location['latitude']==-.21 and location['longitude']==-78.4914
     assert location['openingHours']=={'opensAt':'09:00:00','closesAt':'17:00:00'}
     actors, _=fixture()
@@ -53,7 +54,8 @@ def main():
     assert status==201 and checkout['total']=='7.25' and checkout['taxAmount']=='0.00'
     assert checkout['fulfillment']['method']=='STORE_PICKUP'
     pickup=checkout['fulfillment']['pickup']
-    assert pickup['location']==location and re.fullmatch(r'P-[2-9A-HJ-NP-Z]{6,8}',pickup['pickupCode'])
+    snapshot_location={key:value for key,value in location.items() if key not in ('provinceId','cityId','cityNeedsReview')}
+    assert pickup['location']==snapshot_location and re.fullmatch(r'P-[2-9A-HJ-NP-Z]{6,8}',pickup['pickupCode'])
     oid=checkout['orderId']
     status, detail=request('/api/v1/orders/'+oid,actor)
     assert status==200 and detail['address'] is None and detail['shipment'] is None

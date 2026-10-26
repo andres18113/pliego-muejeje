@@ -1,4 +1,5 @@
 import { fillCheckoutBilling } from "./billing-fixtures";
+import { choosePlace, geoResponse, withPlaceNames } from "./geo-fixtures";
 import { expect, test, type Page, type Route } from "@playwright/test";
 
 /** Account pages are reached from the header's account menu. */
@@ -83,6 +84,7 @@ class FakePliego {
     const request = route.request();
     const url = new URL(request.url());
     const path = url.pathname.replace("/api/v1", "");
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const method = request.method();
     const body = request.postData() ? JSON.parse(request.postData()!) : undefined;
     const ok = (payload: unknown, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(payload) });
@@ -140,7 +142,7 @@ class FakePliego {
     if (path === "/me/addresses" && method === "GET") return ok(this.addresses);
     if (path === "/me/addresses" && method === "POST") {
       const addressId = String(15 + this.addresses.length);
-      this.addresses.push({ addressId, ...body, primary: body.makePrimary || this.addresses.length === 0 });
+      this.addresses.push({ addressId, ...withPlaceNames(body), primary: body.makePrimary || this.addresses.length === 0 });
       return ok({ addressId }, 201);
     }
 
@@ -257,8 +259,7 @@ async function saveFirstAddress(page: Page) {
   const dialog = page.getByRole("dialog", { name: "Nueva dirección" });
   await expect(dialog).toBeVisible();
   await dialog.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
-  await dialog.getByLabel("Ciudad", { exact: true }).fill("Quito");
-  await dialog.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+  await choosePlace(page, dialog);
   await dialog.getByLabel("Teléfono de contacto", { exact: true }).fill("991234567");
   await dialog.getByRole("button", { name: "Guardar dirección", exact: true }).click();
   await expect(page.locator('[data-purchase="selected-address"]')).toContainText("Av. Amazonas 100");

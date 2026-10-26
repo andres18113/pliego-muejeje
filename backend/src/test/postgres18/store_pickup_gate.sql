@@ -76,7 +76,7 @@ BEGIN
  IF (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:'||o)<>1
  OR (SELECT datos->'pickup' FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:'||o) IS DISTINCT FROM snapshot->'pickup'
  THEN RAISE EXCEPTION 'pickup confirmation not atomic or wrong snapshot'; END IF;
- CALL pliego.sp_pickup_location_update(a,pickup,'Nombre editado','Nueva dirección','Otra ciudad','Otra provincia','EC','170525',1,2,
+ CALL pliego.sp_pickup_location_update(a,pickup,'Nombre editado','Nueva dirección','Sangolquí','Pichincha','EC','170525',1,2,
   'UTC','10:00'::TIME,'16:00'::TIME,FALSE,45);
  SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
  IF d.fulfillment IS DISTINCT FROM snapshot THEN RAISE EXCEPTION 'location edit changed history'; END IF;

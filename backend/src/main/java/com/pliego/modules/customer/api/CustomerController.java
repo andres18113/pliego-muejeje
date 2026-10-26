@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 
@@ -55,6 +57,7 @@ import jakarta.validation.constraints.Size;
 @Tag(name = "Customer", description = "Perfil y direcciones del cliente autenticado.")
 @SecurityRequirement(name = "bearerJwt")
 public class CustomerController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomerController.class);
 
     private final CustomerService customerService;
 
@@ -125,9 +128,10 @@ public class CustomerController {
             @RequestHeader("Idempotency-Key") UUID key,
             @Valid @RequestBody AddressRequest request) {
         long addressId = customerService.createAddress(actorUserId(jwt), key, addressData(request.alias(),
-                request.recipient(), request.line1(), request.line2(), request.city(), request.province(),
-                request.countryCode(), request.postalCode(), request.reference(), request.phone()),
+                request.recipient(), request.line1(), request.line2(), request.provinceId(), request.cityId(),
+                request.city(), request.province(), request.countryCode(), request.postalCode(), request.reference(), request.phone()),
                 request.makePrimary());
+        if (request.usesLegacyNames()) LOGGER.info("geo_legacy_payload operation=customer-address-create");
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new AddressCreatedResponse(Long.toString(addressId)));
     }
@@ -140,8 +144,9 @@ public class CustomerController {
             @PathVariable @Positive(message = "El identificador de la dirección debe ser positivo.") long addressId,
             @Valid @RequestBody AddressUpdateRequest request) {
         customerService.updateAddress(actorUserId(jwt), addressId, addressData(request.alias(), request.recipient(),
-                request.line1(), request.line2(), request.city(), request.province(), request.countryCode(),
+                request.line1(), request.line2(), request.provinceId(), request.cityId(), request.city(), request.province(), request.countryCode(),
                 request.postalCode(), request.reference(), request.phone()));
+        if (request.usesLegacyNames()) LOGGER.info("geo_legacy_payload operation=customer-address-update");
         return ResponseEntity.noContent().build();
     }
 
@@ -222,14 +227,18 @@ public class CustomerController {
     }
 
     private static AddressInput addressData(String alias, String recipient, String line1, String line2,
-            String city, String province, String countryCode, String postalCode, String reference, String phone) {
-        return new AddressInput(alias, recipient, line1, line2, city, province, countryCode, postalCode,
-                reference, phone);
+            String provinceId, String cityId, String city, String province, String countryCode, String postalCode,
+            String reference, String phone) {
+        return new AddressInput(alias, recipient, line1, line2, provinceId, cityId, countryCode, postalCode,
+                reference, phone, city, province);
     }
 
     private static CustomerAddressResponse toResponse(CustomerAddress address) {
         return new CustomerAddressResponse(Long.toString(address.addressId()), address.alias(), address.recipient(),
-                address.line1(), address.line2(), address.city(), address.province(), address.countryCode(),
+                address.line1(), address.line2(), address.city(), address.province(),
+                address.cityId() == null ? null : Long.toString(address.cityId()),
+                address.provinceId() == null ? null : Long.toString(address.provinceId()),address.cityNeedsReview(),
+                address.countryCode(),
                 address.postalCode(), address.reference(), address.phone(), address.primary());
     }
 

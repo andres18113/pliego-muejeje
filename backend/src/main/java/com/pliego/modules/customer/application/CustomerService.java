@@ -76,8 +76,9 @@ public class CustomerService {
     public List<CustomerAddress> listAddresses(long actorUserId) {
         return customerGateway.listAddresses(actorUserId).stream()
                 .map(address -> new CustomerAddress(address.addressId(), address.alias(), address.recipient(),
-                        address.line1(), address.line2(), address.city(), address.province(), address.countryCode(),
-                        address.postalCode(), address.reference(), address.phone(), address.primary()))
+                        address.line1(), address.line2(), address.city(), address.province(), address.provinceId(),
+                        address.cityId(), address.cityNeedsReview(), address.countryCode(), address.postalCode(),
+                        address.reference(), address.phone(), address.primary()))
                 .toList();
     }
 
@@ -122,7 +123,9 @@ public class CustomerService {
     }
 
     private static AddressData toGatewayAddress(AddressInput address) {
-        return new AddressData(address.alias(), address.recipient(), address.line1(), address.line2(), address.city(),
-                address.province(), address.countryCode(), address.postalCode(), address.reference(), address.phone());
+        return new AddressData(address.alias(), address.recipient(), address.line1(), address.line2(),
+                address.provinceId() == null ? null : Long.parseLong(address.provinceId()),
+                address.cityId() == null ? null : Long.parseLong(address.cityId()),address.city(),address.province(),
+                address.countryCode(),address.postalCode(),address.reference(),address.phone());
     }
 }

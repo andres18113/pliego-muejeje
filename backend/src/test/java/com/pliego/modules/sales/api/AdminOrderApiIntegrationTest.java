@@ -164,6 +164,26 @@ class AdminOrderApiIntegrationTest {
     }
 
     @Test
+    void legacyAdminInvoiceAddressNamesReachTheStrictDatabaseAdapter() throws Exception {
+        mvc.perform(post("/api/v1/admin/orders/700/invoice")
+                        .header("Authorization", token("7", "ADMIN"))
+                        .header("Idempotency-Key", UUID.randomUUID().toString())
+                        .contentType("application/json")
+                        .content("""
+                                {"documentNumber":"LEGACY-1","buyerName":"Comprador anterior",
+                                 "identityType":"OTHER","identityNumber":"anterior",
+                                 "billingAddress":{"line1":"Calle fiscal","city":"Playas",
+                                 "province":"Guayas","countryCode":"EC"}}
+                                """))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.invoiceId").value("901"));
+        assertEquals("Playas", gateway.lastInvoice.billingAddress().city());
+        assertEquals("Guayas", gateway.lastInvoice.billingAddress().province());
+        assertEquals(null, gateway.lastInvoice.billingAddress().cityId());
+        assertEquals(null, gateway.lastInvoice.billingAddress().provinceId());
+    }
+
+    @Test
     void nonexistentOrderReturnsSafeSpanish404() throws Exception {
         gateway.failure = failure("P5001", "private SQL, table names, and lock data");
         String body = mvc.perform(get("/api/v1/admin/orders/999999")
@@ -323,7 +343,12 @@ class AdminOrderApiIntegrationTest {
 
         @Override public void transitionShipment(long actor,long order,String state) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
         @Override public void updateTracking(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.Tracking tracking) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
-        @Override public long issueInvoice(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice invoice) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
+        @Override public long issueInvoice(long actor,long order,com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice invoice) {
+            called("issue-invoice",actor);
+            orderId=order;
+            lastInvoice=invoice;
+            return 901;
+        }
         @Override public long issueCreditNote(long actor,long order,String number,String reason) { throw new UnsupportedOperationException("Covered by live PostgreSQL HTTP gate"); }
         int calls;
         long actor;
@@ -333,6 +358,7 @@ class AdminOrderApiIntegrationTest {
         DatabaseException failure;
         Page page = new Page(List.of(), 0);
         Search search;
+        com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice lastInvoice;
 
         void reset() {
             calls = 0;
@@ -343,6 +369,7 @@ class AdminOrderApiIntegrationTest {
             failure = null;
             page = new Page(List.of(), 0);
             search = null;
+            lastInvoice = null;
         }
 
         private void called(String operation, long actorUserId) {

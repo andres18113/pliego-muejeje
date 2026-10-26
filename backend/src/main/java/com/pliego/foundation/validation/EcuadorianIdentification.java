@@ -1,7 +1,7 @@
 package com.pliego.foundation.validation;
 
 /**
- * Ecuadorian cédula and RUC by algorithm only (ADR 0041); it never establishes existence or ownership.
+ * Ecuadorian cédula and RUC by structural/check-digit rules only (ADR 0041/0043); it never establishes existence or ownership.
  * Same rules as PostgreSQL {@code fn_is_valid_ec_identification} and the frontend; shared fixtures in
  * {@code shared/validation/ec-identification-cases.json}.
  */
@@ -9,8 +9,6 @@ public final class EcuadorianIdentification {
     public static final String CEDULA = "EC_CEDULA";
     public static final String RUC = "EC_RUC";
     public static final String MESSAGE = "Ingresa una cédula (10 dígitos) o un RUC (13 dígitos) válidos";
-    private static final int[] PUBLIC_WEIGHTS = {3, 2, 7, 6, 5, 4, 3, 2};
-    private static final int[] PRIVATE_WEIGHTS = {4, 3, 2, 7, 6, 5, 4, 3, 2};
 
     private EcuadorianIdentification() { }
 
@@ -33,8 +31,8 @@ public final class EcuadorianIdentification {
             return CEDULA.equals(type) || !value.endsWith("000");
         }
         if (!RUC.equals(type)) return false;
-        if (third == 6) return moduloEleven(value, PUBLIC_WEIGHTS) == value.charAt(8) - '0' && !value.substring(9).equals("0000");
-        if (third == 9) return moduloEleven(value, PRIVATE_WEIGHTS) == value.charAt(9) - '0' && !value.endsWith("000");
+        if (third == 6) return !value.substring(9).equals("0000");
+        if (third == 9) return !value.endsWith("000");
         return false;
     }
 
@@ -53,11 +51,4 @@ public final class EcuadorianIdentification {
         return (10 - sum % 10) % 10;
     }
 
-    /** Returns -1 when the remainder leaves no valid check digit (11 - r = 10). */
-    private static int moduloEleven(String value, int[] weights) {
-        int sum = 0;
-        for (int i = 0; i < weights.length; i++) sum += (value.charAt(i) - '0') * weights[i];
-        int check = 11 - sum % 11;
-        return check == 11 ? 0 : check == 10 ? -1 : check;
-    }
 }

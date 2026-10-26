@@ -63,7 +63,7 @@ describe("STORE_PICKUP transport and checkout", () => {
       await user.type(screen.getByLabelText("Nombre en la tarjeta"), "Ana Pérez");
       await user.click(screen.getByRole("button", { name: "Usar esta tarjeta" }));
     }
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     const posts = transport.calls.filter(call => call.path === "/api/v1/checkout");
     expect(posts).toHaveLength(1);
@@ -89,7 +89,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
     await user.click(await screen.findByRole("tab", { name: "Retiro" }));
     const second = await screen.findByRole("radio", { name: /Segundo punto/ }); await transfer(user);
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     expect(await screen.findByText("Elige un punto de retiro.")).toBeInTheDocument();
     expect(transport.count("POST", "/api/v1/checkout")).toBe(0);
     expect(screen.getAllByRole("radio")[0]).toHaveFocus();
@@ -144,7 +144,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     const transport = api({ "POST /api/v1/checkout": () => { throw new TypeError("Failed to fetch"); },
       "POST /api/v1/checkout/attempts/*/resolve": () => json({ state: "CREATED", order: approved }) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout"); await selectPickup(user); await transfer(user);
-    fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
+    await fillBillingFixture(); await user.click(screen.getByRole("button", { name: "Hacer pedido" }));
     await user.click(await screen.findByRole("button", { name: /Consultar resultado/ }));
     expect(await screen.findByText("P-ABC234")).toBeInTheDocument();
     expect(transport.calls.filter(call => call.method === "POST" && call.path === "/api/v1/checkout")).toHaveLength(1);

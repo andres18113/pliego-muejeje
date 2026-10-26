@@ -47,3 +47,5 @@
 - [0041 — Full cédula and RUC algorithm, validated live](0041-ecuador-cedula-ruc-algorithm.md)
 
 - [0042 — One active digital copy per customer account](0042-single-digital-copy-per-customer.md)
+- [0043 — Tiered billing identity corrections and separate invoice recipients](0043-tiered-billing-identity-and-invoice-recipients.md)
+- [0044 — INEC geographic catalog for editable Ecuadorian addresses](0044-ecuador-geographic-address-catalog.md)

@@ -70,7 +70,7 @@ export async function submitCheckout(command: CheckoutCommand, key: string): Pro
     ? { fulfillmentMethod: command.fulfillmentMethod, pickupLocationId: command.pickupLocationId }
     : { addressId: command.addressId, fulfillmentMethod: "HOME_DELIVERY" as const };
   const body = {
-    billingIdentity: command.billingIdentity, buyerName: command.buyerName,
+    billingRecipient: command.billingRecipient, billingIdentity: command.billingIdentity, buyerName: command.buyerName,
     billingAddress: { ...command.billingAddress, line2: command.billingAddress.line2 ?? undefined, postalCode: command.billingAddress.postalCode ?? undefined },
     ...destination, expectedCartId: command.expectedCartId, expectedQuoteFingerprint: command.expectedQuoteFingerprint, paymentMethod: command.paymentMethod,
     simulationOutcome: "APPROVED",

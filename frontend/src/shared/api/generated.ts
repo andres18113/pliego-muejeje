@@ -83,11 +83,14 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Consultar mi identificación de facturación */
+        /**
+         * Consultar mi identificación de facturación
+         * @description Devuelve la identidad de la cuenta, el uso de facturación y la solicitud vigente o reciente. Respuesta no almacenable en caché.
+         */
         get: operations["get"];
         /**
-         * Registrar mi cédula
-         * @description Registra la primera cédula. Repetir el mismo número no cambia nada; un número distinto responde P1105 y requiere una corrección.
+         * Registrar mi identificación
+         * @description Registra la primera cédula o RUC. Repetir el mismo número no cambia nada; un número distinto responde P1105 y requiere una corrección.
          */
         put: operations["registerBillingIdentity"];
         post?: never;
@@ -428,8 +431,8 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Corregir mi cédula
-         * @description Requiere la contraseña actual y la cédula vista. Queda registrada; las facturas anteriores no cambian.
+         * Corregir mi identificación
+         * @description No requiere contraseña. currentNumber compara con el valor mostrado. currentPassword es opcional por compatibilidad, se ignora y no se valida. Una identidad usada solo admite el cambio directo entre cédula y RUC de la misma persona; cualquier otro cambio requiere revisión.
          */
         post: operations["correctBillingIdentity"];
         delete?: never;
@@ -487,7 +490,7 @@ export interface paths {
         put?: never;
         /**
          * Finalizar compra simulada
-         * @description No realiza cobros reales. Idempotency-Key identifica el intento; repetirlo devuelve el resultado original. Resuelve una respuesta perdida mediante el intento exacto.
+         * @description No realiza cobros reales. Idempotency-Key identifica el intento; repetirlo devuelve el resultado original. Resuelve una respuesta perdida mediante el intento exacto. billingRecipient es opcional y, si se omite, equivale a ACCOUNT. ACCOUNT verifica o registra la identidad de la cuenta; OTHER guarda los datos solo en la factura. El destinatario forma parte de la huella idempotente.
          */
         post: operations["checkout"];
         delete?: never;
@@ -1491,6 +1494,123 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/billing-identity/correction-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Solicitar revisión de una corrección de identificación
+         * @description Crea una solicitud idempotente para una identidad que ya fue usada en una factura de la cuenta.
+         */
+        post: operations["requestBillingIdentityCorrection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/billing-identity-corrections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Listar solicitudes de corrección
+         * @description Ordena por fecha de vencimiento más antigua primero. Solo disponible para ADMIN.
+         */
+        get: operations["searchAdminBillingIdentityCorrections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/billing-identity-corrections/{requestId}/decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Aprobar o rechazar una solicitud
+         * @description Solo disponible para ADMIN. decisionReason es obligatorio al rechazar y se presenta al cliente en español.
+         */
+        post: operations["decideAdminBillingIdentityCorrection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/billing-identity/correction-requests/{id}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retirar mi solicitud pendiente de corrección */
+        post: operations["withdrawBillingIdentityCorrection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/geo/provinces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar provincias
+         * @description Devuelve las provincias activas de Ecuador ordenadas con colación española. Respuesta pública y cacheable.
+         */
+        get: operations["listGeoProvinces"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/geo/provinces/{provinceId}/cities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar ciudades y parroquias de una provincia
+         * @description Devuelve las cabeceras cantonales y parroquias rurales activas en orden alfabético español; luego usa el cantón y el código DPA para desempatar. Respuesta pública y cacheable.
+         */
+        get: operations["listGeoCities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -1559,7 +1679,7 @@ export interface components {
             type: string;
             number?: string;
         };
-        /** @description Reemplaza todos los datos mutables de la dirección. */
+        /** @description Reemplaza todos los datos mutables de la dirección; provinciaId y cityId deben formar un par activo. IDs recomendados: provinceId y cityId deben enviarse juntos. Durante la transición se admite city y province juntos; no se pueden mezclar ambos pares. */
         AddressUpdateRequest: {
             /** @example Casa */
             alias: string;
@@ -1569,10 +1689,6 @@ export interface components {
             line1: string;
             /** @example Departamento 4 */
             line2?: string | null;
-            /** @example Quito */
-            city: string;
-            /** @example Pichincha */
-            province: string;
             /**
              * @example EC
              * @enum {string}
@@ -1587,6 +1703,26 @@ export interface components {
              * @example +59325550134
              */
             phone: string;
+            /**
+             * @description ID decimal del catálogo geográfico. Envíalo junto con cityId; en su lugar se admite el par city/province durante la transición.
+             * @example 17
+             */
+            provinceId?: string;
+            /**
+             * @description ID decimal del catálogo geográfico. Envíalo junto con provinceId; en su lugar se admite el par city/province durante la transición.
+             * @example 893
+             */
+            cityId?: string;
+            /**
+             * @deprecated
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             */
+            city?: string | null;
+            /**
+             * @deprecated
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             */
+            province?: string | null;
         };
         Quantity: {
             /** Format: int32 */
@@ -1712,17 +1848,18 @@ export interface components {
             /** Format: int64 */
             restoredUnits?: number;
         };
+        /** @description La corrección compara currentNumber con el valor mostrado. No requiere contraseña; currentPassword es opcional, se ignora y se acepta por compatibilidad. */
         BillingIdentityCorrectionRequest: {
             type: string;
             currentNumber: string;
-            number?: string;
+            number: string;
             /**
              * Format: password
-             * @description Contraseña actual, para confirmar la corrección.
+             * @description Opcional por compatibilidad; se ignora y no se valida.
              */
-            currentPassword: string;
+            currentPassword?: string;
         };
-        /** @description Datos completos de una dirección del cliente. */
+        /** @description Datos completos de una dirección del cliente. La ciudad y la provincia se eligen por sus IDs del catálogo geográfico. IDs recomendados: provinceId y cityId deben enviarse juntos. Durante la transición se admite city y province juntos; no se pueden mezclar ambos pares. */
         AddressRequest: {
             /** @example Casa */
             alias: string;
@@ -1732,10 +1869,6 @@ export interface components {
             line1: string;
             /** @example Departamento 4 */
             line2?: string | null;
-            /** @example Quito */
-            city: string;
-            /** @example Pichincha */
-            province: string;
             /**
              * @example EC
              * @enum {string}
@@ -1752,6 +1885,26 @@ export interface components {
             phone: string;
             /** @example true */
             makePrimary: boolean;
+            /**
+             * @description ID decimal del catálogo geográfico. Envíalo junto con cityId; en su lugar se admite el par city/province durante la transición.
+             * @example 17
+             */
+            provinceId?: string;
+            /**
+             * @description ID decimal del catálogo geográfico. Envíalo junto con provinceId; en su lugar se admite el par city/province durante la transición.
+             * @example 893
+             */
+            cityId?: string;
+            /**
+             * @deprecated
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             */
+            city?: string | null;
+            /**
+             * @deprecated
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             */
+            province?: string | null;
         };
         AddressCreated: {
             /** @example 15 */
@@ -1763,7 +1916,12 @@ export interface components {
         };
         BillingIdentity: {
             type: string;
-            number?: string;
+            number: string;
+            /** @description True si existe una factura ACCOUNT o histórica (NULL) en cualquier estado para un pedido de esta cuenta. Las facturas OTHER no cuentan. */
+            used: boolean;
+            /** @enum {string} */
+            correctionMode: "DIRECT" | "REQUEST";
+            correctionRequest: components["schemas"]["BillingIdentityCorrection"] | null;
         };
         CheckoutRequest: {
             addressId?: string;
@@ -1780,17 +1938,45 @@ export interface components {
             pickupLocationId?: string;
             /** @description Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación. */
             expectedQuoteFingerprint?: string;
-            billingIdentity: components["schemas"]["BillingIdentity"];
+            billingIdentity: components["schemas"]["CheckoutBillingIdentity"];
             buyerName: string;
             billingAddress: components["schemas"]["InvoiceBillingAddressRequest"];
+            /**
+             * @description Opcional; si se omite equivale a ACCOUNT. OTHER guarda buyerName, billingIdentity y billingAddress solo en la factura.
+             * @enum {string}
+             */
+            billingRecipient?: "ACCOUNT" | "OTHER";
         };
+        /** @description Dirección de facturación ecuatoriana. PostgreSQL toma los nombres de provincia y ciudad desde el par de IDs activo. IDs recomendados: provinceId y cityId deben enviarse juntos. Durante la transición se admite city y province juntos; no se pueden mezclar ambos pares. */
         InvoiceBillingAddressRequest: {
             line1: string;
             line2?: string;
-            city: string;
-            province: string;
-            countryCode: string;
+            /**
+             * @example EC
+             * @enum {string}
+             */
+            countryCode: "EC";
             postalCode?: string;
+            /**
+             * @description ID decimal del catálogo geográfico. Envíalo junto con cityId; en su lugar se admite el par city/province durante la transición.
+             * @example 17
+             */
+            provinceId?: string;
+            /**
+             * @description ID decimal del catálogo geográfico. Envíalo junto con provinceId; en su lugar se admite el par city/province durante la transición.
+             * @example 893
+             */
+            cityId?: string;
+            /**
+             * @deprecated
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             */
+            city?: string | null;
+            /**
+             * @deprecated
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             */
+            province?: string | null;
         };
         CheckoutResponse: {
             orderId?: string;
@@ -2471,6 +2657,15 @@ export interface components {
             phone?: string;
             /** @example true */
             primary?: boolean;
+            /** @example 893 */
+            cityId: string | null;
+            /** @example 17 */
+            provinceId: string | null;
+            /**
+             * @description true cuando una dirección anterior no se pudo vincular sin ambigüedad al catálogo.
+             * @example false
+             */
+            cityNeedsReview: boolean;
         };
         HelpCategory: {
             slug?: string;
@@ -2918,6 +3113,135 @@ export interface components {
             pageSize?: number;
             totalCount?: string;
         };
+        BillingIdentityCorrection: {
+            id: string;
+            /** @enum {string} */
+            status: "PENDING" | "APPROVED" | "REJECTED" | "WITHDRAWN";
+            /** @enum {string} */
+            proposedType: "EC_CEDULA" | "EC_RUC";
+            proposedNumber: string;
+            /** @enum {string} */
+            reasonCode: "DOCUMENT_TYPO" | "DOCUMENT_CHANGED" | "OTHER";
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            dueAt: string;
+            /** Format: date-time */
+            decidedAt: string | null;
+            decisionReason: string | null;
+        };
+        BillingIdentityCorrectionSubmitRequest: {
+            /** @enum {string} */
+            type: "EC_CEDULA" | "EC_RUC";
+            currentNumber: string;
+            /** @description Identificación propuesta; se valida con las reglas de EC_CEDULA o EC_RUC. */
+            number: string;
+            /** @enum {string} */
+            reasonCode: "DOCUMENT_TYPO" | "DOCUMENT_CHANGED" | "OTHER";
+            /** @description Opcional; se recortan espacios exteriores. */
+            note?: string | null;
+        };
+        BillingIdentityCorrectionDecisionRequest: {
+            /** @enum {string} */
+            decision: "APPROVE" | "REJECT";
+            /** @description Obligatorio al rechazar; se muestra al cliente en español. */
+            decisionReason?: string | null;
+        };
+        BillingIdentityCorrectionDecisionResponse: {
+            id: string;
+            /** @enum {string} */
+            status: "APPROVED" | "REJECTED";
+            /** Format: date-time */
+            decidedAt: string;
+            decidedBy: string;
+            decisionReason: string | null;
+        };
+        AdminBillingIdentityCorrectionRequest: {
+            id: string;
+            customerId: string;
+            customerName: string;
+            customerEmail: string;
+            /** @enum {string} */
+            currentType: "EC_CEDULA" | "EC_RUC";
+            currentNumber: string;
+            /** @enum {string} */
+            proposedType: "EC_CEDULA" | "EC_RUC";
+            proposedNumber: string;
+            /** @enum {string} */
+            reasonCode: "DOCUMENT_TYPO" | "DOCUMENT_CHANGED" | "OTHER";
+            note: string | null;
+            /** @enum {string} */
+            status: "PENDING" | "APPROVED" | "REJECTED" | "WITHDRAWN";
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            dueAt: string;
+            /** Format: date-time */
+            decidedAt: string | null;
+            decidedBy: string | null;
+            decisionReason: string | null;
+        };
+        PageResponseAdminBillingIdentityCorrectionRequest: {
+            items: components["schemas"]["AdminBillingIdentityCorrectionRequest"][];
+            /** Format: int32 */
+            page: number;
+            /** Format: int32 */
+            pageSize: number;
+            totalCount: string;
+        };
+        CheckoutBillingIdentity: {
+            /** @enum {string} */
+            type: "EC_CEDULA" | "EC_RUC";
+            number: string;
+        };
+        GeoProvince: {
+            /** @example 17 */
+            id: string;
+            /** @example 17 */
+            code: string;
+            /** @example Pichincha */
+            name: string;
+        };
+        GeoCity: {
+            /** @example 893 */
+            id: string;
+            /** @example 1701 */
+            code: string;
+            /** @example Quito */
+            name: string;
+            /** @enum {string} */
+            kind: "CABECERA_CANTONAL" | "PARROQUIA_RURAL";
+            /** @example Distrito Metropolitano de Quito */
+            cantonName: string;
+            /** @description Nombres alternativos oficiales para búsqueda, ordenados con colación española. */
+            aliases: string[];
+        };
+        /** @description Punto de retiro activo con dirección y coordenadas estándar e IDs de catálogo geográfico. */
+        PickupLocationReference: {
+            id?: string;
+            name?: string;
+            address?: string;
+            city?: string;
+            province?: string;
+            countryCode?: string;
+            postalCode?: string;
+            latitude?: number;
+            longitude?: number;
+            timezone?: string;
+            openingHours?: components["schemas"]["OpeningHours"];
+            active?: boolean;
+            /** Format: int32 */
+            preparationMinutes?: number;
+            /** @example 17 */
+            provinceId: string | null;
+            /** @example 893 */
+            cityId: string | null;
+            /**
+             * @description true cuando el punto de retiro anterior no pudo vincularse sin ambigüedad al catálogo.
+             * @example false
+             */
+            cityNeedsReview: boolean;
+        };
     };
     responses: never;
     parameters: never;
@@ -3175,11 +3499,20 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
+                    "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["BillingIdentity"];
                 };
+            };
+            /** @description No hay identificación registrada */
+            204: {
+                headers: {
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -3196,12 +3529,22 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK */
-            200: {
+            /** @description Identificación registrada */
+            204: {
                 headers: {
+                    "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
             };
         };
     };
@@ -3226,6 +3569,15 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
             };
             /** @description Dirección no disponible */
             404: {
@@ -3801,18 +4153,38 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
+        /** @description Identificación corregida */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["BillingIdentityCorrectionRequest"];
             };
         };
         responses: {
-            /** @description OK */
-            200: {
+            /** @description Identificación corregida */
+            204: {
                 headers: {
+                    "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Conflicto, requiere revisión o existe una solicitud pendiente */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
             };
         };
     };
@@ -3860,7 +4232,7 @@ export interface operations {
                     "application/json": components["schemas"]["AddressCreated"];
                 };
             };
-            /** @description Datos inválidos */
+            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -3917,8 +4289,17 @@ export interface operations {
                     "application/json": components["schemas"]["CheckoutResponse"];
                 };
             };
-            /** @description Solicitud inválida */
+            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Conflicto de identidad o de idempotencia */
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4488,6 +4869,15 @@ export interface operations {
                     "application/json": components["schemas"]["IssuedInvoice"];
                 };
             };
+            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
         };
     };
     issueCreditNote: {
@@ -4910,7 +5300,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PickupLocation"][];
+                    "application/json": components["schemas"]["PickupLocationReference"][];
                 };
             };
         };
@@ -5670,6 +6060,253 @@ export interface operations {
                 };
             };
             /** @description Filtros inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    requestBillingIdentityCorrection: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Cambio propuesto y motivo */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingIdentityCorrectionSubmitRequest"];
+            };
+        };
+        responses: {
+            /** @description Solicitud creada o repetida */
+            201: {
+                headers: {
+                    Location?: string;
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BillingIdentityCorrection"];
+                };
+            };
+            /** @description Datos inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Conflicto de idempotencia o solicitud pendiente */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    searchAdminBillingIdentityCorrections: {
+        parameters: {
+            query?: {
+                status?: "PENDING" | "APPROVED" | "REJECTED" | "WITHDRAWN";
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Página de solicitudes */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PageResponseAdminBillingIdentityCorrectionRequest"];
+                };
+            };
+            /** @description Filtro o página inválidos */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Acceso denegado */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    decideAdminBillingIdentityCorrection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                requestId: number;
+            };
+            cookie?: never;
+        };
+        /** @description Decisión administrativa */
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillingIdentityCorrectionDecisionRequest"];
+            };
+        };
+        responses: {
+            /** @description Decisión registrada */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BillingIdentityCorrectionDecisionResponse"];
+                };
+            };
+            /** @description Decisión inválida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Acceso denegado */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description Solicitud no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description La identidad cambió o la solicitud ya fue atendida */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    withdrawBillingIdentityCorrection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Solicitud retirada */
+            204: {
+                headers: {
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Solicitud no encontrada */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description La solicitud ya no está pendiente */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    listGeoProvinces: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Provincias activas */
+            200: {
+                headers: {
+                    /** @description Datos de referencia; reutilizables durante 24 horas y revalidables durante 24 horas. */
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GeoProvince"][];
+                };
+            };
+        };
+    };
+    listGeoCities: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID decimal devuelto por GET /api/v1/geo/provinces. */
+                provinceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Localidades activas de la provincia; una lista vacía indica que el ID no tiene localidades disponibles. */
+            200: {
+                headers: {
+                    /** @description Datos de referencia; reutilizables durante 24 horas y revalidables durante 24 horas. */
+                    "Cache-Control"?: string;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GeoCity"][];
+                };
+            };
+            /** @description ID de provincia inválido */
             400: {
                 headers: {
                     [name: string]: unknown;

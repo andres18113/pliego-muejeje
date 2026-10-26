@@ -62,12 +62,12 @@ class CustomerApiIntegrationTest {
 
     private static final String ADDRESS = """
             {"alias":"Casa","recipient":"Ana Pérez","line1":"Av. Principal 123","line2":null,
-             "city":"Quito","province":"Pichincha","countryCode":"EC","postalCode":null,
+             "provinceId":"17","cityId":"801","countryCode":"EC","postalCode":null,
              "reference":"Frente al parque","phone":"+59325550134","makePrimary":true}
             """;
     private static final String ADDRESS_UPDATE = """
             {"alias":"Trabajo","recipient":"Ana Pérez","line1":"Av. Principal 123","line2":"Oficina 3",
-             "city":"Quito","province":"Pichincha","countryCode":"EC","postalCode":"170101",
+             "provinceId":"17","cityId":"801","countryCode":"EC","postalCode":"170101",
              "reference":null,"phone":"+59325550134"}
             """;
 
@@ -122,6 +122,50 @@ class CustomerApiIntegrationTest {
                     .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
         }
         assertTrue(gateway.addresses.isEmpty());
+    }
+
+    @Test
+    void addressCreateAndReadExposeCatalogIdsAndReviewFlag() throws Exception {
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString())
+                .header("Authorization", customerToken("100")).contentType(MediaType.APPLICATION_JSON).content(ADDRESS))
+                .andExpect(status().isCreated());
+        mvc.perform(get("/api/v1/me/addresses").header("Authorization", customerToken("100")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].provinceId").value("17"))
+                .andExpect(jsonPath("$[0].cityId").value("801"))
+                .andExpect(jsonPath("$[0].cityNeedsReview").value(false));
+    }
+
+    @Test
+    void legacyAddressNamesAreAcceptedOnlyAsACompletePairDuringTheTransition() throws Exception {
+        String legacy = """
+                {"alias":"Casa anterior","recipient":"Ana Pérez","line1":"Calle antigua",
+                 "city":"Bucay","province":"Guayas","countryCode":"EC","phone":"+59325550134",
+                 "makePrimary":false}
+                """;
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString())
+                        .header("Authorization", customerToken("100")).contentType(MediaType.APPLICATION_JSON).content(legacy))
+                .andExpect(status().isCreated());
+        assertEquals("Bucay", gateway.lastAddressData.city());
+        assertEquals("Guayas", gateway.lastAddressData.province());
+        assertEquals(null, gateway.lastAddressData.cityId());
+        assertEquals(null, gateway.lastAddressData.provinceId());
+
+        mvc.perform(put("/api/v1/me/addresses/501").header("Authorization", customerToken("100"))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                                {"alias":"Casa anterior","recipient":"Ana Pérez","line1":"Calle antigua",
+                                 "city":"Quito","province":"Pichincha","countryCode":"EC","phone":"+59325550134"}
+                                """))
+                .andExpect(status().isNoContent());
+        assertEquals("Quito", gateway.lastAddressData.city());
+        assertEquals("Pichincha", gateway.lastAddressData.province());
+
+        String incomplete = legacy.replace("\"province\":\"Guayas\",", "");
+        mvc.perform(post("/api/v1/me/addresses").header("Idempotency-Key", UUID.randomUUID().toString())
+                        .header("Authorization", customerToken("100")).contentType(MediaType.APPLICATION_JSON).content(incomplete))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
     }
 
     @Test
@@ -451,6 +495,7 @@ class CustomerApiIntegrationTest {
         private long lastActorUserId;
         private long nextAddressId = 501;
         private DatabaseException failure;
+        AddressData lastAddressData;
         private final List<Favorite> favorites = new ArrayList<>();
         String passwordHash;
         private int changeEmailCalls;
@@ -465,6 +510,7 @@ class CustomerApiIntegrationTest {
             lastActorUserId = 0;
             nextAddressId = 501;
             failure = null;
+            lastAddressData = null;
             favorites.clear();
             passwordHash = null;
             changeEmailCalls = 0;
@@ -520,21 +566,23 @@ class CustomerApiIntegrationTest {
 
         @Override public long createAddress(long actorUserId, UUID key, AddressData address, boolean makePrimary) {
             beforeCall(actorUserId);
+            lastAddressData = address;
             if (makePrimary) setNoAddressesPrimary();
             long id = nextAddressId++;
             addresses.add(new CustomerAddress(id, address.alias(), address.recipient(), address.line1(), address.line2(),
-                    address.city(), address.province(), address.countryCode(), address.postalCode(), address.reference(),
-                    address.phone(), makePrimary));
+                    "Quito", "Pichincha", address.provinceId(), address.cityId(), false,address.countryCode(),
+                    address.postalCode(), address.reference(), address.phone(), makePrimary));
             return id;
         }
 
         @Override public void updateAddress(long actorUserId, long addressId, AddressData address) {
             beforeCall(actorUserId);
+            lastAddressData = address;
             int index = findOwnAddress(addressId);
             CustomerAddress old = addresses.get(index);
             addresses.set(index, new CustomerAddress(addressId, address.alias(), address.recipient(), address.line1(),
-                    address.line2(), address.city(), address.province(), address.countryCode(), address.postalCode(),
-                    address.reference(), address.phone(), old.primary()));
+                    address.line2(), "Quito", "Pichincha", address.provinceId(), address.cityId(), false,
+                    address.countryCode(), address.postalCode(), address.reference(), address.phone(), old.primary()));
         }
 
         @Override public void deleteAddress(long actorUserId, long addressId) {
@@ -548,8 +596,9 @@ class CustomerApiIntegrationTest {
             for (int index = 0; index < addresses.size(); index++) {
                 CustomerAddress address = addresses.get(index);
                 addresses.set(index, new CustomerAddress(address.addressId(), address.alias(), address.recipient(),
-                        address.line1(), address.line2(), address.city(), address.province(), address.countryCode(),
-                        address.postalCode(), address.reference(), address.phone(), address.addressId() == addressId));
+                        address.line1(), address.line2(), address.city(), address.province(),address.provinceId(),
+                        address.cityId(),address.cityNeedsReview(),address.countryCode(),address.postalCode(),
+                        address.reference(), address.phone(), address.addressId() == addressId));
             }
         }
 
@@ -584,8 +633,9 @@ class CustomerApiIntegrationTest {
             for (int index = 0; index < addresses.size(); index++) {
                 CustomerAddress address = addresses.get(index);
                 addresses.set(index, new CustomerAddress(address.addressId(), address.alias(), address.recipient(),
-                        address.line1(), address.line2(), address.city(), address.province(), address.countryCode(),
-                        address.postalCode(), address.reference(), address.phone(), false));
+                        address.line1(), address.line2(), address.city(), address.province(),address.provinceId(),
+                        address.cityId(),address.cityNeedsReview(),address.countryCode(),address.postalCode(),
+                        address.reference(), address.phone(), false));
             }
         }
 

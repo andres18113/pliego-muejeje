@@ -26,6 +26,8 @@
 .lines { display: grid; gap: 2px; align-content: start; min-width: 0; color: var(--acc-ink); font-style: normal; line-height: 1.45; overflow-wrap: anywhere; }
 .recipient { font-weight: 600; }
 .phone { margin-top: 4px; color: var(--acc-muted); font-variant-numeric: tabular-nums; }
+.cityReview { display: flex; align-items: flex-start; gap: 6px; margin: 0; color: var(--acc-muted); font-size: .875rem; line-height: 1.4; }
+.cityReview > :global(.material-symbol) { flex: none; margin-top: 1px; color: var(--acc-blue); }
 .reference { margin: -4px 0 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.4; overflow-wrap: anywhere; }
 .reference::before { content: "Referencia: "; font-weight: 600; }
 

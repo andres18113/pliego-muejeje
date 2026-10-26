@@ -126,9 +126,16 @@ def main():
     legacy = f"/api/v1/orders/{legacy_order}/invoice"
     problem(legacy, legacy_actor, 404, "INVOICE_NOT_FOUND")
     problem(legacy + "/files/PDF?disposition=inline", legacy_actor, 409, "INVOICE_FILE_NOT_READY")
-    query(f"CALL pliego.sp_invoice_issue({admin},{legacy_order},'LEGACY-{uuid.uuid4().hex}',"
-          "'Comprador histórico','OTHER','synthetic-fixture',NULL,'Calle histórica',NULL,"
-          "'Quito','Pichincha','EC',NULL,NULL)")
+    issue_payload = {
+        'documentNumber': f'LEGACY-{uuid.uuid4().hex}', 'buyerName': 'Comprador histórico',
+        'identityType': 'OTHER', 'identityNumber': 'synthetic-fixture',
+        'billingAddress': {'line1': 'Calle histórica', 'city': 'Playas', 'province': 'Guayas', 'countryCode': 'EC'},
+    }
+    issue_status, _, issue_body = request(f"/api/v1/admin/orders/{legacy_order}/invoice", admin,
+        role='ADMIN', method='POST', body=issue_payload)
+    assert issue_status == 201, (issue_status, issue_body)
+    invoice_id = json.loads(issue_body)['invoiceId']
+    assert query(f"SELECT ciudad||'|'||provincia FROM pliego.factura_direccion WHERE factura_id={invoice_id}") == 'General Villamil|Guayas'
     status, _, content = request(legacy, legacy_actor)
     metadata = json.loads(content)
     assert status == 200 and metadata["provenance"] == "LEGACY", (status, content)

@@ -108,10 +108,13 @@ def fixtures():
             JOIN pliego.usuario u USING(usuario_id)
             WHERE content.tipo='PDF' AND f.estado='ISSUED' AND u.estado='ACTIVE'
             ORDER BY f.factura_id LIMIT 1),
+          'admin_actor', (SELECT min(usuario_id) FROM pliego.usuario WHERE rol='ADMIN' AND estado='ACTIVE'),
+          'identity_actor', (SELECT min(u.usuario_id) FROM pliego.cliente_identificacion i
+            JOIN pliego.cliente c USING(cliente_id) JOIN pliego.usuario u USING(usuario_id) WHERE u.estado='ACTIVE'),
           'help_slug', NULL)
     """))
-    assert data["cart_actor"] and data["owned"] and data["offer"] and data["invoice"], (
-        "Run after HTTP gates: need a populated cart, active digital ownership, live offer and PDF")
+    assert data["cart_actor"] and data["owned"] and data["offer"] and data["invoice"] and data["admin_actor"] and data["identity_actor"], (
+        "Run after HTTP gates: need a populated cart, active ownership, live offer, PDF, ADMIN, and billing identity")
     # A published article, independent of the seeded slug naming convention.
     data["help_slug"] = psql("SELECT slug FROM pliego.fn_help_search(NULL,NULL,NULL,0,1) LIMIT 1")
     assert data["help_slug"], "Expected published help fixture"
@@ -126,6 +129,7 @@ def cases(data):
     owned = f"{data['owned']['owned']}::bigint"
     invoice_actor = f"{data['invoice']['actor']}::bigint"
     invoice_order = f"{data['invoice']['order']}::bigint"
+    admin_actor = f"{data['admin_actor']}::bigint"
     batch = literal(str(data["owned"]["edition"]))
     key = "'00000000-0000-4000-8000-000000000079'::uuid"
     null = "NULL::varchar"
@@ -142,11 +146,15 @@ def cases(data):
         "fn_offers_filter_options": [],
         "fn_customer_profile_verified": [actor],
         "fn_customer_password_hash": [actor],
+        "fn_geo_provinces": [],
+        "fn_geo_cities": ["17"],
         "fn_address_list": [actor],
         "fn_customer_favorites": [actor, "0", "20"],
         "fn_customer_favorite_status": [actor, batch],
         "fn_address_create_resolve": [actor, key],
         "fn_customer_billing_identity": [actor],
+        "fn_customer_billing_identity_read_model": [f"{data['identity_actor']}::bigint"],
+        "fn_admin_billing_identity_correction_requests": [admin_actor, "'PENDING'", "0", "20"],
         "fn_customer_digital_eligibility": [actor, batch],
         "fn_customer_library": [actor, null, "0", "20"],
         "fn_customer_library_detail": [actor, owned],

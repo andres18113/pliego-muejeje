@@ -6,29 +6,17 @@ import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { CountryFlag } from "./CountryFlag";
 import classes from "./CountryPicker.module.css";
 
+/** One choice of a `SearchPicker`: a stable code and the name a person reads and searches. */
+export type PickerOption = { code: string; name: string };
+/** How a picker names its things: the empty trigger, the result count and the no-match hint. */
+export type PickerWording = { choose: string; one: string; many: string; noMatch: string };
+
+const countryWording: PickerWording = { choose: "Elige un país", one: "país", many: "países", noMatch: "Prueba con otro nombre" };
+
 /**
- * PLIEGO's country choice: a field-shaped trigger (flag + value) that opens one search field over one list.
- * Desktop anchors a compact panel to the trigger; phones get a bottom sheet with taller rows. The panel's
- * search is the only search chrome; the list is a listbox driven from that field (arrows, Page keys, Enter,
- * Escape), keeps the selected country in view and marks it (ultramar + check). Escape, a choice or a click
- * outside close it and return focus to the trigger.
+ * PLIEGO's country choice: the shared `SearchPicker` with a flag before every name.
  */
-export function CountryPicker({
-  id,
-  label,
-  countries,
-  value,
-  onChange,
-  disabled = false,
-  invalid = false,
-  describedBy,
-  valueContent,
-  optionDetail,
-  searchTerms,
-  searchPlaceholder = "Busca un país",
-  className,
-  hideLabel = false,
-}: {
+export function CountryPicker({ countries, searchPlaceholder = "Busca un país", valueContent, optionDetail, ...props }: {
   id: string;
   label: string;
   countries: CountryReference[];
@@ -44,6 +32,58 @@ export function CountryPicker({
   /** Extra text a search may match (e.g. the calling code). */
   searchTerms?: (country: CountryReference) => string;
   searchPlaceholder?: string;
+  className?: string;
+  hideLabel?: boolean;
+}) {
+  return <SearchPicker {...props} options={countries} searchPlaceholder={searchPlaceholder} optionDetail={optionDetail}
+    wording={{ ...countryWording, noMatch: optionDetail ? "Prueba con otro nombre o con el código" : countryWording.noMatch }}
+    leading={(country) => <CountryFlag code={country.code} className={classes.flag} />}
+    valueContent={valueContent ?? ((country) => <><CountryFlag code={country.code} className={classes.flag} /><span className={classes.valueText}>{country.name}</span></>)} />;
+}
+
+/**
+ * PLIEGO's choice from a known list: a field-shaped trigger that opens one search field over one list.
+ * Desktop anchors a compact panel to the trigger; phones get a bottom sheet with taller rows. The panel's
+ * search is the only search chrome; the list is a listbox driven from that field (arrows, Page keys, Enter,
+ * Escape), keeps the selected option in view and marks it (ultramar + check). Escape, a choice or a click
+ * outside close it and return focus to the trigger. Never a native select.
+ */
+export function SearchPicker<T extends PickerOption>({
+  id,
+  label,
+  options,
+  value,
+  onChange,
+  wording,
+  disabled = false,
+  invalid = false,
+  describedBy,
+  valueContent,
+  leading,
+  optionDetail,
+  searchTerms,
+  searchPlaceholder,
+  className,
+  hideLabel = false,
+}: {
+  id: string;
+  label: string;
+  options: T[];
+  value: string;
+  onChange: (code: string) => void;
+  wording: PickerWording;
+  disabled?: boolean;
+  invalid?: boolean;
+  describedBy?: string;
+  /** What the trigger shows for the selected option (defaults to its name). */
+  valueContent?: (option: T) => ReactNode;
+  /** Shown before each option's name (e.g. a flag). */
+  leading?: (option: T) => ReactNode;
+  /** Quiet detail at the end of each option (e.g. the calling code, the canton); `query` is what was typed, trimmed. */
+  optionDetail?: (option: T, query: string) => string;
+  /** Extra text a search may match (e.g. the calling code). */
+  searchTerms?: (option: T) => string;
+  searchPlaceholder: string;
   className?: string;
   hideLabel?: boolean;
 }) {
@@ -70,7 +110,7 @@ export function CountryPicker({
   }, [opened]);
   const labelId = `${id}-label`;
   const panelId = `${id}-panel`;
-  const selected = countries.find((country) => country.code === value) ?? null;
+  const selected = options.find((option) => option.code === value) ?? null;
   const choose = (code: string) => { onChange(code); setOpened(false); };
 
   const trigger = <button
@@ -94,13 +134,13 @@ export function CountryPicker({
     }}
   >
     <span className={classes.value}>{selected
-      ? valueContent?.(selected) ?? <><CountryFlag code={selected.code} className={classes.flag} /><span className={classes.valueText}>{selected.name}</span></>
-      : <span className={classes.placeholder}>Elige un país</span>}</span>
+      ? valueContent?.(selected) ?? <span className={classes.valueText}>{selected.name}</span>
+      : <span className={classes.placeholder}>{wording.choose}</span>}</span>
     <MaterialSymbol name="expand_more" className={`country-picker-chevron ${classes.chevron}`} aria-hidden="true" size={20} />
   </button>;
 
-  const list = <CountryList
-    id={id} label={label} countries={countries} value={value} onChoose={choose} onDismiss={() => setOpened(false)}
+  const list = <OptionList
+    id={id} label={label} options={options} value={value} onChoose={choose} onDismiss={() => setOpened(false)} wording={wording} leading={leading}
     optionDetail={optionDetail} searchTerms={searchTerms} placeholder={searchPlaceholder} autoFocus={!phone || byKeyboard} sheet={phone}
   />;
 
@@ -149,20 +189,25 @@ function revealOption(list: HTMLElement | null, optionId: string, center: boolea
 
 const normalize = (text: string) => text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("es");
 
-function CountryList({ id, label, countries, value, onChoose, onDismiss, optionDetail, searchTerms, placeholder, autoFocus, sheet }: {
+function OptionList<T extends PickerOption>({ id, label, options, value, onChoose, onDismiss, wording, leading, optionDetail, searchTerms, placeholder, autoFocus, sheet }: {
   id: string;
   label: string;
-  countries: CountryReference[];
+  options: T[];
   value: string;
   onChoose: (code: string) => void;
   onDismiss: () => void;
-  optionDetail?: (country: CountryReference) => string;
-  searchTerms?: (country: CountryReference) => string;
+  wording: PickerWording;
+  leading?: (option: T) => ReactNode;
+  optionDetail?: (option: T, query: string) => string;
+  searchTerms?: (option: T) => string;
   placeholder: string;
   autoFocus: boolean;
   sheet: boolean;
 }) {
   const [query, setQuery] = useState("");
+  // A new list (another province's cities) starts without the previous search, even if the panel was still closing.
+  const [shownOptions, setShownOptions] = useState(options);
+  if (shownOptions !== options) { setShownOptions(options); setQuery(""); }
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   // The anchored panel focuses its search only once it is placed, without scrolling the page: focusing
@@ -176,10 +221,10 @@ function CountryList({ id, label, countries, value, onChoose, onDismiss, optionD
   const optionId = (code: string) => `${id}-option-${code}`;
   const visible = useMemo(() => {
     const needle = normalize(query.trim()).replace(/^\+/, "");
-    if (!needle) return countries;
-    return countries.filter((country) => normalize(`${country.name} ${country.code} ${searchTerms?.(country) ?? ""}`).includes(needle));
-  }, [countries, query, searchTerms]);
-  const selectedIndex = visible.findIndex((country) => country.code === value);
+    if (!needle) return options;
+    return options.filter((option) => normalize(`${option.name} ${option.code} ${searchTerms?.(option) ?? ""}`).includes(needle));
+  }, [options, query, searchTerms]);
+  const selectedIndex = visible.findIndex((option) => option.code === value);
   const [active, setActive] = useState(Math.max(0, selectedIndex));
   const activeCountry = visible[Math.min(active, visible.length - 1)];
 
@@ -231,27 +276,27 @@ function CountryList({ id, label, countries, value, onChoose, onDismiss, optionD
       />
     </div>
     <div ref={listRef} role="listbox" id={listId} aria-label={label} className={classes.list} hidden={count === 0}>
-      {visible.map((country, index) => {
-        const isSelected = country.code === value;
+      {visible.map((option, index) => {
+        const isSelected = option.code === value;
         return <div
-          key={country.code}
-          id={optionId(country.code)}
+          key={option.code}
+          id={optionId(option.code)}
           role="option"
           aria-selected={isSelected}
           data-active={index === active || undefined}
           className={classes.option}
           onMouseMove={() => { if (index !== active) setActive(index); }}
           onMouseDown={(event) => event.preventDefault()}
-          onClick={() => onChoose(country.code)}
+          onClick={() => onChoose(option.code)}
         >
-          <CountryFlag code={country.code} className={classes.flag} />
-          <span className={classes.optionName}>{country.name}</span>
-          {optionDetail && <span className={classes.optionDetail}>{optionDetail(country)}</span>}
+          {leading?.(option)}
+          <span className={classes.optionName}>{option.name}</span>
+          {optionDetail && <span className={classes.optionDetail}>{optionDetail(option, query.trim())}</span>}
           <MaterialSymbol name="check" aria-hidden="true" size={18} className={classes.check} />
         </div>;
       })}
     </div>
-    {count === 0 && <p className={classes.empty}>No encontramos «{query.trim()}». Prueba con otro nombre{optionDetail ? " o con el código" : ""}.</p>}
-    <span className="visually-hidden" role="status" aria-live="polite">{query.trim() ? count === 1 ? "1 país" : `${count} países` : ""}</span>
+    {count === 0 && <p className={classes.empty}>No encontramos «{query.trim()}». {wording.noMatch}.</p>}
+    <span className="visually-hidden" role="status" aria-live="polite">{query.trim() ? count === 1 ? `1 ${wording.one}` : `${count} ${wording.many}` : ""}</span>
   </div>;
 }

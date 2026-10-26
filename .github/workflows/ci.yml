@@ -208,6 +208,15 @@ jobs:
           PGDATABASE=pliego_ecuador_contact_upgrade_ci \
             PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_ecuador_contact_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/ecuador_contact_upgrade_gate.py
+      - name: Verify the INEC province/city catalog links legacy addresses and keeps snapshots across Flyway upgrade
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_geo_upgrade_ci
+          # Production's runtime role, so the gate proves V082 leaves it SELECT-only on the catalog.
+          sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -c 'CREATE ROLE pliego_app NOLOGIN'
+          PGDATABASE=pliego_geo_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_geo_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/geo_upgrade_gate.py
       - name: Retain backend failure diagnostics
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

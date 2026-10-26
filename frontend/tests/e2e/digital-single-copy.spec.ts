@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { geoResponse } from "./geo-fixtures";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 import { fillCheckoutBilling } from "./billing-fixtures";
 
@@ -18,6 +19,7 @@ async function mockCustomer(page: Page, options: { initial?: DigitalState; cart?
   const eligibilityGate = options.deferEligibility ? new Promise<void>(resolve => { releaseEligibility = resolve; }) : Promise.resolve();
   await page.route("**/api/v1/**", async route => {
     const request = route.request(), url = new URL(request.url()), path = url.pathname.replace("/api/v1", "");
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const ok = (body: unknown, status = 200) => route.fulfill({ json: body, status });
     const conflict = (code: string) => ok({ type: `urn:pliego:problem:${code}`, status: 409, code, title: "Compra digital bloqueada", detail: "Consulta tu biblioteca o el pedido abierto." }, 409);
     if (path === "/auth/refresh") return ok({ accessToken: "synthetic-digital-token", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "2", email: "digital@example.test", role: "CUSTOMER" } });

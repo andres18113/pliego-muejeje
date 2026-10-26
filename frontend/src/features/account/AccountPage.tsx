@@ -4,7 +4,9 @@ import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { billingIdentityQueryKey, changeEmail, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import { billingIdentityQueryKey, changeEmail, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, withdrawBillingIdentityCorrection, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import type { BillingIdentityCorrectionRequest, StoredBillingIdentity } from "@/shared/api/billing";
+import { orderShortDateLabel } from "@/features/purchase/purchaseText";
 import { personNameSchema, personNameError, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { FieldMessage } from "@/shared/ui/Field";
@@ -60,11 +62,31 @@ function AccountContent() {
 }
 
 type IdentityState = {
-  data: import("@/shared/api/billing").BillingIdentity | null | undefined;
+  data: StoredBillingIdentity | null | undefined;
   pending: boolean;
   failed: boolean;
-  refetch: () => Promise<{ data?: import("@/shared/api/billing").BillingIdentity | null; isError: boolean }>;
+  refetch: () => Promise<{ data?: StoredBillingIdentity | null; isError: boolean }>;
 };
+
+/**
+ * A correction request under the number, in the value's own place: pending says what was asked and until when
+ * staff answer; a recent decision says what happened. A withdrawn request needs no line (ADR 0043).
+ */
+function CorrectionStatus({ request }: { request: BillingIdentityCorrectionRequest | null }) {
+  if (!request || request.status === "WITHDRAWN") return null;
+  if (request.status === "PENDING") return <span className={classes.valueDetail}>
+    <span className={classes.missingChip} data-tone="review">En revisión</span>
+    <span>Pediste cambiarla a <span className={classes.detailNumber}>{request.proposedNumber}</span>. Respuesta antes del {orderShortDateLabel(request.dueAt)}.</span>
+  </span>;
+  if (request.status === "APPROVED") return <span className={classes.valueDetail}>
+    <MaterialSymbol name="check_circle" aria-hidden="true" size={16} />
+    <span>Corregida según tu solicitud del {orderShortDateLabel(request.createdAt)}.</span>
+  </span>;
+  return <span className={classes.valueDetail}>
+    <MaterialSymbol name="info" aria-hidden="true" size={16} />
+    <span>No aplicamos tu corrección a <span className={classes.detailNumber}>{request.proposedNumber}</span>{request.decisionReason ? `: ${request.decisionReason}` : "."}</span>
+  </span>;
+}
 
 /**
  * Identity first and read-only: the reader's avatar and name, then each piece of data as plain text.
@@ -75,6 +97,8 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
   const [feedback, setFeedback] = useState<Feedback | null>(null);
   const editButtons = useRef<Partial<Record<FieldKey, HTMLButtonElement | null>>>({});
   const password = usePasswordCooldown();
+  const [withdrawing, setWithdrawing] = useState(false);
+  const withdrawScope = useSessionOperationScope(`${profile.customerId}:cedula-request`);
   const fullName = `${profile.firstNames} ${profile.lastNames}`.trim();
   const phone = profile.phone ? parsePhoneNumberFromString(profile.phone)?.formatInternational() ?? profile.phone : null;
   const verified = profile.emailVerified !== false;
@@ -90,12 +114,39 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
   }
   const editorProps = (field: FieldKey) => ({ profile, refetch, onExpired, onDone: (result?: Result) => close(field, result) });
 
+  /** Withdrawing keeps the current number; the row says so in place and focus stays on its action. */
+  async function withdraw(requestId: string) {
+    setFeedback(null);
+    setWithdrawing(true);
+    try {
+      withdrawScope.assertCurrent();
+      await withdrawBillingIdentityCorrection(requestId);
+      if (!withdrawScope.isCurrent()) return;
+      await identity.refetch();
+      if (withdrawScope.isCurrent()) setFeedback({ field: "cedula", message: "Retiraste la solicitud. Tu identificación no cambió.", error: false });
+    } catch (failure) {
+      if (!withdrawScope.isCurrent()) return;
+      if (failure instanceof ApiRequestError && failure.status === 401) { onExpired(); return; }
+      // Already decided, or the reply was lost: the stored state is the answer.
+      await identity.refetch();
+      if (withdrawScope.isCurrent()) setFeedback({ field: "cedula", message: "No pudimos retirar la solicitud. Revisa su estado actual.", error: true });
+    } finally {
+      if (withdrawScope.isCurrent()) setWithdrawing(false);
+    }
+  }
+
   const cedula: Row = identity.pending
     ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "Consultando…", disabled: true, editor: null }
     : identity.failed
       ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "No pudimos consultarla.", action: "Volver a consultar", icon: "refresh", onAction: () => void identity.refetch(), editor: null }
-      : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: identity.data ? "Corregir" : "Agregar",
-          editor: <CedulaEditor customerId={profile.customerId} identity={identity.data ?? null} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
+      : identity.data?.correctionRequest?.status === "PENDING"
+        // One change at a time: while staff review a request, the row offers to withdraw it instead of a second one.
+        ? { field: "cedula", label: "Cédula o RUC", value: identity.data.number, detail: <CorrectionStatus request={identity.data.correctionRequest} />,
+            action: "Retirar solicitud", actionName: "de corrección de la cédula o RUC", icon: "close", waiting: withdrawing,
+            onAction: () => void withdraw(identity.data!.correctionRequest!.id), editor: null }
+        : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: identity.data ? "Corregir" : "Agregar",
+            detail: <CorrectionStatus request={identity.data?.correctionRequest ?? null} />,
+            editor: <CedulaEditor customerId={profile.customerId} identity={identity.data ?? null} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
   const rows: Row[] = [
     { field: "firstNames", label: "Nombres", value: profile.firstNames, editor: <NameEditor field="firstNames" label="nombres" {...editorProps("firstNames")} /> },
     { field: "lastNames", label: "Apellidos", value: profile.lastNames, editor: <NameEditor field="lastNames" label="apellidos" {...editorProps("lastNames")} /> },
@@ -136,6 +187,7 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
                 // Not registered yet: a chip names the state; the hint says whether and when it is needed.
                 ? <span className={classes.missing}><span className={classes.missingChip} data-tone={row.missing.tone}>Sin registrar</span><span className="visually-hidden">. </span><span className={classes.missingHint}>{row.missing.hint}</span></span>
                 : row.empty)}
+              {row.value && row.detail}
             </p>
             <Button
               ref={(element: HTMLButtonElement | null) => { editButtons.current[row.field] = element; }}
@@ -144,7 +196,7 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
               // Waiting keeps the action focusable, so focus can return to it after a request.
               aria-disabled={row.waiting || undefined}
               onClick={() => { if (row.waiting) return; if (row.onAction) row.onAction(); else open(row.field); }}
-            ><MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.label[0].toLowerCase() + row.label.slice(1)}</span></Button>
+            ><MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.actionName ?? row.label[0].toLowerCase() + row.label.slice(1)}</span></Button>
           </>}
           {rowFeedback && !isEditing && <p className={`${classes.feedback} ${rowFeedback.error ? classes.feedbackError : ""}`} role={rowFeedback.error ? "alert" : "status"}>
             <MaterialSymbol name={rowFeedback.error ? "info" : "check_circle"} aria-hidden="true" size={16} />{rowFeedback.message}
@@ -168,7 +220,11 @@ type Row = {
   /** The password: `value` is read aloud, the eye sees a fixed mask (the password itself is never shown). */
   masked?: boolean;
   /** `lock` marks the security action of the password row. */
-  action?: string; icon?: "add" | "edit" | "lock" | "refresh"; disabled?: boolean; waiting?: boolean; onAction?: () => void;
+  action?: string; icon?: "add" | "close" | "edit" | "lock" | "refresh"; disabled?: boolean; waiting?: boolean; onAction?: () => void;
+  /** What the action acts on when it is not the row itself, for its accessible name ("Retirar solicitud de corrección…"). */
+  actionName?: string;
+  /** A state line under the value, such as a correction request in review. */
+  detail?: ReactNode;
 };
 
 interface EditorProps {

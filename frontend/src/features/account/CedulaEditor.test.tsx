@@ -48,11 +48,14 @@ it("validates on leaving the field with one message, then reads the number back 
   await user.click(screen.getByRole("button", { name: "Guardar" }));
   const dialog = await screen.findByRole("dialog", { name: "¿Es correcta tu cédula?" });
   expect(within(dialog).getByText("1710034065")).toBeInTheDocument();
-  await user.click(within(dialog).getByRole("button", { name: "Revisar" }));
+  expect(within(dialog).getByText("La usaremos por defecto para tus facturas.")).toBeInTheDocument();
+  // The answer that changes nothing takes focus first; it returns to the field to edit the number.
+  expect(within(dialog).getByRole("button", { name: "Editar" })).toHaveFocus();
+  await user.click(within(dialog).getByRole("button", { name: "Editar" }));
   await waitFor(() => expect(screen.getByLabelText("Cédula o RUC")).toHaveFocus());
   expect(api.count("PUT", "/api/v1/me/billing-identity")).toBe(0);
   await user.click(screen.getByRole("button", { name: "Guardar" }));
-  await user.click(await screen.findByRole("button", { name: "Guardar cédula" }));
+  await user.click(await screen.findByRole("button", { name: "Confirmar cédula" }));
   expect(await screen.findByRole("status")).toHaveTextContent("Guardamos tu cédula.");
   expect(api.calls.find(call => call.method === "PUT")?.body).toEqual({ type: "EC_CEDULA", number: "1710034065" });
   expect(within(row()).getByText("1710034065")).toBeVisible();
@@ -60,38 +63,108 @@ it("validates on leaving the field with one message, then reads the number back 
   expect(screen.queryByRole("button", { name: "Editar cédula" })).not.toBeInTheDocument();
 });
 
-it("corrects a registered cédula only with the current password and the number that was seen", async () => {
+it("corrects a number that is on no invoice directly: in place, read back, without a password", async () => {
   const { api, user } = renderAccount({ "GET /api/v1/me/billing-identity": [stored("0912345675"), stored("1710034065")], "POST /api/v1/me/billing-identity/correction": done });
   expect(await screen.findByText("0912345675")).toBeVisible();
   await user.click(screen.getByRole("button", { name: "Corregir cédula o RUC" }));
-  await user.type(screen.getByLabelText("Cédula o RUC"), "0912345675");
+  const input = screen.getByLabelText("Cédula o RUC");
+  // The current number is the starting point and no error is shown before anything was typed.
+  expect(input).toHaveValue("0912345675");
+  expect(input).toHaveFocus();
+  expect(input).not.toHaveAttribute("aria-invalid");
+  expect(screen.queryByLabelText("Contraseña actual")).not.toBeInTheDocument();
+  expect(screen.queryByText("Por qué pedimos tu contraseña")).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Corregir" }));
-  expect(screen.getByLabelText("Cédula o RUC")).toHaveAccessibleDescription("Ese ya es tu número. Escribe el correcto.");
-  expect(screen.getByText("Escribe tu contraseña actual para confirmar la corrección.")).toBeVisible();
-  await user.clear(screen.getByLabelText("Cédula o RUC"));
-  await user.type(screen.getByLabelText("Cédula o RUC"), "1710034065");
-  await user.type(screen.getByLabelText("Contraseña actual"), "Lectura-segura-2026");
+  expect(input).toHaveAccessibleDescription("Ese ya es tu número. Escribe el correcto.");
+  await user.clear(input);
+  await user.type(input, "1710034065");
   await user.click(screen.getByRole("button", { name: "Corregir" }));
   const dialog = await screen.findByRole("dialog", { name: "¿Corregir tu identificación?" });
   expect(within(dialog).getByText(/Las anteriores conservan la identificación con la que se emitieron/)).toBeInTheDocument();
   await user.click(within(dialog).getByRole("button", { name: "Sí, corregir" }));
   expect(await screen.findByRole("status")).toHaveTextContent("Corregimos tu identificación. Tus facturas anteriores no cambian.");
   expect(api.calls.find(call => call.path === "/api/v1/me/billing-identity/correction")?.body)
-    .toEqual({ type: "EC_CEDULA", currentNumber: "0912345675", number: "1710034065", currentPassword: "Lectura-segura-2026" });
+    .toEqual({ type: "EC_CEDULA", currentNumber: "0912345675", number: "1710034065" });
   expect(within(row()).getByText("1710034065")).toBeVisible();
 });
 
-it("keeps the correction open on a wrong password and never shows success", async () => {
-  const { user } = renderAccount({ "GET /api/v1/me/billing-identity": stored("0912345675"),
-    "POST /api/v1/me/billing-identity/correction": () => problem(400, "CURRENT_PASSWORD_INVALID", "Contraseña incorrecta", "La contraseña actual no es correcta.") });
+const used = (number: string, correctionRequest: object | null = null) => () => json({ type: "EC_CEDULA", number, used: true, correctionMode: "REQUEST", correctionRequest });
+const pendingRequest = { id: "17", status: "PENDING", proposedType: "EC_CEDULA", proposedNumber: "1710034065", reasonCode: "DOCUMENT_TYPO",
+  createdAt: "2026-10-25T17:00:00Z", dueAt: "2026-11-09T17:00:00Z", decidedAt: null, decisionReason: null };
+
+it("sends a number already on an invoice to review, with one reason, and shows the request in the row", async () => {
+  const { api, user } = renderAccount({ "GET /api/v1/me/billing-identity": [used("0912345675"), used("0912345675", pendingRequest)],
+    "POST /api/v1/me/billing-identity/correction-requests": () => json(pendingRequest, 201) });
   await user.click(await screen.findByRole("button", { name: "Corregir cédula o RUC" }));
-  await user.type(screen.getByLabelText("Cédula o RUC"), "1710034065");
-  await user.type(screen.getByLabelText("Contraseña actual"), "otra");
+  const input = screen.getByLabelText("Cédula o RUC");
+  expect(input).toHaveAccessibleDescription(/Ya figura en una factura: revisaremos la corrección antes de aplicarla\./);
+  await user.clear(input);
+  await user.type(input, "1710034065");
+  await user.click(screen.getByRole("button", { name: "Corregir" }));
+  expect(screen.getByText("Elige qué pasó con el número.")).toBeVisible();
+  expect(screen.getByRole("radio", { name: "Lo escribí mal" })).toHaveFocus();
+  await user.click(screen.getByRole("radio", { name: "Lo escribí mal" }));
+  await user.click(screen.getByRole("button", { name: "Corregir" }));
+  const dialog = await screen.findByRole("dialog", { name: "¿Enviar la corrección?" });
+  expect(within(dialog).getByText(/te responderemos en un plazo de 15 días/)).toBeInTheDocument();
+  await user.click(within(dialog).getByRole("button", { name: "Enviar solicitud" }));
+  expect(await screen.findByRole("status")).toHaveTextContent("Enviamos tu solicitud. Te responderemos en un plazo de 15 días.");
+  const call = api.calls.find(entry => entry.path === "/api/v1/me/billing-identity/correction-requests")!;
+  expect(call.body).toEqual({ type: "EC_CEDULA", currentNumber: "0912345675", number: "1710034065", reasonCode: "DOCUMENT_TYPO" });
+  expect(call.headers.get("Idempotency-Key")).toMatch(/^[0-9a-f-]{36}$/);
+  expect(api.calls.filter(entry => entry.path === "/api/v1/me/billing-identity/correction")).toHaveLength(0);
+  // The current number stays; the request reads under it, and the row offers to withdraw it instead of correcting again.
+  expect(within(row()).getByText("0912345675")).toBeVisible();
+  expect(within(row()).getByText("En revisión")).toBeVisible();
+  expect(within(row()).getByText(/Pediste cambiarla a/)).toHaveTextContent("Pediste cambiarla a 1710034065. Respuesta antes del 9 nov 2026.");
+  expect(screen.getByRole("button", { name: "Retirar solicitud de corrección de la cédula o RUC" })).toBeVisible();
+  expect(screen.queryByRole("button", { name: "Corregir cédula o RUC" })).not.toBeInTheDocument();
+});
+
+it("switches between the same person's cédula and RUC directly, even once the number is on an invoice", async () => {
+  const { api, user } = renderAccount({ "GET /api/v1/me/billing-identity": [used("1710034065"), stored("1710034065001")], "POST /api/v1/me/billing-identity/correction": done });
+  await user.click(await screen.findByRole("button", { name: "Corregir cédula o RUC" }));
+  await user.type(screen.getByLabelText("Cédula o RUC"), "001");
+  expect(screen.getByLabelText("Cédula o RUC")).toHaveAccessibleDescription(/Es la misma persona: el cambio se aplica de inmediato\./);
+  expect(screen.queryByRole("radio")).not.toBeInTheDocument();
   await user.click(screen.getByRole("button", { name: "Corregir" }));
   await user.click(await screen.findByRole("button", { name: "Sí, corregir" }));
-  expect(await screen.findByText("La contraseña actual no es correcta.")).toBeVisible();
-  expect(screen.getByLabelText("Contraseña actual")).toHaveValue("");
+  expect(await screen.findByRole("status")).toHaveTextContent("Corregimos tu identificación.");
+  expect(api.calls.find(call => call.path === "/api/v1/me/billing-identity/correction")?.body)
+    .toEqual({ type: "EC_RUC", currentNumber: "1710034065", number: "1710034065001" });
+  expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests")).toBe(0);
+});
+
+it("turns a direct correction the server refuses as already invoiced into a request, without losing the number", async () => {
+  const { api, user } = renderAccount({ "GET /api/v1/me/billing-identity": stored("0912345675"),
+    "POST /api/v1/me/billing-identity/correction": () => problem(409, "P1107", "Esta identificación requiere revisión", "Esta identificación ya figura en una factura.") });
+  await user.click(await screen.findByRole("button", { name: "Corregir cédula o RUC" }));
+  await user.clear(screen.getByLabelText("Cédula o RUC"));
+  await user.type(screen.getByLabelText("Cédula o RUC"), "1710034065");
+  await user.click(screen.getByRole("button", { name: "Corregir" }));
+  await user.click(await screen.findByRole("button", { name: "Sí, corregir" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("Esta identificación ya figura en una factura: revisaremos la corrección antes de aplicarla.");
+  expect(screen.getByLabelText("Cédula o RUC")).toHaveValue("1710034065");
+  await waitFor(() => expect(screen.getByRole("radio", { name: "Lo escribí mal" })).toHaveFocus());
   expect(screen.queryByRole("status")).not.toBeInTheDocument();
+  expect(api.calls.filter(entry => entry.path === "/api/v1/me/billing-identity/correction")).toHaveLength(1);
+});
+
+it("withdraws a pending request in place and keeps the current number", async () => {
+  const { api, user } = renderAccount({ "GET /api/v1/me/billing-identity": [used("0912345675", pendingRequest), used("0912345675")],
+    "POST /api/v1/me/billing-identity/correction-requests/17/withdraw": done });
+  await user.click(await screen.findByRole("button", { name: "Retirar solicitud de corrección de la cédula o RUC" }));
+  expect(await screen.findByRole("status")).toHaveTextContent("Retiraste la solicitud. Tu identificación no cambió.");
+  expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests/17/withdraw")).toBe(1);
+  expect(within(row()).queryByText("En revisión")).not.toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Corregir cédula o RUC" })).toBeVisible();
+});
+
+it("says why a request was not applied and lets the customer correct again", async () => {
+  renderAccount({ "GET /api/v1/me/billing-identity": used("0912345675", { ...pendingRequest, status: "REJECTED", decidedAt: "2026-10-27T15:00:00Z",
+    decisionReason: "La documentación no permite confirmar el cambio." }) });
+  expect(await screen.findByText(/No aplicamos tu corrección a/)).toHaveTextContent("No aplicamos tu corrección a 1710034065: La documentación no permite confirmar el cambio.");
+  expect(screen.getByRole("button", { name: "Corregir cédula o RUC" })).toBeEnabled();
 });
 
 it("explains a stale registration without overwriting the stored cédula", async () => {
@@ -100,7 +173,7 @@ it("explains a stale registration without overwriting the stored cédula", async
   await user.click(await screen.findByRole("button", { name: "Agregar cédula o RUC" }));
   await user.type(screen.getByLabelText("Cédula o RUC"), "1710034065");
   await user.click(screen.getByRole("button", { name: "Guardar" }));
-  await user.click(await screen.findByRole("button", { name: "Guardar cédula" }));
+  await user.click(await screen.findByRole("button", { name: "Confirmar cédula" }));
   expect(await screen.findByRole("alert")).toHaveTextContent("Tu perfil ya tiene una cédula o RUC. Cancela para revisarlo y, si es incorrecto, usa Corregir.");
   expect(api.count("PUT", "/api/v1/me/billing-identity")).toBe(1);
 });
@@ -111,7 +184,7 @@ it.each([["applied", "1710034065", "Guardamos tu cédula."], ["not applied", nul
   await user.click(await screen.findByRole("button", { name: "Agregar cédula o RUC" }));
   await user.type(screen.getByLabelText("Cédula o RUC"), "1710034065");
   await user.click(screen.getByRole("button", { name: "Guardar" }));
-  await user.click(await screen.findByRole("button", { name: "Guardar cédula" }));
+  await user.click(await screen.findByRole("button", { name: "Confirmar cédula" }));
   expect(await screen.findByText(new RegExp(message))).toBeVisible();
   expect(api.count("PUT", "/api/v1/me/billing-identity")).toBe(1);
 });

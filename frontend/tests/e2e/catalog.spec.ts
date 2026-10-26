@@ -404,7 +404,7 @@ test("keeps the editorial Home and Bricolage heading hierarchy at all target wid
     const title = page.getByRole("heading", { level: 1 });
     await expect(title).toBeVisible();
     // Libros has a featured title in this mock, so the header shows it as a section menu.
-    await expect(page.getByTestId("site-header").getByRole("button", { name: width >= 960 ? "Libros" : "Abrir navegación", exact: true })).toBeVisible();
+    await expect(page.getByTestId("site-header").getByRole("button", { name: width >= 960 ? "Menú de Libros" : "Abrir navegación", exact: true })).toBeVisible();
     expect(await title.evaluate((node) => getComputedStyle(node).fontFamily)).toContain("Bricolage Grotesque");
     await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
   }

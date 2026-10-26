@@ -35,7 +35,10 @@ identity = {"type": "EC_CEDULA", "number": "0912345675"}
 assert request(path, actor)[0] == 204
 assert request(path, actor, "PUT", identity)[0] == 204
 status, headers, body = request(path, actor)
-assert status == 200 and json.loads(body) == identity and "no-store" in headers.get("Cache-Control", "")
+stored_identity = json.loads(body)
+assert status == 200 and stored_identity["type"] == identity["type"] and stored_identity["number"] == identity["number"]
+assert not stored_identity["used"] and stored_identity["correctionMode"] == "DIRECT" and stored_identity["correctionRequest"] is None
+assert "no-store" in headers.get("Cache-Control", "")
 assert request(path, other)[0] == 204
 assert request(path, actor, "PUT", {**identity, "number": "0012345670"})[0] == 400
 # ADR 0040: registration never overwrites, the cédula cannot be removed, and a purchase uses it.
@@ -47,7 +50,7 @@ assert query(f"SELECT count(*) FROM pliego.cliente_identificacion_evento e JOIN 
 
 payload = {"addressId": str(address), "paymentMethod": "CARD", "simulationOutcome": "APPROVED",
            "cardNumber": "4242424242424242", "billingIdentity": identity, "buyerName": "Comprador Prueba",
-           "billingAddress": {"line1": "Calle Fiscal", "city": "Quito", "province": "Pichincha", "countryCode": "EC"}}
+           "billingAddress": {"line1": "Calle Fiscal", "provinceId": "17", "cityId": "893", "countryCode": "EC"}}
 key = uuid.uuid4()
 invalid = {**payload, "billingIdentity": {"type": "EC_CEDULA", "number": "0012345670"}}
 status, _, invalid_body = request("/api/v1/checkout", actor, "POST", invalid, uuid.uuid4())
@@ -117,7 +120,7 @@ unicode_actors, _ = fixture()
 unicode_actor, unicode_address = unicode_actors[0]
 unicode_payload = {**payload, "addressId": str(unicode_address), "buyerName": "Ana 李",
     "billingAddress": {"line1": ("Calle\nFiscal " + "A" * 200)[:200], "line2": "B" * 200,
-                       "city": "Q" * 100, "province": "P" * 100, "countryCode": "EC"}}
+                       "provinceId": "17", "cityId": "893", "countryCode": "EC"}}
 status, _, body = request("/api/v1/checkout", unicode_actor, "POST", unicode_payload, uuid.uuid4())
 assert status == 201, (status, body)
 unicode_path = f'/api/v1/orders/{json.loads(body)["orderId"]}/invoice'
@@ -136,14 +139,16 @@ assert status == 200 and b"[U+674E]" in body and b"/ActualText" in body
 # ADR 0041: a RUC buyer is invoiced as TAX_ID with SRI code 04; an invalid RUC creates nothing.
 ruc_actors, _ = fixture()
 ruc_actor, ruc_address = ruc_actors[0]
-ruc_payload = {**payload, "addressId": str(ruc_address), "billingIdentity": {"type": "EC_RUC", "number": "1790016919001"}, "buyerName": "Sociedad Prueba"}
-status, _, body = request("/api/v1/checkout", ruc_actor, "POST", {**ruc_payload, "billingIdentity": {"type": "EC_RUC", "number": "1790016918001"}}, uuid.uuid4())
-assert status == 400 and "1790016918001" not in body.decode(), body
+ruc_payload = {**payload, "addressId": str(ruc_address), "billingIdentity": {"type": "EC_RUC", "number": "1790016918001"}, "buyerName": "Sociedad Prueba"}
+status, _, body = request("/api/v1/checkout", ruc_actor, "POST", {**ruc_payload, "billingIdentity": {"type": "EC_RUC", "number": "1790016918000"}}, uuid.uuid4())
+assert status == 400 and "1790016918000" not in body.decode(), body
 status, _, body = request("/api/v1/checkout", ruc_actor, "POST", ruc_payload, uuid.uuid4())
 assert status == 201, (status, body)
 ruc_order = int(json.loads(body)["orderId"])
-assert query(f"SELECT identidad_tipo||'|'||identidad_numero FROM pliego.factura WHERE pedido_id={ruc_order}") == "TAX_ID|1790016919001"
-assert json.loads(request(path, ruc_actor)[2]) == {"type": "EC_RUC", "number": "1790016919001"}
+assert query(f"SELECT identidad_tipo||'|'||identidad_numero FROM pliego.factura WHERE pedido_id={ruc_order}") == "TAX_ID|1790016918001"
+stored_ruc = json.loads(request(path, ruc_actor)[2])
+assert stored_ruc["type"] == "EC_RUC" and stored_ruc["number"] == "1790016918001"
+assert stored_ruc["used"] and stored_ruc["correctionMode"] == "REQUEST"
 deadline = time.monotonic() + 35
 while True:
     status, _, body = request(f"/api/v1/orders/{ruc_order}/invoice", ruc_actor)
@@ -152,5 +157,5 @@ while True:
     assert time.monotonic() < deadline, "RUC invoice artifacts did not complete"
     time.sleep(0.25)
 status, _, body = request(f"/api/v1/orders/{ruc_order}/invoice/files/XML", ruc_actor)
-assert status == 200 and b"<tipoIdentificacionComprador>04</tipoIdentificacionComprador>" in body and b"1790016919001" in body
+assert status == 200 and b"<tipoIdentificacionComprador>04</tipoIdentificacionComprador>" in body and b"1790016918001" in body
 print("Live billed checkout/profile/replay/ownership/ADMIN/private PDF+XML, pending approval and Unicode/address boundaries and RUC (TAX_ID/04) passed.")

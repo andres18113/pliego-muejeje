@@ -257,6 +257,11 @@ public final class ApiExceptionHandler {
             case CUSTOMER_NOT_FOUND -> "Perfil no encontrado";
             case BILLING_IDENTITY_CONFLICT -> "Tu identificación cambió";
             case BILLING_IDENTITY_MISMATCH -> "Identificación distinta a la de tu perfil";
+            case BILLING_IDENTITY_CORRECTION_REQUIRES_REVIEW -> "Esta identificación requiere revisión";
+            case BILLING_IDENTITY_CORRECTION_PENDING -> "Ya tienes una solicitud pendiente";
+            case BILLING_IDENTITY_CORRECTION_NOT_FOUND -> "Solicitud no encontrada";
+            case BILLING_IDENTITY_CORRECTION_NOT_REQUIRED -> "Puedes corregirla directamente";
+            case BILLING_IDENTITY_CORRECTION_INVALID_TRANSITION -> "Solicitud ya atendida";
             case ADDRESS_NOT_FOUND -> "Dirección no encontrada";
             case AUTHOR_NOT_FOUND -> "Autor no encontrado";
             case AUTHOR_INACTIVE -> "Autor no disponible";
@@ -300,6 +305,8 @@ public final class ApiExceptionHandler {
             case PICKUP_LOCATION_INACTIVE -> "Punto de retiro no disponible";
             case PICKUP_NOT_APPLICABLE -> "Retiro no disponible para este carrito";
             case PICKUP_CODE_INVALID -> "Código de retiro incorrecto";
+            case GEO_CITY_PROVINCE_INVALID -> "Ciudad no válida para la provincia";
+            case GEO_CITY_UNAVAILABLE -> "Ciudad no disponible";
             case PAYMENT_OUTCOME_INVALID -> "Resultado de pago inválido";
             case PAYMENT_STATE_INVALID -> "Estado de pago inválido";
             case PAYMENT_REFERENCE_CONFLICT -> "Referencia de pago en conflicto";
@@ -405,6 +412,11 @@ public final class ApiExceptionHandler {
             case CUSTOMER_NOT_FOUND -> "El perfil solicitado no está disponible.";
             case BILLING_IDENTITY_CONFLICT -> "La identificación de tu perfil no es la que estabas viendo. Revisa la actual antes de continuar.";
             case BILLING_IDENTITY_MISMATCH -> "La factura usa la cédula o el RUC registrado en tu perfil. Si es incorrecto, corrígelo en Mi perfil.";
+            case BILLING_IDENTITY_CORRECTION_REQUIRES_REVIEW -> "Esta identificación ya figura en una factura. Solicita la corrección para que la revisemos.";
+            case BILLING_IDENTITY_CORRECTION_PENDING -> "Ya existe una solicitud de corrección pendiente para esta cuenta.";
+            case BILLING_IDENTITY_CORRECTION_NOT_FOUND -> "La solicitud no existe o no está disponible para esta cuenta.";
+            case BILLING_IDENTITY_CORRECTION_NOT_REQUIRED -> "Esta identificación no requiere una solicitud; usa la corrección directa de tu perfil.";
+            case BILLING_IDENTITY_CORRECTION_INVALID_TRANSITION -> "La solicitud ya no está pendiente y no puede cambiarse.";
             case ADDRESS_NOT_FOUND -> "La dirección solicitada no existe o no está disponible para tu cuenta.";
             case DIGITAL_ALREADY_OWNED -> "Esta edición digital ya está en tu biblioteca. Puedes consultarla sin volver a comprarla.";
             case DIGITAL_PURCHASE_PENDING -> "Ya tienes un pedido abierto con esta edición digital. Revisa ese pedido antes de intentar otra compra.";
@@ -413,6 +425,8 @@ public final class ApiExceptionHandler {
             case PICKUP_LOCATION_INACTIVE -> "El punto de retiro está inactivo. Selecciona otro.";
             case PICKUP_NOT_APPLICABLE -> "El retiro en tienda requiere al menos un producto físico.";
             case PICKUP_CODE_INVALID -> "El código de retiro no corresponde al pedido.";
+            case GEO_CITY_PROVINCE_INVALID -> "La ciudad no pertenece a la provincia seleccionada.";
+            case GEO_CITY_UNAVAILABLE -> "Elige una ciudad de la lista.";
             case AUTHOR_NOT_FOUND -> "El autor solicitado no está disponible.";
             case AUTHOR_INACTIVE -> "El autor no está disponible para esta operación.";
             case PUBLISHER_NOT_FOUND -> "La editorial solicitada no está disponible.";
