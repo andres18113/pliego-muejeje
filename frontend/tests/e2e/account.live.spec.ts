@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { choosePlace } from "./geo-fixtures";
 import { verifyRegisteredEmail } from "./shared/verified-registration";
 
 /** Account pages are reached from the header's account menu. */
@@ -101,8 +102,7 @@ test("customer navigates profile, address book and orders across desktop and mob
   await page.getByRole("button", { name: "Agregar dirección" }).click();
   await expect(page.locator("#address-form-heading")).toBeFocused();
   await page.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
-  await page.getByLabel("Ciudad").fill("Quito");
-  await page.getByLabel("Provincia").fill("Pichincha");
+  await choosePlace(page, page.locator("body"), "Pichincha", "Quito");
   await page.setViewportSize({ width: 1280, height: 1800 });
   const deliveryCountry = page.getByRole("combobox", { name: "País de entrega", exact: true });
   const desktopCountryBefore = await settledBox(deliveryCountry);

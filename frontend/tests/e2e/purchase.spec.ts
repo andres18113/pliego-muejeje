@@ -245,11 +245,13 @@ async function signInAndAdd(page: Page, api: FakePliego, screenshots?: { pending
   expect(Math.abs(successBox.y - idleBox.y)).toBeLessThanOrEqual(1);
   expect(successBox.width).toBeCloseTo(idleBox.width, 0);
   expect(successBox.height).toBeCloseTo(idleBox.height, 0);
-  await expect(addButton).toBeFocused();
+  // A confirmed add from the scene answers like the bar's: the cart drawer, with the line just added.
+  const drawer = page.getByRole("dialog", { name: "Tu carrito" });
+  await expect(drawer).toBeVisible();
   await expect(page.getByTestId("header-cart-count")).toHaveText("1");
   expect(api.addPosts).toBe(1);
   if (screenshots) await page.screenshot({ path: screenshots.added, fullPage: true });
-  await page.getByRole("link", { name: "Ver el carrito" }).click();
+  await drawer.getByRole("link", { name: "Ver carrito" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Tu carrito" })).toBeVisible();
   if (screenshots) await page.screenshot({ path: screenshots.cart, fullPage: true });
 }

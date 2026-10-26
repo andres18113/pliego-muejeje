@@ -24,6 +24,8 @@ export function stubApi(routes: Record<string, Handler | Handler[]>) {
     if (!entry && key === "GET /api/v1/reference/transfer-details") return json({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
     if (!entry && key === "GET /api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (!entry && key === "GET /api/v1/me/favorites") return json({ items: [], page: 0, pageSize: 20, totalCount: "0" });
+    // Saved for Later (ADR 0045) is empty unless a test says otherwise.
+    if (!entry && key === "GET /api/v1/cart/saved") return json({ items: [], totalCount: 0 });
     if (!entry && key === "GET /api/v1/geo/provinces") return json(geoProvincesFixture);
     if (!entry && key.startsWith("GET /api/v1/geo/provinces/") && key.endsWith("/cities")) return json(geoCitiesFixture[url.pathname.split("/")[5]] ?? []);
     if (!entry) return json({ title: "Sin ruta de prueba", detail: key }, 599);
@@ -84,6 +86,12 @@ export function renderPurchaseRoute(
   return { ...view, router, queryClient };
 }
 
+/** A Saved for Later item: a cart line's projection with its own id and the quantity it will return with. */
+export function savedItem(item: Partial<CartItemFixture> & { savedItemId?: string } = {}) {
+  const { cartItemId: _cartItemId, ...line } = cartBody([item]).items[0];
+  return { ...line, savedItemId: item.savedItemId ?? "501" };
+}
+
 export function cartBody(items: Partial<CartItemFixture>[] = [{}], total?: string) {
   const lines = items.map((item, index) => {
     const requiresPhysicalFulfillment = item.requiresPhysicalFulfillment ?? (item.format !== "EBOOK" && item.format !== "AUDIOBOOK");
@@ -137,7 +145,7 @@ export const geoCitiesFixture: Record<string, { id: string; code: string; name: 
 
 /**
  * Chooses a province, then one of its places, in the catalog pickers inside `container` (stubApi serves the slice).
- * The city is matched by the start of its row, which may add the canton ("El Quinche · Quito").
+ * The city is matched by the start of its row, which adds a detail only for a repeated name or an alias match.
  */
 export async function choosePlace(container: HTMLElement = document.body, province = "Pichincha", city = "Quito") {
   const scope = within(container);

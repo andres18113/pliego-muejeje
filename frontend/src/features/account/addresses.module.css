@@ -50,7 +50,8 @@
 .addCopy strong { font: 650 1.25rem/1.15 var(--acc-display); letter-spacing: -.03em; }
 .addCopy small { color: var(--acc-muted); font-size: .9375rem; line-height: 1.4; }
 
-.empty { margin: 0; }
+/* Centered like the page heading and the add card under it, so the empty state reads as one column. */
+.empty { margin: 0; text-align: center; }
 .empty h3 { margin: 0; font: 650 1.375rem/1.2 var(--acc-display); letter-spacing: -.03em; }
 
 /* The address editor: one sheet laid over the page (centered ≥600px, full-height on phones). It is portalled,

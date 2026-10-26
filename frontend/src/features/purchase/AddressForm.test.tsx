@@ -130,11 +130,14 @@ describe("AddressForm collapsed error recovery", () => {
     expect(province.compareDocumentPosition(city) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     fireEvent.click(city);
     const places = within(await screen.findByRole("listbox", { name: "Ciudad" }));
-    expect(places.getAllByRole("option").map(option => option.textContent?.replace("check", ""))).toEqual(["El QuincheQuito", "Quito", "SangolquíRumiñahui"]);
+    expect(places.getAllByRole("option").map(option => option.textContent?.replace("check", ""))).toEqual(["El Quinche", "Quito", "Sangolquí"]);
     expect(places.queryByRole("option", { name: /Guayaquil/ })).not.toBeInTheDocument();
-    // The canton finds its seat: "Rumiñahui" is Sangolquí.
-    fireEvent.change(screen.getByRole("combobox", { name: "Buscar ciudad" }), { target: { value: "rumiñahui" } });
-    expect(places.getAllByRole("option").map(option => option.textContent?.replace("check", ""))).toEqual(["SangolquíRumiñahui"]);
+    // Each row is the place's own name; a canton is not a search term, so "Quito" does not list its parishes.
+    const search = screen.getByRole("combobox", { name: "Buscar ciudad" });
+    fireEvent.change(search, { target: { value: "quito" } });
+    expect(places.getAllByRole("option").map(option => option.textContent?.replace("check", ""))).toEqual(["Quito"]);
+    fireEvent.change(search, { target: { value: "sangol" } });
+    expect(places.getAllByRole("option").map(option => option.textContent?.replace("check", ""))).toEqual(["Sangolquí"]);
     fireEvent.click(places.getByRole("option", { name: /Sangolquí/ }));
     await waitFor(() => expect(city).toHaveTextContent("Sangolquí"));
     // Another province clears a city that belongs to the previous one.
@@ -180,8 +183,8 @@ describe("AddressForm collapsed error recovery", () => {
     fireEvent.click(city);
     const places = within(await screen.findByRole("listbox", { name: "Ciudad" }));
     const rows = () => places.getAllByRole("option").map(option => option.textContent?.replace("check", ""));
-    // Unsearched, a row names only its canton when its own name does not: Guayaquil's urban parishes stay quiet.
-    expect(rows()).toEqual(expect.arrayContaining(["General Antonio Elizalde", "General VillamilPlayas", "Guayaquil"]));
+    // Unsearched, a row is only the place's name: no canton, and Guayaquil's urban parishes stay quiet.
+    expect(rows()).toEqual(expect.arrayContaining(["General Antonio Elizalde", "General Villamil", "Guayaquil"]));
     // A search that matches only another INEC name shows that name, so the row says why it is there; never a second row.
     const search = screen.getByRole("combobox", { name: "Buscar ciudad" });
     fireEvent.change(search, { target: { value: "bucay" } });

@@ -236,6 +236,7 @@ public final class ApiExceptionHandler {
             return switch (error) {
                 case CART_NOT_ACTIVE -> "Carrito no disponible";
                 case CART_ITEM_NOT_FOUND -> "Artículo del carrito no encontrado";
+                case SAVED_ITEM_NOT_FOUND -> "Artículo guardado no encontrado";
                 case CART_QUANTITY_INVALID -> "Cantidad inválida";
                 default -> databaseTitle(error);
             };
@@ -294,6 +295,7 @@ public final class ApiExceptionHandler {
             case CART_ITEM_NOT_FOUND -> "Artículo del carrito no encontrado";
             case CART_QUANTITY_INVALID -> "Cantidad del carrito inválida";
             case CART_QUOTE_CHANGED -> "El carrito cambió";
+            case SAVED_ITEM_NOT_FOUND -> "Artículo guardado no encontrado";
             case ORDER_NOT_FOUND -> "Pedido no encontrado";
             case ORDER_INVALID_TRANSITION -> "Cambio de estado del pedido inválido";
             case DIGITAL_ALREADY_OWNED -> "Ya tienes esta edición digital";
@@ -364,6 +366,7 @@ public final class ApiExceptionHandler {
             return switch (error) {
                 case CART_NOT_ACTIVE -> "No hay un carrito activo para realizar esta operación.";
                 case CART_ITEM_NOT_FOUND -> "El artículo solicitado no existe o no está disponible en tu carrito.";
+                case SAVED_ITEM_NOT_FOUND -> "El artículo guardado no existe o no está disponible en tu lista.";
                 case CART_QUANTITY_INVALID -> "La cantidad debe ser mayor que cero.";
                 case INSUFFICIENT_STOCK -> "No hay existencias suficientes para la cantidad solicitada.";
                 case EDITION_INACTIVE -> "La edición seleccionada no está disponible actualmente.";

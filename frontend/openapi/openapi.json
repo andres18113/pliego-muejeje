@@ -5397,6 +5397,181 @@
           }
         }
       }
+    },
+    "/api/v1/cart/saved": {
+      "get": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Consultar artículos guardados para después",
+        "operationId": "getSavedForLater",
+        "responses": {
+          "200": {
+            "description": "Lista del cliente con precios y disponibilidad vigentes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedForLater"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/cart/items/{cartItemId}/save-for-later": {
+      "post": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Mover un artículo del carrito a Guardado para después",
+        "description": "La cantidad del carrito reemplaza la cantidad guardada de la misma edición. Devuelve el carrito y la lista actualizados.",
+        "operationId": "saveForLater",
+        "parameters": [
+          {
+            "name": "cartItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Carrito y lista actualizados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "El artículo ya no existe en el carrito",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/cart/saved/{savedItemId}/move-to-cart": {
+      "post": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Restaurar en el carrito un artículo guardado",
+        "description": "Valida la edición con las reglas de agregar al carrito; ante un error, el artículo permanece guardado.",
+        "operationId": "moveSavedToCart",
+        "parameters": [
+          {
+            "name": "savedItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Carrito y lista actualizados",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedState"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Artículo guardado no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "La edición no puede agregarse al carrito",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/cart/saved/{savedItemId}": {
+      "delete": {
+        "tags": [
+          "Carrito"
+        ],
+        "summary": "Quitar un artículo de Guardado para después",
+        "operationId": "removeSavedItem",
+        "parameters": [
+          {
+            "name": "savedItemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Artículo eliminado"
+          },
+          "404": {
+            "description": "Artículo guardado no encontrado",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -10231,6 +10406,122 @@
           "cityNeedsReview",
           "provinceId"
         ]
+      },
+      "SavedForLater": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SavedForLaterItem"
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "SavedForLaterItem": {
+        "type": "object",
+        "description": "Artículo guardado con la proyección comercial vigente del carrito.",
+        "properties": {
+          "savedItemId": {
+            "type": "string"
+          },
+          "editionId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "authors": {
+            "type": "string"
+          },
+          "sku": {
+            "type": "string"
+          },
+          "coverUrl": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "currentPrice": {
+            "type": "string"
+          },
+          "currentSubtotal": {
+            "type": "string"
+          },
+          "available": {
+            "type": "boolean"
+          },
+          "unavailabilityReason": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "enum": [
+              "P2041",
+              "P2042",
+              "P2043",
+              "P3002",
+              "P4004",
+              "P6002",
+              "P6003"
+            ]
+          },
+          "format": {
+            "type": "string",
+            "enum": [
+              "PAPERBACK",
+              "HARDCOVER",
+              "EBOOK",
+              "AUDIOBOOK"
+            ]
+          },
+          "requiresPhysicalFulfillment": {
+            "type": "boolean"
+          },
+          "quantityEditable": {
+            "type": "boolean"
+          },
+          "originalPrice": {
+            "type": "string"
+          },
+          "unitSavings": {
+            "type": "string"
+          },
+          "originalSubtotal": {
+            "type": "string"
+          },
+          "lineSavings": {
+            "type": "string"
+          },
+          "savedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SavedState": {
+        "type": "object",
+        "properties": {
+          "cart": {
+            "$ref": "#/components/schemas/Cart"
+          },
+          "saved": {
+            "$ref": "#/components/schemas/SavedForLater"
+          }
+        }
       }
     },
     "securitySchemes": {

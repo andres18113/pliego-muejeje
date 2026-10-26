@@ -1,7 +1,7 @@
-import { screen, within } from "@testing-library/react";
+import { screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cartBody, json, problem, renderPurchaseRoute, stubApi } from "@/test/purchase";
+import { cartBody, json, problem, renderPurchaseRoute, savedItem, stubApi } from "@/test/purchase";
 import { CartPage } from "./CartPage";
 
 const routes = [
@@ -225,53 +225,81 @@ describe("CartPage", () => {
     expect(screen.queryByRole("button", { name: "Reintentar" })).not.toBeInTheDocument();
   });
 
-  it("saves an item for later in Favoritos before taking it out of the cart", async () => {
+  it("saves a line for later in its own list, never in Favoritos, and follows it there", async () => {
     const api = stubApi({
-      "GET /api/v1/cart": [() => json(cartBody()), () => json(cartBody([]))],
-      "PUT /api/v1/me/favorites/42": () => new Response(null, { status: 204 }),
-      "DELETE /api/v1/cart/items/100": () => new Response(null, { status: 204 }),
+      "GET /api/v1/cart": () => json(cartBody([{ quantity: 3, currentSubtotal: "55.50" }])),
+      "POST /api/v1/cart/items/100/save-for-later": () => json({ cart: cartBody([]), saved: { items: [savedItem({ quantity: 3, currentSubtotal: "55.50" })], totalCount: 1 } }),
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/cart");
 
     await user.click(await screen.findByRole("button", { name: "Guardar Cien años de soledad para después" }));
 
-    expect(await screen.findByText("Guardado en Favoritos")).toBeInTheDocument();
-    const order = api.calls.filter((call) => call.method !== "GET").map((call) => call.method);
-    expect(order).toEqual(["PUT", "DELETE"]);
+    const saved = await screen.findByRole("region", { name: "Guardado para después" });
+    const link = await within(saved).findByRole("link", { name: "Cien años de soledad" });
+    expect(link).toHaveFocus();
+    expect(within(saved).getByText("Cantidad: 3")).toBeInTheDocument();
+    expect(within(saved).getByRole("button", { name: "Mover Cien años de soledad al carrito" })).toBeInTheDocument();
+    expect(screen.getByText("Cien años de soledad se guardó para después.")).toBeInTheDocument();
+    // The move is the answer: no undo toast, and Favoritos is never touched.
+    expect(screen.queryByRole("button", { name: "Deshacer" })).toBeNull();
+    expect(api.calls.filter((call) => call.path.startsWith("/api/v1/me/favorites"))).toEqual([]);
+    expect(api.calls.filter((call) => call.method !== "GET").map((call) => call.path)).toEqual(["/api/v1/cart/items/100/save-for-later"]);
   });
 
-  it("moves a saved line back with the quantity it had, withdraws the stale undo, and keeps it a normal line", async () => {
-    const rayuela = { editionId: "42", bookId: "30", title: "Cien años de soledad", authors: "Gabriel García Márquez", publisher: "Editorial Sur", isbn13: null, price: "18.50", coverUrl: null, coverLicense: null, coverAttribution: null, format: "PAPERBACK", language: "es", available: true, favoritedAt: "2026-10-01T12:00:00Z" };
-    let line: { cartItemId: string; quantity: number } | null = { cartItemId: "100", quantity: 3 };
-    let saved = false;
-    const cart = () => json(cartBody(line ? [{ cartItemId: line.cartItemId, quantity: line.quantity, currentSubtotal: (18.5 * line.quantity).toFixed(2) }] : []));
+  it("moves a saved item back to the cart with the quantity it had and follows it there", async () => {
     const api = stubApi({
-      "GET /api/v1/cart": () => cart(),
-      "GET /api/v1/me/favorites": () => json({ items: saved ? [rayuela] : [], page: 0, pageSize: 4, totalCount: saved ? "1" : "0" }),
-      "GET /api/v1/me/favorites/status": () => json([{ editionId: "42", favorite: saved }]),
-      "PUT /api/v1/me/favorites/42": () => { saved = true; return new Response(null, { status: 204 }); },
-      "DELETE /api/v1/cart/items/100": () => { line = null; return new Response(null, { status: 204 }); },
-      "POST /api/v1/cart/items": async (request: Request) => { const body = await request.json() as { quantity: number }; line = { cartItemId: "101", quantity: body.quantity }; return json({ cartItemId: "101", quantity: body.quantity }, 201); },
-      "PUT /api/v1/cart/items/101": async (request: Request) => { const body = await request.json() as { quantity: number }; line = { cartItemId: "101", quantity: body.quantity }; return json({ cartItemId: "101", quantity: body.quantity }); },
+      "GET /api/v1/cart": () => json(cartBody([])),
+      "GET /api/v1/cart/saved": () => json({ items: [savedItem({ quantity: 3, currentSubtotal: "55.50" })], totalCount: 1 }),
+      "POST /api/v1/cart/saved/501/move-to-cart": () => json({ cart: cartBody([{ quantity: 3, currentSubtotal: "55.50" }]), saved: { items: [], totalCount: 0 } }),
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/cart");
 
-    await user.click(await screen.findByRole("button", { name: "Guardar Cien años de soledad para después" }));
-    expect(await screen.findByRole("button", { name: "Deshacer" })).toBeInTheDocument();
-    const savedRegion = await screen.findByRole("region", { name: "Guardado para después" });
-    await user.click(await within(savedRegion).findByRole("button", { name: /Agregar al carrito: Cien años de soledad/ }));
+    await user.click(await screen.findByRole("button", { name: "Mover Cien años de soledad al carrito" }));
 
     const trigger = await screen.findByRole("combobox", { name: "Cantidad de Cien años de soledad" });
     expect(trigger).toHaveTextContent("3");
-    expect(api.calls.find((call) => call.method === "POST")?.body).toEqual({ editionId: "42", quantity: 3 });
-    expect(screen.queryByRole("button", { name: "Deshacer" })).toBeNull();
+    expect(screen.getByRole("link", { name: "Cien años de soledad" })).toHaveFocus();
+    expect(within(screen.getByRole("region", { name: "Guardado para después" })).getByText("No hay libros guardados")).toBeInTheDocument();
+    expect(screen.getByText("Cien años de soledad volvió al carrito.")).toBeInTheDocument();
+    expect(api.calls.filter((call) => call.path.startsWith("/api/v1/me/favorites"))).toEqual([]);
+  });
 
-    await user.click(trigger);
-    await user.click(await screen.findByRole("option", { name: "5" }));
-    expect(await screen.findByText("Cantidad actualizada: 5 unidades.")).toBeInTheDocument();
-    expect(api.calls.filter((call) => call.method === "PUT" && call.path.startsWith("/api/v1/cart/items/101")).map((call) => call.body)).toEqual([{ quantity: 5 }]);
+  it("keeps a saved item saved, and the cart unchanged, when the cart refuses it", async () => {
+    const api = stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/cart/saved": () => json({ items: [savedItem({ editionId: "77", title: "Rayuela", quantity: 4, currentSubtotal: "84.00" })], totalCount: 1 }),
+      "POST /api/v1/cart/saved/501/move-to-cart": () => problem(409, "P3002", "Existencias insuficientes", "No hay existencias suficientes para la cantidad solicitada."),
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/cart");
+
+    await user.click(await screen.findByRole("button", { name: "Mover Rayuela al carrito" }));
+
+    const saved = screen.getByRole("region", { name: "Guardado para después" });
+    expect(await within(saved).findByRole("alert")).toHaveTextContent("No hay existencias suficientes para esta cantidad. Sigue guardado.");
+    expect(within(saved).getByRole("link", { name: "Rayuela" })).toBeInTheDocument();
+    expect(screen.getAllByRole("combobox", { name: /Cantidad de/ })).toHaveLength(1);
+    expect(api.count("POST", "/api/v1/cart/saved/501/move-to-cart")).toBe(1);
+  });
+
+  it("removes a saved item and keeps the keyboard in the list", async () => {
+    let items = [savedItem({ editionId: "77", title: "Rayuela" })];
+    stubApi({
+      "GET /api/v1/cart": () => json(cartBody()),
+      "GET /api/v1/cart/saved": () => json({ items, totalCount: items.length }),
+      "DELETE /api/v1/cart/saved/501": () => { items = []; return new Response(null, { status: 204 }); },
+    });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/cart");
+
+    await user.click(await screen.findByRole("button", { name: "Quitar Rayuela de guardados" }));
+
+    const saved = screen.getByRole("region", { name: "Guardado para después" });
+    expect(await within(saved).findByText("No hay libros guardados")).toBeInTheDocument();
+    await waitFor(() => expect(screen.getByRole("heading", { name: "Guardado para después" })).toHaveFocus());
+    expect(screen.getByRole("link", { name: "Cien años de soledad" })).toBeInTheDocument();
   });
 
   it("chooses a quantity from the keyboard without leaving the trigger", async () => {
@@ -291,19 +319,6 @@ describe("CartPage", () => {
     expect(await quantityOf()).toHaveFocus();
   });
 
-  it("shows what was saved for later from Favoritos, below the cart", async () => {
-    stubApi({
-      "GET /api/v1/cart": () => json(cartBody()),
-      "GET /api/v1/me/favorites": () => json({ items: [{ editionId: "77", bookId: "30", title: "Rayuela", authors: "Julio Cortázar", publisher: "Alfaguara", isbn13: null, price: "21.00", coverUrl: null, coverLicense: null, coverAttribution: null, format: "PAPERBACK", language: "es", available: true, favoritedAt: "2026-10-01T12:00:00Z" }], page: 0, pageSize: 4, totalCount: "6" }),
-    });
-    renderPurchaseRoute(routes, "/cart");
-
-    const saved = await screen.findByRole("region", { name: "Guardado para después" });
-    expect(await within(saved).findByRole("heading", { name: "Rayuela" })).toBeInTheDocument();
-    expect(within(saved).getByRole("link", { name: "Favoritos" })).toHaveAttribute("href", "/favorites");
-    expect(within(saved).getByRole("link", { name: "Ver los 6 en Favoritos" })).toHaveAttribute("href", "/favorites");
-  });
-
   it("invites saving books when nothing is saved for later", async () => {
     stubApi({ "GET /api/v1/cart": () => json(cartBody()) });
     renderPurchaseRoute(routes, "/cart");
@@ -316,7 +331,7 @@ describe("CartPage", () => {
   it("keeps the item in the cart when it cannot be saved for later", async () => {
     const api = stubApi({
       "GET /api/v1/cart": () => json(cartBody()),
-      "PUT /api/v1/me/favorites/42": () => problem(404, "P2041", "Edición no encontrada", "La edición ya no está publicada."),
+      "POST /api/v1/cart/items/100/save-for-later": () => problem(404, "P2041", "Edición no encontrada", "La edición ya no está publicada."),
     });
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/cart");
@@ -339,7 +354,7 @@ describe("CartPage", () => {
 
     expect(await screen.findByRole("alert")).toHaveTextContent("No pudimos confirmar el cambio.");
     expect(api.count("PUT", "/api/v1/cart/items")).toBe(1);
-    expect(api.count("GET", "/api/v1/cart")).toBe(2);
+    expect(api.calls.filter((call) => call.method === "GET" && call.path === "/api/v1/cart")).toHaveLength(2);
   });
 
   it("shows an empty cart with a route back to the catalog", async () => {

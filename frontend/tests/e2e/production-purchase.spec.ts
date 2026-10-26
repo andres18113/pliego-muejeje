@@ -113,6 +113,8 @@ for (const width of [320, 390, 768, 1280]) {
   });
 
   test(`ACCT-03 first saved address restores focus after the real dialog exits at ${width}px`, async ({ context, page }) => {
+    // At a quarter of the CPU, three dialog openings and two place pickers take 11–26s; parallel workers add more.
+    test.setTimeout(60_000);
     const state = await installPurchaseApi(context);
     await page.setViewportSize({ width, height: 900 });
     // A busy browser can commit the replacement control later than a single animation frame.

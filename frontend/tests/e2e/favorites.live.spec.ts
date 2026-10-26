@@ -83,7 +83,7 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
 
     await page.goto(`/catalog/editions/${catalogEdition.editionId}`);
     await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
-    await expect(page.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
+    await expect(page.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true })).toBeVisible();
 
     await openFavorites(page);
     const favoriteCount = unavailableEdition ? 3 : 2;
@@ -136,7 +136,7 @@ test("persists favorites through catalog, detail, reload, and a new customer ses
       await expect(mobileCard.getByRole("button", { name: `Quitar de favoritos: ${detailEdition.title}` })).toHaveAttribute("aria-pressed", "true");
       await mobile.goto(`/catalog/editions/${detailEdition.editionId}`);
       await mobile.getByRole("button", { name: "Agregar al carrito", exact: true }).tap();
-      await expect(mobile.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
+      await expect(mobile.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true })).toBeVisible();
       await expect.poll(() => mobile.evaluate(() => document.documentElement.scrollWidth)).toBe(390);
     } finally {
       await mobileContext.close();

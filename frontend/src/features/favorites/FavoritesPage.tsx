@@ -111,8 +111,8 @@ function FavoritesContent() {
       {favoritePage.totalCountValue === 0n ? (
         <section className={`favorites-empty ${classes.collection} ${classes.empty}`} aria-labelledby="favorites-empty-heading">
           <span className={classes.emptyMark} aria-hidden="true"><MaterialSymbol name="favorite_border" size={28} /></span>
-          <h2 id="favorites-empty-heading" tabIndex={-1}>Aún no guardaste favoritos.</h2>
-          <p>En el catálogo, elige “Agregar a favoritos” en la tarjeta de una edición.</p>
+          <h2 id="favorites-empty-heading" tabIndex={-1}>Todavía no tienes favoritos</h2>
+          <p>Guarda los libros que te interesen para encontrarlos aquí.</p>
           <ButtonLink variant="primary" to="/catalog">Explorar el catálogo</ButtonLink>
         </section>
       ) : editions.length === 0 ? (

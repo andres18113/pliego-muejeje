@@ -1611,6 +1611,80 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/cart/saved": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consultar artículos guardados para después */
+        get: operations["getSavedForLater"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cart/items/{cartItemId}/save-for-later": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mover un artículo del carrito a Guardado para después
+         * @description La cantidad del carrito reemplaza la cantidad guardada de la misma edición. Devuelve el carrito y la lista actualizados.
+         */
+        post: operations["saveForLater"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cart/saved/{savedItemId}/move-to-cart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restaurar en el carrito un artículo guardado
+         * @description Valida la edición con las reglas de agregar al carrito; ante un error, el artículo permanece guardado.
+         */
+        post: operations["moveSavedToCart"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cart/saved/{savedItemId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Quitar un artículo de Guardado para después */
+        delete: operations["removeSavedItem"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3241,6 +3315,43 @@ export interface components {
              * @example false
              */
             cityNeedsReview: boolean;
+        };
+        SavedForLater: {
+            items?: components["schemas"]["SavedForLaterItem"][];
+            /** Format: int64 */
+            totalCount?: number;
+        };
+        /** @description Artículo guardado con la proyección comercial vigente del carrito. */
+        SavedForLaterItem: {
+            savedItemId?: string;
+            editionId?: string;
+            title?: string;
+            authors?: string;
+            sku?: string;
+            coverUrl?: string | null;
+            /** Format: int32 */
+            quantity?: number;
+            currentPrice?: string;
+            currentSubtotal?: string;
+            available?: boolean;
+            /** @enum {string|null} */
+            unavailabilityReason?: "P2041" | "P2042" | "P2043" | "P3002" | "P4004" | "P6002" | "P6003" | null;
+            /** @enum {string} */
+            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
+            requiresPhysicalFulfillment?: boolean;
+            quantityEditable?: boolean;
+            originalPrice?: string;
+            unitSavings?: string;
+            originalSubtotal?: string;
+            lineSavings?: string;
+            /** Format: date-time */
+            savedAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        SavedState: {
+            cart?: components["schemas"]["Cart"];
+            saved?: components["schemas"]["SavedForLater"];
         };
     };
     responses: never;
@@ -6308,6 +6419,126 @@ export interface operations {
             };
             /** @description ID de provincia inválido */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    getSavedForLater: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista del cliente con precios y disponibilidad vigentes */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedForLater"];
+                };
+            };
+        };
+    };
+    saveForLater: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cartItemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Carrito y lista actualizados */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedState"];
+                };
+            };
+            /** @description El artículo ya no existe en el carrito */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    moveSavedToCart: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                savedItemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Carrito y lista actualizados */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedState"];
+                };
+            };
+            /** @description Artículo guardado no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description La edición no puede agregarse al carrito */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    removeSavedItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                savedItemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Artículo eliminado */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Artículo guardado no encontrado */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };

@@ -54,9 +54,12 @@
 
 .pagination { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; }
 
-.empty { justify-items: start; gap: 12px; padding: clamp(28px, 4vw, 48px); }
-.empty h2 { margin: 0; color: var(--acc-blue); font: 650 clamp(1.5rem, 1.2rem + 1vw, 2rem)/1.1 var(--acc-display); letter-spacing: -.04em; }
-.empty p { max-width: 52ch; margin: 0; color: var(--acc-ink); }
+/* An empty collection is a compact field on the page's centre axis, not the full-width list field: mark, heading,
+   one line of guidance and the action read as one group, with the action set slightly apart. */
+.collection.empty { justify-items: center; gap: 0; width: min(100%, 520px); margin-inline: auto; padding: clamp(28px, 4vw, 40px) clamp(20px, 4vw, 40px); text-align: center; }
+.empty h2 { margin: 16px 0 0; color: var(--acc-blue); font: 650 clamp(1.375rem, 1.2rem + .6vw, 1.625rem)/1.15 var(--acc-display); letter-spacing: -.035em; text-wrap: balance; }
+.empty p { max-width: 38ch; margin: 8px 0 0; color: var(--acc-muted); font-size: 1rem; line-height: 1.45; text-wrap: pretty; }
+.empty > :is(a, button) { margin-top: 24px; }
 .emptyMark { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; background: var(--acc-paper); color: var(--acc-blue); }
 
 /* Narrow rows: the cover and identity lead; price, stock and actions follow under the text. */

@@ -20,7 +20,7 @@ afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 it.each([
   [{ owned: true, ownedItemId: "800", pendingOrder: true, pendingOrderId: "900" }, "Ya está en tu biblioteca", "Ver en Mi biblioteca", "/biblioteca/800"],
   [{ pendingOrder: true, pendingOrderId: "900", inCart: true }, "Tienes un pedido abierto con esta edición", "Ver pedido", "/orders/900"],
-  [{ inCart: true }, "Ya está en tu carrito", "Ver el carrito", "/cart"],
+  [{ inCart: true }, "Ya está en tu carrito", "Ver carrito", "/cart"],
 ] as const)("mirrors digital state %j in the scene and sticky action", async (state, message, label, href) => {
   api(() => ({ ...eligible, ...state }));
   renderPurchaseRoute(routes, "/catalog/editions/42");

@@ -66,10 +66,10 @@ public class BillingIdentityController {
         return ResponseEntity.created(location).header("Cache-Control", "no-store").body(result);
     }
 
-    @PostMapping(path = "/correction-requests/{requestId}/withdraw")
+    @PostMapping(path = "/correction-requests/{id}/withdraw")
     @Operation(summary = "Retirar mi solicitud pendiente de corrección")
     public ResponseEntity<Void> withdrawCorrection(@AuthenticationPrincipal Jwt jwt,
-            @PathVariable @jakarta.validation.constraints.Positive long requestId) {
+            @PathVariable("id") @jakarta.validation.constraints.Positive long requestId) {
         corrections.withdraw(Long.parseLong(jwt.getSubject()), requestId);
         return ResponseEntity.noContent().header("Cache-Control", "no-store").build();
     }

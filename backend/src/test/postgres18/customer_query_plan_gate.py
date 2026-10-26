@@ -87,6 +87,10 @@ def fixtures():
               AND EXISTS(SELECT FROM pliego.carrito_item ci WHERE ci.carrito_id=c.carrito_id)
             ORDER BY (SELECT count(*) FROM pliego.carrito_item ci WHERE ci.carrito_id=c.carrito_id) DESC,
               c.carrito_id LIMIT 1),
+          'saved_actor', (SELECT cl.usuario_id FROM pliego.cliente_guardado_despues s
+            JOIN pliego.cliente cl USING(cliente_id) JOIN pliego.usuario u USING(usuario_id)
+            WHERE u.estado='ACTIVE'
+            GROUP BY cl.usuario_id ORDER BY count(*) DESC, cl.usuario_id LIMIT 1),
           'owned', (SELECT json_build_object('actor',cl.usuario_id,'order',pi.pedido_id,
               'edition',o.edicion_id,'owned',o.owned_item_id,'email',u.email_normalizado)
             FROM pliego.digital_ownership o JOIN pliego.digital_grant g USING(owned_item_id)
@@ -113,8 +117,8 @@ def fixtures():
             JOIN pliego.cliente c USING(cliente_id) JOIN pliego.usuario u USING(usuario_id) WHERE u.estado='ACTIVE'),
           'help_slug', NULL)
     """))
-    assert data["cart_actor"] and data["owned"] and data["offer"] and data["invoice"] and data["admin_actor"] and data["identity_actor"], (
-        "Run after HTTP gates: need a populated cart, active ownership, live offer, PDF, ADMIN, and billing identity")
+    assert data["cart_actor"] and data["saved_actor"] and data["owned"] and data["offer"] and data["invoice"] and data["admin_actor"] and data["identity_actor"], (
+        "Run after HTTP gates: need a populated cart and saved list, active ownership, live offer, PDF, ADMIN, and billing identity")
     # A published article, independent of the seeded slug naming convention.
     data["help_slug"] = psql("SELECT slug FROM pliego.fn_help_search(NULL,NULL,NULL,0,1) LIMIT 1")
     assert data["help_slug"], "Expected published help fixture"
@@ -138,6 +142,7 @@ def cases(data):
                      null, null, "'TITLE_ASC'", "0", "20"]
     bindings = {
         "fn_purchase_item_capabilities": [cart_actor] * 3,
+        "fn_customer_saved_for_later": [f"{data['saved_actor']}::bigint"],
         "fn_catalog_search": search,
         "fn_catalog_search_global": global_search,
         "fn_edition_detail": [edition],
@@ -190,7 +195,7 @@ def cases(data):
         "fn_catalog_search_global(?,?,?,?,?,?,?,?,?)", "fn_catalog_search_global(?,?,?,?,?,?,?,?,?,?)")
     queries[catalog + ".offers"] = queries[catalog].replace(
         "fn_catalog_search(?,?,?,?,?,?,?,?,?,?,?)", "fn_catalog_search_offers(?,?,?,?,?,?,?,?,?,?,?,?)")
-    required = {"JdbcCartGateway.CART_GET", "JdbcCustomerOrderGateway.DETAIL",
+    required = {"JdbcCartGateway.CART_GET", "JdbcCartGateway.SAVED_GET", "JdbcCustomerOrderGateway.DETAIL",
                 "JdbcDigitalEligibilityGateway.fn_customer_digital_eligibility",
                 global_catalog + ".product_type"}
     assert required <= queries.keys(), f"Missing required gateway queries: {required - queries.keys()}"
@@ -254,7 +259,8 @@ def main():
                     problems.append("CART_GET must return exactly one row")
             if base_name in {"JdbcCustomerOrderGateway.DETAIL", "JdbcDigitalEligibilityGateway.fn_customer_digital_eligibility",
                              "JdbcCatalogGateway.CATALOG_GLOBAL_SEARCH_QUERY.product_type", "JdbcLibraryGateway.fn_customer_library",
-                             "JdbcCatalogGateway.CATALOG_SEARCH_QUERY.offers", "JdbcBillingGateway.fn_invoice_artifact_download"}:
+                             "JdbcCatalogGateway.CATALOG_SEARCH_QUERY.offers", "JdbcBillingGateway.fn_invoice_artifact_download",
+                             "JdbcCartGateway.SAVED_GET"}:
                 if not plan["Plan"]["Actual Rows"]:
                     problems.append("Expected nonempty representative fixture result")
             results.append(dict(name=name, sql=sql, setup=setup, analyzed=analyze, cost=cost,

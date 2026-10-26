@@ -26,6 +26,9 @@ async function install(page: Page, scheme: "light" | "dark", quantityConflict = 
     if (path === "/cart") return ok({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: true, physicalItemCount: 4, digitalItemCount: 0, items: [null, "P3002", "P2042", "P2043"].map((reason, index) => ({
       cartItemId: String(100 + index), editionId: String(42 + index), title: index === 0 ? summary.title : `${unavailable.title} ${index}`, authors: summary.authors, sku: `PLG-BK-${index}`, coverUrl: null, requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 2, currentPrice: "20.00", currentSubtotal: "40.00", available: stockOverride ?? (reason === null), unavailabilityReason: stockOverride === true ? null : stockOverride === false ? "P3002" : reason,
     })), totalCurrent: "160.00" });
+    // Guardado para después (ADR 0045): a saved row shows availability only when there is a problem, as a cart line does.
+    if (path === "/cart/saved") return ok({ items: [{ savedItemId: "501", editionId: "60", title: `${unavailable.title} guardado`, authors: summary.authors, sku: "PLG-BK-60", coverUrl: null,
+      requiresPhysicalFulfillment: true, quantityEditable: true, quantity: 1, currentPrice: "20.00", currentSubtotal: "20.00", available: false, unavailabilityReason: "P2042" }], totalCount: 1 });
     if (route.request().method() !== "GET" && path.startsWith("/cart/items")) writes++;
     if (path === "/cart/items" && quantityConflict) return route.fulfill({ status: 409, contentType: "application/problem+json", body: JSON.stringify({ type: "urn:pliego:problem:P3002", code: "P3002", status: 409, title: "Existencias insuficientes", detail: "La cantidad solicitada no está cubierta." }) });
     if (path === "/me/addresses") return ok([{ addressId: "15", alias: "Casa", recipient: "Lector de prueba", line1: "Av. Principal 100", line2: null, city: "Quito", province: "Pichincha", countryCode: "EC", postalCode: null, reference: null, phone: "+593991234567", primary: true }]);
@@ -94,7 +97,7 @@ for (const scheme of ["light", "dark"] as const) {
       await page.goto("/cart"); await check(page, 4);
       await page.locator('[data-purchase="line-copy"] h2 a').first().hover();
       await check(page, 4);
-      await expect(page.locator('[data-stockstatus-explanation]')).toHaveText(["No hay existencias suficientes para esta cantidad.", "Esta edición ya no está a la venta.", "Este libro ya no está a la venta."]);
+      await expect(page.locator('[data-cart-line] [data-stockstatus-explanation]')).toHaveText(["No hay existencias suficientes para esta cantidad.", "Esta edición ya no está a la venta.", "Este libro ya no está a la venta."]);
       await expect(page.getByRole('combobox', { name: 'Cantidad de Introducción al álgebra lineal 1' })).toHaveAccessibleDescription(/No disponible.*No hay existencias suficientes para esta cantidad/);
       await page.goto("/checkout");
       await check(page, 3); // One summary sheet at every width.

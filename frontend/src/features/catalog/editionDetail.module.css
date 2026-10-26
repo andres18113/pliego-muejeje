@@ -1,6 +1,6 @@
 /* Physical edition detail, in reading order: the jacket and the book's identity, then the purchase
-   decision as the page's one quiet scene on the Libros warm paper gray (price, stock, the ultramar
-   action, the favorite) — never lavender, which is the eBook color — then the edition's facts as
+   decision as the page's one quiet scene on the Libros warm paper gray (price, stock, count and the
+   ultramar action; the favorite is a heart on the jacket) — never lavender, which is the eBook color — then the edition's facts as
    one unit, the synopsis in a reading column and its categories. One flat grid, recomposed per width;
    no rules between parts — spacing and type carry the grouping. */
 .page {
@@ -13,6 +13,8 @@
   --ed-muted: var(--pliego-text-muted, #595a6e);
   --ed-yellow: var(--store-yellow, #f3df83);
   --ed-mist: #ecebe4;
+  /* The Libros scene gray on every medium: a settled digital state (in the cart, owned, ordered) is no sale. */
+  --ed-neutral: #ecebe4;
   --ed-disc: var(--store-paper, #f6f5f0);
   --ed-line: color-mix(in srgb, var(--store-ink, #252740) 16%, var(--store-paper, #f6f5f0));
   --ed-ease: cubic-bezier(.32, .94, .6, 1);
@@ -21,6 +23,7 @@
 :global([data-mantine-color-scheme="dark"]) .page {
   --ed-blue: var(--store-link, #c5bcff);
   --ed-mist: color-mix(in srgb, #ffffff 7%, #26283f);
+  --ed-neutral: color-mix(in srgb, #ffffff 7%, #26283f);
   --ed-disc: color-mix(in srgb, #ffffff 14%, #26283f);
   --ed-line: color-mix(in srgb, #ffffff 20%, #26283f);
 }
@@ -36,8 +39,7 @@
   --ed-disc: #3a3660;
   --ed-line: #4a4578;
 }
-/* Audiobooks: the same page, with pale yellow — the audiobook color — as its one supporting surface.
-   The saved favorite keeps its full yellow and gains an ultramar edge so it still reads on that field. */
+/* Audiobooks: the same page, with pale yellow — the audiobook color — as its one supporting surface. */
 .page[data-media="audiobook"] {
   --ed-mist: color-mix(in srgb, var(--store-yellow, #f3df83) 42%, var(--store-paper, #f6f5f0));
   --ed-disc: var(--store-paper, #f6f5f0);
@@ -48,7 +50,6 @@
   --ed-disc: color-mix(in srgb, #ffffff 12%, #26283f);
   --ed-line: color-mix(in srgb, var(--store-yellow, #f3df83) 32%, #26283f);
 }
-.page[data-media="audiobook"] .favorite.favorite[aria-pressed="true"] { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--store-blue, #283da8) 45%, transparent); }
 
 /* The page ground follows the scheme, as on Account pages. */
 :global(html[data-mantine-color-scheme="dark"]):has(.page), :global([data-mantine-color-scheme="dark"] body):has(.page) { background: #26283f; }
@@ -136,6 +137,7 @@
 /* The purchase decision */
 .buy { grid-area: buy; display: grid; gap: 16px; min-width: 0; margin-top: 24px; padding: clamp(18px, 2.2vw, 24px); border-radius: 18px; background: var(--ed-mist); }
 /* Unavailable steps back to paper with a hairline edge, as on the cards. */
+.buy[data-settled] { background: var(--ed-neutral); }
 .edition[data-available="false"] .buy { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ed-line); }
 .edition[data-available="false"] .price { color: var(--ed-muted); }
 .offer { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; min-width: 0; }
@@ -153,22 +155,38 @@
 .actions :global(.button) { min-width: 0; max-width: 100%; min-height: 48px; padding: 10px 22px; white-space: normal; text-align: center; overflow-wrap: anywhere; border-radius: 8px; font-size: 1rem; font-weight: 600; }
 .actions > :global(.button-primary), .actions :global(.detail-purchase-links) > :global(.button-primary) { flex: 1 1 14rem; background: var(--ed-action); color: var(--ed-on-action); }
 .actions > :global(.button-primary):hover, .actions :global(.detail-purchase-links) > :global(.button-primary):hover { background: var(--ed-action-hover); color: var(--ed-on-action); }
-/* Follow-ups ("Ver el carrito", "Comprobar…") take their own line below, so the primary action never moves or resizes. */
+/* A follow-up ("Comprobar el estado del carrito") takes its own line below, so the primary action never moves or resizes. */
 .actions > :global(.button-secondary) { order: 1; flex: 1 1 100%; border-color: var(--ed-blue); color: var(--ed-blue); }
 .actions > :global(.button-secondary):hover { background: color-mix(in srgb, var(--ed-blue) 8%, transparent); border-color: var(--ed-blue); color: var(--ed-blue); }
-.actions :global(.button):focus-visible, .favorite:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 3px; }
+.actions :global(.button):focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 3px; }
 .actions :global(.detail-purchase-links) { display: flex; flex: 1 1 100%; flex-wrap: wrap; align-items: center; gap: 10px 20px; }
 .actions :global(.detail-purchase-links) > a:not(:global(.button)) { display: inline-flex; align-items: center; min-height: 44px; color: var(--ed-ink); font-weight: 600; text-underline-offset: 4px; }
 .actions :global(.detail-purchase-feedback) { flex: 1 1 100%; margin: 0; color: var(--ed-ink); font-size: .9375rem; line-height: 1.45; }
+/* A physical edition's count sits before "Agregar al carrito" on one row, as compact as the store's pattern:
+   the shared quantity field at the button's height. Digital editions have none (one copy per account). */
+.quantity { flex: 0 0 auto; --control-min-height: 48px; --control-surface: var(--ed-disc); }
+/* A settled edition: a quiet confirmation with its mark, and the compact way there on the same line. A physical
+   one keeps its count and button, so the line follows them (order 1) and the primary action never moves. */
+.settled { order: 1; flex: 1 1 100%; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; min-width: 0; }
+.settledNote { display: inline-flex; align-items: center; gap: 8px; margin: 0; color: var(--ed-ink); font-size: .9375rem; font-weight: 600; line-height: 1.4; }
+.settledNote > :global(.material-symbol) { flex: none; color: var(--ed-blue); }
+.settledCount { color: var(--ed-muted); font-weight: 500; }
+/* The compact paper pill that leads to where a copy already is (cart, library, order). */
+.cartChip { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; padding: 0 10px 0 12px; border-radius: 999px; background: var(--ed-disc); color: var(--ed-blue); font-size: .875rem; font-weight: 600; text-decoration: none; transition: background-color 140ms ease; }
+.cartChip:hover { background: color-mix(in srgb, var(--ed-disc) 86%, var(--ed-blue)); }
+.cartChip:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 2px; }
 .actions > :global(.mantine-Text-root) { flex: 1 1 100%; }
 
-/* Favorite: the secondary action. Saved = the yellow "this one" mark with an ultramar heart. */
-.favorite.favorite { flex: 0 1 auto; height: auto; min-height: 48px; padding: 8px 18px 8px 14px; border: 0; border-radius: 999px; background: var(--ed-disc); color: var(--ed-ink); font-size: .9375rem; font-weight: 600; transition: background-color 140ms var(--ed-ease), color 140ms var(--ed-ease); }
-.favorite.favorite:hover:not(:disabled) { background: color-mix(in srgb, var(--ed-disc) 88%, var(--ed-ink)); }
-.favorite.favorite[aria-pressed="true"] { background: var(--ed-yellow); color: var(--store-blue, #283da8); }
+/* Favorite: the catalog card's heart in the jacket's top-right corner — saving, apart from buying. A paper disc
+   with a soft lift over any cover; saved = the yellow "this one" mark with an ultramar heart and edge. */
+.jacket { position: relative; display: grid; }
+.favorite.favorite { position: absolute; top: 10px; right: 10px; z-index: 1; width: 44px; height: 44px; min-width: 44px; border: 0; border-radius: 999px; background: color-mix(in srgb, var(--store-paper, #f6f5f0) 92%, transparent); color: var(--ed-ink); box-shadow: 0 1px 3px rgb(37 39 64 / 18%); transition: background-color 140ms var(--ed-ease), color 140ms var(--ed-ease); }
+.favorite.favorite[aria-pressed="true"] { background: var(--ed-yellow); color: var(--store-blue, #283da8); box-shadow: 0 1px 3px rgb(37 39 64 / 18%), inset 0 0 0 1.5px color-mix(in srgb, var(--store-blue, #283da8) 45%, transparent); }
 .favorite.favorite:disabled { opacity: .6; }
-.favorite :global(.mantine-Button-inner) { height: auto; }
-.favorite :global(.mantine-Button-label) { height: auto; white-space: normal; overflow: visible; line-height: 1.3; text-align: left; }
+.jacket > :global(.mantine-Text-root) { margin-top: 10px; }
+.favorite.favorite:focus-visible { outline: 3px solid var(--ed-blue); outline-offset: 2px; }
+@media (hover: hover) { .favorite.favorite:hover:not(:disabled):not([aria-pressed="true"]) { background: #fff; color: var(--ed-blue); } }
+:global([data-mantine-color-scheme="dark"]) .favorite.favorite:not([aria-pressed="true"]) { background: color-mix(in srgb, var(--pliego-surface) 88%, transparent); }
 
 /* Datos de la edición: publisher, format, language, pages, date and ISBN as one small record —
    label over value on a steady three-column rhythm (two on phones); a record, not a table. */
@@ -212,7 +230,6 @@
 .bone[data-bone="price"] { width: 7rem; height: calc(clamp(1.875rem, 1.6rem + 1vw, 2.375rem) * 1.05); border-radius: 8px; }
 .bone[data-bone="stock"] { width: 6rem; height: 1rem; }
 .bone[data-bone="action"] { flex: 1 1 14rem; height: 48px; border-radius: 8px; }
-.bone[data-bone="favorite"] { flex: 0 1 11rem; height: 48px; border-radius: 999px; }
 .bone[data-bone="heading"] { width: 9rem; font-size: 1.0625rem; height: 1em; margin-block: .125em; }
 .bone[data-bone="label"] { width: 4.5rem; font-size: .8125rem; height: 1em; margin-block: .2em; }
 .bone[data-bone="value"] { width: 80%; font-size: .9375rem; height: 1em; margin-block: .2em; }
@@ -239,19 +256,23 @@
 @media (max-width: 599px) {
   .edition { grid-template-columns: minmax(0, 1fr); grid-template-areas: "cover" "identity" "buy" "facts" "synopsis" "categories"; grid-template-rows: none; margin-top: 4px; }
   .cover { justify-items: center; margin-bottom: 20px; }
-  .cover :global(.book-cover) { width: min(58%, 240px); }
+  .jacket { width: min(58%, 240px); }
+  .jacket > :global(.mantine-Text-root) { text-align: center; }
   .cover :global(.cover-image) { max-height: 44vh; }
   .coverSource { text-align: center; }
   .buy { margin-top: 18px; border-radius: 16px; }
-  .actions > :global(.button), .favorite.favorite, .actions :global(.detail-purchase-links) > :global(.button) { flex: 1 1 100%; }
-  .favorite :global(.mantine-Button-inner) { justify-content: center; }
+  .actions > :global(.button), .actions :global(.detail-purchase-links) > :global(.button) { flex: 1 1 100%; }
+  /* The count keeps its place beside the button, which takes the rest of the row; with enlarged text that no
+     longer fits, the button wraps under the count instead of overflowing. */
+  .actions > .quantity + :global(.button-primary) { flex: 1 1 7.5rem; }
   .facts { margin-top: 28px; }
   .facts dl, .factsGrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .coverBone { width: min(58%, 240px); margin-inline: auto; max-height: 44vh; }
   .synopsis { margin-top: 28px; }
 }
-@media (prefers-reduced-motion: reduce) { .favorite.favorite { transition: none; } .bone { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .favorite.favorite, .cartChip { transition: none; } .bone { animation: none; } }
 @media (forced-colors: active) {
   .buy { border: 1px solid CanvasText; }
+  .cartChip { border: 1px solid LinkText; }
   .cover :global(.cover-image) { filter: none; }
 }

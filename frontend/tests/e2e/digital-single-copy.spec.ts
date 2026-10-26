@@ -5,7 +5,7 @@ import { fillCheckoutBilling } from "./billing-fixtures";
 
 type DigitalState = "available" | "owned" | "pending" | "inCart";
 const messages = { owned: "Ya está en tu biblioteca", pending: "Tienes un pedido abierto con esta edición", inCart: "Ya está en tu carrito" };
-const labels = { owned: "Ver en Mi biblioteca", pending: "Ver pedido", inCart: "Ver el carrito" };
+const labels = { owned: "Ver en Mi biblioteca", pending: "Ver pedido", inCart: "Ver carrito" };
 const compactLabels = { owned: "Mi biblioteca", pending: "Ver pedido", inCart: "Ver carrito" };
 const hrefs = { owned: "/biblioteca/800", pending: "/orders/900", inCart: "/cart" };
 const synopsis = Array.from({ length: 50 }, (_, i) => `Párrafo ${i + 1} para recorrer esta lectura digital y consultar sus datos.`).join(" ");
@@ -100,11 +100,9 @@ for (const width of [1280, 360]) {
     test(`cart and drawer explain the digital copy ${blocked ?? "available"} at ${width}px`, async ({ page }, testInfo) => {
       await page.setViewportSize({ width, height: 800 });
       await mockCustomer(page, { cart: true, blocked });
-      // Adding another, physical title opens the shared drawer with the already present digital line.
+      // Adding another, physical title (from the scene, as from the bar) opens the shared drawer with the already present digital line.
       await page.goto("/catalog/editions/43");
       await page.getByRole("region", { name: "Compra" }).getByRole("button", { name: "Agregar al carrito", exact: true }).click();
-      await page.evaluate(() => window.scrollTo(0, 650));
-      await page.getByRole("region", { name: "Resumen del libro" }).getByRole("button", { name: width < 600 ? "Agregar" : "Agregar al carrito", exact: true }).click();
       const drawer = page.getByRole("dialog", { name: "Tu carrito" });
       await expect(drawer.getByText("Copia digital individual")).toBeVisible();
       await expect(drawer.getByRole("combobox", { name: "Cantidad de Un libro en papel" })).toBeVisible();
@@ -202,8 +200,8 @@ test("eligibility loading keeps the normal add, then refreshes to inCart after s
   await bar.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
   await expect(page.getByRole("dialog", { name: "Tu carrito" })).toBeVisible();
   await page.getByRole("button", { name: "Cerrar carrito" }).click();
-  await expect(bar.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
-  await expect(bar.getByRole("link", { name: "Ver el carrito", exact: true })).toBeFocused();
+  await expect(bar.getByRole("link", { name: "Ver carrito", exact: true })).toBeVisible();
+  await expect(bar.getByRole("link", { name: "Ver carrito", exact: true })).toBeFocused();
   expect(await bar.boundingBox()).toEqual(before);
   expect(state.adds).toBe(1);
   expect(state.eligibilityReads).toBeGreaterThanOrEqual(2);

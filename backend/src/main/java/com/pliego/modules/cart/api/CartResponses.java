@@ -75,4 +75,21 @@ public final class CartResponses {
     }
 
     public record ItemMutation(String cartId, String cartItemId, int quantity) { }
+
+    public record SavedForLater(List<SavedItem> items, long totalCount) { }
+
+    /** Fresh cart and Saved for Later snapshots returned by either move command. */
+    public record SavedState(Cart cart, SavedForLater saved) { }
+
+    @Schema(name = "SavedForLaterItem", description = "Artículo guardado con la proyección comercial vigente del carrito.")
+    public record SavedItem(String savedItemId, String editionId, String title, String authors, String sku,
+            @Schema(nullable = true) String coverUrl, int quantity, String currentPrice, String currentSubtotal,
+            boolean available,
+            @Schema(nullable = true, allowableValues = {"P2041", "P2042", "P2043", "P3002", "P4004", "P6002", "P6003"})
+            String unavailabilityReason,
+            @Schema(allowableValues = {"PAPERBACK", "HARDCOVER", "EBOOK", "AUDIOBOOK"}) String format,
+            boolean requiresPhysicalFulfillment, boolean quantityEditable, String originalPrice,
+            String unitSavings, String originalSubtotal, String lineSavings,
+            @Schema(format = "date-time") String savedAt,
+            @Schema(format = "date-time") String updatedAt) { }
 }

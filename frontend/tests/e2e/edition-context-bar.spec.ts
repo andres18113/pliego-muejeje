@@ -204,7 +204,7 @@ for (const width of [1280, 360] as const) {
     await expect(drawer.getByText("Ahorro total hoy")).toBeVisible();
     await expect(drawer.locator("dl").getByText("$ 25,95")).toBeVisible();
     // The scene shares the outcome: one add, one confirmation.
-    await expect(scene.getByRole("link", { name: "Ver el carrito" })).toBeAttached();
+    await expect(scene.getByRole("link", { name: "Ver carrito" })).toBeAttached();
   });
 }
 

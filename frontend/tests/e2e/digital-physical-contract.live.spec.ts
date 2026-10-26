@@ -86,13 +86,17 @@ test("live physical and digital purchase controls keep cart quantities and clean
       await page.request.delete(`/api/v1/me/favorites/${edition.editionId}`, { headers });
       await page.goto(`/catalog/editions/${edition.editionId}`);
       await page.getByRole("button", { name: "Agregar al carrito", exact: true }).click();
-      await expect(page.getByRole("link", { name: "Ver el carrito", exact: true })).toBeVisible();
+      // A confirmed add answers with the cart drawer.
+      await expect(page.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true })).toBeVisible();
       if (format !== "PAPERBACK") {
         // A digital edition already in the cart offers the cart instead of a second add (the server also refuses one).
         await expect(page.getByText("Ya está en tu carrito", { exact: true })).toBeVisible();
         await expect(page.getByRole("region", { name: "Compra" }).getByRole("button", { name: "Agregar al carrito", exact: true })).toHaveCount(0);
       }
-      await page.getByRole("link", { name: "Ver el carrito", exact: true }).click();
+      await page.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true }).click();
+      // Arrive at the cart page and let the closing drawer leave, so its copy of the line is gone.
+      await expect(page).toHaveURL(/\/cart$/);
+      await expect(page.getByRole("dialog", { name: "Tu carrito" })).toHaveCount(0);
       await expect(page.getByRole("link", { name: edition.title, exact: true }).first()).toBeVisible();
       if (format === "PAPERBACK") await expect(page.getByRole("combobox", { name: `Cantidad de ${edition.title}` })).toBeVisible();
       else {

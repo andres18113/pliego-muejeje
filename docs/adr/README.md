@@ -49,3 +49,4 @@
 - [0042 — One active digital copy per customer account](0042-single-digital-copy-per-customer.md)
 - [0043 — Tiered billing identity corrections and separate invoice recipients](0043-tiered-billing-identity-and-invoice-recipients.md)
 - [0044 — INEC geographic catalog for editable Ecuadorian addresses](0044-ecuador-geographic-address-catalog.md)
+- [0045 — Saved for Later independiente de favoritos y del carrito activo](0045-customer-saved-for-later.md)

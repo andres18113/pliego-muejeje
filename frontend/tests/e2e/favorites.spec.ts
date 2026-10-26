@@ -77,8 +77,8 @@ test("guests retain the favorite action through sign-in; customers can browse, t
   await page.keyboard.press("Tab");
   await expect(confirm.getByRole("button", { name: "Quitar de Favoritos" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "Todavía no tienes favoritos" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Todavía no tienes favoritos" })).toBeFocused();
   await expect(page.getByRole("dialog")).toHaveCount(0);
   // The footer closes the page: nothing is left under it.
   expect(await page.evaluate(() => { const footer = document.querySelector("#root > footer")!.getBoundingClientRect(); return Math.round(Math.max(window.innerHeight, document.documentElement.scrollHeight) - (footer.bottom + window.scrollY)); })).toBeCloseTo(0);
