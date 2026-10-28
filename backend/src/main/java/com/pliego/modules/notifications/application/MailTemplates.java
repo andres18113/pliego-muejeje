@@ -31,8 +31,27 @@ public final class MailTemplates {
    case "ORDER_CONFIRMED" -> orderConfirmed(data,base);
    case "ORDER_STATUS" -> orderStatus(data,base);
    case "ORDER_CANCELLED" -> orderCancelled(data,base);
+   case "INVOICE_ISSUED" -> invoiceIssued(data,base);
    default -> throw new IllegalArgumentException("Tipo de correo inválido.");
   };
+ }
+
+ /** One stable, authenticated store URL; neither invoice bytes nor identity numbers enter the message. */
+ private MailMessage invoiceIssued(JsonNode data,String base) {
+  String order=orderId(data);
+  String name=data.path("customerName").asText("");
+  String documentNumber=data.path("documentNumber").asText("");
+  if(name.isBlank()||MailProperties.unsafe(name)||!documentNumber.matches("999-999-[0-9]{9}"))
+   throw new IllegalArgumentException("Datos de factura inválidos.");
+  String url=base+"/orders/"+order+"/invoice";
+  return new MailLayout("Tu factura académica N.° "+documentNumber+" está disponible.",base)
+   .heading("Tu factura académica está disponible")
+   .lead("Estimado(a) "+name)
+   .paragraphWithNoWrap("Tienes una nueva factura académica N.° ",documentNumber,
+    ", disponible para su visualización y descarga.")
+   .muted("Es una simulación académica sin validez tributaria y no constituye una factura electrónica autorizada por el SRI.")
+   .button("Visualizar documento",url)
+   .build("Tu factura académica "+documentNumber);
  }
 
  /** Verification (first send and every resend) and password reset: one statement, one action, what to do if it was not you. */

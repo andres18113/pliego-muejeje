@@ -1685,6 +1685,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/orders/{orderId}/invoice/files/PDF/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener acceso autenticado para visualizar el PDF
+         * @description Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.
+         */
+        get: operations["getInvoicePdfAccess_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{orderId}/invoice/files/PDF/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener acceso autenticado para visualizar el PDF
+         * @description Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.
+         */
+        get: operations["getInvoicePdfAccess"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -3352,6 +3392,14 @@ export interface components {
         SavedState: {
             cart?: components["schemas"]["Cart"];
             saved?: components["schemas"]["SavedForLater"];
+        };
+        /** @description Instrucción privada para visualizar el PDF de la factura. */
+        InvoiceDocumentAccess: {
+            /** @enum {string} */
+            delivery?: "API_STREAM" | "SIGNED_URL";
+            url?: string;
+            /** Format: date-time */
+            expiresAt?: string | null;
         };
     };
     responses: never;
@@ -6544,6 +6592,110 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    getInvoicePdfAccess_1: {
+        parameters: {
+            query?: {
+                /** @description Presentación del PDF. */
+                disposition?: "inline" | "attachment";
+            };
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Instrucción privada de acceso */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceDocumentAccess"];
+                };
+            };
+            /** @description Presentación no válida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description Factura o archivo no disponible */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description El archivo aún se prepara */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+        };
+    };
+    getInvoicePdfAccess: {
+        parameters: {
+            query?: {
+                /** @description Presentación del PDF. */
+                disposition?: "inline" | "attachment";
+            };
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Instrucción privada de acceso */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceDocumentAccess"];
+                };
+            };
+            /** @description Presentación no válida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description Factura o archivo no disponible */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description El archivo aún se prepara */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
                 };
             };
         };

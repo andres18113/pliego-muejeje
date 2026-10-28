@@ -173,6 +173,14 @@ export const router = createBrowserRouter([
           return { Component: OrderPage };
         },
       },
+      {
+        // The invoice's stable address: the invoice email's "Visualizar documento" links here, never to storage.
+        path: "orders/:orderId/invoice",
+        lazy: async () => {
+          const { InvoiceDocumentPage } = await import("@/features/purchase/InvoiceDocumentPage");
+          return { Component: InvoiceDocumentPage };
+        },
+      },
       { path: "admin", Component: AdminWorkspacePage },
       { path: "*", Component: NotFoundPage },
     ],

@@ -68,8 +68,8 @@ class OpenApiCoverageTest {
                 }
             }
         }
-        assertThat(endpoints).as("REST total including catalog, saved-for-later, billing-identity corrections, post-purchase routes and email change")
-                .isEqualTo(99);
+        assertThat(endpoints).as("REST total including catalog, saved-for-later, billing-identity corrections, invoice access and post-purchase routes")
+                .isEqualTo(100);
     }
 
     @Test

@@ -4,6 +4,7 @@ Uses the same PG*, CHECKOUT_BASE_URL and PLIEGO_JWT_SECRET as the CI gates.
 Only public business routines create historical fixtures; existing records are untouched.
 """
 
+import hashlib
 import json
 import os
 import re
@@ -11,6 +12,7 @@ import time
 import urllib.error
 import urllib.request
 import uuid
+import zlib
 
 from admin_orders_http_gate import token
 from checkout_billing import billed
@@ -50,6 +52,47 @@ def checkout(outcome):
     return actor, actors[1][0], int(json.loads(content)["orderId"])
 
 
+def pdf_structure(pdf):
+    """Inflates the PDF's object/content streams (PDFBox writes PDF 1.6 object streams) to read its structure."""
+    inflated = []
+    for raw in re.findall(rb"stream\r?\n(.*?)\r?\nendstream", pdf, re.S):
+        try:
+            inflated.append(zlib.decompress(raw))
+        except zlib.error:
+            pass  # images and other non-Flate streams carry no structure this gate reads
+    return pdf + b"\n".join(inflated)
+
+
+def pdf_title(structure):
+    match = re.search(rb"/Title\s*(<[0-9A-Fa-f]+>|\((?:\\.|[^\\)])*\))", structure)
+    assert match, "PDF has no document title"
+    value = match.group(1)
+    if value.startswith(b"<"):
+        raw = bytes.fromhex(value[1:-1].decode())
+        return raw[2:].decode("utf-16-be") if raw.startswith(b"\xfe\xff") else raw.decode("latin-1")
+    return value[1:-1].decode("latin-1")
+
+
+def assert_academic_pdf(pdf, document_number, pages, invoice_id):
+    """Integrity of the served bytes: a complete PDF for this invoice, with embedded fonts and no active content."""
+    assert pdf.startswith(b"%PDF-1.") and pdf.rstrip().endswith(b"%%EOF"), "truncated or non-PDF bytes"
+    # Fonts are subset-embedded (a one-page invoice is ~32 KB): the bounds reject a stub and full-font regressions.
+    assert 10_000 < len(pdf) < 1_000_000, len(pdf)
+    structure = pdf_structure(pdf)
+    assert re.findall(rb"/Type\s*/Catalog", structure), "PDF has no catalog"
+    # One page tree and no outlines: its /Count is the document's page count.
+    assert [int(n) for n in re.findall(rb"/Count\s+(\d+)", structure)] == [pages], "unexpected page count"
+    fonts = set(re.findall(rb"/BaseFont\s*/[A-Z]{6}\+(Roboto-[A-Za-z]+)", structure))
+    assert fonts >= {b"Roboto-Regular"} and len(re.findall(rb"/FontFile2", structure)) == len(fonts), fonts
+    assert not re.search(rb"/(?:JavaScript|JS|OpenAction|Launch|EmbeddedFile|Encrypt|AA)\b", structure), "active PDF content"
+    assert pdf_title(structure) == "Factura académica " + document_number, pdf_title(structure)
+    # The bytes served are exactly the artifact PostgreSQL recorded, whichever storage holds them.
+    recorded = query(f"""SELECT coalesce(a.checksum, c.checksum) FROM pliego.factura_archivo a
+        LEFT JOIN pliego.factura_archivo_contenido c USING(factura_id, tipo)
+        WHERE a.factura_id={int(invoice_id)} AND a.tipo='PDF'""")
+    assert recorded == hashlib.sha256(pdf).hexdigest(), "served PDF differs from the recorded SHA-256"
+
+
 def private_file(path, actor, mime, disposition, role="CUSTOMER"):
     status, headers, content = request(path, actor, role)
     assert status == 200 and headers.get("Content-Type", "").startswith(mime), (path, status, content)
@@ -58,16 +101,6 @@ def private_file(path, actor, mime, disposition, role="CUSTOMER"):
     assert headers.get("X-Content-Type-Options") == "nosniff", headers
     assert int(headers["Content-Length"]) == len(content), headers
     return content
-
-
-def pdf_text(content):
-    """Read the renderer's actual WinAnsi text operators, including octal accents/dash."""
-    rows = re.findall(r"\(((?:\\.|[^\\)])*)\) Tj", content.decode("ascii", errors="replace"))
-    def decode(row):
-        unescaped = re.sub(r"\\([0-7]{3}|.)", lambda match: chr(int(match[1], 8))
-                           if re.fullmatch("[0-7]{3}", match[1]) else match[1], row)
-        return unescaped.encode("latin-1").decode("windows-1252")
-    return "\n".join(decode(row) for row in rows)
 
 
 def main():
@@ -101,8 +134,9 @@ def main():
         time.sleep(0.25)
 
     pdf = private_file(preview, actor, "application/pdf", "inline")
-    assert pdf.startswith(b"%PDF-")
-    assert "SIMULACIÓN ACADÉMICA — SIN VALIDEZ TRIBUTARIA" in pdf_text(pdf)
+    # Text is CID-encoded in compressed streams: the Java PDFBox suite extracts and checks every value;
+    # this gate checks the served bytes' structure, identity and integrity.
+    assert_academic_pdf(pdf, metadata["documentNumber"], 1, metadata["invoiceId"])
     assert private_file(invoice + "/files/PDF", actor, "application/pdf", "attachment") == pdf
     assert private_file(invoice + "/files/PDF?disposition=attachment", actor, "application/pdf", "attachment") == pdf
     assert private_file(f"/api/v1/admin/orders/{order}/invoice/files/PDF?disposition=inline",

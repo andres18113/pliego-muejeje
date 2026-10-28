@@ -50,3 +50,4 @@
 - [0043 — Tiered billing identity corrections and separate invoice recipients](0043-tiered-billing-identity-and-invoice-recipients.md)
 - [0044 — INEC geographic catalog for editable Ecuadorian addresses](0044-ecuador-geographic-address-catalog.md)
 - [0045 — Saved for Later independiente de favoritos y del carrito activo](0045-customer-saved-for-later.md)
+- [0046 — PDF académico determinista, correo de entrega y puerto de almacenamiento privado](0046-academic-invoice-pdf-email-and-storage.md)

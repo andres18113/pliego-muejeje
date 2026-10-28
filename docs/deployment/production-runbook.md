@@ -70,6 +70,77 @@ reference values, not instructions to redeploy that release or expect 73 forever
 Memory, disk, catalog counts, active offers and job counts are observations to
 recapture. Expired offers are not missing deployment data; preserve original dates.
 
+### Optional R2 storage for newly generated invoice files
+
+Invoice R2 storage is disabled by default; PostgreSQL bytea remains the active
+default. When enabled, the worker writes both PDF and XML to a private bucket before
+the Database API transaction marks the artifact READY. Existing bytea artifacts
+remain in PostgreSQL and are not backfilled automatically.
+
+Production activation requires the operator to add these variables to
+`/etc/pliego/pliego.env` before activating a release. This runbook update does not
+edit the environment file or include its values:
+
+- `PLIEGO_R2_ENABLED`
+- `PLIEGO_R2_BUCKET`
+- `PLIEGO_R2_ENDPOINT`
+- `PLIEGO_R2_REGION` (default `auto`)
+- `PLIEGO_R2_ACCESS_KEY_ID`
+- `PLIEGO_R2_SECRET_ACCESS_KEY`
+- `PLIEGO_R2_PRESIGN_TTL_SECONDS` (default `300`, valid range `1`–`300`)
+- `PLIEGO_R2_KEY_PREFIX` (default `invoices/`; must end in `/`)
+
+Local development should use `PLIEGO_R2_KEY_PREFIX=local-dev/invoices/` to keep
+test objects separate from production keys.
+
+When `PLIEGO_R2_ENABLED=true`, missing or invalid configuration stops startup with
+a Spanish error. Keep the environment file root-owned and mode `0640`; never copy
+these values to a release manifest, command line, build log or deployment output.
+Keep R2 enabled while artifact rows reference R2 objects. Disabling the flag does
+not backfill those objects into PostgreSQL; an operator must re-enable R2 or follow
+a separately reviewed future backfill plan before disabling it. The optional live
+smoke test is for an operator-controlled non-production bucket only and is never
+part of deployment verification.
+
+**Credential rotation.** The R2 key pair is an S3 credential scoped to the invoice
+bucket (read, write, list). The Cloudflare API token issued with it is not used by
+PLIEGO and must not be stored on the server. Rotate the key pair (create the new
+pair, update `/etc/pliego/pliego.env`, restart, verify one invoice view, then revoke
+the old pair in Cloudflare) when: a value has appeared outside the environment file
+(chat, ticket, terminal transcript, screenshot), an operator with access leaves,
+before first production activation if the pair was shared during development, and
+at least every 90 days. Presigned links need no revocation: each expires after the
+configured TTL (300 s) and is issued only after Database API authorization.
+
+**Framing.** On desktop, the customer invoice page (`/orders/:orderId/invoice`)
+frames the signed R2 URL; with PostgreSQL storage it frames a `blob:` URL. If Nginx
+or Cloudflare adds a `Content-Security-Policy` to the storefront, its `frame-src`
+(or `child-src`/`default-src`) must allow
+`https://<account-id>.r2.cloudflarestorage.com` and `blob:`; otherwise the page
+shows an empty frame while "Abrir en otra pestaña" and "Descargar PDF" keep working.
+
+### Invoice email backlog before enabling mail
+
+V084 queues one `INVOICE_ISSUED` row per newly issued invoice whether or not mail
+delivery is enabled. Order notifications (`ORDER_CONFIRMED`, `ORDER_STATUS`,
+`ORDER_CANCELLED`) and invoice notifications never expire: when
+`PLIEGO_MAIL_ENABLED` becomes `true`, the worker sends every `PENDING` row oldest
+first (default one per 30 s). Verification and reset emails expire with their
+tokens (`ACTION_EXPIRED`); nothing else does. Before turning mail on, or after any
+long mail outage, inspect the backlog read-only:
+
+```sql
+SELECT tipo, count(*), min(fecha_creacion), max(fecha_creacion), max(intentos)
+  FROM pliego.correo_outbox WHERE estado = 'PENDING' GROUP BY tipo ORDER BY tipo;
+```
+
+If stale notifications must not reach customers, the owner decides a cutoff and an
+operator retires them with an approved, audited statement instead of deleting rows,
+for example marking them `FAILED` with `ultimo_error = 'STALE_NOT_SENT'` for the
+chosen types and age. Never delete outbox rows: their event keys keep enqueueing
+idempotent. A permanent claim-time freshness rule is a reviewed migration, not an
+operator action.
+
 ## 3. Access, secrets and evidence
 
 Every remote connection and transfer must use:

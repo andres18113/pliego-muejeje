@@ -20,3 +20,9 @@ it.each(["/biblioteca/invalid", "/biblioteca/0", "/biblioteca/../admin", "//evil
 it.each(["//evil.test/account", "/account/unknown", "/account/../admin", "/account\\addresses", "https://evil.test/account", "/sign-in"])("rejects unsafe or unsupported destination %s", (href) => {
   expect(safeAuthReturnHref(href)).toBe("/");
 });
+it.each(["/orders/700/invoice", "/orders/700"])("returns the invoice email's reader to the order's document %s", (href) => {
+  expect(safeAuthReturnHref(href)).toBe(href);
+});
+it.each(["/orders/0/invoice", "/orders/700/invoice/extra", "/orders/invoice", "/biblioteca/123/invoice", "/orders/700/invoice/../../admin"])("rejects malformed invoice destination %s", (href) => {
+  expect(safeAuthReturnHref(href)).toBe("/");
+});

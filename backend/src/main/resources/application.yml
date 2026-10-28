@@ -28,6 +28,15 @@ pliego:
     enabled: ${PLIEGO_BILLING_ENABLED:true}
     poll-interval: ${PLIEGO_BILLING_POLL_INTERVAL:PT5S}
     batch-size: ${PLIEGO_BILLING_BATCH_SIZE:4}
+  r2:
+    enabled: ${PLIEGO_R2_ENABLED:false}
+    bucket: ${PLIEGO_R2_BUCKET:}
+    endpoint: ${PLIEGO_R2_ENDPOINT:}
+    region: ${PLIEGO_R2_REGION:auto}
+    access-key-id: ${PLIEGO_R2_ACCESS_KEY_ID:}
+    secret-access-key: ${PLIEGO_R2_SECRET_ACCESS_KEY:}
+    presign-ttl-seconds: ${PLIEGO_R2_PRESIGN_TTL_SECONDS:300}
+    key-prefix: ${PLIEGO_R2_KEY_PREFIX:invoices/}
   home-delivery:
     scheduler-enabled: ${PLIEGO_HOME_DELIVERY_SCHEDULER_ENABLED:true}
     poll-interval: ${PLIEGO_HOME_DELIVERY_POLL_INTERVAL:PT10S}

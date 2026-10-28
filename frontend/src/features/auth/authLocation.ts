@@ -9,7 +9,7 @@ export function emailActionLocation(pathname: string, from: string) {
   return from === "/" ? pathname : authLocation(pathname, from);
 }
 
-const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkout|(?:orders|biblioteca)(?:\/[1-9][0-9]{0,18})?)\/?$/;
+const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkout|orders(?:\/[1-9][0-9]{0,18}(?:\/invoice)?)?|biblioteca(?:\/[1-9][0-9]{0,18})?)\/?$/;
 
 /**
  * Validates the post-sign-in destination: catalog routes plus the CUSTOMER purchase

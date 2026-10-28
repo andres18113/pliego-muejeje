@@ -97,6 +97,12 @@ export const invoiceMetadataSchema = z.object({
 });
 export type InvoiceMetadata=z.infer<typeof invoiceMetadataSchema>;
 export type InvoiceFileType="PDF"|"XML";
+export const invoiceDocumentAccessSchema=z.object({
+  delivery:z.enum(["API_STREAM","SIGNED_URL"]),
+  url:z.string().min(1),
+  expiresAt:z.string().datetime().nullable(),
+});
+export type InvoiceDocumentAccess=z.infer<typeof invoiceDocumentAccessSchema>;
 export async function getInvoiceMetadata(orderId:string,signal?:AbortSignal):Promise<InvoiceMetadata|null> {
   const {data,error,response}=await apiClient.GET("/api/v1/orders/{orderId}/invoice",{params:{path:{orderId}},signal,cache:"no-store"});
   if(response.status===404) return null;
@@ -112,4 +118,12 @@ export async function getInvoiceFile(orderId:string,type:InvoiceFileType,signal?
   const mime=response.headers.get("Content-Type")?.split(";")[0].trim();
   if(!data || data.size===0 || mime!==(type==="PDF"?"application/pdf":"application/xml")) throw toApiRequestError(502,{},"No pudimos descargar el documento","El archivo recibido está incompleto. Vuelve a consultar los documentos.");
   return data;
+}
+/** Resolves an authenticated inline PDF stream or a short-lived signed URL without caching either instruction. */
+export async function getInvoiceAccess(orderId:string,signal?:AbortSignal,disposition?:"inline"|"attachment"):Promise<InvoiceDocumentAccess> {
+  const {data,error,response}=await apiClient.GET("/api/v1/orders/{orderId}/invoice/files/PDF/access",{params:{path:{orderId},...(disposition!==undefined?{query:{disposition}}:{})},signal,cache:"no-store"});
+  if(!response.ok) throw toApiRequestError(response.status,error,"No pudimos abrir el documento","El PDF puede seguir en preparación. Actualiza los datos e inténtalo de nuevo.");
+  const parsed=invoiceDocumentAccessSchema.safeParse(data);
+  if(!parsed.success) throw toApiRequestError(502,{},"No pudimos abrir el documento","La respuesta del servidor está incompleta.");
+  return parsed.data;
 }

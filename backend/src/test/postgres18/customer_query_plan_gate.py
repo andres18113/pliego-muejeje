@@ -55,7 +55,7 @@ def gateway_queries():
             sql = match[1]
             function = re.search(r"pliego\.(fn_\w+)", sql)[1]
             # Scheduled billing workers do not serve customer requests.
-            if function in {"fn_invoice_artifact_claim", "fn_invoice_artifact_complete",
+            if function in {"fn_invoice_artifact_claim", "fn_invoice_artifact_complete", "fn_invoice_artifact_complete_stored",
                             "fn_invoice_artifact_fail"}:
                 continue
             queries[f"{path.stem}.{function}"] = sql
@@ -175,6 +175,7 @@ def cases(data):
         "fn_help_search": [null, null, null, "0", "20"],
         "fn_help_article": [literal(data['help_slug'])],
         "fn_invoice_artifact_metadata": [invoice_actor, invoice_order],
+        "fn_invoice_artifact_access_v085": [invoice_actor, invoice_order, "'PDF'"],
         "fn_invoice_artifact_download": [invoice_actor, invoice_order, "'PDF'"],
         "fn_user_auth_data": [literal(data['owned']['email'])],
         "fn_auth_session_create_checked": [actor, "'plan-gate-unused'", "CURRENT_TIMESTAMP + INTERVAL '1 day'", "'unused'"],
@@ -260,6 +261,7 @@ def main():
             if base_name in {"JdbcCustomerOrderGateway.DETAIL", "JdbcDigitalEligibilityGateway.fn_customer_digital_eligibility",
                              "JdbcCatalogGateway.CATALOG_GLOBAL_SEARCH_QUERY.product_type", "JdbcLibraryGateway.fn_customer_library",
                              "JdbcCatalogGateway.CATALOG_SEARCH_QUERY.offers", "JdbcBillingGateway.fn_invoice_artifact_download",
+                             "JdbcBillingGateway.fn_invoice_artifact_access_v085",
                              "JdbcCartGateway.SAVED_GET"}:
                 if not plan["Plan"]["Actual Rows"]:
                     problems.append("Expected nonempty representative fixture result")

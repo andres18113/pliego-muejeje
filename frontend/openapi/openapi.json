@@ -505,8 +505,8 @@
           "204": {
             "description": "Dirección actualizada"
           },
-          "404": {
-            "description": "Dirección no disponible",
+          "400": {
+            "description": "Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva.",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -515,8 +515,8 @@
               }
             }
           },
-          "400": {
-            "description": "Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva.",
+          "404": {
+            "description": "Dirección no disponible",
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -4114,7 +4114,7 @@
             "required": false,
             "schema": {
               "type": "number",
-              "minimum": 0.0
+              "minimum": 0
             }
           },
           {
@@ -4123,7 +4123,7 @@
             "required": false,
             "schema": {
               "type": "number",
-              "minimum": 0.0
+              "minimum": 0
             }
           },
           {
@@ -5561,6 +5561,172 @@
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/orders/{orderId}/invoice/files/PDF/access": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Obtener acceso autenticado para visualizar el PDF",
+        "description": "Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.",
+        "operationId": "getInvoicePdfAccess_1",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "exclusiveMinimum": 0,
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "disposition",
+            "in": "query",
+            "description": "Presentación del PDF.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "inline",
+              "enum": [
+                "inline",
+                "attachment"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instrucción privada de acceso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDocumentAccess"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Factura o archivo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El archivo aún se prepara",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Presentación no válida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/admin/orders/{orderId}/invoice/files/PDF/access": {
+      "get": {
+        "tags": [
+          "Billing"
+        ],
+        "summary": "Obtener acceso autenticado para visualizar el PDF",
+        "description": "Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.",
+        "operationId": "getInvoicePdfAccess",
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "exclusiveMinimum": 0,
+              "pattern": "^[1-9][0-9]*$"
+            }
+          },
+          {
+            "name": "disposition",
+            "in": "query",
+            "description": "Presentación del PDF.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "inline",
+              "enum": [
+                "inline",
+                "attachment"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Instrucción privada de acceso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDocumentAccess"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Factura o archivo no disponible",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "El archivo aún se prepara",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Presentación no válida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
                 }
               }
             }
@@ -10520,6 +10686,29 @@
           },
           "saved": {
             "$ref": "#/components/schemas/SavedForLater"
+          }
+        }
+      },
+      "InvoiceDocumentAccess": {
+        "type": "object",
+        "description": "Instrucción privada para visualizar el PDF de la factura.",
+        "properties": {
+          "delivery": {
+            "type": "string",
+            "enum": [
+              "API_STREAM",
+              "SIGNED_URL"
+            ]
+          },
+          "url": {
+            "type": "string"
+          },
+          "expiresAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
           }
         }
       }
