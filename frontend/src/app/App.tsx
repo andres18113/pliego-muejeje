@@ -132,6 +132,13 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: "account/identity",
+        lazy: async () => {
+          const { IdentityCorrectionPage } = await import("@/features/account/IdentityCorrectionPage");
+          return { Component: IdentityCorrectionPage };
+        },
+      },
+      {
         path: "account/addresses",
         lazy: async () => {
           const { AddressBookPage } = await import("@/features/account/AddressBook");

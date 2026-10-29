@@ -66,19 +66,26 @@ class InvoiceRendererTest {
             assertThat(pdf.getPage(0).getMediaBox().getWidth()).isEqualTo(595f);
             assertThat(pdf.getPage(0).getMediaBox().getHeight()).isEqualTo(842f);
             var info = pdf.getDocumentInformation();
-            assertThat(info.getTitle()).isEqualTo("Factura académica 999-999-000000042");
+            assertThat(info.getTitle()).isEqualTo("Comprobante de compra 999-999-000000042");
             assertThat(info.getProducer()).isEqualTo("PLIEGO");
             String text = new PDFTextStripper().getText(pdf);
-            assertThat(text).contains("PLIEGO ACADÉMICO", "Identificación sintética: 9999999999001",
-                    "Campus académico", "Entorno académico sin validez tributaria", "999-999-000000042",
-                    "Pedido: 10", "Fecha de emisión", "SIMULACIÓN ACADÉMICA", "Ambiente: SIMULACIÓN ACADÉMICA",
-                    "Autorización SRI: No aplica — documento académico", "José Muñoz", "Cédula: 0000000018",
-                    "Calle Ñ & campus", "academic@example.invalid", "Álgebra & <cálculo> (edición) \\ especial",
-                    "12.00", "4.00", "15.00", "20.00", "Subtotal IVA 15%", "Subtotal sin impuestos",
-                    "Total descuento", "IVA", "Envío", "VALOR TOTAL", "23.00", "Forma de pago", "Tarjeta",
-                    "SIMULACIÓN ACADÉMICA — SIN VALIDEZ TRIBUTARIA",
-                    "Documento sin firma electrónica. No constituye autorización SRI.", "Página 1 de 1");
-            assertThat(text).doesNotContain("CLAVE DE ACCESO", "NÚMERO DE AUTORIZACIÓN", "Código de barras");
+            assertThat(text).contains("pliegolibros.com", "COMPROBANTE DE COMPRA", "N.° 999-999-000000042",
+                    "Pedido: 10", "Fecha de emisión", "Datos del cliente", "Nombre / Razón social",
+                    "José Muñoz", "Cédula", "0000000018", "Dirección", "Calle Ñ & campus",
+                    "Correo", "academic@example.invalid", "1", "2",
+                    "Álgebra & <cálculo> (edición) \\ especial", "12.00", "4.00", "15.00", "20.00",
+                    "Subtotal IVA 15%", "Subtotal sin impuestos", "Total descuento", "IVA", "3.00",
+                    "Envío", "0.00", "VALOR TOTAL", "23.00 USD", "Información adicional",
+                    "Moneda", "Forma de pago", "Tarjeta", "Monto registrado",
+                    "Comprobante sin validez tributaria. No es una factura electrónica autorizada por el SRI.",
+                    "Página 1 de 1");
+            assertThat(text.split("academic@example.invalid", -1).length - 1).isEqualTo(1);
+            assertThat(occurrences(text, "Pedido: 10")).isEqualTo(1);
+            assertThat(occurrences(text, "Fecha de emisión")).isEqualTo(1);
+            assertThat(occurrences(text, "Envío")).isEqualTo(1);
+            assertThat(text.indexOf("Envío")).isGreaterThan(text.indexOf("Resumen de valores"));
+            assertNoRemovedSimulationContent(text);
+            assertFooterNoticeOncePerPage(pdf);
         }
         assertThat(renderer.render("PDF", snapshot())).isEqualTo(bytes);
     }
@@ -92,16 +99,19 @@ class InvoiceRendererTest {
             var positions = new PositionedTextStripper();
             positions.getText(pdf);
             float nameX = positions.xOf("José Muñoz");
-            float dateX = positions.xOfInRow("17/10/2026", "Fecha de emisión");
             float addressX = positions.xOf("Avenida de las letras");
-            float identityX = positions.xOf("Cédula: 0000000018");
+            float identityLabelX = positions.xOf("Cédula");
+            float identityX = positions.xOf("0000000018");
             float emailX = positions.xOf("ana");
-            assertThat(nameX).isCloseTo(dateX, org.assertj.core.data.Offset.offset(0.5f));
             assertThat(nameX).isCloseTo(addressX, org.assertj.core.data.Offset.offset(0.5f));
+            assertThat(identityLabelX).isLessThan(identityX);
             assertThat(identityX).isCloseTo(emailX, org.assertj.core.data.Offset.offset(0.5f));
+            assertThat(positions.yOf("Avenida de las letras"))
+                    .isCloseTo(positions.yOf("ana"), org.assertj.core.data.Offset.offset(0.5f));
             String extracted = new PDFTextStripper().getText(pdf);
             assertThat(extracted).contains("Avenida de las letras", "Quito", "Pichincha");
             assertThat(extracted.split("Avenida", -1).length - 1).isEqualTo(8);
+            assertThat(occurrences(extracted, "Fecha de emisión")).isEqualTo(1);
         }
     }
 
@@ -118,27 +128,38 @@ class InvoiceRendererTest {
         byte[] bytes = renderer.render("PDF", snapshot);
         try (PDDocument pdf = Loader.loadPDF(bytes)) {
             assertThat(pdf.getNumberOfPages()).isGreaterThan(1);
-            assertThat(pdf.getDocumentInformation().getTitle()).isEqualTo("Factura académica 999-999-000000042");
+            assertThat(pdf.getDocumentInformation().getTitle()).isEqualTo("Comprobante de compra 999-999-000000042");
             assertThat(pdf.getDocumentInformation().getProducer()).isEqualTo("PLIEGO");
             PDFTextStripper stripper = new PDFTextStripper();
             String text = stripper.getText(pdf);
             for (int i = 0; i < 70; i++) assertThat(text).contains("Título largo " + i, "FIN-" + i);
             assertThat(text).contains("Código", "Cant.", "Descripción", "Precio unitario", "Descuento", "IVA %", "Precio total");
-            assertThat(text).contains("Subtotal IVA 15%", "Subtotal sin impuestos", "Total descuento", "VALOR TOTAL");
+            assertThat(text).contains("Subtotal IVA 15%", "Subtotal sin impuestos", "Total descuento", "IVA",
+                    "Envío", "VALOR TOTAL", "23.00 USD");
             assertThat(text.lines().filter(line -> line.contains("VALOR TOTAL")).count()).isEqualTo(1);
             assertThat(text.lines().filter(line -> line.contains("Subtotal IVA 15%")).count()).isEqualTo(1);
+            assertThat(occurrences(text, "Envío")).isEqualTo(1);
             for (int page = 1; page <= pdf.getNumberOfPages(); page++) {
                 stripper.setStartPage(page);
                 stripper.setEndPage(page);
                 String pageText = stripper.getText(pdf);
-                assertThat(pageText).contains("SIMULACIÓN ACADÉMICA — SIN VALIDEZ TRIBUTARIA");
-                assertThat(pageText).contains("Documento sin firma electrónica. No constituye autorización SRI.");
+                assertNoRemovedSimulationContent(pageText);
+                assertThat(pageText).contains("Comprobante sin validez tributaria. No es una factura electrónica autorizada por el SRI.");
                 assertThat(pageText).contains("Página " + page + " de " + pdf.getNumberOfPages());
-                if (page > 1 && pageText.contains("Título largo"))
-                    assertThat(pageText).contains("Código", "Descripción", "Precio unitario");
-                if (page < pdf.getNumberOfPages()) assertThat(pageText).doesNotContain("VALOR TOTAL", "Información adicional");
-                if (page == pdf.getNumberOfPages()) assertThat(pageText).contains("VALOR TOTAL", "Información adicional");
+                assertThat(occurrences(pageText,
+                        "Comprobante sin validez tributaria. No es una factura electrónica autorizada por el SRI."))
+                        .isEqualTo(1);
+                assertThat(occurrences(pageText, "Pedido: 10")).isEqualTo(1);
+                if (page == 1) assertThat(occurrences(pageText, "Fecha de emisión")).isEqualTo(1);
+                else assertThat(pageText).doesNotContain("Fecha de emisión");
+                if (page > 1) {
+                    assertThat(pageText).contains("Comprobante de compra · N.° 999-999-000000042", "Pedido: 10");
+                    if (pageText.contains("Título largo")) assertThat(pageText).contains("Código", "Descripción", "Precio unitario");
+                }
+                if (page < pdf.getNumberOfPages()) assertThat(pageText).doesNotContain("VALOR TOTAL", "Información adicional", "Envío");
+                if (page == pdf.getNumberOfPages()) assertThat(pageText).contains("VALOR TOTAL", "Información adicional", "Envío");
             }
+            assertFooterNoticeOncePerPage(pdf);
         }
     }
 
@@ -147,6 +168,11 @@ class InvoiceRendererTest {
         java.nio.file.Path samples = java.nio.file.Path.of("/tmp/claude-1000/-home-andres18123-PLIEGO/a47bcd7b-ad29-480d-9eb9-444e650de42e/scratchpad/samples");
         java.nio.file.Files.createDirectories(samples);
         java.nio.file.Files.write(samples.resolve("invoice-single.pdf"), renderer.render("PDF", snapshot()));
+        ObjectNode ruc = snapshot();
+        ruc.put("buyerName", "Ana Rojas");
+        ruc.put("identityType", "TAX_ID");
+        ruc.put("identityNumber", "1790016919001");
+        java.nio.file.Files.write(samples.resolve("invoice-ruc.pdf"), renderer.render("PDF", ruc));
         ObjectNode multiple = snapshot();
         var items = multiple.putArray("items");
         for (int i = 0; i < 70; i++) {
@@ -227,8 +253,11 @@ class InvoiceRendererTest {
         assertThat(xml).contains("<tipoIdentificacionComprador>04</tipoIdentificacionComprador>", "<identificacionComprador>1790016919001</identificacionComprador>");
         assertThat(new String(renderer.render("XML", snapshot()), StandardCharsets.UTF_8)).contains("<tipoIdentificacionComprador>05</tipoIdentificacionComprador>");
         String pdf = pdfText(renderer.render("PDF", ruc));
-        assertThat(pdf).contains("RUC: 1790016919001").doesNotContain("Cédula:");
-        assertThat(pdfText(renderer.render("PDF", snapshot()))).contains("Cédula: 0000000018").doesNotContain("RUC:");
+        assertThat(pdf).contains("RUC", "1790016919001").doesNotContain("Cédula");
+        assertNoRemovedSimulationContent(pdf);
+        String cedulaPdf = pdfText(renderer.render("PDF", snapshot()));
+        assertThat(cedulaPdf).contains("Cédula", "0000000018").doesNotContain("RUC");
+        assertNoRemovedSimulationContent(cedulaPdf);
         for (String[] invalid : new String[][]{{"TAX_ID", "0000000018"}, {"NATIONAL_ID", "1790016919001"}, {"PASSPORT", "0000000018"}}) {
             ObjectNode wrong = snapshot(); wrong.put("identityType", invalid[0]); wrong.put("identityNumber", invalid[1]);
             assertThatThrownBy(() -> renderer.render("XML", wrong)).isInstanceOf(IllegalArgumentException.class);
@@ -276,6 +305,27 @@ class InvoiceRendererTest {
         try (PDDocument pdf = Loader.loadPDF(bytes)) { return new PDFTextStripper().getText(pdf); }
     }
 
+    private static void assertNoRemovedSimulationContent(String text) {
+        assertThat(text).doesNotContain("SIMULACIÓN", "ACADÉMIC", "Identificación sintética", "Ambiente",
+                "Autorización", "CLAVE DE ACCESO", "Factura", "9999999999001");
+    }
+
+    private static void assertFooterNoticeOncePerPage(PDDocument pdf) throws Exception {
+        String notice = "Comprobante sin validez tributaria. No es una factura electrónica autorizada por el SRI.";
+        PDFTextStripper stripper = new PDFTextStripper();
+        for (int page = 1; page <= pdf.getNumberOfPages(); page++) {
+            stripper.setStartPage(page);
+            stripper.setEndPage(page);
+            String pageText = stripper.getText(pdf);
+            assertThat(occurrences(pageText, notice)).isEqualTo(1);
+            assertThat(pageText).contains("Página " + page + " de " + pdf.getNumberOfPages());
+        }
+    }
+
+    private static long occurrences(String text, String value) {
+        return text.split(java.util.regex.Pattern.quote(value), -1).length - 1L;
+    }
+
     private static final class PositionedTextStripper extends PDFTextStripper {
         private final java.util.List<PositionedRun> runs = new java.util.ArrayList<>();
         private PositionedTextStripper() throws java.io.IOException { }
@@ -302,6 +352,11 @@ class InvoiceRendererTest {
                 if (at >= 0 && Math.abs(run.y() - rowY) < 1f) return run.positions().get(at).getXDirAdj();
             }
             throw new AssertionError("No se encontró el valor alineado: " + value);
+        }
+
+        private float yOf(String value) {
+            return runs.stream().filter(run -> run.text().contains(value)).map(PositionedRun::y)
+                    .findFirst().orElseThrow(() -> new AssertionError("No se encontró texto del PDF: " + value));
         }
     }
 

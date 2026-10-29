@@ -10,7 +10,7 @@
 
 .row {
   display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "identity commerce" "identity actions" "feedback feedback";
-  align-items: start; gap: 10px 18px; width: 100%; min-width: 0; padding: 14px 16px 14px 14px; border-radius: 18px; background: var(--acc-sheet);
+  align-items: start; gap: 10px 18px; width: 100%; min-width: 0; padding: 14px 16px 14px 14px; border-radius: var(--acc-card-radius); background: var(--acc-card);
   transition: opacity 200ms var(--acc-ease);
 }
 .row[data-removed] .identityLink, .row[data-removed] .commerce { opacity: .55; }

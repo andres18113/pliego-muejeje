@@ -31,6 +31,8 @@ For email, enqueue the event in the database completion routine or publish it fr
 
 PDFBox provides embedded Unicode fonts, page and image primitives, metadata control and direct text extraction for tests without adding a browser runtime. The bundled Roboto Regular, Medium and Bold files come from the official Google Fonts `googlefonts/roboto-2` GitHub repository and include its Apache 2.0 license. Unsupported glyphs render as `?` without failing the worker. A fixed document ID, omitted creation timestamp, fixed title and producer keep output deterministic.
 
+The PDF presentation uses the commercial title “Comprobante de compra” and a single quiet footer notice on each page. It omits synthetic issuer credentials and simulation banners. XML output and its schema-backed content remain unchanged.
+
 The renderer only formats values from the immutable claim snapshot. It does not price, aggregate, authorize or infer tax treatment. Current payment method and amount are projected at claim time from the immutable `checkout_attempt` receipt. If an older order has no receipt, the PDF shows the invoice total without inventing a payment method.
 
 `fn_invoice_artifact_complete` enqueues `INVOICE_ISSUED:<invoiceId>` in the same transaction that first marks a simulated PDF READY. The recipient is the order owner's account email. The payload contains the account holder's name, document number and order ID, and no identification number. XML, LEGACY invoices and artifacts already READY when V084 is applied do not enqueue mail. If `pliego.mail.enabled=false`, the existing conditional worker is absent: new outbox rows stay `PENDING`, are not sent, and are not logged as sent.

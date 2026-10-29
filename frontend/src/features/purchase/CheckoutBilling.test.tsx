@@ -274,10 +274,10 @@ it("explains a cédula different from the profile's and shows the registered one
   expect(api.count("POST", "/api/v1/checkout")).toBe(1);
 });
 
-it("shows a registered number that no longer validates as something to fix in Mi perfil", async () => {
+it("shows a registered number that no longer validates as something to fix on its correction page", async () => {
   install({ identity: () => json({ type: "EC_CEDULA", number: "0012345674" }) });
   renderPurchaseRoute(routes, "/checkout");
   const alert = await (await billingArea()).findByRole("alert");
   expect(alert).toHaveTextContent("No es válida.");
-  expect(within(alert).getByRole("link", { name: "Corrígela en Mi perfil" })).toHaveAttribute("href", "/account");
+  expect(within(alert).getByRole("link", { name: "Corrígela" })).toHaveAttribute("href", "/account/identity");
 });

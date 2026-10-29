@@ -1,5 +1,5 @@
-/* Direcciones: each address is a complete object. The primary one is the page's yellow "here"
-   scene; the others are paper objects with a hairline edge; adding is a dashed object in the same
+/* Direcciones: each address is a complete object, the Account's white card with a hairline. The primary
+   one says so with a quiet Principal badge, never a coloured field; adding is a dashed object in the same
    set. Actions live inside each object, ordered by consequence. The set is centered on the page axis:
    one or two objects sit together in the middle, and rows fill out to three across as addresses are added. */
 .section { display: grid; gap: 20px; min-width: 0; }
@@ -9,19 +9,18 @@
 
 .object {
   display: flex; flex-direction: column; gap: 14px; min-width: 0;
-  padding: 22px 22px 16px; border-radius: 24px;
-  background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line);
+  padding: 22px 22px 16px; border: 1px solid var(--acc-card-edge); border-radius: var(--acc-card-radius);
+  background: var(--acc-card);
 }
-.object[data-primary] { background: var(--acc-yellow); box-shadow: none; --acc-muted: #4b4632; }
-:global([data-mantine-color-scheme="dark"]) .object[data-primary] { --acc-ink: #252740; color: #252740; }
 
 .objectHead { display: flex; flex-wrap: wrap; align-items: center; min-height: 28px; justify-content: space-between; gap: 6px 12px; min-width: 0; }
 .alias { margin: 0; min-width: 0; color: var(--acc-ink); font: 650 1.5rem/1.1 var(--acc-display); letter-spacing: -.035em; overflow-wrap: anywhere; }
 .primaryMark.primaryMark {
-  display: inline-flex; align-items: center; gap: 7px; padding: 4px 11px 4px 9px; border: 0; border-radius: 999px;
-  background: var(--store-blue, #283da8); color: #fff; font-size: .8125rem; font-weight: 600; line-height: 1.3;
+  display: inline-flex; align-items: center; gap: 7px; padding: 3px 10px 3px 8px; border: 0; border-radius: 999px;
+  background: color-mix(in srgb, var(--acc-blue) 9%, transparent); color: var(--acc-blue); font-size: .8125rem; font-weight: 600; line-height: 1.3;
 }
-.primaryDot { width: 7px; height: 7px; border-radius: 50%; background: var(--acc-yellow); }
+/* The yellow full stop ("this one"), ringed so it holds its edge on the white card. */
+.primaryDot { width: 7px; height: 7px; border-radius: 50%; background: var(--acc-yellow); box-shadow: 0 0 0 1.5px var(--acc-blue); }
 
 .lines { display: grid; gap: 2px; align-content: start; min-width: 0; color: var(--acc-ink); font-style: normal; line-height: 1.45; overflow-wrap: anywhere; }
 .recipient { font-weight: 600; }
@@ -35,11 +34,19 @@
 .makePrimary.makePrimary { order: 3; flex: 1 0 calc(100% - 12px); min-height: 44px; margin: 6px 6px 2px; padding-inline: 14px; border-radius: 8px; }
 .quiet.quiet { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 10px; border-radius: 8px; color: var(--acc-ink); text-decoration: none; }
 .quiet.quiet:hover:not(:disabled) { background: color-mix(in srgb, var(--acc-ink) 7%, transparent); color: var(--acc-ink); }
+/* Editar in PLIEGO's ultramar; Eliminar, text and icon, in the destructive red (light red on the dark card). It
+   still asks first in the destructive ConfirmDialog. */
+.object { --acc-danger: var(--error, #7e281f); }
+:global([data-mantine-color-scheme="dark"]) .object { --acc-danger: #ffb4ab; }
+.edit.edit, .edit.edit:hover:not(:disabled) { color: var(--acc-blue); }
+.edit.edit:hover:not(:disabled) { background: color-mix(in srgb, var(--acc-blue) 8%, transparent); }
+.remove.remove, .remove.remove:hover:not(:disabled) { color: var(--acc-danger); }
+.remove.remove:hover:not(:disabled) { background: color-mix(in srgb, var(--acc-danger) 8%, transparent); }
 .quiet.quiet:focus-visible, .makePrimary.makePrimary:focus-visible, .addTile:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
 
 .addTile {
   display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 16px; min-height: 168px; min-width: 0;
-  padding: 22px; border: 1.5px dashed var(--acc-line); border-radius: 24px; background: transparent;
+  padding: 22px; border: 1.5px dashed var(--acc-line); border-radius: var(--acc-card-radius); background: transparent;
   color: var(--acc-ink); text-align: left; cursor: pointer; font: inherit;
   transition: border-color 160ms var(--acc-ease), background-color 160ms var(--acc-ease);
 }
@@ -91,7 +98,7 @@
 
 @media (max-width: 599px) {
   .grid > .addTile, .list > .object { flex-basis: 100%; max-width: none; }
-  .object, .addTile { border-radius: 20px; padding: 18px 18px 14px; }
+  .object, .addTile { padding: 18px 18px 14px; }
   .addTile { min-height: 0; }
   .editor.editor { border-radius: 0; box-shadow: none; }
   .editor :global(.address-form) > :global(.purchase-actions) > * { flex: 1 1 auto; }
@@ -104,5 +111,5 @@
 @media (prefers-reduced-motion: reduce) { .addTile, .editorClose button { transition: none; } }
 @media (forced-colors: active) {
   .object, .addTile, .editor.editor { border: 1px solid CanvasText; }
-  .object[data-primary] { border: 3px solid Highlight; }
+  .primaryMark.primaryMark { border: 1px solid CanvasText; }
 }

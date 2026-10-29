@@ -65,6 +65,8 @@
 .readBack .actions { justify-content: center; }
 .dialog.readBack .actions > * { flex: 1 1 9.5rem; max-width: 12.5rem; padding-inline: 20px; border-radius: 999px; }
 @media (max-width: 420px) { .dialog.readBack .actions > * { max-width: none; } }
+/* Pill answers for a plain question: the same balanced pills, the sheet keeps its reading alignment. */
+.dialog.pill .actions > * { flex: 0 1 auto; min-width: 7.5rem; padding-inline: 22px; border-radius: 999px; }
 /* Focus is a ring around the answer, never a new fill: the answer keeps its own colour. */
 .dialog :focus-visible { outline: 3px solid var(--cd-focus); outline-offset: 2px; box-shadow: none; }
 

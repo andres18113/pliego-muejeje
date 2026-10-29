@@ -21,7 +21,7 @@ import java.util.Map;
 
 import static com.pliego.modules.billing.application.InvoiceRenderer.*;
 
-/** PLIEGO's deterministic academic invoice layout. All amounts and item values come from the immutable claim snapshot. */
+/** PLIEGO's deterministic purchase receipt layout. Values come directly from the immutable claim snapshot. */
 final class AcademicInvoicePdf {
     private static final float PAGE_WIDTH = 595f;
     private static final float PAGE_HEIGHT = 842f;
@@ -29,23 +29,17 @@ final class AcademicInvoicePdf {
     private static final float RIGHT = 559f;
     private static final float CONTENT_WIDTH = RIGHT - LEFT;
     private static final float BODY_BOTTOM = 84f;
-    private static final float FOOTER_TOP = 72f;
     private static final float HEADER_HEIGHT = 28f;
     private static final Color ULTRAMAR = new Color(0x28, 0x3d, 0xa8);
     private static final Color INK = new Color(0x25, 0x27, 0x40);
     private static final Color MUTED = new Color(0x59, 0x5a, 0x6e);
-    private static final Color PAPER = new Color(0xf6, 0xf5, 0xf0);
-    private static final Color YELLOW = new Color(0xf3, 0xdf, 0x83);
     private static final Color BORDER = new Color(0xd5, 0xd7, 0xe0);
-    private static final Color PALE_BLUE = new Color(0xf3, 0xf5, 0xfc);
     private static final float[] COLUMN_WIDTHS = {42f, 38f, 196f, 65f, 58f, 52f, 72f};
     private static final String[] COLUMN_HEADINGS = {"Código", "Cant.", "Descripción", "Precio unitario", "Descuento", "IVA %", "Precio total"};
     private static final Map<String, String> TAX_LABELS = Map.ofEntries(
             Map.entry("0", "IVA 0%"), Map.entry("2", "IVA 12%"), Map.entry("3", "IVA 14%"),
             Map.entry("4", "IVA 15%"), Map.entry("5", "IVA 5%"), Map.entry("6", "No objeto de IVA"),
             Map.entry("7", "Exento de IVA"), Map.entry("8", "IVA 8%"));
-    private static final String LEGEND = InvoiceRenderer.LEGEND;
-
     private AcademicInvoicePdf() { }
 
     static byte[] render(JsonNode snapshot) throws Exception {
@@ -64,7 +58,7 @@ final class AcademicInvoicePdf {
             layout.footers();
 
             var information = document.getDocumentInformation();
-            information.setTitle("Factura académica " + text(snapshot, "documentNumber"));
+            information.setTitle("Comprobante de compra " + text(snapshot, "documentNumber"));
             information.setProducer("PLIEGO");
             var output = new ByteArrayOutputStream();
             document.save(output);
@@ -126,71 +120,65 @@ final class AcademicInvoicePdf {
             newPage();
             float itemsTableTop;
             try (var stream = stream()) {
-                stream.drawImage(logo, LEFT, 790f, 104f, 24.2f);
-                roundedBox(stream, LEFT, 650f, 254f, 124f, Color.WHITE, BORDER);
-                drawText(stream, medium, 8.5f, LEFT + 14f, 756f, MUTED, "EMISOR ACADÉMICO");
-                drawText(stream, bold, 13f, LEFT + 14f, 736f, INK, text(snapshot.path("issuer"), "name"));
-                drawWrapped(stream, regular, 9f, LEFT + 14f, 720f, 224f, 12f, INK,
-                        text(snapshot.path("issuer"), "address"));
-                drawText(stream, medium, 8f, LEFT + 14f, 690f, MUTED, "Identificación sintética");
-                drawText(stream, regular, 10f, LEFT + 14f, 675f, INK, text(snapshot.path("issuer"), "identification"));
-                drawText(stream, regular, 8f, LEFT + 14f, 660f, MUTED, "Entorno académico sin validez tributaria");
+                float headerTop = PAGE_HEIGHT - 36f;
+                float logoBottom = headerTop - 27f;
+                float siteBaseline = headerTop - 40f;
+                stream.drawImage(logo, LEFT, logoBottom, 104f, 24.2f);
+                drawText(stream, regular, 8.2f, LEFT, siteBaseline, MUTED, "pliegolibros.com");
 
-                roundedBox(stream, 304f, 641f, 255f, 165f, Color.WHITE, BORDER);
-                drawText(stream, medium, 8f, 318f, 788f, MUTED,
-                        "Identificación sintética: " + text(snapshot.path("issuer"), "identification"));
-                letterSpaced(stream, bold, 13f, 318f, 768f, ULTRAMAR, "FACTURA ACADÉMICA", 0.35f);
-                drawText(stream, bold, 11f, 318f, 748f, INK, "No.: " + text(snapshot, "documentNumber"));
-                drawText(stream, regular, 8.5f, 318f, 729f, INK, "Pedido: " + text(snapshot, "orderId"));
-                drawText(stream, regular, 8.5f, 318f, 713f, INK, "Fecha de emisión: " + date(snapshot));
-                drawText(stream, regular, 8f, 318f, 695f, INK, "Ambiente: SIMULACIÓN ACADÉMICA");
-                drawWrapped(stream, regular, 7.4f, 318f, 678f, 226f, 10f, INK,
-                        "Autorización SRI: No aplica — documento académico");
+                float boxX = 304f;
+                float boxWidth = 255f;
+                float boxPadding = 12f;
+                float textX = boxX + boxPadding;
+                float titleY = headerTop - 17f;
+                float documentY = titleY - 22f;
+                float orderY = documentY - 18f;
+                float issueDateY = orderY - 18f;
+                float boxBottom = issueDateY - boxPadding;
+                float boxHeight = headerTop - boxBottom;
+                roundedBox(stream, boxX, boxBottom, boxWidth, boxHeight, Color.WHITE, BORDER);
+                letterSpaced(stream, bold, 12f, textX, titleY, ULTRAMAR, "COMPROBANTE DE COMPRA", 0.3f);
+                drawText(stream, bold, 10.5f, textX, documentY, INK, "N.° " + text(snapshot, "documentNumber"));
+                drawText(stream, regular, 8.5f, textX, orderY, INK, "Pedido: " + text(snapshot, "orderId"));
+                drawText(stream, regular, 8.5f, textX, issueDateY, INK, "Fecha de emisión: " + date(snapshot));
 
-                roundedBox(stream, LEFT, 610f, CONTENT_WIDTH, 24f, YELLOW, YELLOW);
-                centered(stream, bold, 9f, LEFT, CONTENT_WIDTH, 618f, INK, LEGEND);
-
-                itemsTableTop = drawCustomerBox(stream);
+                float logoBlockBottom = siteBaseline - 2.5f;
+                float logoBlockHeight = headerTop - logoBlockBottom;
+                float headerRowHeight = Math.max(logoBlockHeight, boxHeight);
+                itemsTableTop = drawCustomerBox(stream, headerTop - headerRowHeight - 20f);
             }
             tableHeader(itemsTableTop);
         }
 
-        private float drawCustomerBox(PDPageContentStream stream) throws Exception {
-            float boxTop = 596f;
+        private float drawCustomerBox(PDPageContentStream stream, float boxTop) throws Exception {
             float leftX = LEFT + 12f;
             float rightX = LEFT + 267f;
             float valueOffset = 100f;
             float leftValueX = leftX + valueOffset;
             float rightValueX = rightX + valueOffset;
             float valueWidth = 144f;
-            float startY = 557f;
+            float startY = boxTop - 36f;
             float lineHeight = 9f;
 
             List<String> nameLines = wrap(text(snapshot, "buyerName"), 7.5f, valueWidth);
-            String identity = (ruc(snapshot) ? "RUC" : "Cédula") + ": " + text(snapshot, "identityNumber");
-            List<String> identityLines = wrap(identity, 7.5f, valueWidth);
+            List<String> identityLines = wrap(text(snapshot, "identityNumber"), 7.5f, valueWidth);
             float firstRowHeight = Math.max(nameLines.size(), identityLines.size()) * lineHeight;
-
-            float secondY = startY - firstRowHeight - 8f;
-            List<String> dateLines = wrap(date(snapshot), 7.5f, valueWidth);
+            float secondY = startY - firstRowHeight - 10f;
             String email = optional(snapshot, "buyerEmail");
             List<String> emailLines = email.isEmpty() ? List.of() : wrap(email, 7.5f, valueWidth);
-            float secondRowHeight = Math.max(dateLines.size(), emailLines.size()) * lineHeight;
-
-            float addressY = secondY - secondRowHeight - 8f;
-            List<String> addressLines = wrap(address(snapshot.path("billingAddress")), 7.5f, CONTENT_WIDTH - valueOffset - 24f);
-            float addressHeight = addressLines.size() * lineHeight;
-            float boxBottom = addressY - addressHeight - 10f;
+            float addressWidth = emailLines.isEmpty() ? CONTENT_WIDTH - valueOffset - 24f : valueWidth;
+            List<String> addressLines = wrap(address(snapshot.path("billingAddress")), 7.5f, addressWidth);
+            float secondRowHeight = Math.max(addressLines.size(), emailLines.size()) * lineHeight;
+            float boxBottom = secondY - secondRowHeight - 12f;
             float boxHeight = boxTop - boxBottom;
 
             roundedBox(stream, LEFT, boxBottom, CONTENT_WIDTH, boxHeight, Color.WHITE, BORDER);
             drawText(stream, bold, 9.5f, leftX, boxTop - 17f, ULTRAMAR, "Datos del cliente");
-            drawCustomerField(stream, leftX, leftValueX, startY, "Razón social / Nombres", nameLines, 7.1f, lineHeight);
-            drawCustomerField(stream, rightX, rightValueX, startY, "Identificación", identityLines, 7.1f, lineHeight);
-            drawCustomerField(stream, leftX, leftValueX, secondY, "Fecha de emisión", dateLines, 7.1f, lineHeight);
+            drawCustomerField(stream, leftX, leftValueX, startY, "Nombre / Razón social", nameLines, 7.1f, lineHeight);
+            drawCustomerField(stream, rightX, rightValueX, startY, ruc(snapshot) ? "RUC" : "Cédula", identityLines, 7.1f, lineHeight);
+            drawCustomerField(stream, leftX, leftValueX, secondY, "Dirección", addressLines, 7.5f, lineHeight);
             if (!emailLines.isEmpty()) drawCustomerField(stream, rightX, rightValueX, secondY, "Correo", emailLines, 7.1f, lineHeight);
-            drawCustomerField(stream, leftX, leftValueX, addressY, "Dirección", addressLines, 7.5f, lineHeight);
-            return boxBottom - 16f;
+            return boxBottom - 14f;
         }
 
         private void drawCustomerField(PDPageContentStream stream, float labelX, float valueX, float y,
@@ -241,23 +229,20 @@ final class AcademicInvoicePdf {
         }
 
         private float additionalHeight() {
-            int rows = 4;
+            int rows = 1;
             JsonNode payment = snapshot.path("payment");
             if (payment.path("method").isTextual()) rows++;
             return 18f + rows * 14f + 10f + 15f + 14f;
         }
 
         private float totalsHeight() {
-            return 18f + (snapshot.path("taxes").size() + 5) * 15f + 10f;
+            return 18f + (snapshot.path("taxes").size() + 5) * 15f + 22f;
         }
 
         private void drawAdditional(PDPageContentStream stream, float x, float top, float width) throws Exception {
             drawText(stream, bold, 9f, x, top, ULTRAMAR, "Información adicional");
             float rowY = top - 18f;
-            smallFact(stream, x, rowY, width, "Correo", optional(snapshot, "buyerEmail")); rowY -= 14f;
-            smallFact(stream, x, rowY, width, "Pedido", text(snapshot, "orderId")); rowY -= 14f;
             smallFact(stream, x, rowY, width, "Moneda", text(snapshot, "currency")); rowY -= 14f;
-            smallFact(stream, x, rowY, width, "Envío", amount(snapshot, "shippingAmount")); rowY -= 14f;
             drawText(stream, medium, 8f, x, rowY - 2f, MUTED, "Forma de pago"); rowY -= 17f;
             JsonNode payment = snapshot.path("payment");
             String method = paymentLabel(optional(payment, "method"));
@@ -289,22 +274,22 @@ final class AcademicInvoicePdf {
 
         private void continuationPage() throws Exception {
             newPage();
-            try (var stream = stream()) {
-                drawText(stream, bold, 11f, LEFT, 806f, ULTRAMAR,
-                        "FACTURA ACADÉMICA · " + text(snapshot, "documentNumber"));
-                drawText(stream, regular, 8f, LEFT, 791f, MUTED, "Pedido: " + text(snapshot, "orderId"));
-            }
-            tableHeader(779f);
+            continuationHeader();
+            tableHeader(778f);
         }
 
         private void summaryPage() throws Exception {
             newPage();
-            try (var stream = stream()) {
-                drawText(stream, bold, 11f, LEFT, 806f, ULTRAMAR,
-                        "FACTURA ACADÉMICA · " + text(snapshot, "documentNumber"));
-                drawText(stream, regular, 8f, LEFT, 791f, MUTED, "Resumen del pedido: " + text(snapshot, "orderId"));
-            }
+            continuationHeader();
             y = 772f;
+        }
+
+        private void continuationHeader() throws Exception {
+            try (var stream = stream()) {
+                drawText(stream, medium, 9f, LEFT, 806f, ULTRAMAR,
+                        "Comprobante de compra · N.° " + text(snapshot, "documentNumber"));
+                drawText(stream, regular, 8f, LEFT, 791f, MUTED, "Pedido: " + text(snapshot, "orderId"));
+            }
         }
 
         private void tableHeader(float top) throws Exception {
@@ -359,20 +344,13 @@ final class AcademicInvoicePdf {
                 PDPage footerPage = pages.get(index);
                 try (PDPageContentStream stream = new PDPageContentStream(document, footerPage,
                         PDPageContentStream.AppendMode.APPEND, true, true)) {
-                    stream.setNonStrokingColor(PAPER);
-                    stream.addRect(0f, 0f, PAGE_WIDTH, FOOTER_TOP);
-                    stream.fill();
-                    roundedBox(stream, LEFT, 51f, CONTENT_WIDTH, 19f, YELLOW, YELLOW);
-                    centered(stream, bold, 7.5f, LEFT, CONTENT_WIDTH, 57f, INK, LEGEND);
-                    drawText(stream, regular, 7f, LEFT, 38f, MUTED,
-                            "Documento sin firma electrónica. No constituye autorización SRI.");
-                    rightText(stream, medium, 7f, LEFT, 38f, CONTENT_WIDTH, MUTED,
+                    drawText(stream, regular, 8f, LEFT, 34f, MUTED,
+                            "Comprobante sin validez tributaria. No es una factura electrónica autorizada por el SRI.");
+                    rightText(stream, regular, 8f, LEFT, 34f, CONTENT_WIDTH, MUTED,
                             "Página " + (index + 1) + " de " + totalPages);
                 }
             }
         }
-
-        private float[] rowWidths() { return COLUMN_WIDTHS; }
 
         private void newPage() {
             page = new PDPage(new PDRectangle(PAGE_WIDTH, PAGE_HEIGHT));
@@ -402,21 +380,6 @@ final class AcademicInvoicePdf {
             float size = strong ? 8.2f : 7.3f;
             drawText(stream, font, size, x, y, color, label);
             rightText(stream, font, size, x, y, width, color, value);
-        }
-
-        private void labelValue(PDPageContentStream stream, float x, float y, String label,
-                String value, float width) throws Exception {
-            drawText(stream, medium, 7.2f, x, y, MUTED, label + ":");
-            drawWrapped(stream, regular, 8f, x + 122f, y, width - 122f, 10f, INK, value);
-        }
-
-        private void drawWrapped(PDPageContentStream stream, PDType0Font font, float size, float x,
-                float y, float width, float lineHeight, Color color, String value) throws Exception {
-            int index = 0;
-            for (String line : wrap(value, size, width)) {
-                drawText(stream, font, size, x, y - index * lineHeight, color, line);
-                index++;
-            }
         }
 
         private List<String> wrap(String value, float size, float width) throws Exception {

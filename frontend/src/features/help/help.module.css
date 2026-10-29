@@ -1,6 +1,7 @@
 /* Ayuda: the calmest storefront page. Warm paper throughout; one large line in ink display type, then the
    published articles as white support-resource cards (Material symbol, title, summary) — resources first, no
-   search or filters. An article is one 62ch column that closes on a white card: the way back into Ayuda.
+   search or filters. An article is one 62ch column of questions and short answers that closes on the other
+   topics, so the next question is one press away.
    Ultramar is kept for symbols and actions. Nothing here is lavender (the eBook colour). */
 .page {
   --help-blue: var(--store-blue, #283da8); --help-blue-hover: #1d2c86; --help-on-blue: #fff;
@@ -87,15 +88,67 @@
 .context a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .context a:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
 .articleTitle { margin: 4px 0 0; color: var(--help-ink); font: 650 clamp(1.875rem, 1.4rem + 2.2vw, 2.75rem)/1.06 var(--store-display); letter-spacing: -.045em; overflow-wrap: anywhere; text-wrap: balance; }
-.article .lead { max-width: 56ch; margin-top: 14px; color: var(--help-muted); font-size: 1.1875rem; line-height: 1.5; overflow-wrap: anywhere; text-wrap: pretty; }
-.body { display: grid; gap: 1.1em; max-width: 62ch; margin-top: clamp(22px, 3vw, 32px); font-size: 1.0625rem; line-height: 1.7; }
+.article .lead { max-width: 56ch; margin-top: 10px; color: var(--help-muted); font-size: 1.1875rem; line-height: 1.5; overflow-wrap: anywhere; text-wrap: pretty; }
+.body { display: grid; gap: 12px; max-width: 62ch; margin-top: clamp(20px, 2.6vw, 28px); font-size: 1.0625rem; line-height: 1.6; text-wrap: pretty; }
 .body p { overflow-wrap: anywhere; white-space: pre-line; }
+/* Sections: a short Bricolage heading with room above it, so the page scans as a few answers rather than prose. */
+.section { margin: 20px 0 -4px; color: var(--help-ink); font: 650 1.25rem/1.25 var(--store-display); letter-spacing: -.03em; overflow-wrap: anywhere; text-wrap: balance; scroll-margin-top: 104px; }
+.body > .section:first-child { margin-top: 0; }
+.section:focus { outline: none; }
+.section:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 4px; border-radius: 4px; }
+/* Steps: a quiet ultramar numeral on a faint ultramar disc beside each short instruction. */
+.steps, .bullets { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.steps { counter-reset: help-step; }
+.steps li { counter-increment: help-step; position: relative; min-height: 28px; padding-left: 42px; overflow-wrap: anywhere; }
+.steps li::before {
+  content: counter(help-step); position: absolute; top: .1em; left: 0; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%;
+  background: color-mix(in srgb, var(--help-blue) 10%, transparent); color: var(--help-blue); font: 650 .9375rem/1 var(--store-display); font-variant-numeric: tabular-nums;
+}
+.bullets li { position: relative; padding-left: 22px; overflow-wrap: anywhere; }
+.bullets li::before { content: ""; position: absolute; top: .72em; left: 6px; width: 6px; height: 6px; border-radius: 50%; background: var(--help-muted); }
+.inlineLink { color: var(--help-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.inlineLink:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
+/* The reader's own correction request on the "Cédula o RUC" article: a compact white card (the page's one bounded
+   object) — the request and its state, the server's answer date, and the way to it at the end. */
+.personal {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 2px 16px; max-width: 62ch;
+  margin-top: clamp(18px, 2.4vw, 24px); padding: 14px 12px 14px 20px; border: 1px solid var(--help-line); border-radius: 20px; background: var(--help-card);
+}
+.personalHead { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; min-width: 0; }
+.personalHead h2 { margin: 0; color: var(--help-ink); font: 650 1.0625rem/1.3 var(--store-display); letter-spacing: -.02em; }
+.reviewChip { display: inline-flex; padding: 2px 9px; border-radius: 8px; background: #ecebe4; color: #4a4b5c; font-size: .8125rem; font-weight: 600; line-height: 1.4; white-space: nowrap; }
+:global([data-mantine-color-scheme="dark"]) .reviewChip { background: #33354f; color: #d9d6e6; }
+.article .personalDue { grid-column: 1; margin: 0; color: var(--help-muted); font-size: .9375rem; line-height: 1.45; }
+.personalDue strong { color: var(--help-ink); font-weight: 600; font-variant-numeric: tabular-nums; }
+.personalLink {
+  grid-column: 2; grid-row: 1 / span 2; display: inline-flex; align-items: center; gap: 2px; min-height: 44px; padding: 0 8px 0 12px; border-radius: 999px;
+  color: var(--help-blue); font-weight: 600; text-decoration: none; white-space: nowrap;
+}
+.personalLink:hover { background: color-mix(in srgb, var(--help-blue) 8%, transparent); }
+.personalLink:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; }
+@media (max-width: 479px) {
+  .personal { grid-template-columns: minmax(0, 1fr); padding-right: 16px; }
+  .personalLink { grid-column: 1; grid-row: auto; justify-self: start; margin-left: -12px; }
+}
+@media (forced-colors: active) { .personal { border-color: CanvasText; } .reviewChip { border: 1px solid CanvasText; } }
 
-/* The page's one supporting card: where to go after reading. White, like the resources. */
-.onward { display: grid; gap: 10px; min-width: 0; margin-top: clamp(32px, 5vw, 52px); padding: clamp(20px, 3vw, 28px); border-radius: 24px; background: var(--help-card); box-shadow: inset 0 0 0 1px var(--help-line); }
-.onward h2 { margin: 0; font: 650 1.375rem/1.2 var(--store-display); letter-spacing: -.035em; }
-.onwardLinks { display: flex; flex-wrap: wrap; gap: 4px 24px; min-width: 0; }
-.onwardLinks a { display: inline-flex; align-items: center; min-height: 44px; color: var(--help-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; overflow-wrap: anywhere; }
+/* "En este artículo": the sections as one quiet list under the lead — no card, a hairline at its start edge. */
+.contents { display: grid; gap: 6px; max-width: 62ch; margin-top: clamp(20px, 3vw, 28px); padding-left: 16px; border-left: 2px solid var(--help-line); }
+.contentsTitle { margin: 0; color: var(--help-muted); font-size: .8125rem; font-weight: 600; }
+.contents ul { display: grid; margin: 0; padding: 0; list-style: none; }
+.contents a { display: inline-flex; align-items: center; min-height: 36px; color: var(--help-ink); font-weight: 500; text-decoration: none; }
+.contents a:hover { color: var(--help-blue); text-decoration: underline; text-underline-offset: 4px; }
+.contents a:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
+@media (forced-colors: active) { .steps li::before { border: 1px solid CanvasText; } .bullets li::before { background: CanvasText; } }
+
+/* The other topics: no card — a hairline, a small heading and the titles as rows with their symbols, two across
+   from 600px. */
+.onward { display: grid; gap: 8px; min-width: 0; margin-top: clamp(32px, 4.4vw, 44px); padding-top: clamp(20px, 2.6vw, 28px); border-top: 1px solid var(--help-line); }
+.onward h2 { margin: 0; color: var(--help-ink); font: 650 1.125rem/1.3 var(--store-display); letter-spacing: -.02em; }
+.onwardLinks { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); gap: 0 24px; min-width: 0; margin: 0; padding: 0; list-style: none; }
+.onwardLinks a { display: flex; align-items: center; gap: 10px; min-height: 44px; color: var(--help-ink); font-weight: 500; text-decoration: none; overflow-wrap: anywhere; }
+.onwardLinks a :global(.material-symbol) { flex: none; color: var(--help-blue); }
+.onwardLinks a:hover { color: var(--help-blue); text-decoration: underline; text-underline-offset: 4px; }
 .onwardLinks a:focus-visible { outline: 3px solid var(--help-blue); outline-offset: 2px; border-radius: 4px; }
 
 @media (prefers-reduced-motion: reduce) { .card, .cardGo, .action { transition: none; } .card:has(a:hover) .cardGo { translate: none; } }

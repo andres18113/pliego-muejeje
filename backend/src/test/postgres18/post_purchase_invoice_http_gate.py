@@ -85,7 +85,7 @@ def assert_academic_pdf(pdf, document_number, pages, invoice_id):
     fonts = set(re.findall(rb"/BaseFont\s*/[A-Z]{6}\+(Roboto-[A-Za-z]+)", structure))
     assert fonts >= {b"Roboto-Regular"} and len(re.findall(rb"/FontFile2", structure)) == len(fonts), fonts
     assert not re.search(rb"/(?:JavaScript|JS|OpenAction|Launch|EmbeddedFile|Encrypt|AA)\b", structure), "active PDF content"
-    assert pdf_title(structure) == "Factura académica " + document_number, pdf_title(structure)
+    assert pdf_title(structure) == "Comprobante de compra " + document_number, pdf_title(structure)
     # The bytes served are exactly the artifact PostgreSQL recorded, whichever storage holds them.
     recorded = query(f"""SELECT coalesce(a.checksum, c.checksum) FROM pliego.factura_archivo a
         LEFT JOIN pliego.factura_archivo_contenido c USING(factura_id, tipo)

@@ -32,7 +32,7 @@ export function HeaderCart() {
 
 /** The customer's account destinations; the account menu is their only navigation (current = ultramar + yellow dot). */
 const accountSections = [
-  { to: "/account", icon: "account_circle", label: "Perfil", current: (path: string) => path === "/account" },
+  { to: "/account", icon: "account_circle", label: "Perfil", current: (path: string) => path === "/account" || path === "/account/identity" },
   { to: "/account/addresses", icon: "location_on", label: "Direcciones", current: (path: string) => path.startsWith("/account/addresses") },
   { to: "/favorites", icon: "favorite", label: "Favoritos", current: (path: string) => path.startsWith("/favorites") },
   { to: "/biblioteca", icon: "menu_book", label: "Mi biblioteca", current: (path: string) => path.startsWith("/biblioteca") },

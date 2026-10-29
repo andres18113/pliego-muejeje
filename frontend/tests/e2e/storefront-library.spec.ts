@@ -114,10 +114,8 @@ test("Help search keeps backend applicability and opens a published article", as
   await expect(page.getByRole("link", { name: "Ver todos los recursos" })).toHaveAttribute("href", "/ayuda");
   await page.getByRole("link", { name: "Cómo funcionan los eBooks" }).click();
   await expect(page.getByText("Tu cuenta registra la titularidad del título adquirido.")).toBeVisible();
-  // The closing card is white, never lavender.
-  const onward = page.getByRole("complementary", { name: "Más ayuda" });
-  await expect(onward.getByRole("heading", { name: "¿Necesitas algo más?" })).toBeVisible();
-  await expect(onward).toHaveCSS("background-color", "rgb(255, 255, 255)");
+  // No closing card: the article ends on its content and, when there are other topics, their list.
+  await expect(page.getByText("¿Necesitas algo más?")).toHaveCount(0);
   await expect(page.getByRole("link", { name: "Volver a Ayuda" })).toBeVisible();
   await page.screenshot({ path: test.info().outputPath("help-article.png"), fullPage: true });
 });

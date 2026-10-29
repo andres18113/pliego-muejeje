@@ -231,7 +231,7 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
             <span className={classes.billingLabel}>{kind(registeredNumber)}</span>
             <span className={classes.billingValue}>{registeredNumber}</span>
             {registeredInvalid
-              ? <span className={classes.billingFix} role="alert">No es válida. <Link to="/account">Corrígela en Mi perfil</Link> para poder comprar.</span>
+              ? <span className={classes.billingFix} role="alert">No es válida. <Link to="/account/identity">Corrígela</Link> para poder comprar.</span>
               : editing && <span className={classes.billingNote}>Se corrige en <Link to="/account">Mi perfil</Link>.</span>}
           </div>
         </>

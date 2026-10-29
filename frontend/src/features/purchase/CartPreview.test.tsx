@@ -126,3 +126,92 @@ it.each(["P6002", "P6003"])("links a blocked digital %s line to its acquisition 
   expect(within(drawer).getByText("Copia digital individual")).toBeInTheDocument();
   expect(within(drawer).queryByRole("link", { name: "Continuar con la compra" })).not.toBeInTheDocument();
 });
+
+/** A server cart the DELETE route really changes, so every read after it reflects the removal. */
+function removableCart(lines = [{}, { quantity: 2, currentSubtotal: "37.00" }], deleteStatus = 204) {
+  let items = cartBody(lines).items;
+  const body = () => json(cartBody(items.map(({ cartItemId, ...rest }) => ({ ...rest, cartItemId })),
+    items.reduce((sum, line) => sum + Number(line.currentSubtotal), 0).toFixed(2)));
+  return stubApi({
+    "GET /api/v1/cart": body,
+    "POST /api/v1/cart/items": () => json({ cartItemId: "100", quantity: 1 }),
+    "DELETE /api/v1/cart/items/*": (request) => {
+      if (deleteStatus >= 400) return problem(deleteStatus, "INTERNAL_ERROR", "Error", "Fallo temporal.");
+      const id = new URL(request.url).pathname.split("/").pop();
+      items = items.filter((line) => line.cartItemId !== id);
+      return new Response(null, { status: deleteStatus });
+    },
+  });
+}
+
+async function openDrawer() {
+  show();
+  const user = userEvent.setup();
+  await user.click(await screen.findByRole("button", { name: "Agregar 42" }));
+  const drawer = await screen.findByRole("dialog", { name: "Tu carrito" });
+  await within(drawer).findByRole("list", { name: "Libros en tu carrito" });
+  return { user, drawer };
+}
+
+it("removes only the confirmed line and shows the server's new count and totals at once", async () => {
+  const api = removableCart();
+  const { user, drawer } = await openDrawer();
+  expect(within(drawer).getByText(/55,50/)).toBeInTheDocument();
+
+  await user.click(within(drawer).getByRole("button", { name: "Quitar Edición 1 del carrito" }));
+  const question = await screen.findByRole("dialog", { name: "¿Quitar del carrito?" });
+  expect(within(question).getByText("Edición 1", { selector: "strong" })).toBeInTheDocument();
+  expect(within(question).getByRole("button", { name: "Cancelar" })).toHaveFocus();
+  await user.click(within(question).getByRole("button", { name: "Quitar" }));
+
+  await waitFor(() => expect(screen.queryByRole("dialog", { name: "¿Quitar del carrito?" })).not.toBeInTheDocument());
+  expect(api.calls.filter((call) => call.method === "DELETE").map((call) => call.path)).toEqual(["/api/v1/cart/items/101"]);
+  const list = within(drawer).getByRole("list", { name: "Libros en tu carrito" });
+  await waitFor(() => expect(list.children).toHaveLength(1));
+  expect(within(list).getByText("Cien años de soledad")).toBeInTheDocument();
+  expect(within(drawer).queryByText(/55,50/)).not.toBeInTheDocument();
+  expect(within(drawer).getAllByText(/18,50/).length).toBeGreaterThan(0);
+  expect(within(drawer).getByRole("status", { name: "" })).toHaveTextContent("Quitaste Edición 1 del carrito");
+  // The drawer stays; the keyboard lands on the remaining line's control.
+  await waitFor(() => expect(within(drawer).getByRole("button", { name: "Quitar Cien años de soledad del carrito" })).toHaveFocus());
+});
+
+it("keeps every line when the question is cancelled or dismissed with Escape, without closing the drawer", async () => {
+  const api = removableCart();
+  const { user, drawer } = await openDrawer();
+  const control = within(drawer).getByRole("button", { name: "Quitar Edición 1 del carrito" });
+
+  await user.click(control);
+  await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Cancelar" }));
+  await waitFor(() => expect(screen.queryByRole("dialog", { name: "¿Quitar del carrito?" })).not.toBeInTheDocument());
+  await waitFor(() => expect(control).toHaveFocus());
+
+  await user.click(control);
+  await screen.findByRole("dialog", { name: "¿Quitar del carrito?" });
+  await user.keyboard("{Escape}");
+  await waitFor(() => expect(screen.queryByRole("dialog", { name: "¿Quitar del carrito?" })).not.toBeInTheDocument());
+  expect(screen.getByRole("dialog", { name: "Tu carrito" })).toBeInTheDocument();
+
+  expect(api.calls.some((call) => call.method === "DELETE")).toBe(false);
+  expect(within(drawer).getByRole("list", { name: "Libros en tu carrito" }).children).toHaveLength(2);
+});
+
+it("says the cart is empty after its last line goes and offers no checkout", async () => {
+  removableCart([{}]);
+  const { user, drawer } = await openDrawer();
+  await user.click(within(drawer).getByRole("button", { name: "Quitar Cien años de soledad del carrito" }));
+  await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Quitar" }));
+  expect(await within(drawer).findByText("Tu carrito está vacío.")).toBeInTheDocument();
+  expect(within(drawer).queryByRole("list", { name: "Libros en tu carrito" })).not.toBeInTheDocument();
+  expect(within(drawer).queryByRole("link", { name: "Continuar con la compra" })).not.toBeInTheDocument();
+  expect(within(drawer).getByRole("link", { name: "Ver carrito" })).toBeInTheDocument();
+});
+
+it("keeps the line and says so when the removal fails", async () => {
+  removableCart(undefined, 500);
+  const { user, drawer } = await openDrawer();
+  await user.click(within(drawer).getByRole("button", { name: "Quitar Edición 1 del carrito" }));
+  await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Quitar" }));
+  expect(await within(drawer).findByRole("alert")).toHaveTextContent("No pudimos quitar este libro. Sigue en tu carrito");
+  expect(within(drawer).getByRole("list", { name: "Libros en tu carrito" }).children).toHaveLength(2);
+});
