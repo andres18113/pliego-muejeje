@@ -19,9 +19,16 @@ async function mockEdition(page: Page) {
   });
 }
 
+/** The floating pill's place: inset from the viewport's edges (32px, 24px below 1024px, 8px on phones), fully round. */
+function pill(width: number) {
+  const [top, side, height] = width < 600 ? [8, 8, 56] : width < 1024 ? [16, 24, 64] : [16, 32, 64];
+  const span = Math.min(width - 2 * side, 1760);
+  return { x: (width - span) / 2, y: top, width: span, height };
+}
+
 const frames = (page: Page) => page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
 
-for (const [width, barHeight] of [[1440, 72], [1024, 60], [390, 56]] as const) {
+for (const width of [1440, 1024, 390] as const) {
   test(`the edition hands over from header to context bar in place, as product pages do, at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 800 });
     await mockEdition(page);
@@ -55,7 +62,7 @@ for (const [width, barHeight] of [[1440, 72], [1024, 60], [390, 56]] as const) {
       if (present) {
         if (appearedAt < 0) appearedAt = y;
         const box = (await bar.boundingBox())!;
-        expect([box.y, box.height, box.width]).toEqual([0, barHeight, width]);
+        expect(box).toEqual(pill(width));
         expect(await bar.evaluate(node => { const style = getComputedStyle(node); return [style.transform, style.opacity, style.transitionDuration]; }))
           .toEqual(["none", "1", "0s"]);
       }
@@ -66,10 +73,14 @@ for (const [width, barHeight] of [[1440, 72], [1024, 60], [390, 56]] as const) {
     await expect(bar.getByRole("button", { name: "Volver atrás" })).toBeVisible();
     await expect(bar.getByText(edition.title)).toBeVisible();
     await expect(bar.getByText("$ 25,95")).toBeVisible();
-    await expect(bar.locator(".book-cover")).toBeVisible();
+    // A light floating pill: fully round, on the white card surface; no jacket competes with the title.
+    await expect(bar.locator(".book-cover")).toHaveCount(0);
+    expect(Number.parseFloat(await bar.evaluate(node => getComputedStyle(node).borderTopLeftRadius))).toBeGreaterThanOrEqual(pill(width).height / 2);
+    // The one addition: the scene's own action, here a guest's way in ("Iniciar sesión" on phones).
+    await expect(bar.getByRole("link", { name: width < 600 ? "Iniciar sesión" : "Iniciar sesión para agregar" })).toBeVisible();
     expect(await page.getByRole("heading", { level: 1 }).evaluate(node => node.getBoundingClientRect().top + window.scrollY)).toBe(headingTop);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
-    expect(await bar.evaluate(node => getComputedStyle(node).backgroundColor)).toBe(await header.evaluate(node => getComputedStyle(node).backgroundColor));
+    expect(await bar.evaluate(node => getComputedStyle(node).backgroundColor)).toBe("rgb(255, 255, 255)");
     await page.screenshot({ path: testInfo.outputPath(`scrolled-${width}.png`) });
 
     // Back up in the same steps: the bar is gone the moment the row returns; the header comes back with the scroll.
@@ -92,7 +103,140 @@ for (const [width, barHeight] of [[1440, 72], [1024, 60], [390, 56]] as const) {
   });
 }
 
-test("the context bar follows the header surface in dark mode", async ({ page }, testInfo) => {
+/** The long synopsis opened in full, so the page has a long lower part to scroll through. */
+async function openSynopsis(page: Page) {
+  await page.locator("[aria-controls='synopsis-text']").click();
+  await page.evaluate(() => window.scrollTo(0, 0));
+}
+
+const offer = { offerId: "7", originalPrice: "32.00", discountAmount: "6.05", effectivePrice: "25.95", savingsAmount: "6.05", savingsPercent: "18.91",
+  startsAt: "2026-10-01T00:00:00Z", endsAt: "2026-12-31T00:00:00Z", daysRemaining: 60, endingSoon: false };
+
+/** A signed-in customer and a server cart; every amount comes from these responses, never from the page. */
+async function mockCustomer(page: Page, state: { quantity: number; posts: number; fail?: boolean }, detail: Record<string, unknown>) {
+  await page.route("**/api/v1/**", route => {
+    const path = new URL(route.request().url()).pathname;
+    const json = (body: unknown) => route.fulfill({ json: body });
+    if (path.endsWith("/auth/refresh")) return json({ accessToken: "t", tokenType: "Bearer", expiresInSeconds: 1800, user: { userId: "100", email: "c@example.invalid", role: "CUSTOMER" } });
+    if (path.endsWith("/storefront/navigation")) return json(storefrontNavigationFixture);
+    if (path.endsWith("/catalog/editions/42")) return json(detail);
+    if (path.endsWith("/me/favorites/status")) return json({ items: [{ editionId: "42", favorite: false }] });
+    if (path.endsWith("/cart/items") && route.request().method() === "POST") {
+      state.posts++;
+      if (state.fail) return route.fulfill({ status: 409, json: { type: "urn:pliego:problem:P2050", code: "P2050", status: 409, title: "No pudimos agregar la edición", detail: "No queda stock suficiente para esa cantidad." } });
+      state.quantity += 1;
+      return json({ cartItemId: "100", quantity: state.quantity });
+    }
+    if (path.endsWith("/cart")) {
+      const q = state.quantity;
+      const money = (value: number) => value.toFixed(2);
+      const items = q ? [{ cartItemId: "100", editionId: "42", title: edition.title, authors: "Autora Prueba", sku: "PAPER-42", coverUrl: null, quantity: q,
+        currentPrice: "25.95", currentSubtotal: money(25.95 * q), originalPrice: "32.00", unitSavings: "6.05", originalSubtotal: money(32 * q), lineSavings: money(6.05 * q),
+        available: true, requiresPhysicalFulfillment: true, quantityEditable: true, format: "PAPERBACK", unavailabilityReason: null }] : [];
+      return json({ cartId: "40", state: "ACTIVE", requiresPhysicalFulfillment: q > 0, physicalItemCount: q, digitalItemCount: 0, items,
+        totalCurrent: money(25.95 * q), originalSubtotal: money(32 * q), savingsTotal: money(6.05 * q), currentSubtotal: money(25.95 * q),
+        subtotal: money(25.95 * q), taxRate: "0.00", taxAmount: "0.00", shippingAmount: "0.00", total: money(25.95 * q) });
+    }
+    return json({ items: [], page: 0, pageSize: 20, totalCount: "0" });
+  });
+}
+
+for (const width of [1280, 360] as const) {
+  test(`the bar keeps its place through the whole page and adds with the scene's own cart at ${width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: 800 });
+    const state = { quantity: 0, posts: 0 };
+    await mockCustomer(page, state, { ...edition, offer });
+    await page.goto("/catalog/editions/42");
+    const scene = page.getByRole("region", { name: "Compra" });
+    const bar = page.getByRole("region", { name: "Resumen del libro" });
+    const row = page.getByRole("navigation", { name: "Ruta de navegación" }).locator("..").getByRole("button", { name: "Volver atrás" });
+    const label = width < 600 ? "Agregar" : "Agregar al carrito";
+    await expect(scene.getByRole("button", { name: "Agregar al carrito" })).toBeVisible();
+    await openSynopsis(page);
+    await expect(scene.locator("s")).toHaveText("$ 32,00");
+    const headingTop = await page.getByRole("heading", { level: 1 }).evaluate(node => node.getBoundingClientRect().top + window.scrollY);
+    const bottom = await page.evaluate(() => document.documentElement.scrollHeight - window.innerHeight);
+
+    // Top: no bar. Middle and bottom: the same bar, in the same place, with its one added action.
+    await expect(bar).toHaveCount(0);
+    for (const [name, y] of [["middle", Math.round(bottom / 2)], ["bottom", bottom]] as const) {
+      await page.evaluate(top => window.scrollTo(0, top), y);
+      await frames(page);
+      await expect(bar).toBeVisible();
+      expect(await bar.boundingBox()).toEqual(pill(width));
+      await expect(bar.getByRole("button", { name: "Volver atrás" })).toBeVisible();
+      await expect(bar.getByText(edition.title)).toBeVisible();
+      await expect(bar.getByText("$ 25,95")).toBeVisible();
+      // The previous price is struck beside it where the bar has room, as it was designed.
+      await expect(bar.locator("s")).toBeVisible({ visible: width >= 600 });
+      await expect(bar.locator(".book-cover")).toHaveCount(0);
+      await expect(bar.getByRole("button", { name: label, exact: true })).toBeVisible();
+      // Nothing in the pill overlaps or leaves it: arrow and title, then price and action, side by side inside its edge.
+      const boxes = await bar.evaluate(node => [...node.firstElementChild!.querySelectorAll(":scope > div > *")].map(child => child.getBoundingClientRect()).map(box => [box.left, box.right]));
+      boxes.slice(1).forEach(([left], index) => expect(left).toBeGreaterThanOrEqual(boxes[index][1] - 0.5));
+      const edge = pill(width);
+      expect(boxes[0][0]).toBeGreaterThanOrEqual(edge.x);
+      expect(boxes[boxes.length - 1][1]).toBeLessThanOrEqual(edge.x + edge.width - 4);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+      await page.screenshot({ path: testInfo.outputPath(`${name}-${width}.png`) });
+    }
+
+    // Back up in small steps: the bar stays until the page's own row (and the scene beside or under it) returns.
+    for (let y = bottom; y >= 0; y -= 24) {
+      await page.evaluate(top => window.scrollTo(0, top), y);
+      await frames(page);
+      const rowBottom = await row.evaluate(node => node.getBoundingClientRect().bottom);
+      expect(await bar.count()).toBe(rowBottom <= 0 ? 1 : 0);
+    }
+    await page.evaluate(() => window.scrollTo(0, 0));
+    await frames(page);
+    await expect(bar).toHaveCount(0);
+    await expect(scene.getByRole("button", { name: "Agregar al carrito" })).toBeInViewport();
+    expect(await page.getByRole("heading", { level: 1 }).evaluate(node => node.getBoundingClientRect().top + window.scrollY)).toBe(headingTop);
+
+    // From the bottom, the bar adds through the scene's mutation; the cart answers with the server's lines and saving.
+    await page.evaluate(top => window.scrollTo(0, top), bottom);
+    await bar.getByRole("button", { name: label, exact: true }).click();
+    await expect.poll(() => state.posts).toBe(1);
+    const drawer = page.getByRole("dialog", { name: "Tu carrito" });
+    await expect(drawer).toBeVisible();
+    await expect(drawer.locator("s")).toHaveText(/\$\s32,00/);
+    await expect(drawer.getByText("Ahorro total hoy")).toBeVisible();
+    await expect(drawer.locator("dl").getByText("$ 25,95")).toBeVisible();
+    // The scene shares the outcome: one add, one confirmation.
+    await expect(scene.getByRole("link", { name: "Ver carrito" })).toBeAttached();
+  });
+}
+
+test("a failed add from the bar brings the purchase scene and its explanation back into view", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  const state = { quantity: 0, posts: 0, fail: true };
+  await mockCustomer(page, state, edition);
+  await page.goto("/catalog/editions/42");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await openSynopsis(page);
+  await page.evaluate(() => window.scrollTo(0, 1400));
+  const bar = page.getByRole("region", { name: "Resumen del libro" });
+  await bar.getByRole("button", { name: "Agregar al carrito" }).click();
+  const scene = page.getByRole("region", { name: "Compra" });
+  await expect(scene.getByRole("alert").or(scene.getByRole("status")).filter({ hasText: /stock|disponible/i }).first()).toBeInViewport();
+  await expect(bar).toHaveCount(0);
+  await expect(page.getByRole("dialog", { name: "Tu carrito" })).toHaveCount(0);
+});
+
+test("an unavailable edition keeps its price in the bar and says it is not available, with no action", async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await mockCustomer(page, { quantity: 0, posts: 0 }, { ...edition, available: false });
+  await page.goto("/catalog/editions/42");
+  await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+  await openSynopsis(page);
+  await page.evaluate(() => window.scrollTo(0, 1400));
+  const bar = page.getByRole("region", { name: "Resumen del libro" });
+  await expect(bar.getByText("No disponible", { exact: true })).toBeVisible();
+  await expect(bar.getByRole("button", { name: "Agregar al carrito" })).toHaveCount(0);
+});
+
+test("the floating bar takes the card tone in dark mode", async ({ page }, testInfo) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.setViewportSize({ width: 1280, height: 800 });
   await mockEdition(page);
@@ -101,7 +245,7 @@ test("the context bar follows the header surface in dark mode", async ({ page },
   await page.evaluate(() => window.scrollTo(0, 700));
   const bar = page.getByRole("region", { name: "Resumen del libro" });
   await expect(bar).toBeVisible();
-  expect(await bar.evaluate(node => getComputedStyle(node).backgroundColor))
-    .toBe(await page.getByTestId("site-header").evaluate(node => getComputedStyle(node).backgroundColor));
+  // The dark scheme's card tone, one step lighter than the page, as PLIEGO's white cards are in light.
+  expect(await bar.evaluate(node => getComputedStyle(node).backgroundColor)).toBe("rgb(43, 45, 71)");
   await page.screenshot({ path: testInfo.outputPath("scrolled-dark.png") });
 });

@@ -33,7 +33,7 @@ def recipient_limits():
     status,registered=register("A"*120,"B"*120)
     assert status==201,(status,registered)
     actor=int(registered["userId"])
-    body={"alias":"Casa","recipient":full,"line1":"Calle 1","city":"Quito","province":"Pichincha",
+    body={"alias":"Casa","recipient":full,"line1":"Calle 1","provinceId":"17","cityId":"893",
           "countryCode":"EC","phone":"+593991234567","makePrimary":True}
     key=str(uuid.uuid4())
     status,address=request("/api/v1/me/addresses","POST",body,actor,key)
@@ -85,7 +85,7 @@ def phone_rule():
 def delivery_scope():
     assert request('/api/v1/reference/countries')==(200,[{'code':'EC','name':'Ecuador'}])
     actors,_=fixture();actor,_=actors[0]
-    body={'alias':'Casa','recipient':'Ana Pérez','line1':'Calle 1','city':'Quito','province':'Pichincha',
+    body={'alias':'Casa','recipient':'Ana Pérez','line1':'Calle 1','provinceId':'17','cityId':'893',
           'countryCode':'EC','phone':'+593991234567','makePrimary':False}
     for field,value in [('countryCode','GB'),('phone','+442079460018'),('recipient','Ana7 Pérez')]:
         status,problem=request('/api/v1/me/addresses','POST',{**body,field:value},actor,str(uuid.uuid4()))

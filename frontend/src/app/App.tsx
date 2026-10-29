@@ -132,6 +132,13 @@ export const router = createBrowserRouter([
         },
       },
       {
+        path: "account/identity",
+        lazy: async () => {
+          const { IdentityCorrectionPage } = await import("@/features/account/IdentityCorrectionPage");
+          return { Component: IdentityCorrectionPage };
+        },
+      },
+      {
         path: "account/addresses",
         lazy: async () => {
           const { AddressBookPage } = await import("@/features/account/AddressBook");
@@ -171,6 +178,14 @@ export const router = createBrowserRouter([
         lazy: async () => {
           const { OrderPage } = await import("@/features/purchase/OrderPage");
           return { Component: OrderPage };
+        },
+      },
+      {
+        // The invoice's stable address: the invoice email's "Visualizar documento" links here, never to storage.
+        path: "orders/:orderId/invoice",
+        lazy: async () => {
+          const { InvoiceDocumentPage } = await import("@/features/purchase/InvoiceDocumentPage");
+          return { Component: InvoiceDocumentPage };
         },
       },
       { path: "admin", Component: AdminWorkspacePage },

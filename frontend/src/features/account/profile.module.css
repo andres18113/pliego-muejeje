@@ -13,9 +13,9 @@
 .name { max-width: 20ch; margin: 0; color: var(--acc-ink); font: 700 clamp(1.75rem, 1.35rem + 1.6vw, 2.5rem)/1.04 var(--acc-display); letter-spacing: -.05em; overflow-wrap: anywhere; text-wrap: balance; }
 .tagline { margin: 0; color: var(--acc-muted); font-size: 1rem; line-height: 1.45; text-wrap: balance; }
 
-/* Read-only facts: one paper sheet; on desktop each field is one line — label, value, action.
+/* Read-only facts: one white Account card; on desktop each field is one line — label, value, action.
    Nombres, Apellidos, Cédula, Correo, Teléfono and Contraseña share it. */
-.facts { display: grid; width: min(100%, 760px); min-width: 0; margin: 0; padding: 4px clamp(16px, 3vw, 28px); border-radius: 24px; background: var(--acc-sheet); box-shadow: inset 0 0 0 1.5px var(--acc-line); list-style: none; }
+.facts { display: grid; width: min(100%, 760px); min-width: 0; margin: 0; padding: 4px clamp(16px, 3vw, 28px); border: 1px solid var(--acc-card-edge); border-radius: var(--acc-card-radius); background: var(--acc-card); list-style: none; }
 .fact {
   display: grid; grid-template-columns: minmax(8.5rem, 10rem) minmax(0, 1fr) auto; grid-template-areas: "label value action" ". feedback feedback";
   align-items: center; column-gap: 20px; min-width: 0; min-height: 60px; padding: 8px 0;
@@ -34,8 +34,20 @@
 }
 :global([data-mantine-color-scheme="dark"]) .missingChip { --missing-required-bg: #4a2225; --missing-required-ink: #ffd9d5; --missing-optional-bg: #33354f; --missing-optional-ink: #d9d6e6; }
 .missingChip[data-tone="required"] { background: var(--missing-required-bg); color: var(--missing-required-ink); }
-.missingChip[data-tone="optional"] { background: var(--missing-optional-bg); color: var(--missing-optional-ink); }
+.missingChip[data-tone="optional"], .missingChip[data-tone="review"] { background: var(--missing-optional-bg); color: var(--missing-optional-ink); }
 .missingHint { color: var(--acc-muted); font-size: .9375rem; font-weight: 400; }
+/* A state under a stored value (a correction in review, a recent decision): one quiet line, the value stays first. */
+.valueDetail { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 4px 10px; margin-top: 4px; color: var(--acc-muted); font-size: .9375rem; font-weight: 400; line-height: 1.4; }
+.valueDetail > :global(.material-symbol) { flex: none; margin-top: 2px; color: var(--acc-blue); }
+.valueDetail > span:last-child { flex: 1 1 18ch; min-width: 0; }
+.detailNumber { color: var(--acc-ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+/* A pending correction: the chip and its `info` toggletip as one status; the explanation is portalled, so it
+   reads the global PLIEGO tokens rather than the Account's. */
+.reviewStatus { display: inline-flex; align-items: center; gap: 2px; }
+.reviewStatus > button { color: var(--acc-muted); }
+.requestPanel.requestPanel { display: grid; gap: 2px; text-align: left; hyphens: manual; -webkit-hyphens: manual; }
+.requestLabel { color: var(--pliego-text-muted, #595a6e); font-size: .8125rem; font-weight: 600; }
+.requestNumber { margin-bottom: 6px; font: 650 1.125rem/1.3 var(--store-display); letter-spacing: .02em; font-variant-numeric: tabular-nums; }
 @media (forced-colors: active) { .missingChip { border: 1px solid CanvasText; } }
 
 .edit.edit {
@@ -70,6 +82,13 @@
 /* A second field's label speaks like the row labels; every helper line (note, help, error, draft) like one helper. */
 .subLabel { margin-top: 6px; color: var(--acc-muted); font-size: .875rem; font-weight: 600; }
 .inlineNote { margin: 2px 0 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
+/* The one choice a correction request asks for: two plain options on one line, wrapping on narrow rows. */
+.reasons { min-width: 0; margin: 0; padding: 0; border: 0; }
+.reasons > legend { padding: 0; }
+.reasonOptions { display: flex; flex-wrap: wrap; align-items: center; gap: 0 20px; }
+.reason { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--acc-ink); font-size: .9375rem; cursor: pointer; }
+.reason > input { width: 18px; height: 18px; margin: 0; accent-color: var(--acc-blue); }
+.reason > input:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; }
 .securityDisclosure { color: var(--acc-muted); font-size: .8125rem; line-height: 1.4; }
 .securityDisclosure > summary { width: fit-content; min-height: 44px; padding-block: 12px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 .securityDisclosure > summary:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 3px; }
@@ -111,7 +130,7 @@
 
 /* Phones: label over value; the action stays on the label line. Editing keeps the same rhythm. */
 @media (max-width: 639px) {
-  .facts { border-radius: 20px; padding-inline: 16px; }
+  .facts { padding-inline: 16px; }
   .fact { grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "label action" "value value" "feedback feedback"; row-gap: 2px; min-height: 0; padding: 12px 0; }
   .inline { grid-column: 1 / -1; grid-row: 2; grid-template-columns: minmax(0, 1fr); row-gap: 8px; }
   .inlineFields { max-width: none; }

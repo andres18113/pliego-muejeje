@@ -9,13 +9,15 @@ import { formatEdition, formatUsd } from "@/features/catalog/formatters";
 import { AccountShell } from "@/features/account/AccountShell";
 import { getPublicEdition } from "@/shared/api/catalog";
 import { ApiRequestError } from "@/shared/api/errors";
-import { CancellationOutcomeUnknown, cancelOrder, type OrderCreditNote, type OrderDetail, type OrderInvoice, type OrderShipment } from "@/shared/api/orders";
+import { CancellationOutcomeUnknown, cancelOrder, type OrderDetail, type OrderItemDigitalAccess, type OrderShipment } from "@/shared/api/orders";
+
+type OrderItem = OrderDetail["items"][number];
 import { ReadFailure } from "./CartPage";
 import { hasSaving } from "./cartPricingViewModel";
 import { toOrderPricingViewModel } from "./orderPricingViewModel";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import {
-  deliveryWindowLabel, electronicIssuanceLabel, identityTypeLabel, orderDateLabel, orderMomentLabel,
+  deliveryWindowLabel, orderDateLabel, orderMomentLabel,
   paymentMethodLabel, paymentStateLabel, shipmentStateLabel, ivaLabel,
 } from "./purchaseText";
 import { orderStory, purchaseWindowView, type OrderStory, type PurchaseWindowView } from "./orderStory";
@@ -27,8 +29,9 @@ import { TransferFacts } from "./TransferFacts";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import classes from "./orderPage.module.css";
-import { InvoiceDocuments } from "./InvoiceDocuments";
+import { InvoiceAction } from "./InvoiceAction";
 import { PickupDetails } from "./PickupDetails";
+import { ParentLink } from "@/shared/ui/ParentLink";
 
 export function OrderPage() {
   const { orderId = "" } = useParams();
@@ -107,7 +110,7 @@ function OrderContent({ orderId, returnTo, purchased }: { orderId: string; retur
   const shell = (children: ReactNode) => <AccountShell
     title="Detalle del pedido"
     headingRef={headingRef}
-    before={<Link to={returnTo} className={classes.back}><MaterialSymbol name="arrow_back" aria-hidden="true" size={18} /><span>Volver a mis pedidos</span></Link>}
+    before={<ParentLink to={returnTo}>Volver a mis pedidos</ParentLink>}
   >{children}</AccountShell>;
 
   if (!validId || (orderQuery.error instanceof ApiRequestError && orderQuery.error.status === 404)) {
@@ -176,6 +179,11 @@ function OrderView({ order, readCurrent, confirming, setConfirming, cancellation
     : windowView === "digital-complete" ? { ...baseStory, tone: "arrived", headline: "¡Gracias por tu compra!" } : baseStory;
   const closed = story.kind === "cancelled" || story.kind === "payment-rejected";
   const shipment = order.shipment;
+  // A mixed order: printed books stay in the shipping/pickup story; digital titles get their own access section.
+  const physicalItems = order.items.filter((item) => item.requiresPhysicalFulfillment);
+  const digitalItems = order.items.filter((item) => !item.requiresPhysicalFulfillment);
+  const mixed = physicalItems.length > 0 && digitalItems.length > 0;
+  const coverOf = (item: OrderItem) => coverQueries[order.items.indexOf(item)]?.data;
   const window = shipment && (story.kind === "preparing" || story.kind === "in-transit")
     ? deliveryWindowLabel(shipment.estimatedDeliveryFrom, shipment.estimatedDeliveryTo) : null;
 
@@ -188,6 +196,7 @@ function OrderView({ order, readCurrent, confirming, setConfirming, cancellation
       </dl>
 
       <div className={classes.layout}>
+        <div className={classes.column}>
         <section className={classes.main} data-tone={story.tone} data-story={story.kind} aria-labelledby="order-story-heading">
           <div className={classes.status}>
             <h2 id="order-story-heading" className={classes.headline}>{story.headline}</h2>
@@ -200,12 +209,12 @@ function OrderView({ order, readCurrent, confirming, setConfirming, cancellation
           {windowView === "digital-complete" && <div className={classes.actionRow}><ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca<MaterialSymbol name="arrow_forward" aria-hidden="true" size={18} /></ButtonLink></div>}
           {shipment && (story.kind === "in-transit" || story.kind === "delivered") && <ShipmentHistory shipment={shipment} />}
           <Destination order={order} story={story} />
-          <Books order={order} covers={coverQueries.map((query) => query.data)} />
+          <Books order={order} items={mixed ? physicalItems : order.items} coverOf={coverOf} label={mixed ? "Libros impresos del pedido" : "Libros del pedido"} />
         </section>
-        <aside className={classes.aside} aria-label="Pago y documentos">
+        {mixed && <DigitalAccess order={order} items={digitalItems} coverOf={coverOf} />}
+        </div>
+        <aside className={classes.aside} aria-label="Pago y factura">
           <PaymentPanel order={order} />
-          <InvoiceDocuments orderId={order.orderId} />
-          {(order.invoice || order.creditNotes.length > 0) && <DocumentsPanel invoice={order.invoice} creditNotes={order.creditNotes} />}
         </aside>
       </div>
     </article>
@@ -266,15 +275,27 @@ function cancelConsequence(order: OrderDetail) {
     digitalOnly: order.fulfillment == null && !order.items.some((item) => item.requiresPhysicalFulfillment),
     pickup: order.fulfillment?.method === "STORE_PICKUP",
   });
+  // An unpaid order is never charged, so nothing is refunded (ADR 0042 report: cancelling it rejects the payment).
+  if (order.payment?.state === "PENDING") return "Aún puedes cancelarlo: no se realizará ningún cobro.";
   if (windowView === "digital-window") return "Si lo cancelas, se reembolsará el pago y la compra dejará de estar en Mi biblioteca.";
-  if (windowView === "pickup-window") return "Si lo cancelas, se reembolsará el pago y se liberarán los libros.";
-  return "Aún puedes cancelarlo: se reembolsará el pago y se liberarán los libros.";
+  const mixed = isMixedOrder(order);
+  const prefix = windowView === "pickup-window" ? "Si lo cancelas" : "Aún puedes cancelarlo:";
+  return mixed
+    ? `${prefix}${windowView === "pickup-window" ? "," : ""} se reembolsará el pago completo, se liberarán los libros impresos y los títulos digitales saldrán de Mi biblioteca.`
+    : `${prefix}${windowView === "pickup-window" ? "," : ""} se reembolsará el pago y se liberarán los libros.`;
+}
+
+/** A paid mixed order cancels as a whole: one refund, printed books released and every digital title revoked. */
+function isMixedOrder(order: OrderDetail) {
+  return order.items.some((item) => item.requiresPhysicalFulfillment) && order.items.some((item) => !item.requiresPhysicalFulfillment);
 }
 
 /** What the cancellation releases besides the payment, in the order's own terms. */
 function cancelRelease(order: OrderDetail) {
   const digitalOnly = order.fulfillment == null && !order.items.some((item) => item.requiresPhysicalFulfillment);
-  return digitalOnly ? "La compra dejará de estar en Mi biblioteca." : "Los libros reservados para este pedido quedarán libres.";
+  if (digitalOnly) return "La compra dejará de estar en Mi biblioteca.";
+  if (isMixedOrder(order) && order.payment?.state !== "PENDING") return "Los libros impresos reservados quedarán libres y los títulos digitales saldrán de Mi biblioteca.";
+  return "Los libros reservados para este pedido quedarán libres.";
 }
 
 /**
@@ -294,7 +315,7 @@ function CancelAction({ order, readCurrent, confirming, setConfirming, cancellat
     <ConfirmDialog opened={confirming} destructive title={`¿Cancelar el pedido N.° ${order.orderId}?`}
       confirmLabel="Confirmar cancelación" busyLabel="Cancelando pedido…" keepLabel="Conservar pedido" busy={cancellationPending}
       onConfirm={onCancel} onKeep={keep}>
-      <p>Se reembolsarán {formatUsd(order.total)} del pago de este pedido.</p>
+      <p>{order.payment?.state === "PENDING" ? "No se realizará ningún cobro por este pedido." : `Se reembolsarán ${formatUsd(order.total)} del pago de este pedido.`}</p>
       <p>{cancelRelease(order)}</p>
     </ConfirmDialog>
   </div>;
@@ -376,31 +397,67 @@ function Destination({ order, story }: { order: OrderDetail; story: OrderStory }
   </div>;
 }
 
+type CoverOf = (item: OrderItem) => { coverUrl?: string | null; coverLicense?: string | null; coverAttribution?: string | null } | undefined;
+
 /** Titles, prices and quantities exactly as purchased; only the cover is looked up by edition. */
-function Books({ order, covers }: { order: OrderDetail; covers: ({ coverUrl?: string | null; coverLicense?: string | null; coverAttribution?: string | null } | undefined)[] }) {
-  const pricing = toOrderPricingViewModel(order);
+function Books({ order, items, coverOf, label }: { order: OrderDetail; items: OrderItem[]; coverOf: CoverOf; label: string }) {
   return <div className={classes.books}>
-    <h3 id="order-items-heading" className="visually-hidden">Libros del pedido</h3>
+    <h3 id="order-items-heading" className="visually-hidden">{label}</h3>
     <ul aria-labelledby="order-items-heading">
-      {order.items.map((item, index) => {
-        const edition = covers[index];
-        // The line's saving from the order's immutable snapshot; nothing is recalculated.
-        const line = pricing.lines.find((candidate) => candidate.orderItemId === item.orderItemId);
-        const saving = line?.pricingSnapshotAvailable && line.lineSavings && hasSaving(line.lineSavings.rawValue) ? line.lineSavings : null;
-        return <li className={classes.book} key={item.orderItemId}>
-          <span className={classes.bookCover}><BookCover url={edition?.coverUrl ?? null} license={edition?.coverLicense ?? null} attribution={edition?.coverAttribution ?? null} title={item.title} size="compact" loading={index === 0 ? "eager" : "lazy"} /></span>
-          <div className={classes.bookCopy}>
-            <h4>{item.title}</h4>
-            <p>{[item.authors || "Autor no disponible", item.format ? formatEdition(item.format) : null].filter(Boolean).join(", ")}</p>
-            <p className={classes.bookPrice}><strong>{formatUsd(item.unitPrice)}</strong>
-              {saving && line?.originalPrice && <s className={classes.bookWas}><span className="visually-hidden">Precio anterior: </span>{line.originalPrice.formattedValue}</s>}
-              <span>Cantidad: {item.quantity}</span></p>
-            {saving && <p className={classes.bookSaving} data-order-saving><MaterialSymbol name="sell" size={18} aria-hidden="true" /><span>Ahorraste {saving.formattedValue} en este artículo</span></p>}
-          </div>
-        </li>;
-      })}
+      {items.map((item, index) => <BookLine key={item.orderItemId} order={order} item={item} cover={coverOf(item)} eager={index === 0} />)}
     </ul>
   </div>;
+}
+
+function BookLine({ order, item, cover: edition, eager, children }: { order: OrderDetail; item: OrderItem; cover: ReturnType<CoverOf>; eager: boolean; children?: ReactNode }) {
+  // The line's saving from the order's immutable snapshot; nothing is recalculated.
+  const line = toOrderPricingViewModel(order).lines.find((candidate) => candidate.orderItemId === item.orderItemId);
+  const saving = line?.pricingSnapshotAvailable && line.lineSavings && hasSaving(line.lineSavings.rawValue) ? line.lineSavings : null;
+  return <li className={classes.book}>
+    <span className={classes.bookCover}><BookCover url={edition?.coverUrl ?? null} license={edition?.coverLicense ?? null} attribution={edition?.coverAttribution ?? null} title={item.title} size="compact" loading={eager ? "eager" : "lazy"} /></span>
+    <div className={classes.bookCopy}>
+      <h4>{item.title}</h4>
+      <p>{[item.authors || "Autor no disponible", item.format ? formatEdition(item.format) : null].filter(Boolean).join(", ")}</p>
+      <p className={classes.bookPrice}><strong>{formatUsd(item.unitPrice)}</strong>
+        {saving && line?.originalPrice && <s className={classes.bookWas}><span className="visually-hidden">Precio anterior: </span>{line.originalPrice.formattedValue}</s>}
+        <span>Cantidad: {item.quantity}</span></p>
+      {saving && <p className={classes.bookSaving} data-order-saving><MaterialSymbol name="sell" size={18} aria-hidden="true" /><span>Ahorraste {saving.formattedValue} en este artículo</span></p>}
+      {children}
+    </div>
+  </li>;
+}
+
+/** Each digital line's own access, from the server's per-line projection (V077); never inferred from the shipment. */
+const digitalAccessCopy: Record<OrderItemDigitalAccess["state"], { icon: "check_circle" | "schedule" | "block"; text: string }> = {
+  AVAILABLE: { icon: "check_circle", text: "En Mi biblioteca" },
+  PENDING_PAYMENT: { icon: "schedule", text: "Se añadirá a Mi biblioteca cuando se apruebe el pago." },
+  REVOKED: { icon: "block", text: "Retirado de Mi biblioteca al cancelar el pedido." },
+  UNAVAILABLE: { icon: "block", text: "Sin acceso: el pedido no se completó." },
+};
+
+/**
+ * A mixed order's digital titles, apart from the shipment: they are not sent, they join Mi biblioteca once the
+ * payment is approved and leave it if the order is cancelled.
+ */
+function DigitalAccess({ order, items, coverOf }: { order: OrderDetail; items: OrderItem[]; coverOf: CoverOf }) {
+  return <section className={classes.digital} aria-labelledby="order-digital-heading">
+    <div className={classes.digitalHead}>
+      <h2 id="order-digital-heading">Acceso digital</h2>
+      <p className={classes.quiet}>{items.length === 1 ? "Este título no se envía: queda en tu cuenta." : "Estos títulos no se envían: quedan en tu cuenta."}</p>
+    </div>
+    <div className={classes.books}>
+      <ul aria-labelledby="order-digital-heading">
+        {items.map((item, index) => {
+          const access = item.digitalAccess;
+          const copy = access ? digitalAccessCopy[access.state] : null;
+          return <BookLine key={item.orderItemId} order={order} item={item} cover={coverOf(item)} eager={index === 0}>
+            {copy && <p className={classes.access} data-state={access!.state}><MaterialSymbol name={copy.icon} size={18} aria-hidden="true" /><span>{copy.text}</span></p>}
+            {access?.state === "AVAILABLE" && <Link className={classes.accessLink} to={`/biblioteca/${access.ownedItemId}`}>Ver en Mi biblioteca</Link>}
+          </BookLine>;
+        })}
+      </ul>
+    </div>
+  </section>;
 }
 
 function PaymentPanel({ order }: { order: OrderDetail }) {
@@ -424,39 +481,7 @@ function PaymentPanel({ order }: { order: OrderDetail }) {
       <div className={classes.grandTotal}><dt>{saving ? "Total pagado" : "Total"}</dt><dd>{formatUsd(order.total)}</dd></div>
       {payment?.state === "REFUNDED" && <div className={classes.refund}><dt>Reembolsado</dt><dd>{formatUsd(payment.amount)}</dd></div>}
     </dl>
+    {order.creditNotes.map((note) => <p key={note.creditNoteId} className={classes.creditNote}>Nota de crédito N.° {note.documentNumber} · {formatUsd(note.total)}</p>)}
+    <InvoiceAction orderId={order.orderId} issued={Boolean(order.invoice)} className={classes.invoice} />
   </section>;
-}
-
-/** Documents exist only as the server reports them; nothing here implies electronic authorization or downloads that are not available. */
-function DocumentsPanel({ invoice, creditNotes }: { invoice: OrderInvoice | null; creditNotes: OrderCreditNote[] }) {
-  return <section className={classes.panel} aria-labelledby="order-documents-heading">
-    <h2 id="order-documents-heading">{creditNotes.length ? "Factura y notas de crédito" : "Factura"}</h2>
-    {invoice && <InvoiceFacts invoice={invoice} />}
-    {creditNotes.map((note) => <div key={note.creditNoteId} className={classes.document} data-kind="credit">
-      <h3>Nota de crédito N.° {note.documentNumber}</h3>
-      <dl>
-        <div><dt>Emitida</dt><dd><time dateTime={note.issuedAt}>{orderDateLabel(note.issuedAt)}</time></dd></div>
-        <div><dt>Motivo</dt><dd>{note.reason}</dd></div>
-        <div><dt>Total</dt><dd>{formatUsd(note.total)}</dd></div>
-      </dl>
-    </div>)}
-  </section>;
-}
-
-function InvoiceFacts({ invoice }: { invoice: OrderInvoice }) {
-  const notAssessed = invoice.items.length > 0 && invoice.items.every((item) => item.taxTreatment === "NOT_ASSESSED");
-  const billing = invoice.billingAddress;
-  const authorized = invoice.electronicIssuance?.state === "AUTHORIZED";
-  return <div className={classes.document} data-kind="invoice">
-    <h3>Factura comercial N.° {invoice.documentNumber}</h3>
-    <dl>
-      <div><dt>Emitida</dt><dd>{invoice.issuedAt ? <time dateTime={invoice.issuedAt}>{orderDateLabel(invoice.issuedAt)}</time> : "Pendiente de emisión"}</dd></div>
-      <div><dt>A nombre de</dt><dd>{invoice.buyerName}<span>{identityTypeLabel(invoice.identityType)} {invoice.identityNumber}</span></dd></div>
-      {billing && <div><dt>Facturación</dt><dd>{billing.line1}{billing.line2 && <>, {billing.line2}</>}<span>{[billing.city, billing.province].join(", ")}</span></dd></div>}
-      <div><dt>Impuestos</dt><dd>{notAssessed ? "No calculados" : formatUsd(invoice.taxTotal)}</dd></div>
-      <div><dt>Total</dt><dd>{formatUsd(invoice.total)}</dd></div>
-      <div><dt>Autorización electrónica</dt><dd>{invoice.electronicIssuance ? electronicIssuanceLabel(invoice.electronicIssuance.state) : "Aún no disponible"}</dd></div>
-    </dl>
-    <p className={classes.snapshotNote}>{authorized ? "" : "Documento comercial de PLIEGO; todavía no es un comprobante electrónico autorizado. "}{invoice.pdfAvailable || invoice.xmlAvailable ? "Su descarga aún no está habilitada en tu cuenta." : "PDF y XML aún no disponibles."}</p>
-  </div>;
 }

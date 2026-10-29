@@ -61,6 +61,28 @@ class TransactionalMailTest {
   assertTrue(verify.text().contains("vence el 5 de octubre de 2026, 07:00")); assertTrue(verify.text().contains("Si no creaste esta cuenta, puedes ignorar este mensaje."));
   assertTrue(verify.html().contains("copia este enlace")); assertTrue(reset.text().contains("Restablecer contraseña: "));
  }
+ @Test void invoiceIssuedTemplateEscapesGreetingAndUsesStableInvoicePageLink() throws Exception {
+  var message=preview("invoice-issued",templates().render("INVOICE_ISSUED",json.readTree("""
+   {"customerName":"Ana <b> & \\"Luz\\"","documentNumber":"999-999-000000001","orderId":"42"}
+   """)));
+  assertEquals("Tu factura académica 999-999-000000001",message.subject());
+  assertTrue(message.html().contains("Estimado(a) Ana &lt;b&gt; &amp; &quot;Luz&quot;"));
+  assertFalse(message.html().contains("<b>"));
+  assertTrue(message.text().contains("Estimado(a) Ana <b> & \"Luz\""));
+  assertTrue(message.text().replace("\u2060", "").contains("Tienes una nueva factura académica N.° 999-999-000000001, disponible para su visualización y descarga."));
+  assertTrue(message.text().contains("999-\u2060999-\u2060000000001"));
+  assertTrue(message.text().contains("Visualizar documento: https://pliego.example/orders/42/invoice"));
+  assertTrue(message.html().contains("href=\"https://pliego.example/orders/42/invoice\""));
+  assertTrue(message.html().contains("white-space:nowrap") && message.html().contains("999-999-000000001</span>"));
+  assertTrue(message.html().contains("simulación académica sin validez tributaria"));
+  assertEquals(1,message.html().split("<a ",-1).length-1);
+  for(String forbidden:new String[]{"accessKey","identityNumber","identificacion","CLAVE DE ACCESO","NÚMERO DE AUTORIZACIÓN","r2.cloudflarestorage.com"}) {
+   assertFalse(message.html().contains(forbidden)); assertFalse(message.text().contains(forbidden));
+  }
+  var samples=java.nio.file.Path.of("/tmp/claude-1000/-home-andres18123-PLIEGO/a47bcd7b-ad29-480d-9eb9-444e650de42e/scratchpad/samples");
+  java.nio.file.Files.createDirectories(samples);
+  java.nio.file.Files.writeString(samples.resolve("invoice-email.html"),message.html(),StandardCharsets.UTF_8);
+ }
  @Test void emailActionKeepsSafeReturnContextSeparateFromTheFragmentCredential() {
   var credential=tokens.issue("VERIFY_EMAIL");
   var data=json.createObjectNode().put("nonce",credential.nonce()).put("returnTo","/cart?source=edition#items");

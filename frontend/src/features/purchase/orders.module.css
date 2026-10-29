@@ -1,10 +1,11 @@
-/* Mis pedidos: one order-card grammar at two volumes, every card white with a hairline (#2b2d47 in dark) —
+/* Mis pedidos: one order-card grammar at two volumes, every card the Account's white card (#2b2d47 in dark) —
    never lavender. Orders en curso are few and lead: a white card each, the server-reported state in ultramar display type, an ultramar "Ver pedido".
    Finished orders are quiet outlined sheets read as identity, date, total, "Ver pedido", then the
-   state and its books. Delivered keeps ink and a check; cancelled steps back to muted text.
+   state and its books. A finished order (Entregado, Compra completada) says so in words, in display type
+   and a quiet success green; cancelled steps back to muted functional text. No status icons.
    Every unit is one link; books carry a small cover beside the purchased title. */
-.history { --ol-card: #fff; --ol-edge: color-mix(in srgb, var(--acc-ink) 10%, transparent); --ol-savings: #1e7a3c; display: grid; gap: clamp(28px, 4vw, 40px); width: 100%; max-width: 920px; min-width: 0; margin-inline: auto; }
-:global([data-mantine-color-scheme="dark"]) .history { --ol-card: #2b2d47; --ol-edge: rgb(255 255 255 / 9%); --ol-savings: #8fdca6; }
+.history { --ol-card: var(--acc-card); --ol-edge: var(--acc-card-edge); --ol-savings: #1e7a3c; --ol-done: #1e6b3a; display: grid; gap: clamp(28px, 4vw, 40px); width: 100%; max-width: 920px; min-width: 0; margin-inline: auto; }
+:global([data-mantine-color-scheme="dark"]) .history { --ol-savings: #8fdca6; --ol-done: #9fdcb2; }
 .group { display: grid; gap: 12px; min-width: 0; }
 .groupTitle { margin: 0; color: var(--acc-ink); font-size: 1.0625rem; font-weight: 600; line-height: 1.3; }
 .open, .past { margin: 0; padding: 0; list-style: none; }
@@ -36,7 +37,7 @@
 /* En curso */
 .unit[data-group="open"] {
   grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "story placed total" "books books books" "meta meta go";
-  align-items: end; gap: 10px 24px; padding: 18px clamp(18px, 2.4vw, 24px); border: 1px solid var(--ol-edge); border-radius: 20px; background: var(--ol-card);
+  align-items: end; gap: 10px 24px; padding: 18px clamp(18px, 2.4vw, 24px); border: 1px solid var(--ol-edge); border-radius: var(--acc-card-radius); background: var(--ol-card);
 }
 .unit[data-group="open"] .story { align-self: start; }
 .unit[data-group="open"] .state { color: var(--acc-blue); font: 650 clamp(1.25rem, 1.1rem + .6vw, 1.5rem)/1.15 var(--acc-display); letter-spacing: -.04em; }
@@ -49,7 +50,7 @@
 /* Anteriores */
 .unit[data-group="past"] {
   grid-template-columns: 13.5rem minmax(0, 1fr) auto; grid-template-rows: auto auto 1fr; align-items: start; gap: 10px 28px; padding: 18px clamp(18px, 2.4vw, 24px);
-  border: 1px solid var(--ol-edge); border-radius: 20px; background: var(--ol-card); font-size: .9375rem; line-height: 1.45;
+  border: 1px solid var(--ol-edge); border-radius: var(--acc-card-radius); background: var(--ol-card); font-size: .9375rem; line-height: 1.45;
 }
 .unit[data-group="past"] .what { display: grid; grid-column: 2; grid-row: 1 / -1; gap: 10px; min-width: 0; }
 .unit[data-group="past"] :is(.story, .books, .meta, .total, .go) { grid-area: auto; }
@@ -58,10 +59,10 @@
 .unit[data-group="past"] .document { font-size: .8125rem; }
 .unit[data-group="past"] .total { grid-column: 3; grid-row: 1; justify-self: end; text-align: right; }
 .unit[data-group="past"] .go { grid-column: 3; grid-row: 2; justify-self: end; gap: 2px; min-height: 36px; padding: 0 8px 0 16px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--acc-blue); color: var(--acc-blue); font-size: .9375rem; }
-.unit[data-group="past"] .state { font-weight: 600; }
-.unit[data-group="past"] .state :global(.material-symbol) { margin-right: 6px; vertical-align: -4px; }
+/* Finished: the outcome in display type and a quiet success green; the words carry it, not the colour. */
+.unit[data-outcome="done"] .state { color: var(--ol-done); font: 650 1.0625rem/1.3 var(--acc-display); letter-spacing: -.02em; }
 .unit[data-group="past"] .note { color: var(--acc-muted); font-size: .8125rem; }
-.unit[data-outcome="closed"] .state { color: var(--acc-muted); }
+.unit[data-outcome="closed"] .state { color: var(--acc-muted); font-weight: 500; }
 .unit[data-outcome="closed"] .bookTitle, .unit[data-outcome="closed"] .total { color: var(--acc-muted); }
 .unit[data-outcome="closed"] .total { font-weight: 400; }
 .unit[data-outcome="closed"] .cover { opacity: .6; }

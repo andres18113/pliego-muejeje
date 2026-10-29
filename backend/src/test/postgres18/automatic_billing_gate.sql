@@ -160,9 +160,14 @@ CALL pliego.sp_checkout_billed_quoted(v_user,v_key,v_address,'TRANSFER','APPROVE
 'EC_CEDULA','0912345675','Comprador Fiscal','Direccion Fiscal',NULL,'Quito','Pichincha','EC',NULL,
 v_order,v_order_state,v_payment_state,v_total,v_reference,v_invoice);
 RAISE EXCEPTION 'terminal checkout fence ignored'; EXCEPTION WHEN SQLSTATE 'P1011' THEN NULL; END;
--- A correction applies to new invoices only; issued invoices keep their own snapshot.
-CALL pliego.sp_customer_billing_identity_correct(v_user,'EC_CEDULA','0912345675','1710034065');
-IF EXISTS(SELECT FROM pliego.factura f JOIN pliego.pedido p USING(pedido_id) WHERE p.cliente_id=v_customer AND f.identidad_numero<>'0912345675') THEN
- RAISE EXCEPTION 'correction rewrote issued invoices'; END IF;
+-- A used identity now requires review for an arbitrary change; no profile or invoice snapshot changes.
+BEGIN
+ CALL pliego.sp_customer_billing_identity_correct(v_user,'EC_CEDULA','0912345675','1710034065');
+ RAISE EXCEPTION 'used arbitrary correction was applied directly';
+EXCEPTION WHEN SQLSTATE 'P1107' THEN NULL; END;
+IF NOT EXISTS(SELECT FROM pliego.fn_customer_billing_identity(v_user) WHERE identity_number='0912345675')
+ OR EXISTS(SELECT FROM pliego.factura f JOIN pliego.pedido p USING(pedido_id)
+   WHERE p.cliente_id=v_customer AND f.identidad_numero<>'0912345675') THEN
+ RAISE EXCEPTION 'review-required correction changed the account or an issued invoice'; END IF;
 END; $gate$;
 ROLLBACK;

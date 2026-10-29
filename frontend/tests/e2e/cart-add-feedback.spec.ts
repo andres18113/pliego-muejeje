@@ -24,7 +24,7 @@ async function mockApi(page: Page, state: { quantity: number; format: string; po
     return route.fulfill({ status: 404, json: {} });
   });
 }
-for (const width of [320, 390, 1280]) for (const surface of ["/favorites", "/cart"]) {
+for (const width of [320, 390, 1280]) for (const surface of ["/favorites"]) {
   test(`Cart feedback ${surface} ${width}px: confirmed quantity, pending lock, failure retry, keyboard and one announcement`, async ({ page }) => {
     const state = { quantity: 2, format: "PAPERBACK", posts: 0, fail: true, release: undefined as Promise<void> | undefined };
     await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto(surface);
@@ -62,7 +62,7 @@ for (const width of [320, 390, 1280]) for (const surface of ["/favorites", "/car
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
   });
 }
-for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites", "/cart"]) {
+for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites"]) {
   test(`Digital ${format} ${surface}: one copy and no false success`, async ({ page }) => {
     const state = { quantity: 1, format, posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width: 390, height: 900 }); await page.goto(surface);
     const row = page.locator('[data-favorite-row][data-edition-id="42"]');
@@ -86,17 +86,7 @@ for (const dismissal of ["close", "Escape"]) {
   await expect(toast).toHaveCount(0); await expect(page.locator("#favorite-editions-heading")).toBeFocused();
  });
 }
-test("the first saved-list addition to an empty cart keeps its confirmed notification", async ({ page }) => {
- const state = { quantity: 0, format: "PAPERBACK", posts: 0 };
- await mockApi(page, state); await page.setViewportSize({ width: 320, height: 900 }); await page.goto("/cart");
- await expect(page.getByRole("heading", { name: "Tu carrito está vacío." })).toBeVisible();
- await page.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
- await expect(page.locator('[data-favorite-row][data-edition-id="42"]').getByText("En el carrito: 1 unidad")).toBeVisible();
- await expect(page.locator("[data-cart-added-notification]")).toContainText("Ahora tienes 1 unidad de esta edición en tu carrito.");
- expect(state.posts).toBe(1);
-});
-
-for (const width of [320, 390]) for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites", "/cart"]) {
+for (const width of [320, 390]) for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites"]) {
  test(`First digital keyboard addition ${format} ${surface} ${width}px retains local focus`, async ({ page }) => {
   const state = { quantity: 0, format, posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto(surface);
   const row = page.locator('[data-favorite-row][data-edition-id="42"]');
@@ -107,47 +97,6 @@ for (const width of [320, 390]) for (const format of ["EBOOK", "AUDIOBOOK"]) for
   await expect(page.getByRole("status").filter({ hasText: "¡Agregado al carrito!" })).toHaveCount(1);
   expect(state.posts).toBe(1);
   await page.screenshot({ path: test.info().outputPath(`first-digital-focus-${format}-${surface.slice(1)}-${width}.png`), fullPage: true, animations: "disabled" });
- });
-}
-for (const width of [320, 390]) {
- test(`First physical keyboard addition to empty cart ${width}px retains the available add control`, async ({ page }) => {
-  const state = { quantity: 0, format: "PAPERBACK", posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto("/cart");
-  const row = page.locator('[data-favorite-row][data-edition-id="42"]'); const add = row.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" });
-  await add.focus(); await page.keyboard.press("Enter"); await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible(); await expect(add).toBeFocused();
-  await page.keyboard.press("Enter"); await expect(row.getByText("En el carrito: 2 unidades")).toBeVisible(); expect(state.posts).toBe(2);
- });
-}
-test("empty-cart focus recovery preserves the focused notification action", async ({ page }) => {
- let release!: () => void; const readRelease = new Promise<void>(resolve => { release = resolve; });
- const state = { quantity: 0, format: "EBOOK", posts: 0, readRelease }; await mockApi(page, state); await page.goto("/cart");
- const add = page.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }); await add.focus(); await page.keyboard.press("Enter");
- const action = page.locator("[data-cart-added-notification]").getByRole("link", { name: "Ver carrito" }); await expect(action).toBeVisible(); await action.focus(); release();
- await expect(page.locator('[data-favorite-row][data-edition-id="42"]').getByText("En el carrito: 1 unidad")).toBeVisible(); await expect(action).toBeFocused();
-});
-
-for (const width of [320, 390]) {
- test(`Confirmed first addition with failed cart read ${width}px shows recovery rather than an empty cart`, async ({ page }) => {
-  const state = { quantity: 0, format: "PAPERBACK", posts: 0, readFail: true }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto("/cart");
-  const row = page.locator('[data-favorite-row][data-edition-id="42"]'); const node = await row.elementHandle();
-  await row.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
-  await expect(page.getByRole("alert", { name: "No pudimos consultar tu carrito." })).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Tu carrito está vacío." })).toHaveCount(0);
-  await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible();
-  await expect(page.locator("[data-cart-added-notification]")).toContainText("Ahora tienes 1 unidad");
-  expect(await node!.evaluate(element => element.isConnected)).toBe(true);
-  state.readFail = false; await page.getByRole("button", { name: "Volver a intentar", exact: true }).click();
-  await expect(page.getByRole("alert", { name: "No pudimos consultar tu carrito." })).toHaveCount(0);
-  await expect(page.locator("[data-cart-line]")).toHaveCount(1); expect(state.posts).toBe(1);
- });
- test(`Ver carrito from its own saved section ${width}px moves to the review content`, async ({ page }) => {
-  const state = { quantity: 2, format: "PAPERBACK", posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width, height: 900 }); await page.goto("/cart");
-  const add = page.locator('[data-favorite-row][data-edition-id="42"]').getByRole("button", { name: "Agregar al carrito: Cien años de soledad" });
-  await add.focus(); await page.keyboard.press("Enter");
-  const action = page.locator("[data-cart-added-notification]").getByRole("link", { name: "Ver carrito" }); await action.focus(); await page.keyboard.press("Enter");
-  await expect(page.locator("#contenido-principal")).toBeFocused(); await expect(page.locator("[data-cart-added-notification]")).toHaveCount(0);
-  const headerBottom = await page.locator("[data-purchase-header]").evaluate(element => element.getBoundingClientRect().bottom);
-  const mainTop = await page.locator("#contenido-principal").evaluate(element => element.getBoundingClientRect().top);
-  expect(mainTop).toBeGreaterThanOrEqual(headerBottom - 1); expect(mainTop).toBeLessThanOrEqual(headerBottom + 8);
  });
 }
 test("Favorites does not announce the old zero after a confirmed addition and failed cart refresh", async ({ page }) => {

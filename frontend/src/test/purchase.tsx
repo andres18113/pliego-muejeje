@@ -1,9 +1,9 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { PliegoThemeProvider } from "@/theme/PliegoThemeProvider";
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { createMemoryRouter, RouterProvider, type RouteObject } from "react-router-dom";
-import { vi } from "vitest";
+import { expect, vi } from "vitest";
 import { SessionProvider, useSession } from "@/app/session";
 
 export type Handler = (request: Request) => Response | Promise<Response>;
@@ -24,6 +24,10 @@ export function stubApi(routes: Record<string, Handler | Handler[]>) {
     if (!entry && key === "GET /api/v1/reference/transfer-details") return json({ bank: "Banco Guayaquil", beneficiary: "PLIEGO", accountType: "Ahorros", accountNumber: "2557897233", identification: "1751550656" });
     if (!entry && key === "GET /api/v1/me") return json({ customerId: "2", email: "ana@example.com", firstNames: "Ana", lastNames: "Pérez", phone: null, state: "ACTIVE", version: "0" });
     if (!entry && key === "GET /api/v1/me/favorites") return json({ items: [], page: 0, pageSize: 20, totalCount: "0" });
+    // Saved for Later (ADR 0045) is empty unless a test says otherwise.
+    if (!entry && key === "GET /api/v1/cart/saved") return json({ items: [], totalCount: 0 });
+    if (!entry && key === "GET /api/v1/geo/provinces") return json(geoProvincesFixture);
+    if (!entry && key.startsWith("GET /api/v1/geo/provinces/") && key.endsWith("/cities")) return json(geoCitiesFixture[url.pathname.split("/")[5]] ?? []);
     if (!entry) return json({ title: "Sin ruta de prueba", detail: key }, 599);
     if (Array.isArray(entry)) {
       const next = entry.length > 1 ? entry.shift()! : entry[0];
@@ -82,6 +86,12 @@ export function renderPurchaseRoute(
   return { ...view, router, queryClient };
 }
 
+/** A Saved for Later item: a cart line's projection with its own id and the quantity it will return with. */
+export function savedItem(item: Partial<CartItemFixture> & { savedItemId?: string } = {}) {
+  const { cartItemId: _cartItemId, ...line } = cartBody([item]).items[0];
+  return { ...line, savedItemId: item.savedItemId ?? "501" };
+}
+
 export function cartBody(items: Partial<CartItemFixture>[] = [{}], total?: string) {
   const lines = items.map((item, index) => {
     const requiresPhysicalFulfillment = item.requiresPhysicalFulfillment ?? (item.format !== "EBOOK" && item.format !== "AUDIOBOOK");
@@ -118,6 +128,36 @@ function cartItem(index: number) {
   };
 }
 
+/** A small slice of the INEC catalog (ADR 0044) served by every `stubApi` unless a test routes it itself. */
+export const geoProvincesFixture = [{ id: "9", code: "09", name: "Guayas" }, { id: "17", code: "17", name: "Pichincha" }];
+export const geoCitiesFixture: Record<string, { id: string; code: string; name: string; kind: "CABECERA_CANTONAL" | "PARROQUIA_RURAL"; cantonName: string; aliases?: string[] }[]> = {
+  "9": [
+    { id: "495", code: "0927", name: "General Antonio Elizalde", kind: "CABECERA_CANTONAL", cantonName: "General Antonio Elizalde", aliases: ["General Elizalde (Bucay)", "Bucay"] },
+    { id: "488", code: "0921", name: "General Villamil", kind: "CABECERA_CANTONAL", cantonName: "Playas", aliases: ["Playas"] },
+    { id: "432", code: "0901", name: "Guayaquil", kind: "CABECERA_CANTONAL", cantonName: "Guayaquil", aliases: ["Chongón", "Roca", "Tarqui"] },
+  ],
+  "17": [
+    { id: "903", code: "170160", name: "El Quinche", kind: "PARROQUIA_RURAL", cantonName: "Distrito Metropolitano de Quito" },
+    { id: "893", code: "1701", name: "Quito", kind: "CABECERA_CANTONAL", cantonName: "Distrito Metropolitano de Quito" },
+    { id: "952", code: "1705", name: "Sangolquí", kind: "CABECERA_CANTONAL", cantonName: "Rumiñahui" },
+  ],
+};
+
+/**
+ * Chooses a province, then one of its places, in the catalog pickers inside `container` (stubApi serves the slice).
+ * The city is matched by the start of its row, which adds a detail only for a repeated name or an alias match.
+ */
+export async function choosePlace(container: HTMLElement = document.body, province = "Pichincha", city = "Quito") {
+  const scope = within(container);
+  fireEvent.click(await scope.findByRole("combobox", { name: "Provincia" }));
+  fireEvent.click(await screen.findByRole("option", { name: province }));
+  const cityTrigger = scope.getByRole("combobox", { name: "Ciudad" });
+  await waitFor(() => expect(cityTrigger).toBeEnabled());
+  fireEvent.click(cityTrigger);
+  fireEvent.click(await screen.findByRole("option", { name: new RegExp(`^${city}`) }));
+  await waitFor(() => expect(cityTrigger).toHaveTextContent(city));
+}
+
 export const savedAddress = {
   addressId: "15",
   alias: "Casa",
@@ -126,6 +166,9 @@ export const savedAddress = {
   line2: null,
   city: "Quito",
   province: "Pichincha",
+  cityId: "893" as string | null,
+  provinceId: "17" as string | null,
+  cityNeedsReview: false,
   countryCode: "EC",
   postalCode: null,
   reference: null,

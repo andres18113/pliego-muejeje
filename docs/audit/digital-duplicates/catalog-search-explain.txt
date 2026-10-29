@@ -1,0 +1,329 @@
+BEFORE — public title matching join
+Nested Loop  (cost=0.27..42.74 rows=1 width=8) (actual time=0.013..0.112 rows=3.00 loops=1)
+  Buffers: shared hit=36
+  ->  Seq Scan on libro l  (cost=0.00..34.44 rows=1 width=8) (actual time=0.008..0.104 rows=3.00 loops=1)
+        Filter: (((estado)::text = 'ACTIVE'::text) AND (lower((titulo)::text) ~~ '%cómo%'::text))
+        Rows Removed by Filter: 422
+        Buffers: shared hit=27
+  ->  Index Scan using idx_edicion_libro on edicion e  (cost=0.27..8.29 rows=1 width=16) (actual time=0.002..0.002 rows=1.00 loops=3)
+        Index Cond: (libro_id = l.libro_id)
+        Filter: ((estado)::text = 'ACTIVE'::text)
+        Index Searches: 3
+        Buffers: shared hit=9
+Planning:
+  Buffers: shared hit=335
+Planning Time: 0.418 ms
+Execution Time: 0.132 ms
+
+BEFORE — fn_catalog_search_global(Cómo), AUDIOBOOK scope
+{
+  "Plan": {
+    "Node Type": "Function Scan",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Function Name": "fn_catalog_search_global",
+    "Alias": "fn_catalog_search_global",
+    "Startup Cost": 0.25,
+    "Total Cost": 10.25,
+    "Plan Rows": 1000,
+    "Plan Width": 413,
+    "Actual Startup Time": 7.591,
+    "Actual Total Time": 7.592,
+    "Actual Rows": 2.0,
+    "Actual Loops": 1,
+    "Disabled": false,
+    "Shared Hit Blocks": 2626,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning": {
+    "Shared Hit Blocks": 0,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning Time": 0.025,
+  "Triggers": [],
+  "Execution Time": 7.896
+}
+
+BEFORE — fn_catalog_search_global(García), AUDIOBOOK scope
+{
+  "Plan": {
+    "Node Type": "Function Scan",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Function Name": "fn_catalog_search_global",
+    "Alias": "fn_catalog_search_global",
+    "Startup Cost": 0.25,
+    "Total Cost": 10.25,
+    "Plan Rows": 1000,
+    "Plan Width": 413,
+    "Actual Startup Time": 7.389,
+    "Actual Total Time": 7.389,
+    "Actual Rows": 2.0,
+    "Actual Loops": 1,
+    "Disabled": false,
+    "Shared Hit Blocks": 2662,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning": {
+    "Shared Hit Blocks": 0,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning Time": 0.028,
+  "Triggers": [],
+  "Execution Time": 7.69
+}
+
+BEFORE — fn_catalog_search_global(niño), AUDIOBOOK scope
+{
+  "Plan": {
+    "Node Type": "Function Scan",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Function Name": "fn_catalog_search_global",
+    "Alias": "fn_catalog_search_global",
+    "Startup Cost": 0.25,
+    "Total Cost": 10.25,
+    "Plan Rows": 1000,
+    "Plan Width": 413,
+    "Actual Startup Time": 7.465,
+    "Actual Total Time": 7.466,
+    "Actual Rows": 1.0,
+    "Actual Loops": 1,
+    "Disabled": false,
+    "Shared Hit Blocks": 2610,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning": {
+    "Shared Hit Blocks": 0,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning Time": 0.024,
+  "Triggers": [],
+  "Execution Time": 7.74
+}
+
+AFTER — public title matching join
+Hash Join  (cost=38.48..58.91 rows=8 width=8) (actual time=0.099..0.158 rows=5.00 loops=1)
+  Hash Cond: (e.libro_id = l.libro_id)
+  Buffers: shared hit=46
+  ->  Seq Scan on edicion e  (cost=0.00..19.31 rows=425 width=16) (actual time=0.006..0.053 rows=425.00 loops=1)
+        Filter: ((estado)::text = 'ACTIVE'::text)
+        Buffers: shared hit=14
+  ->  Hash  (cost=38.38..38.38 rows=8 width=8) (actual time=0.085..0.085 rows=5.00 loops=1)
+        Buckets: 1024  Batches: 1  Memory Usage: 9kB
+        Buffers: shared hit=32
+        ->  Seq Scan on libro l  (cost=0.00..38.38 rows=8 width=8) (actual time=0.003..0.081 rows=5.00 loops=1)
+              Filter: ((search_title_folded ~~ '%como%'::text) AND ((estado)::text = 'ACTIVE'::text))
+              Rows Removed by Filter: 420
+              Buffers: shared hit=32
+Planning:
+  Buffers: shared hit=400
+Planning Time: 0.438 ms
+Execution Time: 0.180 ms
+
+AFTER — fn_catalog_search_global(Cómo), AUDIOBOOK scope
+{
+  "Plan": {
+    "Node Type": "Function Scan",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Function Name": "fn_catalog_search_global",
+    "Alias": "fn_catalog_search_global",
+    "Startup Cost": 0.25,
+    "Total Cost": 10.25,
+    "Plan Rows": 1000,
+    "Plan Width": 413,
+    "Actual Startup Time": 8.58,
+    "Actual Total Time": 8.58,
+    "Actual Rows": 2.0,
+    "Actual Loops": 1,
+    "Disabled": false,
+    "Shared Hit Blocks": 2732,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning": {
+    "Shared Hit Blocks": 0,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning Time": 0.029,
+  "Triggers": [],
+  "Execution Time": 8.883
+}
+
+AFTER — fn_catalog_search_global(García), AUDIOBOOK scope
+{
+  "Plan": {
+    "Node Type": "Function Scan",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Function Name": "fn_catalog_search_global",
+    "Alias": "fn_catalog_search_global",
+    "Startup Cost": 0.25,
+    "Total Cost": 10.25,
+    "Plan Rows": 1000,
+    "Plan Width": 413,
+    "Actual Startup Time": 8.09,
+    "Actual Total Time": 8.09,
+    "Actual Rows": 2.0,
+    "Actual Loops": 1,
+    "Disabled": false,
+    "Shared Hit Blocks": 2708,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning": {
+    "Shared Hit Blocks": 0,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning Time": 0.026,
+  "Triggers": [],
+  "Execution Time": 8.382
+}
+
+AFTER — fn_catalog_search_global(niño), AUDIOBOOK scope
+{
+  "Plan": {
+    "Node Type": "Function Scan",
+    "Parallel Aware": false,
+    "Async Capable": false,
+    "Function Name": "fn_catalog_search_global",
+    "Alias": "fn_catalog_search_global",
+    "Startup Cost": 0.25,
+    "Total Cost": 10.25,
+    "Plan Rows": 1000,
+    "Plan Width": 413,
+    "Actual Startup Time": 7.119,
+    "Actual Total Time": 7.12,
+    "Actual Rows": 1.0,
+    "Actual Loops": 1,
+    "Disabled": false,
+    "Shared Hit Blocks": 2689,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning": {
+    "Shared Hit Blocks": 0,
+    "Shared Read Blocks": 0,
+    "Shared Dirtied Blocks": 0,
+    "Shared Written Blocks": 0,
+    "Local Hit Blocks": 0,
+    "Local Read Blocks": 0,
+    "Local Dirtied Blocks": 0,
+    "Local Written Blocks": 0,
+    "Temp Read Blocks": 0,
+    "Temp Written Blocks": 0
+  },
+  "Planning Time": 0.023,
+  "Triggers": [],
+  "Execution Time": 7.392
+}
+Bitmap Heap Scan on libro  (cost=4.31..16.12 rows=4 width=40) (actual time=0.049..0.054 rows=3.00 loops=1)
+  Filter: (search_title_folded ~~ 'como%'::text)
+  Heap Blocks: exact=2
+  Buffers: shared hit=2 read=2
+  ->  Bitmap Index Scan on ix_libro_search_fold_cover  (cost=0.00..4.31 rows=4 width=0) (actual time=0.040..0.040 rows=3.00 loops=1)
+        Index Cond: ((search_title_folded ~>=~ 'como'::text) AND (search_title_folded ~<~ 'comp'::text))
+        Index Searches: 1
+        Buffers: shared read=2
+Planning:
+  Buffers: shared hit=169
+Planning Time: 0.336 ms
+Execution Time: 0.089 ms
+Bitmap Heap Scan on autor  (cost=4.33..11.90 rows=5 width=31) (actual time=0.016..0.020 rows=4.00 loops=1)
+  Filter: (search_name_folded ~~ 'garcia%'::text)
+  Heap Blocks: exact=4
+  Buffers: shared hit=4 read=2
+  ->  Bitmap Index Scan on ix_autor_search_fold_cover  (cost=0.00..4.33 rows=5 width=0) (actual time=0.011..0.011 rows=4.00 loops=1)
+        Index Cond: ((search_name_folded ~>=~ 'garcia'::text) AND (search_name_folded ~<~ 'garcib'::text))
+        Index Searches: 1
+        Buffers: shared read=2
+Planning:
+  Buffers: shared hit=49
+Planning Time: 0.075 ms
+Execution Time: 0.024 ms

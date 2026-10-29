@@ -32,7 +32,8 @@ import { DinersClubLogoIcon } from "react-svg-credit-card-payment-icons/dinerscl
 import { MastercardLogoIcon } from "react-svg-credit-card-payment-icons/mastercard";
 import { VisaLogoIcon } from "react-svg-credit-card-payment-icons/visa";
 import { AddressEditorDialog } from "@/features/account/AddressEditorDialog";
-import { cartQueryKey, useCustomerCart } from "./cartQuery";
+import { cartQueryKey, isSingleDigitalCopy, useCustomerCart } from "./cartQuery";
+import { DigitalCopyNote } from "./DigitalCopyNote";
 import { ReadFailure } from "./CartPage";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import { fulfillmentMethodLabel, type CheckoutFulfillmentMethod, checkoutFulfillmentMethods } from "./fulfillment";
@@ -53,11 +54,14 @@ import { CardSecurityCodeHelp } from "./CardSecurityCodeHelp";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { personNameError } from "@/shared/validation/person";
 
-import { checkoutBillingSchema, type CheckoutBillingInput } from "@/shared/api/billing";
-import type { Control, FieldErrors, UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
+import { checkoutBillingRefinement, checkoutBillingSchema, refineCheckoutBilling, type CheckoutBillingInput } from "@/shared/api/billing";
+import type { Control, FieldErrors, UseFormClearErrors, UseFormGetValues, UseFormRegister, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { CheckoutBilling, useBillingSource } from "./CheckoutBilling";
 import { clearLegacyBillingIntents } from "./checkoutBillingIntent";
-import { PageWayfinding } from "@/app/navigation/BackButton";
+import { useDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
+import { digitalConflictDestination, isDigitalConflict, type DigitalConflict } from "@/features/library/digitalPurchaseState";
+import { DigitalConflictLink } from "@/features/library/DigitalConflictLink";
+import { ParentLink } from "@/shared/ui/ParentLink";
 
 const checkoutSchema = z.object({
   ...checkoutBillingSchema.shape,
@@ -69,7 +73,10 @@ const checkoutSchema = z.object({
   expiration: z.string(),
   cvv: z.string(),
   cardholder: z.string(),
-}).superRefine((values, context) => {
+})
+  // Spreading the billing shape drops its own refinement: the buyer-name rule is applied here as well.
+  .superRefine(refineCheckoutBilling, checkoutBillingRefinement)
+  .superRefine((values, context) => {
   if (values.fulfillmentMethod === "HOME_DELIVERY" && !values.addressId) {
     context.addIssue({ code: "custom", path: ["addressId"], message: "Elige una dirección de entrega." });
   }
@@ -100,8 +107,8 @@ const checkoutSchema = z.object({
 });
 
 type CheckoutValues = z.input<typeof checkoutSchema>;
-type Phase = "idle" | "checking" | "submitting" | "unknown" | "reconciling";
-type Problem = { title: string; detail: string; action?: "cart" };
+type Phase = "idle" | "checking" | "submitting" | "unknown" | "reconciling" | "blocked";
+type Problem = { title: string; detail: string; action?: "cart"; digitalConflict?: DigitalConflict };
 const supportedCardBrands: CardBrand[] = ["visa", "mastercard", "amex", "diners"];
 const cardBrandNames: Record<CardBrand, string> = { visa: "Visa", mastercard: "Mastercard", amex: "American Express", diners: "Diners Club" };
 const cardFieldOrder = ["cardNumber", "expiration", "cvv", "cardholder"] as const;
@@ -156,6 +163,16 @@ function CheckoutContent() {
   const problemRef = useRef<HTMLDivElement>(null);
   const [phase, setPhase] = useState<Phase>(recovery.key ? "unknown" : "idle");
   const [problem, setProblem] = useState<Problem | null>(recovery.error ? { title: "No enviamos tu pedido.", detail: recovery.error } : null);
+  const eligibilityQuery = useDigitalEligibility((cartQuery.data?.items ?? []).filter(item =>
+    problem?.digitalConflict ? !item.requiresPhysicalFulfillment : !item.available && isDigitalConflict(item.unavailabilityReason)
+  ).map(item => item.editionId));
+  const conflictMatches = eligibilityQuery.data?.filter(item => problem?.digitalConflict === "P6002" ? item.owned : item.pendingOrder) ?? [];
+  const conflictDestinations = problem?.digitalConflict ? [...new Map(
+    (conflictMatches.length ? conflictMatches : [undefined]).map(item => {
+      const destination = digitalConflictDestination(problem.digitalConflict!, item);
+      return [destination.href, destination] as const;
+    })
+  ).values()] : [];
   const [addressEditor, setAddressEditor] = useState({ opened: false, opening: 0 });
   const addressTrigger = useRef<HTMLElement | null>(null);
   const savedAddressFocusPending = useRef(false);
@@ -194,7 +211,7 @@ function CheckoutContent() {
     formState: { errors, dirtyFields },
   } = useForm<CheckoutValues>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: { billingIdentity: { type: "EC_CEDULA", number: "" }, buyerName: "", billingAddress: { line1: "", line2: "", city: "", province: "", countryCode: "EC", postalCode: "" }, fulfillmentMethod: "HOME_DELIVERY", addressId: "", pickupLocationId: "", paymentMethod: undefined, cardNumber: "", expiration: "", cvv: "", cardholder: "" },
+    defaultValues: { billingRecipient: "ACCOUNT", billingIdentity: { type: "EC_CEDULA", number: "" }, buyerName: "", billingAddress: { line1: "", line2: "", provinceId: "", cityId: "", countryCode: "EC", postalCode: "" }, fulfillmentMethod: "HOME_DELIVERY", addressId: "", pickupLocationId: "", paymentMethod: undefined, cardNumber: "", expiration: "", cvv: "", cardholder: "" },
     // Focus is placed explicitly: the address choice may have no input to focus yet.
     shouldFocusError: false,
   });
@@ -202,10 +219,12 @@ function CheckoutContent() {
   const identityQuery = useQuery({queryKey: billingIdentityQueryKey, queryFn: ({signal}) => getBillingIdentity(signal), meta:{authRequired:true}, retry:false});
   useEffect(() => {
     if (!scope.isCurrent() || phase !== "idle") return;
+    // Another recipient's name and number are the customer's own typing: a refreshed profile never overwrites them.
+    if (getValues("billingRecipient") === "OTHER") return;
     if (profileQuery.data && !dirtyFields.buyerName) setValue("buyerName", `${profileQuery.data.firstNames} ${profileQuery.data.lastNames}`.trim());
-    // The invoice uses the customer's own registered cédula; it is corrected only from Mi perfil.
+    // The account's invoice uses the customer's own registered cédula; it is corrected only from Mi perfil.
     if (identityQuery.data) setValue("billingIdentity.number", identityQuery.data.number, { shouldValidate: Boolean(errors.billingIdentity?.number) });
-  }, [profileQuery.data, identityQuery.data, dirtyFields.buyerName, errors.billingIdentity?.number, phase, scope, setValue]);
+  }, [profileQuery.data, identityQuery.data, dirtyFields.buyerName, errors.billingIdentity?.number, phase, scope, setValue, getValues]);
   const cardNumberRegistration = register("cardNumber");
   const cvvRegistration = register("cvv");
   const cardholderRegistration = register("cardholder");
@@ -542,7 +561,7 @@ function CheckoutContent() {
     pendingKey.current = null;
     setPhase("idle");
     const code = error.code;
-    const fields=(["addressId","pickupLocationId","fulfillmentMethod","paymentMethod","cardNumber","buyerName","billingIdentity.number","billingIdentity.type","billingAddress.line1","billingAddress.line2","billingAddress.city","billingAddress.province","billingAddress.countryCode","billingAddress.postalCode"] as const).filter((field) => {
+    const fields=(["addressId","pickupLocationId","fulfillmentMethod","paymentMethod","cardNumber","buyerName","billingIdentity.number","billingIdentity.type","billingAddress.line1","billingAddress.line2","billingAddress.provinceId","billingAddress.cityId","billingAddress.countryCode","billingAddress.postalCode"] as const).filter((field) => {
       const message=fieldErrorMessages(error,field);
       if(message) {
         setError(field,{type:"server",message});
@@ -553,7 +572,12 @@ function CheckoutContent() {
     });
     if(fields.length) { requestAnimationFrame(() => focusFirstInvalid({[fields[0]]:true})); return; }
     // Canonical SQLSTATE wire codes; see API amendment v1.0.3.
-    if (availabilityConflictMessage(code)) {
+    if (isDigitalConflict(code)) {
+      // A definitive refusal ends this attempt, even if a stale cart read still looks purchasable.
+      setPhase("blocked");
+      setProblem({ title: availabilityConflictMessage(code)!, detail: "No se creó ningún pedido. Revisa esta edición antes de continuar desde el carrito.", action: "cart", digitalConflict: code });
+      await cartQuery.refetch();
+    } else if (availabilityConflictMessage(code)) {
       await cartQuery.refetch();
       setProblem({
         title: "La disponibilidad cambió y no se creó el pedido.",
@@ -563,7 +587,7 @@ function CheckoutContent() {
     } else if (code === "P1106") {
       const current = await identityQuery.refetch();
       if (current.data) setValue("billingIdentity.number", current.data.number);
-      setProblem({ title: "La identificación no coincide con la de tu perfil.", detail: "Tu factura usa la cédula o el RUC registrado en tu perfil; ya lo mostramos. Si es incorrecto, corrígelo en Mi perfil. No se creó ningún pedido." });
+      setProblem({ title: "La identificación no coincide con la de tu perfil.", detail: "Tu factura usa la cédula o el RUC registrado en tu perfil; ya lo mostramos. Si es incorrecto, corrígelo en Mi perfil; si la factura es para otra persona o empresa, elígelo en Factura. No se creó ningún pedido." });
     } else if (code === "P4005") {
       await cartQuery.refetch();
       setProblem({ title: "Tu carrito cambió y no se creó el pedido.", detail: "Actualizamos los productos, cantidades y precios. Revisa el nuevo resumen antes de confirmar otra vez." });
@@ -639,7 +663,7 @@ function CheckoutContent() {
   const selectedAddress = addresses?.find((address) => address.addressId === addressId)
     ?? addresses?.find(address => address.primary) ?? addresses?.[0];
   // The customer must settle payment first; submitting still validates the destination and current data.
-  const submitBlocked = Boolean(recovery.error) || busy || phase === "unknown" || phase === "reconciling" || unavailable
+  const submitBlocked = Boolean(recovery.error) || busy || phase === "unknown" || phase === "reconciling" || phase === "blocked" || unavailable
     || cartReviewRequired || cartQuery.isFetching
     || !paymentReady
     || cart.items.length === 0
@@ -675,7 +699,10 @@ function CheckoutContent() {
         <div className={classes.problem} role="alert" tabIndex={-1} ref={problemRef}>
           <h2>{problem.title}</h2>
           <p>{problem.detail}</p>
-          {problem.action === "cart" && <Link to="/cart">Revisar el carrito</Link>}
+          {(conflictDestinations.length > 0 || problem.action === "cart") && <div className={classes.problemActions}>
+            {conflictDestinations.map(destination => <ButtonLink key={destination.href} variant="text" to={destination.href}>{destination.label}</ButtonLink>)}
+            {problem.action === "cart" && <Link to="/cart">Revisar el carrito</Link>}
+          </div>}
         </div>
       )}
 
@@ -705,12 +732,17 @@ function CheckoutContent() {
             return {
               key: item.cartItemId,
               title: item.title,
-              meta: [item.format ? formatEdition(item.format) : null, `${unitsLabel(item.quantity)} × ${formatUsd(item.currentPrice)}`].filter(Boolean).join(" · "),
+              // A digital copy names its rule with the same note as the cart (its price is the line's amount);
+              // physical lines read units × price.
+              meta: isSingleDigitalCopy(item)
+                ? <>{item.format && `${formatEdition(item.format)} · `}<DigitalCopyNote /></>
+                : [item.format ? formatEdition(item.format) : null, `${unitsLabel(item.quantity)} × ${formatUsd(item.currentPrice)}`].filter(Boolean).join(" · "),
               amount: formatUsd(item.currentSubtotal),
               was: saving && linePricing?.originalSubtotal ? linePricing.originalSubtotal.formattedValue : undefined,
               extra: saving || stock ? <>
                 {saving && <p className={classes.summaryLineSaving}><MaterialSymbol name="sell" size={16} aria-hidden="true" /><span>Ahorras {saving.formattedValue}</span></p>}
                 {stock}
+                {!item.available && <DigitalConflictLink reason={item.unavailabilityReason} eligibility={eligibilityQuery.byEdition.get(item.editionId)} />}
               </> : undefined,
             };
           })}
@@ -747,7 +779,7 @@ function CheckoutContent() {
             type="submit"
             form="checkout-form"
             aria-label={busy ? "Procesando compra" : submitLabel}
-            disabled={unavailable || !paymentReady}
+            disabled={unavailable || !paymentReady || phase === "blocked"}
             {...stockFocus}
             aria-describedby={unavailable ? "checkout-stock-blocker" : undefined}
             aria-disabled={submitBlocked || undefined}
@@ -864,6 +896,8 @@ function CheckoutContent() {
           <CheckoutBilling register={register as unknown as UseFormRegister<CheckoutBillingInput>} control={control as unknown as Control<CheckoutBillingInput>}
             errors={errors as FieldErrors<CheckoutBillingInput>} setValue={setValue as unknown as UseFormSetValue<CheckoutBillingInput>}
             getValues={getValues as unknown as UseFormGetValues<CheckoutBillingInput>} trigger={trigger as unknown as UseFormTrigger<CheckoutBillingInput>}
+            clearErrors={clearErrors as unknown as UseFormClearErrors<CheckoutBillingInput>}
+            accountName={profileQuery.data ? `${profileQuery.data.firstNames} ${profileQuery.data.lastNames}`.trim() : ""}
             disabled={phase !== "idle" || Boolean(recovery.error)}
             registeredNumber={identityQuery.data?.number ?? null} identityPending={identityQuery.isPending}
             profilePending={profileQuery.isPending}
@@ -1115,9 +1149,9 @@ function CheckoutContent() {
 }
 
 /** The purchase header names the place ("Pago (n artículos)"); the page keeps its heading for assistive technology. */
-/** The page's opening: the back arrow under the purchase header (the wordmark stands alone), then its name. */
+/** The page's opening: the way back to the cart under the purchase header, then its name. */
 function CheckoutHeading() {
-  return <><PageWayfinding /><h1 className="visually-hidden">Finalizar compra</h1></>;
+  return <><ParentLink to="/cart">Volver al carrito</ParentLink><h1 className="visually-hidden">Finalizar compra</h1></>;
 }
 
 function positionAfterDigits(value: string, digitCount: number) {

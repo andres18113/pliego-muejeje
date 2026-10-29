@@ -88,12 +88,39 @@ class HistoricalOrderPricingGatewayTest {
         assertEquals(new BigDecimal("39.80"), order.postPurchase().offerPricing().currentSubtotal());
         var item = order.items().getFirst();
         assertTrue(item.pricingSnapshotAvailable());
+        assertNull(item.digitalAccess());
         assertEquals(new BigDecimal("22.15"), item.originalPrice());
         assertEquals(new BigDecimal("2.26"), item.unitSavings());
         assertEquals(new BigDecimal("44.31"), item.originalSubtotal());
         assertEquals(new BigDecimal("4.51"), item.lineSavings());
         assertEquals(0, new BigDecimal("19.90").compareTo(item.unitPrice()));
         assertEquals(0, new BigDecimal("39.80").compareTo(item.subtotal()));
+    }
+
+    @Test
+    void customerDetailMapsDigitalAccessWithoutBorrowingAnotherSource() throws Exception {
+        for (String state : java.util.List.of("PENDING_PAYMENT", "AVAILABLE", "REVOKED", "UNAVAILABLE")) {
+            var jdbc = mock(JdbcTemplate.class);
+            var row = orderRow();
+            String ownedId = "AVAILABLE".equals(state) ? "\"9007199254740993\"" : "null";
+            when(row.getString("items")).thenReturn("""
+                    [{"orderItemId":"801","editionId":"251","title":"Digital",
+                      "format":"EBOOK","unitPrice":10.00,"quantity":1,"subtotal":10.00,
+                      "requiresPhysicalFulfillment":false,"pricingSnapshotAvailable":false,
+                      "digitalAccess":{"state":"%s","ownedItemId":%s}}]
+                    """.formatted(state, ownedId));
+            when(jdbc.queryForObject(anyString(), org.mockito.ArgumentMatchers.<RowMapper<Detail>>any(), eq(42L), eq(700L)))
+                    .thenAnswer(invocation -> {
+                        RowMapper<Detail> mapper = invocation.getArgument(1);
+                        return mapper.mapRow(row, 0);
+                    });
+            var item = new JdbcCustomerOrderGateway(new DatabaseExceptionTranslator(), jdbc, new ObjectMapper())
+                    .detail(42L, 700L).items().getFirst();
+            assertFalse(item.requiresPhysicalFulfillment());
+            assertNotNull(item.digitalAccess());
+            assertEquals(state, item.digitalAccess().state());
+            assertEquals("AVAILABLE".equals(state) ? "9007199254740993" : null, item.digitalAccess().ownedItemId());
+        }
     }
 
     @Test

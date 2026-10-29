@@ -66,13 +66,25 @@ public final class PostPurchaseModels {
     }
     public record ShipmentEvent(String eventId, String type, String origin, String actorUserId,
             String previousState, String newState, String carrier, String trackingCode, String trackingUrl, String at) { }
-    public record CheckoutBilling(String identityType, String identityNumber, String buyerName, BillingAddress address) {
+    public record CheckoutBilling(String recipientKind, String identityType, String identityNumber,
+            String buyerName, BillingAddressInput address) {
+        public CheckoutBilling(String identityType, String identityNumber, String buyerName, BillingAddressInput address) {
+            this("ACCOUNT", identityType, identityNumber, buyerName, address);
+        }
         @Override public String toString() { return "CheckoutBilling[redacted]"; }
     }
-    public record BillingAddress(String line1, String line2, String city, String province, String countryCode, String postalCode) { }
+    public record BillingAddressInput(String line1, String line2, Long provinceId, Long cityId,
+            String city, String province, String countryCode, String postalCode) {
+        public BillingAddressInput(String line1, String line2, long provinceId, long cityId,
+                String countryCode, String postalCode) {
+            this(line1,line2,provinceId,cityId,null,null,countryCode,postalCode);
+        }
+    }
+    public record BillingAddressSnapshot(String line1, String line2, String city, String province,
+            String countryCode, String postalCode) { }
     public record Invoice(String invoiceId, String documentNumber, String state, String buyerName,
             String identityType, String identityNumber, String buyerEmail, String currency,
-            BigDecimal subtotal, BigDecimal taxTotal, BigDecimal total, String issuedAt, BillingAddress billingAddress,
+            BigDecimal subtotal, BigDecimal taxTotal, BigDecimal total, String issuedAt, BillingAddressSnapshot billingAddress,
             List<InvoiceItem> items, ElectronicIssuance electronicIssuance, boolean pdfAvailable, boolean xmlAvailable,
             BigDecimal taxRate, BigDecimal shippingAmount) {
         public Invoice { items = List.copyOf(items); }
@@ -87,5 +99,5 @@ public final class PostPurchaseModels {
     public record Tracking(String carrier, String trackingCode, String trackingUrl,
             OffsetDateTime estimatedDeliveryFrom, OffsetDateTime estimatedDeliveryTo) { }
     public record IssueInvoice(String documentNumber, String buyerName, String identityType, String identityNumber,
-            String buyerEmail, BillingAddress billingAddress) { }
+            String buyerEmail, BillingAddressInput billingAddress) { }
 }

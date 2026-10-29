@@ -93,7 +93,7 @@ def main():
     assert len(physical_cart)==1 and physical_cart[0]['editionId']==editions['PAPERBACK'] and physical_cart[0]['quantityEditable'] is True
     assert all(line['quantityEditable'] is False for line in cart['items'] if not line['requiresPhysicalFulfillment'])
     address=ok('/api/v1/me/addresses',customer,'POST',{'alias':'Casa','recipient':'Cliente Biblioteca','line1':'Calle Biblioteca',
-        'line2':None,'city':'Quito','province':'Pichincha','countryCode':'EC','postalCode':None,'reference':None,'phone':'+59325550134','makePrimary':True},201)['addressId']
+        'line2':None,'provinceId':'17','cityId':'893','countryCode':'EC','postalCode':None,'reference':None,'phone':'+59325550134','makePrimary':True},201)['addressId']
     status,mixed=checkout(customer,{'fulfillmentMethod':'HOME_DELIVERY','addressId':address,'paymentMethod':'TRANSFER','simulationOutcome':'APPROVED'},str(uuid.uuid4()))
     assert status==201,(status,mixed)
     mixed_detail=ok('/api/v1/orders/'+mixed['orderId'],customer)

@@ -15,9 +15,22 @@ public class JdbcBillingIdentityGateway extends JdbcGatewaySupport implements Bi
     }
     @Override public BillingIdentity find(long actorUserId) {
         return withDatabaseErrorTranslation(() -> jdbc.query(
-                "SELECT identity_type, identity_number FROM pliego.fn_customer_billing_identity(?)",
+                "SELECT * FROM pliego.fn_customer_billing_identity_read_model(?)",
                 ps -> ps.setLong(1, actorUserId),
-                rs -> rs.next() ? new BillingIdentity(rs.getString("identity_type"), rs.getString("identity_number")) : null));
+                rs -> {
+                    if (!rs.next()) return null;
+                    Long requestId = rs.getObject("correction_request_id", Long.class);
+                    BillingIdentity.CorrectionRequest request = requestId == null ? null :
+                            new BillingIdentity.CorrectionRequest(Long.toString(requestId),
+                                    rs.getString("correction_request_status"), rs.getString("proposed_type"),
+                                    rs.getString("proposed_number"), rs.getString("reason_code"),
+                                    rs.getObject("created_at", java.time.OffsetDateTime.class),
+                                    rs.getObject("due_at", java.time.OffsetDateTime.class),
+                                    rs.getObject("decided_at", java.time.OffsetDateTime.class),
+                                    rs.getString("decision_reason"));
+                    return new BillingIdentity(rs.getString("identity_type"), rs.getString("identity_number"),
+                            rs.getBoolean("used"), rs.getString("correction_mode"), request);
+                }));
     }
     @Override public void register(long actorUserId, String type, String number) {
         withDatabaseErrorTranslation(() -> jdbc.update(

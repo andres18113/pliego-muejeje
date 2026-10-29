@@ -90,7 +90,7 @@ function presentOrder(order: OrderSummary, viewModel: MisPedidosOrder, detail?: 
     digitalOnly: viewModel.fulfillmentType === "DIGITAL_ONLY" || Boolean(detail && detail.fulfillment == null && !detail.items.some((item) => item.requiresPhysicalFulfillment)),
     pickup: viewModel.fulfillmentType === "STORE_PICKUP",
   });
-  // A finalized digital purchase is finished (Anteriores, with the check); inside its window it reads as confirmed.
+  // A finalized digital purchase is finished (Anteriores, as delivered); inside its window it reads as confirmed.
   const story: OrderStory = windowView === "digital-complete" ? { kind: "delivered", tone: "arrived", headline: "Compra completada" }
     : windowView === "digital-window" ? { ...baseStory, headline: "Compra confirmada" } : baseStory;
   return { order, viewModel, detail, paymentState, story, windowView, open: story.tone === "progress" || story.kind === "awaiting-payment" };
@@ -132,7 +132,7 @@ function OrderUnit({ order, viewModel, detail, paymentState, story, windowView, 
   return <Link className={classes.unit} data-group={group} data-outcome={group === "past" ? outcome : undefined} to={`/orders/${order.orderId}`} state={{ ordersPage: page }}>
     <span className={classes.what}>
     <span className={classes.story}>
-      <strong className={classes.state}>{group === "past" && outcome === "done" && <MaterialSymbol name="check" size={18} />}{story.headline}</strong>{" "}
+      <strong className={classes.state}>{story.headline}</strong>{" "}
       {note && <span className={classes.note}>{note}</span>}
     </span>{" "}
     {items.length > 0 && <span className={classes.books}>

@@ -1,24 +1,26 @@
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { BookCover } from "@/features/catalog/BookCover";
-import { resolveStockStatus } from "@/features/catalog/stockStatusModel";
+import { availabilityConflictMessage, resolveStockStatus, stockReadOptions } from "@/features/catalog/stockStatusModel";
+import { useBlockedDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
+import type { DigitalEligibility } from "@/shared/api/digitalEligibility";
+import { DigitalConflictLink } from "@/features/library/DigitalConflictLink";
 import { StockStatus } from "@/features/catalog/StockStatus";
 import surface from "@/features/catalog/availabilitySurface.module.css";
 import { formatEdition, formatUsd } from "@/features/catalog/formatters";
-import { addEditionToCart, removeCartItem, updateCartItemQuantity, type CartLine } from "@/shared/api/cart";
+import { addEditionToCart, getSavedForLater, moveSavedItemToCart, removeCartItem, removeSavedItem, saveCartItemForLater, savedForLaterQueryKey,
+  updateCartItemQuantity, type CartLine, type SavedItem, type SavedMove } from "@/shared/api/cart";
 import { ApiRequestError, fieldErrorMessages, readRecoveryDetail } from "@/shared/api/errors";
-import { addCustomerFavorite } from "@/shared/api/favorites";
 import { QuantityPicker } from "@/shared/ui/QuantityPicker";
 import { UndoToast, type UndoToastMessage } from "@/shared/ui/UndoToast";
-import { CartAddedNotification, useCartAddedNotification } from "@/shared/ui/CartAddedNotification";
-import type { ConfirmedCartAddition } from "@/shared/ui/cartAdditionFeedback";
-import { SavedForLater } from "./SavedForLater";
-import { cartQuantityChoices, useCustomerCart } from "./cartQuery";
+import { SavedForLater, type SavedFeedback } from "./SavedForLater";
+import { cartQuantityChoices, cartQueryKey, isSingleDigitalCopy, useCustomerCart } from "./cartQuery";
+import { DigitalCopyNote } from "./DigitalCopyNote";
 import { hasSaving, toCartPricingViewModel, type CartLinePricingViewModel } from "./cartPricingViewModel";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import { ivaLabel, unitsLabel } from "./purchaseText";
@@ -30,7 +32,7 @@ type LineFeedback = { cartItemId: string; tone: "success" | "error"; message: st
 type CartCommand =
   | { kind: "quantity"; line: CartLine; quantity: number }
   | { kind: "remove"; line: CartLine }
-  /** "Guardar para después" is PLIEGO's Favoritos: the edition is saved there, then leaves the cart. */
+  /** "Guardar para después" moves the line, with its quantity, to the Saved for Later list (never Favoritos). */
   | { kind: "save"; line: CartLine };
 type Departed = { editionId: string; title: string; quantity: number };
 type CartToast = Omit<UndoToastMessage, "action"> & { departed?: Departed; unknownOutcome?: boolean };
@@ -47,59 +49,65 @@ export function CartPage() {
 }
 
 function CartContent() {
-  const cartNotice = useCartAddedNotification();
   const scope = useSessionOperationScope("cart");
   const { clear: clearSession } = useSession();
   const queryClient = useQueryClient();
   const cartQuery = useCustomerCart(true);
-  const emptyCartInvoker = useRef<{ element: HTMLElement; editionId: string; scope: SessionOperationScope } | null>(null);
+  const digitalEligibility = useBlockedDigitalEligibility(cartQuery.data?.items);
   const commandLock = useRef(false);
   const toastKey = useRef(0);
   const [lineFeedback, setLineFeedback] = useState<LineFeedback | null>(null);
   const [toast, setToast] = useState<CartToast | null>(null);
-  /** Quantities of lines saved for later during this visit, so moving one back restores the same line. */
-  const [savedQuantities, setSavedQuantities] = useState<ReadonlyMap<string, number>>(() => new Map());
+  const savedQuery = useQuery({
+    queryKey: savedForLaterQueryKey,
+    ...stockReadOptions,
+    queryFn: ({ signal }) => getSavedForLater(signal),
+    meta: { authRequired: true },
+    retry: false,
+  });
+  const [savedFeedback, setSavedFeedback] = useState<SavedFeedback | null>(null);
+  /** One polite line for what a move did; the moved row itself is brought into view. */
+  const [announcement, setAnnouncement] = useState("");
+  /** The row a confirmed move should bring into view once both lists show the server's state. */
+  const pendingReveal = useRef<{ section: "cart" | "saved"; editionId: string } | null>(null);
 
-  function confirmSavedAddition(addition: ConfirmedCartAddition) {
-    const active = document.activeElement;
-    // An empty cart swaps its saved collection into the populated layout after refetch.
-    // Remember only the focused add control that this successful command will replace.
-    if (cartQuery.data?.items.length === 0 && active instanceof HTMLElement && active.matches("[data-cart-saved] [data-bookcard-cart]")) {
-      const editionId = active.closest<HTMLElement>("[data-edition-id]")?.dataset.editionId;
-      if (editionId) emptyCartInvoker.current = { element: active, editionId, scope };
-    }
-    cartNotice.show(addition);
+  /** Both lists as the server now holds them: no reload, no second read. */
+  function applyMove(moved: SavedMove) {
+    queryClient.setQueryData(cartQueryKey, moved.cart);
+    queryClient.setQueryData(savedForLaterQueryKey, moved.saved);
   }
 
   useLayoutEffect(() => {
-    const invoker = emptyCartInvoker.current;
-    if (!invoker || !cartQuery.data?.items.length) return;
-    emptyCartInvoker.current = null;
-    // Preserve focus the user moved to the notification or any other control meanwhile.
-    if (!invoker.scope.isCurrent() || invoker.element.isConnected || document.activeElement !== document.body) return;
-    const row = Array.from(document.querySelectorAll<HTMLElement>("[data-cart-saved] [data-favorite-row]"))
-      .find(candidate => candidate.dataset.editionId === invoker.editionId);
-    const target = row?.querySelector<HTMLElement>("[data-bookcard-cart]:not(:disabled), [data-bookcard-favorite]:not(:disabled)")
-      ?? document.getElementById("cart-saved-heading");
-    target?.focus({ preventScroll: true });
-  }, [cartQuery.data]);
+    const target = pendingReveal.current;
+    if (!target) return;
+    const row = document.querySelector<HTMLElement>(`[data-${target.section === "cart" ? "cart-line" : "saved-item"}][data-edition-id="${CSS.escape(target.editionId)}"]`);
+    if (!row) return;
+    pendingReveal.current = null;
+    // Travel to where the book went, gently unless motion is reduced, and keep the keyboard on it.
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    row.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+    row.querySelector<HTMLElement>("h2 a, h3 a")?.focus({ preventScroll: true });
+  }, [cartQuery.data, savedQuery.data]);
 
   const command = useMutation({
     meta: { authRequired: true },
-    mutationFn: async (next: CartCommand & {scope:SessionOperationScope}) => {
+    mutationFn: async (next: CartCommand & {scope:SessionOperationScope}): Promise<SavedMove | undefined> => {
       next.scope.assertCurrent();
       if (next.kind === "quantity") { await updateCartItemQuantity(next.line.cartItemId, next.quantity); return; }
-      if (next.kind === "save") {
-        await addCustomerFavorite(next.line.editionId);
-        next.scope.assertCurrent();
-        void queryClient.invalidateQueries({ queryKey: ["customer-favorites"] });
-        void queryClient.invalidateQueries({ queryKey: ["customer-favorite-status"] });
-      }
+      if (next.kind === "save") return saveCartItemForLater(next.line.cartItemId);
       await removeCartItem(next.line.cartItemId);
     },
     retry: false,
-    onSuccess: async (_, next) => {
+    onSuccess: async (moved, next) => {
       if (!next.scope.isCurrent()) return;
+      if (next.kind === "save" && moved) {
+        // Saved: the line now lives in Guardado para después; follow it there. No toast — the row is the answer.
+        setLineFeedback(null);
+        pendingReveal.current = { section: "saved", editionId: next.line.editionId };
+        applyMove(moved);
+        setAnnouncement(`${next.line.title} se guardó para después.`);
+        return;
+      }
       const index = cartQuery.data?.items.findIndex((item) => item.cartItemId === next.line.cartItemId) ?? 0;
       await cartQuery.refetch();
       if (!next.scope.isCurrent()) return;
@@ -112,10 +120,9 @@ function CartContent() {
         return;
       }
       setLineFeedback(null);
-      if (next.kind === "save") setSavedQuantities((current) => new Map(current).set(next.line.editionId, next.line.quantity));
       setToast({
         key: ++toastKey.current,
-        message: next.kind === "save" ? "Guardado en Favoritos" : "Quitado del carrito",
+        message: "Quitado del carrito",
         detail: next.line.title,
         departed: { editionId: next.line.editionId, title: next.line.title, quantity: next.line.quantity },
       });
@@ -154,14 +161,13 @@ function CartContent() {
     },
   });
 
-  /** Undo for "Quitar" and "Guardar para después": the same edition and quantity go back through the cart API. */
+  /** Undo for "Quitar": the same edition and quantity go back through the cart API. */
   const restore = useMutation({
     meta: { authRequired: true },
     mutationFn: (departed: Departed & {scope:SessionOperationScope}) => { departed.scope.assertCurrent(); return addEditionToCart(departed.editionId, departed.quantity); },
     retry: false,
     onSuccess: async (added, departed) => {
       if (!departed.scope.isCurrent()) return;
-      setSavedQuantities((current) => { const next = new Map(current); next.delete(departed.editionId); return next; });
       await cartQuery.refetch();
       if (!departed.scope.isCurrent()) return;
       setToast({ key: ++toastKey.current, message: "Devuelto al carrito", detail: departed.title });
@@ -175,7 +181,7 @@ function CartContent() {
       const definitive = error instanceof ApiRequestError && error.status < 500;
       setToast({
         key: ++toastKey.current,
-        message: definitive ? "Ya no se puede devolver al carrito" : "No pudimos confirmar el cambio. Consulta el carrito antes de volver a añadirlo.",
+        message: (error instanceof ApiRequestError ? availabilityConflictMessage(error.code) : null) ?? (definitive ? "Ya no se puede devolver al carrito" : "No pudimos confirmar el cambio. Consulta el carrito antes de volver a añadirlo."),
         detail: departed.title,
         ...(definitive ? {} : { departed, unknownOutcome: true }),
       });
@@ -200,18 +206,73 @@ function CartContent() {
     },
   });
 
-  /** A saved line went back to the cart from the saved list: forget its quantity and withdraw a stale undo. */
-  function restoredFromSaved(editionId: string) {
-    setSavedQuantities((current) => { const next = new Map(current); next.delete(editionId); return next; });
-    setToast(null);
-  }
+  /** "Mover al carrito": the server adds it through the cart's own checks; it leaves the list only on success. */
+  const moveToCart = useMutation({
+    meta: { authRequired: true },
+    mutationFn: (next: { item: SavedItem; scope: SessionOperationScope }) => { next.scope.assertCurrent(); return moveSavedItemToCart(next.item.savedItemId); },
+    retry: false,
+    onSuccess: (moved, { item, scope: issued }) => {
+      if (!issued.isCurrent()) return;
+      pendingReveal.current = { section: "cart", editionId: item.editionId };
+      applyMove(moved);
+      setAnnouncement(`${item.title} volvió al carrito.`);
+    },
+    onError: async (error: Error, { item, scope: issued }) => {
+      if (!issued.isCurrent()) return;
+      if (error instanceof ApiRequestError && error.status === 401) { clearSession("expired"); return; }
+      const code = error instanceof ApiRequestError ? error.code : undefined;
+      const [, refreshed] = await Promise.all([cartQuery.refetch(), savedQuery.refetch()]);
+      if (!issued.isCurrent()) return;
+      const message = (code === "P3002" ? "No hay existencias suficientes para esta cantidad. Sigue guardado." : availabilityConflictMessage(code))
+        ?? (error instanceof ApiRequestError && error.status < 500 ? `${error.title}. Sigue guardado.` : "No pudimos confirmar el cambio. Revisa el carrito y tus libros guardados antes de intentarlo otra vez.");
+      if (refreshed.data?.items.some((saved) => saved.savedItemId === item.savedItemId)) setSavedFeedback({ savedItemId: item.savedItemId, message, reason: code });
+      else setToast({ key: ++toastKey.current, message: code === "P4006" ? "Ese libro ya no estaba en tus guardados. Mostramos la lista actual." : message, detail: item.title });
+    },
+    onSettled: () => { commandLock.current = false; },
+  });
+
+  const removeSaved = useMutation({
+    meta: { authRequired: true },
+    mutationFn: (next: { item: SavedItem; scope: SessionOperationScope }) => { next.scope.assertCurrent(); return removeSavedItem(next.item.savedItemId); },
+    retry: false,
+    onSuccess: async (_, { item, scope: issued }) => {
+      if (!issued.isCurrent()) return;
+      const index = savedQuery.data?.items.findIndex((saved) => saved.savedItemId === item.savedItemId) ?? 0;
+      await savedQuery.refetch();
+      if (!issued.isCurrent()) return;
+      setAnnouncement(`${item.title} se quitó de tus guardados.`);
+      window.requestAnimationFrame(() => {
+        if (!issued.isCurrent()) return;
+        const links = document.querySelectorAll<HTMLElement>("[data-saved-item] h3 a");
+        (links[Math.min(index, links.length - 1)] ?? document.getElementById("cart-saved-heading"))?.focus();
+      });
+    },
+    onError: async (error: Error, { item, scope: issued }) => {
+      if (!issued.isCurrent()) return;
+      if (error instanceof ApiRequestError && error.status === 401) { clearSession("expired"); return; }
+      await savedQuery.refetch();
+      if (!issued.isCurrent()) return;
+      setSavedFeedback({ savedItemId: item.savedItemId, message: "No pudimos quitarlo. Inténtalo otra vez." });
+    },
+    onSettled: () => { commandLock.current = false; },
+  });
 
   function run(next: CartCommand) {
     if (commandLock.current || restore.isPending) return;
     commandLock.current = true;
     setToast(null);
     setLineFeedback(null);
+    setSavedFeedback(null);
     command.mutate({...next,scope});
+  }
+
+  function runSaved(kind: "move" | "remove", item: SavedItem) {
+    if (commandLock.current || restore.isPending) return;
+    commandLock.current = true;
+    setToast(null);
+    setLineFeedback(null);
+    setSavedFeedback(null);
+    (kind === "move" ? moveToCart : removeSaved).mutate({ item, scope });
   }
 
   /** The line's controls leave the DOM: keep keyboard users in the cart, on the line that took its place. */
@@ -228,6 +289,11 @@ function CartContent() {
   const pricing = data ? toCartPricingViewModel(data) : undefined;
   const summarySaving = pricing?.summary.savingsTotal && hasSaving(pricing.summary.savingsTotal.rawValue) ? pricing.summary.savingsTotal : null;
   const busyLineId = command.isPending ? command.variables?.line.cartItemId : undefined;
+  const savedBusy = moveToCart.isPending || removeSaved.isPending;
+  const locked = command.isPending || restore.isPending || savedBusy;
+  const savedSection = <SavedForLater query={savedQuery} locked={locked} feedback={savedFeedback}
+    busyId={moveToCart.isPending ? moveToCart.variables?.item.savedItemId : removeSaved.isPending ? removeSaved.variables?.item.savedItemId : undefined}
+    onMoveToCart={(item) => runSaved("move", item)} onRemove={(item) => runSaved("remove", item)} />;
   const blocked = Boolean(data?.items.some((line) => !resolveStockStatus(line).canAddToCart));
   // An undo for an edition that is already back in the cart (by any route) would add it a second time.
   const departedBack = Boolean(toast?.departed && data?.items.some((line) => line.editionId === toast.departed?.editionId));
@@ -247,7 +313,7 @@ function CartContent() {
             <p>Explora el catálogo para encontrar tu próxima lectura.</p>
             <ButtonLink variant="primary" to="/catalog">Ir al catálogo</ButtonLink>
           </section>}
-          <div className={cart.savedAlone}><SavedForLater savedQuantities={savedQuantities} onRestored={restoredFromSaved} onCartConfirmed={confirmSavedAddition} /></div>
+          <div className={cart.savedAlone}>{savedSection}</div>
         </>
       ) : data ? (
         <>
@@ -291,10 +357,11 @@ function CartContent() {
                 {data.items.map((line) => (
                   <li key={line.cartItemId}>
                     <CartLineItem
+                      eligibility={digitalEligibility.byEdition.get(line.editionId)}
                       line={line}
                       pricing={pricing?.lines.find((linePricing) => linePricing.cartItemId === line.cartItemId)}
                       busy={busyLineId === line.cartItemId}
-                      locked={command.isPending || restore.isPending}
+                      locked={locked}
                       feedback={lineFeedback?.cartItemId === line.cartItemId ? lineFeedback : null}
                       onQuantity={(quantity) => run({ kind: "quantity", line, quantity })}
                       onSave={() => run({ kind: "save", line })}
@@ -303,12 +370,12 @@ function CartContent() {
                   </li>
                 ))}
               </ul>
-              <SavedForLater savedQuantities={savedQuantities} onRestored={restoredFromSaved} onCartConfirmed={confirmSavedAddition} />
+              {savedSection}
             </section>
           </PurchaseLayout>
         </>
       ) : null}
-      <CartAddedNotification addition={cartNotice.addition} onDismiss={cartNotice.dismiss} fallbackFocus={() => document.getElementById("cart-saved-heading")} />
+      <p className="visually-hidden" role="status" aria-live="polite" aria-atomic="true">{announcement}</p>
       <UndoToast onDismiss={() => setToast(null)} toast={toast && {
         key: toast.key,
         message: toast.message,
@@ -329,8 +396,9 @@ function CartContent() {
 }
 
 /** One purchase unit: the book, what it costs at this quantity, its availability and its own actions. */
-function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSave, onRemove }: {
+function CartLineItem({ line, eligibility, pricing, busy, locked, feedback, onQuantity, onSave, onRemove }: {
   line: CartLine;
+  eligibility?: DigitalEligibility;
   pricing?: CartLinePricingViewModel;
   busy: boolean;
   locked: boolean;
@@ -347,7 +415,7 @@ function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSav
   const saving = pricing?.lineSavings && hasSaving(pricing.lineSavings.rawValue) ? pricing.lineSavings : null;
 
   return (
-    <article className={cart.item} data-cart-line data-unavailable={stock.canAddToCart ? undefined : ""} aria-busy={busy}>
+    <article className={cart.item} data-cart-line data-edition-id={line.editionId} data-unavailable={stock.canAddToCart ? undefined : ""} aria-busy={busy}>
       <Link className={cart.cover} to={`/catalog/editions/${line.editionId}`} tabIndex={-1} aria-hidden="true">
         <BookCover url={line.coverUrl} license={null} attribution={null} title={line.title} size="compact" />
       </Link>
@@ -369,6 +437,9 @@ function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSav
               onChange={onQuantity}
               appearance="quiet"
             />
+          ) : isSingleDigitalCopy(line) ? (
+            // A digital copy is one per account: a short label and its explanation in place of a count that cannot change.
+            <p className={cart.quantityDigital}><DigitalCopyNote /></p>
           ) : (
             // Read like the picker beside it ("Cant. 1"); assistive technology hears the full word.
             <p className={cart.quantityStatic}>
@@ -390,6 +461,7 @@ function CartLineItem({ line, pricing, busy, locked, feedback, onQuantity, onSav
         <StockStatus available={line.available} unavailabilityReason={line.unavailabilityReason} id={stockId} className={surface.status} />
       </div>}
       <div className={cart.actions}>
+        <DigitalConflictLink reason={!line.available ? line.unavailabilityReason : null} eligibility={eligibility} />
         <Button variant="text" type="button" aria-label={`Guardar ${line.title} para después`} aria-disabled={locked || undefined} onClick={() => !locked && onSave()}>
           Guardar para después
         </Button>

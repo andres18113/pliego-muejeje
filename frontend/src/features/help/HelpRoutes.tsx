@@ -4,14 +4,16 @@ import type { HelpCriteria } from "@/shared/api/help";
 import { MaterialSymbol, type MaterialSymbolName } from "@/shared/ui/MaterialSymbol";
 import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
-import { PageWayfinding } from "@/app/navigation/BackButton";
 import { useHelpArticle, useHelpArticles, useHelpCategories } from "./helpQuery";
+import { HelpBody } from "./helpBody";
+import { IdentityRequestStatus } from "./IdentityRequestStatus";
 import classes from "./help.module.css";
+import { ParentLink } from "@/shared/ui/ParentLink";
 
 const applicabilityLabels = { GENERAL: "General", PHYSICAL: "Libros físicos", EBOOK: "eBooks", AUDIOBOOK: "Audiolibros" } as const;
 
 /** A resource's symbol comes from its published topic; a topic without one of its own falls back to what the article applies to. */
-const topicSymbols: Record<string, MaterialSymbolName> = { compras: "shopping_bag", retiro: "storefront", pagos: "payments", "cancelaciones-y-reembolsos": "currency_exchange", "cuenta-y-correo": "person", "entrega-a-domicilio": "local_shipping", ebooks: "mobile", audiolibros: "headphones" };
+const topicSymbols: Record<string, MaterialSymbolName> = { compras: "shopping_bag", retiro: "storefront", pagos: "payments", "cancelaciones-y-reembolsos": "currency_exchange", "cuenta-y-correo": "person", "cedula-o-ruc": "badge", "entrega-a-domicilio": "local_shipping", ebooks: "mobile", audiolibros: "headphones" };
 const applicabilitySymbols: Record<keyof typeof applicabilityLabels, MaterialSymbolName> = { GENERAL: "help", PHYSICAL: "local_shipping", EBOOK: "mobile", AUDIOBOOK: "headphones" };
 const resourceSymbol = (article: { categorySlug: string; applicability: keyof typeof applicabilityLabels }) => topicSymbols[article.categorySlug] ?? applicabilitySymbols[article.applicability];
 
@@ -36,7 +38,6 @@ export function HelpPage() {
   useEffect(() => { document.title = "Ayuda · PLIEGO"; }, []);
   return <>
     <main className={`page-frame ${classes.page} ${classes.landing}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
-      <PageWayfinding className={classes.landingWayfinding} />
       <header className={classes.masthead}>
         <h1 className={classes.title}>Estamos aquí para ayudarte.</h1>
       </header>
@@ -95,13 +96,13 @@ export function HelpArticlePage() {
   const state = query.viewState;
   const article = state.status === "ready" ? state.data : null;
   const topic = article ? categories.data?.find(category => category.slug === article.categorySlug) : undefined;
-  // Two published results suffice to find a resource besides this article.
-  const related = useHelpArticles({ query: "", category: article?.categorySlug ?? "", applicability: "", page: 0, pageSize: 2 }, Boolean(article));
-  const hasRelatedResource = !related.isError && related.data?.items.some(resource => resource.slug !== article?.slug);
+  // The other published topics, so a reader can go on to the next question without returning to the landing.
+  const others = useHelpArticles({ query: "", category: "", applicability: "", page: 0, pageSize: 20 }, Boolean(article));
+  const otherResources = others.isError ? [] : others.data?.items.filter(resource => resource.slug !== article?.slug) ?? [];
   useEffect(() => { document.title = article ? `${article.title} · Ayuda · PLIEGO` : "Ayuda · PLIEGO"; }, [article]);
   return <>
     <main className={`page-frame ${classes.page} ${classes.reading}`} id="contenido-principal" tabIndex={-1} data-storefront-surface>
-      <Link to="/ayuda" className={classes.back}><MaterialSymbol name="arrow_back" /><span>Volver a Ayuda</span></Link>
+      <ParentLink to="/ayuda">Volver a Ayuda</ParentLink>
       {state.status === "loading" && <>
         <p className="visually-hidden" role="status">Cargando artículo…</p>
         <div className={`${classes.article} ${classes.pending}`} aria-hidden="true"><span /><span /><span /><span /></div>
@@ -115,22 +116,26 @@ export function HelpArticlePage() {
         </section>)}
       {article && <>
         <article className={classes.article}>
+          {/* The topic only when it says something the title does not; what the article applies to stays as a quiet line. */}
           <p className={classes.context}>
-            {topic && <Link to={`/ayuda?category=${encodeURIComponent(topic.slug)}`}>{topic.title}</Link>}
+            {topic && topic.title !== article.title && <Link to={`/ayuda?category=${encodeURIComponent(topic.slug)}`}>{topic.title}</Link>}
             {article.applicability !== "GENERAL" && applicabilityLabels[article.applicability] !== topic?.title && <span>{applicabilityLabels[article.applicability]}</span>}
           </p>
           <h1 className={classes.articleTitle}>{article.title}</h1>
           {article.summary && <p className={classes.lead}>{article.summary}</p>}
-          {/* Plain text only: paragraphs are split on blank lines and markup-like strings stay text. */}
-          <div className={classes.body}>{article.body.split(/\n\s*\n/).map((paragraph, index) => <p key={index}>{paragraph}</p>)}</div>
+          {/* The one personal element in Ayuda: the reader's own request, only where the article explains it. */}
+          {article.slug === "cedula-o-ruc" && <IdentityRequestStatus />}
+          {/* Plain text with a small safe convention (sections, steps, lists, PLIEGO links); markup-like strings stay text. */}
+          <HelpBody body={article.body} />
         </article>
-        <aside className={classes.onward} aria-label="Más ayuda">
-          <h2>¿Necesitas algo más?</h2>
-          <div className={classes.onwardLinks}>
-            {topic && hasRelatedResource && <Link to={`/ayuda?category=${encodeURIComponent(topic.slug)}`}>Más sobre {topic.title}</Link>}
-            <Link to="/ayuda">Ver todos los recursos de Ayuda</Link>
-          </div>
-        </aside>
+        {otherResources.length > 0 && <nav className={classes.onward} aria-labelledby="help-onward-heading">
+          <h2 id="help-onward-heading">Otros temas de Ayuda</h2>
+          <ul className={classes.onwardLinks}>
+            {otherResources.map(resource => <li key={resource.slug}>
+              <Link to={`/ayuda/${encodeURIComponent(resource.slug)}`}><MaterialSymbol name={resourceSymbol(resource)} aria-hidden="true" size={20} />{resource.title}</Link>
+            </li>)}
+          </ul>
+        </nav>}
       </>}
     </main>
     <SiteFooter />

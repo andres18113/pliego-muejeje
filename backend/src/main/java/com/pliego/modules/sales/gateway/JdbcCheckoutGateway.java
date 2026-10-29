@@ -20,7 +20,7 @@ import java.util.UUID;
 public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutGateway {
 
     private static final String CHECKOUT = "CALL pliego.sp_checkout_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String CHECKOUT_BILLED = "CALL pliego.sp_checkout_billed_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String CHECKOUT_BILLED = "CALL pliego.sp_checkout_billed_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final JdbcTemplate jdbcTemplate;
     private final tools.jackson.databind.ObjectMapper objectMapper;
 
@@ -66,17 +66,23 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                 statement.setString(9, quoteFingerprint);
                 int outputStart = 10;
                 if (billing != null) {
-                    statement.setString(10, billing.identityType());
-                    statement.setString(11, billing.identityNumber());
-                    statement.setString(12, billing.buyerName());
-                    statement.setString(13, billing.address().line1());
-                    statement.setString(14, billing.address().line2());
-                    statement.setString(15, billing.address().city());
-                    statement.setString(16, billing.address().province());
-                    statement.setString(17, billing.address().countryCode());
-                    statement.setString(18, billing.address().postalCode());
-                    outputStart = 19;
-                    statement.setNull(24, Types.BIGINT);
+                    statement.setString(10, billing.recipientKind());
+                    statement.setString(11, billing.identityType());
+                    statement.setString(12, billing.identityNumber());
+                    statement.setString(13, billing.buyerName());
+                    statement.setString(14, billing.address().line1());
+                    statement.setString(15, billing.address().line2());
+                    if (billing.address().provinceId() == null) {
+                        statement.setString(16, billing.address().city());
+                        statement.setString(17, billing.address().province());
+                    } else {
+                        statement.setLong(16, billing.address().provinceId());
+                        statement.setLong(17, billing.address().cityId());
+                    }
+                    statement.setString(18, billing.address().countryCode());
+                    statement.setString(19, billing.address().postalCode());
+                    outputStart = 20;
+                    statement.setNull(25, Types.BIGINT);
                 }
                 statement.setNull(outputStart, Types.BIGINT);
                 statement.setNull(outputStart + 1, Types.VARCHAR);

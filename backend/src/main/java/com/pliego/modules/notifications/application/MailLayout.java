@@ -38,6 +38,14 @@ final class MailLayout {
  MailLayout lead(String value) { return paragraph(value,"17px",INK); }
  MailLayout paragraph(String value) { return paragraph(value,"15px",INK); }
  MailLayout muted(String value) { return paragraph(value,"14px",MUTED); }
+ /** A short value (such as an invoice number) that email clients must keep together when wrapping. */
+ MailLayout paragraphWithNoWrap(String before,String value,String after) {
+  html.append("<p style=\"margin:0 0 12px;").append(FONT).append("font-size:15px;line-height:1.55;color:").append(INK).append("\">")
+   .append(escape(before)).append("<span style=\"white-space:nowrap;word-break:normal;overflow-wrap:normal\">")
+   .append(escape(value)).append("</span>").append(escape(after)).append("</p>");
+  text.append(before).append(value.replace("-", "-\u2060")).append(after).append("\n");
+  return this;
+ }
  private MailLayout paragraph(String value,String size,String color) {
   html.append("<p style=\"margin:0 0 12px;").append(FONT).append("font-size:").append(size).append(";line-height:1.55;color:").append(color).append("\">").append(escape(value)).append("</p>");
   text.append(value).append("\n");

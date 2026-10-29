@@ -5,6 +5,8 @@ import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { billingIdentityQueryKey, changeEmail, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import type { BillingIdentityCorrectionRequest, StoredBillingIdentity } from "@/shared/api/billing";
+import { orderShortDateLabel } from "@/features/purchase/purchaseText";
 import { personNameSchema, personNameError, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
 import { FieldMessage } from "@/shared/ui/Field";
@@ -12,10 +14,12 @@ import { ReadFailure } from "@/features/purchase/CartPage";
 import { useSessionOperationScope, type SessionOperationScope } from "@/app/sessionOperation";
 import { CustomerOnly, PurchasePage } from "@/features/purchase/PurchaseChrome";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
+import { InfoToggletip } from "@/shared/ui/InfoToggletip";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { CedulaEditor } from "./CedulaEditor";
+import { identityCorrectionPath, type IdentityCorrectionState } from "./IdentityCorrectionPage";
 import { EditorFrame, type Result } from "./EditorFrame";
 import { PasswordRecoveryEditor, usePasswordCooldown } from "./PasswordRecovery";
 import { AccountShell } from "./AccountShell";
@@ -60,20 +64,51 @@ function AccountContent() {
 }
 
 type IdentityState = {
-  data: import("@/shared/api/billing").BillingIdentity | null | undefined;
+  data: StoredBillingIdentity | null | undefined;
   pending: boolean;
   failed: boolean;
-  refetch: () => Promise<{ data?: import("@/shared/api/billing").BillingIdentity | null; isError: boolean }>;
+  refetch: () => Promise<{ data?: StoredBillingIdentity | null; isError: boolean }>;
 };
+
+/**
+ * A correction request under the number, in one quiet line: pending is the "En revisión" chip with an `info`
+ * toggletip holding what was asked and when we answer; a recent decision says what happened. Dates, the reason and withdrawing live on the correction page. A withdrawn request needs no line.
+ */
+function CorrectionStatus({ request }: { request: BillingIdentityCorrectionRequest | null }) {
+  if (!request || request.status === "WITHDRAWN") return null;
+  if (request.status === "PENDING") return <span className={classes.valueDetail}>
+    <span className={classes.reviewStatus}>
+      <span className={classes.missingChip} data-tone="review">En revisión</span>
+      <InfoToggletip label="Detalles de la corrección en revisión" panelClassName={classes.requestPanel}>
+        <span className={classes.requestLabel}>{request.proposedType === "EC_RUC" ? "RUC solicitado" : "Cédula solicitada"}</span>
+        <span className={classes.requestNumber}>{request.proposedNumber}</span>
+        <span>Te responderemos antes del {orderShortDateLabel(request.dueAt)}. Mientras tanto, tus compras usan tu identificación actual.</span>
+      </InfoToggletip>
+    </span>
+  </span>;
+  if (request.status === "APPROVED") return <span className={classes.valueDetail}>
+    <MaterialSymbol name="check_circle" aria-hidden="true" size={16} />
+    <span>Corregida según tu solicitud del {orderShortDateLabel(request.createdAt)}.</span>
+  </span>;
+  return <span className={classes.valueDetail}>
+    <MaterialSymbol name="info" aria-hidden="true" size={16} />
+    <span>No aplicamos tu corrección a <span className={classes.detailNumber}>{request.proposedNumber}</span>.</span>
+  </span>;
+}
 
 /**
  * Identity first and read-only: the reader's avatar and name, then each piece of data as plain text.
  * One field opens for editing at a time, in place; saving or cancelling returns focus to its action.
  */
 function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordReadCurrent }: { profile: CustomerProfile; readCurrent: boolean; refetch: Refetch; onExpired: () => void; identity: IdentityState; passwordReadCurrent: boolean }) {
-  const [editing, setEditing] = useState<FieldKey | null>(() => restoredProfileField(profile.customerId));
-  const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const editButtons = useRef<Partial<Record<FieldKey, HTMLButtonElement | null>>>({});
+  const location = useLocation();
+  const navigate = useNavigate();
+  // A direct correction returns here from its page: its outcome reads on the cédula row, once (navigation itself
+  // places focus on the page heading, as on every route).
+  const returned = (location.state as IdentityCorrectionState | null)?.identityFeedback;
+  const [editing, setEditing] = useState<FieldKey | null>(() => returned ? null : restoredProfileField(profile.customerId));
+  const [feedback, setFeedback] = useState<Feedback | null>(() => returned ? { field: "cedula", message: returned, error: false } : null);
+  const editButtons = useRef<Partial<Record<FieldKey, HTMLElement | null>>>({});
   const password = usePasswordCooldown();
   const fullName = `${profile.firstNames} ${profile.lastNames}`.trim();
   const phone = profile.phone ? parsePhoneNumberFromString(profile.phone)?.formatInternational() ?? profile.phone : null;
@@ -83,19 +118,46 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
     setFeedback(null);
     setEditing(field);
   }
+  /**
+   * The action focus returns to, kept until the person acts again: an action replaced by a later render (Agregar
+   * becomes the Corregir link once the stored cédula arrives) still receives focus, which never leaves for the page.
+   */
+  const refocus = useRef<FieldKey | null>(null);
   function close(field: FieldKey, result?: Result) {
     setEditing(null);
     if (result) setFeedback({ field, ...result });
+    refocus.current = field;
     requestAnimationFrame(() => editButtons.current[field]?.focus({ preventScroll: true }));
   }
   const editorProps = (field: FieldKey) => ({ profile, refetch, onExpired, onDone: (result?: Result) => close(field, result) });
+  useEffect(() => {
+    const field = refocus.current, active = document.activeElement;
+    if (field && editing === null && (!active || active === document.body)) editButtons.current[field]?.focus({ preventScroll: true });
+  });
+  useEffect(() => {
+    const settle = () => { refocus.current = null; };
+    document.addEventListener("pointerdown", settle, true);
+    document.addEventListener("keydown", settle, true);
+    return () => { document.removeEventListener("pointerdown", settle, true); document.removeEventListener("keydown", settle, true); };
+  }, []);
+  useEffect(() => {
+    // Read once on arrival; a reload starts clean.
+    if (returned) navigate(".", { replace: true, state: null });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const cedula: Row = identity.pending
     ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "Consultando…", disabled: true, editor: null }
     : identity.failed
       ? { field: "cedula", label: "Cédula o RUC", value: null, empty: "No pudimos consultarla.", action: "Volver a consultar", icon: "refresh", onAction: () => void identity.refetch(), editor: null }
-      : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: identity.data ? "Corregir" : "Agregar",
-          editor: <CedulaEditor customerId={profile.customerId} identity={identity.data ?? null} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
+      // The add editor stays mounted until it reports, even once the refetch returns the stored number.
+      : identity.data && editing !== "cedula"
+        // A stored number is corrected on its own page, never in this sheet: the row only says where it stands and
+        // leads there — to correct it, or to the request staff are reviewing.
+        ? { field: "cedula", label: "Cédula o RUC", value: identity.data.number, detail: <CorrectionStatus request={identity.data.correctionRequest} />, to: identityCorrectionPath, editor: null,
+            ...identity.data.correctionRequest?.status === "PENDING" ? { action: "Ver solicitud", actionName: "de corrección de la cédula o RUC" } : { action: "Corregir" } }
+        : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: "Agregar",
+            editor: <CedulaEditor customerId={profile.customerId} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
   const rows: Row[] = [
     { field: "firstNames", label: "Nombres", value: profile.firstNames, editor: <NameEditor field="firstNames" label="nombres" {...editorProps("firstNames")} /> },
     { field: "lastNames", label: "Apellidos", value: profile.lastNames, editor: <NameEditor field="lastNames" label="apellidos" {...editorProps("lastNames")} /> },
@@ -136,15 +198,21 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
                 // Not registered yet: a chip names the state; the hint says whether and when it is needed.
                 ? <span className={classes.missing}><span className={classes.missingChip} data-tone={row.missing.tone}>Sin registrar</span><span className="visually-hidden">. </span><span className={classes.missingHint}>{row.missing.hint}</span></span>
                 : row.empty)}
+              {row.value && row.detail}
             </p>
-            <Button
+            {row.to && editing === null
+              // Leaves the sheet for another page: the text-link grammar, its chevron after the words.
+              ? <Link to={row.to} ref={(element: HTMLAnchorElement | null) => { editButtons.current[row.field] = element; }} className={classes.edit}>
+                {row.action}{" "}<span className="visually-hidden">{row.actionName ?? row.label[0].toLowerCase() + row.label.slice(1)}</span><MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />
+              </Link>
+              : <Button
               ref={(element: HTMLButtonElement | null) => { editButtons.current[row.field] = element; }}
               variant="text" type="button" className={classes.edit}
               disabled={row.disabled || (!row.onAction && !readCurrent) || (editing !== null && !isEditing)}
               // Waiting keeps the action focusable, so focus can return to it after a request.
               aria-disabled={row.waiting || undefined}
               onClick={() => { if (row.waiting) return; if (row.onAction) row.onAction(); else open(row.field); }}
-            ><MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.label[0].toLowerCase() + row.label.slice(1)}</span></Button>
+            >{!row.to && <MaterialSymbol name={row.icon ?? (row.value ? "edit" : "add")} aria-hidden="true" size={18} />}{row.action ?? (row.value ? "Editar" : "Agregar")}{" "}<span className="visually-hidden">{row.actionName ?? row.label[0].toLowerCase() + row.label.slice(1)}</span>{row.to && <MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />}</Button>}
           </>}
           {rowFeedback && !isEditing && <p className={`${classes.feedback} ${rowFeedback.error ? classes.feedbackError : ""}`} role={rowFeedback.error ? "alert" : "status"}>
             <MaterialSymbol name={rowFeedback.error ? "info" : "check_circle"} aria-hidden="true" size={16} />{rowFeedback.message}
@@ -169,6 +237,12 @@ type Row = {
   masked?: boolean;
   /** `lock` marks the security action of the password row. */
   action?: string; icon?: "add" | "edit" | "lock" | "refresh"; disabled?: boolean; waiting?: boolean; onAction?: () => void;
+  /** The action leads to another page (the cédula's correction): a link with a trailing chevron, not an edit in place. */
+  to?: string;
+  /** What the action acts on when it is not the row itself, for its accessible name ("Ver solicitud de corrección…"). */
+  actionName?: string;
+  /** A state line under the value, such as a correction request in review. */
+  detail?: ReactNode;
 };
 
 interface EditorProps {

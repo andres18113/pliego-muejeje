@@ -14,7 +14,7 @@ public final class PostPurchaseResponses {
     public record Invoice(String invoiceId, String documentNumber, String state, String buyerName,
             String identityType, String identityNumber, String buyerEmail, String currency,
             String subtotal, String taxTotal, String total, String issuedAt,
-            PostPurchaseModels.BillingAddress billingAddress, List<InvoiceItem> items,
+            PostPurchaseModels.BillingAddressSnapshot billingAddress, List<InvoiceItem> items,
             PostPurchaseModels.ElectronicIssuance electronicIssuance, boolean pdfAvailable, boolean xmlAvailable,
             String taxRate,String shippingAmount) { }
     @Schema(name="OrderInvoiceItem")

@@ -22,7 +22,7 @@ export function PurchaseLayout({ children, summary }: { children: ReactNode; sum
 }
 
 /** `was`: the line's amount before an offer (the server's original subtotal), shown struck under the amount. */
-export interface SummaryLine { key: string; title: string; meta: string; amount: string; was?: string; extra?: ReactNode }
+export interface SummaryLine { key: string; title: string; meta: ReactNode; amount: string; was?: string; extra?: ReactNode }
 
 /** The stable sheet of the flow: what is being bought, the total, and the stage's final action together. */
 export function PurchaseSummary({ headingId, title, lines, totals, children }: {

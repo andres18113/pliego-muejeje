@@ -31,6 +31,7 @@ class OpenApiCoverageTest {
             com.pliego.modules.sales.api.AdminPickupController.class,
             com.pliego.modules.customer.api.CustomerController.class,
             com.pliego.modules.customer.api.BillingIdentityController.class,
+            com.pliego.modules.customer.api.AdminBillingIdentityCorrectionController.class,
             com.pliego.modules.billing.api.BillingController.class,
             com.pliego.modules.customer.api.AdminCustomerController.class,
             com.pliego.modules.catalog.api.CatalogController.class, EditionOfferController.class,
@@ -42,7 +43,9 @@ class OpenApiCoverageTest {
             com.pliego.modules.sales.api.AdminOrderController.class,
             com.pliego.modules.storefront.api.StorefrontController.class,
             com.pliego.modules.help.api.HelpController.class,
-            com.pliego.modules.library.api.LibraryController.class);
+            com.pliego.modules.library.api.LibraryController.class,
+            com.pliego.modules.library.api.DigitalEligibilityController.class,
+            com.pliego.modules.geo.api.GeoController.class);
 
     private static boolean isEndpoint(Method method) {
         return method.isAnnotationPresent(GetMapping.class)
@@ -65,8 +68,8 @@ class OpenApiCoverageTest {
                 }
             }
         }
-        assertThat(endpoints).as("REST total including public catalog, customer favorites, post-purchase routes and email change")
-                .isEqualTo(88);
+        assertThat(endpoints).as("REST total including catalog, saved-for-later, billing-identity corrections, invoice access and post-purchase routes")
+                .isEqualTo(100);
     }
 
     @Test
@@ -83,7 +86,7 @@ class OpenApiCoverageTest {
         for (Class<?> controller : CONTROLLERS) {
             boolean secured = controller.isAnnotationPresent(SecurityRequirement.class);
             String name = controller.getSimpleName();
-            if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("PickupLocationController")
+            if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("PickupLocationController") || name.equals("GeoController")
                     || name.equals("StorefrontController") || name.equals("HelpController")) {
                 assertThat(secured).as("%s must stay public", name).isFalse();
             } else {

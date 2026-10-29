@@ -12,12 +12,15 @@ import tools.jackson.databind.ObjectMapper;
 public class InvoiceArtifactWorker {
     private static final Logger LOG = LoggerFactory.getLogger(InvoiceArtifactWorker.class);
     private final InvoiceArtifactService service;
+    private final InvoiceDocumentStore documents;
     private final InvoiceRenderer renderer;
     private final ObjectMapper json;
     private final BillingProperties properties;
 
-    public InvoiceArtifactWorker(InvoiceArtifactService service, InvoiceRenderer renderer, ObjectMapper json,
-            BillingProperties properties) { this.service = service; this.renderer = renderer; this.json = json; this.properties = properties; }
+    public InvoiceArtifactWorker(InvoiceArtifactService service, InvoiceDocumentStore documents, InvoiceRenderer renderer,
+            ObjectMapper json, BillingProperties properties) {
+        this.service = service; this.documents = documents; this.renderer = renderer; this.json = json; this.properties = properties;
+    }
 
     @Scheduled(fixedDelayString = "${pliego.billing.poll-interval:PT5S}", initialDelayString = "${pliego.billing.poll-interval:PT5S}")
     public void process() {
@@ -34,8 +37,19 @@ public class InvoiceArtifactWorker {
                 LOG.warn("invoice_artifact id={} type={} code=RENDER_FAILED", job.invoiceId(), job.type());
                 continue;
             }
+            InvoiceStoredArtifact stored;
+            try { stored = documents.prepare(job, bytes); }
+            catch (InvoiceDocumentUploadException e) {
+                try { service.fail(job); }
+                catch (RuntimeException failure) {
+                    LOG.warn("invoice_artifact id={} type={} code=UPLOAD_FAILURE_RECORDING_FAILED", job.invoiceId(), job.type());
+                    return;
+                }
+                LOG.warn("invoice_artifact id={} type={} code=UPLOAD_FAILED", job.invoiceId(), job.type());
+                continue;
+            }
             try {
-                boolean applied = service.complete(job, bytes);
+                boolean applied = service.complete(job, stored);
                 LOG.info("invoice_artifact id={} type={} state={}", job.invoiceId(), job.type(), applied ? "READY" : "STALE_COMPLETION");
             } catch (RuntimeException e) {
                 // Commit may be uncertain: do not fail/release the lease or render again here.

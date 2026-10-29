@@ -1,4 +1,5 @@
 import { fillCheckoutBilling } from "./billing-fixtures";
+import { choosePlace } from "./geo-fixtures";
 import { expect, test } from "@playwright/test";
 import { verifyRegisteredEmail } from "./shared/verified-registration";
 
@@ -38,14 +39,18 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await page.getByLabel("Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await page.getByRole("button", { name: "Agregar al carrito" }).click();
-  await page.getByRole("link", { name: "Ver el carrito" }).click();
+  // A confirmed add answers with the cart drawer.
+  await page.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true }).click();
+  // Arrive at the cart page and let the closing drawer leave, so its copy of the line is gone.
+  await expect(page).toHaveURL(/\/cart$/);
+  await expect(page.getByRole("dialog", { name: "Tu carrito" })).toHaveCount(0);
   await expect(page.getByRole("link", { name: edition.title })).toBeVisible();
 
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await page.getByRole("button", { name: "Añadir dirección", exact: true }).click();
   await page.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
-  await page.getByLabel("Ciudad", { exact: true }).fill("Quito");
-  await page.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+  // Province, then city, from the INEC catalog the live API serves (ADR 0044).
+  await choosePlace(page, page.getByRole("dialog", { name: "Nueva dirección" }), "Pichincha", "Quito");
   await page.getByLabel("Teléfono de contacto").fill("991234567");
   await page.getByRole("button", { name: "Guardar dirección" }).click();
   await expect(page.locator('[data-purchase="selected-address"]')).toContainText("Av. Amazonas 100");
@@ -105,12 +110,16 @@ test("transfer checkout reads configured bank data and confirms the approved pay
   await page.getByLabel("Contraseña", { exact: true }).fill(password);
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await page.getByRole("button", { name: "Agregar al carrito" }).click();
-  await page.getByRole("link", { name: "Ver el carrito" }).click();
+  // A confirmed add answers with the cart drawer.
+  await page.getByRole("dialog", { name: "Tu carrito" }).getByRole("link", { name: "Ver carrito", exact: true }).click();
+  // Arrive at the cart page and let the closing drawer leave, so its copy of the line is gone.
+  await expect(page).toHaveURL(/\/cart$/);
+  await expect(page.getByRole("dialog", { name: "Tu carrito" })).toHaveCount(0);
   await page.getByRole("link", { name: "Continuar con la compra" }).click();
   await page.getByRole("button", { name: "Añadir dirección", exact: true }).click();
   await page.getByLabel("Dirección", { exact: true }).fill("Calle Lectura 12");
-  await page.getByLabel("Ciudad", { exact: true }).fill("Quito");
-  await page.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+  // Province, then city, from the INEC catalog the live API serves (ADR 0044).
+  await choosePlace(page, page.getByRole("dialog", { name: "Nueva dirección" }), "Pichincha", "Quito");
   await page.getByLabel("Teléfono de contacto").fill("991234567");
   await page.getByRole("button", { name: "Guardar dirección" }).click();
   await page.locator('[data-purchase="payment-method"]').filter({ hasText: "Transferencia" }).click();

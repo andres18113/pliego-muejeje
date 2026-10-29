@@ -2,11 +2,6 @@
    the fulfillment panel (state, what happens next, progress, destination, purchased books) stands
    beside a compact payment card. Both are sheets with a hairline; the state heading carries the
    tone — ultramar while the order is in motion, ink once it arrived, muted when it is closed. */
-.back { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; color: var(--acc-ink); font-weight: 600; text-decoration: none; }
-.back :global(.material-symbol) { text-decoration: none; }
-.back > span:last-child { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
-.back:hover { color: var(--acc-blue); }
-.back:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 6px; }
 .missing h2 { margin: 0 0 8px; font: 650 1.75rem/1.1 var(--acc-display); letter-spacing: -.04em; }
 
 .order {
@@ -28,6 +23,20 @@
 .main, .panel { min-width: 0; border: 1px solid var(--acc-line); border-radius: 24px; background: var(--acc-sheet); }
 .main { display: grid; gap: 18px; padding: clamp(20px, 2.6vw, 28px); }
 .aside { display: grid; gap: 16px; min-width: 0; }
+/* The left column: the order's story (printed books' shipping or pickup) and, in a mixed order, its digital access. */
+.column { display: grid; gap: 20px; align-content: start; min-width: 0; }
+/* Digital titles are not shipped: their own sheet, the main panel's surface, each line stating its own access. */
+.digital { display: grid; gap: 14px; min-width: 0; padding: clamp(20px, 2.6vw, 28px); border: 1px solid var(--acc-line); border-radius: 24px; background: var(--acc-sheet); }
+.digitalHead { display: grid; gap: 4px; }
+.digitalHead h2 { margin: 0; font: 650 1.375rem/1.1 var(--acc-display); letter-spacing: -.035em; }
+.bookCopy .access { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--acc-ink); font-size: .9375rem; }
+.bookCopy .access[data-state="AVAILABLE"] { color: var(--od-savings); font-weight: 600; }
+.bookCopy .access[data-state="REVOKED"], .bookCopy .access[data-state="UNAVAILABLE"] { color: var(--acc-muted); }
+.accessLink { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.accessLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+/* The payment card closes with its documents: credit notes as plain lines, then the one invoice action. */
+.creditNote { margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; overflow-wrap: anywhere; }
+.invoice { padding-top: 14px; border-top: 1px solid var(--acc-line); }
 
 /* State */
 .status { display: grid; gap: 6px; min-width: 0; }
@@ -125,15 +134,6 @@
 .grandTotal dt, .grandTotal dd { font-weight: 700; }
 .refund dt, .refund dd { color: var(--acc-blue); font-weight: 600; }
 
-.document { display: grid; gap: 10px; min-width: 0; }
-.document + .document { padding-top: 14px; border-top: 1px solid var(--acc-line); }
-.document h3 { margin: 0; font-size: 1rem; font-weight: 650; overflow-wrap: anywhere; }
-.document dl { display: grid; gap: 6px; margin: 0; }
-.document dl div { display: grid; gap: 0; }
-.document dt { color: var(--acc-muted); font-size: .8125rem; }
-.document dd { display: grid; gap: 1px; margin: 0; font-size: .9375rem; overflow-wrap: anywhere; }
-.document dd span { color: var(--acc-muted); font-size: .875rem; }
-.snapshotNote { margin: 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.45; }
 
 @media (max-width: 899px) {
   .layout { grid-template-columns: minmax(0, 1fr); }

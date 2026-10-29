@@ -1,6 +1,7 @@
 import type { Page } from "@playwright/test";
+import { choosePlace } from "./geo-fixtures";
 /** Synthetic fiscal data for existing purchase/concurrency scenarios, independent of delivery fixtures. */
-export const billingFixturePayload = {billingIdentity:{type:"EC_CEDULA",number:"0123456782"},buyerName:"Compradora Prueba",billingAddress:{line1:"Calle Fiscal de prueba",line2:"",city:"Quito",province:"Pichincha",countryCode:"EC",postalCode:""}};
+export const billingFixturePayload = {billingRecipient:"ACCOUNT",billingIdentity:{type:"EC_CEDULA",number:"0123456782"},buyerName:"Compradora Prueba",billingAddress:{line1:"Calle Fiscal de prueba",line2:"",provinceId:"17",cityId:"893",countryCode:"EC",postalCode:""}};
 
 /**
  * Completes the invoice as a customer would in the redesigned checkout: the details open to set the name, the
@@ -19,10 +20,10 @@ export async function fillCheckoutBilling(page: Page) {
   if (await name.count()) await name.fill("Compradora Prueba");
   const cedula = billing.getByLabel("Cédula o RUC", { exact: true });
   if (await cedula.count() && await cedula.isEditable()) await cedula.fill("0123456782");
-  for (const [label, value] of [["Dirección", "Calle Fiscal de prueba"], ["Ciudad", "Quito"], ["Provincia", "Pichincha"]] as const) {
-    const field = billing.getByLabel(label, { exact: true });
-    if (await field.count()) await field.fill(value);
-  }
+  const street = billing.getByLabel("Dirección", { exact: true });
+  if (await street.count()) await street.fill("Calle Fiscal de prueba");
+  // The invoice's own address takes province and city from the catalog pickers (ADR 0044).
+  if (await billing.getByRole("combobox", { name: "Provincia", exact: true }).count()) await choosePlace(page, billing);
   const use = billing.getByRole("button", { name: "Usar estos datos" });
   if (await use.count() && await use.isEnabled()) await use.click();
 }

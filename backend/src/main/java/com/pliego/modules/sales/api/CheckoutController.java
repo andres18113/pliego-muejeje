@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -35,6 +37,7 @@ import jakarta.validation.Valid;
 @Tag(name = "Checkout", description = "Finaliza el carrito mediante un pago académico simulado.")
 @SecurityRequirement(name = "bearerJwt")
 public class CheckoutController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CheckoutController.class);
 
     private final CheckoutService service;
 
@@ -50,16 +53,15 @@ public class CheckoutController {
             @RequestHeader("Idempotency-Key") UUID key,
             @Valid @RequestBody CheckoutRequest request) {
         validateCard(request);
-        // Every purchase is billed: the cédula, buyer name and billing address are required (ADR 0040).
+        // Every purchase is named; ACCOUNT preserves profile ownership while OTHER snapshots a third party (ADR-0043).
         CheckoutResult result = service.checkoutBilled(Long.parseLong(jwt.getSubject()), key,
                 request.addressId() == null ? null : Long.valueOf(request.addressId()), request.paymentMethod(),
                 request.simulationOutcome(), request.expectedCartId() == null ? null : Long.valueOf(request.expectedCartId()),
                 request.fulfillmentMethod(), request.pickupLocationId() == null ? null : Long.valueOf(request.pickupLocationId()),
                 request.expectedQuoteFingerprint(), new com.pliego.modules.sales.application.PostPurchaseModels.CheckoutBilling(
-                    request.billingIdentity().type(), request.billingIdentity().number(), request.buyerName(),
-                    new com.pliego.modules.sales.application.PostPurchaseModels.BillingAddress(request.billingAddress().line1(),
-                        request.billingAddress().line2(), request.billingAddress().city(), request.billingAddress().province(),
-                        request.billingAddress().countryCode(), request.billingAddress().postalCode())));
+                    request.billingRecipient(), request.billingIdentity().type(), request.billingIdentity().number(), request.buyerName(),
+                    billingAddress(request.billingAddress())));
+        if (request.billingAddress().usesLegacyNames()) LOGGER.info("geo_legacy_payload operation=checkout-billing");
         URI location = URI.create("/api/v1/orders/" + result.orderId());
         return ResponseEntity.created(location).body(toResponse(result));
     }
@@ -82,6 +84,17 @@ public class CheckoutController {
     }
 
     private static String money(java.math.BigDecimal value) {return value == null ? null : value.setScale(2,RoundingMode.UNNECESSARY).toPlainString();}
+
+    private static com.pliego.modules.sales.application.PostPurchaseModels.BillingAddressInput billingAddress(
+            PostPurchaseRequests.BillingAddress address) {
+        if (address.provinceId() != null) {
+            return new com.pliego.modules.sales.application.PostPurchaseModels.BillingAddressInput(address.line1(),
+                    address.line2(),Long.parseLong(address.provinceId()),Long.parseLong(address.cityId()),
+                    address.countryCode(),address.postalCode());
+        }
+        return new com.pliego.modules.sales.application.PostPurchaseModels.BillingAddressInput(address.line1(),
+                address.line2(),null,null,address.city(),address.province(),address.countryCode(),address.postalCode());
+    }
 
     private static void validateCard(CheckoutRequest request) {
         if ("CARD".equals(request.paymentMethod())) {

@@ -6,7 +6,10 @@ Java 25 / Spring Boot backend for the approved PLIEGO REST and PostgreSQL Databa
 
 V071–V073 add private profile identification, billed checkout and asynchronous
 PDF/XML artifacts. V074 (ADR 0040) makes the identification required to buy: every
-checkout submits `billingIdentity`, `buyerName` and an independent `billingAddress`, and
+checkout submits `billingIdentity`, `buyerName` and an independent `billingAddress` with
+`provinceId`/`cityId` from the public geographic catalog. During the documented SPA
+rollout window, the complete legacy `city`/`province` pair resolves strictly through
+the same catalog; it is never persisted as free text. The billing address and
 the number must match the customer's own (the first billed purchase registers it). V075
 (ADR 0041) accepts a cédula or a RUC with the full Ecuadorian algorithm (province, third
 digit, modulo 10/11, establishment). The identification is never removed or freely

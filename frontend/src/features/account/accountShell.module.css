@@ -13,6 +13,10 @@
   --acc-mist: color-mix(in srgb, var(--store-lavender, #e4def4) 56%, var(--store-paper, #f6f5f0));
   --acc-line: color-mix(in srgb, var(--store-lavender, #e4def4) 70%, var(--store-ink, #252740) 12%);
   --acc-sheet: #fbfaf7;
+  /* The Account card: one white object with a hairline (Mis pedidos, Favoritos, Direcciones, Mi perfil). */
+  --acc-card: #fff;
+  --acc-card-edge: color-mix(in srgb, var(--acc-ink) 10%, transparent);
+  --acc-card-radius: 20px;
   /* Interaction states: PLIEGO's shared faint ultramar, never the decorative mist or lavender. */
   --acc-hover: var(--store-hover, #e8e8eb);
   --acc-press: var(--store-press, #dcdde6);
@@ -30,6 +34,8 @@
   --acc-mist: #2e2b4d;
   --acc-line: #3d3964;
   --acc-sheet: #26283f;
+  --acc-card: #2b2d47;
+  --acc-card-edge: rgb(255 255 255 / 9%);
   --acc-paper: var(--pliego-surface, #22243b);
   --acc-lavender: #3a3660;
   --acc-on-blue: var(--store-ink, #252740);
@@ -39,10 +45,8 @@
 :global(.purchase-route):has(> .shell) { padding-top: 0; }
 /* Orientation, not navigation: one quiet line at the page's start — "Inicio" (a link with a 44px target
    that keeps the line compact) | the current page, muted. The bar is drawn, so it is never read aloud. */
-/* Every Account page starts its wayfinding — the back arrow, then the trail — on the same centered 760px axis as
-   its title (Mi perfil's reading column), as the edition page does on its own axis. */
-.wayfinding { justify-self: center; width: min(100%, 760px); margin: 8px 0 2px; }
-.trail { flex: 1 1 auto; min-width: 0; }
+/* Every Account page starts its trail on the same centered 760px axis as its title (Mi perfil's reading column). */
+.trail { justify-self: center; width: min(100%, 760px); min-width: 0; margin: 14px 0 16px; }
 .trail ol { display: flex; flex-wrap: wrap; align-items: center; margin: 0; padding: 0; list-style: none; color: var(--acc-muted); font-size: .9375rem; font-weight: 500; line-height: 1.5rem; }
 .trail li { display: inline-flex; align-items: center; min-width: 0; }
 .trail li + li::before { content: ""; width: 1.5px; height: 1em; margin-inline: 12px; background: currentColor; opacity: .55; }

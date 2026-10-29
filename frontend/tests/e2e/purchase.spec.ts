@@ -1,4 +1,5 @@
 import { fillCheckoutBilling } from "./billing-fixtures";
+import { choosePlace, geoResponse, withPlaceNames } from "./geo-fixtures";
 import { expect, test, type Page, type Route } from "@playwright/test";
 
 /** Account pages are reached from the header's account menu. */
@@ -83,6 +84,7 @@ class FakePliego {
     const request = route.request();
     const url = new URL(request.url());
     const path = url.pathname.replace("/api/v1", "");
+    { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
     const method = request.method();
     const body = request.postData() ? JSON.parse(request.postData()!) : undefined;
     const ok = (payload: unknown, status = 200) => route.fulfill({ status, contentType: "application/json", body: JSON.stringify(payload) });
@@ -140,7 +142,7 @@ class FakePliego {
     if (path === "/me/addresses" && method === "GET") return ok(this.addresses);
     if (path === "/me/addresses" && method === "POST") {
       const addressId = String(15 + this.addresses.length);
-      this.addresses.push({ addressId, ...body, primary: body.makePrimary || this.addresses.length === 0 });
+      this.addresses.push({ addressId, ...withPlaceNames(body), primary: body.makePrimary || this.addresses.length === 0 });
       return ok({ addressId }, 201);
     }
 
@@ -243,11 +245,13 @@ async function signInAndAdd(page: Page, api: FakePliego, screenshots?: { pending
   expect(Math.abs(successBox.y - idleBox.y)).toBeLessThanOrEqual(1);
   expect(successBox.width).toBeCloseTo(idleBox.width, 0);
   expect(successBox.height).toBeCloseTo(idleBox.height, 0);
-  await expect(addButton).toBeFocused();
+  // A confirmed add from the scene answers like the bar's: the cart drawer, with the line just added.
+  const drawer = page.getByRole("dialog", { name: "Tu carrito" });
+  await expect(drawer).toBeVisible();
   await expect(page.getByTestId("header-cart-count")).toHaveText("1");
   expect(api.addPosts).toBe(1);
   if (screenshots) await page.screenshot({ path: screenshots.added, fullPage: true });
-  await page.getByRole("link", { name: "Ver el carrito" }).click();
+  await drawer.getByRole("link", { name: "Ver carrito" }).click();
   await expect(page.getByRole("heading", { level: 1, name: "Tu carrito" })).toBeVisible();
   if (screenshots) await page.screenshot({ path: screenshots.cart, fullPage: true });
 }
@@ -257,8 +261,7 @@ async function saveFirstAddress(page: Page) {
   const dialog = page.getByRole("dialog", { name: "Nueva dirección" });
   await expect(dialog).toBeVisible();
   await dialog.getByLabel("Dirección", { exact: true }).fill("Av. Amazonas 100");
-  await dialog.getByLabel("Ciudad", { exact: true }).fill("Quito");
-  await dialog.getByLabel("Provincia", { exact: true }).fill("Pichincha");
+  await choosePlace(page, dialog);
   await dialog.getByLabel("Teléfono de contacto", { exact: true }).fill("991234567");
   await dialog.getByRole("button", { name: "Guardar dirección", exact: true }).click();
   await expect(page.locator('[data-purchase="selected-address"]')).toContainText("Av. Amazonas 100");

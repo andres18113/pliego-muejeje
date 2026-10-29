@@ -3,6 +3,7 @@ package com.pliego.modules.sales.application;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /** Values returned by the approved customer order Functions and cancellation Procedure. */
 public final class OrderModels {
@@ -29,7 +30,16 @@ public final class OrderModels {
             String title, String authors, String publisher, String format, String language,
             BigDecimal unitPrice, int quantity, BigDecimal subtotal, boolean requiresPhysicalFulfillment,
             BigDecimal originalPrice, BigDecimal unitSavings, BigDecimal originalSubtotal, BigDecimal lineSavings,
-            boolean pricingSnapshotAvailable) {
+            boolean pricingSnapshotAvailable, DigitalAccess digitalAccess) {
+        public Item(String orderItemId, String editionId, String sku, String isbn,
+                String title, String authors, String publisher, String format, String language,
+                BigDecimal unitPrice, int quantity, BigDecimal subtotal, boolean requiresPhysicalFulfillment,
+                BigDecimal originalPrice, BigDecimal unitSavings, BigDecimal originalSubtotal, BigDecimal lineSavings,
+                boolean pricingSnapshotAvailable) {
+            this(orderItemId, editionId, sku, isbn, title, authors, publisher, format, language,
+                    unitPrice, quantity, subtotal, requiresPhysicalFulfillment, originalPrice, unitSavings,
+                    originalSubtotal, lineSavings, pricingSnapshotAvailable, null);
+        }
         public Item(String orderItemId, String editionId, String sku, String isbn,
                 String title, String authors, String publisher, String format, String language,
                 BigDecimal unitPrice, int quantity, BigDecimal subtotal, boolean requiresPhysicalFulfillment) {
@@ -37,6 +47,14 @@ public final class OrderModels {
                     unitPrice, quantity, subtotal, requiresPhysicalFulfillment, null, null, null, null, false);
         }
     }
+
+    @Schema(name = "OrderItemDigitalAccess",
+            description = "Acceso de esta línea de compra. AVAILABLE acredita propiedad en biblioteca; no entrega archivos ni contenido digital.")
+    public record DigitalAccess(
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED,
+                    allowableValues = {"PENDING_PAYMENT", "AVAILABLE", "REVOKED", "UNAVAILABLE"}) String state,
+            @Schema(requiredMode = Schema.RequiredMode.REQUIRED,
+                    nullable = true, description = "Identificador para /biblioteca/{id}; solo está presente si esta fuente está AVAILABLE.") String ownedItemId) { }
 
     public record Address(String recipient, String line1, String line2, String city,
             String province, String countryCode, String postalCode, String reference, String phone) { }

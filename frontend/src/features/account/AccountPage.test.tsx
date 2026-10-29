@@ -1,7 +1,7 @@
 import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { json, problem, renderPurchaseRoute, savedAddress, stubApi as stubPurchaseApi } from "@/test/purchase";
+import { json, problem, renderPurchaseRoute, savedAddress, stubApi as stubPurchaseApi, choosePlace } from "@/test/purchase";
 import { AccountPage } from "./AccountPage";
 import { AddressBookPage } from "./AddressBook";
 import { useSession } from "@/app/session";
@@ -241,8 +241,7 @@ describe("customer account", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar dirección" }));
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Av. Principal 123");
-    await user.type(screen.getByLabelText("Ciudad"), "Quito");
-    await user.type(screen.getByLabelText("Provincia"), "Pichincha");
+    await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
     await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
@@ -261,8 +260,7 @@ describe("customer account", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar dirección" }));
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Calle 10");
-    await user.type(screen.getByLabelText("Ciudad"), "Quito");
-    await user.type(screen.getByLabelText("Provincia"), "Pichincha");
+    await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
     expect(screen.getByLabelText("País de entrega")).toHaveValue("Ecuador");
     expect(screen.getByLabelText("País de entrega")).toHaveAttribute("readonly");
     expect(screen.queryByRole("combobox", { name: "País de entrega" })).not.toBeInTheDocument();

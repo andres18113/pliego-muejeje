@@ -1,3 +1,5 @@
+import { useDigitalEligibility } from "@/features/library/digitalEligibilityQuery";
+import { digitalEditionState } from "@/features/library/digitalPurchaseState";
 import { useAvailabilityFocus } from "./useAvailabilityFocus";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -13,12 +15,17 @@ import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
 import { InPageBackButton } from "@/app/navigation/BackButton";
 import { EditionContextBar, useContextBarVisible } from "./EditionContextBar";
 import { TransactionButtonLabel } from "@/shared/ui/TransactionButtonLabel";
+import { useCartPreview } from "@/features/purchase/CartPreview";
+import { useCustomerCart } from "@/features/purchase/cartQuery";
+import { unitsLabel } from "@/features/purchase/purchaseText";
+import { useMediaQuery } from "@mantine/hooks";
 import { useSession } from "@/app/session";
 import { useFavoriteSessionFailure, useFavoriteStatuses } from "@/features/favorites/favoriteStatus";
 import { FavoriteButton } from "./FavoriteButton";
 import { favoriteStatusQueryKey } from "@/shared/api/favorites";
 import { BookCover } from "./BookCover";
 import { MaterialSymbol, type MaterialSymbolName } from "@/shared/ui/MaterialSymbol";
+import { QuantityPicker } from "@/shared/ui/QuantityPicker";
 import { mediaOfProductType, type CatalogMedia } from "./catalogMedia";
 import { StockStatus } from "./StockStatus";
 import { SavingsChip, UrgencyChip } from "./OfferChips";
@@ -80,7 +87,19 @@ export function EditionDetailPage() {
   const focusPageBack = useCallback(() => {
     (wayfinding.current?.querySelector("button") ?? document.getElementById("contenido-principal"))?.focus({ preventScroll: true });
   }, []);
+  const buySection = useRef<HTMLElement>(null);
+  const cartPreview = useCartPreview();
+  /** Where the current add started: a problem from the bar brings the scene, which explains it, back into view. */
+  const addSource = useRef<"page" | "bar">("page");
+  // The bar's label is short on phones, where it shares the bar with the title, price and jacket.
+  const phone = useMediaQuery("(max-width: 599px)");
+  const revealPurchase = useCallback(() => {
+    requestAnimationFrame(() => buySection.current?.scrollIntoView({ block: "center" }));
+  }, []);
   const [addedPulse, setAddedPulse] = useState(false);
+  /** Copies of a physical edition to add (1–10, as in the cart); a digital edition is always one per account. */
+  const [quantity, setQuantity] = useState(1);
+  const attemptedQuantity = useRef(1);
   const returnHref = safeCatalogReturnHref(new URLSearchParams(location.search).get("from"));
   const currentIntent = `${location.pathname}${location.search}`;
   const coverPreview = coverPreviewFromNavigation(location.state, editionId);
@@ -97,6 +116,9 @@ export function EditionDetailPage() {
   const isValidEditionId = isEditionId(editionId);
   const customerId = session?.user.role === "CUSTOMER" ? session.user.userId : null;
   const favoriteQuery = useFavoriteStatuses(isValidEditionId ? [editionId] : [], customerId);
+  // The header's cart read (shared cache): how many of this edition the cart already holds.
+  const customerCart = useCustomerCart(Boolean(customerId), { fresh: false });
+  const unitsInCart = customerCart.data?.items.find((item) => item.editionId === editionId)?.quantity ?? 0;
   useFavoriteSessionFailure(favoriteQuery.error, clearSession);
   const detailQuery = useQuery({
     queryKey: ["public-catalog", "edition", editionId],
@@ -106,6 +128,9 @@ export function EditionDetailPage() {
     staleTime: 30_000,
     retry: (failureCount, error) => !(error instanceof ApiRequestError && error.status === 404) && failureCount < 1,
   });
+  const digitalCustomer = Boolean(customerId && isDigitalFormat(detailQuery.data?.format));
+  const eligibilityQuery = useDigitalEligibility(digitalCustomer ? [editionId] : []);
+  const digitalState = digitalCustomer ? digitalEditionState(eligibilityQuery.byEdition.get(editionId)) : null;
   const safeCoverSourceHref = safeExternalHttpHref(detailQuery.data?.coverSourceUrl);
   const addToCartMutation = useMutation({
     mutationFn: async () => {
@@ -116,7 +141,7 @@ export function EditionDetailPage() {
       if (isDigitalFormat(detailQuery.data?.format) && quantityBeforeAttempt.current >= 1) {
         return { quantity: quantityBeforeAttempt.current, alreadyInCart: true };
       }
-      return { ...await addEditionToCart(editionId), alreadyInCart: false };
+      return { ...await addEditionToCart(editionId, attemptedQuantity.current), alreadyInCart: false };
     },
     retry: false,
     onSuccess: async ({ quantity, alreadyInCart }) => {
@@ -126,9 +151,14 @@ export function EditionDetailPage() {
       if (addedPulseTimer.current !== null) window.clearTimeout(addedPulseTimer.current);
       addedPulseTimer.current = window.setTimeout(() => setAddedPulse(false), 1_100);
       setPurchaseFeedback({ kind: "success", message: alreadyInCart ? "Esta edición digital ya está en tu carrito." : addedQuantityMessage(quantity) });
+      setQuantity(1);
+      // Every confirmed add, from the scene or the bar, answers the same way: the cart drawer on this edition.
+      cartPreview?.open(editionId);
     },
     onError: async (error: Error) => {
       await keepAddFeedbackVisible(addAttemptStartedAt.current);
+      // A problem is explained in the purchase scene: bring it back into view (the bar then steps aside).
+      if (addSource.current === "bar") revealPurchase();
       if (error instanceof ApiRequestError && error.status === 401) {
         clearSession("expired");
         setPurchaseFeedback({
@@ -145,6 +175,7 @@ export function EditionDetailPage() {
           message: availabilityMessage,
         });
         await detailQuery.refetch();
+        if (digitalCustomer) await eligibilityQuery.refetch();
         return;
       }
 
@@ -178,7 +209,7 @@ export function EditionDetailPage() {
       const currentQuantity = currentItem?.quantity ?? 0;
       const quantityDelta = currentQuantity - quantityBeforeAttempt.current;
 
-      if (quantityDelta === 1) {
+      if (quantityDelta === attemptedQuantity.current) {
         setPurchaseFeedback({
           kind: "success",
           message: cartQuantityMessage(currentQuantity, "El carrito ahora muestra"),
@@ -211,7 +242,12 @@ export function EditionDetailPage() {
       });
     },
   });
-  const stockFocus = useAvailabilityFocus(!detailQuery.error && Boolean(detailQuery.data?.available), () => document.getElementById("detail-error-heading") ?? detailHeadingRef.current, () => detailHeadingRef.current);
+  const canKeepAddFocus = !detailQuery.error && Boolean(detailQuery.data?.available) && !digitalState;
+  const stockFocus = useAvailabilityFocus(canKeepAddFocus,
+    () => document.getElementById("edition-digital-destination") ?? document.getElementById("detail-error-heading") ?? detailHeadingRef.current,
+    () => detailHeadingRef.current);
+  const contextFocus = useAvailabilityFocus(canKeepAddFocus,
+    () => document.getElementById("context-digital-destination") ?? document.getElementById("edition-digital-destination") ?? detailHeadingRef.current);
   const detail = detailQuery.data;
   // The same urgency as the Ofertas cards: only when the server's own days left are five or fewer.
   const urgency = detail?.offer ? offerUrgencyLabel(detail.offer.daysRemaining) : null;
@@ -256,7 +292,7 @@ export function EditionDetailPage() {
           <div className={classes.edition}>
             <div className={classes.cover}>
               {coverPreview?.url ? (
-                <BookCover url={coverPreview.url} license={coverPreview.license} attribution={coverPreview.attribution} title={coverPreview.title} size="detail" loading="eager" />
+                <div className={classes.jacket}><BookCover url={coverPreview.url} license={coverPreview.license} attribution={coverPreview.attribution} title={coverPreview.title} size="detail" loading="eager" /></div>
               ) : <span className={classes.coverBone} aria-hidden="true" />}
             </div>
             <header className={classes.identity}>
@@ -269,7 +305,7 @@ export function EditionDetailPage() {
             </header>
             <div className={classes.buy} aria-hidden="true">
               <div className={classes.offer}><span className={classes.bone} data-bone="price" /><span className={classes.bone} data-bone="stock" /></div>
-              <div className={classes.actions}><span className={classes.bone} data-bone="action" /><span className={classes.bone} data-bone="favorite" /></div>
+              <div className={classes.actions}><span className={classes.bone} data-bone="action" /></div>
             </div>
             <div className={classes.facts} aria-hidden="true">
               <span className={classes.bone} data-bone="heading" />
@@ -312,13 +348,15 @@ export function EditionDetailPage() {
   const customerSession = session?.user.role === "CUSTOMER";
   const adminSession = session?.user.role === "ADMIN";
 
-  function addToCart() {
+  function addToCart(source: "page" | "bar" = "page") {
     if (!purchasingAvailable || addLock.current || addToCartMutation.isPending || cartCheckMutation.isPending || purchaseFeedback?.kind === "unknown") return;
     addLock.current = true;
+    addSource.current = source;
     addAttemptStartedAt.current = Date.now();
     setAddedPulse(false);
     if (addedPulseTimer.current !== null) window.clearTimeout(addedPulseTimer.current);
     setPurchaseFeedback(null);
+    attemptedQuantity.current = isDigitalFormat(detail?.format) ? 1 : quantity;
     addToCartMutation.mutate(undefined, { onSettled: () => { addLock.current = false; } });
   }
 
@@ -339,9 +377,22 @@ export function EditionDetailPage() {
                 queryKey={favoriteStatusQueryKey(customerId ?? "guest", favoriteQuery.stableIds)}
                 returnHref={currentIntent}
                 className={classes.favorite}
+                appearance="icon"
               />
   );
-  const purchase = !purchasingAvailable ? (
+  const purchase = digitalState ? (
+    // Settled: where the copy already is, then a compact way there — never a second full-width button.
+    <div className={classes.settled}>
+      <p className={classes.settledNote} role="status">
+        <MaterialSymbol name={settledSymbol[digitalState.kind]} aria-hidden="true" size={20} />
+        <span>{digitalState.message}</span>
+      </p>
+      <Link id="edition-digital-destination" className={classes.cartChip} to={digitalState.href}>
+        {digitalState.label}
+        <MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />
+      </Link>
+    </div>
+  ) : !purchasingAvailable ? (
                 <p
                   className={`detail-purchase-feedback${purchaseFeedback?.kind === "unavailable" || !detail.available ? " detail-purchase-feedback--unavailable" : ""}`}
                   role="status"
@@ -354,6 +405,20 @@ export function EditionDetailPage() {
                 </p>
               ) : customerSession ? (
                 <>
+                  {media === "physical" && unitsInCart > 0 && (
+                    // Already in the cart, as for a digital copy; a physical one can still take more, so the row stays.
+                    <div className={classes.settled}>
+                      <p className={classes.settledNote} role="status">
+                        <MaterialSymbol name="check_circle" aria-hidden="true" size={20} />
+                        <span>Ya está en tu carrito</span>
+                        <span className={classes.settledCount}>· {unitsLabel(unitsInCart)}</span>
+                      </p>
+                      <Link className={classes.cartChip} to="/cart">
+                        Ver carrito
+                        <MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />
+                      </Link>
+                    </div>
+                  )}
                   {purchaseFeedback?.kind === "unknown" && (
                     <Button
                       variant="secondary"
@@ -365,10 +430,22 @@ export function EditionDetailPage() {
                       {cartCheckMutation.isPending ? "Comprobando…" : "Comprobar el estado del carrito"}
                     </Button>
                   )}
+                  {media === "physical" && (
+                    <div className={classes.quantity}>
+                      <QuantityPicker
+                        label={`Cantidad de ${title}`}
+                        value={quantity}
+                        choices={QUANTITY_CHOICES}
+                        onChange={setQuantity}
+                        busy={addToCartMutation.isPending || cartCheckMutation.isPending}
+                        describedBy="edition-stock"
+                      />
+                    </div>
+                  )}
                   <Button
                     variant="primary"
                     type="button"
-                    onClick={addToCart}
+                    onClick={() => addToCart()}
                     {...stockFocus}
                     aria-describedby="edition-stock"
                     aria-disabled={addToCartMutation.isPending || cartCheckMutation.isPending || purchaseFeedback?.kind === "unknown"}
@@ -381,9 +458,6 @@ export function EditionDetailPage() {
                       success="Agregado"
                     />
                   </Button>
-                  {purchaseFeedback?.kind === "success" && (
-                    <ButtonLink variant="secondary" to="/cart">Ver el carrito</ButtonLink>
-                  )}
                   {addToCartMutation.isPending && (
                     <p className="visually-hidden" role="status" aria-live="polite" aria-atomic="true">
                       Agregando esta edición al carrito…
@@ -432,6 +506,37 @@ export function EditionDetailPage() {
                 </>
               );
 
+  // The bar's action mirrors the scene's for the same session and stock, with the same mutation and state.
+  const contextAction = digitalState ? (
+    <ButtonLink id="context-digital-destination" variant="primary" className={`${classes.contextAction} ${classes.contextDigitalAction}`} to={digitalState.href}>
+      {phone ? digitalState.compactLabel : digitalState.label}
+    </ButtonLink>
+  ) : !purchasingAvailable ? <span className={classes.contextUnavailable}>No disponible</span>
+    : customerSession ? (
+      <Button
+        variant="primary"
+        type="button"
+        className={`${classes.contextAction}${digitalCustomer ? ` ${classes.contextDigitalAction}` : ""}`}
+        {...contextFocus}
+        // While the cart's state is unknown, the scene holds the way to check it.
+        onClick={() => purchaseFeedback?.kind === "unknown" ? revealPurchase() : addToCart("bar")}
+        aria-disabled={addToCartMutation.isPending || cartCheckMutation.isPending || undefined}
+        aria-busy={addToCartMutation.isPending}
+      >
+        <TransactionButtonLabel
+          state={addToCartMutation.isPending ? "pending" : addedPulse ? "success" : "idle"}
+          idle={phone ? "Agregar" : "Agregar al carrito"}
+          pending="Agregando…"
+          success="Agregado"
+          reserve={phone ? "Agregando…" : "Agregar al carrito"}
+        />
+      </Button>
+    ) : adminSession ? null
+    : <ButtonLink variant="primary" className={classes.contextAction} to={authLocation("/sign-in", currentIntent)}>
+      {/* One inline label, so the button's own gap never doubles the space before the phone-hidden words. */}
+      <span>Iniciar sesión<span className={classes.contextLong}> para agregar</span></span>
+    </ButtonLink>;
+
   const facts = [
     publisher ? ["Editorial", publisher] : null,
     // Digital formats carry their one technical detail (file format, running time) beside the medium.
@@ -449,8 +554,7 @@ export function EditionDetailPage() {
       <main className={`detail-route page-frame ${classes.page}`} id="contenido-principal" tabIndex={-1} data-media={media}>
         <EditionContextBar visible={contextBarVisible} title={title}
           price={detail.price ? formatUsd(detail.price) : null} originalPrice={detail.offer ? formatUsd(detail.offer.originalPrice) : null}
-          cover={{ url: detail.coverUrl ?? null, license: detail.coverLicense ?? null, attribution: detail.coverAttribution ?? null }}
-          onHiddenWithFocus={focusPageBack} />
+          action={contextAction} onHiddenWithFocus={focusPageBack} />
         {/* As on product pages: the back arrow under the header, on the content's own edge — never beside the wordmark. */}
         <div className={classes.wayfinding} ref={wayfinding}>
           <InPageBackButton headerScrollsAway />
@@ -462,14 +566,18 @@ export function EditionDetailPage() {
 
         <article className={classes.edition} data-available={detail.available}>
           <div className={classes.cover}>
-            <BookCover
-              url={detail.coverUrl ?? null}
-              license={detail.coverLicense ?? null}
-              attribution={detail.coverAttribution ?? null}
-              title={title}
-              size="detail"
-              loading="eager"
-            />
+            {/* Saving is not buying: the favorite is the catalog card's heart on the jacket, outside the purchase scene. */}
+            <div className={classes.jacket}>
+              <BookCover
+                url={detail.coverUrl ?? null}
+                license={detail.coverLicense ?? null}
+                attribution={detail.coverAttribution ?? null}
+                title={title}
+                size="detail"
+                loading="eager"
+              />
+              {favorite}
+            </div>
             {safeCoverSourceHref && (
               <a className={classes.coverSource} href={safeCoverSourceHref} target="_blank" rel="noopener noreferrer">
                 Consultar fuente de la portada <span>(abre en pestaña nueva)</span>
@@ -484,7 +592,7 @@ export function EditionDetailPage() {
             {authors && <p className={classes.authors}>{authors}</p>}
           </header>
 
-          <section className={classes.buy} aria-label="Compra">
+          <section className={classes.buy} aria-label="Compra" ref={buySection} data-settled={digitalState ? "" : undefined}>
             {/* With an offer: price, then the offer's two chips as one group, then availability on its own quiet line. */}
             <div className={classes.offer} data-offer={detail.offer ? "" : undefined}>
               <div className={classes.priceLine}>
@@ -499,7 +607,6 @@ export function EditionDetailPage() {
             </div>
             <div className={classes.actions}>
               {purchase}
-              {favorite}
             </div>
           </section>
 
@@ -558,6 +665,14 @@ function Synopsis({ text }: { text: string }) {
     </section>
   );
 }
+
+/** Each settled digital state's mark: in the cart, in the library, in an open order. */
+const settledSymbol: Record<NonNullable<ReturnType<typeof digitalEditionState>>["kind"], MaterialSymbolName> = {
+  inCart: "check_circle", owned: "menu_book", pendingOrder: "receipt_long",
+};
+
+/** The same range the cart offers for a physical line. */
+const QUANTITY_CHOICES = Array.from({ length: 10 }, (_, index) => index + 1);
 
 function addedQuantityMessage(quantity: number) {
   const formattedQuantity = new Intl.NumberFormat("es-EC").format(quantity);

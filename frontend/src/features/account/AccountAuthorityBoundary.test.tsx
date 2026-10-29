@@ -6,7 +6,7 @@ import { useSession } from "@/app/session";
 import { AddressForm } from "@/features/purchase/AddressForm";
 import { readPendingAttempt } from "@/shared/api/attemptStorage";
 import type { CustomerProfile } from "@/shared/api/customer";
-import { json, renderPurchaseRoute, stubApi } from "@/test/purchase";
+import { json, renderPurchaseRoute, stubApi, choosePlace } from "@/test/purchase";
 import { AccountPage } from "@/features/account/AccountPage";
 import { restoredProfileField, useProfileDraft } from "@/features/account/profileDraft";
 
@@ -54,8 +54,7 @@ describe("account command authority boundaries", () => {
     const user = userEvent.setup();
     try {
       await user.type(await screen.findByLabelText("Dirección", { exact: true }), "Casa privada de Ana");
-      await user.type(screen.getByLabelText("Ciudad"), "Quito");
-      await user.type(screen.getByLabelText("Provincia"), "Pichincha");
+      await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
       await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
       await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
       await waitFor(() => expect(states).toHaveBeenLastCalledWith(expect.objectContaining({ busy: true })));

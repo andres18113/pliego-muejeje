@@ -1,0 +1,47 @@
+/* Factura: the invoice's stable page (the email's "Visualizar documento"). The order's identity row with the
+   document's two actions, then the PDF itself standing on the quiet neutral stage covers use, never a coloured
+   field. Phones get the same document as one compact object that opens it. */
+.page {
+  --inv-stage: var(--home-quiet, #ecebe4);
+  display: grid; gap: 16px; width: 100%; max-width: 1000px; min-width: 0; margin-inline: auto; color: var(--acc-ink);
+}
+:global([data-mantine-color-scheme="dark"]) .page { --inv-stage: #1b1d30; }
+
+.gate h2 { margin: 0 0 8px; font: 650 1.75rem/1.1 var(--acc-display); letter-spacing: -.04em; }
+
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; min-width: 0; padding-inline: clamp(4px, 2.4vw, 24px); }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 32px; margin: 0; font-size: 1.0625rem; line-height: 1.4; padding-inline: clamp(4px, 2.4vw, 24px); }
+.bar .facts { padding-inline: 0; }
+.facts div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; min-width: 0; }
+.facts dt { font-weight: 650; }
+.facts dd { margin: 0; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.button.button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
+.button[aria-disabled="true"] { cursor: progress; opacity: .72; }
+.notice { margin: 0; padding-inline: clamp(4px, 2.4vw, 24px); color: var(--acc-muted); font-size: .9375rem; line-height: 1.4; }
+
+/* Preparing, or a historical invoice kept without a file: one sheet that says so. */
+.state { display: grid; gap: 8px; justify-items: start; padding: clamp(20px, 2.6vw, 28px); border: 1px solid var(--acc-line); border-radius: 24px; background: var(--acc-sheet); }
+.state h2 { margin: 0; font: 650 1.375rem/1.15 var(--acc-display); letter-spacing: -.035em; }
+.state p { margin: 0; color: var(--acc-muted); line-height: 1.45; }
+
+/* An A4 page is ≈1:1.41; the stage keeps a full page in view on a laptop and scrolls inside for the rest. */
+.stage { min-width: 0; padding: clamp(10px, 1.6vw, 18px); border-radius: 24px; background: var(--inv-stage); }
+.frame { display: grid; place-items: center; min-height: clamp(520px, calc(100vh - 260px), 1180px); }
+.viewer { display: block; width: 100%; height: clamp(520px, calc(100vh - 260px), 1180px); border: 0; border-radius: 12px; background: #fff; }
+.compact { display: none; }
+
+@media (max-width: 640px) {
+  .bar .actions { display: none; }
+  /* The compact object below names the invoice; the row keeps only the order. */
+  .bar .numberFact { display: none; }
+  .frame { display: none; }
+  .compact {
+    display: grid; justify-items: center; gap: 6px; padding: 28px 16px 24px; border-radius: 16px;
+    background: var(--acc-sheet); color: var(--acc-ink); text-align: center;
+  }
+  .compact > :global(.material-symbol) { color: var(--acc-blue); }
+  .compactTitle { margin: 6px 0 0; font: 650 1.25rem/1.15 var(--acc-display); letter-spacing: -.035em; overflow-wrap: anywhere; }
+  .compactMeta { margin: 0 0 12px; color: var(--acc-muted); font-size: .9375rem; }
+}

@@ -86,7 +86,7 @@ public class CustomerOrderController {
                         item.isbn(), item.title(), item.authors(), item.publisher(), item.format(),
                         item.language(), money(item.unitPrice()), item.quantity(), money(item.subtotal()), item.requiresPhysicalFulfillment(),
                         money(item.originalPrice()), money(item.unitSavings()), money(item.originalSubtotal()), money(item.lineSavings()),
-                        item.pricingSnapshotAvailable())).toList(),
+                        item.pricingSnapshotAvailable(), item.digitalAccess())).toList(),
                 address==null ? null : new Address(address.recipient(), address.line1(), address.line2(), address.city(),
                         address.province(), address.countryCode(), address.postalCode(), address.reference(),
                         address.phone()),

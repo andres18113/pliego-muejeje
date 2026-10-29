@@ -1,4 +1,3 @@
-import type { ReactNode } from "react";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useBackNavigation } from "./useBackNavigation";
 import { useHeaderScrollsAway } from "./HeaderFlowContext";
@@ -13,15 +12,12 @@ export function BackButton() {
 }
 
 /**
- * The view's back arrow, drawn under the header on the content's edge (as on product pages). The headers never
- * draw one beside the wordmark, so this is the view's one arrow. `headerScrollsAway` is the edition page's claim.
+ * The edition page's back arrow, drawn under the header on the content's edge before its trail. It returns to
+ * wherever the reader came from (a filtered shelf, search, Ofertas), which no single named parent could promise.
+ * The headers never draw an arrow beside the wordmark. `headerScrollsAway` is the edition page's claim.
  */
 export function InPageBackButton({ headerScrollsAway = false }: { headerScrollsAway?: boolean }) {
   useHeaderScrollsAway(headerScrollsAway);
   return <span className={classes.inPage}><BackButton /></span>;
 }
 
-/** A page's wayfinding row under the header: the back arrow, then an optional quiet trail on the same line. */
-export function PageWayfinding({ className, children }: { className?: string; children?: ReactNode }) {
-  return <div className={`${classes.wayfinding}${className ? ` ${className}` : ""}`}><InPageBackButton />{children}</div>;
-}

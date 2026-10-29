@@ -200,10 +200,12 @@ function AddressRow({ address, countryName, editable, onEdit, onPrimary, onDelet
       <span className={classes.phone}>{parsePhoneNumberFromString(address.phone)?.formatInternational() ?? address.phone}</span>
     </address>
     {address.reference && <p className={classes.reference}>{address.reference}</p>}
+    {/* An older address whose city is not in the catalog (ADR 0044): it still delivers, but asks for its city once. */}
+    {address.cityNeedsReview && <p className={classes.cityReview}><MaterialSymbol name="info" aria-hidden="true" size={16} />Elige su ciudad de la lista con Editar para usarla también en tus facturas.</p>}
     <div className={`account-address-actions ${classes.actions}`}>
       {!address.primary && <Button variant="secondary" type="button" className={classes.makePrimary} disabled={!editable} onClick={onPrimary}>Usar como principal<span className="visually-hidden"> {address.alias}</span></Button>}
-      <Button variant="text" type="button" className={classes.quiet} disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><MaterialSymbol name="edit" aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
-      <Button variant="text" type="button" className={classes.quiet} disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><MaterialSymbol name="delete" aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
+      <Button variant="text" type="button" className={`${classes.quiet} ${classes.edit}`} disabled={!editable} onClick={(event) => onEdit(event.currentTarget)}><MaterialSymbol name="edit" aria-hidden="true" size={16} />Editar <span className="visually-hidden">{address.alias}</span></Button>
+      <Button variant="text" type="button" className={`${classes.quiet} ${classes.remove}`} disabled={!editable} onClick={(event) => onDelete(event.currentTarget)}><MaterialSymbol name="delete" aria-hidden="true" size={16} />Eliminar <span className="visually-hidden">{address.alias}</span></Button>
     </div>
   </li>;
 }

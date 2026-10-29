@@ -49,23 +49,57 @@ class BillingIdentityApiIntegrationTest extends CustomerApiIntegrationTest {
     }
 
     @Test
-    void correctionRequiresTheCurrentPasswordAndTheNumberTheCustomerSaw() throws Exception {
-        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
+    void correctionDoesNotRequirePasswordAndIgnoresTheLegacyPasswordField() throws Exception {
         mvc.perform(post("/api/v1/me/billing-identity/correction").header("Authorization", auth(10))
-                .contentType(MediaType.APPLICATION_JSON).content(CORRECTION.replace("Lectura-segura-2026", "otra-clave")))
-                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("CURRENT_PASSWORD_INVALID"));
-        verify(billingGateway, never()).correct(anyLong(), any(), any(), any());
-        mvc.perform(post("/api/v1/me/billing-identity/correction").header("Authorization", auth(10))
-                .contentType(MediaType.APPLICATION_JSON).content(CORRECTION))
+                .contentType(MediaType.APPLICATION_JSON).content(CORRECTION.replace("Lectura-segura-2026", "contraseña-obsoleta")))
                 .andExpect(status().isNoContent()).andExpect(header().string("Cache-Control", "no-store"));
-        verify(billingGateway).correct(10, "EC_CEDULA", "0912345675", "1710034065");
+        mvc.perform(post("/api/v1/me/billing-identity/correction").header("Authorization", auth(10))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(CORRECTION.replace(",\"currentPassword\":\"Lectura-segura-2026\"", "")))
+                .andExpect(status().isNoContent()).andExpect(header().string("Cache-Control", "no-store"));
+        verify(billingGateway, times(2)).correct(10, "EC_CEDULA", "0912345675", "1710034065");
     }
 
     @Test
-    void correctionRejectsMissingPasswordSameNumberOrInvalidNumberBeforeGateway() throws Exception {
-        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
+    void billingIdentityReadModelIncludesUsageCorrectionModeAndPendingRequestWithoutCaching() throws Exception {
+        when(billingGateway.find(10)).thenReturn(new com.pliego.modules.customer.application.BillingIdentity(
+                "EC_CEDULA", "0912345675", true, "REQUEST",
+                new com.pliego.modules.customer.application.BillingIdentity.CorrectionRequest("55", "PENDING",
+                        "EC_CEDULA", "1710034065", "DOCUMENT_TYPO",
+                        java.time.OffsetDateTime.parse("2026-10-25T12:00:00Z"),
+                        java.time.OffsetDateTime.parse("2026-11-09T12:00:00Z"), null, null)));
+
+        mvc.perform(get("/api/v1/me/billing-identity").header("Authorization", auth(10)))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Cache-Control", "no-store"))
+                .andExpect(jsonPath("$.used").value(true))
+                .andExpect(jsonPath("$.correctionMode").value("REQUEST"))
+                .andExpect(jsonPath("$.correctionRequest.id").value("55"))
+                .andExpect(jsonPath("$.correctionRequest.status").value("PENDING"))
+                .andExpect(jsonPath("$.correctionRequest.proposedType").value("EC_CEDULA"))
+                .andExpect(jsonPath("$.correctionRequest.proposedNumber").value("1710034065"))
+                .andExpect(jsonPath("$.correctionRequest.reasonCode").value("DOCUMENT_TYPO"))
+                .andExpect(jsonPath("$.correctionRequest.decisionReason").doesNotExist());
+    }
+
+    @Test
+    void usedArbitraryCorrectionReturnsSpanishReviewProblemWithoutEchoingTheIdentification() throws Exception {
+        doThrow(exceptionTranslator.translate(new java.sql.SQLException("private", "P1107")))
+                .when(billingGateway).correct(10, "EC_CEDULA", "0912345675", "1710034065");
+
+        mvc.perform(post("/api/v1/me/billing-identity/correction").header("Authorization", auth(10))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(CORRECTION.replace(",\"currentPassword\":\"Lectura-segura-2026\"", "")))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.code").value("P1107"))
+                .andExpect(jsonPath("$.title").value("Esta identificación requiere revisión"))
+                .andExpect(jsonPath("$.detail").value("Esta identificación ya figura en una factura. Solicita la corrección para que la revisemos."))
+                .andExpect(content().string(org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("0912345675"))));
+    }
+
+    @Test
+    void correctionRejectsSameNumberOrInvalidNumberBeforeGateway() throws Exception {
         for (String body : new String[]{
-                CORRECTION.replace(",\"currentPassword\":\"Lectura-segura-2026\"", ""),
                 CORRECTION.replace("1710034065", "0912345675"),
                 CORRECTION.replace("1710034065", "1710034066"),
                 CORRECTION.replace("\"currentNumber\":\"0912345675\",", "")}) {
@@ -79,7 +113,6 @@ class BillingIdentityApiIntegrationTest extends CustomerApiIntegrationTest {
 
     @Test
     void staleCorrectionKeepsTheConflictCode() throws Exception {
-        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
         doThrow(exceptionTranslator.translate(new java.sql.SQLException("private", "P1105")))
                 .when(billingGateway).correct(10, "EC_CEDULA", "0912345675", "1710034065");
         mvc.perform(post("/api/v1/me/billing-identity/correction").header("Authorization", auth(10))
@@ -96,7 +129,6 @@ class BillingIdentityApiIntegrationTest extends CustomerApiIntegrationTest {
                 "{\"type\":\"EC_CEDULA\",\"number\":\"0012345674\"}",
                 "{\"type\":\"EC_CEDULA\",\"number\":\"1791234561001\"}",
                 "{\"type\":\"EC_RUC\",\"number\":\"0912345675\"}",
-                "{\"type\":\"EC_RUC\",\"number\":\"1790016918001\"}",
                 "{\"type\":\"EC_RUC\",\"number\":\"1710034065000\"}"}) {
             mvc.perform(put("/api/v1/me/billing-identity").header("Authorization", auth(10))
                     .contentType(MediaType.APPLICATION_JSON).content(body))
@@ -114,7 +146,6 @@ class BillingIdentityApiIntegrationTest extends CustomerApiIntegrationTest {
                     .andExpect(status().isNoContent());
             verify(billingGateway).register(10, "EC_RUC", ruc);
         }
-        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
         mvc.perform(post("/api/v1/me/billing-identity/correction").header("Authorization", auth(10))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(CORRECTION.replace("\"type\":\"EC_CEDULA\"", "\"type\":\"EC_RUC\"").replace("1710034065", "1790016919001")))
@@ -125,7 +156,7 @@ class BillingIdentityApiIntegrationTest extends CustomerApiIntegrationTest {
     @Test
     void invalidNumberIsReportedOnTheNumberField() throws Exception {
         mvc.perform(put("/api/v1/me/billing-identity").header("Authorization", auth(10))
-                .contentType(MediaType.APPLICATION_JSON).content("{\"type\":\"EC_RUC\",\"number\":\"1790016918001\"}"))
+                .contentType(MediaType.APPLICATION_JSON).content("{\"type\":\"EC_RUC\",\"number\":\"1790016918000\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.violations[0].field").value("number"))
                 .andExpect(jsonPath("$.violations[0].message").value("Ingresa una cédula (10 dígitos) o un RUC (13 dígitos) válidos"));

@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.pliego.foundation.web.PageResponse;
 import com.pliego.foundation.web.ProblemResponse;
@@ -50,6 +52,7 @@ import jakarta.validation.constraints.Positive;
 @Tag(name = "Pedidos administrativos", description = "Consulta y gestión logística de pedidos.")
 @SecurityRequirement(name = "bearerJwt")
 public class AdminOrderController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AdminOrderController.class);
 
     private final AdminOrderService service;
 
@@ -166,10 +169,20 @@ public class AdminOrderController {
         var address=request.billingAddress();
         long id=service.issueInvoice(actorId(jwt),orderId,new PostPurchaseModels.IssueInvoice(request.documentNumber(),
                 request.buyerName(),request.identityType(),request.identityNumber(),request.buyerEmail(),
-                new PostPurchaseModels.BillingAddress(address.line1(),address.line2(),address.city(),address.province(),
-                        address.countryCode(),address.postalCode())));
+                billingAddress(address)));
+        if (address.usesLegacyNames()) LOGGER.info("geo_legacy_payload operation=admin-invoice-issue");
         return ResponseEntity.created(java.net.URI.create("/api/v1/admin/orders/"+orderId))
                 .body(new PostPurchaseResponses.IssuedInvoice(Long.toString(orderId),Long.toString(id)));
+    }
+
+    private static PostPurchaseModels.BillingAddressInput billingAddress(PostPurchaseRequests.BillingAddress address) {
+        if (address.provinceId() != null) {
+            return new PostPurchaseModels.BillingAddressInput(address.line1(),address.line2(),
+                    Long.parseLong(address.provinceId()),Long.parseLong(address.cityId()),
+                    address.countryCode(),address.postalCode());
+        }
+        return new PostPurchaseModels.BillingAddressInput(address.line1(),address.line2(),null,null,
+                address.city(),address.province(),address.countryCode(),address.postalCode());
     }
 
     @PostMapping(path="/{orderId}/credit-notes",consumes=MediaType.APPLICATION_JSON_VALUE)

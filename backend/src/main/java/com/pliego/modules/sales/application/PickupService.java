@@ -10,7 +10,7 @@ public class PickupService {
     private final PickupLocationGateway gateway;
     public PickupService(PickupLocationGateway gateway) { this.gateway=gateway; }
     @Transactional(readOnly=true)
-    public List<PickupLocation> locations() { return gateway.activeLocations(); }
+    public List<PickupLocationReference> locations() { return gateway.activeLocations(); }
     @Transactional
     public void collect(long actorId,long orderId,String code) { gateway.collect(actorId,orderId,code); }
 }

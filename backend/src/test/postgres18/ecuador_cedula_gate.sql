@@ -77,10 +77,10 @@ BEGIN
   CALL pliego.sp_customer_billing_identity_register(u2,'EC_CEDULA','1790016919001');
   RAISE EXCEPTION 'RUC accepted as cedula';
  EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
- BEGIN
-  CALL pliego.sp_customer_billing_identity_register(u2,'EC_RUC','1790016918001');
-  RAISE EXCEPTION 'RUC with wrong check digit accepted';
- EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
+ CALL pliego.sp_customer_billing_identity_register(u2,'EC_RUC','1790016918001');
+ IF NOT EXISTS(SELECT FROM pliego.fn_customer_billing_identity(u2)
+  WHERE identity_type='EC_RUC' AND identity_number='1790016918001') THEN RAISE EXCEPTION 'structural company RUC rejected'; END IF;
+ CALL pliego.sp_customer_billing_identity_correct(u2,'EC_RUC','1790016918001','1790016919001');
  CALL pliego.sp_customer_billing_identity_register(u2,'EC_RUC',' 1790016919001 ');
  IF NOT EXISTS(SELECT FROM pliego.fn_customer_billing_identity(u2) WHERE identity_type='EC_RUC' AND identity_number='1790016919001') THEN RAISE EXCEPTION 'RUC not registered'; END IF;
  CALL pliego.sp_customer_billing_identity_correct(u2,'EC_RUC','1790016919001','1760001200001');
@@ -89,7 +89,7 @@ BEGIN
   AND identidad_tipo_anterior='EC_RUC' AND identidad_tipo='EC_CEDULA' AND numero_anterior='1760001200001' AND numero_nuevo='1710034065') THEN
   RAISE EXCEPTION 'cross-kind correction not audited'; END IF;
  BEGIN
-  INSERT INTO pliego.cliente_identificacion_evento(cliente_id,accion,origen,identidad_tipo,numero_nuevo) VALUES(c2,'REGISTERED','PROFILE','EC_RUC','1790016918001');
+  INSERT INTO pliego.cliente_identificacion_evento(cliente_id,accion,origen,identidad_tipo,numero_nuevo) VALUES(c2,'REGISTERED','PROFILE','EC_RUC','1790016918000');
   RAISE EXCEPTION 'invalid audited RUC accepted';
  EXCEPTION WHEN check_violation THEN NULL; END;
 END; $gate$;
