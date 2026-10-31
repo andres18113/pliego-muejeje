@@ -283,5 +283,12 @@ describe("customer account", () => {
     expect(api.count("DELETE", "/api/v1/me/addresses/15")).toBe(0);
     await user.click(within(confirm).getByRole("button", { name: "Eliminar dirección" }));
     expect(await screen.findByRole("heading", { name: "Aún no tienes direcciones guardadas." })).toBeInTheDocument();
+    // A short toast reports it; the page keeps no banner, and focus moves to what is left.
+    expect(await screen.findByText("Dirección eliminada")).toBeInTheDocument();
+    expect(screen.queryByText(/Eliminamos la dirección/)).not.toBeInTheDocument();
+    // Focus moves a frame after the list is read again; allow for a busy test runner.
+    await waitFor(() => expect(screen.getByRole("button", { name: "Agregar dirección" })).toHaveFocus(), { timeout: 3000 });
+    await user.click(screen.getByRole("button", { name: "Cerrar aviso" }));
+    expect(screen.queryByText("Dirección eliminada")).not.toBeInTheDocument();
   });
 });

@@ -152,8 +152,10 @@ for (const payment of ["CARD", "TRANSFER"] as const) {
     await expect(page.getByText("America/Guayaquil")).toHaveCount(0);
     await expect(page.getByText(/Presenta la confirmación enviada a tu correo/)).toBeVisible();
     await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", /marker=-0\.22%2C-78\.5/);
-    await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/IVA|Total|Cien años/);
+    // The receipt once (totals, no books); the pickup facts and the books to collect lead beside it.
+    await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/Cien años/);
     await expect(page.locator('[data-confirmation="details"]')).toContainText("IVA (15 %)");
+    await expect(page.getByRole("region", { name: "Retiro" })).toContainText("P-ABC234");
     expect(api.posts).toHaveLength(1);
     expect(api.posts[0].body).toMatchObject({ fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", paymentMethod: payment });
     expect(api.posts[0].body).not.toHaveProperty("addressId");

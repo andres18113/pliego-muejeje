@@ -150,8 +150,8 @@ function OrderUnit({ order, viewModel, detail, paymentState, story, windowView, 
     <span className={classes.meta}>
       <span>Pedido N.° {order.orderId}</span>{" "}
       {group === "past" && <><span>{placed}</span>{" "}</>}
-      {viewModel.units !== null && <span>{unitsLabel(viewModel.units)}</span>}{" "}
-      {(detail ? detail.invoice?.state === "ISSUED" : order.invoiceState === "ISSUED") && <span className={classes.document}>Factura emitida</span>}
+      {/* The invoice is a document on the order's own page, not a status every row repeats. */}
+      {viewModel.units !== null && <span>{unitsLabel(viewModel.units)}</span>}
     </span>{" "}
     {group === "open" && <><span className={classes.placed}><span className={classes.label}>Realizado </span>{placed}</span>{" "}</>}
     <span className={classes.total}><span className={classes.label}>Total </span>{formatUsd(viewModel.pricing.total)}

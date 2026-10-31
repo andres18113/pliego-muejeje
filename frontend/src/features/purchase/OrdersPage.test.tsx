@@ -127,7 +127,8 @@ describe("OrdersPage", () => {
     const cancelled = screen.getByRole("link", { name: /Pedido N.° 699/ });
     expect(cancelled).toHaveTextContent("Pedido cancelado");
     expect(cancelled).toHaveTextContent("Pago reembolsado");
-    expect(cancelled).toHaveTextContent("Factura emitida");
+    // The invoice lives on the order's own page; the list never repeats it per row.
+    expect(cancelled).not.toHaveTextContent("Factura");
   });
 
   it("shows paginated orders and opens detail", async () => {

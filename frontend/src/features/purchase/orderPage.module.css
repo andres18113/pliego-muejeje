@@ -32,8 +32,6 @@
 .bookCopy .access { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; color: var(--acc-ink); font-size: .9375rem; }
 .bookCopy .access[data-state="AVAILABLE"] { color: var(--od-savings); font-weight: 600; }
 .bookCopy .access[data-state="REVOKED"], .bookCopy .access[data-state="UNAVAILABLE"] { color: var(--acc-muted); }
-.accessLink { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
-.accessLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
 /* The payment card closes with its documents: credit notes as plain lines, then the one invoice action. */
 .creditNote { margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; overflow-wrap: anywhere; }
 .invoice { padding-top: 14px; border-top: 1px solid var(--acc-line); }
@@ -46,8 +44,14 @@
 .lead { max-width: 34rem; margin: 0; line-height: 1.5; }
 .estimate { margin: 0; font-weight: 650; line-height: 1.45; }
 
-.cancel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; min-width: 0; }
-.cancel > p { flex: 1 1 18rem; margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; }
+/* Cancelling, last in the story and quiet: a hairline, the window or consequence as one muted line, and a text action
+   in ink (never an outlined button competing with the purchase). The refund and what is released are in the dialog. */
+.cancel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 20px; min-width: 0; padding-top: 14px; border-top: 1px solid var(--acc-line); }
+.cancel > p { display: flex; align-items: flex-start; gap: 8px; flex: 1 1 18rem; margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; }
+.cancel > p :global(.material-symbol) { flex: none; margin-top: 1px; }
+.cancelLink { min-height: 44px; padding: 0; border: 0; background: none; color: var(--acc-ink); font: inherit; font-size: .9375rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; cursor: pointer; }
+@media (hover: hover) { .cancelLink:hover { text-decoration-thickness: 2px; } }
+.cancelLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
 
 /* Progress: one bar in five parts, filled through the server-reported step; the full stop marks "here". */
 .track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; margin: 0; padding: 0; list-style: none; }
@@ -80,17 +84,25 @@
 .follow span:first-child, .more { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .copy:focus-visible, .follow:focus-visible, .more:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 6px; }
 
-.history { display: grid; justify-items: start; gap: 2px; min-width: 0; }
-.timeline { display: grid; gap: 8px; width: 100%; margin: 0; padding: 0; list-style: none; font-size: .9375rem; line-height: 1.4; }
-.timeline li { display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 2px 20px; }
-.timeline time { color: var(--acc-muted); font-variant-numeric: tabular-nums; }
-.timeline li > span { display: grid; gap: 2px; min-width: 0; }
+.history { display: grid; justify-items: start; gap: 4px; min-width: 0; }
+/* The history as one aligned grid (subgrid): dot · moment (as wide as the longest) · what happened, close together,
+   on a thin rail. The latest event's dot takes the delivery green; the others are quiet. */
+.timeline { --tl-gap: 10px; display: grid; grid-template-columns: 12px max-content minmax(0, 1fr); gap: var(--tl-gap) 14px; width: 100%; margin: 0; padding: 0; list-style: none; font-size: .9375rem; line-height: 1.4; }
+.timeline li { position: relative; display: grid; grid-column: 1 / -1; grid-template-columns: subgrid; align-items: baseline; }
+/* The rail: from each dot down to the next one, never past the last. */
+.timeline li:not(:last-child)::before { content: ""; position: absolute; top: calc(.2em + 12px); bottom: calc(-1 * var(--tl-gap) - .2em); left: 5px; width: 2px; background: color-mix(in srgb, var(--acc-ink) 14%, transparent); }
+.dot { position: relative; align-self: start; width: 12px; height: 12px; margin-top: .2em; border-radius: 50%; background: var(--acc-card, #fff); box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--acc-ink) 30%, transparent); }
+.timeline li[data-latest] .dot { background: var(--od-progress-end); box-shadow: none; }
+.timeline time { color: var(--acc-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.event { display: grid; gap: 2px; min-width: 0; }
 .timeline strong { font-weight: 650; }
-.timeline li > span span { color: var(--acc-muted); font-size: .875rem; overflow-wrap: anywhere; }
+.event span { color: var(--acc-muted); font-size: .875rem; overflow-wrap: anywhere; }
 
 /* Destination */
-.destination { display: grid; grid-template-columns: 10.5rem minmax(0, 1fr); align-items: start; gap: 6px 20px; min-width: 0; }
-.destination h3 { margin: 0; font-size: 1rem; font-weight: 650; line-height: 1.5; }
+/* The label sits right before the address it names (as wide as its words), first lines on one baseline. */
+.destination { display: grid; grid-template-columns: max-content minmax(0, 1fr); align-items: baseline; gap: 4px 24px; min-width: 0; }
+.destination h3 { margin: 0; font-size: .9375rem; font-weight: 650; line-height: 1.5; }
+.address > span:first-child { font-weight: 600; }
 .destination[data-kind="pickup"] { grid-template-columns: minmax(0, 1fr); gap: 10px; }
 /* The shared pickup facts, set compactly: the point, then its facts in one wrapping row, then a shorter map. */
 .destination[data-kind="pickup"] > div { gap: 14px; font-size: .9375rem; }
@@ -147,7 +159,10 @@
   /* The heading already names the step; the bar keeps only its position. */
   .trackLabel { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   .destination { grid-template-columns: minmax(0, 1fr); gap: 2px; }
-  .timeline li { grid-template-columns: minmax(0, 1fr); }
+  /* Phones: what happened leads, its moment right under it, both beside the dot. */
+  .timeline { --tl-gap: 12px; grid-template-columns: 12px minmax(0, 1fr); }
+  .timeline time { grid-column: 2; grid-row: 2; white-space: normal; font-size: .875rem; }
+  .event { grid-column: 2; grid-row: 1; }
   .books { padding-inline: 14px; }
   .book { gap: 14px; }
 }

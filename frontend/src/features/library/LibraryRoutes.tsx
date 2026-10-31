@@ -126,6 +126,9 @@ function OwnedItemDetail({ ownedItemId }: { ownedItemId: string }) {
 function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
   const owned = item.ownershipState === "OWNED";
   const facts = editionFacts(item);
+  // The server's actions, each where it belongs: help beside the title, the order inside its own purchase record.
+  const help = item.availableActions.find(action => action.type === "HELP");
+  const orderLink = (orderId: string) => item.availableActions.find(action => action.type === "VIEW_ORDER" && action.href === `/orders/${orderId}`);
   return <article className={classes.detail} data-ownership={item.ownershipState}>
     <div className={classes.scene}>
       <div className={classes.jacket}><BookCover url={item.coverUrl} license={null} attribution={null} title={item.title} size="detail" loading="eager" /></div>
@@ -134,12 +137,11 @@ function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
         <h1 className={classes.title} data-long={item.title.length > 60 || undefined}>{item.title}</h1>
         {item.authors && <p className={classes.authors}>{item.authors}</p>}
         <div className={classes.ownership}>
-          <p className={classes.ownershipState}><MaterialSymbol name={owned ? "check_circle" : "block"} fill={owned} size={22} /><span>{item.ownershipLabel}</span></p>
-          <p>Adquirido el <time dateTime={item.acquiredAt}>{acquiredDateLabel(item.acquiredAt)}</time></p>
+          {/* The title is the subject: owned, and what it is for — reading or listening — in the reader's words. */}
+          <p className={classes.ownershipState}><MaterialSymbol name={owned ? "check_circle" : "block"} fill={owned} size={22} /><span>{owned ? (item.productType === "EBOOK" ? "Tuyo para leer" : "Tuyo para escuchar") : item.ownershipLabel}</span></p>
+          <p>{owned ? "En tu biblioteca desde el" : "Adquirido el"} <time dateTime={item.acquiredAt}>{acquiredDateLabel(item.acquiredAt)}</time></p>
         </div>
-        {item.availableActions.length > 0 && <nav className={classes.actions} aria-label="Acciones de la adquisición">
-          {item.availableActions.map((action, index) => <Link key={`${action.type}-${index}`} to={action.href} className={classes.action} data-action={action.type}>{action.label}</Link>)}
-        </nav>}
+        {help && <Link className={classes.helpLink} to={help.href}><MaterialSymbol name="help" size={20} aria-hidden="true" /><span>{help.label}</span></Link>}
       </div>
     </div>
 
@@ -158,6 +160,7 @@ function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
             <div><dt>Pago</dt><dd>{source.paymentStateLabel}</dd></div>
             <div><dt>Titularidad</dt><dd>{source.grantStateLabel}</dd></div>
           </dl>
+          {orderLink(source.orderId) && <Link className={classes.purchaseLink} to={orderLink(source.orderId)!.href} aria-label={`${orderLink(source.orderId)!.label} N.° ${source.orderId}`}>{orderLink(source.orderId)!.label}<MaterialSymbol name="chevron_right" size={20} aria-hidden="true" /></Link>}
         </li>)}</ul>
       </section>
     </div>

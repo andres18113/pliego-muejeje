@@ -309,7 +309,8 @@ test("deleting an address asks in a dialog that names it and returns focus when 
   await expect(confirm.getByRole("button", { name: "Eliminar dirección" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(confirm).toBeHidden();
-  await expect(page.getByText("Eliminamos la dirección.")).toBeFocused();
+  await expect(page.locator("[data-undo-toast]")).toHaveText(/Dirección eliminada/);
+  await expect(page.getByRole("button", { name: "Editar Casa" })).toBeFocused();
   await expect(page.getByRole("heading", { level: 3, name: "Oficina" })).toHaveCount(0);
   expect(api.deletes).toBe(1);
 

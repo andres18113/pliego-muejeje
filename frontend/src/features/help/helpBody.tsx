@@ -1,4 +1,4 @@
-import { Fragment, type MouseEvent } from "react";
+import { Fragment, type MouseEvent, type ReactNode } from "react";
 import { Link } from "react-router-dom";
 import classes from "./help.module.css";
 
@@ -86,23 +86,34 @@ function jump(event: MouseEvent<HTMLAnchorElement>, id: string) {
 /** Only a long article earns a contents list; a short one is read faster than its outline. */
 const longArticle = (sections: number, body: string) => sections >= 5 && body.length >= 2400;
 
-/** The body in reading order; a long article adds a short "En este artículo" list of its sections first. */
-export function HelpBody({ body }: { body: string }) {
+const sameText = (a: string, b: string) => a.localeCompare(b, "es", { sensitivity: "base" }) === 0;
+
+/**
+ * The body in reading order; a long article adds a short "En este artículo" list of its sections first.
+ * `within` places something of the reader's own right where the article explains it: after the first block of the
+ * named section, or — if the published text no longer has that section — before the body, so it is never lost.
+ */
+export function HelpBody({ body, within }: { body: string; within?: { section: string; render: (placement: "section" | "top") => ReactNode } }) {
   const blocks = parseHelpBody(body);
   const sections = blocks.filter((block): block is Extract<HelpBlock, { kind: "heading" }> => block.kind === "heading");
+  const anchor = within ? blocks.findIndex(block => block.kind === "heading" && sameText(block.text, within.section)) : -1;
+  // After the section's first paragraph or list: the general rule is read first, then the reader's own case.
+  const slotAfter = anchor >= 0 && anchor + 1 < blocks.length && blocks[anchor + 1].kind !== "heading" ? anchor + 1 : anchor;
   return <>
     {longArticle(sections.length, body) && <nav className={classes.contents} aria-labelledby="help-contents-heading">
       <h2 id="help-contents-heading" className={classes.contentsTitle}>En este artículo</h2>
       <ul>{sections.map(section => <li key={section.id}><a href={`#${section.id}`} onClick={event => jump(event, section.id)}>{section.text}</a></li>)}</ul>
     </nav>}
+    {within && anchor < 0 && within.render("top")}
     <div className={classes.body}>
       {blocks.map((block, index) => {
-        if (block.kind === "heading") return <h2 key={index} id={block.id} tabIndex={-1} className={classes.section}>{block.text}</h2>;
-        if (block.kind === "paragraph") return <p key={index}><Inline parts={block.inline} /></p>;
+        const slot = index === slotAfter && within ? within.render("section") : null;
+        if (block.kind === "heading") return <Fragment key={index}><h2 id={block.id} tabIndex={-1} className={classes.section}>{block.text}</h2>{slot}</Fragment>;
+        if (block.kind === "paragraph") return <Fragment key={index}><p><Inline parts={block.inline} /></p>{slot}</Fragment>;
         const List = block.kind === "steps" ? "ol" : "ul";
-        return <List key={index} className={block.kind === "steps" ? classes.steps : classes.bullets}>
+        return <Fragment key={index}><List className={block.kind === "steps" ? classes.steps : classes.bullets}>
           {block.items.map((item, itemIndex) => <li key={itemIndex}><Inline parts={item} /></li>)}
-        </List>;
+        </List>{slot}</Fragment>;
       })}
     </div>
   </>;

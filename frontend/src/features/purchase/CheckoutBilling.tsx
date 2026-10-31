@@ -4,6 +4,7 @@ import { useFormState, useWatch, type Control, type FieldErrors, type UseFormCle
 import type { BillingRecipient, CheckoutBillingInput } from "@/shared/api/billing";
 import type { CustomerAddress } from "@/shared/api/customer";
 import { Button } from "@/components/ui/button";
+import { ChoicePicker } from "@/shared/ui/ChoicePicker";
 import { EcuadorianCedulaInput } from "@/shared/ui/EcuadorianCedulaInput";
 import { IdentificationStatus, identificationInvalid } from "@/shared/ui/IdentificationStatus";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
@@ -25,8 +26,24 @@ export function isBillable(address: CustomerAddress | null | undefined): address
 function fromSaved(address: CustomerAddress): BillingAddressValues {
   return { line1: address.line1, line2: address.line2 ?? "", provinceId: address.provinceId ?? "", cityId: address.cityId ?? "", countryCode: "EC", postalCode: address.postalCode ?? "" };
 }
-function addressLines(address: Pick<CustomerAddress, "line1" | "line2" | "city" | "province">) {
-  return [[address.line1, address.line2].filter(Boolean).join(", "), [address.city, address.province].filter(Boolean).join(", ")].filter(Boolean);
+/**
+ * Takes the customer to "Entregar en": scrolled clear of the sticky purchase header (measured, it compacts on
+ * scroll) and focused on its change action, so one more press opens the saved addresses.
+ */
+function goToDelivery() {
+  const section = document.getElementById("checkout-destination");
+  if (!section) return;
+  const header = document.querySelector<HTMLElement>("[data-purchase-header]");
+  const clearance = (header && getComputedStyle(header).position !== "static" ? header.getBoundingClientRect().height : 0) + 16;
+  const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+  window.scrollTo({ top: Math.max(0, section.getBoundingClientRect().top + window.scrollY - clearance), behavior: reduced ? "auto" : "smooth" });
+  // With the saved addresses already open, the chosen one; otherwise the action that opens them.
+  const target = section.querySelector<HTMLElement>('input[name="addressId"]:checked') ?? document.getElementById("checkout-change-address") ?? section;
+  target.focus({ preventScroll: true, focusVisible: true } as FocusOptions);
+}
+/** Enough to recognise a saved address: its street and city, never the whole record. */
+function shortAddress(address: Pick<CustomerAddress, "line1" | "city">) {
+  return [address.line1, address.city].filter(Boolean).join(", ");
 }
 
 /**
@@ -121,11 +138,13 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
   const [nameRejection, setNameRejection] = useState<string | null>(null);
   const buyerName = register("buyerName");
   const buyerNameError = nameRejection ?? errors.buyerName?.message;
-  const nameOpen = editing || Boolean(buyerNameError) || (!profilePending && !buyerNameValue.trim());
-
   // Who the invoice is for. Each recipient keeps what was typed for it while the customer compares the two.
   const recipient: BillingRecipient = useWatch({ control, name: "billingRecipient" }) ?? "ACCOUNT";
   const other = recipient === "OTHER";
+  // The account holder's invoice carries the profile's name, like its number: a field only when the profile has none
+  // or the server refused it. Another recipient's name is typed while editing and reads as a line once accepted.
+  const nameOpen = Boolean(buyerNameError) || (other ? editing || !buyerNameValue.trim() : !profilePending && !buyerNameValue.trim());
+
   const drafts = useRef<Record<BillingRecipient, { name: string; number: string } | null>>({ ACCOUNT: null, OTHER: null });
   function chooseRecipient(next: BillingRecipient) {
     if (next === recipient) return;
@@ -137,7 +156,7 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
       setValue("billingIdentity.number", draft?.number ?? "");
     } else {
       // The account holder's number is the profile's whenever there is one.
-      setValue("buyerName", draft?.name || accountName);
+      setValue("buyerName", accountName || draft?.name || "");
       setValue("billingIdentity.number", registeredNumber ?? draft?.number ?? "");
     }
     setNameRejection(null);
@@ -158,16 +177,22 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
     requestAnimationFrame(() => document.getElementById("checkout-change-billing")?.focus());
   }
 
-  const sourceOptions: { value: string; label: string; lines: string[] }[] = [
-    ...(billableDelivery || awaitingDelivery ? [{ value: "delivery", label: "Misma dirección de entrega", lines: billableDelivery ? addressLines(billableDelivery) : [] }] : []),
+  // One compact choice: the delivery (only once there is a valid one — never offered, let alone preselected, before),
+  // each other saved address by its alias, and "Otra dirección", the only one that asks for fields.
+  const sourceOptions: { value: string; label: string }[] = [
+    ...(billableDelivery ? [{ value: "delivery", label: "Igual que la entrega" }] : []),
     ...(billableAddresses ?? []).filter(address => address.addressId !== billableDelivery?.addressId)
-      .map(address => ({ value: `saved:${address.addressId}`, label: address.alias, lines: addressLines(address) })),
-    { value: "other", label: "Otra dirección", lines: [] },
+      .map(address => ({ value: `saved:${address.addressId}`, label: address.alias || "Dirección guardada" })),
+    { value: "other", label: "Otra dirección" },
   ];
   const sourceValue = effective.kind === "saved" ? `saved:${effective.addressId}` : effective.kind;
+  // Waiting for the delivery address there is nothing to choose yet; with only "Otra dirección" its fields say it all.
+  const sourcePickable = !awaitingDelivery && sourceOptions.length > 1;
   const addressFieldsOpen = otherAddress && (editing || !resolved);
   const optionalFields = [{ name: "line2", label: "Complemento (opcional)", max: 200, autoComplete: "address-line2" }, { name: "postalCode", label: "Código postal (opcional)", max: 20, autoComplete: "postal-code" }] as const;
   const requiredFields = [{ name: "line1", label: "Dirección", max: 200, autoComplete: "address-line1" }] as const;
+  const [optionalLine2 = "", optionalPostal = ""] = useWatch({ control, name: ["billingAddress.line2", "billingAddress.postalCode"] }) as (string | null | undefined)[];
+  const optionalFilled = Boolean(optionalLine2?.trim() || optionalPostal?.trim());
   const billingProvinceId = useWatch({ control, name: "billingAddress.provinceId" }) ?? "";
   const billingCityId = useWatch({ control, name: "billingAddress.cityId" }) ?? "";
   const field = (item: (typeof requiredFields)[number] | (typeof optionalFields)[number]) => {
@@ -191,14 +216,17 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
         }}>Cambiar datos de factura</button>}
       </div>
 
-      {/* Who it is for: asked only once the customer opens the details; the account holder by default. */}
-      {editing && <fieldset className={`${classes.choices} ${classes.billingChoices}`}>
-        <legend className={classes.billingLegend}>La factura es para</legend>
-        {([["ACCOUNT", "Para mí", "Con tu cédula o RUC del perfil."], ["OTHER", "Otra persona o empresa", "Solo esta factura; tu perfil no cambia."]] as const).map(([value, label, line]) =>
-          <label key={value} className={classes.choice}>
-            <input type="radio" name="billing-recipient" value={value} checked={recipient === value} onChange={() => chooseRecipient(value)} />
-            <span className={classes.choiceCopy}><strong>{label}</strong><span>{line}</span></span>
-          </label>)}
+      {/* Who it is for: one two-way switch, asked only once the customer opens the details; the account holder by default.
+          Only the chosen side's details follow it. */}
+      {editing && <fieldset className={classes.recipientSwitch}>
+        <legend className={classes.billingLegend}>Facturar a</legend>
+        <div className={classes.recipientOptions}>
+          {([["ACCOUNT", "Para mí"], ["OTHER", "Otra persona o empresa"]] as const).map(([value, label]) =>
+            <label key={value} className={classes.recipientOption}>
+              <input type="radio" name="billing-recipient" value={value} checked={recipient === value} onChange={() => chooseRecipient(value)} />
+              <span>{label}</span>
+            </label>)}
+        </div>
       </fieldset>}
 
       {/* Who the invoice is for: plain lines once known, a field only for what is missing. */}
@@ -211,13 +239,12 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
           : <PersonNameInput id="billing-buyer" autoComplete="name" {...buyerName} onInputRejected={setNameRejection}
             onChange={event => { setNameRejection(null); void buyerName.onChange(event); }}
             aria-invalid={Boolean(buyerNameError) || undefined}
-            aria-describedby={buyerNameError ? "billing-buyer-error" : "billing-buyer-help"} />}
-        {buyerNameError ? <FieldMessage id="billing-buyer-error" tone="error">{buyerNameError}</FieldMessage>
-          : !other && <FieldMessage id="billing-buyer-help" tone="help">Solo para esta factura; tu perfil no cambia.</FieldMessage>}
+            aria-describedby={buyerNameError ? "billing-buyer-error" : undefined} />}
+        {buyerNameError && <FieldMessage id="billing-buyer-error" tone="error">{buyerNameError}</FieldMessage>}
       </div> : <div className={classes.billingRow}>
         <span className={classes.billingLabel}>A nombre de</span>
         <span className={classes.billingValue}>{buyerNameValue}</span>
-        {other && <span className={classes.billingNote}>Otra persona o empresa · solo esta factura</span>}
+        {other && !editing && <span className={classes.billingNote}>Otra persona o empresa · solo esta factura</span>}
       </div>}
 
       {identityPending && !other ? <p className={classes.status} role="status">Consultando tu identificación…</p>
@@ -232,7 +259,7 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
             <span className={classes.billingValue}>{registeredNumber}</span>
             {registeredInvalid
               ? <span className={classes.billingFix} role="alert">No es válida. <Link to="/account/identity">Corrígela</Link> para poder comprar.</span>
-              : editing && <span className={classes.billingNote}>Se corrige en <Link to="/account">Mi perfil</Link>.</span>}
+              : editing && <span className={classes.billingNote}>Tu nombre y {kind(registeredNumber) === "RUC" ? "tu RUC" : "tu cédula"} se corrigen en <Link to="/account">Mi perfil</Link>.</span>}
           </div>
         </>
         : <div className="form-field">
@@ -244,37 +271,37 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
             aria-invalid={identificationInvalid(number, numberError) || undefined}
             aria-describedby="billing-cedula-status billing-cedula-save" />
           <IdentificationStatus id="billing-cedula-status" value={number} error={numberError} />
-          <span id="billing-cedula-save" className="field-help">{other ? "Solo para esta factura; no se guarda en tu perfil." : "La guardaremos en tu perfil para tus próximas compras."}</span>
+          <span id="billing-cedula-save" className="field-help">{other ? "Solo para esta factura." : "Se guardará en tu perfil."}</span>
         </div>}
 
       {/* Where the invoice goes: the delivery address by default; a choice only when asked for. */}
-      {editing ? <fieldset className={`${classes.choices} ${classes.billingChoices}`}>
-        <legend className={classes.billingLegend}>Dirección de facturación</legend>
-        {sourceOptions.map(option => <label key={option.value} className={classes.choice}>
-          <input type="radio" name="billing-source" value={option.value} checked={sourceValue === option.value}
-            onChange={() => setChosen(option.value === "delivery" ? { kind: "delivery" } : option.value === "other" ? { kind: "other" } : { kind: "saved", addressId: option.value.slice(6) })} />
-          <span className={classes.choiceCopy}>
-            <strong>{option.label}</strong>
-            {option.lines.map(line => <span key={line}>{line}</span>)}
-          </span>
-        </label>)}
-      </fieldset> : addressesPending && !resolved && !otherAddress ? <p className={classes.status} role="status">Consultando tus direcciones…</p>
-        : (awaitingDelivery || resolved) && <div className={classes.billingRow}>
+      {editing ? sourcePickable && <div className={classes.sourcePick}>
+        <span className={classes.billingLegend} aria-hidden="true">Dirección de facturación</span>
+        <ChoicePicker label="Dirección de facturación" value={sourceValue} options={sourceOptions}
+          onChange={next => setChosen(next === "delivery" ? { kind: "delivery" } : next === "other" ? { kind: "other" } : { kind: "saved", addressId: next.slice(6) })} />
+        {/* A saved address is recognised by its street and city: one line, never the whole record. */}
+        {effective.kind === "saved" && resolved && <span className={classes.billingShort}>{shortAddress(resolved)}</span>}
+      </div> : addressesPending && !resolved && !otherAddress ? <p className={classes.status} role="status">Consultando tus direcciones…</p>
+        // Before there is a delivery address the invoice has nothing to say about one: no row until it exists.
+        : resolved && <div className={classes.billingRow}>
           <span className={classes.billingLabel}>Dirección de facturación</span>
           {effective.kind === "delivery"
-            // Reused, not retyped: one chip says so at a glance; the short address says which one.
-            ? <span className={classes.billingValue}>
+            // Reused, not retyped: "Entregar en" already shows the address, so it is not repeated here.
+            ? <span className={classes.billingReuse}>
               <span className={classes.billingChip}><MaterialSymbol name="local_shipping" aria-hidden="true" size={16} />Igual que la entrega</span>
-              <span className={classes.billingShort}>{resolved ? [resolved.line1, resolved.city].filter(Boolean).join(", ") : "Elige primero dónde entregar."}</span>
+              {/* Changing where it is delivered is the delivery's decision, not the invoice's: go there instead of duplicating it. */}
+              <button type="button" className={classes.billingJump} onClick={goToDelivery}>
+                <span>Cambiar entrega</span><MaterialSymbol name="chevron_right" aria-hidden="true" size={18} />
+              </button>
             </span>
-            : resolved && <span className={classes.billingValue}>
-              <span className={classes.billingChip}><MaterialSymbol name="home" aria-hidden="true" size={16} />{resolved.alias || "Dirección guardada"}</span>
-              <span className={classes.billingShort}>{[resolved.line1, resolved.city].filter(Boolean).join(", ")}</span>
-            </span>}
+            : <>
+              <span className={classes.billingValue}>{resolved.alias || "Dirección guardada"}</span>
+              <span className={classes.billingShort}>{shortAddress(resolved)}</span>
+            </>}
         </div>}
 
       {addressFieldsOpen && <fieldset className={classes.billingFields}>
-        <legend className={editing ? "visually-hidden" : classes.billingLegend}>Dirección de facturación</legend>
+        <legend className={editing && sourcePickable ? "visually-hidden" : classes.billingLegend}>Dirección de facturación</legend>
         {requiredFields.map(field)}
         <ProvinceCityFields idPrefix="billing" provinceId={billingProvinceId} cityId={billingCityId} disabled={disabled}
           provinceError={errors.billingAddress?.provinceId?.message} cityError={errors.billingAddress?.cityId?.message}
@@ -283,8 +310,17 @@ export function CheckoutBilling({ register, control, errors, setValue, getValues
             setValue("billingAddress.cityId", next.cityId, { shouldDirty: true });
             clearErrors(next.cityId ? ["billingAddress.provinceId", "billingAddress.cityId"] : "billingAddress.provinceId");
           }} />
-        {showOptional ? optionalFields.map(field)
-          : <button type="button" className={`${classes.linkAction} ${classes.wide}`} onClick={() => { setShowOptional(true); requestAnimationFrame(() => document.getElementById("billing-line2")?.focus()); }}>Añadir complemento o código postal</button>}
+        {/* Complement and postal code are optional: one disclosure that opens and closes them. Collapsed by default;
+            closing keeps what was typed (the form keeps unmounted values) and the label says something is there. */}
+        <button type="button" className={classes.optionalToggle} aria-expanded={showOptional} aria-controls="billing-optional"
+          onClick={() => {
+            setShowOptional(!showOptional);
+            if (!showOptional) requestAnimationFrame(() => document.getElementById("billing-line2")?.focus());
+          }}>
+          <span>{showOptional ? "Ocultar datos opcionales" : optionalFilled ? "Mostrar datos opcionales" : "Añadir datos opcionales"}</span>
+          <MaterialSymbol name={showOptional ? "expand_less" : "expand_more"} aria-hidden="true" size={20} />
+        </button>
+        {showOptional && <div id="billing-optional" className={classes.optionalFields}>{optionalFields.map(field)}</div>}
       </fieldset>}
 
       {editing && <div className={classes.billingDone}>

@@ -76,7 +76,7 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   expect(orderId).toBeTruthy();
   await page.getByRole("link", { name: "Ver pedido completo" }).first().click();
   await expect(page.getByText("Aprobado", { exact: true })).toBeVisible();
-  await page.getByRole("link", { name: "Volver a mis pedidos" }).click();
+  await page.getByRole("navigation", { name: "Ruta" }).getByRole("link", { name: "Pedidos" }).click();
   await expect(page.locator(`a[href="/orders/${orderId}"]`).first()).toBeVisible();
   await page.screenshot({ path: "/tmp/pliego-s06-desktop.png", fullPage: true });
   await page.setViewportSize({ width: 390, height: 844 });

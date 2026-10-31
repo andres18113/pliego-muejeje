@@ -40,10 +40,10 @@ test("real purchase ownership supports list, media filters, detail, purchase and
   await page.getByRole("group", { name: "Mostrar" }).getByRole("button", { name: "Audiolibros" }).click();
   await page.locator(`a[href="/biblioteca/${fixture.audioOwnedItemId}"]`).click();
   await expect(page.getByText("Voz Biblioteca", { exact: true })).toBeVisible();
-  await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();
-  const actions = page.getByRole("navigation", { name: "Acciones de la adquisición" });
-  await expect(actions.getByRole("link", { name: "Ver pedido" })).toHaveAttribute("href", `/orders/${fixture.mixedOrderId}`);
-  await actions.getByRole("link", { name: "Ayuda" }).click();
+  await expect(page.getByText("Tuyo para escuchar", { exact: true })).toBeVisible();
+  const purchases = page.getByRole("region", { name: "Información de compra" });
+  await expect(purchases.getByRole("link", { name: /^Ver pedido/ })).toHaveAttribute("href", `/orders/${fixture.mixedOrderId}`);
+  await page.getByRole("article").getByRole("link", { name: "Ayuda", exact: true }).click();
   await expect(page).toHaveURL(/\/ayuda\/audiolibros$/);
   await expect(page.getByRole("heading", { name: "Audiolibros", exact: true })).toBeVisible();
   await page.goto("/ayuda");

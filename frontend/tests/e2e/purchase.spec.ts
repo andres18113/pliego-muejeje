@@ -452,6 +452,8 @@ test("keeps purchase steps and the Account family on their type systems at all t
   };
 
   await verifySurface("Tu carrito");
+  // The purchase header carries no account menu: the Account family is entered from the site header.
+  await page.getByRole("link", { name: "Seguir comprando" }).click();
   await openAccountSection(page, "Perfil");
   await verifySurface("Mi perfil", "600");
   await openAccountSection(page, "Direcciones");

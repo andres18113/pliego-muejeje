@@ -52,9 +52,10 @@ const refunded = { paymentId: "9", method: "CARD", state: "REFUNDED", amount: "3
 describe("OrderPage", () => {
   afterEach(() => vi.unstubAllGlobals());
 
-  const digitalOrder = (actions: Record<string, unknown>) => order({
+  const owned = { state: "AVAILABLE", ownedItemId: "81" };
+  const digitalOrder = (actions: Record<string, unknown>, digitalAccess: Record<string, unknown> = owned) => order({
     fulfillment: null, shipment: null, address: null,
-    items: [{ ...order().items[0], requiresPhysicalFulfillment: false, format: "EBOOK", quantity: 1, subtotal: "18.50" }],
+    items: [{ ...order().items[0], requiresPhysicalFulfillment: false, format: "EBOOK", quantity: 1, subtotal: "18.50", digitalAccess }],
     availableActions: { cancel: false, changeShippingAddress: false, ...actions },
   });
 
@@ -110,7 +111,8 @@ describe("OrderPage", () => {
     expect(await screen.findByRole("heading", { level: 2, name: "Compra confirmada" })).toBeInTheDocument();
     expect(screen.getByText("Puedes cancelar este pedido durante los primeros 6 minutos.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca/ })).toBeNull();
+    // Paid and owned already: the title opens straight from its line, even inside the window.
+    expect(screen.getByRole("link", { name: "Ver en Mi biblioteca: Cien años de soledad" })).toHaveAttribute("href", "/biblioteca/81");
     expect(document.body.textContent).not.toMatch(/15:06|CANCELLATION_WINDOW/);
   });
 
@@ -120,7 +122,9 @@ describe("OrderPage", () => {
     expect(await screen.findByRole("heading", { level: 2, name: "¡Gracias por tu compra!" })).toBeInTheDocument();
     expect(screen.getByText("Tu compra está confirmada.")).toBeInTheDocument();
     expect(screen.getByText("Puedes revisar tus artículos comprados en Mi biblioteca.")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Ver Mi biblioteca/ })).toHaveAttribute("href", "/biblioteca");
+    // One way in, to the owned title itself; no second, collection-wide button competes with it.
+    expect(screen.getByRole("link", { name: "Ver en Mi biblioteca: Cien años de soledad" })).toHaveAttribute("href", "/biblioteca/81");
+    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca/ })).toBeNull();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
     expect(document.body.textContent).not.toMatch(/Leer|Escuchar|Descargar/);
   });
@@ -216,7 +220,12 @@ describe("OrderPage", () => {
 
     expect(await screen.findByRole("heading", { level: 2, name: "Pedido confirmado" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: "Detalle del pedido" })).toHaveFocus();
-    expect(screen.getByRole("link", { name: "Volver a mis pedidos" })).toHaveAttribute("href", "/orders");
+    // One trail, Google Store style: Inicio | Pedidos | Detalle del pedido, and no second way back.
+    const trail = within(screen.getByRole("navigation", { name: "Ruta" }));
+    expect(trail.getByRole("link", { name: "Inicio" })).toHaveAttribute("href", "/");
+    expect(trail.getByRole("link", { name: "Pedidos" })).toHaveAttribute("href", "/orders");
+    expect(trail.getByText("Detalle del pedido")).toHaveAttribute("aria-current", "page");
+    expect(screen.queryByRole("link", { name: "Volver a mis pedidos" })).toBeNull();
     expect(screen.getByRole("list", { name: "Progreso del envío" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Libros del pedido" })).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Cien años de soledad" })).toBeInTheDocument();
@@ -350,28 +359,45 @@ describe("OrderPage", () => {
     const digital = screen.getByRole("region", { name: "Acceso digital" });
     expect(within(digital).getByText("Cómo comportarse en la multitud")).toBeInTheDocument();
     expect(within(digital).getByText("En Mi biblioteca")).toBeInTheDocument();
-    expect(within(digital).getByRole("link", { name: "Ver en Mi biblioteca" })).toHaveAttribute("href", "/biblioteca/81");
+    expect(within(digital).getByRole("link", { name: /^Ver en Mi biblioteca/ })).toHaveAttribute("href", "/biblioteca/81");
+    // Only the digital title: the printed book has no library action.
+    expect(within(printed).queryByRole("link", { name: /Mi biblioteca/ })).toBeNull();
     // Cancelling a paid mixed order refunds it whole and revokes its digital titles (verified backend rule).
     expect(screen.getByText(/se reembolsará el pago completo, se liberarán los libros impresos y los títulos digitales saldrán de Mi biblioteca/)).toBeInTheDocument();
+  });
+
+  it.each([
+    ["a pending payment", { state: "PENDING_PAYMENT", ownedItemId: null }, "PENDING"],
+    ["an unsuccessful purchase", { state: "UNAVAILABLE", ownedItemId: null }, "REJECTED"],
+    ["a refunded payment, whatever the line says", { state: "AVAILABLE", ownedItemId: "81" }, "REFUNDED"],
+  ])("offers no library action for %s", async (_case, access, paymentState) => {
+    const base = digitalOrder({ canCancel: false, lifecycleState: "COMPLETED", libraryAccessState: "OWNERSHIP_ONLY" }, access);
+    stubApi({ "GET /api/v1/orders/700": () => json({ ...base, payment: { ...base.payment, state: paymentState } }) });
+    renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByText("Cien años de soledad")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Ver en Mi biblioteca/ })).toBeNull();
   });
 
   it("cancels a digital purchase inside its window and then shows the server's cancelled state", async () => {
     const api = stubApi({
       "GET /api/v1/orders/700": [
         () => json(digitalOrder({ cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: new Date(Date.now() + 300_000).toISOString(), libraryAccessState: "OWNERSHIP_ONLY" })),
-        () => json({ ...digitalOrder({ canCancel: false, lifecycleState: "CANCELLED", libraryAccessState: "NOT_APPLICABLE" }), orderState: "CANCELLED", purchaseState: "CANCELLED", payment: refunded,
+        () => json({ ...digitalOrder({ canCancel: false, lifecycleState: "CANCELLED", libraryAccessState: "NOT_APPLICABLE" }, { state: "REVOKED", ownedItemId: null }), orderState: "CANCELLED", purchaseState: "CANCELLED", payment: refunded,
           stateHistory: [{ historyId: "2", actorUserId: "2", origin: "USER", previousState: "CONFIRMED", newState: "CANCELLED", at: "2026-09-27T22:00:00Z" }] }),
       ],
       "POST /api/v1/orders/700/cancel": () => json({ orderId: "700", previousState: "CONFIRMED", orderState: "CANCELLED", paymentState: "REFUNDED", restoredUnits: 0 }),
     });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByText("Si lo cancelas, se reembolsará el pago y la compra dejará de estar en Mi biblioteca.")).toBeInTheDocument();
+    expect(await screen.findByText("Puedes cancelar este pedido durante los primeros 6 minutos.")).toBeInTheDocument();
     expect(screen.queryByText(/Aún puedes cancelarlo/)).toBeNull();
     await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
+    // The consequence is stated where the decision is taken.
+    const dialog = await screen.findByRole("dialog");
+    expect(within(dialog).getByText("La compra dejará de estar en Mi biblioteca.")).toBeInTheDocument();
     await userEvent.click(await screen.findByRole("button", { name: "Confirmar cancelación" }));
     expect(await screen.findByRole("heading", { level: 2, name: "Pedido cancelado" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
-    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca/ })).toBeNull();
+    expect(screen.queryByRole("link", { name: /Ver Mi biblioteca|Ver en Mi biblioteca/ })).toBeNull();
     expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(1);
   });
 

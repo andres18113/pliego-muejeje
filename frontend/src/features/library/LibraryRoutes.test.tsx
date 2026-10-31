@@ -31,7 +31,10 @@ describe("Mi biblioteca functional routes", () => {
     expect(await screen.findByText("1 título")).toBeInTheDocument();
     await user.click(await screen.findByRole("link", { name: "Libro propio" }));
     await screen.findByRole("heading", { name: "Libro propio" });
-    expect(screen.getByText("Pertenece a tu cuenta")).toBeInTheDocument();
+    // The title and what it is for lead; nothing about the product's own limits.
+    expect(screen.getByText("Tuyo para leer")).toBeInTheDocument();
+    expect(screen.getByText(/En tu biblioteca desde el/)).toBeInTheDocument();
+    expect(screen.queryByText(/no ofrece|en línea/i)).toBeNull();
     expect(screen.getByText("EPUB")).toBeInTheDocument();
     const purchases = screen.getByRole("region", { name: "Información de compra" });
     for (const label of ["Pedido N.° 700", "Confirmado", "Aprobado", "Vigente"]) expect(within(purchases).getByText(label)).toBeInTheDocument();
@@ -40,9 +43,19 @@ describe("Mi biblioteca functional routes", () => {
     expect(screen.getByText("1 de enero de 2020")).toBeInTheDocument();
     expect(screen.getByText("Español")).toBeInTheDocument();
     expect(document.body).not.toHaveTextContent(/2026-10-05T|segundos/);
-    expect(screen.getByRole("link", { name: "Ver pedido" })).toHaveAttribute("href", "/orders/700");
+    // The order is administration: it sits in its purchase record, not beside the title.
+    expect(within(purchases).getByRole("link", { name: "Ver pedido N.° 700" })).toHaveAttribute("href", "/orders/700");
+    expect(screen.getAllByRole("link", { name: /Ver pedido/ })).toHaveLength(1);
     expect(screen.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda/ebooks");
     expect(screen.queryByRole("link", { name: /Leer|Escuchar|Continuar leyendo|Continuar escuchando/i })).not.toBeInTheDocument();
+  });
+
+  it("tells an audiobook owner it is theirs to listen to, with no player control", async () => {
+    stubApi({ "GET /api/v1/me/library/8": () => json({ ...item, productType: "AUDIOBOOK", metadata: { ...item.metadata, pageCount: null, ebookFileFormat: null, audioDurationSeconds: 31320, narrators: ["Voz Uno"] } }) });
+    renderPurchaseRoute(routes, "/biblioteca/8");
+    expect(await screen.findByText("Tuyo para escuchar")).toBeInTheDocument();
+    expect(screen.queryByText(/no ofrece|en línea/i)).toBeNull();
+    expect(screen.queryByRole("button", { name: /Reproducir|Escuchar/i })).not.toBeInTheDocument();
   });
   it("retains the isolated 404 state without a catalog fallback", async () => {
     const api = stubApi({ "GET /api/v1/me/library/8": () => problem(404, "RESOURCE_NOT_FOUND", "No disponible", "Esta adquisición no está disponible.") });
@@ -60,10 +73,15 @@ describe("Mi biblioteca functional routes", () => {
     await screen.findByRole("heading", { name: "Libro propio" });
     expect(screen.getByText("Audiolibro")).toBeInTheDocument();
     expect(screen.getAllByText("Titularidad revocada")).toHaveLength(1);
+    // A revoked title is not described as being in the library or for reading.
+    expect(screen.queryByText(/Tuyo para|En tu biblioteca desde/)).toBeNull();
+    expect(screen.getByText(/Adquirido el/)).toBeInTheDocument();
     expect(screen.getByText("8 h 42 min")).toBeInTheDocument();
     expect(screen.getByText("Voz Uno, Voz Dos")).toBeInTheDocument();
     expect(screen.getByText("Revocada")).toBeInTheDocument();
-    expect(within(screen.getByRole("navigation", { name: "Acciones de la adquisición" })).getAllByRole("link")).toHaveLength(1);
+    // Only the server's actions: the order link in its record, no help link it did not offer.
+    expect(screen.getByRole("link", { name: "Ver pedido N.° 700" })).toHaveAttribute("href", "/orders/700");
+    expect(screen.queryByRole("link", { name: "Ayuda" })).toBeNull();
   });
   it("marks ownership cache private and scopes it to the authenticated account", async () => {
     stubApi({ "GET /api/v1/me/library": () => json({ items: [item], page: 0, pageSize: 20, totalCount: "1" }) });

@@ -1,7 +1,8 @@
+import { LibraryAccessLink } from "./LibraryAccessLink";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useMutation, useQueries, useQueryClient } from "@tanstack/react-query";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { BookCover } from "@/features/catalog/BookCover";
@@ -31,7 +32,6 @@ import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import classes from "./orderPage.module.css";
 import { InvoiceAction } from "./InvoiceAction";
 import { PickupDetails } from "./PickupDetails";
-import { ParentLink } from "@/shared/ui/ParentLink";
 
 export function OrderPage() {
   const { orderId = "" } = useParams();
@@ -110,7 +110,8 @@ function OrderContent({ orderId, returnTo, purchased }: { orderId: string; retur
   const shell = (children: ReactNode) => <AccountShell
     title="Detalle del pedido"
     headingRef={headingRef}
-    before={<ParentLink to={returnTo}>Volver a mis pedidos</ParentLink>}
+    // Where the order sits, as one trail (Google Store: Home | Order history | Order details); "Pedidos" keeps the list's page.
+    trail="Detalle del pedido" trailParents={[{ label: "Pedidos", to: returnTo }]} trailWidth="1000px"
   >{children}</AccountShell>;
 
   if (!validId || (orderQuery.error instanceof ApiRequestError && orderQuery.error.status === 404)) {
@@ -203,13 +204,13 @@ function OrderView({ order, readCurrent, confirming, setConfirming, cancellation
             <StoryLead order={order} story={story} windowView={windowView} />
             {window && <p className={classes.estimate}>Llega {window}</p>}
           </div>
-          <CancelAction order={order} readCurrent={readCurrent} confirming={confirming} setConfirming={setConfirming} cancellationPending={cancellationPending} onCancel={onCancel} />
           {shipment && !closed && <ShipmentTrack shipment={shipment} />}
           <StoryAction order={order} story={story} />
-          {windowView === "digital-complete" && <div className={classes.actionRow}><ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca<MaterialSymbol name="arrow_forward" aria-hidden="true" size={18} /></ButtonLink></div>}
           {shipment && (story.kind === "in-transit" || story.kind === "delivered") && <ShipmentHistory shipment={shipment} />}
           <Destination order={order} story={story} />
           <Books order={order} items={mixed ? physicalItems : order.items} coverOf={coverOf} label={mixed ? "Libros impresos del pedido" : "Libros del pedido"} />
+          {/* Last and quiet: being able to cancel is a fact about the order, not the page's next step. */}
+          <CancelAction order={order} readCurrent={readCurrent} confirming={confirming} setConfirming={setConfirming} cancellationPending={cancellationPending} onCancel={onCancel} />
         </section>
         {mixed && <DigitalAccess order={order} items={digitalItems} coverOf={coverOf} />}
         </div>
@@ -252,23 +253,21 @@ function StoryLead({ order, story, windowView }: { order: OrderDetail; story: Or
     default:
       text = order.fulfillment?.method === "STORE_PICKUP" ? "Tu compra está confirmada. Te esperamos en el punto de retiro." : "Tu compra está confirmada.";
   }
-  const canCancel = Boolean(order.availableActions?.canCancel ?? order.availableActions?.cancel);
-  // The window's wording follows the server: the cancel line only while it still offers cancellation.
-  if (windowView === "digital-window") text = canCancel ? "Puedes cancelar este pedido durante los primeros 6 minutos." : "Tu compra está confirmada.";
+  // Inside the window the story states the purchase; the cancel foot alone says it can still be cancelled.
+  if (windowView === "digital-window") text = "Tu compra está confirmada.";
   if (windowView === "digital-complete") return <>
     <p className={classes.lead}>Tu compra está confirmada.</p>
     <p className={classes.lead}>Puedes revisar tus artículos comprados en Mi biblioteca.</p>
   </>;
   return <>
     <p className={classes.lead}>{text}</p>
-    {windowView === "pickup-window" && canCancel && <p className={classes.lead}>Puedes cancelar este pedido durante los primeros 6 minutos.</p>}
     {story.kind === "cancelled" && order.payment?.state === "REFUNDED" && <p className={classes.lead}>Tu pago fue reembolsado.</p>}
   </>;
 }
 
 /**
- * What cancelling does, in the order's own terms. Inside the purchase window the story above already says the
- * order can be cancelled, so this line states only the consequence (a digital purchase leaves Mi biblioteca).
+ * The cancel foot's one line, in the order's own terms. Inside the purchase window it states the window; what
+ * cancelling refunds and releases is said in the confirmation, where the decision is taken.
  */
 function cancelConsequence(order: OrderDetail) {
   const windowView = purchaseWindowView(order.availableActions?.lifecycleState, {
@@ -277,12 +276,10 @@ function cancelConsequence(order: OrderDetail) {
   });
   // An unpaid order is never charged, so nothing is refunded (ADR 0042 report: cancelling it rejects the payment).
   if (order.payment?.state === "PENDING") return "Aún puedes cancelarlo: no se realizará ningún cobro.";
-  if (windowView === "digital-window") return "Si lo cancelas, se reembolsará el pago y la compra dejará de estar en Mi biblioteca.";
-  const mixed = isMixedOrder(order);
-  const prefix = windowView === "pickup-window" ? "Si lo cancelas" : "Aún puedes cancelarlo:";
-  return mixed
-    ? `${prefix}${windowView === "pickup-window" ? "," : ""} se reembolsará el pago completo, se liberarán los libros impresos y los títulos digitales saldrán de Mi biblioteca.`
-    : `${prefix}${windowView === "pickup-window" ? "," : ""} se reembolsará el pago y se liberarán los libros.`;
+  if (windowView === "digital-window" || windowView === "pickup-window") return "Puedes cancelar este pedido durante los primeros 6 minutos.";
+  return isMixedOrder(order)
+    ? "Aún puedes cancelarlo: se reembolsará el pago completo, se liberarán los libros impresos y los títulos digitales saldrán de Mi biblioteca."
+    : "Aún puedes cancelarlo: se reembolsará el pago y se liberarán los libros.";
 }
 
 /** A paid mixed order cancels as a whole: one refund, printed books released and every digital title revoked. */
@@ -309,8 +306,8 @@ function CancelAction({ order, readCurrent, confirming, setConfirming, cancellat
   const keep = () => { setConfirming(false); requestAnimationFrame(() => cancelRef.current?.focus({ preventScroll: true })); };
   return <div className={classes.cancel}>
     {!readCurrent ? <p>Actualiza el pedido para comprobar si aún se puede cancelar.</p> : <>
-      <p>{cancelConsequence(order)}</p>
-      <Button ref={cancelRef} variant="secondary" type="button" onClick={() => setConfirming(true)}>Cancelar pedido</Button>
+      <p><MaterialSymbol name="schedule" size={18} aria-hidden="true" /><span>{cancelConsequence(order)}</span></p>
+      <button ref={cancelRef} type="button" className={classes.cancelLink} onClick={() => setConfirming(true)}>Cancelar pedido</button>
     </>}
     <ConfirmDialog opened={confirming} destructive title={`¿Cancelar el pedido N.° ${order.orderId}?`}
       confirmLabel="Confirmar cancelación" busyLabel="Cancelando pedido…" keepLabel="Conservar pedido" busy={cancellationPending}
@@ -363,12 +360,14 @@ function ShipmentHistory({ shipment }: { shipment: OrderShipment }) {
   })).sort((a, b) => b.at.localeCompare(a.at));
   if (events.length < 2) return null;
   const shown = all ? events : events.slice(0, 3);
+  // One scannable column: a dot on a rail, the moment, and right beside it what happened (the latest first, marked).
   return <div className={classes.history}>
     <h3 id="order-history-heading" className="visually-hidden">Seguimiento</h3>
     <ol className={classes.timeline} aria-labelledby="order-history-heading">
-      {shown.map((event) => <li key={event.id}>
+      {shown.map((event, index) => <li key={event.id} data-latest={index === 0 || undefined}>
+        <span className={classes.dot} aria-hidden="true" />
         <time dateTime={event.at}>{orderMomentLabel(event.at)}</time>
-        <span><strong>{event.title}</strong>{event.detail && <span>{event.detail}</span>}</span>
+        <span className={classes.event}><strong>{event.title}</strong>{event.detail && <span>{event.detail}</span>}</span>
       </li>)}
     </ol>
     {events.length > 3 && <button type="button" className={classes.more} aria-expanded={all} onClick={() => setAll(!all)}>{all ? "Ver menos" : "Ver todo"}</button>}
@@ -404,7 +403,10 @@ function Books({ order, items, coverOf, label }: { order: OrderDetail; items: Or
   return <div className={classes.books}>
     <h3 id="order-items-heading" className="visually-hidden">{label}</h3>
     <ul aria-labelledby="order-items-heading">
-      {items.map((item, index) => <BookLine key={item.orderItemId} order={order} item={item} cover={coverOf(item)} eager={index === 0} />)}
+      {/* A paid digital title opens straight from its line; printed books and unpaid or revoked titles have no action. */}
+      {items.map((item, index) => <BookLine key={item.orderItemId} order={order} item={item} cover={coverOf(item)} eager={index === 0}>
+        <LibraryAccessLink order={order} item={item} />
+      </BookLine>)}
     </ul>
   </div>;
 }
@@ -452,7 +454,7 @@ function DigitalAccess({ order, items, coverOf }: { order: OrderDetail; items: O
           const copy = access ? digitalAccessCopy[access.state] : null;
           return <BookLine key={item.orderItemId} order={order} item={item} cover={coverOf(item)} eager={index === 0}>
             {copy && <p className={classes.access} data-state={access!.state}><MaterialSymbol name={copy.icon} size={18} aria-hidden="true" /><span>{copy.text}</span></p>}
-            {access?.state === "AVAILABLE" && <Link className={classes.accessLink} to={`/biblioteca/${access.ownedItemId}`}>Ver en Mi biblioteca</Link>}
+            <LibraryAccessLink order={order} item={item} />
           </BookLine>;
         })}
       </ul>

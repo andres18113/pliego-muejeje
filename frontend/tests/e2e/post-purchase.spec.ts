@@ -75,7 +75,7 @@ for (const width of [1280, 360]) {
         await expect(main.getByRole("list", { name: "Libros impresos del pedido" }).getByText(physical.title)).toBeVisible();
         await expect(main.getByRole("list", { name: "Libros impresos del pedido" }).getByText(audiobook.title)).toHaveCount(0);
         await expect(digital.getByText(audiobook.title)).toBeVisible();
-        await expect(digital.getByRole("link", { name: "Ver en Mi biblioteca" })).toHaveAttribute("href", "/biblioteca/81");
+        await expect(digital.getByRole("link", { name: /^Ver en Mi biblioteca/ })).toHaveAttribute("href", "/biblioteca/81");
       } else {
         await expect(digital).toHaveCount(0);
       }

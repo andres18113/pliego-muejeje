@@ -4,8 +4,9 @@ import { choosePlace } from "./geo-fixtures";
 export const billingFixturePayload = {billingRecipient:"ACCOUNT",billingIdentity:{type:"EC_CEDULA",number:"0123456782"},buyerName:"Compradora Prueba",billingAddress:{line1:"Calle Fiscal de prueba",line2:"",provinceId:"17",cityId:"893",countryCode:"EC",postalCode:""}};
 
 /**
- * Completes the invoice as a customer would in the redesigned checkout: the details open to set the name, the
- * cédula is typed only when the profile has none, and an address only when no saved one can be reused.
+ * Completes the invoice as a customer would: the account holder's invoice carries the profile's name (a name field
+ * appears only when the profile has none), the cédula is typed only when the profile has none, and an address only
+ * when no saved one can be reused.
  */
 export async function fillCheckoutBilling(page: Page) {
   const billing = page.locator("#checkout-billing");

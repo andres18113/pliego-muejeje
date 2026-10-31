@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope } from "@/app/sessionOperation";
-import { Button } from "@/components/ui/button";
 import { getInvoiceFile, getInvoiceMetadata, type InvoiceMetadata } from "@/shared/api/billing";
 import { ApiRequestError, readRecoveryDetail } from "@/shared/api/errors";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
@@ -85,11 +84,12 @@ export function InvoiceAction({ orderId, issued, className }: { orderId: string;
   }
 
   return <div className={`${classes.action}${className ? ` ${className}` : ""}`}>
-    <Button variant="secondary" type="button" className={classes.button} onClick={() => void open()}
+    {/* A document to consult, not a decision: a quiet ultramar link-style action, never an outlined button. */}
+    <button type="button" className={classes.link} onClick={() => void open()}
       aria-disabled={preparing || opening || undefined} aria-busy={opening || undefined}>
       <MaterialSymbol name="receipt_long" size={20} aria-hidden="true" />
       <span>{preparing ? "Preparando factura…" : opening ? "Abriendo factura…" : "Ver factura"}</span>
-    </Button>
+    </button>
     {notice && <p className={classes.notice} role="status">{notice}</p>}
   </div>;
 }

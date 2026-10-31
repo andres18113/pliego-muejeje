@@ -6,12 +6,14 @@ import { BookCover } from "@/features/catalog/BookCover";
 import { formatUsd } from "@/features/catalog/formatters";
 import { getPublicEdition } from "@/shared/api/catalog";
 import type { OrderDetail } from "@/shared/api/orders";
+import { LibraryAccessLink } from "./LibraryAccessLink";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { fulfillmentMethodLabel } from "./fulfillment";
 import { LocationMap } from "./LocationMap";
 import { openingHoursLabel } from "./PickupLocationPicker";
 import { PurchaseFlow } from "./PurchaseFlow";
 import { deliveryWindowLabel, ivaLabel, paymentMethodLabel } from "./purchaseText";
+import { purchaseWindowView } from "./orderStory";
 import { hasSaving } from "./cartPricingViewModel";
 import { InvoiceAction } from "./InvoiceAction";
 import { toOrderPricingViewModel, type OrderLinePricingViewModel } from "./orderPricingViewModel";
@@ -57,97 +59,110 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
     const line = pricing.lines.find((candidate) => candidate.orderItemId === orderItemId);
     return line?.pricingSnapshotAvailable && line.lineSavings && hasSaving(line.lineSavings.rawValue) ? line as OrderLinePricingViewModel & { lineSavings: NonNullable<OrderLinePricingViewModel["lineSavings"]> } : null;
   };
-  const fulfillmentHeading = pickup ? "Retiro" : order.fulfillment?.method === "HOME_DELIVERY" ? "Entrega" : "Artículos comprados";
+  const fulfillmentHeading = pickup ? "Retiro" : "Entrega";
+  // The six-minute window (ADR 0029) is stated only while the server still offers cancellation.
+  const canCancel = Boolean(order.availableActions?.canCancel ?? order.availableActions?.cancel);
+  const windowView = purchaseWindowView(order.availableActions?.lifecycleState, { digitalOnly: !hasPhysicalFulfillment, pickup: Boolean(pickup) });
+  const inWindow = windowView === "digital-window" || windowView === "pickup-window";
+  const cover = (item: OrderDetail["items"][number]) => coverQueries[order.items.indexOf(item)]?.data;
+  const bookCover = (item: OrderDetail["items"][number]) => <div className={classes.bookCover}>
+    <BookCover url={cover(item)?.coverUrl ?? null} license={cover(item)?.coverLicense ?? null} attribution={cover(item)?.coverAttribution ?? null} title={item.title} size="compact" decorative />
+  </div>;
 
   return <PurchaseFlow stage="confirmation">
     <div className={classes.confirmation} data-confirmation="success">
+      {/* 1. The outcome: it went through, under this number. */}
       <header className={classes.intro}>
+        <span className={classes.done} aria-hidden="true"><MaterialSymbol name="check_circle" size={32} /></span>
         <h1 id="confirmation-heading" tabIndex={-1} ref={headingRef}>Es momento de celebrar</h1>
         <p className={classes.thanks}>Gracias por tu pedido N.º {order.orderId}</p>
-        <p>Si necesitas hacer cambios, revisa tu pedido lo antes posible.</p>
+        {inWindow && canCancel && <p>Puedes cancelarlo durante los primeros 6 minutos desde el detalle del pedido.</p>}
       </header>
 
       <div className={classes.layout}>
-        {hasPhysicalFulfillment && <section className={classes.destination} aria-label="Destino confirmado">
-          <LocationMap latitude={mapCoordinates.latitude} longitude={mapCoordinates.longitude}
-            label={location?.name ?? "referencia de PUCE"} callout={callout}
-            linkLabel={location ? undefined : "Ver mapa de referencia"} />
-          {!location && <p className={classes.mapReference}>Referencia PUCE en la entrada principal.</p>}
-        </section>}
+        {/* 2. What happens next, by what was bought: where the printed books go, where the digital ones already are. */}
+        <div className={classes.next}>
+          {hasPhysicalFulfillment && <section className={classes.destination} aria-label="Destino confirmado">
+            <LocationMap latitude={mapCoordinates.latitude} longitude={mapCoordinates.longitude}
+              label={location?.name ?? "referencia de PUCE"} callout={callout}
+              linkLabel={location ? undefined : "Ver mapa de referencia"} />
+            {!location && <p className={classes.mapReference}>Referencia PUCE en la entrada principal.</p>}
+          </section>}
 
-        <aside className={classes.immediate} aria-labelledby="confirmation-immediate-heading">
-          <h2 id="confirmation-immediate-heading">Tu pedido</h2>
-          <p className={classes.orderNumber}>Pedido N.º {order.orderId}</p>
-          <dl className={classes.quickFacts}>
-            {method && <div><dt>{method}</dt><dd>{recipient}</dd></div>}
-            {pickup ? <>
-              <div><dt>Retiro estimado</dt><dd><time dateTime={pickup.readyAt}>{readyLabel}</time></dd></div>
-              <div><dt>Código de retiro</dt><dd className={classes.pickupCode}>{pickup.pickupCode}</dd></div>
-            </> : deliveryWindow && <div><dt>Entrega estimada</dt><dd>{deliveryWindow}</dd></div>}
-          </dl>
-          {pickup && order.fulfillment?.state !== "COLLECTED" && <p className={classes.emailInstruction}>Presenta la confirmación enviada a tu correo al retirar el pedido.</p>}
-          <ButtonLink variant="primary" to={`/orders/${order.orderId}`} replace state={null}>Ver pedido completo</ButtonLink>
-        </aside>
+          {hasPhysicalFulfillment && <section className={classes.card} aria-labelledby="confirmation-fulfillment-heading" data-confirmation="fulfillment">
+            <header className={classes.cardHead}>
+              <h2 id="confirmation-fulfillment-heading">{fulfillmentHeading}</h2>
+              {method && <p>{method}</p>}
+            </header>
+            {(pickup || deliveryWindow) && <dl className={classes.facts}>
+              {pickup ? <>
+                <div className={classes.code}><dt>Código de retiro</dt><dd>{pickup.pickupCode}</dd></div>
+                <div><dt>Retiro estimado</dt><dd><time dateTime={pickup.readyAt}>{readyLabel}</time></dd></div>
+                {location && <div><dt>Horario de atención</dt><dd>{openingHoursLabel(location)}</dd></div>}
+              </> : <div><dt>Entrega estimada</dt><dd>{deliveryWindow}</dd></div>}
+            </dl>}
+            {pickup && order.fulfillment?.state !== "COLLECTED" && <p className={classes.note}>Presenta la confirmación enviada a tu correo al retirar el pedido.</p>}
+            <ul className={classes.lines} aria-label={pickup ? "Libros para retirar" : "Libros para entregar"}>{order.items.filter(item => item.requiresPhysicalFulfillment).map((item) => {
+              const saving = lineSaving(item.orderItemId);
+              return <li key={item.orderItemId}>
+                {bookCover(item)}
+                <div className={classes.lineCopy}>
+                  <strong className={classes.bookTitle}>{item.title}</strong>
+                  <span className={classes.lineMeta}>
+                    <span className={classes.unitPrice}>{formatUsd(item.unitPrice)}<span className="visually-hidden"> por unidad</span>
+                      {saving?.originalPrice && <s className={classes.was}><span className="visually-hidden">Precio anterior: </span>{saving.originalPrice.formattedValue}</s>}</span>
+                    <span>Cantidad: {item.quantity}</span>
+                  </span>
+                  {saving && <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span>}
+                </div>
+              </li>;
+            })}</ul>
+          </section>}
 
-        <section className={classes.details} aria-labelledby="confirmation-order-heading confirmation-order-number" data-confirmation="details">
-          <header className={classes.detailHead}>
+          {digitalItems.length > 0 && <section className={classes.card} aria-labelledby="confirmation-digital-heading">
+            <header className={classes.cardHead}>
+              <h2 id="confirmation-digital-heading">Compras digitales</h2>
+              {hasPhysicalFulfillment && <p>No se envían con los libros impresos: quedan en tu cuenta.</p>}
+            </header>
+            <ul className={classes.lines}>{digitalItems.map(item => {
+              const saving = lineSaving(item.orderItemId);
+              // Each title's own access from the server (V077): digital titles are not shipped, they join Mi biblioteca.
+              const access = item.digitalAccess?.state;
+              return <li key={item.orderItemId}>
+                {bookCover(item)}
+                <div className={classes.lineCopy}>
+                  <strong className={classes.bookTitle}>{item.title}</strong>
+                  {access && <span className={classes.access} data-state={access}><MaterialSymbol name={access === "AVAILABLE" ? "check_circle" : access === "PENDING_PAYMENT" ? "schedule" : "block"} size={18} aria-hidden="true" />{access === "AVAILABLE" ? "Ya está en Mi biblioteca" : access === "PENDING_PAYMENT" ? "Se añadirá a Mi biblioteca cuando se apruebe el pago" : "Sin acceso en Mi biblioteca"}</span>}
+                  {saving && <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span>}
+                  {/* Opens the owned title itself, only once it is really in Mi biblioteca (paid, not revoked). */}
+                  <LibraryAccessLink order={order} item={item} />
+                </div>
+              </li>;
+            })}</ul>
+          </section>}
+        </div>
+
+        {/* 3. The receipt, once: number, payment, totals, the full order and its invoice. */}
+        <aside className={classes.receipt} aria-labelledby="confirmation-order-heading" data-confirmation="details">
+          <header className={classes.receiptHead}>
             <h2 id="confirmation-order-heading">Tu pedido</h2>
-            <p id="confirmation-order-number">N.º {order.orderId}</p>
+            <p>N.º {order.orderId}</p>
           </header>
-          <div className={classes.detailColumns}>
-            <div className={classes.orderFacts}>
-              {(recipient || method) && <section><h3>{method ?? "Destino"}</h3><p>{recipient}</p></section>}
-              {order.payment && <section>
-                <h3>Método de pago</h3>
-                <p className={classes.paymentMethod}><MaterialSymbol name={order.payment.method === "TRANSFER" ? "account_balance" : "credit_card"} size={20} />{paymentMethodLabel(order.payment.method)}</p>
-              </section>}
-            </div>
-            <dl className={classes.totals}>
-              {summarySaving && pricing.summary.originalSubtotal ? <>
-                <div><dt>Subtotal</dt><dd>{pricing.summary.originalSubtotal.formattedValue}</dd></div>
-                <div data-tone="savings"><dt>Ahorro total</dt><dd>-{summarySaving.formattedValue}</dd></div>
-              </> : order.subtotal != null && <div><dt>Subtotal</dt><dd>{formatUsd(order.subtotal)}</dd></div>}
-              {order.taxAmount != null && <div><dt>{ivaLabel(order.taxRate)}</dt><dd>{formatUsd(order.taxAmount)}</dd></div>}
-              {order.shippingAmount != null && <div><dt>Gastos de envío</dt><dd>{formatUsd(order.shippingAmount)}</dd></div>}
-              <div className={classes.total} data-purchase="total"><dt>{summarySaving ? "Total pagado" : "Total"}</dt><dd>{formatUsd(order.total)}</dd></div>
-            </dl>
-          </div>
-          {/* The order's one invoice action, beside the way to the full order; files and their states stay out of view. */}
-          <div className={classes.orderActions}>
-            <Link className={classes.orderAction} to={`/orders/${order.orderId}`} replace state={null}>Ver pedido completo</Link>
+          {order.payment && <p className={classes.paymentMethod}><MaterialSymbol name={order.payment.method === "TRANSFER" ? "account_balance" : "credit_card"} size={20} aria-hidden="true" /><span><span className="visually-hidden">Método de pago: </span>{paymentMethodLabel(order.payment.method)}</span></p>}
+          <dl className={classes.totals}>
+            {summarySaving && pricing.summary.originalSubtotal ? <>
+              <div><dt>Subtotal</dt><dd>{pricing.summary.originalSubtotal.formattedValue}</dd></div>
+              <div data-tone="savings"><dt>Ahorro total</dt><dd>-{summarySaving.formattedValue}</dd></div>
+            </> : order.subtotal != null && <div><dt>Subtotal</dt><dd>{formatUsd(order.subtotal)}</dd></div>}
+            {order.taxAmount != null && <div><dt>{ivaLabel(order.taxRate)}</dt><dd>{formatUsd(order.taxAmount)}</dd></div>}
+            {order.shippingAmount != null && <div><dt>Gastos de envío</dt><dd>{formatUsd(order.shippingAmount)}</dd></div>}
+            <div className={classes.total} data-purchase="total"><dt>{summarySaving ? "Total pagado" : "Total"}</dt><dd>{formatUsd(order.total)}</dd></div>
+          </dl>
+          <div className={classes.receiptActions}>
+            <ButtonLink variant="primary" to={`/orders/${order.orderId}`} replace state={null}>Ver pedido completo</ButtonLink>
             <InvoiceAction orderId={order.orderId} issued={Boolean(order.invoice)} />
           </div>
-        </section>
-
-        {hasPhysicalFulfillment && <section className={classes.fulfillment} aria-labelledby="confirmation-fulfillment-heading" data-confirmation="fulfillment">
-          <header className={classes.fulfillmentHead}>
-            <h2 id="confirmation-fulfillment-heading">{fulfillmentHeading}</h2>
-            {location ? <p>Horario de atención: {openingHoursLabel(location)}</p> : deliveryWindow && <p>{deliveryWindow}</p>}
-          </header>
-          <ul>{order.items.filter(item => item.requiresPhysicalFulfillment).map((item) => {
-            const cover = coverQueries[order.items.indexOf(item)]?.data;
-            const saving = lineSaving(item.orderItemId);
-            return <li key={item.orderItemId}>
-              <div className={classes.bookCover}><BookCover url={cover?.coverUrl ?? null} license={cover?.coverLicense ?? null} attribution={cover?.coverAttribution ?? null} title={item.title} size="compact" decorative /></div>
-              <strong className={classes.bookTitle}>{item.title}</strong>
-              <div className={classes.priceQuantity}>
-                <span className={classes.unitPrice}>{formatUsd(item.unitPrice)}<span className="visually-hidden"> por unidad</span>
-                  {saving?.originalPrice && <s className={classes.was}><span className="visually-hidden">Precio anterior: </span>{saving.originalPrice.formattedValue}</s>}</span>
-                <span>Cantidad: {item.quantity}</span>
-                {saving && <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span>}
-              </div>
-            </li>;
-          })}</ul>
-        </section>}
-        {digitalItems.length > 0 && <section className={classes.digital} aria-labelledby="confirmation-digital-heading"><h2 id="confirmation-digital-heading">Compras digitales</h2><ul>{digitalItems.map(item => {
-          const saving = lineSaving(item.orderItemId);
-          // Each title's own access from the server (V077): digital titles are not shipped, they join Mi biblioteca.
-          const access = item.digitalAccess?.state;
-          return <li key={item.orderItemId}>
-            <span>{item.title} · Cantidad: {item.quantity}{saving && <> <span className={classes.saving}><MaterialSymbol name="sell" size={16} aria-hidden="true" />Ahorraste {saving.lineSavings.formattedValue}</span></>}</span>
-            {access && <span className={classes.access} data-state={access}><MaterialSymbol name={access === "AVAILABLE" ? "check_circle" : access === "PENDING_PAYMENT" ? "schedule" : "block"} size={18} aria-hidden="true" />{access === "AVAILABLE" ? "Ya está en Mi biblioteca" : access === "PENDING_PAYMENT" ? "Se añadirá a Mi biblioteca cuando se apruebe el pago" : "Sin acceso en Mi biblioteca"}</span>}
-          </li>;
-        })}</ul>{hasPhysicalFulfillment && <p>No se envían con los libros impresos: quedan en tu cuenta.</p>}<ButtonLink variant="primary" to="/biblioteca">Ver Mi biblioteca</ButtonLink></section>}
+        </aside>
       </div>
       <Link className={classes.continue} to="/catalog">Seguir explorando el catálogo</Link>
     </div>

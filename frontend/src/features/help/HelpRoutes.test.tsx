@@ -51,11 +51,11 @@ const identityArticle = { slug: "cedula-o-ruc", categorySlug: "cedula-o-ruc", ti
 const correctionRequest = { id: "1", status: "PENDING", proposedType: "EC_CEDULA", proposedNumber: "1710034065", reasonCode: "DOCUMENT_TYPO",
   createdAt: "2026-10-25T17:00:00Z", dueAt: "2026-11-09T17:00:00Z", decidedAt: null, decisionReason: null };
 const identity = (request: object | null) => ({ type: "EC_CEDULA", number: "0912345675", used: true, correctionMode: "REQUEST", correctionRequest: request });
-function renderIdentityArticle(role: "CUSTOMER" | "ADMIN" | null, billingIdentity?: () => Response, slug = "cedula-o-ruc") {
+function renderIdentityArticle(role: "CUSTOMER" | "ADMIN" | null, billingIdentity?: () => Response, slug = "cedula-o-ruc", body = "## Cómo corregirla\nEn Mi perfil.") {
   const article = slug === "cedula-o-ruc" ? identityArticle : ebookArticle;
   const api = stubApi({
     "GET /api/v1/help/categories": () => json({ items: [] }),
-    [`GET /api/v1/help/articles/${slug}`]: () => json({ ...article, body: "## Cómo corregirla\nEn Mi perfil." }),
+    [`GET /api/v1/help/articles/${slug}`]: () => json({ ...article, body }),
     "GET /api/v1/help/articles": () => json({ items: [article], page: 0, pageSize: 20, totalCount: "1" }),
     ...(billingIdentity ? { "GET /api/v1/me/billing-identity": billingIdentity } : {}),
   });
@@ -70,6 +70,25 @@ it("shows a signed-in customer's pending correction with the server's own answer
   expect(within(status).getByText("En revisión")).toBeVisible();
   expect(within(status).getByText(/Respuesta antes del/)).toHaveTextContent(/Respuesta antes del 9 nov\.? 2026/);
   expect(within(status).getByRole("link", { name: "Ver solicitud" })).toHaveAttribute("href", "/account/identity");
+});
+
+it("puts the reader's own answer date inside the section that explains the review", async () => {
+  const body = "## Cómo corregirla\n\nEn Mi perfil.\n\n## Mientras la revisamos\n\nTe respondemos en un plazo de 15 días.\n\nTus compras siguen usando tu número actual.\n\n## Si ya no quieres el cambio\n\nRetírala.";
+  renderIdentityArticle("CUSTOMER", () => json(identity(correctionRequest)), "cedula-o-ruc", body);
+  const status = await screen.findByRole("region", { name: "Tu solicitud de corrección" });
+  expect(within(status).getByRole("heading", { level: 3, name: "Tu solicitud de corrección" })).toBeInTheDocument();
+  expect(status).toHaveTextContent(/Respuesta antes del 9 nov\.? 2026/);
+  // Right after the rule it makes concrete, before the next paragraph and the next section.
+  const rule = screen.getByText("Te respondemos en un plazo de 15 días.");
+  expect(rule.nextElementSibling).toBe(status);
+  expect(status.compareDocumentPosition(screen.getByRole("heading", { name: "Si ya no quieres el cambio" })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+});
+
+it("keeps the reader's request visible under the summary when the article has no review section", async () => {
+  renderIdentityArticle("CUSTOMER", () => json(identity(correctionRequest)));
+  const status = await screen.findByRole("region", { name: "Tu solicitud de corrección" });
+  expect(within(status).getByRole("heading", { level: 2 })).toBeInTheDocument();
+  expect(status.compareDocumentPosition(screen.getByRole("heading", { name: "Cómo corregirla" })) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 });
 
 it.each([

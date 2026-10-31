@@ -123,10 +123,12 @@ export function HelpArticlePage() {
           </p>
           <h1 className={classes.articleTitle}>{article.title}</h1>
           {article.summary && <p className={classes.lead}>{article.summary}</p>}
-          {/* The one personal element in Ayuda: the reader's own request, only where the article explains it. */}
-          {article.slug === "cedula-o-ruc" && <IdentityRequestStatus />}
-          {/* Plain text with a small safe convention (sections, steps, lists, PLIEGO links); markup-like strings stay text. */}
-          <HelpBody body={article.body} />
+          {/* Plain text with a small safe convention (sections, steps, lists, PLIEGO links); markup-like strings stay text.
+              The one personal element in Ayuda — the reader's own correction request with its answer date — sits inside
+              the section that explains the review, so the date is read where the wait is described. */}
+          <HelpBody body={article.body} within={article.slug === "cedula-o-ruc"
+            ? { section: "Mientras la revisamos", render: placement => <IdentityRequestStatus headingLevel={placement === "section" ? 3 : 2} /> }
+            : undefined} />
         </article>
         {otherResources.length > 0 && <nav className={classes.onward} aria-labelledby="help-onward-heading">
           <h2 id="help-onward-heading">Otros temas de Ayuda</h2>

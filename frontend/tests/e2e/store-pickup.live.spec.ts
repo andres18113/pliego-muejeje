@@ -100,7 +100,8 @@ for (const [fulfillment, payment, width] of [["STORE_PICKUP", "CARD", 1440], ["S
       await expect(page.getByText("Referencia PUCE en la entrada principal.")).toBeVisible();
     }
     await expect(page.getByRole("heading", { name: "Es momento de celebrar" })).toBeVisible();
-    await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/Subtotal|IVA|Total/);
+    // The receipt once: totals live in the one "Tu pedido" card beside what happens next.
+    await expect(page.getByRole("complementary", { name: "Tu pedido" })).toContainText(/Total/);
     await expect(page.getByRole("region", { name: "Destino confirmado" }).getByRole("heading", { name: "Enviar a" })).toBeVisible();
     const destinationBox = (await page.getByRole("region", { name: "Destino confirmado" }).boundingBox())!;
     const quickBox = (await page.getByRole("complementary", { name: "Tu pedido" }).boundingBox())!;

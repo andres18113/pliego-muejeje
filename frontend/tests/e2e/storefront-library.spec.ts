@@ -83,15 +83,16 @@ test("owned title filters open detail with only genuine purchase and Help action
   await page.screenshot({ path: test.info().outputPath("library.png") });
   await page.getByRole("link", { name: "Libro propio", exact: true }).click();
   await expect(page).toHaveURL(/\/biblioteca\/8$/);
-  await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();
+  await expect(page.getByText("Tuyo para leer", { exact: true })).toBeVisible();
   await expect(page.getByText(/simulación|Registro de titularidad/)).toHaveCount(0);
   await expect(page.locator('[class*="scene"]').first()).toHaveCSS("background-color", "rgb(255, 255, 255)");
   await expect(page.locator('[class*="purchase_"], [class*="_purchase"]').locator("visible=true").first()).toBeVisible();
   await page.waitForTimeout(200);
   await page.screenshot({ path: test.info().outputPath("library-detail.png"), fullPage: true });
-  await expect(page.getByRole("navigation", { name: "Acciones de la adquisición" }).getByRole("link")).toHaveCount(2);
+  // Only the server's two actions, each where it belongs: the order in its purchase record, help beside the title.
+  await expect(page.getByRole("region", { name: "Información de compra" }).getByRole("link", { name: /^Ver pedido/ })).toHaveCount(1);
   await expect(page.getByRole("link", { name: /^Leer$|^Escuchar$|Continuar/ })).toHaveCount(0);
-  await page.getByRole("navigation", { name: "Acciones de la adquisición" }).getByRole("link", { name: "Ayuda" }).click();
+  await page.getByRole("article").getByRole("link", { name: "Ayuda", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Cómo funcionan los eBooks" })).toBeVisible();
 });
 
@@ -133,6 +134,6 @@ for (const mixed of [false, true]) test(`${mixed ? "mixed" : "digital-only"} che
   await expect(page).toHaveURL(/\/orders\/700$/);
   // The invoice reuses the saved address (the delivery one when there is a delivery) instead of asking again.
   const invoiceAddress = { line1: "Av. Principal 123", line2: "", provinceId: "17", cityId: "893", countryCode: "EC", postalCode: "" };
-  expect(api.checkout).toEqual([{ ...billingFixturePayload, billingAddress: invoiceAddress, ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
+  expect(api.checkout).toEqual([{ ...billingFixturePayload, buyerName: "Ana Pérez", billingAddress: invoiceAddress, ...(mixed ? { fulfillmentMethod: "HOME_DELIVERY", addressId: "15" } : { fulfillmentMethod: "DIGITAL_ONLY" }), expectedCartId: "40", paymentMethod: "TRANSFER", simulationOutcome: "APPROVED" }]);
   if (!mixed) { expect(api.physicalReads.filter(path => path !== "/api/v1/me/addresses")).toEqual([]); await expect(page.getByRole("region", { name: "Destino confirmado" })).toHaveCount(0); }
 });

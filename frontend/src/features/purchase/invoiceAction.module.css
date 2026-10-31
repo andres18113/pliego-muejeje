@@ -1,8 +1,9 @@
-/* One invoice action beside the order's payment facts: the shared outlined button with Material `receipt_long`. */
+/* One invoice action beside the order's payment facts: Material `receipt_long` and ultramar words, quiet like a link
+   (only the words underline on hover); a document to consult, not a choice competing with the order's own actions. */
 .action { display: grid; gap: 6px; justify-items: start; min-width: 0; }
-.button.button { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; }
-/* The button face's tight tracking closes the "r f" pair in "Ver factura"; a touch of word space keeps two words. */
-.button.button span { word-spacing: .12em; }
-.button[aria-disabled="true"] { cursor: progress; opacity: .72; }
+.link { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0; border: 0; background: none; color: var(--store-link, #283da8); font: inherit; font-size: .9375rem; font-weight: 600; cursor: pointer; }
+@media (hover: hover) { .link:not([aria-disabled="true"]):hover span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; } }
+.link:focus-visible { outline: 3px solid var(--store-link, #283da8); outline-offset: 2px; border-radius: 4px; }
+.link[aria-disabled="true"] { cursor: progress; opacity: .72; }
 .notice { margin: 0; color: var(--pliego-text-muted); font-size: .875rem; line-height: 1.4; }
 .legacy { margin: 0; color: var(--pliego-text-muted); font-size: .9375rem; }

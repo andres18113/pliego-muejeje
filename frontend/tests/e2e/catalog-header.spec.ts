@@ -167,6 +167,8 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
         await expect(page.getByRole("banner")).toHaveCount(1);
         await expect(page.getByRole("banner")).toContainText(route === "/cart" ? "Carrito" : "Finalizar Compra");
         await expect(page.getByRole("banner").getByRole("button", { name: /Buscar libros/ })).toHaveCount(0);
+        // Focused on the purchase: no account menu either.
+        await expect(page.getByRole("banner").getByRole("button", { name: "Menú de cuenta" })).toHaveCount(0);
         continue;
       }
       await expect(page.getByTestId("site-header")).toHaveCount(1);

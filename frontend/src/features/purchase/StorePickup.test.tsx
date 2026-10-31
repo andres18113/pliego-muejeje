@@ -74,13 +74,14 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(screen.getByText(/19:32:12/)).toBeInTheDocument();
     expect(screen.queryByText(/America\/Guayaquil/)).not.toBeInTheDocument();
     expect(screen.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", expect.stringContaining("marker=-0.22%2C-78.5"));
-    const summary = within(screen.getByRole("region", { name: "Tu pedido N.º 700" }));
-    expect(summary.getByText("IVA (15 %)" )).toBeInTheDocument();
-    expect(summary.getByText(/2[.,]78/)).toBeInTheDocument();
-    const immediate = within(screen.getByRole("complementary", { name: "Tu pedido" }));
-    expect(immediate.queryByText(/IVA|Total|Cien años/)).not.toBeInTheDocument();
+    // The receipt once: totals beside the one way to the full order; the books stay with the pickup facts.
+    const receipt = within(screen.getByRole("complementary", { name: "Tu pedido" }));
+    expect(receipt.getByText("IVA (15 %)" )).toBeInTheDocument();
+    expect(receipt.getByText(/2[.,]78/)).toBeInTheDocument();
+    expect(receipt.queryByText(/Cien años/)).not.toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Retiro" })).getByText("P-ABC234")).toBeInTheDocument();
     expect(screen.queryByText(/Transportista|Seguimiento/)).not.toBeInTheDocument();
-    await user.click(immediate.getByRole("link", { name: "Ver pedido completo" }));
+    await user.click(receipt.getByRole("link", { name: "Ver pedido completo" }));
     await waitFor(() => expect(screen.getByRole("heading", { level: 1, name: "Detalle del pedido" })).toHaveFocus());
   });
 

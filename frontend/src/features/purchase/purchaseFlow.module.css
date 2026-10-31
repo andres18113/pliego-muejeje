@@ -349,23 +349,48 @@
 .billingLabel { color: var(--pf-muted); font-size: .875rem; font-weight: 600; line-height: 1.4; }
 .billingValue { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; min-width: 0; font-size: 1.0625rem; font-weight: 600; line-height: 1.5; overflow-wrap: anywhere; font-variant-numeric: tabular-nums; }
 .billingLines { display: grid; gap: 0; font-weight: 500; }
-.billingChip { display: inline-flex; align-items: flex-start; gap: 6px; padding: 3px 10px; border-radius: 8px; background: color-mix(in srgb, var(--pf-blue) 9%, transparent); color: var(--pf-blue); font-size: .9375rem; font-weight: 600; line-height: 1.4; max-width: 100%; overflow-wrap: anywhere; }
-.billingShort { color: var(--pf-ink); font-size: 1rem; font-weight: 500; }
+/* The reused delivery address: one chip, with the way to change the delivery itself at the row's end. */
+.billingReuse { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; min-width: 0; }
+.billingChip { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 8px; background: color-mix(in srgb, var(--pf-blue) 9%, transparent); color: var(--pf-blue); font-size: .9375rem; font-weight: 600; line-height: 1.4; max-width: 100%; overflow-wrap: anywhere; }
+.billingJump { display: inline-flex; align-items: center; gap: 2px; min-height: 44px; margin-block: -10px; padding: 0; border: 0; background: none; color: var(--pf-blue); font: inherit; font-size: .9375rem; font-weight: 600; cursor: pointer; }
+.billingJump:hover span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; }
+.billingJump:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 2px; border-radius: 4px; }
+.billingJump:disabled { cursor: progress; opacity: .6; }
+@media (forced-colors: active) { .billingChip { border: 1px solid CanvasText; } }
+.billingShort { color: var(--pf-muted); font-size: 1rem; font-weight: 400; line-height: 1.45; overflow-wrap: anywhere; }
 .billingNote { color: var(--pf-muted); font-size: .9375rem; font-weight: 400; }
 .billingNote a, .billingFix a { color: var(--pf-blue); font-weight: 600; text-underline-offset: 4px; }
 .billingFix { color: var(--error); font-size: .9375rem; font-weight: 600; }
 /* Helper lines here are read, not skimmed: the body size, not the global fine print. */
 .billing :global(.field-help), .billing :global(.field-error) { font-size: .9375rem; line-height: 1.45; }
 .billing :global(.form-field) > label { color: var(--pf-muted); font-size: .875rem; font-weight: 600; }
-@media (forced-colors: active) { .billingChip { border: 1px solid CanvasText; } }
 .billingLegend { margin: 4px 0 2px; padding: 0; color: var(--pf-ink); font-size: 1rem; font-weight: 650; }
-.billingChoices { gap: 8px; }
-.billingChoices .choice { padding: 12px 16px; border-radius: 14px; }
+/* Facturar a: the legend over one balanced two-way switch in the filter-chip grammar (hairline; chosen = ultramar
+   edge and text on a faint wash). Both halves stay side by side, phones included; a long label wraps inside its half. */
+.recipientSwitch { display: grid; gap: 8px; min-width: 0; margin: 0; padding: 0; border: 0; }
+.recipientSwitch > legend { padding: 0; margin: 0 0 8px; }
+.recipientOptions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; min-width: 0; }
+.recipientOption { position: relative; display: grid; place-items: center; min-height: 44px; padding: 8px 12px; border-radius: 10px; box-shadow: inset 0 0 0 1px var(--pf-line); color: var(--pf-ink); font-size: .9375rem; font-weight: 600; line-height: 1.3; text-align: center; cursor: pointer; }
+.recipientOption input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+@media (hover: hover) { .recipientOption:not(:has(input:checked)):hover { background: color-mix(in srgb, var(--pf-ink) 5%, transparent); } }
+.recipientOption:has(input:checked) { background: color-mix(in srgb, var(--pf-blue) 7%, transparent); box-shadow: inset 0 0 0 1.5px var(--pf-blue); color: var(--pf-blue); }
+.recipientOption:has(input:focus-visible) { outline: 3px solid var(--pf-blue); outline-offset: 2px; }
+.recipientOption:has(input:disabled) { cursor: progress; opacity: .72; }
+@media (forced-colors: active) { .recipientOption:has(input:checked) { outline: 2px solid Highlight; } }
+/* The invoice address while editing: one field-shaped picker; only "Otra dirección" opens fields under it. */
+.sourcePick { display: grid; gap: 6px; min-width: 0; }
+.sourcePick > .billingLegend { margin: 4px 0 0; }
 .billingFields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 16px; min-width: 0; margin: 0; padding: 0; border: 0; }
-.billingFields > legend { float: left; width: 100%; }
+.billingFields > legend:not(:global(.visually-hidden)) { float: left; width: 100%; }
 .billingPending { margin: 0; color: var(--pf-muted); line-height: 1.5; }
-.billingFields > .billingLegend, .billingFields > .linkAction { grid-column: 1 / -1; }
-.billingFields > .linkAction { justify-self: start; font-size: .9375rem; }
+.billingFields > .billingLegend { grid-column: 1 / -1; }
+/* The optional fields' disclosure: ultramar words with a chevron that turns with the state (only the words underline on hover). */
+.optionalToggle { grid-column: 1 / -1; justify-self: start; display: inline-flex; align-items: center; gap: 4px; min-height: 44px; margin-block: -6px; padding: 0; border: 0; background: none; color: var(--pf-blue); font: inherit; font-size: .9375rem; font-weight: 600; cursor: pointer; }
+@media (hover: hover) { .optionalToggle:hover span { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; } }
+.optionalToggle:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 2px; border-radius: 4px; }
+.optionalToggle:disabled { cursor: progress; opacity: .6; }
+/* Its fields join the address grid (Complemento full width, Código postal half) without a box of their own. */
+.optionalFields { display: contents; }
 .billingDone { display: flex; justify-content: flex-start; }
 .digitalNote { margin: 0; color: var(--pf-muted); line-height: 1.5; }
 

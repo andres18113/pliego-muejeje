@@ -25,7 +25,6 @@
 .bookTitle { font-weight: 500; overflow-wrap: anywhere; }
 .quantity { color: var(--acc-muted); font-weight: 400; white-space: nowrap; }
 .meta { grid-area: meta; display: flex; flex-wrap: wrap; gap: 2px 16px; min-width: 0; color: var(--acc-muted); font-size: .8125rem; line-height: 1.45; font-variant-numeric: tabular-nums; }
-.document { color: var(--acc-ink); font-weight: 600; }
 .total { grid-area: total; justify-self: end; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 /* The order's historical saving (immutable snapshot), quiet green under its total. */
 .saving { display: flex; align-items: center; justify-content: flex-end; gap: 4px; margin-top: 2px; color: var(--ol-savings); font-size: .8125rem; font-weight: 500; line-height: 1.35; white-space: nowrap; }
@@ -56,7 +55,6 @@
 .unit[data-group="past"] :is(.story, .books, .meta, .total, .go) { grid-area: auto; }
 .unit[data-group="past"] .meta { display: grid; grid-column: 1; grid-row: 1 / -1; gap: 2px; font-size: .9375rem; }
 .unit[data-group="past"] .meta > :first-child { color: var(--acc-ink); font-weight: 600; }
-.unit[data-group="past"] .document { font-size: .8125rem; }
 .unit[data-group="past"] .total { grid-column: 3; grid-row: 1; justify-self: end; text-align: right; }
 .unit[data-group="past"] .go { grid-column: 3; grid-row: 2; justify-self: end; gap: 2px; min-height: 36px; padding: 0 8px 0 16px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px var(--acc-blue); color: var(--acc-blue); font-size: .9375rem; }
 /* Finished: the outcome in display type and a quiet success green; the words carry it, not the colour. */
