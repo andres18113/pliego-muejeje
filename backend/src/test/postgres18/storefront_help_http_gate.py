@@ -256,6 +256,9 @@ Selecciona Retirar solicitud en [Cédula o RUC](/account/identity). Tu número a
             assert article['categorySlug'] == slug
             assert article['title'] == 'Cédula o RUC'
             assert article['position'] == 10 and article['applicability'] == 'GENERAL'
+    identity_article = ok('/api/v1/help/articles/cedula-o-ruc')
+    assert 'Te respondemos en un plazo de 15 días. Mientras tanto, tu solicitud aparece como En revisión.' in identity_article['body'], \
+        'La guía de corrección de cédula o RUC no coincide con el contenido publicado.'
     suffix = uuid.uuid4().hex[:12]
     slug = 'http-help-' + suffix
     query(f"INSERT INTO pliego.ayuda_categoria(slug,titulo,estado) VALUES('{slug}','Ayuda {suffix}','PUBLISHED')")

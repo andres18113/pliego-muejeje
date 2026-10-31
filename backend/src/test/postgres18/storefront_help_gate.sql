@@ -1,4 +1,4 @@
--- PostgreSQL 18, Flyway through V046. All fixtures roll back.
+-- PostgreSQL 18, Flyway through V087. All fixtures roll back.
 BEGIN;
 CREATE FUNCTION pg_temp.purchase(p_customer BIGINT,p_edition BIGINT,p_at TIMESTAMPTZ,p_quantity INTEGER DEFAULT 1,
  p_payment VARCHAR DEFAULT 'APPROVED',p_order_state VARCHAR DEFAULT 'CONFIRMED') RETURNS BIGINT LANGUAGE plpgsql AS $$
@@ -107,7 +107,12 @@ BEGIN
  IF NOT EXISTS(SELECT 1 FROM pliego.fn_help_article('cedula-o-ruc') a
   WHERE a.slug='cedula-o-ruc' AND a.category_slug='cedula-o-ruc' AND a.title='Cédula o RUC'
    AND a."position"=10 AND a.applicability='GENERAL') THEN RAISE EXCEPTION 'Cédula o RUC Help article metadata is incorrect'; END IF;
- -- Exact summaries and bodies persisted by V086.
+ -- V087 records the checksum-drift correction, while the full copy below remains the V086 contract.
+ IF NOT EXISTS (
+  SELECT 1 FROM public.flyway_schema_history
+  WHERE version='087' AND description='restore committed help guidance' AND success
+ ) THEN RAISE EXCEPTION 'V087 Help copy restoration was not recorded by Flyway'; END IF;
+ -- Exact summaries and bodies persisted by committed V086 and restored by V087.
  IF EXISTS (
   SELECT 1
   FROM (VALUES
@@ -297,7 +302,7 @@ Selecciona Retirar solicitud en [Cédula o RUC](/account/identity). Tu número a
   ) AS expected(slug, summary, body)
   LEFT JOIN LATERAL pliego.fn_help_article(expected.slug) a ON TRUE
   WHERE a.slug IS NULL OR a.summary IS DISTINCT FROM expected.summary OR a.body IS DISTINCT FROM expected.body
- ) THEN RAISE EXCEPTION 'Published Help content is not the persisted V086 copy'; END IF;
+ ) THEN RAISE EXCEPTION 'Published Help content differs from the committed V086 copy'; END IF;
  UPDATE pliego.ayuda_categoria SET estado='DRAFT' WHERE slug='ebooks';
  IF EXISTS(SELECT 1 FROM pliego.fn_help_article('ebooks')) THEN RAISE EXCEPTION 'Unpublished parent category leaked article'; END IF;
 END $gate$;

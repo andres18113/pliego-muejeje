@@ -456,12 +456,16 @@ indefinitely or hide an automatic restart loop.
 Administrative cleanup, on the `pliego` database, after stopping the service:
 
 ```sql
+-- BEGIN PLIEGO_RUNTIME_ACL_CLEANUP_SQL
 BEGIN;
 -- Precondition: pliego_owner already exists, is NOLOGIN and has no elevated
 -- attributes. Inspect shared ownership before using REASSIGN OWNED: this app
 -- role must not own unrelated databases/tablespaces or serve another system.
 REASSIGN OWNED BY pliego_app TO pliego_owner;
-GRANT CONNECT ON DATABASE pliego TO pliego_app;
+DO $$
+BEGIN
+  EXECUTE format('GRANT CONNECT ON DATABASE %I TO pliego_app',current_database());
+END; $$;
 GRANT USAGE ON SCHEMA public, pliego TO pliego_app;
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA pliego TO pliego_app;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA pliego TO pliego_app;
@@ -474,8 +478,38 @@ ALTER DEFAULT PRIVILEGES FOR ROLE pliego_owner IN SCHEMA pliego
   GRANT USAGE, SELECT ON SEQUENCES TO pliego_app;
 ALTER DEFAULT PRIVILEGES FOR ROLE pliego_owner IN SCHEMA pliego
   GRANT EXECUTE ON ROUTINES TO pliego_app;
+-- Defaults are schema-wide and support future business tables; reset geo ACLs after every broad grant.
+-- Address/pickup FKs lock ciudad with KEY SHARE; one column UPDATE is sufficient, not table-level UPDATE.
+-- No owner DML is needed on provincia: business address/pickup FKs reference ciudad directly.
+GRANT UPDATE (ciudad_id) ON TABLE pliego.ciudad TO pliego_owner;
+-- V082 revoked app's owner DML on these catalogs; REASSIGN OWNED carries that ACL to pliego_owner.
+REVOKE ALL PRIVILEGES ON TABLE pliego.provincia, pliego.ciudad, pliego.ciudad_alias FROM pliego_app;
+-- Also clear any column ACLs; table-level REVOKE does not remove column-level grants.
+DO $$
+DECLARE geo_column RECORD;
+BEGIN
+  FOR geo_column IN
+    SELECT n.nspname AS schema_name, c.relname AS table_name, a.attname AS column_name
+      FROM pg_class c
+      JOIN pg_namespace n ON n.oid=c.relnamespace
+      JOIN pg_attribute a ON a.attrelid=c.oid AND a.attnum>0 AND NOT a.attisdropped
+     WHERE c.oid IN ('pliego.provincia'::regclass,'pliego.ciudad'::regclass,
+                     'pliego.ciudad_alias'::regclass)
+  LOOP
+    EXECUTE format('REVOKE ALL PRIVILEGES (%I) ON TABLE %I.%I FROM pliego_app',
+                   geo_column.column_name,geo_column.schema_name,geo_column.table_name);
+  END LOOP;
+END; $$;
+GRANT SELECT ON TABLE pliego.provincia, pliego.ciudad, pliego.ciudad_alias TO pliego_app;
+-- Runtime needs no schema/database DDL; drop direct grants before ending temporary owner membership.
+REVOKE CREATE ON SCHEMA public, pliego FROM pliego_app;
+DO $$
+BEGIN
+  EXECUTE format('REVOKE CREATE ON DATABASE %I FROM pliego_app',current_database());
+END; $$;
 REVOKE pliego_owner FROM pliego_app;
 COMMIT;
+-- END PLIEGO_RUNTIME_ACL_CLEANUP_SQL
 ```
 
 Execute as the administrative operator using `runuser -u postgres -- psql -X
@@ -487,6 +521,66 @@ An already-open transaction can retain earlier privileges until it ends. A revok
 alone is insufficient: stop/drain before cleanup and restart afterward, including
 on the **failure/rollback path**. Do not use `SET ROLE` for migration on pooled
 runtime connections. Verify new sessions, not only the administrative session.
+The final geo-table revokes must remain after the blanket grants and schema-wide
+defaults; any later migration that adds a geo reference table must keep its own
+explicit read-only ACL because PostgreSQL defaults cannot exclude named tables.
+
+After the cleanup and restricted restart, run this **read-only** postflight query
+block as the administrative operator. Every result must be `t` before declaring
+the restricted runtime ready:
+
+```sql
+WITH geo(table_name, relation_oid) AS (
+  VALUES ('provincia','pliego.provincia'::regclass),
+         ('ciudad','pliego.ciudad'::regclass),
+         ('ciudad_alias','pliego.ciudad_alias'::regclass)
+)
+SELECT table_name,
+       has_table_privilege('pliego_app',relation_oid,'SELECT') AS app_select,
+       NOT (has_table_privilege('pliego_app',relation_oid,'INSERT')
+         OR has_table_privilege('pliego_app',relation_oid,'UPDATE')
+         OR has_table_privilege('pliego_app',relation_oid,'DELETE')
+         OR has_table_privilege('pliego_app',relation_oid,'TRUNCATE')) AS app_no_table_writes
+  FROM geo ORDER BY table_name;
+
+SELECT NOT EXISTS (
+  SELECT FROM pg_attribute a
+   WHERE a.attrelid IN ('pliego.provincia'::regclass,'pliego.ciudad'::regclass,
+                        'pliego.ciudad_alias'::regclass)
+     AND a.attnum>0 AND NOT a.attisdropped
+     AND (has_column_privilege('pliego_app',a.attrelid,a.attnum,'INSERT')
+       OR has_column_privilege('pliego_app',a.attrelid,a.attnum,'UPDATE')
+       OR has_column_privilege('pliego_app',a.attrelid,a.attnum,'REFERENCES'))
+) AS app_no_geo_column_insert_update_references;
+
+SELECT has_column_privilege('pliego_owner','pliego.ciudad','ciudad_id','UPDATE')
+         AS owner_city_id_update,
+       EXISTS (
+         SELECT FROM pg_attribute a
+         CROSS JOIN LATERAL aclexplode(COALESCE(a.attacl,'{}'::aclitem[])) acl
+          WHERE a.attrelid='pliego.ciudad'::regclass
+            AND a.attname='ciudad_id'
+            AND acl.grantee=(SELECT oid FROM pg_roles WHERE rolname='pliego_owner')
+            AND acl.privilege_type='UPDATE'
+       ) AS owner_explicit_city_id_update,
+       NOT has_table_privilege('pliego_owner','pliego.ciudad','UPDATE')
+         AS owner_no_table_update;
+
+SELECT NOT pg_has_role('pliego_app','pliego_owner','MEMBER') AS app_not_owner_member,
+       NOT has_schema_privilege('pliego_app','public','CREATE') AS app_no_public_create,
+       NOT has_schema_privilege('pliego_app','pliego','CREATE') AS app_no_pliego_create,
+       NOT has_database_privilege('pliego_app',current_database(),'CREATE') AS app_no_database_create;
+
+SELECT has_table_privilege('pliego_app','pliego.direccion','SELECT') AS address_select,
+       has_table_privilege('pliego_app','pliego.direccion','INSERT') AS address_insert,
+       has_table_privilege('pliego_app','pliego.direccion','UPDATE') AS address_update,
+       has_table_privilege('pliego_app','pliego.direccion','DELETE') AS address_delete;
+```
+
+The block only reads PostgreSQL privilege/catalog metadata; it performs no writes.
+`runtime_privileges_gate.sql` deliberately performs customer and address writes
+inside a transaction that it rolls back. It is for CI and isolated restores only,
+**not production**.
 
 The application uses `SECURITY INVOKER`; required table DML/sequence/routine grants
 are intentional. Runtime credentials remain trusted backend credentials, not an

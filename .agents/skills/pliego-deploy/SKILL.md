@@ -47,6 +47,10 @@ those actions are separately within scope.
   objects/grant runtime access/revoke membership, then restart and verify no CREATE
   or ownership. The failure path must perform the same cleanup. Never `SET ROLE`
   on pooled app connections or leave migration privileges enabled.
+- Run the cleanup exactly as the runbook's `PLIEGO_RUNTIME_ACL_CLEANUP_SQL` block
+  (it keeps `provincia`/`ciudad`/`ciudad_alias` read-only for `pliego_app`), then
+  require every value of its read-only postflight privilege query to be `t`.
+  `runtime_privileges_gate.sql` writes and rolls back: CI/isolated restores only.
 - Without pending migrations, avoid privilege changes. A frontend-only release
   should not restart the backend. Existing symlink-based publication normally
   requires no Nginx change/reload.
