@@ -41,8 +41,8 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - name: Install frontend dependencies
         run: npm ci
-      - name: Audit frontend dependencies
-        run: npm audit --audit-level=low
+      - name: Test frontend audit gate and audit dependencies
+        run: node --test ../scripts/npm-audit-gate.test.mjs && node ../scripts/npm-audit-gate.mjs
       - name: Install and audit root dependencies
         working-directory: .
         run: |

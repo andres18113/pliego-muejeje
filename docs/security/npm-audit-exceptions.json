@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "exceptions": [
+    {
+      "advisory": "GHSA-g3hv-75wg-m249",
+      "advisoryUrl": "https://github.com/advisories/GHSA-g3hv-75wg-m249",
+      "package": "minimatch",
+      "vulnerableRange": "<11.0.1",
+      "installedVersion": "5.1.9",
+      "lockfilePaths": [
+        "node_modules/minimatch"
+      ],
+      "maxSeverity": "moderate",
+      "effectPackages": {
+        "@redocly/openapi-core": [
+          "node_modules/@redocly/openapi-core"
+        ],
+        "openapi-typescript": [
+          "node_modules/openapi-typescript"
+        ]
+      },
+      "justification": "CVE-2026-118764 is a pattern-amplification denial of service (CWE-405); minimatch's vulnerable input is its pattern argument. Redocly 1.34.20 has one call site, minimatch(url, pattern), where the tested URL comes from an external HTTP $ref and the pattern comes only from resolve.http.headers[].matches in a local Redocly config. The current frontend has no Redocly config; every one of the 273 $ref values in its committed OpenAPI snapshot is an internal JSON pointer (#/...), so no external HTTP $ref is resolved, and even an external $ref would supply only the tested URL, never the pattern; and openapi-typescript's CLI falls back to a minimal config with no HTTP match patterns. Thus the repository build has no untrusted path to the vulnerable pattern. These three packages are dev-only and absent from the production dist bundle.",
+      "owner": "PLIEGO maintainers",
+      "created": "2026-10-31",
+      "expires": "2026-11-30",
+      "removalCriteria": "Remove this exception as soon as the audited dependency tree no longer reports this advisory at the registered package and node path, including when upstream packages adopt a fixed minimatch. The gate fails on expiry, package or path drift, severity increases, or any additional finding. The 30-day review window ends 2026-11-30. Because the gate admits exactly one exception, removing it also means restoring the plain `npm audit --audit-level=low` frontend step in .github/workflows/ci.yml and deleting scripts/npm-audit-gate.mjs, its tests and fixtures, and this register."
+    }
+  ]
+}
