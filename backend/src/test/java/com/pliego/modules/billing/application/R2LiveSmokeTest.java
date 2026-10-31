@@ -14,11 +14,13 @@ import org.junit.jupiter.api.condition.EnabledIfEnvironmentVariable;
 class R2LiveSmokeTest {
     @Test
     void putPresignFetchAndDeleteOnePrivateSmokeObject() {
+        String prefix = requireSmokePrefix(System.getenv("PLIEGO_R2_KEY_PREFIX"),
+                System.getenv("PLIEGO_R2_PRODUCTION_STORAGE"));
         var properties = new R2StorageProperties(true,
                 System.getenv("PLIEGO_R2_BUCKET"), System.getenv("PLIEGO_R2_ENDPOINT"),
                 valueOr("PLIEGO_R2_REGION", "auto"), System.getenv("PLIEGO_R2_ACCESS_KEY_ID"),
                 System.getenv("PLIEGO_R2_SECRET_ACCESS_KEY"), valueOr("PLIEGO_R2_PRESIGN_TTL_SECONDS", "300"),
-                valueOr("PLIEGO_R2_KEY_PREFIX", "invoices/"));
+                prefix, false);
         properties.validate();
         var signer = new R2PresignedUrlSigner();
         var client = new R2ObjectClient(properties, new R2RequestSigner());
@@ -31,6 +33,13 @@ class R2LiveSmokeTest {
         } finally {
             client.deleteObject(key);
         }
+    }
+
+    static String requireSmokePrefix(String prefix, String productionStorage) {
+        if (prefix == null || !prefix.startsWith("local-dev/")
+                || (productionStorage != null && !productionStorage.isBlank() && !"false".equalsIgnoreCase(productionStorage)))
+            throw new IllegalArgumentException("La prueba R2 requiere un prefijo explícito local-dev/ y almacenamiento de producción desactivado.");
+        return prefix;
     }
 
     private static String valueOr(String variable, String fallback) {

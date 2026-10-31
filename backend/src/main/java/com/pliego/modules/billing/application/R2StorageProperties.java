@@ -14,7 +14,8 @@ public record R2StorageProperties(
         String accessKeyId,
         String secretAccessKey,
         @DefaultValue("300") String presignTtlSeconds,
-        @DefaultValue("invoices/") String keyPrefix) {
+        String keyPrefix,
+        @DefaultValue("false") boolean productionStorage) {
 
     public void validate() {
         if (!enabled) return;
@@ -36,6 +37,9 @@ public record R2StorageProperties(
                 || keyPrefix.contains("#") || !keyPrefix.matches("[A-Za-z0-9._/-]+")) throw invalid();
         for (String segment : keyPrefix.substring(0, keyPrefix.length() - 1).split("/"))
             if (segment.isEmpty() || segment.equals(".") || segment.equals("..")) throw invalid();
+        if (productionStorage ? !"invoices/".equals(keyPrefix) : !keyPrefix.startsWith("local-dev/"))
+            throw new IllegalArgumentException("Configura el prefijo R2 invoices/ solo con PLIEGO_R2_PRODUCTION_STORAGE=true; "
+                    + "fuera de producción debe comenzar por local-dev/.");
     }
 
     public URI endpointUri() {
@@ -56,6 +60,6 @@ public record R2StorageProperties(
     @Override public String toString() {
         return "R2StorageProperties[enabled=" + enabled + ", bucket=" + bucket + ", endpoint=" + endpoint
                 + ", region=" + region + ", credentials=REDACTED, presignTtlSeconds=" + presignTtlSeconds
-                + ", keyPrefix=" + keyPrefix + "]";
+                + ", keyPrefix=" + keyPrefix + ", productionStorage=" + productionStorage + "]";
     }
 }

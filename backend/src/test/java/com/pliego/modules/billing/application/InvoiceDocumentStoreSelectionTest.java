@@ -11,7 +11,7 @@ class InvoiceDocumentStoreSelectionTest {
     @Test
     void defaultsToPostgresByteaWhenR2IsDisabled() {
         var properties = new R2StorageProperties(false, null, "http://invalid/path", "", null, null,
-                "not-a-number", "../");
+                "not-a-number", "../", false);
         var store = new BillingConfiguration().invoiceDocumentStore(properties,
                 mock(BillingGateway.class), mock(R2RequestSigner.class), new R2PresignedUrlSigner());
         assertThat(store).isInstanceOf(DatabaseInvoiceDocumentStore.class);
@@ -26,7 +26,7 @@ class InvoiceDocumentStoreSelectionTest {
 
     @Test
     void enabledR2WithMissingConfigurationFailsFastInSpanish() {
-        var incomplete = new R2StorageProperties(true, null, null, "auto", null, null, "300", "invoices/");
+        var incomplete = new R2StorageProperties(true, null, null, "auto", null, null, "300", "invoices/", true);
         assertThatThrownBy(() -> new BillingConfiguration().invoiceDocumentStore(incomplete,
                 mock(BillingGateway.class), mock(R2RequestSigner.class), new R2PresignedUrlSigner()))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -36,6 +36,6 @@ class InvoiceDocumentStoreSelectionTest {
     private static R2StorageProperties properties(boolean enabled) {
         return new R2StorageProperties(enabled, "billing-pliego",
                 "https://0123456789abcdef0123456789abcdef.r2.cloudflarestorage.com", "auto",
-                "fictional-access", "fictional-secret", "300", "invoices/");
+                "fictional-access", "fictional-secret", "300", "invoices/", true);
     }
 }

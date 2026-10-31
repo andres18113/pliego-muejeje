@@ -25,7 +25,7 @@ class R2PresignedUrlSignerTest {
         var now = Instant.parse("2026-10-27T12:00:00Z");
         var properties = new R2StorageProperties(true, "billing-pliego",
                 "https://0123456789abcdef0123456789abcdef.r2.cloudflarestorage.com", "auto",
-                "fictional-access", "fictional-secret", "240", "invoices/");
+                "fictional-access", "fictional-secret", "240", "invoices/", true);
         properties.validate();
         var signed = signer.presignR2Get(properties, "invoices/42/ab12.pdf", "application/pdf",
                 "inline; filename=\"factura-999-999-000000042.pdf\"", now);
@@ -47,7 +47,7 @@ class R2PresignedUrlSignerTest {
         var now = Instant.parse("2026-10-27T12:00:00Z");
         var properties = new R2StorageProperties(true, "billing-pliego",
                 "https://0123456789abcdef0123456789abcdef.r2.cloudflarestorage.com", "auto",
-                "fictional-access", "fictional-secret", "300", "invoices/");
+                "fictional-access", "fictional-secret", "300", "invoices/", true);
         var inline = signer.presignR2Get(properties, "invoices/42/ab12.pdf", "application/pdf",
                 "inline; filename=\"factura-999-999-000000042.pdf\"", now);
         var attachment = signer.presignR2Get(properties, "invoices/42/ab12.pdf", "application/pdf",
@@ -68,7 +68,7 @@ class R2PresignedUrlSignerTest {
         var now = Instant.parse("2026-10-27T12:00:00Z");
         var properties = new R2StorageProperties(true, "billing-pliego",
                 "https://0123456789abcdef0123456789abcdef.r2.cloudflarestorage.com", "auto",
-                "fictional-access", "fictional-secret", "300", "invoices/");
+                "fictional-access", "fictional-secret", "300", "invoices/", true);
         var signed = signer.presignR2Get(properties, "invoices/42/ab12.pdf", "application/pdf",
                 "attachment; filename=\"factura-999-999-000000042.pdf\"", now);
         var signedAt = Instant.from(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd'T'HHmmss'Z'")
@@ -83,7 +83,7 @@ class R2PresignedUrlSignerTest {
         var now = Instant.parse("2026-10-27T12:00:00.987654321Z");
         var properties = new R2StorageProperties(true, "billing-pliego",
                 "https://0123456789abcdef0123456789abcdef.r2.cloudflarestorage.com", "auto",
-                "fictional-access", "fictional-secret", "300", "invoices/");
+                "fictional-access", "fictional-secret", "300", "invoices/", true);
         var signed = signer.presignR2Get(properties, "invoices/42/ab12.pdf", "application/pdf",
                 "inline; filename=\"factura-999-999-000000042.pdf\"", now);
         assertThat(queryValue(signed.url(), "X-Amz-Date")).isEqualTo("20261027T120000Z");

@@ -42,7 +42,7 @@ public final class R2ObjectClient {
             addHeaders(request, signed.headers());
             HttpResponse<Void> response = client.send(request.build(), HttpResponse.BodyHandlers.discarding());
             if (response.statusCode() < 200 || response.statusCode() >= 300) throw new InvoiceDocumentUploadException();
-        } catch (InvoiceDocumentUploadException known) {
+        } catch (R2KeyScope.OutsidePrefixException | InvoiceDocumentUploadException known) {
             throw known;
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt();
@@ -61,7 +61,7 @@ public final class R2ObjectClient {
             addHeaders(request, signed.headers());
             HttpResponse<InputStream> response = client.send(request.build(), HttpResponse.BodyHandlers.ofInputStream());
             return readObject(response);
-        } catch (InvoiceDocumentUnavailableException known) {
+        } catch (R2KeyScope.OutsidePrefixException | InvoiceDocumentUnavailableException known) {
             throw known;
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt();
@@ -76,10 +76,15 @@ public final class R2ObjectClient {
             if (presignedUrl == null || !"https".equalsIgnoreCase(presignedUrl.getScheme())
                     || presignedUrl.getRawUserInfo() != null || presignedUrl.getRawFragment() != null)
                 throw new InvoiceDocumentUnavailableException();
+            URI endpoint = properties.endpointUri();
+            String bucketPath = "/" + properties.bucket() + "/";
+            if (!endpoint.getRawAuthority().equals(presignedUrl.getRawAuthority())
+                    || !presignedUrl.getPath().startsWith(bucketPath)) throw new InvoiceDocumentUnavailableException();
+            objectUri(presignedUrl.getPath().substring(bucketPath.length()));
             HttpRequest request = HttpRequest.newBuilder(presignedUrl).timeout(REQUEST_TIMEOUT).GET().build();
             HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
             return readObject(response);
-        } catch (InvoiceDocumentUnavailableException known) {
+        } catch (R2KeyScope.OutsidePrefixException | InvoiceDocumentUnavailableException known) {
             throw known;
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt();
@@ -98,7 +103,7 @@ public final class R2ObjectClient {
             addHeaders(request, signed.headers());
             HttpResponse<Void> response = client.send(request.build(), HttpResponse.BodyHandlers.discarding());
             if (response.statusCode() < 200 || response.statusCode() >= 300) throw new InvoiceDocumentUnavailableException();
-        } catch (InvoiceDocumentUnavailableException known) {
+        } catch (R2KeyScope.OutsidePrefixException | InvoiceDocumentUnavailableException known) {
             throw known;
         } catch (InterruptedException interrupted) {
             Thread.currentThread().interrupt();
@@ -109,9 +114,7 @@ public final class R2ObjectClient {
     }
 
     private URI objectUri(String objectKey) throws java.net.URISyntaxException {
-        if (objectKey == null || objectKey.isBlank() || objectKey.startsWith("/") || objectKey.contains("..")
-                || objectKey.contains("\\") || objectKey.contains("?"))
-            throw new IllegalArgumentException("Clave de objeto R2 inválida.");
+        R2KeyScope.require(properties, objectKey);
         URI endpoint = properties.endpointUri();
         return new URI(endpoint.getScheme(), null, endpoint.getHost(), endpoint.getPort(),
                 "/" + properties.bucket() + "/" + objectKey, null, null);

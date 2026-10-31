@@ -4,9 +4,12 @@ import java.security.MessageDigest;
 import java.time.Clock;
 import java.util.HexFormat;
 import com.pliego.modules.billing.gateway.BillingGateway;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /** R2 adapter. Uploads are content-addressed and happen before the short PostgreSQL completion transaction. */
 public final class R2InvoiceDocumentStore implements InvoiceDocumentStore {
+    private static final Logger LOG = LoggerFactory.getLogger(R2InvoiceDocumentStore.class);
     private final BillingGateway gateway;
     private final R2ObjectClient objects;
     private final R2PresignedUrlSigner signer;
@@ -46,6 +49,9 @@ public final class R2InvoiceDocumentStore implements InvoiceDocumentStore {
             byte[] content = objects.getObject(grant.objectKey());
             verifyObject(grant, content);
             return new InvoiceDownload(content, grant.mimeType(), grant.fileName(), grant.checksum());
+        } catch (R2KeyScope.OutsidePrefixException outsidePrefix) {
+            LOG.warn("code=R2_KEY_OUTSIDE_PREFIX");
+            throw new InvoiceDocumentUnavailableException();
         } catch (InvoiceDocumentUnavailableException unavailable) {
             throw unavailable;
         } catch (RuntimeException failure) {
@@ -74,6 +80,9 @@ public final class R2InvoiceDocumentStore implements InvoiceDocumentStore {
                     disposition + "; filename=\"" + filename + "\"", clock.instant());
             return new InvoiceDocumentAccessResult(grant.provenance(), grant.fileState(),
                     new InvoiceDocumentAccess("SIGNED_URL", signed.url(), signed.expiresAt()));
+        } catch (R2KeyScope.OutsidePrefixException outsidePrefix) {
+            LOG.warn("code=R2_KEY_OUTSIDE_PREFIX");
+            throw new InvoiceDocumentUnavailableException();
         } catch (RuntimeException signingFailure) {
             throw new InvoiceDocumentUnavailableException();
         }

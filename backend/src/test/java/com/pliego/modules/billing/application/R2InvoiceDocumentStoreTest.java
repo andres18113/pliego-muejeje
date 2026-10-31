@@ -9,6 +9,11 @@ import java.time.Instant;
 import java.time.ZoneOffset;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.springframework.boot.test.system.CapturedOutput;
+import org.springframework.boot.test.system.OutputCaptureExtension;
 import com.pliego.modules.billing.gateway.BillingGateway;
 
 class R2InvoiceDocumentStoreTest {
@@ -16,7 +21,7 @@ class R2InvoiceDocumentStoreTest {
     private final R2ObjectClient objects = mock(R2ObjectClient.class);
     private final R2StorageProperties properties = new R2StorageProperties(true, "billing-pliego",
             "https://0123456789abcdef0123456789abcdef.r2.cloudflarestorage.com", "auto",
-            "fictional-access", "fictional-secret", "300", "invoices/");
+            "fictional-access", "fictional-secret", "300", "invoices/", true);
     private final R2PresignedUrlSigner signer = new R2PresignedUrlSigner();
     private final R2InvoiceDocumentStore store = new R2InvoiceDocumentStore(gateway, objects, signer, properties,
             Clock.fixed(Instant.parse("2026-10-27T12:00:00Z"), ZoneOffset.UTC));
@@ -119,6 +124,52 @@ class R2InvoiceDocumentStoreTest {
                 "attachment")).isNull();
         verify(gateway).access(8, 9, "PDF");
         verifyNoInteractions(signer, objects);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"GET", "PRESIGN"})
+    @ExtendWith(OutputCaptureExtension.class)
+    void read_productionRowInDevelopment_isUnavailableWithoutTransportOrLeakingKey(String operation, CapturedOutput output) {
+        var transport = mock(java.net.http.HttpClient.class);
+        var development = new R2StorageProperties(true, "billing-pliego", "https://r2.example.invalid", "auto",
+                "fictional-access", "fictional-secret", "300", "local-dev/invoices/", false);
+        var guarded = new R2InvoiceDocumentStore(gateway,
+                new R2ObjectClient(development, new R2RequestSigner(), transport), signer, development);
+        String key = "invoices/123/" + "a".repeat(64) + ".pdf";
+        when(gateway.access(7, 9, "PDF")).thenReturn(grant("R2", "READY", key, "a".repeat(64), 128));
+
+        assertThatThrownBy(() -> {
+            if ("GET".equals(operation)) guarded.download(7, 9, "PDF");
+            else guarded.access(7, 9, "PDF", "/private-stream", "inline");
+        }).isInstanceOf(InvoiceDocumentUnavailableException.class)
+                .hasMessageNotContaining(key);
+        assertThat(output).contains("code=R2_KEY_OUTSIDE_PREFIX")
+                .doesNotContain(key, "fictional-access", "fictional-secret", "999-999-000000042");
+        verify(gateway).access(7, 9, "PDF");
+        verifyNoInteractions(transport);
+    }
+
+    @Test
+    void download_productionRowInDevelopment_keepsSpanishUnavailableResponse() {
+        var transport = mock(java.net.http.HttpClient.class);
+        var development = new R2StorageProperties(true, "billing-pliego", "https://r2.example.invalid", "auto",
+                "fictional-access", "fictional-secret", "300", "local-dev/invoices/", false);
+        var guarded = new R2InvoiceDocumentStore(gateway,
+                new R2ObjectClient(development, new R2RequestSigner(), transport), signer, development);
+        when(gateway.access(7, 9, "PDF")).thenReturn(grant("R2", "READY",
+                "invoices/123/" + "a".repeat(64) + ".pdf", "a".repeat(64), 128));
+        var controller = new com.pliego.modules.billing.api.BillingController(
+                new BillingService(gateway, guarded, new tools.jackson.databind.ObjectMapper()));
+        var jwt = org.springframework.security.oauth2.jwt.Jwt.withTokenValue("fictional-token")
+                .header("alg", "HS256").subject("7").build();
+
+        var response = controller.download(jwt, 9, "PDF", "attachment");
+        assertThat(response.getStatusCode().value()).isEqualTo(404);
+        var problem = (org.springframework.http.ProblemDetail) response.getBody();
+        assertThat(problem.getProperties()).containsEntry("code", "INVOICE_FILE_UNAVAILABLE");
+        assertThat(problem.getTitle()).isEqualTo("Documento no disponible");
+        assertThat(problem.getDetail()).isEqualTo("El archivo no está disponible para descarga.");
+        verifyNoInteractions(transport);
     }
 
     private static InvoiceArtifactAccessGrant grant(String kind, String state, String key, String checksum, long size) {

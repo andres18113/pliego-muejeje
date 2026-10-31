@@ -36,7 +36,8 @@ pliego:
     access-key-id: ${PLIEGO_R2_ACCESS_KEY_ID:}
     secret-access-key: ${PLIEGO_R2_SECRET_ACCESS_KEY:}
     presign-ttl-seconds: ${PLIEGO_R2_PRESIGN_TTL_SECONDS:300}
-    key-prefix: ${PLIEGO_R2_KEY_PREFIX:invoices/}
+    key-prefix: ${PLIEGO_R2_KEY_PREFIX:}
+    production-storage: ${PLIEGO_R2_PRODUCTION_STORAGE:false}
   home-delivery:
     scheduler-enabled: ${PLIEGO_HOME_DELIVERY_SCHEDULER_ENABLED:true}
     poll-interval: ${PLIEGO_HOME_DELIVERY_POLL_INTERVAL:PT10S}

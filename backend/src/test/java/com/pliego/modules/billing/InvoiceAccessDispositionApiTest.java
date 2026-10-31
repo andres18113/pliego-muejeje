@@ -49,7 +49,7 @@ class InvoiceAccessDispositionApiTest {
     static class R2StoreTestConfiguration {
         @Bean
         InvoiceDocumentStore invoiceDocumentStore(BillingGateway gateway, R2PresignedUrlSigner signer) {
-            var properties = new R2StorageProperties(false, null, null, "auto", null, null, "300", "invoices/");
+            var properties = new R2StorageProperties(false, null, null, "auto", null, null, "300", "invoices/", true);
             return new R2InvoiceDocumentStore(gateway, mock(R2ObjectClient.class), signer, properties);
         }
     }

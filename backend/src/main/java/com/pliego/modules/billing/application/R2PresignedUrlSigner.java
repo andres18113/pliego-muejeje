@@ -36,6 +36,7 @@ public final class R2PresignedUrlSigner {
             String responseContentDisposition, int requestedTtlSeconds, Instant now) {
         properties.validate();
         if (!properties.enabled()) throw new IllegalArgumentException("El acceso R2 está deshabilitado.");
+        R2KeyScope.require(properties, objectKey);
         int ttl = Math.max(1, Math.min(MAX_R2_EXPIRY_SECONDS, requestedTtlSeconds));
         try {
             URI root = properties.endpointUri();

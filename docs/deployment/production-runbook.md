@@ -77,30 +77,52 @@ default. When enabled, the worker writes both PDF and XML to a private bucket be
 the Database API transaction marks the artifact READY. Existing bytea artifacts
 remain in PostgreSQL and are not backfilled automatically.
 
-Production activation requires the operator to add these variables to
-`/etc/pliego/pliego.env` before activating a release. This runbook update does not
-edit the environment file or include its values:
+Use two separate authorized steps: first deploy the release with R2 disabled
+(no R2 variables are required), then configure and enable R2 in a separately
+authorized activation. For that second step, the operator adds these variables to
+`/etc/pliego/pliego.env`. This runbook update does not edit the environment file
+or include credential values:
 
-- `PLIEGO_R2_ENABLED`
+- `PLIEGO_R2_ENABLED=true`
+- `PLIEGO_R2_PRODUCTION_STORAGE=true`
 - `PLIEGO_R2_BUCKET`
 - `PLIEGO_R2_ENDPOINT`
 - `PLIEGO_R2_REGION` (default `auto`)
 - `PLIEGO_R2_ACCESS_KEY_ID`
 - `PLIEGO_R2_SECRET_ACCESS_KEY`
 - `PLIEGO_R2_PRESIGN_TTL_SECONDS` (default `300`, valid range `1`–`300`)
-- `PLIEGO_R2_KEY_PREFIX` (default `invoices/`; must end in `/`)
+- `PLIEGO_R2_KEY_PREFIX=invoices/` (explicit; no default)
 
-Local development should use `PLIEGO_R2_KEY_PREFIX=local-dev/invoices/` to keep
-test objects separate from production keys.
+Local development uses `PLIEGO_R2_KEY_PREFIX=local-dev/invoices/` and
+`PLIEGO_R2_PRODUCTION_STORAGE=false` (the default). Non-production prefixes must
+start with `local-dev/`; this strict convention prevents accidental selection of
+another namespace. Production storage requires exactly `invoices/`. Every prefix
+must be nonempty and end in `/`, so a non-production prefix can never be an
+ancestor of `invoices/` (neither the empty prefix nor `invoices` is valid).
 
 When `PLIEGO_R2_ENABLED=true`, missing or invalid configuration stops startup with
-a Spanish error. Keep the environment file root-owned and mode `0640`; never copy
-these values to a release manifest, command line, build log or deployment output.
+a Spanish error. Keep the production environment file root-owned and mode `0640`
+(`root:pliego`), and local development environment files that hold R2 values mode
+`0600`; never copy them or their values to a release manifest, command line,
+build log or deployment output.
 Keep R2 enabled while artifact rows reference R2 objects. Disabling the flag does
 not backfill those objects into PostgreSQL; an operator must re-enable R2 or follow
 a separately reviewed future backfill plan before disabling it. The optional live
-smoke test is for an operator-controlled non-production bucket only and is never
-part of deployment verification.
+smoke test requires an explicit `local-dev/` prefix, refuses production storage,
+and is never part of deployment verification.
+
+**Shared storage decision.** For this academic project, the project owner accepts
+one private bucket (`billing-pliego`) and one key pair shared by development and
+production, with `local-dev/invoices/` and `invoices/` respectively. Development
+sharing alone does not require rotation before first production activation.
+
+**LIMITATIONS.** Application guards prevent accidental application access across
+prefixes, including reads and presigning of a database row from another
+environment. The credentials themselves are bucket-scoped: anyone or any tool
+holding the development environment file can read, write or delete production
+objects outside the application. Prefix isolation is not credential isolation.
+Keep development environment files `0600`, never copy them, and rotate immediately if a value
+leaks.
 
 **Credential rotation.** The R2 key pair is an S3 credential scoped to the invoice
 bucket (read, write, list). The Cloudflare API token issued with it is not used by
@@ -108,8 +130,7 @@ PLIEGO and must not be stored on the server. Rotate the key pair (create the new
 pair, update `/etc/pliego/pliego.env`, restart, verify one invoice view, then revoke
 the old pair in Cloudflare) when: a value has appeared outside the environment file
 (chat, ticket, terminal transcript, screenshot), an operator with access leaves,
-before first production activation if the pair was shared during development, and
-at least every 90 days. Presigned links need no revocation: each expires after the
+or at least every 90 days. Presigned links need no revocation: each expires after the
 configured TTL (300 s) and is issued only after Database API authorization.
 
 **Framing.** On desktop, the customer invoice page (`/orders/:orderId/invoice`)
