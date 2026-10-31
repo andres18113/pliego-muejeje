@@ -133,7 +133,7 @@ GRANT CONNECT ON DATABASE pliego_runtime_privileges_ci TO pliego_app;
 GRANT pliego_owner TO pliego_app;
 SQL
 printf 'Runtime privilege CI stage: creating isolated database with restricted production-style roles\n'
-admin_psql postgres -f "$setup_sql"
+admin_psql postgres -f - < "$setup_sql"
 
 server_version_num="$(psql -X -v ON_ERROR_STOP=1 -At -c 'SHOW server_version_num')"
 if (( server_version_num < 180000 )); then
@@ -182,9 +182,9 @@ printf 'Runtime privilege CI stage: Spring Boot migration Flyway=%s as pliego_ap
 stop_backend
 
 printf 'Runtime privilege CI stage: applying cleanup SQL extracted from runbook (1/2)\n'
-admin_psql "$database_name" -f "$cleanup_sql"
+admin_psql "$database_name" -f - < "$cleanup_sql"
 printf 'Runtime privilege CI stage: applying cleanup SQL extracted from runbook (2/2)\n'
-admin_psql "$database_name" -f "$cleanup_sql"
+admin_psql "$database_name" -f - < "$cleanup_sql"
 
 start_backend restricted-restart
 printf 'Runtime privilege gate: strict pliego_app/pliego_owner mode required\n'
