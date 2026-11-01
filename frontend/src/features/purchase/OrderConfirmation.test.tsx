@@ -64,9 +64,9 @@ describe("successful order confirmation", () => {
   });
 
   it("prioritizes pickup location, server readiness and code while moving commercial detail below", async () => {
-    renderConfirmation(pickupOrder);
+    renderConfirmation({ ...pickupOrder, orderReference: "PL-4827-1093" });
     expect(await screen.findByRole("heading", { level: 1, name: "Es momento de celebrar" })).toBeInTheDocument();
-    expect(screen.getByText("Gracias por tu pedido N.º 700")).toBeInTheDocument();
+    expect(screen.getByText("Gracias por tu pedido #PL-4827-1093")).toBeInTheDocument();
     // What happens next leads: the code to show and when, beside the books to collect.
     const pickupFacts = within(screen.getByRole("region", { name: "Retiro" }));
     expect(pickupFacts.getByText("P-ABC234")).toBeInTheDocument();
@@ -147,11 +147,20 @@ it("states the six-minute window only while the server still offers cancellation
   const digital = { ...homeOrder, fulfillment: null, address: null, shipment: null,
     items: [{ ...homeOrder.items[0], format: "EBOOK", requiresPhysicalFulfillment: false, digitalAccess: { state: "AVAILABLE" as const, ownedItemId: "81" } }] };
   const { unmount } = renderConfirmation({ ...digital, availableActions: { cancel: true, canCancel: true, changeShippingAddress: false, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: "2026-10-04T23:61:12Z" } } as OrderDetail);
-  expect(await screen.findByText("Puedes cancelarlo durante los primeros 6 minutos desde el detalle del pedido.")).toBeInTheDocument();
-  unmount();
-  renderConfirmation({ ...digital, availableActions: { cancel: false, canCancel: false, changeShippingAddress: false, lifecycleState: "COMPLETED" } } as OrderDetail);
+  // An unreadable deadline falls back to the rule without a time; the action itself stays on the order detail.
   await screen.findByRole("heading", { name: "Es momento de celebrar" });
-  expect(screen.queryByText(/primeros 6 minutos/)).not.toBeInTheDocument();
+  const note = document.querySelector('[data-confirmation="cancel"]');
+  expect(note).toHaveTextContent("Puedes cancelarlo durante los 6 minutos siguientes a la aprobación del pago. Se hace desde el detalle del pedido.");
+  expect(within(note as HTMLElement).getByRole("link", { name: "detalle del pedido" })).toHaveAttribute("href", `/orders/${digital.orderId}`);
+  expect(screen.queryByRole("button", { name: "Cancelar pedido" })).not.toBeInTheDocument();
+  unmount();
+  const second = renderConfirmation({ ...digital, availableActions: { cancel: false, canCancel: false, changeShippingAddress: false, lifecycleState: "COMPLETED" } } as OrderDetail);
+  await screen.findByRole("heading", { name: "Es momento de celebrar" });
+  expect(screen.queryByText(/cancelarlo/)).not.toBeInTheDocument();
+  second.unmount();
+  // A window the server reports as closed is said, with its own time.
+  renderConfirmation({ ...digital, availableActions: { cancel: false, canCancel: false, changeShippingAddress: false, lifecycleState: "COMPLETED", cancellationDeadline: "2026-10-04T23:06:12Z" } } as OrderDetail);
+  expect(await screen.findByText(/^El plazo para cancelar terminó a las \d{2}:\d{2}\.$/)).toBeInTheDocument();
 });
 
 it("offers no library action on the confirmation until the title is really owned", async () => {

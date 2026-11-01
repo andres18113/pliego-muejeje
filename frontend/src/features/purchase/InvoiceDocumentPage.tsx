@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { orderReference } from "./purchaseText";
+import { useCustomerOrder } from "./ordersQuery";
 import { useMediaQuery } from "@mantine/hooks";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
@@ -55,6 +57,8 @@ function InvoiceDocumentContent({ orderId }: { orderId: string }) {
   // Phones rarely show a PDF inside a page; the frame is not rendered there, so its file is never loaded twice.
   const phone = useMediaQuery("(max-width: 640px)", false, { getInitialValueInEffect: false });
   const validId = /^[1-9][0-9]{0,18}$/.test(orderId) && BigInt(orderId) <= 9223372036854775807n;
+  // The order's public reference (ADR 0047), usually already cached from the order page; the id stays the route key.
+  const orderRef = useCustomerOrder(orderId, validId).data?.orderReference ?? null;
   const metadataQuery = useQuery({
     queryKey: ["customer-invoice", orderId],
     queryFn: ({ signal }) => getInvoiceMetadata(orderId, signal),
@@ -126,7 +130,7 @@ function InvoiceDocumentContent({ orderId }: { orderId: string }) {
 
   const facts = <dl className={classes.facts}>
     {documentNumber && <div className={classes.numberFact}><dt>Factura N.°</dt><dd>{documentNumber}</dd></div>}
-    <div><dt>Pedido N.°</dt><dd>{orderId}</dd></div>
+    <div><dt>Pedido</dt><dd>{orderReference({ orderId, orderReference: orderRef })}</dd></div>
   </dl>;
 
   const unavailable = (metadata.provenance === "LEGACY" && !ready)
@@ -162,7 +166,7 @@ function InvoiceDocumentContent({ orderId }: { orderId: string }) {
   const shown = documentQuery.data?.document;
   const src = shown?.kind === "signed" ? shown.url : blobUrl && blobUrl.blob === blob ? blobUrl.url : null;
   const fileName = `factura-${documentNumber ?? orderId}.pdf`;
-  const title = documentNumber ? `Factura N.° ${documentNumber}` : `Factura del pedido ${orderId}`;
+  const title = documentNumber ? `Factura N.° ${documentNumber}` : `Factura del pedido ${orderReference({ orderId, orderReference: orderRef })}`;
 
   /**
    * A signed link expires after a few minutes, so every press asks the server for a fresh one. Saving asks for a

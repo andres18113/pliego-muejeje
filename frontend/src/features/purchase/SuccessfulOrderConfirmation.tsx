@@ -11,9 +11,10 @@ import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { fulfillmentMethodLabel } from "./fulfillment";
 import { LocationMap } from "./LocationMap";
 import { openingHoursLabel } from "./PickupLocationPicker";
+import { pickupHandoverNote } from "./PickupDetails";
 import { PurchaseFlow } from "./PurchaseFlow";
-import { deliveryWindowLabel, ivaLabel, paymentMethodLabel } from "./purchaseText";
-import { purchaseWindowView } from "./orderStory";
+import { deliveryWindowLabel, ivaLabel, orderReference, paymentMethodLabel } from "./purchaseText";
+import { cancellationCondition, cancellationEnded, orderCancellationRule } from "./cancellationPolicy";
 import { hasSaving } from "./cartPricingViewModel";
 import { InvoiceAction } from "./InvoiceAction";
 import { toOrderPricingViewModel, type OrderLinePricingViewModel } from "./orderPricingViewModel";
@@ -23,7 +24,7 @@ import classes from "./confirmation.module.css";
 const academicMapReference = { latitude: -.21, longitude: -78.4914 };
 
 /** Snapshot-owned destination, readiness, payment and prices; catalog reads supply only cover assets. */
-export function SuccessfulOrderConfirmation({ order, headingRef }: { order: OrderDetail; headingRef: Ref<HTMLHeadingElement> }) {
+export function SuccessfulOrderConfirmation({ order, headingRef, cancelEnded = false }: { order: OrderDetail; headingRef: Ref<HTMLHeadingElement>; cancelEnded?: boolean }) {
   // The response reports no fulfillment for a digital-only purchase.
   const hasPhysicalFulfillment = order.fulfillment != null;
   const digitalItems = order.items.filter(item => !item.requiresPhysicalFulfillment);
@@ -60,10 +61,10 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
     return line?.pricingSnapshotAvailable && line.lineSavings && hasSaving(line.lineSavings.rawValue) ? line as OrderLinePricingViewModel & { lineSavings: NonNullable<OrderLinePricingViewModel["lineSavings"]> } : null;
   };
   const fulfillmentHeading = pickup ? "Retiro" : "Entrega";
-  // The six-minute window (ADR 0029) is stated only while the server still offers cancellation.
+  // Cancelling is stated in the server's own rule while it is offered, and its end once a window the customer was
+  // just given has closed (the page re-reads at the deadline); the decision itself stays on the order detail.
   const canCancel = Boolean(order.availableActions?.canCancel ?? order.availableActions?.cancel);
-  const windowView = purchaseWindowView(order.availableActions?.lifecycleState, { digitalOnly: !hasPhysicalFulfillment, pickup: Boolean(pickup) });
-  const inWindow = windowView === "digital-window" || windowView === "pickup-window";
+  const windowClosed = !canCancel && orderCancellationRule(order) === "window" && Boolean(order.availableActions?.cancellationDeadline);
   const cover = (item: OrderDetail["items"][number]) => coverQueries[order.items.indexOf(item)]?.data;
   const bookCover = (item: OrderDetail["items"][number]) => <div className={classes.bookCover}>
     <BookCover url={cover(item)?.coverUrl ?? null} license={cover(item)?.coverLicense ?? null} attribution={cover(item)?.coverAttribution ?? null} title={item.title} size="compact" decorative />
@@ -75,8 +76,13 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
       <header className={classes.intro}>
         <span className={classes.done} aria-hidden="true"><MaterialSymbol name="check_circle" size={32} /></span>
         <h1 id="confirmation-heading" tabIndex={-1} ref={headingRef}>Es momento de celebrar</h1>
-        <p className={classes.thanks}>Gracias por tu pedido N.º {order.orderId}</p>
-        {inWindow && canCancel && <p>Puedes cancelarlo durante los primeros 6 minutos desde el detalle del pedido.</p>}
+        <p className={classes.thanks}>Gracias por tu pedido {orderReference(order)}</p>
+        {canCancel ? <p className={classes.cancelNote} data-confirmation="cancel">
+          <MaterialSymbol name="schedule" size={18} aria-hidden="true" />
+          <span>{cancellationCondition(order)} Se hace desde el <Link to={`/orders/${order.orderId}`} replace state={null}>detalle del pedido</Link>.</span>
+        </p> : (windowClosed || cancelEnded) && <p className={classes.cancelEnded} role="status" data-confirmation="cancel-ended">
+          <MaterialSymbol name="schedule" size={18} aria-hidden="true" /><span>{cancellationEnded(order)}</span>
+        </p>}
       </header>
 
       <div className={classes.layout}>
@@ -101,7 +107,7 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
                 {location && <div><dt>Horario de atención</dt><dd>{openingHoursLabel(location)}</dd></div>}
               </> : <div><dt>Entrega estimada</dt><dd>{deliveryWindow}</dd></div>}
             </dl>}
-            {pickup && order.fulfillment?.state !== "COLLECTED" && <p className={classes.note}>Presenta la confirmación enviada a tu correo al retirar el pedido.</p>}
+            {pickup && order.fulfillment?.state !== "COLLECTED" && <p className={classes.note}>{pickupHandoverNote}</p>}
             <ul className={classes.lines} aria-label={pickup ? "Libros para retirar" : "Libros para entregar"}>{order.items.filter(item => item.requiresPhysicalFulfillment).map((item) => {
               const saving = lineSaving(item.orderItemId);
               return <li key={item.orderItemId}>
@@ -146,7 +152,7 @@ export function SuccessfulOrderConfirmation({ order, headingRef }: { order: Orde
         <aside className={classes.receipt} aria-labelledby="confirmation-order-heading" data-confirmation="details">
           <header className={classes.receiptHead}>
             <h2 id="confirmation-order-heading">Tu pedido</h2>
-            <p>N.º {order.orderId}</p>
+            <p>{orderReference(order)}</p>
           </header>
           {order.payment && <p className={classes.paymentMethod}><MaterialSymbol name={order.payment.method === "TRANSFER" ? "account_balance" : "credit_card"} size={20} aria-hidden="true" /><span><span className="visually-hidden">Método de pago: </span>{paymentMethodLabel(order.payment.method)}</span></p>}
           <dl className={classes.totals}>

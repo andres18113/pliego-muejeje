@@ -34,7 +34,7 @@ describe("OrdersPage", () => {
       "GET /api/v1/orders/700": () => json(orderDetailFixture(state)),
     });
     renderPurchaseRoute(routes,"/orders");
-    expect(await screen.findByRole("link",{ name: new RegExp(`${label}.*Pedido N.° 700`) })).toHaveTextContent(label);
+    expect(await screen.findByRole("link",{ name: new RegExp(`${label}.*Pedido #700`) })).toHaveTextContent(label);
   });
 
   it("reflects a historical saving under the total only when the order's snapshot holds one", async () => {
@@ -47,10 +47,10 @@ describe("OrdersPage", () => {
       "GET /api/v1/orders/701": () => json(orderDetailFixture("PREPARING", { orderId: "701", pricingSnapshotAvailable: false, originalSubtotal: null, savingsTotal: null })),
     });
     renderPurchaseRoute(routes, "/orders");
-    const saved = await screen.findByRole("link", { name: /Pedido N.° 700/ });
+    const saved = await screen.findByRole("link", { name: /Pedido #700/ });
     expect(await within(saved).findByText(/Ahorraste \$\s*10,00/)).toBeInTheDocument();
     expect(saved.querySelector("[data-order-saving] .material-symbol")?.textContent).toBe("sell");
-    const plain = screen.getByRole("link", { name: /Pedido N.° 701/ });
+    const plain = screen.getByRole("link", { name: /Pedido #701/ });
     expect(plain.querySelector("[data-order-saving]")).toBeNull();
   });
 
@@ -70,10 +70,10 @@ describe("OrdersPage", () => {
     });
     renderPurchaseRoute(routes, "/orders");
     const open = await screen.findByRole("region", { name: "En curso" });
-    const window = await within(open).findByRole("link", { name: /Compra confirmada.*Pedido N.° 800/ });
+    const window = await within(open).findByRole("link", { name: /Compra confirmada.*Pedido #800/ });
     expect(await within(window).findByText("Puedes cancelarlo durante los primeros 6 minutos.")).toBeInTheDocument();
     const past = screen.getByRole("region", { name: "Anteriores" });
-    const done = await within(past).findByRole("link", { name: /Compra completada.*Pedido N.° 801/ });
+    const done = await within(past).findByRole("link", { name: /Compra completada.*Pedido #801/ });
     expect(within(done).getByText("Disponible en Mi biblioteca.")).toBeInTheDocument();
     expect(document.body.textContent).not.toMatch(/CANCELLATION_WINDOW|COMPLETED|OWNERSHIP_ONLY/);
   });
@@ -84,7 +84,7 @@ describe("OrdersPage", () => {
       "GET /api/v1/orders/700": () => json({ ...pickupOrder, availableActions: { cancel: true, changeShippingAddress: false, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: new Date(Date.now() + 300_000).toISOString() } }),
     });
     renderPurchaseRoute(routes, "/orders");
-    const row = await screen.findByRole("link", { name: /Pedido N.° 700/ });
+    const row = await screen.findByRole("link", { name: /Pedido #700/ });
     expect(await within(row).findByText("Puedes cancelarlo durante los primeros 6 minutos.")).toBeInTheDocument();
   });
 
@@ -99,7 +99,7 @@ describe("OrdersPage", () => {
     });
     renderPurchaseRoute(routes, "/orders");
     expect(await screen.findByText("Puedes cancelarlo durante los primeros 6 minutos.")).toBeInTheDocument();
-    expect(await screen.findByRole("link", { name: /Compra completada.*Pedido N.° 800/ }, { timeout: 4000 })).toBeInTheDocument();
+    expect(await screen.findByRole("link", { name: /Compra completada.*Pedido #800/ }, { timeout: 4000 })).toBeInTheDocument();
     expect(screen.queryByText(/primeros 6 minutos/)).toBeNull();
   });
 
@@ -109,7 +109,7 @@ describe("OrdersPage", () => {
       "GET /api/v1/orders/700": () => json({ ...pickupOrder,orderState: "DELIVERED",fulfillment: { ...pickupOrder.fulfillment,state: "COLLECTED" } }),
     });
     renderPurchaseRoute(routes,"/orders");
-    expect(await screen.findByRole("link",{ name: /Retirado.*Pedido N.° 700/ })).not.toHaveTextContent("Entregado");
+    expect(await screen.findByRole("link",{ name: /Retirado.*Pedido #700/ })).not.toHaveTextContent("Entregado");
   });
 
   it("presents each order as one unit led by its server state", async () => {
@@ -118,13 +118,13 @@ describe("OrdersPage", () => {
       summary({ orderId: "699", orderState: "CANCELLED", purchaseState: "CANCELLED", paymentState: "REFUNDED", shipmentState: "CANCELLED", estimatedDeliveryFrom: null, estimatedDeliveryTo: null, itemCount: 1, unitCount: 1, itemSummary: [{ orderItemId: "9", title: "Crimen y castigo", format: "PAPERBACK", quantity: 1 }], invoiceState: "ISSUED" }),
     ], page: 0, pageSize: 10, totalCount: "2" }) });
     renderPurchaseRoute(routes, "/orders");
-    const shipped = await screen.findByRole("link", { name: /Pedido N.° 700/ });
+    const shipped = await screen.findByRole("link", { name: /Pedido #700/ });
     expect(shipped).toHaveTextContent("En camino");
     expect(shipped).toHaveTextContent(/Llega entre el/);
     expect(shipped).toHaveTextContent("El extranjero");
     expect(shipped).toHaveTextContent("y 1 libro más");
     expect(shipped).toHaveTextContent("5 unidades");
-    const cancelled = screen.getByRole("link", { name: /Pedido N.° 699/ });
+    const cancelled = screen.getByRole("link", { name: /Pedido #699/ });
     expect(cancelled).toHaveTextContent("Pedido cancelado");
     expect(cancelled).toHaveTextContent("Pago reembolsado");
     // The invoice lives on the order's own page; the list never repeats it per row.
@@ -137,12 +137,12 @@ describe("OrdersPage", () => {
       return json({ items: [summary({ orderId: String(700 - page) })], page, pageSize: 10, totalCount: "11" });
     } });
     const { router } = renderPurchaseRoute([...routes, { path: "/orders/:orderId", element: <p>Detalle</p> }], "/orders");
-    expect(await screen.findByRole("link", { name: /Pedido N.° 700/ })).toHaveAttribute("href", "/orders/700");
+    expect(await screen.findByRole("link", { name: /Pedido #700/ })).toHaveAttribute("href", "/orders/700");
     await userEvent.click(screen.getByRole("button", { name: "Siguiente" }));
-    expect(await screen.findByRole("link", { name: /Pedido N.° 699/ })).toBeInTheDocument();
+    expect(await screen.findByRole("link", { name: /Pedido #699/ })).toBeInTheDocument();
     expect(api.calls.some((call) => call.path.includes("page=1"))).toBe(true);
     expect(router.state.location.search).toBe("?page=1");
-    await userEvent.click(screen.getByRole("link", { name: /Pedido N.° 699/ }));
+    await userEvent.click(screen.getByRole("link", { name: /Pedido #699/ }));
     expect(router.state.location.state).toEqual({ ordersPage: 1 });
     await router.navigate(-1);
     expect(router.state.location.search).toBe("?page=1");

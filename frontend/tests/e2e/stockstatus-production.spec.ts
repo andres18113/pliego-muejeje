@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 
 const summary = { editionId: "42", bookId: "17", title: "Cien años de soledad", authors: "Gabriel García Márquez", publisher: "Debolsillo", isbn13: "9786287745131", price: "20.00", coverUrl: null, coverLicense: null, coverAttribution: null, format: "HARDCOVER", language: "es", available: true };
 const unavailable = { ...summary, editionId: "43", bookId: "18", title: "Introducción al álgebra lineal", authors: "José Alfredo Collazos Sánchez, Carlos Alberto Ramírez Vanegas, Óscar Danilo Montoya Giraldo", publisher: "Ecoe Ediciones", isbn13: "9789585082656", format: "PAPERBACK", available: false };
@@ -80,10 +81,12 @@ for (const scheme of ["light", "dark"] as const) {
   test(`StockStatus in production routes: ${scheme}, desktop/mobile and real API states`, async ({ page }) => {
     test.setTimeout(120_000);
     await install(page, scheme);
+    // A stored "dark" choice from before PLIEGO had one appearance, plus a dark system preference: both are ignored.
+    await page.emulateMedia({ colorScheme: scheme, reducedMotion: "reduce" });
     for (const width of [320, 390, 768, 1440, 1920]) {
       await page.setViewportSize({ width, height: 1000 });
       await page.goto("/catalog"); await expect(page.locator("[data-bookcard]")).toHaveCount(2); await check(page, 2);
-      await expect(page.locator("html")).toHaveAttribute("data-mantine-color-scheme", scheme);
+      await expectLightAppearance(page); if (scheme === "dark") await expectUnchangedByDarkPreference(page);
       // Catalog cards are browse cards: availability lives in the stock line; buying happens on the edition page.
       await expect(page.locator('.edition-item [data-bookcard-cart]')).toHaveCount(0);
       await expect(page.locator('.edition-item [data-stockstatus]')).toHaveCount(2);

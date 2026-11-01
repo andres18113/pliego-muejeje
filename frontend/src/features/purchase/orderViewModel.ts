@@ -6,6 +6,8 @@ import { toOrderPricingViewModel, type OrderPricingViewModel } from "./orderPric
 /** Data contract for Mis pedidos; presentation chooses grouping, layout, icons and styling. */
 export interface MisPedidosOrder {
   orderId: string;
+  /** The public reference (ADR 0047); null only for a response that predates it. */
+  orderReference: string | null;
   date: string | null;
   state: CurrentOrderState;
   items: { orderItemId: string; title: string; format: string | null; quantity: number }[];
@@ -25,6 +27,7 @@ export function toMisPedidosOrder(summary: OrderSummary, detail?: OrderDetail): 
   const historicalSource = detail && hasHistoricalPricingData(detail) ? detail : summary;
   return {
     orderId: summary.orderId,
+    orderReference: detail?.orderReference ?? summary.orderReference ?? null,
     date: detail?.createdAt ?? summary.createdAt ?? null,
     state: currentOrderState({
       orderState: detail?.orderState ?? summary.orderState,

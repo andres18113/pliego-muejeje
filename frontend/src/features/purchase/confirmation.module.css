@@ -16,6 +16,14 @@
 .intro h1 { margin: 0; color: var(--pf-ink); font: 600 clamp(1.75rem, 1.4rem + 1vw, 2.35rem)/1.2 var(--pf-display); letter-spacing: -.035em; }
 .intro p { margin: 0; max-width: 60ch; color: var(--pf-muted); line-height: 1.5; }
 .intro .thanks { color: var(--pf-ink); font-weight: 650; }
+/* When the order can still be cancelled: one white note on the ground (the confirmation's card surface), the server's
+   rule in ink and where to do it; once a window closes, the same place says so in muted text. Never a button. */
+.intro .cancelNote, .intro .cancelEnded { display: flex; align-items: flex-start; gap: 10px; max-width: 34rem; margin-top: 10px; text-align: start; font-size: .9375rem; }
+.intro .cancelNote { padding: 12px 16px; border-radius: 16px; background: var(--cf-card); box-shadow: inset 0 0 0 1px var(--cf-edge); color: var(--pf-ink); }
+.cancelNote :global(.material-symbol), .cancelEnded :global(.material-symbol) { flex: none; margin-top: 2px; }
+.cancelNote a { color: inherit; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+@media (hover: hover) { .cancelNote a:hover { text-decoration-thickness: 2px; } }
+.cancelNote a:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 2px; border-radius: 4px; }
 
 .layout { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(300px, 1fr); gap: 24px; align-items: start; min-width: 0; }
 

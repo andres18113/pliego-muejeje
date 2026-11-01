@@ -70,7 +70,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(posts[0].body).toEqual({ ...billingFixturePayload, fulfillmentMethod: "STORE_PICKUP", pickupLocationId: "8", expectedCartId: "40", paymentMethod: method,
       simulationOutcome: "APPROVED", ...(method === "CARD" ? { cardNumber: "4111111111111111" } : {}) });
     expect(posts[0].headers.get("Idempotency-Key")).toMatch(/^[0-9a-f-]{36}$/);
-    expect(screen.getByText(/Presenta la confirmación enviada a tu correo/)).toBeInTheDocument();
+    expect(screen.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeInTheDocument();
     expect(screen.getByText(/19:32:12/)).toBeInTheDocument();
     expect(screen.queryByText(/America\/Guayaquil/)).not.toBeInTheDocument();
     expect(screen.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", expect.stringContaining("marker=-0.22%2C-78.5"));

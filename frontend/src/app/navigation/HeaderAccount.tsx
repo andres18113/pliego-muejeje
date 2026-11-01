@@ -39,6 +39,13 @@ const accountSections = [
   { to: "/orders", icon: "shopping_bag", label: "Pedidos", current: (path: string) => path.startsWith("/orders") },
 ] as const;
 
+/** An ADMIN session's menu: the administration area and its tools (ADR 0047). */
+const adminSections = [
+  { to: "/admin", icon: "inventory_2", label: "Administración", current: (path: string) => path === "/admin" || path === "/admin/" },
+  { to: "/admin/retiros", icon: "storefront", label: "Retiros en tienda", current: (path: string) => path.startsWith("/admin/retiros") },
+  { to: "/admin/correcciones", icon: "badge", label: "Correcciones de identificación", current: (path: string) => path.startsWith("/admin/correcciones") },
+] as const;
+
 export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange: (opened: boolean) => void }) {
   const { session, clear, logout } = useSession();
   const location = useLocation();
@@ -109,12 +116,12 @@ export function HeaderAccount({ opened, onChange }: { opened: boolean; onChange:
           {profile.isError && <Text size="xs" className={classes.muted}>No pudimos consultar tu nombre.</Text>}
           </div>
         </div>
-        {isCustomer ? accountSections.map((section, index) => {
+        {(isCustomer ? accountSections : adminSections).map((section, index) => {
           const current = section.current(location.pathname);
           return <Menu.Item key={section.to} component={Link} to={section.to} data-autofocus={index === 0 || undefined}
             leftSection={<MaterialSymbol name={section.icon} />} rightSection={current ? <span className={classes.hereDot} aria-hidden="true" /> : undefined}
             aria-current={current ? "page" : undefined}>{section.label}</Menu.Item>;
-        }) : <Menu.Item component={Link} to="/admin" data-autofocus leftSection={<MaterialSymbol name="inventory_2" />}>Administración</Menu.Item>}
+        })}
         <Menu.Divider />
         {logoutError && <Text role="alert" size="sm" className={classes.error}>No se pudo cerrar la sesión. Comprueba tu conexión e inténtalo otra vez.</Text>}
         <Menu.Item closeMenuOnClick={false} disabled={loggingOut} onClick={() => void signOut()} leftSection={<MaterialSymbol name="logout" />}>{loggingOut ? "Cerrando sesión…" : "Cerrar sesión"}</Menu.Item>

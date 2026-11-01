@@ -39,6 +39,7 @@ export type CheckoutCommand = CheckoutBilling & {
 const checkoutResultSchema = z.object({
   ...orderPricingFields,
   orderId: z.string().min(1),
+  orderReference: z.string().nullish(),
   orderState: z.string().min(1),
   paymentState: z.string().min(1),
   total: moneySchema,
@@ -145,6 +146,7 @@ const orderItemSummarySchema = z.object({
 const orderSummarySchema = z.object({
   ...orderPricingFields,
   orderId: z.string().min(1),
+  orderReference: z.string().nullish(),
   createdAt: z.string().optional(),
   orderState: z.string(),
   total: moneySchema,
@@ -300,6 +302,7 @@ export type OrderItemDigitalAccess = z.infer<typeof digitalAccessSchema>;
 const orderDetailSchema = z.object({
   ...orderPricingFields,
   orderId: z.string().min(1),
+  orderReference: z.string().nullish(),
   orderState: z.string(),
   subtotal: moneySchema.optional(),
   taxRate: z.string().nullish(),

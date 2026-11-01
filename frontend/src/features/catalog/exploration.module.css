@@ -107,7 +107,7 @@
 .pagination { display: flex; align-items: center; justify-content: center; gap: 8px 20px; margin-top: 24px; }
 .pageStep { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding-inline: 14px; border-radius: 999px; color: var(--store-link); font-size: .9375rem; font-weight: 600; text-decoration: none; }
 a.pageStep:hover { background: var(--explore-quiet); }
-.pageStep[data-disabled] { color: var(--pliego-control-border); visibility: visible; }
+.pageStep[data-disabled] { color: #6b6980; visibility: visible; } /* inactive, still legible: 4.86:1 on paper */
 .pageList { display: flex; align-items: center; gap: 4px; margin: 0; padding: 0; list-style: none; }
 .pageNumber { display: grid; place-items: center; min-width: 44px; height: 44px; padding-inline: 6px; border-radius: 999px; color: var(--pliego-text); font-size: .9375rem; font-weight: 600; font-variant-numeric: tabular-nums; text-decoration: none; }
 .pageNumber:hover:not([aria-current]) { background: var(--explore-quiet); }

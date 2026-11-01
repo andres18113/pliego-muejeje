@@ -44,11 +44,16 @@
 .lead { max-width: 34rem; margin: 0; line-height: 1.5; }
 .estimate { margin: 0; font-weight: 650; line-height: 1.45; }
 
-/* Cancelling, last in the story and quiet: a hairline, the window or consequence as one muted line, and a text action
-   in ink (never an outlined button competing with the purchase). The refund and what is released are in the dialog. */
-.cancel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 20px; min-width: 0; padding-top: 14px; border-top: 1px solid var(--acc-line); }
-.cancel > p { display: flex; align-items: flex-start; gap: 8px; flex: 1 1 18rem; margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; }
+/* Cancelling, right under the state: one quiet neutral field (it groups the rule and its action) with the server's
+   rule as an ink line and a text action in ink — never a filled or outlined button competing with the purchase.
+   The refund and what is released are in the dialog. Phones wrap the action under the line. */
+.cancel { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 20px; min-width: 0; padding: 6px 16px 6px 14px; border-radius: 16px; background: color-mix(in srgb, var(--acc-ink) 5%, var(--acc-card, #fff)); }
+.cancel > p { display: flex; align-items: flex-start; gap: 10px; flex: 1 1 18rem; margin: 0; padding-block: 8px; color: var(--acc-ink); font-size: .9375rem; line-height: 1.45; }
+.cancelEnded { display: flex; align-items: flex-start; gap: 10px; margin: 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.45; }
+.cancelEnded :global(.material-symbol) { flex: none; margin-top: 1px; }
 .cancel > p :global(.material-symbol) { flex: none; margin-top: 1px; }
+/* Wrapped under the line (phones, larger text), the action starts where the words do, not under the icon. */
+.cancel .cancelLink { margin-inline-start: 28px; }
 .cancelLink { min-height: 44px; padding: 0; border: 0; background: none; color: var(--acc-ink); font: inherit; font-size: .9375rem; font-weight: 600; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 5px; cursor: pointer; }
 @media (hover: hover) { .cancelLink:hover { text-decoration-thickness: 2px; } }
 .cancelLink:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }

@@ -14,6 +14,10 @@ const profileSchema = z.object({
   customerId: z.string().min(1),
   email: z.string().email(),
   emailVerified: z.boolean().nullish(),
+  // A known permanent delivery failure (hard bounce or provider suppression); absent from older servers.
+  emailDelivery: z.object({ status: z.enum(["OK", "UNDELIVERABLE"]), since: z.string().nullable() }).nullish(),
+  // A requested address that is not in use until its owner confirms it from the link sent there.
+  pendingEmail: z.object({ address: z.string().email(), expiresAt: z.string(), delivery: z.enum(["OK", "UNDELIVERABLE"]).nullish() }).nullish(),
   firstNames: z.string(),
   lastNames: z.string(),
   phone: z.string().nullable(),
@@ -49,13 +53,17 @@ export class EmailChangeOutcomeUnknown extends Error {
   }
 }
 
-export async function changeEmail(newEmail: string, currentPassword: string): Promise<string> {
+const emailChangeRequestedSchema = z.object({ email: z.string().email(), pendingEmail: z.object({ address: z.string().email(), expiresAt: z.string() }) });
+export type EmailChangeRequested = z.infer<typeof emailChangeRequestedSchema>;
+
+/** Requests a change: the current address stays in use until the new one is confirmed from its link. */
+export async function changeEmail(newEmail: string, currentPassword: string): Promise<EmailChangeRequested> {
   const result = await apiClient.PUT("/api/v1/me/email", { body: { newEmail, currentPassword } })
     .catch(() => { throw new EmailChangeOutcomeUnknown(); });
   if (result.response.ok) {
-    const parsed = z.object({ email: z.string().min(3) }).safeParse(result.data);
-    if (!parsed.success) throw new EmailChangeOutcomeUnknown();
-    return parsed.data.email;
+    const parsed = emailChangeRequestedSchema.safeParse(result.data);
+    if (result.response.status !== 202 || !parsed.success) throw new EmailChangeOutcomeUnknown();
+    return parsed.data;
   }
   if (result.response.status >= 500) throw new EmailChangeOutcomeUnknown();
   throw toApiRequestError(result.response.status, result.error, "No pudimos cambiar tu correo", "Revisa los datos e inténtalo otra vez.");
@@ -224,4 +232,16 @@ export async function withdrawBillingIdentityCorrection(requestId: string): Prom
   if (result.response.ok) return;
   if (result.response.status >= 500) throw new BillingIdentityOutcomeUnknown();
   throw toApiRequestError(result.response.status, result.error, "No pudimos retirar la solicitud", "Consulta su estado e inténtalo otra vez.");
+}
+
+/** Sends the pending change's confirmation link again (rate-limited by the server). */
+export async function resendEmailChange(): Promise<void> {
+  const { error, response } = await apiClient.POST("/api/v1/me/email-change/resend", {});
+  if (response.status !== 202) throw toApiRequestError(response.status, error, "No pudimos reenviar el enlace", "Inténtalo de nuevo en unos minutos.");
+}
+
+/** Withdraws the pending change; the current address was never replaced. Idempotent. */
+export async function cancelEmailChange(): Promise<void> {
+  const { error, response } = await apiClient.DELETE("/api/v1/me/email-change", {});
+  if (response.status !== 204) throw toApiRequestError(response.status, error, "No pudimos cancelar el cambio", "Inténtalo de nuevo.");
 }

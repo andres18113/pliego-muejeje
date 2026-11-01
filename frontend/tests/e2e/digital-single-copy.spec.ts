@@ -258,6 +258,8 @@ for (const width of [1280, 360]) {
     // Inside the cart drawer, a scroll of its own list (a nested container) dismisses it too.
     // (Only an add from the floating bar answers with the drawer; the scene's add answers in place.)
     await page.goto("/catalog/editions/43");
+    // Scroll only once the edition has rendered: a still-short page clamps the scroll and the bar never appears.
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
     await page.evaluate(() => window.scrollTo(0, 650));
     await page.getByRole("region", { name: "Resumen del libro" }).getByRole("button", { name: width < 600 ? "Agregar" : "Agregar al carrito", exact: true }).click();
     const drawer = page.getByRole("dialog", { name: "Tu carrito" });

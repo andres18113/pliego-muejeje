@@ -66,7 +66,7 @@ export interface paths {
         get?: never;
         /**
          * Cambiar mi correo
-         * @description Cambia el correo de inicio de sesión del cliente autenticado tras confirmar su contraseña actual. Las sesiones abiertas siguen activas.
+         * @description Solicita un cambio tras confirmar la contraseña actual. Conserva el correo de inicio de sesión, la verificación, las sesiones y los destinatarios hasta confirmar la dirección nueva. Una solicitud nueva sustituye la anterior. Hasta cinco solicitudes por hora.
          */
         put: operations["changeEmail"];
         post?: never;
@@ -83,10 +83,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * Consultar mi identificación de facturación
-         * @description Devuelve la identidad de la cuenta, el uso de facturación y la solicitud vigente o reciente. Respuesta no almacenable en caché.
-         */
+        /** Consultar mi identificación de facturación */
         get: operations["get"];
         /**
          * Registrar mi identificación
@@ -401,6 +398,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/webhooks/mailtrap": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Recibir resultados de correo
+         * @description Requiere firma Mailtrap-Signature sobre el cuerpo crudo; desactivado sin secreto.
+         */
+        post: operations["receive"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/orders/{orderId}/cancel": {
         parameters: {
             query?: never;
@@ -421,6 +438,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/email-change/resend": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Reenviar la confirmación del correo pendiente
+         * @description Envía un nuevo enlace al correo pendiente e invalida el enlace de confirmación anterior. Conserva el vencimiento original de la solicitud. Hasta cinco reenvíos por hora y uno por minuto.
+         */
+        post: operations["resendEmailChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/billing-identity/correction": {
         parameters: {
             query?: never;
@@ -432,9 +469,46 @@ export interface paths {
         put?: never;
         /**
          * Corregir mi identificación
-         * @description No requiere contraseña. currentNumber compara con el valor mostrado. currentPassword es opcional por compatibilidad, se ignora y no se valida. Una identidad usada solo admite el cambio directo entre cédula y RUC de la misma persona; cualquier otro cambio requiere revisión.
+         * @description Usa el número que ves como comparación. No requiere contraseña; el campo legado currentPassword se acepta y se ignora. Los cambios de identificaciones usadas que no sean cédula↔RUC de la misma persona requieren revisión.
          */
         post: operations["correctBillingIdentity"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/billing-identity/correction-requests": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Solicitar revisión de una corrección de identificación
+         * @description Crea una solicitud para un cambio que ya requiere revisión. Idempotency-Key identifica la solicitud.
+         */
+        post: operations["requestCorrection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/me/billing-identity/correction-requests/{id}/withdraw": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Retirar mi solicitud pendiente de corrección */
+        post: operations["withdrawCorrection"];
         delete?: never;
         options?: never;
         head?: never;
@@ -490,7 +564,7 @@ export interface paths {
         put?: never;
         /**
          * Finalizar compra simulada
-         * @description No realiza cobros reales. Idempotency-Key identifica el intento; repetirlo devuelve el resultado original. Resuelve una respuesta perdida mediante el intento exacto. billingRecipient es opcional y, si se omite, equivale a ACCOUNT. ACCOUNT verifica o registra la identidad de la cuenta; OTHER guarda los datos solo en la factura. El destinatario forma parte de la huella idempotente.
+         * @description No realiza cobros reales. Idempotency-Key identifica el intento; repetirlo devuelve el resultado original. Resuelve una respuesta perdida mediante el intento exacto.
          */
         post: operations["checkout"];
         delete?: never;
@@ -519,6 +593,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/cart/saved/{savedItemId}/move-to-cart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Restaurar en el carrito un artículo guardado
+         * @description Valida la edición con las reglas de agregar al carrito; ante un error, el artículo permanece guardado.
+         */
+        post: operations["moveSavedToCart"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/cart/items": {
         parameters: {
             query?: never;
@@ -530,6 +624,26 @@ export interface paths {
         put?: never;
         /** Agregar edición al carrito */
         post: operations["addItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cart/items/{cartItemId}/save-for-later": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Mover un artículo del carrito a Guardado para después
+         * @description La cantidad del carrito reemplaza la cantidad guardada de la misma edición. Devuelve el carrito y la lista actualizados.
+         */
+        post: operations["saveForLater"];
         delete?: never;
         options?: never;
         head?: never;
@@ -696,6 +810,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/email-change/confirm": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirmar el nuevo correo
+         * @description Enlace público de un solo uso, válido durante 24 horas. Promueve el correo y lo verifica, limpia el bloqueo de entrega de la cuenta y revoca todas las sesiones de refresco. Los access tokens existentes conservan su expiración máxima de 30 minutos.
+         */
+        post: operations["confirmEmailChange"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/email-change/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Cancelar el cambio desde el correo actual
+         * @description Enlace público de recuperación. Cancelar de nuevo tiene éxito. Si el cambio ya se confirmó devuelve EMAIL_CHANGE_ALREADY_CONFIRMED para continuar desde Ayuda.
+         */
+        post: operations["cancelEmailChangeByToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/publishers": {
         parameters: {
             query?: never;
@@ -708,6 +862,46 @@ export interface paths {
         put?: never;
         /** Crear editorial */
         post: operations["createPublisher"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/pickups/{orderId}/verify-code": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Verificar el código de este retiro
+         * @description Comprueba el código normalizado sin modificar filas ni reconciliar el estado del pedido.
+         */
+        post: operations["verifyAdminPickupCode"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/pickups/lookup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Buscar un retiro por su código
+         * @description Devuelve el retiro sin exponer su código.
+         */
+        post: operations["lookup"];
         delete?: never;
         options?: never;
         head?: never;
@@ -764,8 +958,8 @@ export interface paths {
         get?: never;
         put?: never;
         /**
-         * Confirmar retiro del pedido
-         * @description Comando ADMIN con referencia de retiro. Marca el pedido entregado y registra historial; repetirlo no duplica la entrega. La hora estimada no bloquea una entrega preparada antes.
+         * Confirmar retiro con identidad verificada
+         * @description Requiere código, identidad verificada y estado READY. Registra el administrador y devuelve el retiro sin su código.
          */
         post: operations["collect"];
         delete?: never;
@@ -934,6 +1128,23 @@ export interface paths {
         put?: never;
         /** Crear libro */
         post: operations["createBook"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/billing-identity-corrections/{requestId}/decision": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Aprobar o rechazar una solicitud */
+        post: operations["decide"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1215,6 +1426,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/geo/provinces": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar provincias
+         * @description Catálogo público de provincias activas, ordenado con colación española.
+         */
+        get: operations["provinces"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/geo/provinces/{provinceId}/cities": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar ciudades y parroquias
+         * @description Devuelve localidades activas de una provincia, en orden alfabético español.
+         */
+        get: operations["cities"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/catalog/offers": {
         parameters: {
             query?: never;
@@ -1349,6 +1600,63 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/cart/saved": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Consultar artículos guardados para después */
+        get: operations["getSavedForLater"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/pickups": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar retiros
+         * @description Filtra por estado y referencia pública de pedido.
+         */
+        get: operations["list_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/pickups/{orderId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar detalle de un retiro
+         * @description Reconcilia el estado actual y devuelve las acciones permitidas sin código de retiro.
+         */
+        get: operations["getAdminPickup"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/admin/orders": {
         parameters: {
             query?: never;
@@ -1426,6 +1734,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/admin/orders/{orderId}/invoice/files/PDF/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener acceso autenticado para visualizar el PDF
+         * @description Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.
+         */
+        get: operations["getInvoicePdfAccess"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/orders/{orderId}/invoice/files/PDF/access": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener acceso autenticado para visualizar el PDF
+         * @description Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.
+         */
+        get: operations["getInvoicePdfAccess_1"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/orders/{orderId}/invoice": {
         parameters: {
             query?: never;
@@ -1494,26 +1842,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/me/billing-identity/correction-requests": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Solicitar revisión de una corrección de identificación
-         * @description Crea una solicitud idempotente para una identidad que ya fue usada en una factura de la cuenta.
-         */
-        post: operations["requestBillingIdentityCorrection"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/admin/billing-identity-corrections": {
         parameters: {
             query?: never;
@@ -1523,9 +1851,9 @@ export interface paths {
         };
         /**
          * Listar solicitudes de corrección
-         * @description Ordena por fecha de vencimiento más antigua primero. Solo disponible para ADMIN.
+         * @description Ordena por fecha de vencimiento más antigua primero.
          */
-        get: operations["searchAdminBillingIdentityCorrections"];
+        get: operations["search_4"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1534,7 +1862,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/admin/billing-identity-corrections/{requestId}/decision": {
+    "/api/v1/me/email-change": {
         parameters: {
             query?: never;
             header?: never;
@@ -1542,127 +1870,13 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put?: never;
-        /**
-         * Aprobar o rechazar una solicitud
-         * @description Solo disponible para ADMIN. decisionReason es obligatorio al rechazar y se presenta al cliente en español.
-         */
-        post: operations["decideAdminBillingIdentityCorrection"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/me/billing-identity/correction-requests/{id}/withdraw": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Retirar mi solicitud pendiente de corrección */
-        post: operations["withdrawBillingIdentityCorrection"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/geo/provinces": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Consultar provincias
-         * @description Devuelve las provincias activas de Ecuador ordenadas con colación española. Respuesta pública y cacheable.
-         */
-        get: operations["listGeoProvinces"];
         put?: never;
         post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/geo/provinces/{provinceId}/cities": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
         /**
-         * Consultar ciudades y parroquias de una provincia
-         * @description Devuelve las cabeceras cantonales y parroquias rurales activas en orden alfabético español; luego usa el cantón y el código DPA para desempatar. Respuesta pública y cacheable.
+         * Cancelar mi cambio de correo pendiente
+         * @description Operación idempotente. Conserva el correo actual y sus sesiones.
          */
-        get: operations["listGeoCities"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/cart/saved": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Consultar artículos guardados para después */
-        get: operations["getSavedForLater"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/cart/items/{cartItemId}/save-for-later": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Mover un artículo del carrito a Guardado para después
-         * @description La cantidad del carrito reemplaza la cantidad guardada de la misma edición. Devuelve el carrito y la lista actualizados.
-         */
-        post: operations["saveForLater"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/cart/saved/{savedItemId}/move-to-cart": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /**
-         * Restaurar en el carrito un artículo guardado
-         * @description Valida la edición con las reglas de agregar al carrito; ante un error, el artículo permanece guardado.
-         */
-        post: operations["moveSavedToCart"];
-        delete?: never;
+        delete: operations["cancelPendingEmailChange"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1680,46 +1894,6 @@ export interface paths {
         post?: never;
         /** Quitar un artículo de Guardado para después */
         delete: operations["removeSavedItem"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/orders/{orderId}/invoice/files/PDF/access": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Obtener acceso autenticado para visualizar el PDF
-         * @description Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.
-         */
-        get: operations["getInvoicePdfAccess_1"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/admin/orders/{orderId}/invoice/files/PDF/access": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /**
-         * Obtener acceso autenticado para visualizar el PDF
-         * @description Autoriza el pedido y confirma que el PDF está listo antes de devolver una transmisión API o una URL firmada breve.
-         */
-        get: operations["getInvoicePdfAccess"];
-        put?: never;
-        post?: never;
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -1771,7 +1945,7 @@ export interface components {
             /** @example 8f2ab598-3e33-40b1-a5c7-15f676a84f9a */
             traceId?: string;
         };
-        /** @description Cambia el correo de inicio de sesión del CUSTOMER autenticado; requiere su contraseña actual. */
+        /** @description Solicita verificar una nueva dirección sin cambiar aún el correo del CUSTOMER autenticado; requiere su contraseña actual. */
         EmailChangeRequest: {
             /**
              * Format: email
@@ -1784,16 +1958,23 @@ export interface components {
              */
             currentPassword: string;
         };
-        /** @description Correo de inicio de sesión vigente, normalizado. */
+        /** @description Correo vigente y cambio pendiente de confirmación. */
         EmailChangeResponse: {
+            /** @example actual@example.com */
+            email: string;
+            pendingEmail: components["schemas"]["RequestedPendingEmail"];
+        };
+        RequestedPendingEmail: {
             /** @example nuevo@example.com */
-            email?: string;
+            address: string;
+            /** Format: date-time */
+            expiresAt: string;
         };
         BillingIdentityRequest: {
             type: string;
             number?: string;
         };
-        /** @description Reemplaza todos los datos mutables de la dirección; provinciaId y cityId deben formar un par activo. IDs recomendados: provinceId y cityId deben enviarse juntos. Durante la transición se admite city y province juntos; no se pueden mezclar ambos pares. */
+        /** @description Reemplaza todos los datos mutables de la dirección. */
         AddressUpdateRequest: {
             /** @example Casa */
             alias: string;
@@ -1803,6 +1984,16 @@ export interface components {
             line1: string;
             /** @example Departamento 4 */
             line2?: string | null;
+            /**
+             * @description ID decimal de GET /api/v1/geo/provinces. Envíalo junto con cityId, o usa city/province durante la transición.
+             * @example 17
+             */
+            provinceId?: string;
+            /**
+             * @description ID decimal de GET /api/v1/geo/provinces/{provinceId}/cities. Envíalo junto con provinceId, o usa city/province durante la transición.
+             * @example 893
+             */
+            cityId?: string;
             /**
              * @example EC
              * @enum {string}
@@ -1818,23 +2009,13 @@ export interface components {
              */
             phone: string;
             /**
-             * @description ID decimal del catálogo geográfico. Envíalo junto con cityId; en su lugar se admite el par city/province durante la transición.
-             * @example 17
-             */
-            provinceId?: string;
-            /**
-             * @description ID decimal del catálogo geográfico. Envíalo junto con provinceId; en su lugar se admite el par city/province durante la transición.
-             * @example 893
-             */
-            cityId?: string;
-            /**
              * @deprecated
-             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.
              */
             city?: string | null;
             /**
              * @deprecated
-             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.
              */
             province?: string | null;
         };
@@ -1962,18 +2143,39 @@ export interface components {
             /** Format: int64 */
             restoredUnits?: number;
         };
-        /** @description La corrección compara currentNumber con el valor mostrado. No requiere contraseña; currentPassword es opcional, se ignora y se acepta por compatibilidad. */
         BillingIdentityCorrectionRequest: {
             type: string;
             currentNumber: string;
-            number: string;
+            number?: string;
             /**
              * Format: password
-             * @description Opcional por compatibilidad; se ignora y no se valida.
+             * @description Campo legado opcional. Se acepta por compatibilidad y se ignora.
              */
             currentPassword?: string;
         };
-        /** @description Datos completos de una dirección del cliente. La ciudad y la provincia se eligen por sus IDs del catálogo geográfico. IDs recomendados: provinceId y cityId deben enviarse juntos. Durante la transición se admite city y province juntos; no se pueden mezclar ambos pares. */
+        Submit: {
+            type: string;
+            currentNumber: string;
+            number?: string;
+            reasonCode: string;
+            /** @description Nota opcional; se recortan los espacios exteriores. */
+            note?: string;
+        };
+        BillingIdentityCorrection: {
+            id?: string;
+            status?: string;
+            proposedType?: string;
+            proposedNumber?: string;
+            reasonCode?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            dueAt?: string;
+            /** Format: date-time */
+            decidedAt?: string;
+            decisionReason?: string;
+        };
+        /** @description Datos completos de una dirección del cliente. */
         AddressRequest: {
             /** @example Casa */
             alias: string;
@@ -1983,6 +2185,16 @@ export interface components {
             line1: string;
             /** @example Departamento 4 */
             line2?: string | null;
+            /**
+             * @description ID decimal de GET /api/v1/geo/provinces. Envíalo junto con cityId, o usa city/province durante la transición.
+             * @example 17
+             */
+            provinceId?: string;
+            /**
+             * @description ID decimal de GET /api/v1/geo/provinces/{provinceId}/cities. Envíalo junto con provinceId, o usa city/province durante la transición.
+             * @example 893
+             */
+            cityId?: string;
             /**
              * @example EC
              * @enum {string}
@@ -2000,23 +2212,13 @@ export interface components {
             /** @example true */
             makePrimary: boolean;
             /**
-             * @description ID decimal del catálogo geográfico. Envíalo junto con cityId; en su lugar se admite el par city/province durante la transición.
-             * @example 17
-             */
-            provinceId?: string;
-            /**
-             * @description ID decimal del catálogo geográfico. Envíalo junto con provinceId; en su lugar se admite el par city/province durante la transición.
-             * @example 893
-             */
-            cityId?: string;
-            /**
              * @deprecated
-             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.
              */
             city?: string | null;
             /**
              * @deprecated
-             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.
              */
             province?: string | null;
         };
@@ -2030,12 +2232,7 @@ export interface components {
         };
         BillingIdentity: {
             type: string;
-            number: string;
-            /** @description True si existe una factura ACCOUNT o histórica (NULL) en cualquier estado para un pedido de esta cuenta. Las facturas OTHER no cuentan. */
-            used: boolean;
-            /** @enum {string} */
-            correctionMode: "DIRECT" | "REQUEST";
-            correctionRequest: components["schemas"]["BillingIdentityCorrection"] | null;
+            number?: string;
         };
         CheckoutRequest: {
             addressId?: string;
@@ -2052,43 +2249,33 @@ export interface components {
             pickupLocationId?: string;
             /** @description Huella del resumen aceptado devuelta por GET /cart; protege cantidades y precios entre consulta y confirmación. */
             expectedQuoteFingerprint?: string;
-            billingIdentity: components["schemas"]["CheckoutBillingIdentity"];
+            billingIdentity: components["schemas"]["BillingIdentity"];
             buyerName: string;
             billingAddress: components["schemas"]["InvoiceBillingAddressRequest"];
             /**
-             * @description Opcional; si se omite equivale a ACCOUNT. OTHER guarda buyerName, billingIdentity y billingAddress solo en la factura.
+             * @description ACCOUNT factura a la cuenta; OTHER guarda estos datos solo en la factura.
+             * @default ACCOUNT
              * @enum {string}
              */
-            billingRecipient?: "ACCOUNT" | "OTHER";
+            billingRecipient: "ACCOUNT" | "OTHER";
         };
-        /** @description Dirección de facturación ecuatoriana. PostgreSQL toma los nombres de provincia y ciudad desde el par de IDs activo. IDs recomendados: provinceId y cityId deben enviarse juntos. Durante la transición se admite city y province juntos; no se pueden mezclar ambos pares. */
         InvoiceBillingAddressRequest: {
             line1: string;
             line2?: string;
-            /**
-             * @example EC
-             * @enum {string}
-             */
-            countryCode: "EC";
+            /** @description ID del catálogo geográfico. Envíalo junto con cityId, o usa city/province durante la transición. */
+            provinceId?: string;
+            /** @description ID del catálogo geográfico. Envíalo junto con provinceId, o usa city/province durante la transición. */
+            cityId?: string;
+            countryCode: string;
             postalCode?: string;
             /**
-             * @description ID decimal del catálogo geográfico. Envíalo junto con cityId; en su lugar se admite el par city/province durante la transición.
-             * @example 17
-             */
-            provinceId?: string;
-            /**
-             * @description ID decimal del catálogo geográfico. Envíalo junto con provinceId; en su lugar se admite el par city/province durante la transición.
-             * @example 893
-             */
-            cityId?: string;
-            /**
              * @deprecated
-             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             * @description Compatibilidad temporal para clientes anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.
              */
             city?: string | null;
             /**
              * @deprecated
-             * @description Compatibilidad temporal para versiones SPA anteriores; el nombre se resuelve exactamente contra el catálogo (incluidos aliases oficiales) y nunca se guarda como texto libre.
+             * @description Compatibilidad temporal para clientes anteriores; el nombre se resuelve contra el catálogo y nunca se guarda como texto libre.
              */
             province?: string | null;
         };
@@ -2120,6 +2307,8 @@ export interface components {
             currentSubtotal?: string | null;
             /** @description Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra. */
             pricingSnapshotAvailable: boolean;
+            /** @example PL-0123-4567 */
+            orderReference?: string | null;
         };
         Fulfillment: {
             method?: string;
@@ -2159,6 +2348,131 @@ export interface components {
         CheckoutAttemptResponse: {
             state?: string;
             order?: components["schemas"]["CheckoutResponse"];
+        };
+        Cart: {
+            cartId?: string | null;
+            state?: string | null;
+            items?: components["schemas"]["CartItem"][];
+            totalCurrent?: string;
+            subtotal?: string;
+            taxRate?: string;
+            taxAmount?: string;
+            shippingAmount?: string;
+            total?: string;
+            /**
+             * Format: date
+             * @description Primer día de la ventana de entrega a domicilio en el calendario de Ecuador (America/Guayaquil); null si el carrito no incluye libros físicos.
+             * @example 2026-10-05
+             */
+            estimatedDeliveryFrom?: string | null;
+            /**
+             * Format: date
+             * @description Último día de la ventana de entrega a domicilio: dos días después del primero; null si el carrito no incluye libros físicos.
+             * @example 2026-10-07
+             */
+            estimatedDeliveryTo?: string | null;
+            requiresPhysicalFulfillment: boolean;
+            /** Format: int32 */
+            physicalItemCount: number;
+            /** Format: int32 */
+            digitalItemCount: number;
+            /**
+             * @description Subtotal original del carrito antes de ofertas e impuestos, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 80.00
+             */
+            originalSubtotal?: string;
+            /**
+             * @description Ahorro total por ofertas, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 12.00
+             */
+            savingsTotal?: string;
+            /**
+             * @description Subtotal vigente después de ofertas y antes de impuestos, calculado por PostgreSQL; coincide con subtotal y se expresa como cadena decimal con dos posiciones.
+             * @example 68.00
+             */
+            currentSubtotal?: string;
+            /** @description Huella del resumen actual para confirmar cantidades y precios en checkout. */
+            quoteFingerprint?: string;
+        };
+        CartItem: {
+            cartItemId?: string;
+            editionId?: string;
+            title?: string;
+            authors?: string;
+            sku?: string;
+            coverUrl?: string | null;
+            /** Format: int32 */
+            quantity?: number;
+            currentPrice?: string;
+            currentSubtotal?: string;
+            available?: boolean;
+            /**
+             * @description SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida, P6002 edición digital propia, P6003 compra digital pendiente; null si está disponible.
+             * @example P3002
+             * @enum {string|null}
+             */
+            unavailabilityReason?: "P2043" | "P2042" | "P3002" | "P4004" | "P6002" | "P6003" | null;
+            /** @enum {string} */
+            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
+            requiresPhysicalFulfillment: boolean;
+            quantityEditable: boolean;
+            /**
+             * @description Precio unitario original antes de ofertas, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 20.00
+             */
+            originalPrice?: string;
+            /**
+             * @description Ahorro unitario vigente, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 3.00
+             */
+            unitSavings?: string;
+            /**
+             * @description Subtotal original de la línea para su cantidad, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 40.00
+             */
+            originalSubtotal?: string;
+            /**
+             * @description Ahorro total de la línea para su cantidad, calculado por PostgreSQL; cadena decimal con dos posiciones.
+             * @example 6.00
+             */
+            lineSavings?: string;
+        };
+        SavedForLater: {
+            items?: components["schemas"]["SavedForLaterItem"][];
+            /** Format: int64 */
+            totalCount?: number;
+        };
+        /** @description Artículo guardado con la proyección comercial vigente del carrito. */
+        SavedForLaterItem: {
+            savedItemId?: string;
+            editionId?: string;
+            title?: string;
+            authors?: string;
+            sku?: string;
+            coverUrl?: string | null;
+            /** Format: int32 */
+            quantity?: number;
+            currentPrice?: string;
+            currentSubtotal?: string;
+            available?: boolean;
+            /** @enum {string|null} */
+            unavailabilityReason?: "P2041" | "P2042" | "P2043" | "P3002" | "P4004" | "P6002" | "P6003" | null;
+            /** @enum {string} */
+            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
+            requiresPhysicalFulfillment?: boolean;
+            quantityEditable?: boolean;
+            originalPrice?: string;
+            unitSavings?: string;
+            originalSubtotal?: string;
+            lineSavings?: string;
+            /** Format: date-time */
+            savedAt?: string;
+            /** Format: date-time */
+            updatedAt?: string;
+        };
+        SavedState: {
+            cart?: components["schemas"]["Cart"];
+            saved?: components["schemas"]["SavedForLater"];
         };
         AddItem: {
             editionId: string;
@@ -2260,8 +2574,91 @@ export interface components {
              */
             password: string;
         };
+        EmailChangeTokenRequest: {
+            /** @description Credencial recibida en el fragmento del enlace; no se incluye en la URL de la API. */
+            token: string;
+        };
+        EmailChangeConfirmedResponse: {
+            /** @example nuevo@example.com */
+            email: string;
+        };
         PublisherCreated: {
             publisherId?: string;
+        };
+        LookupRequest: {
+            code: string;
+        };
+        AdminPickupAvailableActions: {
+            cancel?: boolean;
+            cancellationDeadline?: string | null;
+        };
+        AdminPickupCustomer: {
+            customerId?: string;
+            name?: string;
+            email?: string;
+            identityType?: string | null;
+            identityNumber?: string | null;
+        };
+        /** @description Detalle de retiro sin código, con acciones permitidas por la base de datos. */
+        AdminPickupDetail: {
+            orderId?: string;
+            orderReference?: string;
+            /** @enum {string} */
+            state?: "PENDING" | "READY" | "COLLECTED" | "CANCELLED";
+            orderState?: string;
+            paymentState?: string;
+            createdAt?: string;
+            readyAt?: string | null;
+            collectedAt?: string | null;
+            collectedBy?: {
+                userId?: string;
+                email?: string;
+            } | null;
+            identityVerified?: boolean | null;
+            location?: components["schemas"]["AdminPickupLocation"];
+            customer?: components["schemas"]["AdminPickupCustomer"];
+            items?: components["schemas"]["AdminPickupItem"][];
+            /** Format: int64 */
+            unitCount?: number;
+            total?: string;
+            paymentMethod?: string | null;
+            availableActions?: components["schemas"]["AdminPickupAvailableActions"];
+        };
+        AdminPickupItem: {
+            orderItemId?: string;
+            title?: string;
+            format?: string;
+            /** Format: int32 */
+            quantity?: number;
+        };
+        AdminPickupLocation: {
+            id?: string;
+            name?: string;
+            address?: string;
+            city?: string;
+        };
+        /** @description Retiro administrativo sin código de retiro. */
+        PickupView: {
+            orderId?: string;
+            orderReference?: string;
+            /** @enum {string} */
+            state?: "PENDING" | "READY" | "COLLECTED" | "CANCELLED";
+            orderState?: string;
+            paymentState?: string;
+            createdAt?: string;
+            readyAt?: string | null;
+            collectedAt?: string | null;
+            collectedBy?: {
+                userId?: string;
+                email?: string;
+            } | null;
+            identityVerified?: boolean | null;
+            location?: components["schemas"]["AdminPickupLocation"];
+            customer?: components["schemas"]["AdminPickupCustomer"];
+            items?: components["schemas"]["AdminPickupItem"][];
+            /** Format: int64 */
+            unitCount?: number;
+            total?: string;
         };
         Transition: {
             targetState: string;
@@ -2271,6 +2668,7 @@ export interface components {
         };
         CollectRequest: {
             pickupCode: string;
+            identityVerified: boolean;
         };
         IssueOrderInvoiceRequest: {
             documentNumber: string;
@@ -2343,6 +2741,11 @@ export interface components {
         BookCreated: {
             bookId?: string;
         };
+        Decision: {
+            decision: string;
+            /** @description Obligatorio al rechazar; se muestra al cliente en español. */
+            decisionReason?: string;
+        };
         AuthorCreated: {
             authorId?: string;
         };
@@ -2411,6 +2814,29 @@ export interface components {
             code?: string;
             name?: string;
         };
+        /** @description Punto de retiro activo con sus IDs de catálogo geográfico. */
+        PickupLocationReference: {
+            id?: string;
+            name?: string;
+            address?: string;
+            city?: string;
+            province?: string;
+            /** @example 17 */
+            provinceId?: string | null;
+            /** @example 893 */
+            cityId?: string | null;
+            /** @example false */
+            cityNeedsReview?: boolean;
+            countryCode?: string;
+            postalCode?: string;
+            latitude?: number;
+            longitude?: number;
+            timezone?: string;
+            openingHours?: components["schemas"]["OpeningHours"];
+            active?: boolean;
+            /** Format: int32 */
+            preparationMinutes?: number;
+        };
         CustomerOrderSummary: {
             orderId?: string;
             createdAt?: string;
@@ -2446,6 +2872,8 @@ export interface components {
             taxAmount?: string | null;
             /** @description Importe de envío guardado al comprar; cadena decimal con dos posiciones. */
             shippingAmount?: string | null;
+            /** @example PL-0123-4567 */
+            orderReference?: string | null;
         };
         ItemSummary: {
             orderItemId?: string;
@@ -2482,7 +2910,7 @@ export interface components {
             reference?: string;
             phone?: string;
         };
-        BillingAddress: {
+        BillingAddressSnapshot: {
             line1?: string;
             line2?: string;
             city?: string;
@@ -2518,6 +2946,8 @@ export interface components {
             currentSubtotal?: string | null;
             /** @description Indica si todas las líneas conservan el snapshot de precios originales y ahorros de la compra. */
             pricingSnapshotAvailable: boolean;
+            /** @example PL-0123-4567 */
+            orderReference?: string | null;
         };
         CustomerOrderItem: {
             orderItemId?: string;
@@ -2593,7 +3023,7 @@ export interface components {
             taxTotal?: string;
             total?: string;
             issuedAt?: string;
-            billingAddress?: components["schemas"]["BillingAddress"];
+            billingAddress?: components["schemas"]["BillingAddressSnapshot"];
             items?: components["schemas"]["OrderInvoiceItem"][];
             electronicIssuance?: components["schemas"]["ElectronicIssuance"];
             pdfAvailable?: boolean;
@@ -2650,6 +3080,28 @@ export interface components {
              * @example true
              */
             emailVerified?: boolean;
+            emailDelivery?: components["schemas"]["EmailDeliveryResponse"];
+            /** @description Cambio de correo vigente; null cuando no existe o venció. */
+            pendingEmail: components["schemas"]["PendingEmail"] | null;
+        };
+        EmailDeliveryResponse: {
+            /**
+             * @description Ausencia o presencia de un fallo permanente conocido; no garantiza entrega.
+             * @enum {string}
+             */
+            status?: "OK" | "UNDELIVERABLE";
+            /**
+             * Format: date-time
+             * @description Fecha del fallo conocido; nula cuando el estado es OK.
+             */
+            since?: string | null;
+        };
+        PendingEmail: {
+            address: string;
+            /** Format: date-time */
+            expiresAt: string;
+            /** @enum {string} */
+            delivery: "OK" | "UNDELIVERABLE";
         };
         LibraryAction: {
             /** @enum {string} */
@@ -2691,6 +3143,8 @@ export interface components {
         };
         LibrarySourcePurchase: {
             orderId?: string;
+            /** @example PL-0123-4567 */
+            orderReference?: string;
             orderItemId?: string;
             /** Format: date-time */
             acquiredAt?: string;
@@ -2761,6 +3215,12 @@ export interface components {
             city?: string;
             /** @example Pichincha */
             province?: string;
+            /** @example 893 */
+            cityId?: string | null;
+            /** @example 17 */
+            provinceId?: string | null;
+            /** @example false */
+            cityNeedsReview?: boolean;
             /** @example EC */
             countryCode?: string;
             /** @example 170101 */
@@ -2771,15 +3231,6 @@ export interface components {
             phone?: string;
             /** @example true */
             primary?: boolean;
-            /** @example 893 */
-            cityId: string | null;
-            /** @example 17 */
-            provinceId: string | null;
-            /**
-             * @description true cuando una dirección anterior no se pudo vincular sin ambigüedad al catálogo.
-             * @example false
-             */
-            cityNeedsReview: boolean;
         };
         HelpCategory: {
             slug?: string;
@@ -2820,6 +3271,28 @@ export interface components {
             /** @enum {string} */
             applicability?: "GENERAL" | "PHYSICAL" | "EBOOK" | "AUDIOBOOK";
             body?: string;
+        };
+        GeoProvince: {
+            /** @example 17 */
+            id: string;
+            /** @example 17 */
+            code: string;
+            /** @example Pichincha */
+            name: string;
+        };
+        GeoCity: {
+            /** @example 495 */
+            id: string;
+            /** @example 0927 */
+            code: string;
+            /** @example General Antonio Elizalde */
+            name: string;
+            /** @enum {string} */
+            kind: "CABECERA_CANTONAL" | "PARROQUIA_RURAL";
+            /** @example General Antonio Elizalde */
+            cantonName: string;
+            /** @description Nombres alternativos oficiales para búsqueda, ordenados con colación española. */
+            aliases: string[];
         };
         CatalogEditionSearchResponse: {
             items?: components["schemas"]["CatalogEditionSummaryResponse"][];
@@ -2933,96 +3406,16 @@ export interface components {
         CatalogCategoryListResponse: {
             items?: components["schemas"]["Category"][];
         };
-        Cart: {
-            cartId?: string | null;
-            state?: string | null;
-            items?: components["schemas"]["CartItem"][];
-            totalCurrent?: string;
-            subtotal?: string;
-            taxRate?: string;
-            taxAmount?: string;
-            shippingAmount?: string;
-            total?: string;
-            /**
-             * Format: date
-             * @description Primer día de la ventana de entrega a domicilio en el calendario de Ecuador (America/Guayaquil); null si el carrito no incluye libros físicos.
-             * @example 2026-10-05
-             */
-            estimatedDeliveryFrom?: string | null;
-            /**
-             * Format: date
-             * @description Último día de la ventana de entrega a domicilio: dos días después del primero; null si el carrito no incluye libros físicos.
-             * @example 2026-10-07
-             */
-            estimatedDeliveryTo?: string | null;
-            requiresPhysicalFulfillment: boolean;
-            /** Format: int32 */
-            physicalItemCount: number;
-            /** Format: int32 */
-            digitalItemCount: number;
-            /**
-             * @description Subtotal original del carrito antes de ofertas e impuestos, calculado por PostgreSQL; cadena decimal con dos posiciones.
-             * @example 80.00
-             */
-            originalSubtotal?: string;
-            /**
-             * @description Ahorro total por ofertas, calculado por PostgreSQL; cadena decimal con dos posiciones.
-             * @example 12.00
-             */
-            savingsTotal?: string;
-            /**
-             * @description Subtotal vigente después de ofertas y antes de impuestos, calculado por PostgreSQL; coincide con subtotal y se expresa como cadena decimal con dos posiciones.
-             * @example 68.00
-             */
-            currentSubtotal?: string;
-            /** @description Huella del resumen actual para confirmar cantidades y precios en checkout. */
-            quoteFingerprint?: string;
-        };
-        CartItem: {
-            cartItemId?: string;
-            editionId?: string;
-            title?: string;
-            authors?: string;
-            sku?: string;
-            coverUrl?: string | null;
-            /** Format: int32 */
-            quantity?: number;
-            currentPrice?: string;
-            currentSubtotal?: string;
-            available?: boolean;
-            /**
-             * @description SQLSTATE canónico de la condición que impide comprar el artículo: P2043 libro inactivo, P2042 edición inactiva, P3002 existencias insuficientes, P4004 cantidad digital inválida, P6002 edición digital propia, P6003 compra digital pendiente; null si está disponible.
-             * @example P3002
-             * @enum {string|null}
-             */
-            unavailabilityReason?: "P2043" | "P2042" | "P3002" | "P4004" | "P6002" | "P6003" | null;
-            /** @enum {string} */
-            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
-            requiresPhysicalFulfillment: boolean;
-            quantityEditable: boolean;
-            /**
-             * @description Precio unitario original antes de ofertas, calculado por PostgreSQL; cadena decimal con dos posiciones.
-             * @example 20.00
-             */
-            originalPrice?: string;
-            /**
-             * @description Ahorro unitario vigente, calculado por PostgreSQL; cadena decimal con dos posiciones.
-             * @example 3.00
-             */
-            unitSavings?: string;
-            /**
-             * @description Subtotal original de la línea para su cantidad, calculado por PostgreSQL; cadena decimal con dos posiciones.
-             * @example 40.00
-             */
-            originalSubtotal?: string;
-            /**
-             * @description Ahorro total de la línea para su cantidad, calculado por PostgreSQL; cadena decimal con dos posiciones.
-             * @example 6.00
-             */
-            lineSavings?: string;
-        };
         PageResponsePublisher: {
             items?: components["schemas"]["Publisher"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            totalCount?: string;
+        };
+        PageResponsePickupView: {
+            items?: components["schemas"]["PickupView"][];
             /** Format: int32 */
             page?: number;
             /** Format: int32 */
@@ -3037,6 +3430,8 @@ export interface components {
             orderState?: string;
             total?: string;
             paymentState?: string;
+            /** @example PL-0123-4567 */
+            orderReference?: string | null;
         };
         PageResponseAdminOrderSummary: {
             items?: components["schemas"]["AdminOrderSummary"][];
@@ -3070,6 +3465,8 @@ export interface components {
             taxRate?: string;
             taxAmount?: string;
             shippingAmount?: string;
+            /** @example PL-0123-4567 */
+            orderReference?: string | null;
         };
         InventoryMovement: {
             movementId?: string;
@@ -3100,6 +3497,14 @@ export interface components {
             /** Format: int32 */
             quantity?: number;
             subtotal?: string;
+        };
+        /** @description Instrucción privada para visualizar el PDF de la factura. */
+        InvoiceDocumentAccess: {
+            /** @enum {string} */
+            delivery?: "API_STREAM" | "SIGNED_URL";
+            url?: string;
+            /** Format: date-time */
+            expiresAt?: string | null;
         };
         FileStatus: {
             /** @enum {string} */
@@ -3219,6 +3624,34 @@ export interface components {
             pageSize?: number;
             totalCount?: string;
         };
+        PageResponseRequest: {
+            items?: components["schemas"]["Request"][];
+            /** Format: int32 */
+            page?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            totalCount?: string;
+        };
+        Request: {
+            id?: string;
+            customerId?: string;
+            customerName?: string;
+            customerEmail?: string;
+            currentType?: string;
+            currentNumber?: string;
+            proposedType?: string;
+            proposedNumber?: string;
+            reasonCode?: string;
+            note?: string;
+            status?: string;
+            createdAt?: string;
+            dueAt?: string;
+            decidedAt?: string;
+            decidedBy?: string;
+            decisionReason?: string;
+            customerHasBilledInvoices?: boolean;
+            decidedByEmail?: string | null;
+        };
         PageResponseAuthor: {
             items?: components["schemas"]["Author"][];
             /** Format: int32 */
@@ -3226,180 +3659,6 @@ export interface components {
             /** Format: int32 */
             pageSize?: number;
             totalCount?: string;
-        };
-        BillingIdentityCorrection: {
-            id: string;
-            /** @enum {string} */
-            status: "PENDING" | "APPROVED" | "REJECTED" | "WITHDRAWN";
-            /** @enum {string} */
-            proposedType: "EC_CEDULA" | "EC_RUC";
-            proposedNumber: string;
-            /** @enum {string} */
-            reasonCode: "DOCUMENT_TYPO" | "DOCUMENT_CHANGED" | "OTHER";
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            dueAt: string;
-            /** Format: date-time */
-            decidedAt: string | null;
-            decisionReason: string | null;
-        };
-        BillingIdentityCorrectionSubmitRequest: {
-            /** @enum {string} */
-            type: "EC_CEDULA" | "EC_RUC";
-            currentNumber: string;
-            /** @description Identificación propuesta; se valida con las reglas de EC_CEDULA o EC_RUC. */
-            number: string;
-            /** @enum {string} */
-            reasonCode: "DOCUMENT_TYPO" | "DOCUMENT_CHANGED" | "OTHER";
-            /** @description Opcional; se recortan espacios exteriores. */
-            note?: string | null;
-        };
-        BillingIdentityCorrectionDecisionRequest: {
-            /** @enum {string} */
-            decision: "APPROVE" | "REJECT";
-            /** @description Obligatorio al rechazar; se muestra al cliente en español. */
-            decisionReason?: string | null;
-        };
-        BillingIdentityCorrectionDecisionResponse: {
-            id: string;
-            /** @enum {string} */
-            status: "APPROVED" | "REJECTED";
-            /** Format: date-time */
-            decidedAt: string;
-            decidedBy: string;
-            decisionReason: string | null;
-        };
-        AdminBillingIdentityCorrectionRequest: {
-            id: string;
-            customerId: string;
-            customerName: string;
-            customerEmail: string;
-            /** @enum {string} */
-            currentType: "EC_CEDULA" | "EC_RUC";
-            currentNumber: string;
-            /** @enum {string} */
-            proposedType: "EC_CEDULA" | "EC_RUC";
-            proposedNumber: string;
-            /** @enum {string} */
-            reasonCode: "DOCUMENT_TYPO" | "DOCUMENT_CHANGED" | "OTHER";
-            note: string | null;
-            /** @enum {string} */
-            status: "PENDING" | "APPROVED" | "REJECTED" | "WITHDRAWN";
-            /** Format: date-time */
-            createdAt: string;
-            /** Format: date-time */
-            dueAt: string;
-            /** Format: date-time */
-            decidedAt: string | null;
-            decidedBy: string | null;
-            decisionReason: string | null;
-        };
-        PageResponseAdminBillingIdentityCorrectionRequest: {
-            items: components["schemas"]["AdminBillingIdentityCorrectionRequest"][];
-            /** Format: int32 */
-            page: number;
-            /** Format: int32 */
-            pageSize: number;
-            totalCount: string;
-        };
-        CheckoutBillingIdentity: {
-            /** @enum {string} */
-            type: "EC_CEDULA" | "EC_RUC";
-            number: string;
-        };
-        GeoProvince: {
-            /** @example 17 */
-            id: string;
-            /** @example 17 */
-            code: string;
-            /** @example Pichincha */
-            name: string;
-        };
-        GeoCity: {
-            /** @example 893 */
-            id: string;
-            /** @example 1701 */
-            code: string;
-            /** @example Quito */
-            name: string;
-            /** @enum {string} */
-            kind: "CABECERA_CANTONAL" | "PARROQUIA_RURAL";
-            /** @example Distrito Metropolitano de Quito */
-            cantonName: string;
-            /** @description Nombres alternativos oficiales para búsqueda, ordenados con colación española. */
-            aliases: string[];
-        };
-        /** @description Punto de retiro activo con dirección y coordenadas estándar e IDs de catálogo geográfico. */
-        PickupLocationReference: {
-            id?: string;
-            name?: string;
-            address?: string;
-            city?: string;
-            province?: string;
-            countryCode?: string;
-            postalCode?: string;
-            latitude?: number;
-            longitude?: number;
-            timezone?: string;
-            openingHours?: components["schemas"]["OpeningHours"];
-            active?: boolean;
-            /** Format: int32 */
-            preparationMinutes?: number;
-            /** @example 17 */
-            provinceId: string | null;
-            /** @example 893 */
-            cityId: string | null;
-            /**
-             * @description true cuando el punto de retiro anterior no pudo vincularse sin ambigüedad al catálogo.
-             * @example false
-             */
-            cityNeedsReview: boolean;
-        };
-        SavedForLater: {
-            items?: components["schemas"]["SavedForLaterItem"][];
-            /** Format: int64 */
-            totalCount?: number;
-        };
-        /** @description Artículo guardado con la proyección comercial vigente del carrito. */
-        SavedForLaterItem: {
-            savedItemId?: string;
-            editionId?: string;
-            title?: string;
-            authors?: string;
-            sku?: string;
-            coverUrl?: string | null;
-            /** Format: int32 */
-            quantity?: number;
-            currentPrice?: string;
-            currentSubtotal?: string;
-            available?: boolean;
-            /** @enum {string|null} */
-            unavailabilityReason?: "P2041" | "P2042" | "P2043" | "P3002" | "P4004" | "P6002" | "P6003" | null;
-            /** @enum {string} */
-            format?: "PAPERBACK" | "HARDCOVER" | "EBOOK" | "AUDIOBOOK";
-            requiresPhysicalFulfillment?: boolean;
-            quantityEditable?: boolean;
-            originalPrice?: string;
-            unitSavings?: string;
-            originalSubtotal?: string;
-            lineSavings?: string;
-            /** Format: date-time */
-            savedAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        SavedState: {
-            cart?: components["schemas"]["Cart"];
-            saved?: components["schemas"]["SavedForLater"];
-        };
-        /** @description Instrucción privada para visualizar el PDF de la factura. */
-        InvoiceDocumentAccess: {
-            /** @enum {string} */
-            delivery?: "API_STREAM" | "SIGNED_URL";
-            url?: string;
-            /** Format: date-time */
-            expiresAt?: string | null;
         };
     };
     responses: never;
@@ -3617,8 +3876,8 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Correo actualizado */
-            200: {
+            /** @description Cambio pendiente de confirmación */
+            202: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -3644,6 +3903,15 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
             };
+            /** @description EMAIL_CHANGE_RATE_LIMITED: demasiadas solicitudes */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
         };
     };
     get: {
@@ -3658,20 +3926,11 @@ export interface operations {
             /** @description OK */
             200: {
                 headers: {
-                    "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content: {
                     "application/json": components["schemas"]["BillingIdentity"];
                 };
-            };
-            /** @description No hay identificación registrada */
-            204: {
-                headers: {
-                    "Cache-Control"?: string;
-                    [name: string]: unknown;
-                };
-                content?: never;
             };
         };
     };
@@ -3688,22 +3947,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Identificación registrada */
-            204: {
+            /** @description OK */
+            200: {
                 headers: {
-                    "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
-            };
-            /** @description Datos inválidos */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
             };
         };
     };
@@ -3728,15 +3977,6 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
-            };
-            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
             };
             /** @description Dirección no disponible */
             404: {
@@ -4265,6 +4505,26 @@ export interface operations {
             };
         };
     };
+    receive: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": Record<string, never>;
+                };
+            };
+        };
+    };
     cancel: {
         parameters: {
             query?: never;
@@ -4305,6 +4565,51 @@ export interface operations {
             };
         };
     };
+    resendEmailChange: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Confirmación encolada */
+            202: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Sesión inválida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description EMAIL_CHANGE_NOT_PENDING: no hay un cambio vigente */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description EMAIL_CHANGE_RATE_LIMITED: espera antes de volver a pedir un enlace */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     correctBillingIdentity: {
         parameters: {
             query?: never;
@@ -4312,38 +4617,64 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        /** @description Identificación corregida */
         requestBody: {
             content: {
                 "application/json": components["schemas"]["BillingIdentityCorrectionRequest"];
             };
         };
         responses: {
-            /** @description Identificación corregida */
-            204: {
+            /** @description OK */
+            200: {
                 headers: {
-                    "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Datos inválidos */
-            400: {
+        };
+    };
+    requestCorrection: {
+        parameters: {
+            query?: never;
+            header: {
+                "Idempotency-Key": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Submit"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                    "application/json": components["schemas"]["BillingIdentityCorrection"];
                 };
             };
-            /** @description Conflicto, requiere revisión o existe una solicitud pendiente */
-            409: {
+        };
+    };
+    withdrawCorrection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
+                content?: never;
             };
         };
     };
@@ -4391,7 +4722,7 @@ export interface operations {
                     "application/json": components["schemas"]["AddressCreated"];
                 };
             };
-            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
+            /** @description Datos inválidos */
             400: {
                 headers: {
                     [name: string]: unknown;
@@ -4448,17 +4779,8 @@ export interface operations {
                     "application/json": components["schemas"]["CheckoutResponse"];
                 };
             };
-            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
+            /** @description Solicitud inválida */
             400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description Conflicto de identidad o de idempotencia */
-            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4490,6 +4812,46 @@ export interface operations {
             };
         };
     };
+    moveSavedToCart: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                savedItemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Carrito y lista actualizados */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedState"];
+                };
+            };
+            /** @description Artículo guardado no encontrado */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description La edición no puede agregarse al carrito */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     addItem: {
         parameters: {
             query?: never;
@@ -4514,6 +4876,37 @@ export interface operations {
             };
             /** @description Solicitud inválida */
             400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    saveForLater: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                cartItemId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Carrito y lista actualizados */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedState"];
+                };
+            };
+            /** @description El artículo ya no existe en el carrito */
+            404: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4839,6 +5232,97 @@ export interface operations {
             };
         };
     };
+    confirmEmailChange: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailChangeTokenRequest"];
+            };
+        };
+        responses: {
+            /** @description Correo confirmado */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EmailChangeConfirmedResponse"];
+                };
+            };
+            /** @description EMAIL_CHANGE_TOKEN_INVALID: enlace inválido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description P1101: otra cuenta ya usa ese correo */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description EMAIL_CHANGE_TOKEN_EXPIRED, EMAIL_CHANGE_TOKEN_USED, EMAIL_CHANGE_TOKEN_SUPERSEDED o EMAIL_CHANGE_CANCELLED */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
+    cancelEmailChangeByToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EmailChangeTokenRequest"];
+            };
+        };
+        responses: {
+            /** @description Cambio cancelado o ya cancelado */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description EMAIL_CHANGE_TOKEN_INVALID: enlace inválido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description EMAIL_CHANGE_ALREADY_CONFIRMED, EMAIL_CHANGE_TOKEN_EXPIRED o EMAIL_CHANGE_TOKEN_SUPERSEDED */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     searchPublishers: {
         parameters: {
             query?: {
@@ -4884,6 +5368,56 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PublisherCreated"];
+                };
+            };
+        };
+    };
+    verifyAdminPickupCode: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LookupRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminPickupDetail"];
+                };
+            };
+        };
+    };
+    lookup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LookupRequest"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PickupView"];
                 };
             };
         };
@@ -4978,7 +5512,9 @@ export interface operations {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["PickupView"];
+                };
             };
         };
     };
@@ -5026,15 +5562,6 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["IssuedInvoice"];
-                };
-            };
-            /** @description Solicitud inválida; P5014 ciudad fuera de la provincia, P5015 ciudad desconocida o inactiva. */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
             };
         };
@@ -5322,6 +5849,32 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["BookCreated"];
+                };
+            };
+        };
+    };
+    decide: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                requestId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["Decision"];
+            };
+        };
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Decision"];
                 };
             };
         };
@@ -5773,6 +6326,49 @@ export interface operations {
             };
         };
     };
+    provinces: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GeoProvince"][];
+                };
+            };
+        };
+    };
+    cities: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description ID decimal de la provincia devuelto por GET /api/v1/geo/provinces. */
+                provinceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["GeoCity"][];
+                };
+            };
+        };
+    };
     offers: {
         parameters: {
             query?: {
@@ -5999,10 +6595,78 @@ export interface operations {
             };
         };
     };
+    getSavedForLater: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Lista del cliente con precios y disponibilidad vigentes */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SavedForLater"];
+                };
+            };
+        };
+    };
+    list_1: {
+        parameters: {
+            query?: {
+                state?: string;
+                q?: string;
+                page?: number;
+                pageSize?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PageResponsePickupView"];
+                };
+            };
+        };
+    };
+    getAdminPickup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                orderId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminPickupDetail"];
+                };
+            };
+        };
+    };
     search_1: {
         parameters: {
             query?: {
                 state?: string;
+                q?: string;
                 dateFrom?: string;
                 dateTo?: string;
                 customerId?: number;
@@ -6107,6 +6771,110 @@ export interface operations {
                 content: {
                     "application/pdf": string;
                     "application/xml": string;
+                };
+            };
+        };
+    };
+    getInvoicePdfAccess: {
+        parameters: {
+            query?: {
+                /** @description Presentación del PDF. */
+                disposition?: "inline" | "attachment";
+            };
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Instrucción privada de acceso */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceDocumentAccess"];
+                };
+            };
+            /** @description Presentación no válida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description Factura o archivo no disponible */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description El archivo aún se prepara */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+        };
+    };
+    getInvoicePdfAccess_1: {
+        parameters: {
+            query?: {
+                /** @description Presentación del PDF. */
+                disposition?: "inline" | "attachment";
+            };
+            header?: never;
+            path: {
+                orderId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Instrucción privada de acceso */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InvoiceDocumentAccess"];
+                };
+            };
+            /** @description Presentación no válida */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description Factura o archivo no disponible */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description El archivo aún se prepara */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
                 };
             };
         };
@@ -6229,57 +6997,10 @@ export interface operations {
             };
         };
     };
-    requestBillingIdentityCorrection: {
-        parameters: {
-            query?: never;
-            header: {
-                "Idempotency-Key": string;
-            };
-            path?: never;
-            cookie?: never;
-        };
-        /** @description Cambio propuesto y motivo */
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BillingIdentityCorrectionSubmitRequest"];
-            };
-        };
-        responses: {
-            /** @description Solicitud creada o repetida */
-            201: {
-                headers: {
-                    Location?: string;
-                    "Cache-Control"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BillingIdentityCorrection"];
-                };
-            };
-            /** @description Datos inválidos */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description Conflicto de idempotencia o solicitud pendiente */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    searchAdminBillingIdentityCorrections: {
+    search_4: {
         parameters: {
             query?: {
-                status?: "PENDING" | "APPROVED" | "REJECTED" | "WITHDRAWN";
+                status?: string;
                 page?: number;
                 pageSize?: number;
             };
@@ -6289,280 +7010,40 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Página de solicitudes */
+            /** @description OK */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PageResponseAdminBillingIdentityCorrectionRequest"];
-                };
-            };
-            /** @description Filtro o página inválidos */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description Acceso denegado */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                    "application/json": components["schemas"]["PageResponseRequest"];
                 };
             };
         };
     };
-    decideAdminBillingIdentityCorrection: {
+    cancelPendingEmailChange: {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                requestId: number;
-            };
-            cookie?: never;
-        };
-        /** @description Decisión administrativa */
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["BillingIdentityCorrectionDecisionRequest"];
-            };
-        };
-        responses: {
-            /** @description Decisión registrada */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["BillingIdentityCorrectionDecisionResponse"];
-                };
-            };
-            /** @description Decisión inválida */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description Acceso denegado */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description Solicitud no encontrada */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description La identidad cambió o la solicitud ya fue atendida */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    withdrawBillingIdentityCorrection: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Solicitud retirada */
+            /** @description No queda un cambio pendiente */
             204: {
                 headers: {
-                    "Cache-Control"?: string;
                     [name: string]: unknown;
                 };
                 content?: never;
             };
-            /** @description Solicitud no encontrada */
-            404: {
+            /** @description Sesión inválida */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description La solicitud ya no está pendiente */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    listGeoProvinces: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Provincias activas */
-            200: {
-                headers: {
-                    /** @description Datos de referencia; reutilizables durante 24 horas y revalidables durante 24 horas. */
-                    "Cache-Control"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["GeoProvince"][];
-                };
-            };
-        };
-    };
-    listGeoCities: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                /** @description ID decimal devuelto por GET /api/v1/geo/provinces. */
-                provinceId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Localidades activas de la provincia; una lista vacía indica que el ID no tiene localidades disponibles. */
-            200: {
-                headers: {
-                    /** @description Datos de referencia; reutilizables durante 24 horas y revalidables durante 24 horas. */
-                    "Cache-Control"?: string;
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["GeoCity"][];
-                };
-            };
-            /** @description ID de provincia inválido */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    getSavedForLater: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Lista del cliente con precios y disponibilidad vigentes */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SavedForLater"];
-                };
-            };
-        };
-    };
-    saveForLater: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                cartItemId: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Carrito y lista actualizados */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SavedState"];
-                };
-            };
-            /** @description El artículo ya no existe en el carrito */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    moveSavedToCart: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                savedItemId: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Carrito y lista actualizados */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["SavedState"];
-                };
-            };
-            /** @description Artículo guardado no encontrado */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-            /** @description La edición no puede agregarse al carrito */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                    "application/json": components["schemas"]["ProblemDetail"];
                 };
             };
         };
@@ -6592,110 +7073,6 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
-                };
-            };
-        };
-    };
-    getInvoicePdfAccess_1: {
-        parameters: {
-            query?: {
-                /** @description Presentación del PDF. */
-                disposition?: "inline" | "attachment";
-            };
-            header?: never;
-            path: {
-                orderId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Instrucción privada de acceso */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InvoiceDocumentAccess"];
-                };
-            };
-            /** @description Presentación no válida */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": Record<string, never>;
-                };
-            };
-            /** @description Factura o archivo no disponible */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": Record<string, never>;
-                };
-            };
-            /** @description El archivo aún se prepara */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": Record<string, never>;
-                };
-            };
-        };
-    };
-    getInvoicePdfAccess: {
-        parameters: {
-            query?: {
-                /** @description Presentación del PDF. */
-                disposition?: "inline" | "attachment";
-            };
-            header?: never;
-            path: {
-                orderId: string;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Instrucción privada de acceso */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InvoiceDocumentAccess"];
-                };
-            };
-            /** @description Presentación no válida */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": Record<string, never>;
-                };
-            };
-            /** @description Factura o archivo no disponible */
-            404: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": Record<string, never>;
-                };
-            };
-            /** @description El archivo aún se prepara */
-            409: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": Record<string, never>;
                 };
             };
         };

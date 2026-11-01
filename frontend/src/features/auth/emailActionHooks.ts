@@ -50,3 +50,24 @@ export function useEmailTokenAction(purpose: "verification" | "recovery") {
   }, [location.hash, location.pathname, location.search, location.state, navigate, resetMutation]);
   return { token, mutation };
 }
+
+/**
+ * Reads a one-use link token from the fragment (never sent to servers or Referer), keeps it in memory and removes
+ * it from history at once, as the verification and recovery links do.
+ */
+export function useFragmentToken() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const parse = (hash: string) => {
+    const candidate = new URLSearchParams(hash.slice(1)).get("token") ?? "";
+    return /^[A-Za-z0-9_-]{43}$/.test(candidate) ? candidate : "";
+  };
+  const [token, setToken] = useState(() => parse(location.hash));
+  useEffect(() => {
+    if (!location.hash) return;
+    const next = parse(location.hash);
+    setToken(current => next || current);
+    navigate(location.pathname + location.search, { replace: true, state: location.state });
+  }, [location.hash, location.pathname, location.search, location.state, navigate]);
+  return token;
+}

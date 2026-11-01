@@ -96,6 +96,13 @@
 .summaryLineMeta { grid-column: 1; color: var(--pf-muted); font-size: .875rem; }
 .summaryLineAmount { grid-column: 2; grid-row: 1; font-weight: 600; white-space: nowrap; }
 .summaryLines li > :global(.stock-status) { grid-column: 1 / -1; }
+/* With a jacket (checkout): the cover leads the line, so the book is recognized before its title is read. */
+.summaryLines li[data-cover] { grid-template-columns: 44px minmax(0, 1fr) auto; column-gap: 12px; }
+.summaryLineCover { grid-column: 1; grid-row: 1 / span 4; align-self: start; width: 44px; }
+.summaryLines li[data-cover] .summaryLineTitle, .summaryLines li[data-cover] .summaryLineMeta { grid-column: 2; }
+.summaryLines li[data-cover] .summaryLineAmount { grid-column: 3; }
+.summaryLines li[data-cover] .summaryLineWas { grid-column: 3; }
+.summaryLines li[data-cover] .summaryLineSaving, .summaryLines li[data-cover] > :global(.stock-status) { grid-column: 2 / -1; }
 /* An offer on a summary line: the previous amount struck under today's, and the server's saving as one quiet
    green line with Material sell. */
 .summaryLineWas { grid-column: 2; grid-row: 2; justify-self: end; color: var(--pf-muted); font-size: .8125rem; font-variant-numeric: tabular-nums; }
@@ -121,7 +128,31 @@
 .summaryAction :global(.transaction-button-label) { min-width: 0; max-width: 100%; }
 .summaryAction :global(.transaction-button-label) > span { min-width: 0; white-space: normal; flex-wrap: wrap; text-align: center; }
 .fine { margin: 0; color: var(--pf-muted); font-size: .8125rem; line-height: 1.45; }
-.blocker { margin: 0; color: var(--pf-ink); font-weight: 600; line-height: 1.4; }
+/* The cancellation rule as a quiet fact: under "Hacer pedido" before buying, beside a pending order's story after. */
+.cancelAside { display: flex; align-items: flex-start; gap: 8px; margin: 0; color: var(--scene-muted, var(--pf-muted)); font-size: .875rem; line-height: 1.45; }
+.cancelAside :global(.material-symbol) { flex: none; margin-top: 1px; }
+.cancelAside a { color: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+.cancelAside a:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 2px; border-radius: 4px; }
+/* Under "Hacer pedido": the rule in ink, then where it is done — with the header's own account mark. */
+.cancelNote { font-size: .9375rem; }
+.cancelNote > div { display: grid; gap: 4px; min-width: 0; }
+.cancelNote > :global(.material-symbol) { margin-top: 3px; }
+.cancelNote p { margin: 0; }
+.cancelNote .cancelRule { color: var(--pf-ink); }
+/* Each step stays whole (the icon with "Mi cuenta"); the path may wrap between steps, so 200% text still reflows at 320px. */
+.accountPath { color: var(--pf-ink); font-weight: 600; }
+.pathStep { white-space: nowrap; }
+/* The icon sits on the text baseline, so the words keep their line. */
+.accountPath :global(.material-symbol) { margin: 0 3px 0 0; vertical-align: -3px; }
+
+/* A digital purchase's "Entrega": what does not happen (shipping, pickup) and where it will be. */
+.digitalDelivery { display: flex; align-items: flex-start; gap: 14px; }
+.digitalDeliveryIcon { display: grid; flex: none; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: color-mix(in srgb, var(--pf-ink) 6%, var(--pf-card, #fff)); color: var(--pf-blue); }
+.digitalDelivery p { margin: 0; color: var(--pf-muted); line-height: 1.45; }
+.digitalDelivery strong { color: var(--pf-ink); font-weight: 600; white-space: nowrap; } /* "Mi biblioteca" stays one name */
+.digitalDelivery .digitalDeliveryTitle { margin-bottom: 2px; color: var(--pf-ink); font-weight: 600; }
+.blocker { margin: 0; color: var(--pf-ink); font-weight: 600; line-height: 1.4; scroll-margin: 96px 0 24px; }
 .blocker:focus-visible { outline: 3px solid var(--pf-blue); outline-offset: 3px; border-radius: 6px; }
 .quietLink { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; color: var(--pf-blue); font-weight: 600; text-underline-offset: 4px; }
 .status { margin: 0; color: var(--pf-muted); }
@@ -392,7 +423,6 @@
 /* Its fields join the address grid (Complemento full width, Código postal half) without a box of their own. */
 .optionalFields { display: contents; }
 .billingDone { display: flex; justify-content: flex-start; }
-.digitalNote { margin: 0; color: var(--pf-muted); line-height: 1.5; }
 
 @media (max-width: 599px) {
   .billingFields { grid-template-columns: minmax(0, 1fr); }

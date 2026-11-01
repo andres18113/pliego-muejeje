@@ -10,6 +10,7 @@ import { useOwnedItem, useOwnedItems } from "./libraryQuery";
 import { libraryFilters, libraryRoutes, type OwnedItemViewModel } from "./libraryViewModel";
 import classes from "./library.module.css";
 import { ParentLink } from "@/shared/ui/ParentLink";
+import { orderReference } from "@/features/purchase/purchaseText";
 
 /** Ownership verification only. Reader/player/content capabilities are explicitly outside scope. */
 export function LibraryPage() {
@@ -153,14 +154,14 @@ function OwnedItemArticle({ item }: { item: OwnedItemViewModel }) {
       <section className={classes.purchases} aria-labelledby="library-purchases-heading">
         <h2 id="library-purchases-heading">Información de compra</h2>
         <ul>{item.sourcePurchases.map(source => <li key={source.orderItemId} className={classes.purchase} data-grant={source.grantState}>
-          <p className={classes.purchaseOrder}>Pedido N.° {source.orderId}</p>
+          <p className={classes.purchaseOrder}>Pedido {orderReference(source)}</p>
           <p className={classes.purchaseDate}><time dateTime={source.acquiredAt}>{acquiredDateLabel(source.acquiredAt)}</time></p>
           <dl>
             <div><dt>Pedido</dt><dd>{source.orderStateLabel}</dd></div>
             <div><dt>Pago</dt><dd>{source.paymentStateLabel}</dd></div>
             <div><dt>Titularidad</dt><dd>{source.grantStateLabel}</dd></div>
           </dl>
-          {orderLink(source.orderId) && <Link className={classes.purchaseLink} to={orderLink(source.orderId)!.href} aria-label={`${orderLink(source.orderId)!.label} N.° ${source.orderId}`}>{orderLink(source.orderId)!.label}<MaterialSymbol name="chevron_right" size={20} aria-hidden="true" /></Link>}
+          {orderLink(source.orderId) && <Link className={classes.purchaseLink} to={orderLink(source.orderId)!.href} aria-label={`${orderLink(source.orderId)!.label} ${orderReference(source)}`}>{orderLink(source.orderId)!.label}<MaterialSymbol name="chevron_right" size={20} aria-hidden="true" /></Link>}
         </li>)}</ul>
       </section>
     </div>

@@ -10,7 +10,7 @@ import { ApiRequestError } from "@/shared/api/errors";
 import type { OrderDetail, OrderSummary } from "@/shared/api/orders";
 import { ReadFailure } from "./CartPage";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
-import { booksLabel, deliveryWindowLabel, orderDateLabel, paymentStateLabel, unitsLabel } from "./purchaseText";
+import { booksLabel, deliveryWindowLabel, orderDateLabel, orderReference, paymentStateLabel, unitsLabel } from "./purchaseText";
 import { purchaseWindowView, storyFromState, type OrderStory, type PurchaseWindowView } from "./orderStory";
 import { useCustomerOrders, useRefetchAtCancellationDeadline } from "./ordersQuery";
 import type { MisPedidosOrder } from "./orderViewModel";
@@ -148,7 +148,7 @@ function OrderUnit({ order, viewModel, detail, paymentState, story, windowView, 
     </span>{" "}
     <span className={classes.receipt}>
     <span className={classes.meta}>
-      <span>Pedido N.° {order.orderId}</span>{" "}
+      <span>Pedido {orderReference(order)}</span>{" "}
       {group === "past" && <><span>{placed}</span>{" "}</>}
       {/* The invoice is a document on the order's own page, not a status every row repeats. */}
       {viewModel.units !== null && <span>{unitsLabel(viewModel.units)}</span>}

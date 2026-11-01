@@ -4,7 +4,7 @@ import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { billingIdentityQueryKey, changeEmail, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import { billingIdentityQueryKey, cancelEmailChange, changeEmail, resendEmailChange, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
 import type { BillingIdentityCorrectionRequest, StoredBillingIdentity } from "@/shared/api/billing";
 import { orderShortDateLabel } from "@/features/purchase/purchaseText";
 import { personNameSchema, personNameError, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
@@ -162,7 +162,7 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
     { field: "firstNames", label: "Nombres", value: profile.firstNames, editor: <NameEditor field="firstNames" label="nombres" {...editorProps("firstNames")} /> },
     { field: "lastNames", label: "Apellidos", value: profile.lastNames, editor: <NameEditor field="lastNames" label="apellidos" {...editorProps("lastNames")} /> },
     cedula,
-    { field: "email", label: "Correo electrónico", value: profile.email, editor: <EmailEditor {...editorProps("email")} /> },
+    { field: "email", label: "Correo electrónico", value: profile.email, detail: <EmailStatus profile={profile} />, editor: <EmailEditor {...editorProps("email")} /> },
     { field: "phone", label: "Teléfono", value: phone, missing: { tone: "optional", hint: "Opcional" }, editor: <PhoneEditor {...editorProps("phone")} /> },
     verified
       ? { field: "password", label: "Contraseña", value: "Contraseña configurada", masked: true, action: "Cambiar", icon: "lock", disabled: !passwordReadCurrent, waiting: password.cooling,
@@ -220,10 +220,61 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
         </li>;
       })}
     </ul>
+    {readCurrent && <PendingEmailActions profile={profile} refetch={refetch} onExpired={onExpired} onResult={(result) => setFeedback({ field: "email", message: result.message, error: result.error })} />}
     {!verified && readCurrent && <p className={classes.verification}>
       Tu correo está pendiente de verificación. <Link to="/reenviar-verificacion" state={{ email: profile.email }}>Reenviar verificación de correo</Link>
     </p>}
   </section>;
+}
+
+/**
+ * Under the stored address, at most two quiet lines: a requested address still waiting for its confirmation (or
+ * whose link could not be delivered), and an address in use that stopped accepting mail (a hard bounce or the
+ * provider's suppression). The value stays first; the fix is the row's own Editar, and nothing is resent by itself.
+ */
+function EmailStatus({ profile }: { profile: CustomerProfile }) {
+  const pending = profile.pendingEmail;
+  return <>
+    {pending && (pending.delivery === "UNDELIVERABLE"
+      ? <span className={classes.valueDetail}>
+        <span className={classes.missingChip} data-tone="required">No recibe correos</span>
+        <span>No pudimos enviar el enlace a <span className={classes.detailNumber}>{pending.address}</span>. Revisa la dirección.</span>
+      </span>
+      : <span className={classes.valueDetail}>
+        <span className={classes.missingChip} data-tone="review">Por confirmar</span>
+        <span>Cambio a <span className={classes.detailNumber}>{pending.address}</span>. Confírmalo desde el enlace que te enviamos.</span>
+      </span>)}
+    {profile.emailDelivery?.status === "UNDELIVERABLE" && <span className={classes.valueDetail}>
+      <span className={classes.missingChip} data-tone="required">No recibe correos</span>
+      <span>No pudimos entregarte mensajes. Corrígela para recibir los avisos de tus pedidos.</span>
+    </span>}
+  </>;
+}
+
+/** A pending change's two actions, one quiet line under the sheet (the verification line's place and grammar). */
+function PendingEmailActions({ profile, refetch, onExpired, onResult }: { profile: CustomerProfile; refetch: Refetch; onExpired: () => void; onResult: (result: Result) => void }) {
+  const [busy, setBusy] = useState<"resend" | "cancel" | null>(null);
+  const pending = profile.pendingEmail;
+  if (!pending) return null;
+  async function act(kind: "resend" | "cancel") {
+    if (busy) return;
+    setBusy(kind);
+    try {
+      await (kind === "resend" ? resendEmailChange() : cancelEmailChange());
+      await refetch();
+      onResult({ message: kind === "resend" ? `Te enviamos otro enlace a ${pending!.address}.` : `Cancelamos el cambio. Sigues usando ${profile.email}.`, error: false });
+    } catch (failure) {
+      if (failure instanceof ApiRequestError && failure.status === 401) { onExpired(); return; }
+      onResult({ message: failure instanceof ApiRequestError ? `${failure.title}. ${failure.detail}` : "No pudimos completarlo. Inténtalo otra vez.", error: true });
+    } finally { setBusy(null); }
+  }
+  return <p className={classes.verification}>
+    {pending.delivery === "UNDELIVERABLE" ? "Corrige la dirección con Editar o " : "¿No te llegó el enlace? "}
+    <span className={classes.inlineActions}>
+      {pending.delivery !== "UNDELIVERABLE" && <button type="button" className={classes.inlineAction} aria-disabled={busy !== null || undefined} onClick={() => void act("resend")}>{busy === "resend" ? "Reenviando…" : "Reenviar enlace"}</button>}
+      <button type="button" className={classes.inlineAction} aria-disabled={busy !== null || undefined} onClick={() => void act("cancel")}>{busy === "cancel" ? "Cancelando…" : pending.delivery === "UNDELIVERABLE" ? "cancela el cambio" : "Cancelar cambio"}</button>
+    </span>
+  </p>;
 }
 
 const PASSWORD_MASK = "••••••••";
@@ -365,7 +416,6 @@ function PhoneEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
  */
 function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
   const scope = useSessionOperationScope(`${profile.customerId}:email`);
-  const { session, updateEmailForSession } = useSession();
   const emailId = useId(), passwordId = useId();
   const draft = useProfileDraft(profile, "email", "");
   const { value: email, setValue: setEmail } = draft;
@@ -377,9 +427,9 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
   const { saving, saved, run } = useProfileSaving(profile.customerId, "email");
   useEffect(() => { emailRef.current?.focus(); }, []);
 
-  function confirmed(stored: string): Result {
-    if (session && session.user.email !== stored) updateEmailForSession(session, stored);
-    return { message: `Correo actualizado. Revisa ${stored} para verificarlo.`, error: false };
+  // Nothing changes yet: the address in use stays (and so does the session's) until the new one is confirmed.
+  function pendingFeedback(pending: string): Result {
+    return { message: `Te enviamos un enlace a ${pending}. Seguirás usando ${profile.email} hasta que lo confirmes.`, error: false };
   }
 
   return <EditorFrame label="Cambiar correo electrónico" saving={saving} saved={saved} error={error} notice={draft.notice} onCancel={() => { draft.cancel(); onDone(); }} onSubmit={() => void run(async () => {
@@ -396,11 +446,11 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     const requested = parsed.data;
     try {
       scope.assertCurrent();
-      const stored = await changeEmail(requested, password);
+      const result = await changeEmail(requested, password);
       if (!scope.isCurrent()) return false;
       const current = await refetch();
       if (!scope.isCurrent()) return false;
-      const feedback = confirmed(stored);
+      const feedback = pendingFeedback(result.pendingEmail.address);
       const passwordChanged = passwordRef.current?.value !== submittedPassword;
       setPassword(latest => latest === submittedPassword ? "" : latest);
       if (draft.complete(submitted, current.isError ? undefined : current.data, passwordChanged)) { onDone(feedback); return true; }
@@ -422,14 +472,14 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
       if (failure instanceof EmailChangeOutcomeUnknown) {
         const current = await refetch();
         if (!scope.isCurrent()) return false;
-        if (!current.isError && current.data && current.data.email.toLowerCase() === requested.toLowerCase()) {
-          const feedback = confirmed(current.data.email);
+        if (!current.isError && current.data?.pendingEmail?.address.toLowerCase() === requested.toLowerCase()) {
+          const feedback = pendingFeedback(current.data.pendingEmail.address);
           const passwordChanged = passwordRef.current?.value !== submittedPassword;
           setPassword(latest => latest === submittedPassword ? "" : latest);
           if (draft.complete(submitted, current.data, passwordChanged)) { onDone(feedback); return true; }
           return false;
         }
-        setError("No pudimos confirmar si tu correo cambió. Revisa el correo que aparece en tu perfil antes de intentarlo otra vez.");
+        setError("No pudimos confirmar si se envió el enlace. Revisa tu perfil antes de intentarlo otra vez.");
         return false;
       }
       throw failure;
@@ -440,7 +490,7 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
       aria-invalid={Boolean(errors.email) || undefined} aria-describedby={errors.email ? `${emailId}-error` : `${emailId}-note`}
       onChange={(event) => { setEmail(event.target.value); setErrors(current => ({ ...current, email: undefined })); }} />
     {errors.email && <FieldMessage id={`${emailId}-error`} tone="error">{errors.email}</FieldMessage>}
-    {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace para verificar el nuevo correo.</p>}
+    {!errors.email && <p className={classes.inlineNote} id={`${emailId}-note`}>Te enviaremos un enlace a la dirección nueva. Tu correo actual sigue en uso hasta que lo confirmes.</p>}
     <label className={classes.subLabel} htmlFor={passwordId}>Contraseña actual</label>
     <PasswordInput ref={passwordRef} id={passwordId} className={classes.input} autoComplete="current-password" value={password}
       aria-invalid={Boolean(errors.password) || undefined} aria-describedby={errors.password ? `${passwordId}-error` : undefined}
@@ -448,7 +498,7 @@ function EmailEditor({ profile, refetch, onExpired, onDone }: EditorProps) {
     {errors.password && <FieldMessage id={`${passwordId}-error`} tone="error">{errors.password}</FieldMessage>}
     <details className={classes.securityDisclosure}>
       <summary>Seguridad del cambio</summary>
-      <p>Te pedimos tu contraseña para proteger tu cuenta. Cuando tu sesión termine, tendrás que iniciar sesión de nuevo en tus dispositivos.</p>
+      <p>Te pedimos tu contraseña para proteger tu cuenta. También avisaremos a tu correo actual, desde donde se puede cancelar el cambio. Al confirmar la dirección nueva cerraremos tus sesiones y entrarás con ella.</p>
     </details>
   </EditorFrame>;
 }

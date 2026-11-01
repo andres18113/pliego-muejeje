@@ -199,6 +199,37 @@ describe("CheckoutPage", () => {
     expect(api.count("POST", "/api/v1/checkout")).toBe(0);
   });
 
+  it("states when the order could be cancelled under Hacer pedido, for the payment chosen", async () => {
+    stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");
+    await screen.findByText("Av. Principal 123");
+    const pay = screen.getByRole("button", { name: "Hacer pedido" });
+    const note = document.getElementById("checkout-cancellation-note");
+    expect(note).toHaveTextContent("Podrás cancelarlo mientras lo preparamos, antes de que salga hacia tu dirección.");
+    // Where it is done, named as the header names it (the account icon's "Mi cuenta"), read as words.
+    expect(note).toHaveTextContent(/Para cancelarlo, abre (account_circle)?Mi cuenta › y luego Pedidos\./);
+    // The header's account mark appears inline for recognition, hidden from assistive technology.
+    expect(note?.querySelector(".material-symbol[aria-hidden='true']")).not.toBeNull();
+    expect(pay.getAttribute("aria-describedby")).toContain("checkout-cancellation-note");
+    await choosePayment(user, "Transferencia");
+    await screen.findByText("Banco Guayaquil");
+    expect(note).toHaveTextContent("mientras esperamos tu transferencia o lo preparamos");
+  });
+
+  it("answers Entrega digital with how and when the purchase arrives, shows each book's cover and the six-minute rule", async () => {
+    stubApi({ "GET /api/v1/cart": () => json(cartBody([{ format: "EBOOK", title: "Cien años de soledad", coverUrl: "https://covers.example/cien.webp" }])),
+      "GET /api/v1/me/addresses": () => json([savedAddress]) });
+    renderPurchaseRoute(routes, "/checkout");
+    const delivery = await screen.findByRole("region", { name: "Entrega digital" });
+    // How and when it arrives, said positively; no reader or player is implied.
+    expect(delivery).toHaveTextContent("Tu eBook se añadirá a Mi biblioteca.");
+    expect(delivery).toHaveTextContent("Estará disponible en cuanto se apruebe el pago. No hay envío ni retiro.");
+    expect(delivery.textContent).not.toMatch(/leer|escuchar|reproduc|lector/i);
+    const summary = screen.getByRole("complementary", { name: "Resumen del pedido" });
+    expect(within(summary).getByText("Cien años de soledad").closest("li")?.querySelector("img")).toHaveAttribute("src", "https://covers.example/cien.webp");
+    expect(document.getElementById("checkout-cancellation-note")).toHaveTextContent("Podrás cancelarlo durante los 6 minutos siguientes a la aprobación del pago.");
+  });
+
   it("does not submit a valid card before the customer confirms using it", async () => {
     const api = stubApi({ "GET /api/v1/cart": () => json(cartBody()), "GET /api/v1/me/addresses": () => json([savedAddress]), "POST /api/v1/checkout": () => json(approved, 201) });
     const user = userEvent.setup(); renderPurchaseRoute(routes, "/checkout");

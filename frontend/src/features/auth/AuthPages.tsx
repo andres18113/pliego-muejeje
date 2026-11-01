@@ -6,7 +6,7 @@ import { z } from "zod";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope } from "@/app/sessionOperation";
-import { authLocation, emailActionLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
+import { adminReturnHref, authLocation, emailActionLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { login, register } from "@/shared/api/auth";
 import { ApiRequestError, describeApiError, fieldErrorMessages } from "@/shared/api/errors";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
@@ -105,7 +105,7 @@ export function SignInPage() {
       setFeedback({ state: "success", message: "Inicio de sesión correcto. Abriendo tu cuenta…" });
       await new Promise<void>((resolve) => window.setTimeout(resolve, 220));
       if (!acceptedAuthority.isCurrent() || !scope.isViewCurrent()) return;
-      if (response.user.role === "ADMIN") navigate("/admin", { replace: true });
+      if (response.user.role === "ADMIN") navigate(adminReturnHref(new URLSearchParams(location.search).get("from")), { replace: true });
       else navigate(intent, { replace: true, state: stateAfterSignIn(location.state) });
     } catch (error: unknown) {
       if (!scope.isCurrent()) return;

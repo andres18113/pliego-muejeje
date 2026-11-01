@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { json, problem, renderPurchaseRoute, stubApi } from "@/test/purchase";
 import { InvoiceDocumentPage } from "./InvoiceDocumentPage";
+import { orderDetailFixture } from "@/test/orders";
 
 const routes = [{ path: "/orders/:orderId/invoice", element: <InvoiceDocumentPage /> }];
 const ACCESS = "GET /api/v1/orders/700/invoice/files/PDF/access";
@@ -21,12 +22,14 @@ describe("InvoiceDocumentPage", () => {
   afterEach(() => { vi.unstubAllGlobals(); vi.restoreAllMocks(); });
 
   it("authorizes through the access endpoint, then shows the streamed PDF with its number and order", async () => {
-    const api = stubApi({ "GET /api/v1/orders/700/invoice": () => metadata("READY"), [ACCESS]: streamed, [FILE]: pdf });
+    const api = stubApi({ "GET /api/v1/orders/700/invoice": () => metadata("READY"), [ACCESS]: streamed, [FILE]: pdf,
+      "GET /api/v1/orders/700": () => json(orderDetailFixture("PREPARING", { orderReference: "PL-4827-1093" })) });
     renderPurchaseRoute(routes, "/orders/700/invoice");
     const viewer = await screen.findByTitle("Factura N.° 999-999-000000001");
     await waitFor(() => expect(viewer).toHaveAttribute("src", "blob:invoice"));
     expect(screen.getByRole("heading", { level: 1, name: "Factura" })).toBeInTheDocument();
-    expect(screen.getByText("Pedido N.°").nextSibling).toHaveTextContent("700");
+    // The order by its public reference (ADR 0047); the internal id stays only in the route.
+    expect(await screen.findByText("#PL-4827-1093")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Volver al pedido" })).toHaveAttribute("href", "/orders/700");
     const order = api.calls.map((call) => call.path).filter((path) => path.includes("/files/PDF"));
     expect(order).toEqual(["/api/v1/orders/700/invoice/files/PDF/access?disposition=inline", "/api/v1/orders/700/invoice/files/PDF?disposition=inline"]);

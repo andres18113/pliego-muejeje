@@ -32,7 +32,7 @@ for (const [state,label] of [["PREPARING","En preparación"],["IN_TRANSIT","En c
     const detail = orderDetailFixture(state,{ availableActions: { cancel,changeShippingAddress: false } });
     const reads = await install(page,detail);
     await page.goto("/orders");
-    const row = page.getByRole("link",{ name: new RegExp(`${label}.*Pedido N.° 700`) });
+    const row = page.getByRole("link",{ name: new RegExp(`${label}.*Pedido #700`) });
     await expect(row).toBeVisible();
     await expect(row).toContainText("2 unidades");
     await row.click();
@@ -47,14 +47,14 @@ for (const [state,label] of [["PREPARING","En preparación"],["IN_TRANSIT","En c
   });
 }
 
-for (const [state,label] of [["PENDING","Pendiente de retiro"],["COLLECTED","Retirado"],["CANCELLED","Pedido cancelado"]]) {
+for (const [state,label] of [["PENDING","En preparación"],["READY","Listo para retirar"],["COLLECTED","Retirado"],["CANCELLED","Pedido cancelado"]]) {
   test(`Mis pedidos preserves STORE_PICKUP ${state}`,async ({ page }) => {
     const detail = { ...pickupOrder,orderState: state === "COLLECTED" ? "DELIVERED" : state === "CANCELLED" ? "CANCELLED" : "CONFIRMED",
       purchaseState: state === "CANCELLED" ? "CANCELLED" : "CONFIRMED",
       fulfillment: { ...pickupOrder.fulfillment,state },availableActions: { cancel: state === "PENDING",changeShippingAddress: false } };
     await install(page,detail);
     await page.goto("/orders");
-    await page.getByRole("link",{ name: new RegExp(`${label}.*Pedido N.° 700`) }).click();
+    await page.getByRole("link",{ name: new RegExp(`${label}.*Pedido #700`) }).click();
     await expect(page.getByRole("heading",{ level: 2,name: label })).toBeVisible();
     await expect(page.getByRole("list",{ name: "Progreso del envío" })).toHaveCount(0);
     await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(state === "PENDING" ? 1 : 0);
@@ -73,7 +73,7 @@ test("cancelled home delivery remains a cancelled purchase",async ({ page }) => 
     payment: { method: "CARD",state: "REFUNDED",amount: "42.55",reference: "SIM-1" },availableActions: { cancel: false,changeShippingAddress: false } });
   await install(page,detail);
   await page.goto("/orders");
-  await page.getByRole("link",{ name: /Pedido cancelado.*Pedido N.° 700/ }).click();
+  await page.getByRole("link",{ name: /Pedido cancelado.*Pedido #700/ }).click();
   await expect(page.getByRole("heading",{ level: 2,name: "Pedido cancelado" })).toBeVisible();
   await expect(page.getByRole("list",{ name: "Progreso del envío" })).toHaveCount(0);
   await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(0);
@@ -83,7 +83,7 @@ test("opening detail revalidates a previously cached PREPARING snapshot",async (
   const detail = orderDetailFixture();
   const reads = await install(page,detail);
   await page.goto("/orders");
-  const row = page.getByRole("link",{ name: /En preparación.*Pedido N.° 700/ });
+  const row = page.getByRole("link",{ name: /En preparación.*Pedido #700/ });
   await expect(row).toBeVisible();
   await expect.poll(() => reads.length).toBe(1);
   await expect(page.getByText("Actualizando tus pedidos…")).toHaveCount(0);
@@ -100,7 +100,7 @@ for (const [purchaseState,paymentState,label] of [["CONFIRMED","APPROVED","Compr
       payment: { method: "CARD",state: paymentState,amount: "42.55",reference: null },availableActions: { cancel: false,changeShippingAddress: false } });
     await install(page,detail);
     await page.goto("/orders");
-    await page.getByRole("link",{ name: new RegExp(`${label}.*Pedido N.° 700`) }).click();
+    await page.getByRole("link",{ name: new RegExp(`${label}.*Pedido #700`) }).click();
     await expect(page.getByRole("heading",{ level: 2,name: label })).toBeVisible();
     await expect(page.getByRole("list",{ name: "Progreso del envío" })).toHaveCount(0);
     await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(0);

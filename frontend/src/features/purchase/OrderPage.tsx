@@ -18,7 +18,7 @@ import { hasSaving } from "./cartPricingViewModel";
 import { toOrderPricingViewModel } from "./orderPricingViewModel";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import {
-  deliveryWindowLabel, orderDateLabel, orderMomentLabel,
+  deliveryWindowLabel, orderDateLabel, orderMomentLabel, orderReference,
   paymentMethodLabel, paymentStateLabel, shipmentStateLabel, ivaLabel,
 } from "./purchaseText";
 import { orderStory, purchaseWindowView, type OrderStory, type PurchaseWindowView } from "./orderStory";
@@ -32,6 +32,7 @@ import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import classes from "./orderPage.module.css";
 import { InvoiceAction } from "./InvoiceAction";
 import { PickupDetails } from "./PickupDetails";
+import { cancellationCondition, cancellationEnded } from "./cancellationPolicy";
 
 export function OrderPage() {
   const { orderId = "" } = useParams();
@@ -43,7 +44,7 @@ export function OrderPage() {
   const returnTo = typeof candidate === "number" && Number.isInteger(candidate) && candidate > 0 && candidate <= 99999
     ? `/orders?page=${candidate}` : "/orders";
   return (
-    <PurchasePage title={`Pedido ${orderId}`}>
+    <PurchasePage title="Detalle del pedido">
       <CustomerOnly intent={`/orders/${orderId}`} task="ver tu pedido">
         <OrderContent key={orderId} orderId={orderId} returnTo={returnTo} purchased={purchased} />
       </CustomerOnly>
@@ -63,6 +64,11 @@ function OrderContent({ orderId, returnTo, purchased }: { orderId: string; retur
   // When the server's cancellation deadline arrives, read the order again; the response alone decides what shows.
   const actions = orderQuery.data?.availableActions;
   useRefetchAtCancellationDeadline([actions?.canCancel ? actions.cancellationDeadline : null], orderQuery.refetch);
+  // Seen cancelable on this visit and no longer offered (window closed, shipment left): say so instead of going silent.
+  const canCancelNow = Boolean(actions?.canCancel ?? actions?.cancel);
+  const [seenCancelable, setSeenCancelable] = useState(false);
+  if (canCancelNow && !seenCancelable) setSeenCancelable(true);
+  const cancelEnded = seenCancelable && !canCancelNow && Boolean(orderQuery.data) && orderQuery.data?.orderState !== "CANCELLED";
   const cancellation = useMutation({
     meta: { authRequired: true },
     mutationFn: ({scope:issued,target}:{scope:SessionOperationScope;target:string}) => { issued.assertCurrent(); return cancelOrder(target); },
@@ -104,7 +110,7 @@ function OrderContent({ orderId, returnTo, purchased }: { orderId: string; retur
   }, [loaded, purchased]);
 
   if (purchased && validId && orderQuery.data) {
-    return <OrderConfirmation order={orderQuery.data} headingRef={headingRef} />;
+    return <OrderConfirmation order={orderQuery.data} headingRef={headingRef} cancelEnded={cancelEnded} />;
   }
 
   const shell = (children: ReactNode) => <AccountShell
@@ -141,12 +147,14 @@ function OrderContent({ orderId, returnTo, purchased }: { orderId: string; retur
         className={`purchase-notice ${classes.onAxis} ${cancelMessage.error ? "purchase-notice--error" : "purchase-notice--success"}`}
         role={cancelMessage.error ? "alert" : "status"}
       >{cancelMessage.detail ? <><strong>{cancelMessage.text}</strong><span>{cancelMessage.detail}</span></> : cancelMessage.text}</p>}
-    <OrderView order={orderQuery.data} readCurrent={!orderQuery.isError && !orderQuery.isFetching} confirming={confirming} setConfirming={setConfirming} cancellationPending={cancellation.isPending} onCancel={() => { if (!cancellation.isPending) cancellation.mutate({scope,target:orderId}); }} />
+    <OrderView order={orderQuery.data} cancelEnded={cancelEnded} readCurrent={!orderQuery.isError && !orderQuery.isFetching} confirming={confirming} setConfirming={setConfirming} cancellationPending={cancellation.isPending} onCancel={() => { if (!cancellation.isPending) cancellation.mutate({scope,target:orderId}); }} />
   </>);
 }
 
 interface OrderViewProps {
   order: OrderDetail;
+  /** Cancelable earlier on this visit and no longer offered by the server. */
+  cancelEnded: boolean;
   readCurrent: boolean;
   confirming: boolean;
   setConfirming: (value: boolean) => void;
@@ -159,7 +167,7 @@ interface OrderViewProps {
  * what happens next, progress, destination and the purchased books) beside a compact payment card.
  * The server-reported state changes what the panel says and shows, never the layout.
  */
-function OrderView({ order, readCurrent, confirming, setConfirming, cancellationPending, onCancel }: OrderViewProps) {
+function OrderView({ order, cancelEnded, readCurrent, confirming, setConfirming, cancellationPending, onCancel }: OrderViewProps) {
   const coverQueries = useQueries({
     queries: order.items.map((item) => ({
       queryKey: ["order-item-cover", item.editionId],
@@ -191,7 +199,7 @@ function OrderView({ order, readCurrent, confirming, setConfirming, cancellation
   return (
     <article className={classes.order} aria-labelledby="order-story-heading">
       <dl className={classes.facts}>
-        <div><dt>Pedido N.°</dt><dd>{order.orderId}</dd></div>
+        <div><dt>Pedido</dt><dd>{orderReference(order)}</dd></div>
         {order.createdAt && <div><dt>Realizado</dt><dd><time dateTime={order.createdAt}>{orderDateLabel(order.createdAt)}</time></dd></div>}
         <div><dt>Total</dt><dd>{formatUsd(order.total)}</dd></div>
       </dl>
@@ -204,13 +212,14 @@ function OrderView({ order, readCurrent, confirming, setConfirming, cancellation
             <StoryLead order={order} story={story} windowView={windowView} />
             {window && <p className={classes.estimate}>Llega {window}</p>}
           </div>
+          {/* Right under the state: when cancelling is possible is part of what the order is now, so it never sits
+              below a long list of books. Quiet (a text action), so the story keeps one emphasised action. */}
+          <CancelAction order={order} cancelEnded={cancelEnded} readCurrent={readCurrent} confirming={confirming} setConfirming={setConfirming} cancellationPending={cancellationPending} onCancel={onCancel} />
           {shipment && !closed && <ShipmentTrack shipment={shipment} />}
           <StoryAction order={order} story={story} />
           {shipment && (story.kind === "in-transit" || story.kind === "delivered") && <ShipmentHistory shipment={shipment} />}
           <Destination order={order} story={story} />
           <Books order={order} items={mixed ? physicalItems : order.items} coverOf={coverOf} label={mixed ? "Libros impresos del pedido" : "Libros del pedido"} />
-          {/* Last and quiet: being able to cancel is a fact about the order, not the page's next step. */}
-          <CancelAction order={order} readCurrent={readCurrent} confirming={confirming} setConfirming={setConfirming} cancellationPending={cancellationPending} onCancel={onCancel} />
         </section>
         {mixed && <DigitalAccess order={order} items={digitalItems} coverOf={coverOf} />}
         </div>
@@ -251,9 +260,12 @@ function StoryLead({ order, story, windowView }: { order: OrderDetail; story: Or
       text = order.payment?.method === "TRANSFER" ? "Completa la transferencia para confirmar tu compra." : "Esperamos la confirmación del pago.";
       break;
     default:
-      text = order.fulfillment?.method === "STORE_PICKUP" ? "Tu compra está confirmada. Te esperamos en el punto de retiro." : "Tu compra está confirmada.";
+      text = order.fulfillment?.method !== "STORE_PICKUP" ? "Tu compra está confirmada."
+        : order.fulfillment.state === "READY" ? "Tu pedido está listo. Te esperamos en el punto de retiro."
+        : order.fulfillment.state === "PENDING" ? "Estamos preparando tu pedido para el retiro."
+        : "Tu compra está confirmada. Te esperamos en el punto de retiro.";
   }
-  // Inside the window the story states the purchase; the cancel foot alone says it can still be cancelled.
+  // Inside the window the story states the purchase; the cancellation strip alone says it can still be cancelled.
   if (windowView === "digital-window") text = "Tu compra está confirmada.";
   if (windowView === "digital-complete") return <>
     <p className={classes.lead}>Tu compra está confirmada.</p>
@@ -263,23 +275,6 @@ function StoryLead({ order, story, windowView }: { order: OrderDetail; story: Or
     <p className={classes.lead}>{text}</p>
     {story.kind === "cancelled" && order.payment?.state === "REFUNDED" && <p className={classes.lead}>Tu pago fue reembolsado.</p>}
   </>;
-}
-
-/**
- * The cancel foot's one line, in the order's own terms. Inside the purchase window it states the window; what
- * cancelling refunds and releases is said in the confirmation, where the decision is taken.
- */
-function cancelConsequence(order: OrderDetail) {
-  const windowView = purchaseWindowView(order.availableActions?.lifecycleState, {
-    digitalOnly: order.fulfillment == null && !order.items.some((item) => item.requiresPhysicalFulfillment),
-    pickup: order.fulfillment?.method === "STORE_PICKUP",
-  });
-  // An unpaid order is never charged, so nothing is refunded (ADR 0042 report: cancelling it rejects the payment).
-  if (order.payment?.state === "PENDING") return "Aún puedes cancelarlo: no se realizará ningún cobro.";
-  if (windowView === "digital-window" || windowView === "pickup-window") return "Puedes cancelar este pedido durante los primeros 6 minutos.";
-  return isMixedOrder(order)
-    ? "Aún puedes cancelarlo: se reembolsará el pago completo, se liberarán los libros impresos y los títulos digitales saldrán de Mi biblioteca."
-    : "Aún puedes cancelarlo: se reembolsará el pago y se liberarán los libros.";
 }
 
 /** A paid mixed order cancels as a whole: one refund, printed books released and every digital title revoked. */
@@ -296,20 +291,25 @@ function cancelRelease(order: OrderDetail) {
 }
 
 /**
- * Cancellation is offered only when the server says so; the command revalidates under the order lock. The decision
- * is asked in the shared destructive confirmation; keeping the order returns focus to "Cancelar pedido", and the
- * outcome notice takes focus once the command answers.
+ * Cancellation is offered only when the server says so; the command revalidates under the order lock. The line states
+ * when, in the server's own rule (`cancellationPolicy.ts`); the refund and what is released are asked in the shared
+ * destructive confirmation; keeping the order returns focus to "Cancelar pedido", and the outcome notice takes focus
+ * once the command answers. When the server stops offering it during the visit, one quiet line says why.
  */
-function CancelAction({ order, readCurrent, confirming, setConfirming, cancellationPending, onCancel }: OrderViewProps) {
+function CancelAction({ order, cancelEnded, readCurrent, confirming, setConfirming, cancellationPending, onCancel }: OrderViewProps) {
   const cancelRef = useRef<HTMLButtonElement>(null);
-  if (!(order.availableActions?.canCancel ?? order.availableActions?.cancel)) return null;
+  if (!(order.availableActions?.canCancel ?? order.availableActions?.cancel)) {
+    return cancelEnded ? <p className={classes.cancelEnded} role="status" data-order="cancel-ended">
+      <MaterialSymbol name="schedule" size={18} aria-hidden="true" /><span>{cancellationEnded(order)}</span>
+    </p> : null;
+  }
   const keep = () => { setConfirming(false); requestAnimationFrame(() => cancelRef.current?.focus({ preventScroll: true })); };
-  return <div className={classes.cancel}>
+  return <div className={classes.cancel} data-order="cancel">
     {!readCurrent ? <p>Actualiza el pedido para comprobar si aún se puede cancelar.</p> : <>
-      <p><MaterialSymbol name="schedule" size={18} aria-hidden="true" /><span>{cancelConsequence(order)}</span></p>
+      <p><MaterialSymbol name="schedule" size={18} aria-hidden="true" /><span>{cancellationCondition(order)}</span></p>
       <button ref={cancelRef} type="button" className={classes.cancelLink} onClick={() => setConfirming(true)}>Cancelar pedido</button>
     </>}
-    <ConfirmDialog opened={confirming} destructive title={`¿Cancelar el pedido N.° ${order.orderId}?`}
+    <ConfirmDialog opened={confirming} destructive title={`¿Cancelar el pedido ${orderReference(order)}?`}
       confirmLabel="Confirmar cancelación" busyLabel="Cancelando pedido…" keepLabel="Conservar pedido" busy={cancellationPending}
       onConfirm={onCancel} onKeep={keep}>
       <p>{order.payment?.state === "PENDING" ? "No se realizará ningún cobro por este pedido." : `Se reembolsarán ${formatUsd(order.total)} del pago de este pedido.`}</p>

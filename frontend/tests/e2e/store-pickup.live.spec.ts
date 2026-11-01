@@ -90,7 +90,7 @@ for (const [fulfillment, payment, width] of [["STORE_PICKUP", "CARD", 1440], ["S
       await expect(page.getByText(pickup.pickupCode, { exact: true })).toBeVisible();
       await expect(page.locator(`time[datetime="${pickup.readyAt}"]`)).toBeVisible();
       await expect(page.getByText(pickup.location.timezone, { exact: true })).toHaveCount(0);
-      await expect(page.getByText(/Presenta la confirmación enviada a tu correo/)).toBeVisible();
+      await expect(page.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeVisible();
       await expect(page.getByTitle(`Mapa de ${pickup.location.name}`)).toHaveAttribute("src", new RegExp(`marker=${pickup.location.latitude}%2C${pickup.location.longitude}`.replaceAll(".", "\\.")));
       await expect(page.getByText(/Transportista|Código de seguimiento/)).toHaveCount(0);
     } else {

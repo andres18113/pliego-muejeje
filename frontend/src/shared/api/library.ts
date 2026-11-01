@@ -8,7 +8,7 @@ const ownedItemSchema = z.object({
   productType: z.enum(["EBOOK", "AUDIOBOOK"]), acquiredAt: z.string().datetime({ offset: true }),
   ownershipState: z.enum(["OWNED", "REVOKED"]), accessState: z.enum(["OWNERSHIP_ONLY", "REVOKED"]), contentAccessSupported: z.literal(false),
   metadata: z.object({ isbn: z.string().nullable(), publisher: z.string(), language: z.string(), pageCount: z.number().int().nonnegative().nullable(), publicationDate: z.string().nullable(), ebookFileFormat: z.enum(["EPUB", "PDF"]).nullable(), audioDurationSeconds: z.number().int().positive().nullable(), narrators: z.array(z.string()) }),
-  sourcePurchases: z.array(z.object({ orderId: idSchema, orderItemId: idSchema, acquiredAt: z.string().datetime({ offset: true }), paymentState: z.string(), orderState: z.string(), grantState: z.enum(["ACTIVE", "REVOKED"]) })),
+  sourcePurchases: z.array(z.object({ orderId: idSchema, orderReference: z.string().nullish(), orderItemId: idSchema, acquiredAt: z.string().datetime({ offset: true }), paymentState: z.string(), orderState: z.string(), grantState: z.enum(["ACTIVE", "REVOKED"]) })),
   availableActions: z.array(z.discriminatedUnion("type", [
     z.object({ type: z.literal("VIEW_ORDER"), label: z.string(), href: z.string().regex(/^\/orders\/[1-9]\d*$/) }),
     z.object({ type: z.literal("HELP"), label: z.string(), href: z.string().regex(/^\/ayuda\/[a-z0-9-]+$/) }),

@@ -4,6 +4,7 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import { json, problem, renderPurchaseRoute, stubApi as stubPurchaseApi } from "@/test/purchase";
 import { pickupOrder } from "@/test/pickup";
 import { OrderPage } from "./OrderPage";
+import { cancellationClockLabel } from "./cancellationPolicy";
 
 const stubApi = (routes: Parameters<typeof stubPurchaseApi>[0]) => stubPurchaseApi({"GET /api/v1/orders/700/invoice": () => new Response(null, {status:404}), ...routes});
 
@@ -59,6 +60,29 @@ describe("OrderPage", () => {
     availableActions: { cancel: false, changeShippingAddress: false, ...actions },
   });
 
+  it("identifies the order by its public reference, never by the internal id (ADR 0047)", async () => {
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ orderReference: "PL-4827-1093" })) });
+    renderPurchaseRoute(routes, "/orders/700");
+    expect(await screen.findByText("#PL-4827-1093")).toBeInTheDocument();
+    expect(screen.getByText("Pedido", { selector: "dt" }).nextSibling).toHaveTextContent("#PL-4827-1093");
+    await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
+    expect(await screen.findByRole("dialog", { name: "¿Cancelar el pedido #PL-4827-1093?" })).toBeInTheDocument();
+    expect(document.body.textContent).not.toMatch(/N\.[°º] 700|#700/);
+  });
+
+  it("states when a home-delivery order can be cancelled right under its state, before a long list of books", async () => {
+    const many = Array.from({ length: 12 }, (_, index) => ({ ...order().items[0], orderItemId: `9${index}`, title: `Libro ${index + 1}` }));
+    stubApi({ "GET /api/v1/orders/700": () => json(order({ items: many })) });
+    renderPurchaseRoute(routes, "/orders/700");
+    const rule = await screen.findByText("Puedes cancelarlo mientras lo preparamos, antes de que salga hacia tu dirección.");
+    const cancel = screen.getByRole("button", { name: "Cancelar pedido" });
+    const books = screen.getByRole("list", { name: "Libros del pedido" });
+    // Reading order: the rule and its action come before the books, however many there are.
+    expect(rule.compareDocumentPosition(books) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(cancel.compareDocumentPosition(books) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(screen.queryByText(/6 minutos/)).toBeNull();
+  });
+
   it("discards an open cancellation dialog across A to B to A POP without cancelling B", async () => {
     const api = stubApi({
       "GET /api/v1/orders/700": () => json(order()),
@@ -67,13 +91,13 @@ describe("OrderPage", () => {
     });
     const { router } = renderPurchaseRoute(routes, "/orders/700");
     await userEvent.click(await screen.findByRole("button", { name: "Cancelar pedido" }));
-    await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     await act(async () => { await router.navigate("/orders/701"); });
-    await screen.findByText("701", { selector: "dd" });
+    await screen.findByText("#701", { selector: "dd" });
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     expect(screen.queryByRole("button", { name: "Confirmar cancelación" })).toBeNull();
     await act(async () => { await router.navigate(-1); });
-    await screen.findByText("700", { selector: "dd" });
+    await screen.findByText("#700", { selector: "dd" });
     expect(screen.queryByRole("dialog")).toBeNull();
     expect(api.calls.filter(call => call.method === "POST")).toHaveLength(0);
   });
@@ -91,9 +115,9 @@ describe("OrderPage", () => {
     await userEvent.click(await screen.findByRole("button", { name: "Confirmar cancelación" }));
     await waitFor(() => expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(1));
     await act(async () => { await router.navigate("/orders/701"); });
-    await screen.findByText("701", { selector: "dd" });
+    await screen.findByText("#701", { selector: "dd" });
     await act(async () => { await router.navigate(-1); });
-    await screen.findByText("700", { selector: "dd" });
+    await screen.findByText("#700", { selector: "dd" });
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     const reads = api.count("GET", "/api/v1/orders/700");
     await act(async () => {
@@ -109,11 +133,12 @@ describe("OrderPage", () => {
     stubApi({ "GET /api/v1/orders/700": () => json(digitalOrder({ cancel: true, canCancel: true, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: "2026-10-06T15:06:00Z", libraryAccessState: "OWNERSHIP_ONLY" })) });
     renderPurchaseRoute(routes, "/orders/700");
     expect(await screen.findByRole("heading", { level: 2, name: "Compra confirmada" })).toBeInTheDocument();
-    expect(screen.getByText("Puedes cancelar este pedido durante los primeros 6 minutos.")).toBeInTheDocument();
+    // The server's own deadline, as a wall-clock time (never a countdown).
+    expect(screen.getByText(`Puedes cancelarlo hasta las ${cancellationClockLabel("2026-10-06T15:06:00Z")}, 6 minutos después de aprobarse el pago.`)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
     // Paid and owned already: the title opens straight from its line, even inside the window.
     expect(screen.getByRole("link", { name: "Ver en Mi biblioteca: Cien años de soledad" })).toHaveAttribute("href", "/biblioteca/81");
-    expect(document.body.textContent).not.toMatch(/15:06|CANCELLATION_WINDOW/);
+    expect(document.body.textContent).not.toMatch(/CANCELLATION_WINDOW/);
   });
 
   it("thanks the customer and points to Mi biblioteca once the server finalizes a digital purchase", async () => {
@@ -133,7 +158,7 @@ describe("OrderPage", () => {
     stubApi({ "GET /api/v1/orders/700": () => json(digitalOrder({ canCancel: false, lifecycleState: "CANCELLATION_WINDOW" })) });
     renderPurchaseRoute(routes, "/orders/700");
     expect(await screen.findByRole("heading", { level: 2, name: "Compra confirmada" })).toBeInTheDocument();
-    expect(screen.queryByText(/primeros 6 minutos/)).toBeNull();
+    expect(screen.queryByText(/cancelarlo/)).toBeNull();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
   });
 
@@ -147,6 +172,8 @@ describe("OrderPage", () => {
     expect(await screen.findByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
     expect(await screen.findByRole("heading", { level: 2, name: "¡Gracias por tu compra!" }, { timeout: 4000 })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Cancelar pedido" })).toBeNull();
+    // Seen open on this visit: the place the action was now says the window closed, instead of going silent.
+    expect(screen.getByText(`El plazo para cancelar terminó a las ${cancellationClockLabel(deadline)}.`)).toBeInTheDocument();
     expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/orders/700").length).toBe(2);
   });
 
@@ -165,7 +192,8 @@ describe("OrderPage", () => {
   it("keeps a pickup order's own state and adds the window line only while it can be cancelled", async () => {
     stubApi({ "GET /api/v1/orders/700": () => json({ ...pickupOrder, availableActions: { cancel: true, changeShippingAddress: false, canCancel: true, lifecycleState: "CANCELLATION_WINDOW" } }) });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByText("Puedes cancelar este pedido durante los primeros 6 minutos.")).toBeInTheDocument();
+    // Without a reported deadline the rule is stated without a time.
+    expect(await screen.findByText("Puedes cancelarlo durante los 6 minutos siguientes a la aprobación del pago.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Cancelar pedido" })).toBeInTheDocument();
     expect(screen.queryByRole("heading", { level: 2, name: /Gracias por tu compra/ })).toBeNull();
   });
@@ -231,7 +259,8 @@ describe("OrderPage", () => {
     expect(screen.getByRole("heading", { name: "Cien años de soledad" })).toBeInTheDocument();
     expect(await screen.findByRole("img", { name: "Portada de Cien años de soledad" })).toBeInTheDocument();
     expect(screen.queryByText(/Referencia|SIM-/)).not.toBeInTheDocument();
-    expect(screen.getByText("Pedido N.°").nextSibling).toHaveTextContent("700");
+    // Without a reference in the response (older API), the order still reads with "#", never "N.°".
+    expect(screen.getByText("Pedido", { selector: "dt" }).nextSibling).toHaveTextContent("#700");
     expect(screen.queryByRole("heading", { name: /Factura/ })).not.toBeInTheDocument();
     expect(screen.queryByText(/4111/)).not.toBeInTheDocument();
   });
@@ -362,8 +391,12 @@ describe("OrderPage", () => {
     expect(within(digital).getByRole("link", { name: /^Ver en Mi biblioteca/ })).toHaveAttribute("href", "/biblioteca/81");
     // Only the digital title: the printed book has no library action.
     expect(within(printed).queryByRole("link", { name: /Mi biblioteca/ })).toBeNull();
-    // Cancelling a paid mixed order refunds it whole and revokes its digital titles (verified backend rule).
-    expect(screen.getByText(/se reembolsará el pago completo, se liberarán los libros impresos y los títulos digitales saldrán de Mi biblioteca/)).toBeInTheDocument();
+    // A home-delivery mixed order follows the shipment rule, not the six-minute window (V055: no window with printed books).
+    expect(screen.getByText("Puedes cancelarlo mientras lo preparamos, antes de que salga hacia tu dirección.")).toBeInTheDocument();
+    expect(screen.queryByText(/6 minutos/)).toBeNull();
+    // Cancelling a paid mixed order refunds it whole and revokes its digital titles (verified backend rule), said where it is decided.
+    await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
+    expect(within(await screen.findByRole("dialog")).getByText("Los libros impresos reservados quedarán libres y los títulos digitales saldrán de Mi biblioteca.")).toBeInTheDocument();
   });
 
   it.each([
@@ -388,7 +421,7 @@ describe("OrderPage", () => {
       "POST /api/v1/orders/700/cancel": () => json({ orderId: "700", previousState: "CONFIRMED", orderState: "CANCELLED", paymentState: "REFUNDED", restoredUnits: 0 }),
     });
     renderPurchaseRoute(routes, "/orders/700");
-    expect(await screen.findByText("Puedes cancelar este pedido durante los primeros 6 minutos.")).toBeInTheDocument();
+    expect(await screen.findByText(/^Puedes cancelarlo hasta las \d{2}:\d{2}, 6 minutos después de aprobarse el pago\.$/)).toBeInTheDocument();
     expect(screen.queryByText(/Aún puedes cancelarlo/)).toBeNull();
     await userEvent.click(screen.getByRole("button", { name: "Cancelar pedido" }));
     // The consequence is stated where the decision is taken.
@@ -413,7 +446,7 @@ describe("OrderPage", () => {
     renderPurchaseRoute(routes, "/orders/700");
     await userEvent.click(await screen.findByRole("button", { name: "Cancelar pedido" }));
     expect(api.count("POST", "/api/v1/orders/700/cancel")).toBe(0);
-    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     expect(within(dialog).getByText(/Se reembolsarán/)).toBeInTheDocument();
     await waitFor(() => expect(within(dialog).getByRole("button", { name: "Conservar pedido" })).toHaveFocus());
     await userEvent.click(within(dialog).getByRole("button", { name: "Confirmar cancelación" }));
@@ -433,12 +466,12 @@ describe("OrderPage", () => {
     renderPurchaseRoute(routes, "/orders/700");
     const cancel = await screen.findByRole("button", { name: "Cancelar pedido" });
     await userEvent.click(cancel);
-    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    const dialog = await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     await userEvent.click(within(dialog).getByRole("button", { name: "Conservar pedido" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     await waitFor(() => expect(cancel).toHaveFocus());
     await userEvent.click(cancel);
-    await screen.findByRole("dialog", { name: "¿Cancelar el pedido N.° 700?" });
+    await screen.findByRole("dialog", { name: "¿Cancelar el pedido #700?" });
     await userEvent.keyboard("{Escape}");
     await waitFor(() => expect(screen.queryByRole("dialog")).toBeNull());
     await waitFor(() => expect(cancel).toHaveFocus());

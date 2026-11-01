@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
 const synopsis = Array.from({ length: 40 }, (_, index) => `Párrafo ${index + 1} de una sinopsis larga para recorrer la página.`).join(" ");
@@ -236,7 +237,7 @@ test("an unavailable edition keeps its price in the bar and says it is not avail
   await expect(bar.getByRole("button", { name: "Agregar al carrito" })).toHaveCount(0);
 });
 
-test("the floating bar takes the card tone in dark mode", async ({ page }, testInfo) => {
+test("the floating bar stays on PLIEGO's light card under a dark system preference", async ({ page }, testInfo) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.setViewportSize({ width: 1280, height: 800 });
   await mockEdition(page);
@@ -245,7 +246,10 @@ test("the floating bar takes the card tone in dark mode", async ({ page }, testI
   await page.evaluate(() => window.scrollTo(0, 700));
   const bar = page.getByRole("region", { name: "Resumen del libro" });
   await expect(bar).toBeVisible();
-  // The dark scheme's card tone, one step lighter than the page, as PLIEGO's white cards are in light.
-  expect(await bar.evaluate(node => getComputedStyle(node).backgroundColor)).toBe("rgb(43, 45, 71)");
+  // One appearance: the system's dark preference does not change PLIEGO's light white card, nor any pixel of the view.
+  await expectLightAppearance(page);
+  expect(await bar.evaluate(node => getComputedStyle(node).backgroundColor)).toBe("rgb(255, 255, 255)");
+  await expectUnchangedByDarkPreference(page, "no-preference");
+  await expect(bar).toBeVisible();
   await page.screenshot({ path: testInfo.outputPath("scrolled-dark.png") });
 });

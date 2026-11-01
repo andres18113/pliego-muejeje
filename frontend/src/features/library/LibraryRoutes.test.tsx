@@ -6,7 +6,7 @@ import { LibraryPage, OwnedItemPage } from "./LibraryRoutes";
 
 const item = { ownedItemId: "8", editionId: "42", coverUrl: null, title: "Libro propio", authors: "Autora", productType: "EBOOK", acquiredAt: "2026-10-05T10:00:00Z", ownershipState: "OWNED", accessState: "OWNERSHIP_ONLY", contentAccessSupported: false,
   metadata: { isbn: "9780306406157", publisher: "Editorial", language: "es", pageCount: 120, publicationDate: "2020-01-01", ebookFileFormat: "EPUB", audioDurationSeconds: null, narrators: [] },
-  sourcePurchases: [{ orderId: "700", orderItemId: "1", acquiredAt: "2026-10-05T10:00:00Z", paymentState: "APPROVED", orderState: "CONFIRMED", grantState: "ACTIVE" }],
+  sourcePurchases: [{ orderId: "700", orderReference: "PL-4827-1093", orderItemId: "1", acquiredAt: "2026-10-05T10:00:00Z", paymentState: "APPROVED", orderState: "CONFIRMED", grantState: "ACTIVE" }],
   availableActions: [{ type: "VIEW_ORDER", label: "Ver pedido", href: "/orders/700" }, { type: "HELP", label: "Ayuda", href: "/ayuda/ebooks" }] };
 const routes = [{ path: "/biblioteca", element: <LibraryPage /> }, { path: "/biblioteca/:ownedItemId", element: <OwnedItemPage /> }];
 afterEach(() => vi.unstubAllGlobals());
@@ -37,14 +37,14 @@ describe("Mi biblioteca functional routes", () => {
     expect(screen.queryByText(/no ofrece|en línea/i)).toBeNull();
     expect(screen.getByText("EPUB")).toBeInTheDocument();
     const purchases = screen.getByRole("region", { name: "Información de compra" });
-    for (const label of ["Pedido N.° 700", "Confirmado", "Aprobado", "Vigente"]) expect(within(purchases).getByText(label)).toBeInTheDocument();
+    for (const label of ["Pedido #PL-4827-1093", "Confirmado", "Aprobado", "Vigente"]) expect(within(purchases).getByText(label)).toBeInTheDocument();
     expect(purchases).not.toHaveTextContent(/CONFIRMED|APPROVED|ACTIVE/);
     expect(screen.getAllByText("5 de octubre de 2026").length).toBeGreaterThan(0);
     expect(screen.getByText("1 de enero de 2020")).toBeInTheDocument();
     expect(screen.getByText("Español")).toBeInTheDocument();
     expect(document.body).not.toHaveTextContent(/2026-10-05T|segundos/);
     // The order is administration: it sits in its purchase record, not beside the title.
-    expect(within(purchases).getByRole("link", { name: "Ver pedido N.° 700" })).toHaveAttribute("href", "/orders/700");
+    expect(within(purchases).getByRole("link", { name: "Ver pedido #PL-4827-1093" })).toHaveAttribute("href", "/orders/700");
     expect(screen.getAllByRole("link", { name: /Ver pedido/ })).toHaveLength(1);
     expect(screen.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda/ebooks");
     expect(screen.queryByRole("link", { name: /Leer|Escuchar|Continuar leyendo|Continuar escuchando/i })).not.toBeInTheDocument();
@@ -80,7 +80,7 @@ describe("Mi biblioteca functional routes", () => {
     expect(screen.getByText("Voz Uno, Voz Dos")).toBeInTheDocument();
     expect(screen.getByText("Revocada")).toBeInTheDocument();
     // Only the server's actions: the order link in its record, no help link it did not offer.
-    expect(screen.getByRole("link", { name: "Ver pedido N.° 700" })).toHaveAttribute("href", "/orders/700");
+    expect(screen.getByRole("link", { name: "Ver pedido #PL-4827-1093" })).toHaveAttribute("href", "/orders/700");
     expect(screen.queryByRole("link", { name: "Ayuda" })).toBeNull();
   });
   it("marks ownership cache private and scopes it to the authenticated account", async () => {

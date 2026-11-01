@@ -149,6 +149,13 @@
 .verification { justify-self: center; width: min(100%, 760px); margin: -8px 0 0; color: var(--acc-muted); font-size: .9375rem; line-height: 1.5; text-align: center; text-wrap: pretty; }
 .verification a { display: inline-flex; align-items: center; min-height: 44px; color: var(--acc-blue); font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 .verification a:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
+.inlineAction { display: inline-flex; align-items: center; min-height: 44px; padding: 0; border: 0; background: none; color: var(--acc-blue); font: inherit; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; cursor: pointer; }
+.inlineAction[aria-disabled] { cursor: progress; }
+/* The pending change's two actions travel together: they wrap below the question as one group, never apart. */
+.inlineActions { display: inline-flex; flex-wrap: nowrap; gap: 20px; white-space: nowrap; }
+/* Phones: a state's chip sits above its sentence, so an address in it gets the full row width instead of breaking mid-word. */
+@media (max-width: 599px) { .valueDetail { flex-direction: column; align-items: flex-start; gap: 6px; } .valueDetail > span:last-child { flex: none; } }
+.inlineAction:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: 2px; border-radius: 4px; }
 
 /* An action that waits for current data reads as unavailable, not as working. */
 .save[aria-disabled="true"]:not([aria-busy="true"]) { opacity: .55; cursor: not-allowed; }

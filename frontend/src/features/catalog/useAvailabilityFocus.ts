@@ -16,6 +16,7 @@ export function useAvailabilityFocus(enabled: boolean, fallback: () => HTMLEleme
       if (previous && !previous.target.isConnected && document.activeElement === document.body) {
         const target = previous.action.isConnected && !previous.action.disabled ? previous.action : restoration.current?.();
         target?.focus({ preventScroll: true });
+        if (target) reveal(target);
       }
       return;
     }
@@ -28,6 +29,9 @@ export function useAvailabilityFocus(enabled: boolean, fallback: () => HTMLEleme
     if (target) {
       recovered.current = { target, action };
       target.focus({ preventScroll: true });
+      // A warning inserted above the focused action can land just off-screen (scroll anchoring keeps the action still);
+      // focus must stay visible, so bring it into view only when it is not (a no-op when it already is).
+      reveal(target);
     }
   }, [enabled]);
   return {
@@ -36,4 +40,9 @@ export function useAvailabilityFocus(enabled: boolean, fallback: () => HTMLEleme
       if (event.relatedTarget && event.relatedTarget !== document.body) focusedAction.current = null;
     },
   };
+}
+
+function reveal(target: HTMLElement) {
+  const box = target.getBoundingClientRect();
+  if (box.top < 0 || box.bottom > window.innerHeight) target.scrollIntoView({ block: "nearest" });
 }

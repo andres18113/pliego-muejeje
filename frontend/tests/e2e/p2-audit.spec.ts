@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { expect, test, type Page } from "@playwright/test";
 import { mockFavoritesApi } from "./shared/favorites-api";
 
@@ -152,6 +153,7 @@ for (const colorScheme of ["light", "dark"] as const) {
       await page.goto(path);
       const link = page.locator(".auth-switch a");
       await expect(link).toBeVisible();
+      await expectLightAppearance(page); if (colorScheme === "dark") await expectUnchangedByDarkPreference(page);
       const result = await new AxeBuilder({ page }).include(".auth-switch").withRules(["color-contrast"]).analyze();
       expect(result.violations).toEqual([]);
       await link.focus();

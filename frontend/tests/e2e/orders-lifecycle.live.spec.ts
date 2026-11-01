@@ -51,7 +51,7 @@ test("Mis pedidos reads real home transitions, cutoff, pickup collection and can
   for (const [minutes,label,cancel] of [[0,"En preparación",true],[3,"En camino",false],[2,"En reparto",false],[2,"Entregado",false]] as const) {
     if (minutes) sql(`UPDATE pliego.envio SET fecha_confirmacion=fecha_confirmacion-INTERVAL '${minutes} minutes',transito_desde=transito_desde-INTERVAL '${minutes} minutes',reparto_desde=reparto_desde-INTERVAL '${minutes} minutes',entrega_desde=entrega_desde-INTERVAL '${minutes} minutes' WHERE pedido_id=${data.homeOrderId}`);
     await page.goto("/orders"); // List snapshot can be behind; enrichment must invoke reconciliation.
-    const row = page.getByRole("link",{ name: new RegExp(`${label}.*Pedido N.° ${data.homeOrderId}`) });
+    const row = page.getByRole("link",{ name: new RegExp(`${label}.*Pedido #${data.homeOrderId}`) });
     await expect(row).toBeVisible();
     await row.click();
     await expect(page.getByRole("heading",{ level: 2,name: label })).toBeVisible();
@@ -67,7 +67,7 @@ test("Mis pedidos reads real home transitions, cutoff, pickup collection and can
   await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(0);
 
   await page.goto("/orders");
-  const pickupRow = page.getByRole("link",{ name: new RegExp(`Pendiente de retiro.*Pedido N.° ${data.pickupOrderId}`) });
+  const pickupRow = page.getByRole("link",{ name: new RegExp(`(?:En preparación|Listo para retirar).*Pedido #${data.pickupOrderId}`) });
   await expect(pickupRow).toBeVisible();
   sql(`CALL pliego.sp_pickup_collect(${data.adminId},${data.pickupOrderId},'${data.pickupCode}')`);
   await pickupRow.click();
@@ -76,7 +76,7 @@ test("Mis pedidos reads real home transitions, cutoff, pickup collection and can
   await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(0);
 
   await page.goto(`/orders/${data.pickupCancelOrderId}`);
-  await expect(page.getByRole("heading",{ level: 2,name: "Pendiente de retiro" })).toBeVisible();
+  await expect(page.getByRole("heading",{ level: 2,name: /^(?:En preparación|Listo para retirar)$/ })).toBeVisible();
   await page.getByRole("button",{ name: "Cancelar pedido" }).click();
   await page.getByRole("button",{ name: "Confirmar cancelación" }).click();
   await expect(page.getByRole("heading",{ level: 2,name: "Pedido cancelado" })).toBeVisible();

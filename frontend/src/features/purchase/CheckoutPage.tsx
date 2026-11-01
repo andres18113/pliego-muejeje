@@ -37,10 +37,11 @@ import { DigitalCopyNote } from "./DigitalCopyNote";
 import { ReadFailure } from "./CartPage";
 import { CustomerOnly, PurchasePage } from "./PurchaseChrome";
 import { fulfillmentMethodLabel, type CheckoutFulfillmentMethod, checkoutFulfillmentMethods } from "./fulfillment";
-import { deliveryDateRangeLabel, ivaLabel } from "./purchaseText";
+import { deliveryDateRangeLabel, digitalDeliveryCopy, ivaLabel } from "./purchaseText";
 import { PurchaseFlow, PurchaseLayout, PurchaseSummary } from "./PurchaseFlow";
 import { hasSaving, toCartPricingViewModel } from "./cartPricingViewModel";
 import classes from "./purchaseFlow.module.css";
+import { checkoutCancellationNote } from "./cancellationPolicy";
 import { detectCardBrand, formatCardNumber, isLuhnValid, normalizeCardNumber, unitsLabel, type CardBrand } from "./purchaseText";
 import { StockStatus } from "@/features/catalog/StockStatus";
 import { availabilityConflictMessage, resolveStockStatus } from "@/features/catalog/stockStatusModel";
@@ -732,6 +733,7 @@ function CheckoutContent() {
             return {
               key: item.cartItemId,
               title: item.title,
+              cover: <BookCover url={item.coverUrl} license={null} attribution={null} title={item.title} size="compact" decorative />,
               // A digital copy names its rule with the same note as the cart (its price is the line's amount);
               // physical lines read units × price.
               meta: isSingleDigitalCopy(item)
@@ -781,7 +783,7 @@ function CheckoutContent() {
             aria-label={busy ? "Procesando compra" : submitLabel}
             disabled={unavailable || !paymentReady || phase === "blocked"}
             {...stockFocus}
-            aria-describedby={unavailable ? "checkout-stock-blocker" : undefined}
+            aria-describedby={unavailable ? "checkout-stock-blocker checkout-cancellation-note" : "checkout-cancellation-note"}
             aria-disabled={submitBlocked || undefined}
             aria-busy={busy || undefined}
             onClick={(event) => {
@@ -790,6 +792,16 @@ function CheckoutContent() {
           >
             <TransactionButtonLabel state={busy ? "pending" : "idle"} idle={submitLabel} pending="Procesando…" success="Pedido creado" reserve={submitLabel} />
           </Button>
+          {/* Before committing: when this order could be cancelled afterwards, in the server's rule for the chosen
+              destination and payment. A fact under the action, never a banner or a checkbox. */}
+          <div id="checkout-cancellation-note" className={`${classes.cancelAside} ${classes.cancelNote}`} data-purchase="cancellation-note">
+            <MaterialSymbol name="schedule" size={16} aria-hidden="true" />
+            <div>
+              <p className={classes.cancelRule}>{checkoutCancellationNote(fulfillmentMethod, paymentMethod)}</p>
+              <p>Para cancelarlo, abre{" "}
+                <span className={classes.accountPath}><span className={classes.pathStep}><MaterialSymbol name="account_circle" size={16} aria-hidden="true" />Mi cuenta</span><span aria-hidden="true"> › </span><span className="visually-hidden"> y luego </span><span className={classes.pathStep}>Pedidos</span></span>.</p>
+            </div>
+          </div>
         </PurchaseSummary>
       }>
           {!digitalOnly && <>
@@ -891,7 +903,21 @@ function CheckoutContent() {
             </>}
           </section>
           </>}
-          {digitalOnly && <p role="note" className={classes.digitalNote}>Compra digital: no necesita entrega ni retiro. La encontrarás en Mi biblioteca cuando se apruebe el pago.</p>}
+          {/* A digital purchase answers "Entrega" with how and when it arrives: in Mi biblioteca (the account menu's
+              own mark), at the payment's approval. No reader or player is implied. */}
+          {digitalOnly && (() => {
+            const delivery = digitalDeliveryCopy(cart.items.map((item) => item.format), paymentMethod);
+            return <section className={`${classes.panel} ${classes.checkoutDestination}`} aria-labelledby="checkout-digital-heading" data-purchase="digital-delivery">
+              <div className={classes.panelHead}><h2 id="checkout-digital-heading">Entrega digital</h2></div>
+              <div className={classes.digitalDelivery}>
+                <span className={classes.digitalDeliveryIcon} aria-hidden="true"><MaterialSymbol name="menu_book" size={24} /></span>
+                <div>
+                  <p className={classes.digitalDeliveryTitle}>{delivery.subject} a <strong>Mi biblioteca</strong>.</p>
+                  <p>{delivery.when} No hay envío ni retiro.</p>
+                </div>
+              </div>
+            </section>;
+          })()}
 
           <CheckoutBilling register={register as unknown as UseFormRegister<CheckoutBillingInput>} control={control as unknown as Control<CheckoutBillingInput>}
             errors={errors as FieldErrors<CheckoutBillingInput>} setValue={setValue as unknown as UseFormSetValue<CheckoutBillingInput>}

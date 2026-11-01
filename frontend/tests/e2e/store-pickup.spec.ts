@@ -150,7 +150,7 @@ for (const payment of ["CARD", "TRANSFER"] as const) {
     await expect(page.getByText("P-ABC234")).toBeVisible();
     await expect(page.locator('time[datetime="2026-10-05T00:32:12Z"]')).toContainText("19:32:12");
     await expect(page.getByText("America/Guayaquil")).toHaveCount(0);
-    await expect(page.getByText(/Presenta la confirmación enviada a tu correo/)).toBeVisible();
+    await expect(page.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeVisible();
     await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", /marker=-0\.22%2C-78\.5/);
     // The receipt once (totals, no books); the pickup facts and the books to collect lead beside it.
     await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/Cien años/);

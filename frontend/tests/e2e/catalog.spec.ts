@@ -449,8 +449,9 @@ test("preserves search, sort, and price criteria from edition category links", a
 test("sets administrative and not-found titles and focuses their headings", async ({ page }) => {
   await mockCatalogApi(page);
   await page.goto("/admin");
-  await expect(page).toHaveTitle("Área administrativa · PLIEGO");
-  await expect(page.getByRole("heading", { name: "Inicia sesión para continuar." })).toBeFocused();
+  await expect(page).toHaveTitle("Administración · PLIEGO");
+  // The administration gate (ADR 0047) names its own purpose and takes focus.
+  await expect(page.getByRole("heading", { name: "Inicia sesión para administrar PLIEGO." })).toBeFocused();
 
   await page.goto("/no-existe");
   await expect(page).toHaveTitle("Página no encontrada · PLIEGO");

@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
 const customerEmail = "ana@example.com";
@@ -124,6 +125,9 @@ async function signIn(page: import("@playwright/test").Page) {
   await page.getByLabel("Contraseña", { exact: true }).fill("lectura-segura");
   await page.getByRole("button", { name: "Iniciar sesión" }).click();
   await expect(page).toHaveURL(/\/catalog$/);
+  // The URL changes before the destination commits (a router transition). Arrival is when the catalog's heading
+  // takes the route focus (App's page-heading focus); interacting earlier would race that focus move.
+  await expect(page.locator("#contenido-principal h1")).toBeFocused();
 }
 
 const widths = [320, 375, 768, 1024, 1440, 1920];
@@ -132,6 +136,7 @@ for (const colorScheme of ["light", "dark"] as const) for (const width of widths
     await page.emulateMedia({ colorScheme }); await page.setViewportSize({ width, height: 900 });
     await mockPublicCatalog(page); await page.goto("/");
     const header = page.getByTestId("site-header"); await expect(header).toBeVisible();
+    await expectLightAppearance(page); if (colorScheme === "dark") await expectUnchangedByDarkPreference(page, "no-preference");
     if (width >= 960) await expect(header.getByRole("link", { name: "Libros", exact: true })).toHaveAttribute("href", "/catalog?productType=PHYSICAL");
     else await expect(header.getByRole("button", { name: "Abrir navegación" })).toBeVisible();
     await expect(header.getByRole("button", { name: "Categorías" })).toHaveCount(0);
@@ -181,7 +186,7 @@ test("account keyboard menu and cart remain coherent after navigation and logout
   const header = page.getByTestId("site-header");
   await expect(header.getByRole("link", { name: "Carrito, 3 unidades" })).toBeVisible();
   const account = header.getByRole("button", { name: "Menú de cuenta" });
-  await account.focus(); await page.keyboard.press("ArrowDown");
+  await account.focus(); await expect(account).toBeFocused(); await page.keyboard.press("ArrowDown");
   await expect(page.getByRole("menuitem", { name: "Perfil", exact: true })).toBeFocused();
   await page.keyboard.press("Escape"); await expect(account).toBeFocused();
   await account.click(); await page.getByRole("menuitem", { name: "Cerrar sesión" }).click();
