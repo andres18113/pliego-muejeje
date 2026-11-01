@@ -38,10 +38,13 @@ deployment boundary need their own authorization.
 
 ## 2. Known environment — revalidate, do not assume
 
-Last verified deployment: **2026-11-01**, release `20261101T004004Z-4100391`, source
-`410039152f3db2687922289fd68eb807c8d9fb07`,
-[CI run 41251068050](https://github.com/andres18113/pliego-muejeje/actions/runs/41251068050),
-Flyway **87** (V087 checksum `-414291521`). These operator-verified values are
+Last verified deployment: **2026-11-01**, release `20261101T232546Z-788311a`, source
+`788311a81ad7ab19951d6cb32bcb2580439f97ea`,
+[CI run 41360875235](https://github.com/andres18113/pliego-muejeje/actions/runs/41360875235),
+Flyway **95** (V088–V095 applied through the section 7 privilege lifecycle; previous
+release `20261101T004004Z-4100391` proven to start on V095 for availability rollback).
+The same day a one-time customer-data reset ran after this release (see
+[`docs/testing/data-reset.md`](../testing/data-reset.md)); it is not a Flyway migration. These operator-verified values are
 historical references, not instructions to redeploy that release or assume they
 remain current.
 
