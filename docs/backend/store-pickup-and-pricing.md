@@ -1,5 +1,7 @@
 # STORE_PICKUP y proyección monetaria
 
+V088–V089 añaden referencias públicas, códigos criptográficos, estado READY y colección con identidad verificada. La colección exige `{pickupCode, identityVerified:true}` y responde `200 PickupView`; las vistas administrativas omiten el código. Consulta el [contrato vigente de endpoints, JSON y errores](../api-amendments/2026-11-01-public-order-references-and-verified-pickup.md) y [ADR-0047](../adr/0047-public-order-references-and-verified-pickup.md).
+
 [ADR0021](../adr/0021-basic-store-pickup.md), [ADR0022](../adr/0022-authoritative-ecuador-monetary-projections.md), [contrato pickup](../api-amendments/0013-store-pickup-v1.0.13.md), [contrato monetario](../api-amendments/0014-authoritative-monetary-projections-v1.0.14.md).
 
 ## Persistencia y flujos
@@ -8,9 +10,9 @@ V040 añade ubicacion_retiro y pedido_retiro como subtipo tipado del pedido_entr
 
 Checkout conserva firmas SQL/home y default fulfillmentMethod=HOME_DELIVERY. STORE_PICKUP exige pickupLocationId y ningún addressId; valida existencia/activo bajo lock. Pedido pickup no tiene pedido_direccion ni envio. Digital-only rechaza pickup; mezcla físico/digital lo admite. Digital HOME_DELIVERY conserva contrato legacy sin fulfillment físico.
 
-Snapshot propio de ubicación/código/horario/zona/preparación. estimatedAt usa reloj servidor; readyAt suma minutos efectivos y se expone UTC ISO, con timezone snapshot para representación local. No reconsulta ubicación editada. Referencia P- de seis a ocho caracteres base32 sin0/1/I/O, secuencia y UNIQUE; no es secreto de autorización.
+Snapshot propio de ubicación/código/horario/zona/preparación. estimatedAt usa reloj servidor; readyAt suma minutos efectivos y se expone UTC ISO, con timezone snapshot para representación local. No reconsulta ubicación editada. Los códigos nuevos son P- más ocho caracteres criptográficos del alfabeto `23456789ABCDEFGHJKLMNPQRSTUVWXYZ`, únicos con reintento de colisión. Los códigos anteriores de seis a ocho caracteres se conservan. El cliente presenta el código al personal; las vistas administrativas no lo incluyen.
 
-Retiro PENDING mientras compra CONFIRMED. POST admin orders/{id}/pickup/collect con pickupCode exige ADMIN y confirma DELIVERED/fecha_retiro/historial una sola vez. No fuerza espera hasta readyAt porque es una estimación. CANCELLED usa estado comercial existente; colección/cancelación comparten el lock del pedido. Rutas legacy de status/carrier/tracking rechazan pickup. No hay estado READY; la outbox notifica PREPARING al terminar la ventana y COLLECTED al registrar la colección.
+Retiro PENDING mientras el pago está pendiente, la ventana sigue abierta o falta preparación. READY exige pago aprobado, ventana finalizada y reloj >= readyAt; los pedidos históricos sin ventana conservan la preparación aplicable. POST admin orders/{id}/pickup/collect exige ADMIN, código e identityVerified=true; solo desde READY fija administrador, verificación, fecha e historial DELIVERED. Repetir devuelve 409 PICKUP_ALREADY_COLLECTED. CANCELLED usa el estado comercial existente; colección/cancelación comparten el lock del pedido. Las rutas legacy de status/carrier/tracking rechazan pickup. La outbox notifica PREPARING al terminar la ventana y COLLECTED al registrar la colección.
 
 Idempotencia mantiene advisory lock/fence/receipt y añade método/location al fingerprint. Replay devuelve mismo checkout incluso con ubicación inactiva/editada, carrito posterior o pedido recogido; fulfillment de confirmación solo contiene snapshot inmutable. Detalle añade estado/collectedAt actuales. Lista customer usa fulfillmentMethod existente y shipmentState=null; detail address=null. Factura mantiene dirección fiscal explícita, sin usar domicilio de tienda como dirección del cliente.
 

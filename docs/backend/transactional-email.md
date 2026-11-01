@@ -32,13 +32,20 @@ Rutas nuevas públicas POST/JSON; tokens en body, nunca query de API.
 | `/api/v1/auth/resend-verification` | `{"email":"lector@example.invalid"}`; 202 neutro |
 | `/api/v1/auth/forgot-password` | Mismo request y 202 neutro |
 | `/api/v1/auth/reset-password` | `{"token":"<43 caracteres base64url>","password":"<nueva>"}`; 204 o 400 |
-| `/api/v1/me/email` (modificado) | Request existente con contraseña actual; nuevo correo requiere verificación y revoca refresh |
+| `PUT /api/v1/me/email` (V094–V095) | Request existente con contraseña actual; 202 conserva el correo actual y devuelve pendingEmail. Solo la confirmación pública cambia identidad/verificación y revoca refresh |
 
 Registro conserva P1101 por email duplicado. Resend/forgot responden idénticamente ante desconocido, bloqueado, no elegible o limitado. Cuotas persistentes 20/IP/hora y cinco/email/hora; cooldown de un minuto por cuenta/propósito. `remoteAddr` evita confiar directamente en headers de cualquier cliente; si hay proxy, configurar el proxy confiable en el despliegue para preservar IP real. Cambio autenticado de email: cuota independiente de cinco/usuario/hora, sin invertir locks con cuotas públicas.
 
 ACTIVE/BLOCKED siguen siendo estados administrativos. `usuario.email_verificado_en` es independiente; las cuentas anteriores se consideran verificadas. Verificación vence en 24h, reset en 15m. Uso único; resend invalida el anterior. Tokens HMAC-SHA256 con propósito separado y nonce aleatorio de 256 bits; BD guarda solo hash y nonce no utilizable sin secreto externo, nunca token plano. Un correo ya reclamado puede llegar tras resend, pero su token invalidado no funciona.
 
-Reset reutiliza BCrypt/política existente y revoca todos los refresh, incluidos anteriores de rotación; invalida acciones pendientes. Login vuelve a comprobar hash/estado/verificación bajo lock para no crear sesiones con una comprobación de contraseña obsoleta. JWT previos conservan expiración actual hasta 30 minutos; no existe revocación inmediata de JWT. Verificar/reset no inicia sesión automáticamente.
+Reset reutiliza BCrypt/política existente y revoca todos los refresh, incluidos anteriores de rotación; invalida acciones pendientes, también el cambio de correo de V094. Login vuelve a comprobar correo canónico/hash/estado/verificación bajo lock para no crear sesiones con una comprobación de contraseña obsoleta. JWT previos conservan expiración actual hasta 30 minutos; no existe revocación inmediata de JWT. Verificar/reset no inicia sesión automáticamente.
+
+El [contrato de cambio pendiente](../api-amendments/2026-11-01-pending-email-change.md)
+expone reenvío, cancelación autenticada y confirmación/cancelación públicas. Añade
+EMAIL_CHANGE_CONFIRM (nuevo destinatario), EMAIL_CHANGE_REQUESTED (actual) y
+EMAIL_CHANGED (anterior tras confirmar). El rebote de confirmación afecta solo
+al pendiente versionado, nunca al indicador ni al bloqueo global del correo actual.
+La decisión y sus protecciones de recuperación están en [ADR 0049](../adr/0049-pending-email-change.md).
 
 ## Compra y outbox
 
@@ -54,7 +61,7 @@ Timeout/IO/lease abandonado termina FAILED/AMBIGUOUS_DELIVERY. La API Mailtrap n
 
 La prueba manual [`mailtrap_manual_smoke.py`](../../backend/src/test/postgres18/mailtrap_manual_smoke.py) usa el endpoint real de PLIEGO para solicitar un reset a una cuenta de prueba elegible y espera el estado de outbox y el `message_ids` persistido. Ejecútala desde el mismo entorno que tiene `PLIEGO_MAIL_ENABLED=true`, el token externo, `PLIEGO_APP_PUBLIC_URL` y `PG*` para la base conectada al backend; configura `PLIEGO_MAIL_SMOKE_RECIPIENT` y, si corresponde, `PLIEGO_MAIL_SMOKE_API_URL`. Solo envía con el argumento `--confirm-real-email`; nunca se ejecuta en CI. Confirmar después el evento `delivery` en Email Logs: Mailtrap distingue la aceptación API de los eventos finales de entrega.
 
-Webhooks: Mailtrap puede reportar `delivery`, `soft bounce`, `bounce`, `spam`, `reject` y otros eventos con `message_id` y `event_id`, y firma las solicitudes mediante HMAC-SHA256. Aportaría valor para distinguir aceptación del proveedor y entrega o rebote posterior. Se recomienda un alcance posterior con endpoint HTTPS autenticado, validación de firma sobre el cuerpo crudo, deduplicación por `event_id`, procesamiento asíncrono y una tabla de eventos/estado de entrega. No se implementa en esta iteración; por ahora consultar Email Logs. [Documentación oficial de webhooks](https://docs.mailtrap.io/email-api-smtp/advanced/webhooks) y [estados/eventos](https://docs.mailtrap.io/email-api-smtp/analytics/statuses-and-events).
+Webhooks (V093): `POST /api/v1/webhooks/mailtrap` autentica HMAC-SHA256 sobre el cuerpo crudo, persiste un inbox idempotente y proyecta eventos por `message_id` cada cinco segundos. Sin `PLIEGO_MAILTRAP_WEBHOOK_SECRET` devuelve 404. Se conserva `SENT` como aceptación; `entrega_estado` distingue el resultado posterior. Rebote permanente o supresión bloquea la dirección; una entrega posterior limpia el bloqueo. El worker retiene nuevos envíos en `HELD / EMAIL_UNDELIVERABLE`, sin reencolar fallidos ni retenidos. El perfil expone `emailDelivery`, sin SMTP. La corrección de email limpia el indicador de cuenta; el conocimiento sobre la dirección anterior protege snapshots históricos. Ver [ADR 0048](../adr/0048-mailtrap-delivery-outcomes.md), [contrato](../api-amendments/2026-11-01-email-delivery-status.md), [activación y control](../deployment/production-runbook.md#mailtrap-webhook-activation-and-deliverability) y [documentación oficial](https://docs.mailtrap.io/email-api-smtp/advanced/webhooks).
 
 Rutinas nuevas: `sp_customer_register_with_verification`, `fn_email_rate_limit`, `fn_email_action_enqueue`, `fn_email_action_request`, `fn_email_verification_for_user`, `fn_email_action_consume`, `fn_auth_session_create_checked`, `fn_invalidate_changed_email`, `fn_mail_outbox_claim`, `fn_mail_outbox_complete`. Se reemplaza `fn_user_auth_data`; checkout anterior se renombra `sp_checkout_internal_v033` y wrapper conserva firma. Trigger nuevo `trg_usuario_email_verification`.
 

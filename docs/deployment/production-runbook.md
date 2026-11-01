@@ -38,19 +38,24 @@ deployment boundary need their own authorization.
 
 ## 2. Known environment — revalidate, do not assume
 
-Last verified deployment: **2026-10-21**, release `20261021-a298dc4`, source
-`a298dc4eed2cecba9f197a54df24c90d99e7ef73`, Flyway **73**. These are historical
-reference values, not instructions to redeploy that release or expect 73 forever.
+Last verified deployment: **2026-11-01**, release `20261101T004004Z-4100391`, source
+`410039152f3db2687922289fd68eb807c8d9fb07`,
+[CI run 41251068050](https://github.com/andres18113/pliego-muejeje/actions/runs/41251068050),
+Flyway **87** (V087 checksum `-414291521`). These operator-verified values are
+historical references, not instructions to redeploy that release or assume they
+remain current.
 
 | Component | Expected arrangement |
 | --- | --- |
 | SSH | `deploy@vps1` through the operator's personal SSH alias below |
 | VPS | Ubuntu 24.04, 2 vCPU, about 3.8 GiB RAM, 2 GiB swap |
-| Java | Java 25; application user/group `pliego`, no login |
+| Java | Temurin 25.0.5; application user/group `pliego`, no login |
 | Backend | `/opt/pliego/releases/<release>/pliego-backend-0.1.0-SNAPSHOT.jar` |
 | Backend pointer | `/opt/pliego/current` → versioned release |
 | Service | `pliego.service`; Spring binds only `127.0.0.1:8080` |
+| Unit policy | `Restart=on-failure`, `TimeoutStartSec=3min`, `TimeoutStopSec=45s`; systemd `EnvironmentFile`, no drop-ins |
 | Secrets | `/etc/pliego/pliego.env`, `root:pliego`, `0640` |
+| Mail | `PLIEGO_MAIL_ENABLED=true` at the verified deployment |
 | Frontend | `/var/www/pliego/releases/<release>/`, only built static assets |
 | Frontend pointer | `/var/www/pliego/current`; Nginx document root points here |
 | Operations | `/opt/pliego/deployment/<release>/`, root-only metadata/logs/backups |
@@ -70,27 +75,36 @@ reference values, not instructions to redeploy that release or expect 73 forever
 Memory, disk, catalog counts, active offers and job counts are observations to
 recapture. Expired offers are not missing deployment data; preserve original dates.
 
-### Optional R2 storage for newly generated invoice files
+### R2 storage for newly generated invoice files
 
-Invoice R2 storage is disabled by default; PostgreSQL bytea remains the active
-default. When enabled, the worker writes both PDF and XML to a private bucket before
-the Database API transaction marks the artifact READY. Existing bytea artifacts
-remain in PostgreSQL and are not backfilled automatically.
+Production R2 is **ACTIVE since 2026-11-01**, activation `r2-20261101T013556Z`,
+service restart `01:39:21Z`. The operator verified the activation and configuration
+below. New invoice PDF/XML files use R2 under `invoices/`; the worker uploads them
+before the Database API transaction marks the artifact READY. The first production
+invoice after activation (2026-11-01) stored its PDF and XML in R2 under `invoices/`,
+both READY on the first attempt with no database bytes and one `INVOICE_ISSUED`
+event marked SENT; the earlier invoice's bytea files kept matching checksums.
 
-Use two separate authorized steps: first deploy the release with R2 disabled
-(no R2 variables are required), then configure and enable R2 in a separately
-authorized activation. For that second step, the operator adds these variables to
-`/etc/pliego/pliego.env`. This runbook update does not edit the environment file
-or include credential values:
+Historical artifacts with `storage_kind` NULL or `DATABASE` remain in PostgreSQL
+and use the Database API stream path regardless of R2. The R2 adapter's
+`download`/`access` methods retain this `databaseStored` branch; activation does not
+backfill bytea artifacts. PostgreSQL bytea is still the code default when R2 is
+disabled, not the active production destination for new files.
+
+For future environments without R2 rows, keep two separate authorized steps:
+first deploy with R2 disabled (no R2 variables required), then configure and enable
+R2 in a separately authorized activation. The operator maintains these variables
+in `/etc/pliego/pliego.env` (`root:pliego 0640`); never include credential values
+in documentation or release evidence. Verified production settings:
 
 - `PLIEGO_R2_ENABLED=true`
 - `PLIEGO_R2_PRODUCTION_STORAGE=true`
-- `PLIEGO_R2_BUCKET`
-- `PLIEGO_R2_ENDPOINT`
-- `PLIEGO_R2_REGION` (default `auto`)
+- `PLIEGO_R2_BUCKET=billing-pliego`
+- `PLIEGO_R2_ENDPOINT`: HTTPS account host only, without a path
+- `PLIEGO_R2_REGION=auto`
 - `PLIEGO_R2_ACCESS_KEY_ID`
 - `PLIEGO_R2_SECRET_ACCESS_KEY`
-- `PLIEGO_R2_PRESIGN_TTL_SECONDS` (default `300`, valid range `1`–`300`)
+- `PLIEGO_R2_PRESIGN_TTL_SECONDS=300` (valid range `1`–`300`)
 - `PLIEGO_R2_KEY_PREFIX=invoices/` (explicit; no default)
 
 Local development uses `PLIEGO_R2_KEY_PREFIX=local-dev/invoices/` and
@@ -105,11 +119,13 @@ a Spanish error. Keep the production environment file root-owned and mode `0640`
 (`root:pliego`), and local development environment files that hold R2 values mode
 `0600`; never copy them or their values to a release manifest, command line,
 build log or deployment output.
-Keep R2 enabled while artifact rows reference R2 objects. Disabling the flag does
-not backfill those objects into PostgreSQL; an operator must re-enable R2 or follow
-a separately reviewed future backfill plan before disabling it. The optional live
-smoke test requires an explicit `local-dev/` prefix, refuses production storage,
-and is never part of deployment verification.
+Keep R2 enabled once any `storage_kind='R2'` row exists. Disabling it leaves
+metadata READY but returns `404 INVOICE_FILE_UNAVAILABLE` for those artifacts;
+it does not backfill them into PostgreSQL. The old release `a298dc4` cannot serve
+R2 rows. Rollback of the activation's environment change is valid only while zero
+R2 rows exist; otherwise re-enable R2 to restore access. Any future backfill needs
+separate review. The optional live smoke test requires an explicit `local-dev/`
+prefix, refuses production storage, and is never part of deployment verification.
 
 **Shared storage decision.** For this academic project, the project owner accepts
 one private bucket (`billing-pliego`) and one key pair shared by development and
@@ -139,6 +155,56 @@ or Cloudflare adds a `Content-Security-Policy` to the storefront, its `frame-src
 (or `child-src`/`default-src`) must allow
 `https://<account-id>.r2.cloudflarestorage.com` and `blob:`; otherwise the page
 shows an empty frame while "Abrir en otra pestaña" and "Descargar PDF" keep working.
+
+**Bucket verification (owner dashboard, 2026-11-01).** `r2.dev` is disabled,
+there are no custom domains or CORS policy, storage class is Standard, and the only
+lifecycle rule is the default incomplete-multipart-upload abort. The app uses
+single PUTs, so this rule does not affect invoices. No bucket CORS policy is needed
+for the current page: it navigates to or frames signed URLs instead of fetching
+them with JavaScript.
+
+**Read-only monitoring.** Run these aggregate queries on the `pliego` database;
+do not select customer data, object keys, document bytes or raw errors. Adapted
+from the operator's verified `r2-monitor.sql`:
+
+```sql
+\set ON_ERROR_STOP on
+BEGIN READ ONLY;
+SET LOCAL statement_timeout='10s';
+SELECT estado,tipo,intentos,count(*) AS jobs,
+       min(siguiente_intento) AS next_attempt,min(actualizado_en) AS oldest_update
+  FROM pliego.factura_archivo_trabajo GROUP BY estado,tipo,intentos
+ ORDER BY estado,tipo,intentos;
+SELECT count(*) FILTER(WHERE estado='FAILED') AS failed,
+       count(*) FILTER(WHERE estado='PENDING') AS pending,
+       count(*) FILTER(WHERE estado='PENDING' AND siguiente_intento<=clock_timestamp()) AS pending_due,
+       count(*) FILTER(WHERE estado='PROCESSING' AND lease_until<clock_timestamp()) AS expired_processing,
+       count(*) FILTER(WHERE estado='PROCESSING' AND lease_until<clock_timestamp() AND intentos>=5) AS expired_final_attempt,
+       COALESCE(max(intentos),0) AS max_attempts
+  FROM pliego.factura_archivo_trabajo;
+SELECT COALESCE(storage_kind,'LEGACY_BYTEA') AS storage_kind,count(*) AS artifacts,
+       COALESCE(sum(size_bytes),0) AS metadata_bytes
+  FROM pliego.factura_archivo GROUP BY storage_kind ORDER BY storage_kind;
+SELECT count(*) AS r2_prefix_violations FROM pliego.factura_archivo
+ WHERE storage_kind='R2' AND (object_key IS NULL OR left(object_key,9)<>'invoices/');
+SELECT estado,count(*) AS events,COALESCE(max(intentos),0) AS max_attempts,
+       min(fecha_creacion) AS oldest_created,max(fecha_creacion) AS newest_created
+  FROM pliego.correo_outbox WHERE tipo='INVOICE_ISSUED' GROUP BY estado ORDER BY estado;
+ROLLBACK;
+```
+
+Review FAILED jobs, due PENDING work and expired PROCESSING leases; prefix
+violations must be zero. In the unit journal, inspect `code=UPLOAD_FAILED`,
+`code=UPLOAD_FAILURE_RECORDING_FAILED`, `code=R2_KEY_OUTSIDE_PREFIX`,
+`code=COMPLETION_UNCERTAIN` and `state=STALE_COMPLETION`; successful completion is
+`state=READY`. Share marker counts, not raw records containing invoice IDs.
+
+**Failure recovery.** If jobs reach FAILED, verify credentials, the account-host
+endpoint and connectivity with a read-only `HeadBucket` from the server, keeping
+credentials and signing data out of output. Jobs retry up to five attempts with
+backoff; FAILED requires a reviewed requeue, never ad-hoc SQL. Never delete objects
+or rows to clear a failure. If a credential leaks, follow **Credential rotation**
+above; preserve the shared-bucket limitations and keep R2 enabled for existing rows.
 
 ### Invoice email backlog before enabling mail
 
@@ -370,6 +436,7 @@ prepared release directory by overwriting it.
 3. Compare every **already-applied** migration's bytes in the installed executable
    JAR (`BOOT-INF/classes/db/migration/`) with the candidate. Compare the original
    migrations with the approved ZIP too. Matching filenames are insufficient.
+   The VPS has no `unzip`; use Python `zipfile` to compare migration entry bytes.
    Stop on any discrepancy; do not repair Flyway or edit an applied migration.
 4. Before activation, capture both previous pointer targets and configuration
    hashes in `/opt/pliego/deployment/<release>/release.json` (`0700` directory,
@@ -400,7 +467,8 @@ prepared release directory by overwriting it.
    `--dry-run`. It must validate old targets, planned ownership cleanup, schema/binary
    compatibility and `nginx -t`; see section 10. It must not change privileges,
    pointers or service state during preflight. Syntax-check it and exercise its
-   preflight before changing pointers.
+   preflight before changing pointers. Include section 7's early-failure recovery
+   so a failure before the temporary owner grant restores previous availability.
 
 Immediately before activation, compare the live pointers and installed artifact
 hashes with the captured preflight state. Stop on unexpected drift instead of
@@ -443,8 +511,9 @@ If there are pending migrations:
 
 1. Confirm the backup, compatibility tests, rollback and operator sudo access.
    Use a bounded maintenance window; this is not a zero-downtime procedure.
-2. Stop `pliego.service`, draining its connection pool. As the administrative DB
-   operator, grant migration-time inherited ownership:
+2. Stop `pliego.service`, draining its connection pool; verify the stopped state
+   as described below. As the administrative DB operator, grant migration-time
+   inherited ownership:
 
    ```sql
    GRANT pliego_owner TO pliego_app;
@@ -466,6 +535,24 @@ If there are pending migrations:
    Recheck Flyway, local catalog, unit/worker logs and runtime privileges. Only
    this restricted, fresh pool is the accepted runtime state.
 
+**Stop/start procedure.** Java exits 143 on SIGTERM, so `systemctl stop pliego`
+can leave `ActiveState=failed`, `Result=exit-code`. Treat either failed or inactive
+with `MainPID=0` as drained; waiting only for inactive times out. Inspect
+`systemctl show pliego --property=ActiveState,Result,MainPID` and run
+`systemctl reset-failed pliego` before the next start, including recovery starts.
+On 2026-11-01, attempt 1 waited only for inactive and caused about 1.5 minutes of
+downtime before a manual restart.
+
+**Early-failure recovery.** Any failure before the temporary owner GRANT must
+restore the previous release's availability: leave pointers unchanged, verify the
+exact original Flyway history (V073 for the 2026-11-01 attempt) and section 5's
+`f|f|f|f`, then reset-failed and restart the previous binary. If the temporary
+grant was applied but Flyway still has that exact original history, revert only
+that grant with `REVOKE pliego_owner FROM pliego_app`; verify `f|f|f|f` and zero
+`pliego_app`-owned objects before restarting the previous binary. The full ACL
+cleanup below references V082 geo tables and cannot run on a pre-V082 schema.
+Any partial migration prefix stays stopped pending reviewed recovery.
+
 Suggested startup budget: a **90-second monotonic deadline**, polls about every
 2 seconds, each request capped at 3 seconds and by the remaining deadline. Require
 HTTP 200, parse JSON, validate `items` is a list and `totalCount` is a nonnegative
@@ -474,7 +561,9 @@ malformed JSON or an unexpectedly empty catalog is not a successful check. A
 measured startup requirement can justify a different recorded budget; do not wait
 indefinitely or hide an automatic restart loop.
 
-Administrative cleanup, on the `pliego` database, after stopping the service:
+Full administrative cleanup, on the `pliego` database, after stopping the service
+and confirming the required V082 tables exist (use the early-failure procedure
+above only when history is exactly unchanged):
 
 ```sql
 -- BEGIN PLIEGO_RUNTIME_ACL_CLEANUP_SQL
@@ -612,23 +701,37 @@ stop the backend, switch its pointer and start once. Flyway still validates
 normally. Stop before changing a backend pointer so a live classloader cannot
 resolve resources through a pointer that has changed underneath it.
 
-If migration/startup fails at any point after the grant: stop/drain; revoke and
-restore the restricted runtime grants/ownership; verify privilege cleanup before
-starting either binary. If cleanup or old-binary compatibility cannot be established,
-leave the backend stopped, preserve recovery evidence and report the blocker.
+If migration/startup fails after the grant: stop/drain and inspect the actual
+Flyway history first. Use the early-failure procedure only for the exact original
+history; otherwise restore restricted grants/ownership when the schema supports
+the full cleanup. Verify cleanup before starting either binary. If cleanup or
+old-binary compatibility cannot be established, leave the backend stopped,
+preserve recovery evidence and report the blocker.
 Never leave elevated runtime membership in place to make startup appear healthy.
 Inspect the actual committed migration prefix: if V074 commits and V075 fails,
 V074 remains applied. Check the failed script's transaction configuration and any
 nontransactional remnants; do not assume all-or-nothing across migration files.
 Recovery must be compatible with that actual state, not just the intended final
-schema. Test intermediate prefixes in a disposable DB when their changes could
-affect fallback compatibility; never repair history to manufacture a rollback.
+schema. A partial migration prefix stays stopped; assess intermediate-prefix
+compatibility in a disposable DB for a reviewed recovery, never by repairing
+history to manufacture a rollback.
 
 ## 8. Frontend activation and Nginx
 
 After the backend is healthy as restricted runtime, atomically select the candidate
 frontend. For frontend-only deployments, first verify compatibility with the
 already-running backend. Check the exact public index and entry-asset hashes.
+
+**Email brand assets.** Transactional emails load their logo from the storefront:
+`<PLIEGO_APP_PUBLIC_URL>/brand/pliego-logo-email.png`, and messages delivered
+before that lockup load `/brand/pliego-logo.png`. Before activating a backend whose
+mail templates name a brand file, confirm the candidate `dist` contains it (the
+frontend test `emailBrandAssets` enforces this at build time). After the frontend
+switch, both URLs must answer `200` with `Content-Type: image/png`; the SPA fallback
+answers a missing file with `200 text/html`, so a status code alone proves nothing.
+The interval between backend start and this switch is tolerable because clients
+fetch the logo when a message is opened and the fallback is `no-store`, but keep it
+short and never end a release with the backend ahead of its brand assets.
 
 The existing Nginx root follows `/var/www/pliego/current`. A symlink-only release
 normally requires **no Nginx edit or reload**. If a verified deployment requirement
@@ -654,10 +757,11 @@ past counts such as 425 editions, 73 migrations or a previous test total.
 | Geographic inputs | If an authorized smoke check writes an address, checkout billing address or invoice address, read the public province/city catalog and submit the selected `provinceId`/`cityId` pair; verify public `Bucay` → General Antonio Elizalde and `Playas` → General Villamil aliases. After V082, report the read-only `needs_review` counts from ADR-0044 (saved addresses and pickup locations left with null catalog IDs) next to the preflight totals; they keep their text and stay deliverable, so a count is information, never a reason to edit customer data |
 | Public API/site | HTTPS via Cloudflare; canonical `www` redirect retains path/query and final response is 200; SPA direct navigation/reload works |
 | Catalog | Counts plausible vs preflight; whole-set sort/page/filter behavior if affected, visible formats and decoding images on `covers.pliegolibros.com` |
+| Email assets | `/brand/pliego-logo-email.png` and `/brand/pliego-logo.png` return `image/png` (not `text/html`); a sample of `covers/editions/email-v1/*.jpg` returns `image/jpeg` |
 | Browser | Relevant affected flows at mobile/desktop; normally 320, 390, 1280, plus 768/real zoom when responsive changes warrant it; no new JS/network errors |
 | Private routes | Anonymous billing/identity/invoice/PDF access rejects with 401; authorized ownership/download behavior proven locally without fabricating production purchases |
 | CORS/cookies | Canonical frontend origin allowed, foreign origin rejected; Secure/HttpOnly/SameSite behavior preserved. `www` redirects before JS, so do not add it to CORS automatically |
-| Origin isolation | Local requests to each HTTPS vhost without the AOP client certificate rejected (verified baseline: 400); external direct-origin access blocked; 8080/5432 loopback only |
+| Origin isolation | Origin requests to all three HTTPS vhosts without the AOP client certificate return 400 (operator re-verified 2026-11-01); external direct-origin access blocked; 8080/5432 loopback only |
 | Errors | Understandable Spanish failures, no stacks, SQL or secrets in public responses |
 | Workers | Billing/mail/delivery schedulers configured as intended, no failed claims or stuck leases; inspect aggregate queue outcomes |
 | Resources | RAM available, swap, CPU/load and disk support steady state; compare to preflight |
@@ -665,10 +769,15 @@ past counts such as 425 editions, 73 migrations or a previous test total.
 
 Do not print or download real private invoices merely to test a GET. Empty queues
 prove idle worker health/grants, not successful production document generation.
-Billing defaults: enabled, `PT5S`, batch 4; artifact bytes are private PostgreSQL
-`bytea`, not public files. Existing legacy documents must remain historical; do not
-backfill them by creating orders/invoices yourself. IVA is 0 for new supported
-catalog operations; old commercial snapshots remain unchanged.
+Billing defaults: enabled, `PT5S`, batch 4; new production artifacts use private R2,
+while historical PostgreSQL `bytea` remains streamable. Existing legacy documents
+must remain historical; do not backfill them by creating orders/invoices yourself.
+IVA is 0 for new supported catalog operations; old commercial snapshots remain
+unchanged.
+
+Journal gates fail on ERROR-level Spring records only; match the record's level,
+not arbitrary `Exception` text. WARN and Exception occurrence counts are
+informational; review worker markers and queue state separately as described above.
 
 For mail, preserve existing configuration and inspect outbox aggregates first.
 Never resend demo messages or treat `SENT` as inbox receipt. Distinguish application
@@ -687,12 +796,18 @@ Prepare recovery **before** switching. A release rollback selects the recorded
 compatible recovery targets and restores explicitly backed-up config changes; it
 keeps current business data, applied Flyway migrations and owner/runtime separation.
 
-1. Stop/drain the backend if it was elevated, unhealthy, or needs a pointer switch.
-2. Complete section 7 privilege cleanup and verify no owner membership/CREATE.
+1. Stop/drain the backend if it was elevated, unhealthy, or needs a pointer switch;
+   accept failed/inactive with `MainPID=0` and reset-failed before starting.
+2. Apply section 7's schema-appropriate cleanup and verify no owner membership/
+   CREATE. Exact-original-history recovery revokes only the temporary grant;
+   do not run the V082-dependent block on an older schema. A partial migration
+   prefix stays stopped for reviewed recovery.
 3. Check the old binary's compatibility with the new schema in a disposable DB
    before relying on it. Flyway may ignore future migrations with a warning; do
    not assume that proves old checkout/invoice semantics remain correct. Record
    disabled/new features and any known forward-schema limitations.
+   Once R2 rows exist, keep R2 enabled and choose a binary that serves them;
+   `a298dc4` cannot. An R2 environment rollback requires zero R2 rows.
 4. Atomically restore the recorded old backend and/or frontend targets; start the
    backend as restricted runtime and verify the DB-backed catalog. If restoring
    Nginx, run `nginx -t` before a reload. Frontend-only rollback should not restart
@@ -700,7 +815,10 @@ keeps current business data, applied Flyway migrations and owner/runtime separat
    tree that preserves both generations of hashed chunks. Already-running new
    clients may still require a reload when their API features cannot be supported
    by the old backend; report that compatibility limit instead of promising a
-   transparent, zero-downtime rollback.
+   transparent, zero-downtime rollback. A frontend rollback target must still
+   contain every `/brand/` image the running backend's mail templates reference
+   (`pliego-logo-email.png` from the release that introduced it); keep it in the
+   rollback tree or roll the backend back with it, then re-run the Email assets check.
 5. Verify public requests, workers, ports and logs. Report whether rollback was
    actually executed or only preflight-tested. Keep failed releases/logs for review.
 
@@ -741,3 +859,81 @@ For recovery, inspect the recorded release's `rollback.py` before invoking its
 `--dry-run` or actual rollback; substitute the manifest's verified path, not a past
 release hardcoded in a conversation. A normal restart with no pending migration
 must succeed without granting the runtime owner privileges.
+
+## Mailtrap webhook activation and deliverability
+
+These steps describe a future authorized operation. They do not authorize a
+release, production access, Mailtrap changes, suppression removal, or customer
+email resends. V093 must be released through the normal pinned-artifact and
+migration privilege lifecycle above before activation.
+
+1. In Mailtrap, prepare an Email Sending webhook for the sending domain and
+   transactional stream. Use the public HTTPS route `/api/v1/webhooks/mailtrap`
+   on port 443, JSON payload format, and the delivery, bounce, soft bounce,
+   reject and suspension events. JSON Lines is not supported by this receiver.
+2. Obtain the webhook signing secret from Mailtrap and provision it through the
+   existing secret-injection mechanism as `PLIEGO_MAILTRAP_WEBHOOK_SECRET`.
+   Never paste it in this runbook, command history, URL, logs, or a tracked file.
+   The receiver validates `Mailtrap-Signature` using HMAC-SHA256 on raw bytes;
+   it returns 404 when the secret is absent. It operates independently of
+   `PLIEGO_MAIL_ENABLED`. Changing or rotating the secret requires a controlled
+   backend restart and coordinated update in Mailtrap.
+3. With explicit authorization for the provider configuration, use Mailtrap's
+   webhook test and activate the webhook. This tests webhook ingestion, not an
+   email resend. Confirm HTTP 200 and signature enforcement; investigate 401,
+   409, 413 or 5xx before activation. Monitor the provider's webhook retry/pause
+   status. Configure the proxy to pass the signature header and unmodified body
+   and permit JSON payloads up to the receiver's 1 MiB limit.
+
+Deliverability check (read-only, authorized operators only):
+
+```sql
+SELECT tipo, estado, entrega_estado, count(*)
+  FROM pliego.correo_outbox
+ GROUP BY tipo, estado, entrega_estado ORDER BY tipo, estado, entrega_estado;
+SELECT estado, motivo,
+       count(*) FILTER (WHERE procesado_en IS NULL) AS pending,
+       count(*) FILTER (WHERE procesado_en IS NOT NULL) AS projected,
+       min(recibido_en) FILTER (WHERE procesado_en IS NULL) AS oldest_pending
+  FROM pliego.correo_evento_proveedor GROUP BY estado, motivo ORDER BY estado, motivo;
+SELECT count(*) AS unmatched_events
+  FROM pliego.correo_evento_proveedor e
+ WHERE e.procesado_en IS NULL AND NOT EXISTS (
+   SELECT FROM pliego.correo_outbox o WHERE o.id_mensaje_proveedor=e.id_mensaje_proveedor);
+SELECT count(*) AS accounts_with_known_delivery_failure
+  FROM pliego.usuario WHERE email_no_entregable_desde IS NOT NULL;
+```
+
+`SENT` means API acceptance. `entrega_estado` records the asynchronous outcome;
+neither implies that a message reached the inbox rather than spam. Projection
+runs every five seconds in short transactions. Unmatched events remain durable
+until their provider message receipt is available; investigate persistent unmatched
+events or `mail_event state=PROJECTION_FAILED`. Historical failures are not imported
+automatically: activation cannot retroactively fix an already-sent outbox record.
+
+For provider evidence, `scripts/mailtrap-deliverability.py` reads suppressions and
+recent `not_delivered` logs using `PLIEGO_MAILTRAP_API_TOKEN`. It performs GET only,
+sets an explicit User-Agent (avoids Cloudflare code 1010 from urllib's default UA),
+refuses redirects, and prints only allowlisted fields and canonical SHA-256
+recipient hashes. Default lookback is 24 hours and one page; `--hours` and
+`--max-pages` bound larger reads. Pagination truncation is explicit. It never
+prints SMTP text, subjects, recipients or tokens, deletes suppressions, or sends
+messages. Run only after authorization for the target account; this change was
+tested with a fake transport, never against production.
+
+Hard bounce/suppression makes future worker sends to that address
+`HELD / EMAIL_UNDELIVERABLE`; held rows remain visible and are never automatically
+claimed. A corrected account address clears its profile indicator; a later delivery
+can clear address blocking, while FAILED/HELD rows stay unchanged. Keep event IDs
+for deduplication through the provider replay window; cleanup needs a separately
+reviewed retention procedure, not ad-hoc deletion.
+
+After the customer corrects and verifies the address, separately authorize any
+Mailtrap suppression removal. Never remove suppression just to retry an invalid
+address. Review original recipient snapshots, token expiry, provider acceptance
+and delivery history before any requeue through the existing reviewed operational
+process. There is no public/admin resend endpoint or automatic retargeting, and
+this change adds none. Any customer email resend requires separate authorization.
+
+See [ADR 0048](../adr/0048-mailtrap-delivery-outcomes.md) and the
+[API amendment](../api-amendments/2026-11-01-email-delivery-status.md).

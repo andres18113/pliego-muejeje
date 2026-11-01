@@ -51,3 +51,7 @@
 - [0044 — INEC geographic catalog for editable Ecuadorian addresses](0044-ecuador-geographic-address-catalog.md)
 - [0045 — Saved for Later independiente de favoritos y del carrito activo](0045-customer-saved-for-later.md)
 - [0046 — PDF académico determinista, correo de entrega y puerto de almacenamiento privado](0046-academic-invoice-pdf-email-and-storage.md)
+- [0047 — Referencias públicas de pedidos y retiro verificado](0047-public-order-references-and-verified-pickup.md)
+- [0048 — Resultados de entrega y retención por destinatario](0048-mailtrap-delivery-outcomes.md)
+
+- [ADR 0049 — Cambio de correo pendiente de confirmación](0049-pending-email-change.md)

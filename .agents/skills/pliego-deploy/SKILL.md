@@ -42,14 +42,23 @@ those actions are separately within scope.
   transfer only necessary files through the personal `ssh -F` connection.
 - Hold one exclusive deployment lock; prepare backup, private evidence, previous
   pointers and a schema-compatible rollback before activation.
+- Java exits 143 on SIGTERM: accept stopped `failed`/`inactive` with `MainPID=0`
+  as drained; run `systemctl reset-failed pliego` before starting again.
+- Keep R2 enabled once any `storage_kind='R2'` row exists; disabling it leaves READY
+  metadata but unavailable files. An environment rollback requires zero R2 rows;
+  `a298dc4` cannot serve them. Follow the runbook's R2 recovery limits.
 - With pending migrations, the runtime may need temporary inherited `pliego_owner`
   membership. Apply Flyway through normal backend startup, **stop/drain**, reassign
   objects/grant runtime access/revoke membership, then restart and verify no CREATE
-  or ownership. The failure path must perform the same cleanup. Never `SET ROLE`
-  on pooled app connections or leave migration privileges enabled.
-- Run the cleanup exactly as the runbook's `PLIEGO_RUNTIME_ACL_CLEANUP_SQL` block
-  (it keeps `provincia`/`ciudad`/`ciudad_alias` read-only for `pliego_app`), then
-  require every value of its read-only postflight privilege query to be `t`.
+  or ownership. The failure path follows section 7's schema-appropriate cleanup:
+  before the grant, restore the previous release's availability; with the exact
+  original Flyway history, revoke only the temporary grant; a partial migration
+  prefix stays stopped. Never `SET ROLE` on pooled app connections or leave
+  migration privileges enabled.
+- When section 7 requires full cleanup, run `PLIEGO_RUNTIME_ACL_CLEANUP_SQL`
+  exactly as documented (it keeps `provincia`/`ciudad`/`ciudad_alias` read-only
+  for `pliego_app`), then require every value of its read-only postflight
+  privilege query to be `t`.
   `runtime_privileges_gate.sql` writes and rolls back: CI/isolated restores only.
 - Without pending migrations, avoid privilege changes. A frontend-only release
   should not restart the backend. Existing symlink-based publication normally
