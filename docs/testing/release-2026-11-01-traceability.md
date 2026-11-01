@@ -168,3 +168,15 @@ publicar assets o reenviar correos necesita una instrucción posterior del usuar
 | Playwright completo con `PLIEGO_VISUAL_LIVE=1` | 420 pasan, 0 fallan; 22 omitidas por gates que exigen backend/fixtures desechables (`PLIEGO_E2E_LIVE`, registro, biblioteca, orden del catálogo) |
 | Correcciones de UI encontradas por la regresión | `useAvailabilityFocus` revela el aviso de stock enfocado si quedó fuera de pantalla (WCAG 2.4.11); la ruta «Mi cuenta › Pedidos» del checkout se ajusta a 200 % de texto en 320 px |
 | Expectativas obsoletas actualizadas (sin debilitar) | título y encabezado del área de Administración (ADR 0047); escenario oscuro de `stockstatus-production` convertido a apariencia única (ignora preferencia guardada y del sistema); textos del editor de correo; `digital-single-copy` espera a que la edición se renderice antes de desplazarse |
+
+
+## Data reset
+
+Procedimiento local para V095/53e062a: [clasificación completa de 58 tablas,
+auditorías, secuencias/R2, receta operativa y requisito → evidencia](data-reset.md).
+El harness restaura un custom dump en PostgreSQL 18 nuevo, prueba rollback,
+fallo intermedio, commit, repetición, constraints/ACL y el flujo HTTP real con
+factura DATABASE y propiedad digital. No se cambió Java ni se accedió a producción.
+La garantía de no reutilización histórica de referencias aleatorias y números
+manuales queda bloqueada en V095; el informe explica la decisión necesaria antes
+de cualquier COMMIT de producción.
