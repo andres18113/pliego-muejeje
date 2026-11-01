@@ -82,9 +82,13 @@ test("a new CUSTOMER buys a seeded edition end to end against the live API", asy
   await page.setViewportSize({ width: 390, height: 844 });
   await page.screenshot({ path: "/tmp/pliego-s06-mobile-history.png", fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  // Customers see the order's public reference (V088), never its internal id; list and detail name the same one.
+  const listed = await page.locator(`a[href="/orders/${orderId}"]`).first().textContent();
+  const reference = /#PL-\d{4}-\d{4}/.exec(listed ?? "")?.[0];
+  expect(reference, "the order list shows the public reference").toBeTruthy();
   await page.locator(`a[href="/orders/${orderId}"]`).first().click();
   await expect(page.getByRole("heading", { level: 1, name: "Detalle del pedido" })).toBeVisible();
-  await expect(page.locator("main article dl").first()).toContainText(orderId!);
+  await expect(page.locator("main article dl").first()).toContainText(reference!);
   await page.screenshot({ path: "/tmp/pliego-s06-mobile.png", fullPage: true });
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   await page.setViewportSize({ width: 320, height: 720 });
