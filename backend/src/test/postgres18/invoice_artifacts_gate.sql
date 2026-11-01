@@ -48,6 +48,9 @@ BEGIN
  IF NOT pliego.fn_invoice_artifact_complete(job.invoice_id,job.file_type,job.lease_owner,decode('25504446','hex')) THEN
   RAISE EXCEPTION 'lease completion rejected'; END IF;
  SELECT datos INTO mail_data FROM pliego.correo_outbox WHERE evento_clave='INVOICE_ISSUED:'||job.invoice_id;
+ IF mail_data->>'orderReference' IS DISTINCT FROM
+  (SELECT p.referencia_publica FROM pliego.pedido p JOIN pliego.factura f USING(pedido_id) WHERE f.factura_id=job.invoice_id) THEN
+  RAISE EXCEPTION 'new invoice mail missing public order reference'; END IF;
  IF NOT FOUND OR (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='INVOICE_ISSUED:'||job.invoice_id)<>1
     OR (SELECT destinatario FROM pliego.correo_outbox WHERE evento_clave='INVOICE_ISSUED:'||job.invoice_id)<>owner_email
     OR mail_data->>'customerName' IS NULL OR mail_data->>'customerName'='Comprador Fiscal'

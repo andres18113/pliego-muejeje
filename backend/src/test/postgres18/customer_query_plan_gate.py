@@ -36,7 +36,7 @@ def gateway_queries():
     """Read Java strings so changing a gateway cannot leave an old copy green."""
     excluded = {"JdbcAdminCatalogGateway", "JdbcAdminCustomerGateway",
                 "JdbcAdminOrderGateway", "JdbcInventoryGateway",
-                "JdbcMailOutboxGateway", "JdbcHomeDeliveryGateway",
+                "JdbcMailOutboxGateway", "JdbcMailEventGateway", "JdbcHomeDeliveryGateway",
                 "JdbcEditionOfferGateway"}
     queries = {}
     for path in sorted(MODULES.glob("*/gateway/Jdbc*Gateway.java")):
@@ -112,12 +112,14 @@ def fixtures():
             JOIN pliego.usuario u USING(usuario_id)
             WHERE content.tipo='PDF' AND f.estado='ISSUED' AND u.estado='ACTIVE'
             ORDER BY f.factura_id LIMIT 1),
+          'pickup', (SELECT json_build_object('order',r.pedido_id,'code',r.codigo)
+            FROM pliego.pedido_retiro r ORDER BY r.pedido_id LIMIT 1),
           'admin_actor', (SELECT min(usuario_id) FROM pliego.usuario WHERE rol='ADMIN' AND estado='ACTIVE'),
           'identity_actor', (SELECT min(u.usuario_id) FROM pliego.cliente_identificacion i
             JOIN pliego.cliente c USING(cliente_id) JOIN pliego.usuario u USING(usuario_id) WHERE u.estado='ACTIVE'),
           'help_slug', NULL)
     """))
-    assert data["cart_actor"] and data["saved_actor"] and data["owned"] and data["offer"] and data["invoice"] and data["admin_actor"] and data["identity_actor"], (
+    assert data["cart_actor"] and data["saved_actor"] and data["owned"] and data["offer"] and data["invoice"] and data["admin_actor"] and data["identity_actor"] and data["pickup"], (
         "Run after HTTP gates: need a populated cart and saved list, active ownership, live offer, PDF, ADMIN, and billing identity")
     # A published article, independent of the seeded slug naming convention.
     data["help_slug"] = psql("SELECT slug FROM pliego.fn_help_search(NULL,NULL,NULL,0,1) LIMIT 1")
@@ -134,6 +136,8 @@ def cases(data):
     invoice_actor = f"{data['invoice']['actor']}::bigint"
     invoice_order = f"{data['invoice']['order']}::bigint"
     admin_actor = f"{data['admin_actor']}::bigint"
+    pickup_order = f"{data['pickup']['order']}::bigint"
+    pickup_code = literal(data["pickup"]["code"])
     batch = literal(str(data["owned"]["edition"]))
     key = "'00000000-0000-4000-8000-000000000079'::uuid"
     null = "NULL::varchar"
@@ -150,6 +154,13 @@ def cases(data):
         "fn_public_catalog_filter_facets": ["'GLOBAL'"],
         "fn_offers_filter_options": [],
         "fn_customer_profile_verified": [actor],
+        "fn_customer_profile_email_change": [actor],
+        "fn_customer_email_change_request": [actor, "'plan-pending@example.invalid'", literal('a' * 64), literal('A' * 43), literal('b' * 64), literal('B' * 43)],
+        "fn_customer_email_change_resend": [actor, literal('c' * 64), literal('C' * 43)],
+        "fn_customer_email_change_cancel": [actor],
+        "fn_email_change_token_nonce": ["'EMAIL_CHANGE_CONFIRM'", literal('a' * 64)],
+        "fn_email_change_confirm": [literal('a' * 64)],
+        "fn_email_change_cancel": [literal('b' * 64)],
         "fn_customer_password_hash": [actor],
         "fn_geo_provinces": [],
         "fn_geo_cities": ["17"],
@@ -165,6 +176,13 @@ def cases(data):
         "fn_customer_library_detail": [actor, owned],
         "fn_checkout_resolve": [actor, key],
         "fn_order_fulfillment": [order],
+        "fn_order_reference": [order],
+        "fn_admin_pickup_detail": [admin_actor, pickup_order],
+        # AC-2.1 AC-3.3: plan the actual V091 JDBC reads with a valid order-bound code.
+        "fn_admin_pickup_handover_detail": [admin_actor, pickup_order],
+        "fn_admin_pickup_verify_code": [admin_actor, pickup_order, pickup_code],
+        "fn_admin_pickup_lookup": [admin_actor, pickup_code],
+        "fn_admin_pickups": [admin_actor, null, null, "0", "20"],
         "fn_order_pricing": [order],
         "fn_order_offer_pricing": [order],
         "fn_customer_orders": [actor, "0", "20"],
@@ -178,6 +196,7 @@ def cases(data):
         "fn_invoice_artifact_access_v085": [invoice_actor, invoice_order, "'PDF'"],
         "fn_invoice_artifact_download": [invoice_actor, invoice_order, "'PDF'"],
         "fn_user_auth_data": [literal(data['owned']['email'])],
+        "fn_auth_session_create_identity_checked": [actor, "'plan-gate-unused'", "CURRENT_TIMESTAMP + INTERVAL '1 day'", "'unused'", literal(data['owned']['email'])],
         "fn_auth_session_create_checked": [actor, "'plan-gate-unused'", "CURRENT_TIMESTAMP + INTERVAL '1 day'", "'unused'"],
         "fn_auth_session_refresh": ["'plan-gate-unused'", "'plan-gate-replacement'"],
         "fn_auth_session_revoke": ["'plan-gate-unused'"],
@@ -211,7 +230,7 @@ def cases(data):
         assert sql.count("?") == len(params), name
         parts = sql.split("?")
         bound = parts[0] + "".join(value + part for value, part in zip(params, parts[1:]))
-        analyze = not name.startswith("JdbcIdentityGateway.") or name.endswith(".AUTH_QUERY")
+        analyze = not name.startswith(("JdbcIdentityGateway.", "JdbcEmailChangeGateway.")) or name.endswith(".AUTH_QUERY")
         yield name, bound, analyze, ""
         if name in {"JdbcCartGateway.CART_GET", "JdbcCustomerOrderGateway.DETAIL",
                     "JdbcDigitalEligibilityGateway.fn_customer_digital_eligibility",

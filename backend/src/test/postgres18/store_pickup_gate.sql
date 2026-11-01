@@ -1,5 +1,12 @@
 -- PostgreSQL18 behavior assertions; fixtures and all effects roll back.
 BEGIN;
+-- Age only test fixtures; production snapshots remain immutable.
+CREATE PROCEDURE pg_temp.ready_pickup(p_order BIGINT) LANGUAGE plpgsql AS $$ BEGIN
+ ALTER TABLE pliego.pedido_retiro DISABLE TRIGGER trg_pedido_retiro_snapshot;
+ UPDATE pliego.pedido_retiro SET estimado_desde=estimado_desde-INTERVAL '1 day',listo_desde=listo_desde-INTERVAL '1 day' WHERE pedido_id=p_order;
+ ALTER TABLE pliego.pedido_retiro ENABLE TRIGGER trg_pedido_retiro_snapshot;
+ UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id=p_order;
+END; $$;
 DO $gate$
 DECLARE
  a BIGINT; u BIGINT; customer BIGINT; address_id BIGINT; author_id BIGINT; pub BIGINT; cat BIGINT; book BIGINT;
@@ -100,19 +107,22 @@ BEGIN
   RAISE EXCEPTION 'legacy admin transition bypassed pickup collection';
  EXCEPTION WHEN SQLSTATE 'P5002' THEN NULL; END;
  BEGIN
-  CALL pliego.sp_pickup_collect(a,o,'P-WRONG');
+  CALL pliego.sp_pickup_collect(a,o,'P-WRONG',TRUE);
   RAISE EXCEPTION 'wrong code accepted';
  EXCEPTION WHEN SQLSTATE 'P5013' THEN NULL; END;
  IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED')
  THEN RAISE EXCEPTION 'invalid collection emitted a notification'; END IF;
- CALL pliego.sp_pickup_collect(a,o,code);
- CALL pliego.sp_pickup_collect(a,o,code);
+ CALL pg_temp.ready_pickup(o);
+ confirmation:=pliego.fn_order_fulfillment(o,TRUE);
+ CALL pliego.sp_pickup_collect(a,o,code,TRUE);
+ BEGIN CALL pliego.sp_pickup_collect(a,o,code,TRUE);
+  RAISE EXCEPTION 'double collection accepted'; EXCEPTION WHEN SQLSTATE 'P5017' THEN NULL; END;
  SELECT * INTO d FROM pliego.fn_customer_order_detail(u,o);
  IF d.order_state<>'DELIVERED' OR d.fulfillment->>'state'<>'COLLECTED' OR d.fulfillment->>'collectedAt' IS NULL
  OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=o AND estado_nuevo='DELIVERED')<>1
  THEN RAISE EXCEPTION 'collection not idempotent or not terminal'; END IF;
  IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
-      WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') IS DISTINCT FROM 'COLLECTED'
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') IS DISTINCT FROM 'PREPARING,COLLECTED'
  OR (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED')<>1
  OR EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED'
       AND (((datos->'pickup') ? 'pickupCode') OR ((datos->'fulfillment'->'pickup') ? 'pickupCode')))
@@ -182,7 +192,8 @@ BEGIN
  IF EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_CANCELLED:'||replay)
  THEN RAISE EXCEPTION 'rejected late cancellation emitted a notification'; END IF;
  SELECT codigo INTO code FROM pliego.pedido_retiro WHERE pedido_id=replay;
- CALL pliego.sp_pickup_collect(a,replay,code);
+ CALL pg_temp.ready_pickup(replay);
+ CALL pliego.sp_pickup_collect(a,replay,code,TRUE);
  IF (SELECT estado FROM pliego.pedido WHERE pedido_id=replay)<>'DELIVERED'
     OR pliego.fn_order_fulfillment(replay,FALSE)->>'state'<>'COLLECTED'
  THEN RAISE EXCEPTION 'Pickup collection stopped after cancellation window'; END IF;

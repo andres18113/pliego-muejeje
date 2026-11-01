@@ -76,6 +76,8 @@ assert status == 403 and denied['code'] == 'ACCESS_DENIED', (status, denied)
 status, _, admin_page = request(admin_path + '?status=PENDING&page=0&pageSize=20', admin, role='ADMIN')
 assert status == 200 and admin_page['totalCount'] == '1'
 assert admin_page['items'][0]['id'] == created['id'] and admin_page['items'][0]['currentNumber'] == '0912345675'
+assert admin_page['items'][0]['customerHasBilledInvoices'] is True
+assert admin_page['items'][0]['decidedByEmail'] is None
 status, _, empty_page = request(admin_path + '?status=PENDING&page=100&pageSize=20', admin, role='ADMIN')
 assert status == 200 and empty_page['items'] == [] and empty_page['totalCount'] == '1', (status, empty_page)
 status, _, pagination_problem = request(admin_path + '?status=PENDING&page=2147483647&pageSize=50', admin, role='ADMIN')
@@ -103,6 +105,9 @@ assert status == 201 and approval_request['status'] == 'PENDING'
 status, _, approved = request(f'{admin_path}/{approval_request["id"]}/decision', admin, role='ADMIN', method='POST',
                               body={'decision': 'APPROVE'})
 assert status == 200 and approved['status'] == 'APPROVED' and approved['decidedBy'] == str(admin)
+status, _, reviewed_page = request(admin_path + '?status=APPROVED', admin, role='ADMIN')
+reviewed = next(row for row in reviewed_page['items'] if row['id'] == approval_request['id'])
+assert reviewed['customerHasBilledInvoices'] is True and reviewed['decidedByEmail'] == query(f'SELECT email_normalizado FROM pliego.usuario WHERE usuario_id={admin}')
 assert query(f"SELECT identidad_numero FROM pliego.cliente_identificacion WHERE cliente_id=(SELECT cliente_id FROM pliego.cliente WHERE usuario_id={owner})") == '1710034065'
 assert query(f"SELECT estado||'|'||identidad_numero FROM pliego.factura WHERE factura_id={invoice_id}") == 'DRAFT|0912345675'
 print('PostgreSQL 18 correction HTTP/JDBC gate passed: no-password tier, request replay/uniqueness/withdraw, ADMIN list/reject/approve, ownership 404, Spanish problems, and unchanged DRAFT invoice.')

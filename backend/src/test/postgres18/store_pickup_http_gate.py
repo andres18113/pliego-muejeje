@@ -77,14 +77,42 @@ def main():
     admin=int(query("SELECT usuario_id FROM pliego.usuario WHERE rol='ADMIN' AND estado='ACTIVE' ORDER BY usuario_id LIMIT 1"))
     status, admin_detail=request('/api/v1/admin/orders/'+oid,admin,admin=True)
     assert status==200 and admin_detail['address'] is None and admin_detail['taxAmount']=='0.00'
+    assert admin_detail['fulfillment']['pickup'].get('pickupCode') is None
+    assert re.fullmatch(r'PL-\d{4}-\d{4}',checkout['orderReference'])
+    lookup_path='/api/v1/admin/pickups/lookup'
+    assert request(lookup_path,actor,'POST',{'code':pickup['pickupCode']})[0]==403
+    status, lookup=request(lookup_path,admin,'POST',{'code':pickup['pickupCode'][2:].lower()},admin=True)
+    assert status==200 and lookup['orderId']==oid and lookup['state']=='PENDING'
+    assert lookup['orderReference']==checkout['orderReference'] and 'pickupCode' not in json.dumps(lookup)
+    assert pickup['pickupCode'] not in json.dumps(lookup)
+    status, problem=request(lookup_path,admin,'POST',{'code':'P-NOTFOUND'},admin=True)
+    assert status==404 and problem['code']=='P5016' and problem['detail']=='No encontramos un retiro con ese código.'
+    normalized_ref=checkout['orderReference'].lower().replace('pl-','').replace('-','')
+    status, orders=request('/api/v1/admin/orders?q='+normalized_ref,admin,admin=True)
+    assert status==200 and [row['orderId'] for row in orders['items']]==[oid]
+    queue='/api/v1/admin/pickups?state=PENDING&q='+normalized_ref
+    status, page=request(queue,admin,admin=True)
+    assert status==200 and [row['orderId'] for row in page['items']]==[oid] and page['totalCount']=='1'
+    status, empty=request(queue+'&page=1',admin,admin=True)
+    assert status==200 and empty['items']==[] and empty['totalCount']=='1'
     path=f'/api/v1/admin/orders/{oid}/pickup/collect'
     status, problem=request(f'/api/v1/admin/orders/{oid}/transitions',admin,'POST',{'targetState':'PREPARING'},admin=True)
     assert status==409 and problem['code']=='P5002', 'Legacy admin transition bypassed pickup collection'
     assert request(path,actor,'POST',{'pickupCode':pickup['pickupCode']})[0]==403
-    assert request(path,admin,'POST',{'pickupCode':pickup['pickupCode']},admin=True)[0]==204
-    assert request(path,admin,'POST',{'pickupCode':pickup['pickupCode']},admin=True)[0]==204
+    assert request(path,admin,'POST',{'pickupCode':pickup['pickupCode']},admin=True)[0]==400
+    assert request(path,admin,'POST',{'pickupCode':pickup['pickupCode'],'identityVerified':True},admin=True)[1]['code']=='P5018'
+    query(f"ALTER TABLE pliego.pedido_retiro DISABLE TRIGGER trg_pedido_retiro_snapshot; UPDATE pliego.pedido_retiro SET estimado_desde=estimado_desde-INTERVAL '1 day',listo_desde=listo_desde-INTERVAL '1 day' WHERE pedido_id={oid}; ALTER TABLE pliego.pedido_retiro ENABLE TRIGGER trg_pedido_retiro_snapshot; UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id={oid}")
+    status, ready=request(lookup_path,admin,'POST',{'code':pickup['pickupCode']},admin=True)
+    assert status==200 and ready['state']=='READY' and ready['identityVerified'] is None
+    status, collected=request(path,admin,'POST',{'pickupCode':pickup['pickupCode'],'identityVerified':True},admin=True)
+    assert status==200 and collected['state']=='COLLECTED' and 'pickupCode' not in collected
+    assert collected['identityVerified'] is True and collected['collectedBy']['userId']==str(admin)
+    status, collected_page=request('/api/v1/admin/pickups?state=COLLECTED&q='+checkout['orderReference'],admin,admin=True)
+    assert status==200 and [row['orderId'] for row in collected_page['items']]==[oid]
+    assert request(path,admin,'POST',{'pickupCode':pickup['pickupCode'],'identityVerified':True},admin=True)[1]['code']=='P5017'
     assert request('/api/v1/orders/'+oid,actor)[1]['fulfillment']['state']=='COLLECTED'
-    assert request('/api/v1/checkout',actor,'POST',body,key)==(201,checkout)
+    status, replay=request('/api/v1/checkout',actor,'POST',body,key)
+    assert status==201 and replay['orderId']==oid and replay['orderReference']==checkout['orderReference']
     print('STORE_PICKUP HTTP passed: public coordinates/hours, inputs, quote/checkout/order totals, history/replay, collection authorization')
 
 

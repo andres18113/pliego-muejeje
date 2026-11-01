@@ -166,6 +166,9 @@ BEGIN
  EXCEPTION WHEN SQLSTATE 'P1004' THEN NULL; END;
  SELECT count(*) INTO v_page_count FROM pliego.fn_admin_billing_identity_correction_requests(v_admin,'PENDING',0,20);
  IF v_page_count<1 THEN RAISE EXCEPTION 'admin could not list pending requests'; END IF;
+ IF NOT EXISTS(SELECT FROM pliego.fn_admin_billing_identity_correction_requests(v_admin,'PENDING',0,20)
+  WHERE request_id=v_request AND customer_has_billed_invoices AND decided_by_email IS NULL) THEN
+  RAISE EXCEPTION 'pending correction queue missing billed-account context or nullable admin email'; END IF;
  SELECT total_count INTO v_page_count FROM pliego.fn_admin_billing_identity_correction_requests(v_admin,'PENDING',100,20);
  IF v_page_count IS NULL OR v_page_count<1 THEN RAISE EXCEPTION 'empty admin page lost the filtered total count'; END IF;
  BEGIN
@@ -188,6 +191,10 @@ BEGIN
   v_created,v_due,v_decided,v_decision_reason);
  CALL pliego.sp_admin_billing_identity_correction_decide(v_admin,v_second_request,'APPROVE',NULL,
   v_status,v_decided,v_replay,v_decision_reason);
+ IF NOT EXISTS(SELECT FROM pliego.fn_admin_billing_identity_correction_requests(v_admin,'APPROVED',0,20) q
+  WHERE q.request_id=v_second_request AND q.customer_has_billed_invoices
+   AND q.decided_by_email=(SELECT email_normalizado FROM pliego.usuario WHERE usuario_id=v_admin)) THEN
+  RAISE EXCEPTION 'decided correction queue missing billed-account context or deciding admin email'; END IF;
  IF v_status<>'APPROVED' OR v_decided IS NULL OR v_replay<>v_admin
   OR NOT EXISTS(SELECT FROM pliego.cliente_identificacion_evento WHERE cliente_id=v_customer_c
     AND accion='CORRECTION_APPROVED' AND origen='STAFF_REVIEW')

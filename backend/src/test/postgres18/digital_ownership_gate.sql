@@ -42,6 +42,10 @@ BEGIN
  SELECT lib.owned_item_id,lib.item INTO own,payload FROM pliego.fn_customer_library(u,NULL,0,20) lib;
  IF own IS NULL OR payload->>'ownershipState'<>'OWNED' OR payload->>'contentAccessSupported'<>'false'
  OR payload->>'productType'<>'EBOOK' OR jsonb_array_length(payload->'sourcePurchases')<>1 THEN RAISE EXCEPTION 'Ownership projection incorrect'; END IF;
+ IF payload#>>'{sourcePurchases,0,orderId}' IS DISTINCT FROM o::TEXT
+ OR payload#>>'{sourcePurchases,0,orderReference}' IS DISTINCT FROM (SELECT referencia_publica FROM pliego.pedido WHERE pedido_id=o)
+ OR pliego.fn_customer_library_detail(u,own) IS DISTINCT FROM payload
+ THEN RAISE EXCEPTION 'Library list/detail lost the source order ID or public reference'; END IF;
  CALL pliego.sp_checkout_idempotent(u,key,NULL,'TRANSFER','APPROVED',cart,'DIGITAL_ONLY',NULL,o2,os,ps,total,ref);
  IF o2<>o OR (SELECT count(*) FROM pliego.digital_grant WHERE pedido_item_id IN(SELECT pedido_item_id FROM pliego.pedido_item WHERE pedido_id=o))<>1 THEN RAISE EXCEPTION 'Retry duplicated grant'; END IF;
  BEGIN PERFORM pliego.fn_customer_library_detail(u2,own); RAISE EXCEPTION 'Other user sees entitlement'; EXCEPTION WHEN SQLSTATE 'P6001' THEN NULL; END;
@@ -65,8 +69,17 @@ BEGIN
  CALL pliego.sp_credit_note_issue(a,o,'LIBRARY-CREDIT','Reembolso de fixture',credit);
  IF credit IS NULL THEN RAISE EXCEPTION 'Digital refund missing credit note'; END IF;
  IF (pliego.fn_customer_library_detail(u,own)->>'ownershipState')<>'REVOKED' THEN RAISE EXCEPTION 'Refund failed to revoke'; END IF;
+ IF pliego.fn_customer_library_detail(u,own)#>>'{sourcePurchases,0,orderReference}'
+ IS DISTINCT FROM (SELECT referencia_publica FROM pliego.pedido WHERE pedido_id=o)
+ THEN RAISE EXCEPTION 'Refund changed the library source public reference'; END IF;
  CALL pliego.sp_cart_add_item(u,ebook,1,cart,item,qty);
  CALL pliego.sp_checkout(u,NULL,'TRANSFER','APPROVED','DIGITAL_ONLY',NULL,o2,os,ps,total,ref);
+ payload:=pliego.fn_customer_library_detail(u,own);
+ IF jsonb_array_length(payload->'sourcePurchases')<>2 OR EXISTS(
+  SELECT FROM jsonb_array_elements(payload->'sourcePurchases') source
+  LEFT JOIN pliego.pedido purchase ON purchase.pedido_id::TEXT=source->>'orderId'
+  WHERE purchase.pedido_id IS NULL OR source->>'orderReference' IS DISTINCT FROM purchase.referencia_publica)
+ THEN RAISE EXCEPTION 'Repurchase must retain each source order ID and public reference'; END IF;
  BEGIN UPDATE pliego.digital_grant SET metadata_snapshot='{}'::JSONB WHERE owned_item_id=own;
  RAISE EXCEPTION 'Acquisition snapshot can be rewritten'; EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
  BEGIN UPDATE pliego.digital_ownership SET cliente_id=c2 WHERE owned_item_id=own;
