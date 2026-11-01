@@ -89,13 +89,26 @@ class CustomerApiIntegrationTest {
     @Autowired
     org.springframework.test.context.event.ApplicationEvents events;
 
-    @BeforeEach
-    void resetEmailActions() {
-        org.mockito.Mockito.reset(emailActions);
-    }
-
     @org.springframework.test.context.bean.override.mockito.MockitoBean
-    com.pliego.modules.identity.application.EmailActionService emailActions;
+    com.pliego.modules.identity.gateway.EmailChangeGateway emailChanges;
+
+    @Autowired
+    com.pliego.modules.identity.application.EmailActionTokens emailTokens;
+
+    @BeforeEach
+    void prepareEmailChanges() {
+        org.mockito.Mockito.when(emailChanges.request(org.mockito.ArgumentMatchers.anyLong(),
+                org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.anyString(),
+                org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.anyString(),
+                org.mockito.ArgumentMatchers.anyString())).thenAnswer(call -> {
+            String address = ((String) call.getArgument(1)).trim().toLowerCase(java.util.Locale.ROOT);
+            if (address.equals("tomado@example.com")) {
+                throw exceptionTranslator.translate(new SQLException("private unique detail", "P1101"));
+            }
+            return new com.pliego.modules.identity.application.EmailChangeResult("ana@example.com", address,
+                    Instant.parse("2026-11-02T16:00:00Z"));
+        });
+    }
 
     @BeforeEach
     void resetGateway() {
@@ -183,6 +196,23 @@ class CustomerApiIntegrationTest {
     }
 
     @Test
+    void profileExposesDeliveryStateWithoutProviderReason() throws Exception {
+        mvc.perform(get("/api/v1/me").header("Authorization", customerToken("100")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.emailDelivery.status").value("OK"))
+                .andExpect(jsonPath("$.emailDelivery.since").isEmpty());
+        CustomerProfile current = gateway.profile;
+        gateway.profile = new CustomerProfile(current.customerId(), current.email(), current.firstNames(),
+                current.lastNames(), current.phone(), current.state(), current.version(), true,
+                Instant.parse("2026-11-01T15:33:37Z"));
+        mvc.perform(get("/api/v1/me").header("Authorization", customerToken("100")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.emailDelivery.status").value("UNDELIVERABLE"))
+                .andExpect(jsonPath("$.emailDelivery.since").value("2026-11-01T15:33:37Z"))
+                .andExpect(jsonPath("$.emailDelivery.reason").doesNotExist());
+    }
+
+    @Test
     void profileExposesUnverifiedCurrentEmailEvenWhileAccountIsActive() throws Exception {
         CustomerProfile current = gateway.profile;
         gateway.profile = new CustomerProfile(current.customerId(), current.email(), current.firstNames(),
@@ -221,7 +251,7 @@ class CustomerApiIntegrationTest {
     }
 
     @Test
-    void changesOwnEmailOnlyAfterConfirmingTheCurrentPassword() throws Exception {
+    void keepsOwnEmailUntilThePendingAddressIsConfirmed() throws Exception {
         gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
 
         mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
@@ -237,13 +267,14 @@ class CustomerApiIntegrationTest {
         mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\"newEmail\":\"Nueva@Example.com\",\"currentPassword\":\"Lectura-segura-2026\"}"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.email").value("nueva@example.com"));
+                .andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.email").value("ana@example.com"))
+                .andExpect(jsonPath("$.pendingEmail.address").value("nueva@example.com"))
+                .andExpect(jsonPath("$.pendingEmail.expiresAt").isNotEmpty());
         assertEquals(100L, gateway.lastActorUserId);
-        assertEquals("nueva@example.com", gateway.profile.email());
-        // The integration point for the future mail adapter carries both addresses.
-        assertEquals(List.of(new com.pliego.modules.customer.application.CustomerEmailChanged(100L, "ana@example.com", "nueva@example.com")),
-                events.stream(com.pliego.modules.customer.application.CustomerEmailChanged.class).toList());
+        assertEquals("ana@example.com", gateway.profile.email());
+        assertTrue(gateway.profile.emailVerified());
+        assertEquals(0, events.stream(com.pliego.modules.customer.application.CustomerEmailChanged.class).count());
     }
 
     @Test
@@ -268,8 +299,170 @@ class CustomerApiIntegrationTest {
                         .content("{\"newEmail\":\"nueva@example.com\"}"))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
-        assertEquals(1, gateway.changeEmailCalls);
+        assertEquals(0, gateway.changeEmailCalls);
+        org.mockito.Mockito.verify(emailChanges).request(org.mockito.ArgumentMatchers.eq(100L),
+                org.mockito.ArgumentMatchers.eq("tomado@example.com"), org.mockito.ArgumentMatchers.anyString(),
+                org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.anyString());
         assertEquals("ana@example.com", gateway.profile.email());
+    }
+
+    @Test
+    void pendingEmailIsExplicitlyNullableAndExposesOnlyAddressExpiryAndDelivery() throws Exception {
+        mvc.perform(get("/api/v1/me").header("Authorization", customerToken("100")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.pendingEmail").isEmpty());
+        var current = gateway.profile;
+        for (String delivery : List.of("OK", "UNDELIVERABLE")) {
+            gateway.profile = new CustomerProfile(current.customerId(), current.email(), current.firstNames(),
+                    current.lastNames(), current.phone(), current.state(), current.version(), true, null,
+                    new com.pliego.modules.identity.application.PendingEmailChange("nueva@example.com",
+                            Instant.parse("2026-11-02T16:00:00Z"), delivery));
+            mvc.perform(get("/api/v1/me").header("Authorization", customerToken("100")))
+                    .andExpect(status().isOk()).andExpect(jsonPath("$.email").value("ana@example.com"))
+                    .andExpect(jsonPath("$.emailVerified").value(true))
+                    .andExpect(jsonPath("$.emailDelivery.status").value("OK"))
+                    .andExpect(jsonPath("$.pendingEmail.address").value("nueva@example.com"))
+                    .andExpect(jsonPath("$.pendingEmail.expiresAt").value("2026-11-02T16:00:00Z"))
+                    .andExpect(jsonPath("$.pendingEmail.delivery").value(delivery))
+                    .andExpect(jsonPath("$.pendingEmail.token").doesNotExist());
+        }
+    }
+
+    @Test
+    void aCustomerWithUndeliverableCurrentEmailCanRequestAChange() throws Exception {
+        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
+        var current = gateway.profile;
+        gateway.profile = new CustomerProfile(current.customerId(), current.email(), current.firstNames(),
+                current.lastNames(), current.phone(), current.state(), current.version(), true,
+                Instant.parse("2026-11-01T15:33:37Z"));
+        mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"newEmail\":\"nueva@example.com\",\"currentPassword\":\"Lectura-segura-2026\"}"))
+                .andExpect(status().isAccepted()).andExpect(jsonPath("$.email").value("ana@example.com"));
+        assertEquals(Instant.parse("2026-11-01T15:33:37Z"), gateway.profile.emailUndeliverableSince());
+    }
+
+    @Test
+    void resendAndAuthenticatedCancellationRequireTheCustomerSession() throws Exception {
+        mvc.perform(post("/api/v1/me/email-change/resend")).andExpect(status().isUnauthorized());
+        mvc.perform(delete("/api/v1/me/email-change")).andExpect(status().isUnauthorized());
+        mvc.perform(post("/api/v1/me/email-change/resend").header("Authorization", customerToken("100")))
+                .andExpect(status().isAccepted()).andExpect(content().string(""));
+        for (int attempt = 0; attempt < 2; attempt++) {
+            mvc.perform(delete("/api/v1/me/email-change").header("Authorization", customerToken("100")))
+                    .andExpect(status().isNoContent());
+        }
+        org.mockito.Mockito.verify(emailChanges, org.mockito.Mockito.times(2)).cancelForUser(100L);
+    }
+
+    @Test
+    void publicConfirmationAndRecoveryWorkWithoutJwtAndUseSeparateTokenPurposes() throws Exception {
+        var confirm = emailTokens.issue("EMAIL_CHANGE_CONFIRM");
+        var cancel = emailTokens.issue("EMAIL_CHANGE_CANCEL");
+        org.mockito.Mockito.when(emailChanges.findNonce("EMAIL_CHANGE_CONFIRM", confirm.hash())).thenReturn(confirm.nonce());
+        org.mockito.Mockito.when(emailChanges.findNonce("EMAIL_CHANGE_CANCEL", cancel.hash())).thenReturn(cancel.nonce());
+        org.mockito.Mockito.when(emailChanges.confirm(confirm.hash())).thenReturn("nueva@example.com");
+        mvc.perform(post("/api/v1/auth/email-change/confirm").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"token\":\"" + emailTokens.derive("EMAIL_CHANGE_CONFIRM", confirm.nonce()) + "\"}"))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.email").value("nueva@example.com"));
+        for (int attempt = 0; attempt < 2; attempt++) {
+            mvc.perform(post("/api/v1/auth/email-change/cancel").contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"token\":\"" + emailTokens.derive("EMAIL_CHANGE_CANCEL", cancel.nonce()) + "\"}"))
+                    .andExpect(status().isOk());
+        }
+        mvc.perform(post("/api/v1/auth/email-change/confirm").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"token\":\"" + emailTokens.derive("EMAIL_CHANGE_CANCEL", cancel.nonce()) + "\"}"))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("EMAIL_CHANGE_TOKEN_INVALID"));
+    }
+
+    @Test
+    void malformedMissingAndUnknownCredentialsHaveTheSameSafeCode() throws Exception {
+        for (String payload : List.of("{}", "{\"token\":null}", "{\"token\":\"invalido\"}",
+                "{\"token\":\"" + "A".repeat(43) + "\"}")) {
+            for (String action : List.of("confirm", "cancel")) {
+                mvc.perform(post("/api/v1/auth/email-change/" + action).contentType(MediaType.APPLICATION_JSON).content(payload))
+                        .andExpect(status().isBadRequest())
+                        .andExpect(jsonPath("$.code").value("EMAIL_CHANGE_TOKEN_INVALID"))
+                        .andExpect(jsonPath("$.detail").value("El enlace de cambio de correo no es válido."));
+            }
+        }
+    }
+
+    @Test
+    void tokenOutcomesHaveDistinctStableCodesWithoutAccountData() throws Exception {
+        var credential = emailTokens.issue("EMAIL_CHANGE_CONFIRM");
+        org.mockito.Mockito.when(emailChanges.findNonce("EMAIL_CHANGE_CONFIRM", credential.hash())).thenReturn(credential.nonce());
+        String payload = "{\"token\":\"" + emailTokens.derive("EMAIL_CHANGE_CONFIRM", credential.nonce()) + "\"}";
+        for (String[] outcome : new String[][]{{"P1123", "EMAIL_CHANGE_TOKEN_INVALID", "400"},
+                {"P1124", "EMAIL_CHANGE_TOKEN_EXPIRED", "410"}, {"P1125", "EMAIL_CHANGE_TOKEN_USED", "410"},
+                {"P1126", "EMAIL_CHANGE_TOKEN_SUPERSEDED", "410"}, {"P1127", "EMAIL_CHANGE_CANCELLED", "410"},
+                {"P1101", "P1101", "409"}}) {
+            org.mockito.Mockito.doThrow(exceptionTranslator.translate(new SQLException("PRIVATE recipient/token/payload", outcome[0])))
+                    .when(emailChanges).confirm(credential.hash());
+            mvc.perform(post("/api/v1/auth/email-change/confirm").contentType(MediaType.APPLICATION_JSON).content(payload))
+                    .andExpect(status().is(Integer.parseInt(outcome[2])))
+                    .andExpect(jsonPath("$.code").value(outcome[1]))
+                    .andExpect(jsonPath("$.email").doesNotExist())
+                    .andExpect(jsonPath("$.detail", org.hamcrest.Matchers.not(org.hamcrest.Matchers.containsString("PRIVATE"))));
+        }
+    }
+
+    @Test
+    void cancellationAfterConfirmationDirectsToHelpWithItsStableCode() throws Exception {
+        var credential = emailTokens.issue("EMAIL_CHANGE_CANCEL");
+        org.mockito.Mockito.when(emailChanges.findNonce("EMAIL_CHANGE_CANCEL", credential.hash())).thenReturn(credential.nonce());
+        org.mockito.Mockito.doThrow(exceptionTranslator.translate(new SQLException("PRIVATE", "P1128")))
+                .when(emailChanges).cancelWithToken(credential.hash());
+        mvc.perform(post("/api/v1/auth/email-change/cancel").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"token\":\"" + emailTokens.derive("EMAIL_CHANGE_CANCEL", credential.nonce()) + "\"}"))
+                .andExpect(status().isGone()).andExpect(jsonPath("$.code").value("EMAIL_CHANGE_ALREADY_CONFIRMED"))
+                .andExpect(jsonPath("$.detail", org.hamcrest.Matchers.containsString("Ayuda")));
+    }
+
+    @Test
+    void resendReportsNothingPendingAndRateLimitsWithSpanishStableProblems() throws Exception {
+        for (String[] outcome : new String[][]{{"P1121", "EMAIL_CHANGE_NOT_PENDING", "404"},
+                {"P1122", "EMAIL_CHANGE_RATE_LIMITED", "429"}}) {
+            org.mockito.Mockito.doThrow(exceptionTranslator.translate(new SQLException("PRIVATE", outcome[0])))
+                    .when(emailChanges).resend(org.mockito.ArgumentMatchers.eq(100L),
+                            org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.anyString());
+            mvc.perform(post("/api/v1/me/email-change/resend").header("Authorization", customerToken("100")))
+                    .andExpect(status().is(Integer.parseInt(outcome[2]))).andExpect(jsonPath("$.code").value(outcome[1]));
+        }
+    }
+
+    @Test
+    void requestRejectsTheCurrentAddressAndItsRateLimitWithoutChangingOldMappings() throws Exception {
+        gateway.passwordHash = passwordEncoder.encode("Lectura-segura-2026");
+        for (String[] outcome : new String[][]{{"P1120", "EMAIL_CHANGE_SAME_ADDRESS", "400"},
+                {"P1122", "EMAIL_CHANGE_RATE_LIMITED", "429"}}) {
+            org.mockito.Mockito.doThrow(exceptionTranslator.translate(new SQLException("PRIVATE", outcome[0])))
+                    .when(emailChanges).request(org.mockito.ArgumentMatchers.eq(100L),
+                            org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.anyString(),
+                            org.mockito.ArgumentMatchers.anyString(), org.mockito.ArgumentMatchers.anyString(),
+                            org.mockito.ArgumentMatchers.anyString());
+            var response = mvc.perform(put("/api/v1/me/email").header("Authorization", customerToken("100"))
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content("{\"newEmail\":\"ana@example.com\",\"currentPassword\":\"Lectura-segura-2026\"}"))
+                    .andExpect(status().is(Integer.parseInt(outcome[2]))).andExpect(jsonPath("$.code").value(outcome[1]));
+            if (outcome[0].equals("P1120")) response.andExpect(jsonPath("$.detail").value("Ese ya es tu correo actual."));
+        }
+    }
+
+    @Test
+    void openApiPublishesThePendingEmailContractAndAllFourNewActions() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.paths['/api/v1/me/email'].put.responses['202']").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/me/email'].put.responses['200']").doesNotExist())
+                .andExpect(jsonPath("$.paths['/api/v1/me/email-change/resend'].post.responses['429']").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/me/email-change'].delete.responses['204']").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/auth/email-change/confirm'].post.responses['409']").exists())
+                .andExpect(jsonPath("$.paths['/api/v1/auth/email-change/cancel'].post.responses['410']").exists())
+                .andExpect(jsonPath("$.components.schemas.CustomerProfile.properties.pendingEmail.anyOf[0]['$ref']").value("#/components/schemas/PendingEmail"))
+                .andExpect(jsonPath("$.components.schemas.CustomerProfile.properties.pendingEmail.anyOf[1].type").value("null"))
+                .andExpect(jsonPath("$.components.schemas.PendingEmail.properties.delivery.enum[0]").value("OK"))
+                .andExpect(jsonPath("$.components.schemas.PendingEmail.properties.delivery.enum[1]").value("UNDELIVERABLE"))
+                .andExpect(jsonPath("$.components.schemas.RequestedPendingEmail.properties.delivery").doesNotExist());
     }
 
     @Test

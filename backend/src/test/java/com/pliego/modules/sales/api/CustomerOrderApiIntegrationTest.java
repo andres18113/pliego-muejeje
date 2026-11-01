@@ -66,6 +66,20 @@ class CustomerOrderApiIntegrationTest {
     @BeforeEach void reset() { gateway.reset(); }
 
     @Test
+    void customerListAndDetailExposeTheSamePublicReference() throws Exception {
+        var detail = gateway.detail;
+        gateway.detail = new Detail(detail.orderId(), detail.orderState(), detail.subtotal(), detail.total(),
+                detail.createdAt(), detail.updatedAt(), detail.items(), detail.address(), detail.payment(),
+                detail.stateHistory(), detail.postPurchase(), "PL-0123-4567");
+        gateway.page = new Page(List.of(new Summary("700", detail.createdAt(), detail.orderState(), detail.total(),
+                "APPROVED", summaryExtras("CONFIRMED"), "PL-0123-4567")), 1);
+        mvc.perform(get("/api/v1/orders").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].orderReference").value("PL-0123-4567"));
+        mvc.perform(get("/api/v1/orders/700").header("Authorization", token("42", "CUSTOMER")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.orderReference").value("PL-0123-4567"));
+    }
+
+    @Test
     void digitalAccessContractIsSourceSpecificAndPhysicalLinesRemainNull() throws Exception {
         mvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk())

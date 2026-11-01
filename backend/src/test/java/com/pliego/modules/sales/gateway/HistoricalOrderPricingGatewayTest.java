@@ -49,6 +49,7 @@ class HistoricalOrderPricingGatewayTest {
         var page = new JdbcCustomerOrderGateway(new DatabaseExceptionTranslator(), jdbc, new ObjectMapper()).list(42L, 0, 20);
         var summary = page.items().getFirst();
 
+        assertEquals("PL-0123-4567", new ObjectMapper().valueToTree(summary).path("orderReference").asText());
         assertEquals(1L, page.totalCount());
         assertEquals(new BigDecimal("45.77"), summary.total());
         var amounts = summary.postPurchase().amounts();
@@ -82,6 +83,7 @@ class HistoricalOrderPricingGatewayTest {
         var order = new JdbcCustomerOrderGateway(new DatabaseExceptionTranslator(), jdbc, new ObjectMapper()).detail(42L, 700L);
 
         assertNotNull(order, "Order detail must read the immutable offer-pricing Database API projection");
+        assertEquals("PL-0123-4567", new ObjectMapper().valueToTree(order).path("orderReference").asText());
         assertTrue(order.postPurchase().offerPricing().pricingSnapshotAvailable());
         assertEquals(new BigDecimal("44.31"), order.postPurchase().offerPricing().originalSubtotal());
         assertEquals(new BigDecimal("4.51"), order.postPurchase().offerPricing().savingsTotal());
@@ -189,6 +191,7 @@ class HistoricalOrderPricingGatewayTest {
                 .resolve(42L, UUID.randomUUID()).order();
 
         assertNotNull(order);
+        assertEquals("PL-0123-4567", new ObjectMapper().valueToTree(order).path("orderReference").asText());
         assertTrue(order.offerPricing().pricingSnapshotAvailable());
         assertEquals(new BigDecimal("44.31"), order.offerPricing().originalSubtotal());
         assertEquals(new BigDecimal("4.51"), order.offerPricing().savingsTotal());
@@ -201,6 +204,7 @@ class HistoricalOrderPricingGatewayTest {
     private static ResultSet orderRow() throws Exception {
         var row = mock(ResultSet.class);
         when(row.getLong("order_id")).thenReturn(700L);
+        when(row.getString("order_reference")).thenReturn("PL-0123-4567");
         when(row.getString("order_state")).thenReturn("CONFIRMED");
         when(row.getString("purchase_state")).thenReturn("CONFIRMED");
         when(row.getObject("created_at", OffsetDateTime.class)).thenReturn(OffsetDateTime.parse("2026-09-23T19:30:00Z"));

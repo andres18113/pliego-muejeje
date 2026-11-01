@@ -73,15 +73,16 @@ public class AdminOrderController {
     @ApiResponse(responseCode = "200", description = "Página de pedidos")
     public PageResponse<Summary> search(@AuthenticationPrincipal Jwt jwt,
             @RequestParam(required = false) String state,
+            @RequestParam(required = false) @jakarta.validation.constraints.Size(max = 100, message = "La búsqueda no puede superar 100 caracteres.") String q,
             @RequestParam(required = false) OffsetDateTime dateFrom,
             @RequestParam(required = false) OffsetDateTime dateTo,
             @RequestParam(required = false) @Positive Long customerId,
             @RequestParam(defaultValue = "0") @Min(0) int page,
             @RequestParam(defaultValue = "20") @Min(1) @Max(50) int pageSize) {
-        var result = service.search(actorId(jwt), new Search(state, dateFrom, dateTo, customerId, page, pageSize));
+        var result = service.search(actorId(jwt), new Search(state, dateFrom, dateTo, customerId, page, pageSize, q));
         return new PageResponse<>(result.items().stream().map(order -> new Summary(order.orderId(),
                 order.customerId(), order.customerName(), order.createdAt().toString(), order.orderState(),
-                money(order.total()), order.paymentState())).toList(), page, pageSize,
+                money(order.total()), order.paymentState(), order.orderReference())).toList(), page, pageSize,
                 Long.toString(result.totalCount()));
     }
 
@@ -113,7 +114,7 @@ public class AdminOrderController {
                         movement.type(), movement.quantity(), movement.stockBefore(), movement.stockAfter(),
                         movement.reason(), movement.eventAt())).toList(),post.purchaseState(),post.fulfillment(),post.shipment(),
                 PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions(),
-                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()));
+                money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()), order.orderReference());
     }
 
     @PostMapping(path = "/{orderId}/transitions", consumes = MediaType.APPLICATION_JSON_VALUE)

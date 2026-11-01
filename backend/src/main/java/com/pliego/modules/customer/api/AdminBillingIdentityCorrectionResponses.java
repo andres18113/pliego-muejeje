@@ -1,6 +1,7 @@
 package com.pliego.modules.customer.api;
 
 import java.util.List;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import com.pliego.modules.customer.application.AdminBillingIdentityCorrection;
 import com.pliego.modules.customer.application.BillingIdentityCorrectionDecision;
@@ -11,12 +12,14 @@ public final class AdminBillingIdentityCorrectionResponses {
     public record Request(String id, String customerId, String customerName, String customerEmail,
             String currentType, String currentNumber, String proposedType, String proposedNumber,
             String reasonCode, String note, String status, String createdAt, String dueAt,
-            String decidedAt, String decidedBy, String decisionReason) {
+            String decidedAt, String decidedBy, String decisionReason, boolean customerHasBilledInvoices,
+            @Schema(nullable = true, types = {"string", "null"}) String decidedByEmail) {
         static Request from(AdminBillingIdentityCorrection row) {
             return new Request(row.id(), row.customerId(), row.customerName(), row.customerEmail(), row.currentType(),
                     row.currentNumber(), row.proposedType(), row.proposedNumber(), row.reasonCode(), row.note(),
                     row.status(), row.createdAt().toString(), row.dueAt().toString(),
-                    row.decidedAt() == null ? null : row.decidedAt().toString(), row.decidedBy(), row.decisionReason());
+                    row.decidedAt() == null ? null : row.decidedAt().toString(), row.decidedBy(), row.decisionReason(),
+                    row.customerHasBilledInvoices(), row.decidedByEmail());
         }
     }
 

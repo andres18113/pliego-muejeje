@@ -67,7 +67,7 @@ public class CustomerOrderController {
                 post.amounts() == null ? null : money(post.amounts().subtotal()),
                 post.amounts() == null ? null : money(post.amounts().taxRate()),
                 post.amounts() == null ? null : money(post.amounts().taxAmount()),
-                post.amounts() == null ? null : money(post.amounts().shippingAmount()));
+                post.amounts() == null ? null : money(post.amounts().shippingAmount()), order.orderReference());
         }).toList(), page, pageSize, Long.toString(result.totalCount()));
     }
 
@@ -98,7 +98,7 @@ public class CustomerOrderController {
                 PostPurchaseResponses.invoice(post.invoice()),PostPurchaseResponses.creditNotes(post.creditNotes()),post.availableActions(),
                 money(post.amounts().taxRate()),money(post.amounts().taxAmount()),money(post.amounts().shippingAmount()),
                 money(post.offerPricing().originalSubtotal()), money(post.offerPricing().savingsTotal()),
-                money(post.offerPricing().currentSubtotal()), post.offerPricing().pricingSnapshotAvailable());
+                money(post.offerPricing().currentSubtotal()), post.offerPricing().pricingSnapshotAvailable(), order.orderReference());
     }
 
     @PostMapping("/{orderId}/cancel")

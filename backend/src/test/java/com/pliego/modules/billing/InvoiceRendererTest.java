@@ -27,6 +27,15 @@ class InvoiceRendererTest {
     private final InvoiceRenderer renderer = new InvoiceRenderer();
 
     @Test
+    void render_pdf_newSnapshot_shouldDisplayPublicOrderReferenceAndKeepLegacySnapshotsReadable() throws Exception {
+        ObjectNode current = snapshot();
+        current.put("orderReference", "PL-0123-4567");
+        String text = pdfText(renderer.render("PDF", current));
+        assertThat(text).contains("Pedido: PL-0123-4567").doesNotContain("Pedido: 10");
+        assertThat(pdfText(renderer.render("PDF", snapshot()))).contains("Pedido: 10");
+    }
+
+    @Test
     void render_xml_shouldValidateOfficialSchemaAndPreserveSnapshotAmounts() throws Exception {
         byte[] xml = renderer.render("XML", snapshot());
         var factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

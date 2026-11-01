@@ -4,6 +4,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.stereotype.Component;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -21,13 +23,16 @@ import com.pliego.modules.notifications.application.MailLayout.Item;
 public final class MailTemplates {
  private final MailProperties properties;
  private final EmailActionTokens tokens;
+ private final Map<String,String> emailCoverRenditions;
  public MailTemplates(MailProperties properties,EmailActionTokens tokens,ObjectMapper mapper) {
   this.properties=properties; this.tokens=tokens;
+  this.emailCoverRenditions=loadEmailCoverRenditions(mapper);
  }
  public MailMessage render(String type,JsonNode data) {
   String base=properties.publicUrl().toString().replaceAll("/+$","");
   return switch(type) {
    case "VERIFY_EMAIL","RESET_PASSWORD" -> emailAction(type,data,base);
+   case "EMAIL_CHANGE_CONFIRM","EMAIL_CHANGE_REQUESTED","EMAIL_CHANGED" -> emailChange(type,data,base);
    case "ORDER_CONFIRMED" -> orderConfirmed(data,base);
    case "ORDER_STATUS" -> orderStatus(data,base);
    case "ORDER_CANCELLED" -> orderCancelled(data,base);
@@ -36,9 +41,38 @@ public final class MailTemplates {
   };
  }
 
+ /** A pending identity keeps its confirmation and its recovery action on separate credentials. */
+ private MailMessage emailChange(String type,JsonNode data,String base) {
+  if("EMAIL_CHANGE_CONFIRM".equals(type)) {
+   String url=base+"/confirmar-correo#token="+tokens.derive("EMAIL_CHANGE_CONFIRM",data.path("nonce").asText());
+   return new MailLayout("Confirma tu nuevo correo para usarlo en tu cuenta de PLIEGO.",base)
+    .heading("Confirma tu nuevo correo")
+    .lead("Confirma esta dirección para usarla en tu cuenta de PLIEGO. Hasta que lo hagas, tu cuenta sigue usando tu correo actual.")
+    .button("Confirmar correo",url)
+    .muted("El enlace vence en 24 horas. Si no pediste este cambio, ignora este mensaje.")
+    .fallback(url).build("Confirma tu nuevo correo en PLIEGO");
+  }
+  String masked=data.path("maskedEmail").asText("");
+  if(masked.isBlank()||MailProperties.unsafe(masked))throw new IllegalArgumentException("Datos de cambio de correo inválidos.");
+  if("EMAIL_CHANGE_REQUESTED".equals(type)) {
+   String url=base+"/cancelar-cambio-correo#token="+tokens.derive("EMAIL_CHANGE_CANCEL",data.path("nonce").asText());
+   return new MailLayout("Se pidió cambiar el correo de tu cuenta PLIEGO.",base)
+    .heading("¿Cambiaste tu correo?")
+    .lead("Se pidió usar "+masked+" como correo de tu cuenta. Tu cuenta seguirá usando esta dirección hasta que se confirme el cambio.")
+    .button("No fui yo: cancelar el cambio",url)
+    .muted("Si fuiste tú, no necesitas hacer nada.")
+    .fallback(url).build("Se pidió cambiar el correo de tu cuenta PLIEGO");
+  }
+  return new MailLayout("El correo de tu cuenta PLIEGO cambió.",base)
+   .heading("Tu correo cambió")
+   .lead("Desde ahora tu cuenta usa "+masked+". Si no fuiste tú, escríbenos desde Ayuda.")
+   .button("Ir a Ayuda",base+"/ayuda").build("El correo de tu cuenta PLIEGO cambió");
+ }
+
  /** One stable, authenticated store URL; neither invoice bytes nor identity numbers enter the message. */
  private MailMessage invoiceIssued(JsonNode data,String base) {
   String order=orderId(data);
+  String label=orderLabel(data);
   String name=data.path("customerName").asText("");
   String documentNumber=data.path("documentNumber").asText("");
   if(name.isBlank()||MailProperties.unsafe(name)||!documentNumber.matches("999-999-[0-9]{9}"))
@@ -49,6 +83,7 @@ public final class MailTemplates {
    .lead("Estimado(a) "+name)
    .paragraphWithNoWrap("Tienes una nueva factura académica N.° ",documentNumber,
     ", disponible para su visualización y descarga.")
+   .facts(List.of(Fact.of("Pedido",label)))
    .muted("Es una simulación académica sin validez tributaria y no constituye una factura electrónica autorizada por el SRI.")
    .button("Visualizar documento",url)
    .build("Tu factura académica "+documentNumber);
@@ -75,14 +110,15 @@ public final class MailTemplates {
  /** The purchase as it was confirmed: what was bought and paid, and where it goes. */
  private MailMessage orderConfirmed(JsonNode data,String base) {
   String order=orderId(data);
+  String label=orderLabel(data);
   String orderUrl=actionUrl(base,data,"actionPath","/orders/"+order);
   String libraryUrl=actionUrl(base,data,"libraryPath","/biblioteca");
   boolean delivery=data.path("delivery").isObject(); boolean pickup=data.path("pickup").isObject();
-  var mail=new MailLayout("Tu pedido N.º "+order+" está confirmado.",base)
+  var mail=new MailLayout("Tu pedido "+label+" está confirmado.",base)
    .heading("¡Gracias por tu compra!")
-   .lead("Tu pedido N.º "+order+" está confirmado.")
+   .lead("Tu pedido "+label+" está confirmado.")
    .rule()
-   .facts(List.of(Fact.of("Pedido","N.º "+order),Fact.of("Fecha de compra",MailLayout.date(data.path("date").asText(null)))))
+   .facts(List.of(Fact.of("Pedido",label),Fact.of("Fecha de compra",MailLayout.date(data.path("date").asText(null)))))
    .rule();
   boolean digitalItems=items(mail,data,true);
   mail.rule().facts(totals(data,delivery||pickup));
@@ -96,7 +132,7 @@ public final class MailTemplates {
   }
   mail.button("Ver pedido",orderUrl);
   if(digitalItems||(!delivery&&!pickup))mail.link("Ir a Mi biblioteca",libraryUrl);
-  return mail.build("Tu pedido N.º "+order+" está confirmado");
+  return mail.build("Tu pedido "+label+" está confirmado");
  }
 
  /**
@@ -105,6 +141,7 @@ public final class MailTemplates {
   */
  private MailMessage orderStatus(JsonNode data,String base) {
   String order=orderId(data);
+  String label=orderLabel(data);
   String orderUrl=actionUrl(base,data,"actionPath","/orders/"+order);
   String libraryUrl=actionUrl(base,data,"libraryPath","/biblioteca");
   String method=data.path("method").asText(""); String state=data.path("state").asText("");
@@ -116,15 +153,16 @@ public final class MailTemplates {
    case "HOME_DELIVERY:DELIVERED" -> new Status("entregado","Tu pedido fue entregado","Esperamos que disfrutes tu lectura.");
    case "STORE_PICKUP:PENDING" -> new Status("pendiente de retiro","Tu pedido está pendiente de retiro","Presenta el código de retiro al recogerlo.");
    case "STORE_PICKUP:PREPARING" -> new Status("en preparación","Estamos preparando tu pedido para retiro","Consulta en tu pedido la hora estimada para retirarlo.");
+   case "STORE_PICKUP:READY" -> new Status("listo para retiro","Tu pedido está listo para retiro","Presenta el código de retiro y tu documento de identidad al recogerlo.");
    case "STORE_PICKUP:COLLECTED" -> new Status("retirado","Retiraste tu pedido","Esperamos que disfrutes tu lectura.");
    case "DIGITAL:COMPLETED" -> new Status("compra completada","Tu compra está completa","Puedes revisar tus títulos en Mi biblioteca.");
    default -> throw new IllegalArgumentException("Estado de pedido inválido.");
   };
-  var mail=new MailLayout(status.headline()+". Pedido N.º "+order+".",base)
+  var mail=new MailLayout(status.headline()+". Pedido "+label+".",base)
    .heading(status.headline())
    .lead(status.line())
    .rule()
-   .facts(List.of(Fact.of("Pedido","N.º "+order)));
+   .facts(List.of(Fact.of("Pedido",label)));
   if(data.hasNonNull("trackingCode")) {
    var tracking=new ArrayList<Fact>();
    if(data.hasNonNull("carrier"))tracking.add(Fact.of("Transportista",data.path("carrier").asText()));
@@ -134,35 +172,35 @@ public final class MailTemplates {
   if(data.path("items").isArray()&&!data.path("items").isEmpty()) { mail.rule(); items(mail,data,true); }
   if("HOME_DELIVERY".equals(method)&&data.path("delivery").isObject()) mail.rule().section("Entrega a domicilio").lines(address(data.path("delivery")));
   if("STORE_PICKUP".equals(method)&&data.path("pickup").isObject()) {
-   mail.rule(); pickup(mail,data.path("pickup"),"PENDING".equals(state)||"PREPARING".equals(state));
+   mail.rule(); pickup(mail,data.path("pickup"),"PENDING".equals(state)||"PREPARING".equals(state)||"READY".equals(state));
   }
-  if("DIGITAL".equals(method)) return mail.button("Ir a Mi biblioteca",libraryUrl).link("Ver pedido",orderUrl).build("Pedido N.º "+order+": "+status.label());
-  return mail.button("Ver pedido",orderUrl).build("Pedido N.º "+order+": "+status.label());
+  if("DIGITAL".equals(method)) return mail.button("Ir a Mi biblioteca",libraryUrl).link("Ver pedido",orderUrl).build("Pedido "+label+": "+status.label());
+  return mail.button("Ver pedido",orderUrl).build("Pedido "+label+": "+status.label());
  }
 
  /** A cancelled order, in the customer's terms: what happened to the order and to the money. Nothing else. */
  private MailMessage orderCancelled(JsonNode data,String base) {
   String order=orderId(data);
+  String label=orderLabel(data);
   String orderUrl=actionUrl(base,data,"actionPath","/orders/"+order);
   boolean refunded="REFUNDED".equals(data.path("paymentState").asText(""));
-  var mail=new MailLayout("Tu pedido N.º "+order+" fue cancelado.",base)
+  var mail=new MailLayout("Tu pedido "+label+" fue cancelado.",base)
    .heading("Tu pedido fue cancelado")
    .lead(refunded?"El pago fue reembolsado.":"Este pedido no continuará.")
    .paragraph("No necesitas realizar ninguna acción adicional.")
    .rule();
   var facts=new ArrayList<Fact>();
-  facts.add(Fact.of("Pedido","N.º "+order));
+  facts.add(Fact.of("Pedido",label));
   if(refunded&&MailLayout.positive(data.path("refundAmount").asText(null)))facts.add(Fact.total("Reembolso",MailLayout.money(data.path("refundAmount").asText())));
   mail.facts(facts);
   // A refunded purchase saved nothing: its titles are listed with what was paid, without the saving.
   if(data.path("items").isArray()&&!data.path("items").isEmpty()) { mail.rule(); items(mail,data,false); }
-  return mail.button("Ver pedido",orderUrl).build("Pedido N.º "+order+" cancelado");
+  return mail.button("Ver pedido",orderUrl).build("Pedido "+label+" cancelado");
  }
 
  /** Draws the purchased titles; answers whether the payload says any of them is digital. */
  private boolean items(MailLayout mail,JsonNode data,boolean savings) {
   boolean digital=false;
-  String base=properties.publicUrl().toString().replaceAll("/+$","");
   for(JsonNode item:data.path("items")) {
    String format=item.path("format").asText(null);
    digital|="EBOOK".equals(format)||"AUDIOBOOK".equals(format);
@@ -170,7 +208,7 @@ public final class MailTemplates {
    // The previous price and the saving are shown only together, and only when the server reports a saving.
    boolean saved=savings&&MailLayout.positive(item.path("lineSavings").asText(null))&&item.hasNonNull("originalSubtotal");
    mail.item(new Item(item.path("title").asText(""),authors(item.path("authors").asText(null)),medium(format),item.path("quantity").asText("1"),paid,
-    saved?MailLayout.money(item.path("originalSubtotal").asText()):null,saved?MailLayout.money(item.path("lineSavings").asText()):null,cover(item.path("coverUrl").asText(null),base)));
+    saved?MailLayout.money(item.path("originalSubtotal").asText()):null,saved?MailLayout.money(item.path("lineSavings").asText()):null,cover(item.path("coverUrl").asText(null))));
   }
   return digital;
  }
@@ -205,7 +243,7 @@ public final class MailTemplates {
   if(!waiting)return;
   if(pickup.hasNonNull("readyAt")&&location.hasNonNull("timezone"))
    mail.facts(List.of(Fact.of("Hora estimada de retiro",MailLayout.dateTime(pickup.path("readyAt").asText(),ZoneId.of(location.path("timezone").asText())))));
-  if(pickup.hasNonNull("pickupCode"))mail.code("Código de retiro",pickup.path("pickupCode").asText()).muted("Presenta esta confirmación al recoger tu pedido.");
+  if(pickup.hasNonNull("pickupCode"))mail.code("Código de retiro",pickup.path("pickupCode").asText()).muted("Al retirar, muestra tu código de retiro y tu documento de identidad.");
  }
  private static String joined(JsonNode node,String... fields) {
   var parts=new ArrayList<String>();
@@ -217,6 +255,13 @@ public final class MailTemplates {
   if(!value.matches("[A-Z]{2}"))return value;
   String name=Locale.of("",value).getDisplayCountry(Locale.forLanguageTag("es"));
   return name.isBlank()||name.equals(value)?value:name;
+ }
+ private static String orderLabel(JsonNode data) {
+  String reference=data.path("orderReference").asText(null);
+  if(reference==null||reference.isBlank())return "#"+orderId(data);
+  if(!reference.matches("PL-[0-9]{4}-[0-9]{4}"))
+   throw new IllegalArgumentException("Referencia de pedido inválida.");
+  return "#"+reference;
  }
  private static String orderId(JsonNode data) {
   String order=data.path("orderId").asText();
@@ -238,11 +283,33 @@ public final class MailTemplates {
   if(authors==null||authors.isBlank())return null;
   return authors.replaceAll("\\s*\\((?:coords?|eds?|dirs?|comps?)\\.\\)","").replaceAll("\\s+;",";").strip();
  }
- /** A cover is drawn only from an https address or from the store's own path; anything else is left out. */
- private static String cover(String url,String base) {
-  if(url==null||url.isBlank()||url.contains("\"")||url.contains(" "))return null;
-  if(url.startsWith("https://"))return url;
-  return url.startsWith("/")&&!url.startsWith("//")?base+url:null;
+ /** Only unsigned assets on the public cover CDN; invoice storage and authenticated store paths never enter images. */
+ private String cover(String url) {
+  if(!validCover(url))return null;
+  String rendition=emailCoverRenditions.get(url);
+  return validCover(rendition)?rendition:url;
+ }
+ private static boolean validCover(String url) {
+  return url!=null&&url.matches("https://covers\\.pliegolibros\\.com/covers/editions/(?:[A-Za-z0-9_-]+/)*[A-Za-z0-9_-]+\\.(?:webp|jpg|jpeg|png)");
+ }
+ /** Only generated, bundled mappings opt into JPEG; later covers keep their original validated URL. */
+ private static Map<String,String> loadEmailCoverRenditions(ObjectMapper mapper) {
+  try(var input=MailTemplates.class.getResourceAsStream("/notifications/email-cover-renditions.json")) {
+   if(input==null)throw new IllegalStateException("No se encontró el mapa de portadas para correo.");
+   JsonNode mapping=mapper.readTree(input);
+   if(mapping==null||!mapping.isObject())throw new IllegalStateException("El mapa de portadas para correo no es válido.");
+   var result=new HashMap<String,String>();
+   for(var entry:mapping.properties()) {
+    String source=entry.getKey();
+    String target=entry.getValue().asText();
+    if(validCover(source)&&source.endsWith(".webp")&&validCover(target)
+       &&target.startsWith("https://covers.pliegolibros.com/covers/editions/email-v1/")&&target.endsWith(".jpg"))
+     result.put(source,target);
+   }
+   return Map.copyOf(result);
+  } catch(java.io.IOException failure) {
+   throw new IllegalStateException("No se pudo leer el mapa de portadas para correo.",failure);
+  }
  }
  private static String expiry(String value) {
   try { return value==null?null:MailLayout.dateTime(value,MailLayout.STORE_ZONE); }

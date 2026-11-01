@@ -15,11 +15,23 @@ public final class OrderModels {
     }
 
     public record Summary(String orderId, Instant createdAt, String orderState,
-            BigDecimal total, String paymentState, PostPurchaseModels.SummaryExtras postPurchase) { }
+            BigDecimal total, String paymentState, PostPurchaseModels.SummaryExtras postPurchase, String orderReference) {
+        public Summary(String orderId, Instant createdAt, String orderState,
+                BigDecimal total, String paymentState, PostPurchaseModels.SummaryExtras postPurchase) {
+            this(orderId, createdAt, orderState, total, paymentState, postPurchase, null);
+        }
+    }
 
     public record Detail(String orderId, String orderState, BigDecimal subtotal, BigDecimal total,
             Instant createdAt, Instant updatedAt, List<Item> items, Address address,
-            Payment payment, List<History> stateHistory, PostPurchaseModels.Extras postPurchase) {
+            Payment payment, List<History> stateHistory, PostPurchaseModels.Extras postPurchase, String orderReference) {
+        public Detail(String orderId, String orderState, BigDecimal subtotal, BigDecimal total,
+                Instant createdAt, Instant updatedAt, List<Item> items, Address address,
+                Payment payment, List<History> stateHistory, PostPurchaseModels.Extras postPurchase) {
+            this(orderId, orderState, subtotal, total, createdAt, updatedAt, items, address, payment,
+                    stateHistory, postPurchase, null);
+        }
+
         public Detail {
             items = List.copyOf(items);
             stateHistory = List.copyOf(stateHistory);

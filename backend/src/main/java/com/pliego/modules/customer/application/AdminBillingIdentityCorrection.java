@@ -6,6 +6,6 @@ import java.time.OffsetDateTime;
 public record AdminBillingIdentityCorrection(String id, String customerId, String customerName,
         String customerEmail, String currentType, String currentNumber, String proposedType, String proposedNumber,
         String reasonCode, String note, String status, OffsetDateTime createdAt, OffsetDateTime dueAt,
-        OffsetDateTime decidedAt, String decidedBy, String decisionReason) {
+        OffsetDateTime decidedAt, String decidedBy, String decisionReason, boolean customerHasBilledInvoices, String decidedByEmail) {
     @Override public String toString() { return "AdminBillingIdentityCorrection[id=" + id + ", status=" + status + ", redacted]"; }
 }

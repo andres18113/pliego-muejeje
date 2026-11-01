@@ -118,6 +118,6 @@ public class JdbcBillingIdentityCorrectionGateway extends JdbcGatewaySupport imp
                 rs.getString("reason_code"), rs.getString("note"), rs.getString("status"),
                 rs.getObject("created_at", OffsetDateTime.class), rs.getObject("due_at", OffsetDateTime.class),
                 rs.getObject("decided_at", OffsetDateTime.class), decidedBy == null ? null : Long.toString(decidedBy),
-                rs.getString("decision_reason"));
+                rs.getString("decision_reason"), rs.getBoolean("customer_has_billed_invoices"), rs.getString("decided_by_email"));
     }
 }

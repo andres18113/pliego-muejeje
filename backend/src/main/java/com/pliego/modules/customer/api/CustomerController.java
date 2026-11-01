@@ -72,7 +72,10 @@ public class CustomerController {
     public CustomerProfileResponse getProfile(@AuthenticationPrincipal Jwt jwt) {
         CustomerProfile profile = customerService.getProfile(actorUserId(jwt));
         return new CustomerProfileResponse(Long.toString(profile.customerId()), profile.email(), profile.firstNames(),
-                profile.lastNames(), profile.phone(), profile.state(), Long.toString(profile.version()), profile.emailVerified());
+                profile.lastNames(), profile.phone(), profile.state(), Long.toString(profile.version()), profile.emailVerified(),
+                new CustomerProfileResponse.EmailDeliveryResponse(profile.emailUndeliverableSince() == null ? "OK" : "UNDELIVERABLE", profile.emailUndeliverableSince()),
+                profile.pendingEmail() == null ? null : new CustomerProfileResponse.PendingEmailResponse(
+                        profile.pendingEmail().address(), profile.pendingEmail().expiresAt(), profile.pendingEmail().delivery()));
     }
 
     @PutMapping(path = "/me", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -103,13 +106,16 @@ public class CustomerController {
     }
 
     @PutMapping(path = "/me/email", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Cambiar mi correo", description = "Cambia el correo de inicio de sesión del cliente autenticado tras confirmar su contraseña actual. Las sesiones abiertas siguen activas.")
-    @ApiResponse(responseCode = "200", description = "Correo actualizado", content = @Content(schema = @Schema(implementation = EmailChangeResponse.class)))
+    @Operation(summary = "Cambiar mi correo", description = "Solicita un cambio tras confirmar la contraseña actual. Conserva el correo de inicio de sesión, la verificación, las sesiones y los destinatarios hasta confirmar la dirección nueva. Una solicitud nueva sustituye la anterior. Hasta cinco solicitudes por hora.")
+    @ApiResponse(responseCode = "202", description = "Cambio pendiente de confirmación", content = @Content(schema = @Schema(implementation = EmailChangeResponse.class)))
     @ApiResponse(responseCode = "400", description = "Datos inválidos o contraseña actual incorrecta", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "409", description = "El correo ya pertenece a otra cuenta", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
-    public EmailChangeResponse changeEmail(@AuthenticationPrincipal Jwt jwt,
+    @ApiResponse(responseCode = "429", description = "EMAIL_CHANGE_RATE_LIMITED: demasiadas solicitudes", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    public ResponseEntity<EmailChangeResponse> changeEmail(@AuthenticationPrincipal Jwt jwt,
             @Valid @RequestBody EmailChangeRequest request) {
-        return new EmailChangeResponse(customerService.changeEmail(actorUserId(jwt), request.newEmail(), request.currentPassword()));
+        var change = customerService.changeEmail(actorUserId(jwt), request.newEmail(), request.currentPassword());
+        return ResponseEntity.accepted().body(new EmailChangeResponse(change.email(),
+                new EmailChangeResponse.PendingAddress(change.address(), change.expiresAt())));
     }
 
     @GetMapping("/me/addresses")

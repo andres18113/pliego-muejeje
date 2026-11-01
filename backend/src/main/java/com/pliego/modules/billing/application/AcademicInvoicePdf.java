@@ -139,7 +139,7 @@ final class AcademicInvoicePdf {
                 roundedBox(stream, boxX, boxBottom, boxWidth, boxHeight, Color.WHITE, BORDER);
                 letterSpaced(stream, bold, 12f, textX, titleY, ULTRAMAR, "COMPROBANTE DE COMPRA", 0.3f);
                 drawText(stream, bold, 10.5f, textX, documentY, INK, "N.° " + text(snapshot, "documentNumber"));
-                drawText(stream, regular, 8.5f, textX, orderY, INK, "Pedido: " + text(snapshot, "orderId"));
+                drawText(stream, regular, 8.5f, textX, orderY, INK, "Pedido: " + snapshot.path("orderReference").asText(text(snapshot, "orderId")));
                 drawText(stream, regular, 8.5f, textX, issueDateY, INK, "Fecha de emisión: " + date(snapshot));
 
                 float logoBlockBottom = siteBaseline - 2.5f;
@@ -288,7 +288,7 @@ final class AcademicInvoicePdf {
             try (var stream = stream()) {
                 drawText(stream, medium, 9f, LEFT, 806f, ULTRAMAR,
                         "Comprobante de compra · N.° " + text(snapshot, "documentNumber"));
-                drawText(stream, regular, 8f, LEFT, 791f, MUTED, "Pedido: " + text(snapshot, "orderId"));
+                drawText(stream, regular, 8f, LEFT, 791f, MUTED, "Pedido: " + snapshot.path("orderReference").asText(text(snapshot, "orderId")));
             }
         }
 

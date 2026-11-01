@@ -19,6 +19,12 @@ public interface IdentityGateway {
 
     boolean createSession(long userId, String refreshTokenHash, Instant expiresAt, String expectedPasswordHash);
 
+    /** Binds session creation to the canonical identity snapshot used for password authentication. */
+    default boolean createSession(long userId, String refreshTokenHash, Instant expiresAt,
+            String expectedPasswordHash, String expectedEmail) {
+        return createSession(userId, refreshTokenHash, expiresAt, expectedPasswordHash);
+    }
+
     UserSessionData refreshSession(String currentRefreshTokenHash, String replacementRefreshTokenHash);
 
     void revokeSession(String refreshTokenHash);

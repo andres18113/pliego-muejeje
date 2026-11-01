@@ -73,9 +73,10 @@ class CheckoutApiIntegrationTest {
                 null, new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("39.80"), new BigDecimal("15.00"),
                         new BigDecimal("5.97"), new BigDecimal("0.00"), new BigDecimal("45.77")),
                 new com.pliego.modules.sales.application.PostPurchaseModels.OfferPricing(
-                        new BigDecimal("44.31"), new BigDecimal("4.51"), new BigDecimal("39.80"), true));
+                        new BigDecimal("44.31"), new BigDecimal("4.51"), new BigDecimal("39.80"), true), "PL-0123-4567");
         perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.orderReference").value("PL-0123-4567"))
                 .andExpect(jsonPath("$.originalSubtotal").value("44.31"))
                 .andExpect(jsonPath("$.savingsTotal").value("4.51"))
                 .andExpect(jsonPath("$.currentSubtotal").value("39.80"))
@@ -89,6 +90,7 @@ class CheckoutApiIntegrationTest {
                         .header("Authorization", token("42", "CUSTOMER")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.state").value("CREATED"))
+                .andExpect(jsonPath("$.order.orderReference").value("PL-0123-4567"))
                 .andExpect(jsonPath("$.order.originalSubtotal").value("44.31"))
                 .andExpect(jsonPath("$.order.savingsTotal").value("4.51"))
                 .andExpect(jsonPath("$.order.currentSubtotal").value("39.80"))

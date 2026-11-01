@@ -93,7 +93,7 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                     if (!output.next()) throw new SQLException("Checkout Procedure returned no output", "02000");
                     return new CheckoutResult(Long.toString(output.getLong("o_order_id")),
                             output.getString("o_order_state"), output.getString("o_payment_state"),
-                            output.getBigDecimal("o_total"), output.getString("o_payment_reference"), fulfillment(output.getLong("o_order_id")),amounts(output.getLong("o_order_id")),offerPricing(output.getLong("o_order_id")));
+                            output.getBigDecimal("o_total"), output.getString("o_payment_reference"), fulfillment(output.getLong("o_order_id")),amounts(output.getLong("o_order_id")),offerPricing(output.getLong("o_order_id")),orderReference(output.getLong("o_order_id")));
                 }
             }
         }));
@@ -110,9 +110,12 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                     CheckoutResult order = "CREATED".equals(state) ? new CheckoutResult(
                             Long.toString(results.getLong("order_id")), results.getString("order_state"),
                             results.getString("payment_state"), results.getBigDecimal("total"),
-                            results.getString("payment_reference"), fulfillment(results.getLong("order_id")),amounts(results.getLong("order_id")),offerPricing(results.getLong("order_id"))) : null;
+                            results.getString("payment_reference"), fulfillment(results.getLong("order_id")),amounts(results.getLong("order_id")),offerPricing(results.getLong("order_id")),results.getString("order_reference")) : null;
                     return new CheckoutAttempt(state, order);
                 }));
+    }
+    private String orderReference(long orderId) {
+        return jdbcTemplate.queryForObject("SELECT pliego.fn_order_reference(?)", String.class, orderId);
     }
     private com.pliego.modules.sales.application.PostPurchaseModels.Fulfillment fulfillment(long orderId) throws SQLException {
         String value=jdbcTemplate.queryForObject("SELECT pliego.fn_order_fulfillment(?,TRUE)::text",String.class,orderId);

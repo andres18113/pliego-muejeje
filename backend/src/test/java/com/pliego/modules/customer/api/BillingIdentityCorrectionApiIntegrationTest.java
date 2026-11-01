@@ -152,7 +152,7 @@ class BillingIdentityCorrectionApiIntegrationTest extends CustomerApiIntegration
         var row = new AdminBillingIdentityCorrection("55", "42", "Ana Pérez", "ana@example.invalid",
                 "EC_CEDULA", "0912345675", "EC_CEDULA", "1710034065", "DOCUMENT_TYPO",
                 "El número se registró mal.", "PENDING", OffsetDateTime.parse("2026-10-25T12:00:00Z"),
-                OffsetDateTime.parse("2026-11-09T12:00:00Z"), null, null, null);
+                OffsetDateTime.parse("2026-11-09T12:00:00Z"), null, null, null, false, null);
         when(correctionGateway.search(30, "PENDING", 0, 20)).thenReturn(new BillingIdentityCorrectionPage(List.of(row), 1));
         when(correctionGateway.decide(30, 55, "REJECT", "La documentación no permite confirmar el cambio solicitado."))
                 .thenReturn(new BillingIdentityCorrectionDecision("55", "REJECTED",
@@ -165,6 +165,8 @@ class BillingIdentityCorrectionApiIntegrationTest extends CustomerApiIntegration
                 .andExpect(jsonPath("$.items[0].id").value("55"))
                 .andExpect(jsonPath("$.items[0].currentNumber").value("0912345675"))
                 .andExpect(jsonPath("$.items[0].proposedNumber").value("1710034065"))
+                .andExpect(jsonPath("$.items[0].customerHasBilledInvoices").value(false))
+                .andExpect(jsonPath("$.items[0].decidedByEmail").doesNotExist())
                 .andExpect(jsonPath("$.page").value(0))
                 .andExpect(jsonPath("$.pageSize").value(20))
                 .andExpect(jsonPath("$.totalCount").value("1"));
@@ -179,5 +181,31 @@ class BillingIdentityCorrectionApiIntegrationTest extends CustomerApiIntegration
                 .andExpect(jsonPath("$.decidedBy").value("30"))
                 .andExpect(jsonPath("$.decisionReason").value("La documentación no permite confirmar el cambio solicitado."));
         verify(correctionGateway).decide(30, 55, "REJECT", "La documentación no permite confirmar el cambio solicitado.");
+    }
+
+    @Test
+    void correctionQueueIncludesAccountInvoiceUseAndDecidingAdminEmail() throws Exception {
+        var row = new AdminBillingIdentityCorrection("56", "42", "Ana Pérez", "ana@example.invalid",
+                "EC_CEDULA", "0912345675", "EC_CEDULA", "1710034065", "DOCUMENT_TYPO", null,
+                "APPROVED", OffsetDateTime.parse("2026-10-25T12:00:00Z"), OffsetDateTime.parse("2026-11-09T12:00:00Z"),
+                OffsetDateTime.parse("2026-10-26T12:00:00Z"), "30", null, true, "staff@example.invalid");
+        when(correctionGateway.search(30, "APPROVED", 0, 20))
+                .thenReturn(new BillingIdentityCorrectionPage(List.of(row), 1));
+        mvc.perform(get("/api/v1/admin/billing-identity-corrections").header("Authorization", adminToken(30))
+                        .param("status", "APPROVED"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].customerHasBilledInvoices").value(true))
+                .andExpect(jsonPath("$.items[0].decidedByEmail").value("staff@example.invalid"));
+    }
+
+    @Test
+    void correctionDecisionAcceptsOnlyApproveOrRejectAndRejectRequiresReason() throws Exception {
+        for (String body : List.of("{\"decision\":\"APPROVED\"}", "{\"decision\":\"REJECTED\"}",
+                "{\"decision\":\"REJECT\"}", "{\"decision\":\"REJECT\",\"decisionReason\":\"   \"}")) {
+            mvc.perform(post("/api/v1/admin/billing-identity-corrections/55/decision")
+                            .header("Authorization", adminToken(30)).contentType(MediaType.APPLICATION_JSON).content(body))
+                    .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
+        }
+        verifyNoInteractions(correctionGateway);
     }
 }

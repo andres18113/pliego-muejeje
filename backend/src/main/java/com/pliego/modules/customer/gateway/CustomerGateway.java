@@ -38,7 +38,15 @@ public interface CustomerGateway {
     void removeFavorite(long actorUserId, long editionId);
 
     record CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone,
-            String state, long version, boolean emailVerified) {
+            String state, long version, boolean emailVerified, java.time.Instant emailUndeliverableSince,
+            com.pliego.modules.identity.application.PendingEmailChange pendingEmail) {
+        public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state,
+                long version, boolean emailVerified, java.time.Instant emailUndeliverableSince) {
+            this(customerId, email, firstNames, lastNames, phone, state, version, emailVerified, emailUndeliverableSince, null);
+        }
+        public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state, long version, boolean emailVerified) {
+            this(customerId, email, firstNames, lastNames, phone, state, version, emailVerified, null);
+        }
         public CustomerProfile(long customerId, String email, String firstNames, String lastNames, String phone, String state, boolean emailVerified) {
             this(customerId, email, firstNames, lastNames, phone, state, 0, emailVerified);
         }

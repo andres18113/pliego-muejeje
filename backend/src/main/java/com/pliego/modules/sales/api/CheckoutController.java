@@ -80,7 +80,7 @@ public class CheckoutController {
                 result.paymentReference(), result.fulfillment(),money(result.amounts().subtotal()),money(result.amounts().taxRate()),
                 money(result.amounts().taxAmount()),money(result.amounts().shippingAmount()),
                 money(result.offerPricing().originalSubtotal()), money(result.offerPricing().savingsTotal()),
-                money(result.offerPricing().currentSubtotal()), result.offerPricing().pricingSnapshotAvailable());
+                money(result.offerPricing().currentSubtotal()), result.offerPricing().pricingSnapshotAvailable(), result.orderReference());
     }
 
     private static String money(java.math.BigDecimal value) {return value == null ? null : value.setScale(2,RoundingMode.UNNECESSARY).toPlainString();}

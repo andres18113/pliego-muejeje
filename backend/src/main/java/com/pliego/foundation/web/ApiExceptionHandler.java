@@ -168,12 +168,21 @@ public final class ApiExceptionHandler {
         String detail = error == com.pliego.foundation.database.DatabaseError.INVALID_ARGUMENT
                 ? validationDetail(request) : databaseDetail(error, request);
         String publicCode = switch (error) {
-            case DATABASE_CONTRACT_VIOLATION, INTERNAL_SERVER_ERROR -> error.code();
+            case DATABASE_CONTRACT_VIOLATION, INTERNAL_SERVER_ERROR,
+                    EMAIL_CHANGE_SAME_ADDRESS, EMAIL_CHANGE_NOT_PENDING, EMAIL_CHANGE_RATE_LIMITED,
+                    EMAIL_CHANGE_TOKEN_INVALID, EMAIL_CHANGE_TOKEN_EXPIRED, EMAIL_CHANGE_TOKEN_USED,
+                    EMAIL_CHANGE_TOKEN_SUPERSEDED, EMAIL_CHANGE_CANCELLED, EMAIL_CHANGE_ALREADY_CONFIRMED -> error.code();
             default -> error.sqlState();
         };
         ProblemDetail problem = problems.create(publicCode, databaseTitle(error, request), error.httpStatus(), detail,
                 request);
         return ResponseEntity.status(error.httpStatus()).body(problem);
+    }
+
+    @ExceptionHandler(com.pliego.foundation.security.InvalidEmailChangeTokenException.class)
+    public ResponseEntity<ProblemDetail> invalidEmailChangeToken(HttpServletRequest request) {
+        return ProblemDetailSupport.response(problems, request, "EMAIL_CHANGE_TOKEN_INVALID", "Enlace inválido",
+                HttpStatus.BAD_REQUEST, "El enlace de cambio de correo no es válido.");
     }
 
     @ExceptionHandler(Exception.class)
@@ -255,6 +264,15 @@ public final class ApiExceptionHandler {
             case ACTOR_INACTIVE -> "Cuenta bloqueada";
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "Acceso denegado";
             case EMAIL_ALREADY_EXISTS -> "Correo ya registrado";
+            case EMAIL_CHANGE_SAME_ADDRESS -> "Correo actual";
+            case EMAIL_CHANGE_NOT_PENDING -> "No hay un cambio pendiente";
+            case EMAIL_CHANGE_RATE_LIMITED -> "Demasiadas solicitudes";
+            case EMAIL_CHANGE_TOKEN_INVALID -> "Enlace inválido";
+            case EMAIL_CHANGE_TOKEN_EXPIRED -> "Enlace vencido";
+            case EMAIL_CHANGE_TOKEN_USED -> "Enlace ya utilizado";
+            case EMAIL_CHANGE_TOKEN_SUPERSEDED -> "Enlace sustituido";
+            case EMAIL_CHANGE_CANCELLED -> "Cambio cancelado";
+            case EMAIL_CHANGE_ALREADY_CONFIRMED -> "Cambio ya confirmado";
             case CUSTOMER_NOT_FOUND -> "Perfil no encontrado";
             case BILLING_IDENTITY_CONFLICT -> "Tu identificación cambió";
             case BILLING_IDENTITY_MISMATCH -> "Identificación distinta a la de tu perfil";
@@ -307,6 +325,9 @@ public final class ApiExceptionHandler {
             case PICKUP_LOCATION_INACTIVE -> "Punto de retiro no disponible";
             case PICKUP_NOT_APPLICABLE -> "Retiro no disponible para este carrito";
             case PICKUP_CODE_INVALID -> "Código de retiro incorrecto";
+            case PICKUP_NOT_FOUND -> "Retiro no encontrado";
+            case PICKUP_ALREADY_COLLECTED -> "Pedido ya retirado";
+            case PICKUP_NOT_READY -> "Pedido aún no disponible para retiro";
             case GEO_CITY_PROVINCE_INVALID -> "Ciudad no válida para la provincia";
             case GEO_CITY_UNAVAILABLE -> "Ciudad no disponible";
             case PAYMENT_OUTCOME_INVALID -> "Resultado de pago inválido";
@@ -412,6 +433,15 @@ public final class ApiExceptionHandler {
             case ACTOR_INACTIVE -> "Tu cuenta está bloqueada y no puede realizar esta operación.";
             case ACTOR_NOT_ADMIN, ACTOR_NOT_CUSTOMER -> "No tienes permiso para realizar esta operación.";
             case EMAIL_ALREADY_EXISTS -> "Ya existe una cuenta con ese correo electrónico.";
+            case EMAIL_CHANGE_SAME_ADDRESS -> "Ese ya es tu correo actual.";
+            case EMAIL_CHANGE_NOT_PENDING -> "No tienes un cambio de correo pendiente. Solicita uno nuevo desde tu perfil.";
+            case EMAIL_CHANGE_RATE_LIMITED -> "Pediste demasiados cambios o enlaces. Espera antes de intentarlo de nuevo.";
+            case EMAIL_CHANGE_TOKEN_INVALID -> "El enlace de cambio de correo no es válido.";
+            case EMAIL_CHANGE_TOKEN_EXPIRED -> "El enlace de cambio de correo venció. Solicita un cambio nuevo desde tu perfil.";
+            case EMAIL_CHANGE_TOKEN_USED -> "Este enlace de cambio de correo ya se utilizó.";
+            case EMAIL_CHANGE_TOKEN_SUPERSEDED -> "Este enlace fue sustituido por una solicitud o un enlace más reciente.";
+            case EMAIL_CHANGE_CANCELLED -> "Este cambio de correo fue cancelado.";
+            case EMAIL_CHANGE_ALREADY_CONFIRMED -> "El cambio de correo ya se confirmó. Si no fuiste tú, escríbenos desde Ayuda.";
             case CUSTOMER_NOT_FOUND -> "El perfil solicitado no está disponible.";
             case BILLING_IDENTITY_CONFLICT -> "La identificación de tu perfil no es la que estabas viendo. Revisa la actual antes de continuar.";
             case BILLING_IDENTITY_MISMATCH -> "La factura usa la cédula o el RUC registrado en tu perfil. Si es incorrecto, corrígelo en Mi perfil.";
@@ -428,6 +458,9 @@ public final class ApiExceptionHandler {
             case PICKUP_LOCATION_INACTIVE -> "El punto de retiro está inactivo. Selecciona otro.";
             case PICKUP_NOT_APPLICABLE -> "El retiro en tienda requiere al menos un producto físico.";
             case PICKUP_CODE_INVALID -> "El código de retiro no corresponde al pedido.";
+            case PICKUP_NOT_FOUND -> "No encontramos un retiro con ese código.";
+            case PICKUP_ALREADY_COLLECTED -> "Este pedido ya fue retirado.";
+            case PICKUP_NOT_READY -> "Este pedido aún no está listo para retiro.";
             case GEO_CITY_PROVINCE_INVALID -> "La ciudad no pertenece a la provincia seleccionada.";
             case GEO_CITY_UNAVAILABLE -> "Elige una ciudad de la lista.";
             case AUTHOR_NOT_FOUND -> "El autor solicitado no está disponible.";

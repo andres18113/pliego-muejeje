@@ -32,14 +32,14 @@ import tools.jackson.databind.ObjectMapper;
 @Repository
 public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements CustomerOrderGateway {
 
-    private static final String LIST = "SELECT o.order_id,o.created_at,o.order_state,o.total,o.payment_state,o.total_count,"
+    private static final String LIST = "SELECT o.order_id,o.order_reference,o.created_at,o.order_state,o.total,o.payment_state,o.total_count,"
             + "purchase_state,fulfillment_method,shipment_state,estimated_delivery_from,estimated_delivery_to,"
             + "item_count,unit_count,item_summary::text,invoice_state,invoice_pdf_available,invoice_xml_available,"
             + "p.original_subtotal,p.savings_total,p.current_subtotal,p.pricing_snapshot_available,"
             + "m.subtotal,m.tax_rate,m.tax_amount,m.shipping_amount "
             + "FROM pliego.fn_customer_orders(?,?,?) o CROSS JOIN LATERAL pliego.fn_order_offer_pricing(o.order_id) p "
-            + "CROSS JOIN LATERAL pliego.fn_order_pricing(o.order_id) m";
-    private static final String DETAIL = "SELECT order_id,order_state,subtotal,total,created_at,updated_at,"
+            + "CROSS JOIN LATERAL pliego.fn_order_pricing(o.order_id) m ORDER BY o.created_at DESC,o.order_id DESC";
+    private static final String DETAIL = "SELECT order_id,order_reference,order_state,subtotal,total,created_at,updated_at,"
             + "pliego.fn_order_item_offer_snapshots(pliego.fn_purchase_item_capabilities(items))::text AS items,address::text AS address,payment::text AS payment,"
             + "state_history::text AS state_history,purchase_state,fulfillment::text,shipment::text,invoice::text,"
             + "credit_notes::text,available_actions::text,tax_rate,tax_amount,shipping_amount,"
@@ -87,7 +87,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
                 rs.getBigDecimal("total"), rs.getString("payment_state"),
                 postPurchase.summary(rs, PostPurchaseRowMapper.offerPricing(rs), new com.pliego.foundation.money.MonetaryAmounts(
                         rs.getBigDecimal("subtotal"), rs.getBigDecimal("tax_rate"), rs.getBigDecimal("tax_amount"),
-                        rs.getBigDecimal("shipping_amount"), rs.getBigDecimal("total")))), rs.getLong("total_count")));
+                        rs.getBigDecimal("shipping_amount"), rs.getBigDecimal("total"))), rs.getString("order_reference")), rs.getLong("total_count")));
     }
 
     @Override
@@ -140,7 +140,7 @@ public class JdbcCustomerOrderGateway extends JdbcGatewaySupport implements Cust
                     new Payment(text(payment, "paymentId"), text(payment, "method"),
                             text(payment, "state"), decimal(payment, "amount"),
                             text(payment, "reference"), text(payment, "resultDetail"),
-                            text(payment, "createdAt"), text(payment, "updatedAt")), parseHistory(history),extras);
+                            text(payment, "createdAt"), text(payment, "updatedAt")), parseHistory(history),extras,rs.getString("order_reference"));
         };
     }
 

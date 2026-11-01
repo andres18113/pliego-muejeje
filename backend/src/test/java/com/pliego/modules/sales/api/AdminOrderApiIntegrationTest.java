@@ -69,6 +69,23 @@ class AdminOrderApiIntegrationTest {
     @BeforeEach void reset() { gateway.reset(); }
 
     @Test
+    void adminSearchAcceptsReferenceQueryAndExposesReferencesOnListAndDetail() throws Exception {
+        var detail = gateway.detail;
+        gateway.detail = new Detail(detail.orderId(), detail.customerId(), detail.customerEmail(), detail.customerName(),
+                detail.orderState(), detail.subtotal(), detail.total(), detail.createdAt(), detail.updatedAt(), detail.items(),
+                detail.address(), detail.payment(), detail.stateHistory(), detail.inventoryMovements(), detail.postPurchase(),
+                "PL-0123-4567");
+        gateway.page = new Page(List.of(new Summary("700", "42", "Ana", detail.createdAt(), detail.orderState(),
+                detail.total(), "APPROVED", "PL-0123-4567")), 1);
+        mvc.perform(get("/api/v1/admin/orders").param("q", "#pl01234567")
+                .header("Authorization", token("7", "ADMIN"))).andExpect(status().isOk())
+                .andExpect(jsonPath("$.items[0].orderReference").value("PL-0123-4567"));
+        assertEquals("#pl01234567", gateway.search.q());
+        mvc.perform(get("/api/v1/admin/orders/700").header("Authorization", token("7", "ADMIN")))
+                .andExpect(status().isOk()).andExpect(jsonPath("$.orderReference").value("PL-0123-4567"));
+    }
+
+    @Test
     void approvesPendingPaymentAsRealAdminAndTranslatesInvalidState() throws Exception {
         mvc.perform(post("/api/v1/admin/orders/700/approve-payment")
                 .header("Authorization", token("7", "ADMIN"))).andExpect(status().isNoContent());
@@ -358,6 +375,7 @@ class AdminOrderApiIntegrationTest {
         DatabaseException failure;
         Page page = new Page(List.of(), 0);
         Search search;
+        Detail detail;
         com.pliego.modules.sales.application.PostPurchaseModels.IssueInvoice lastInvoice;
 
         void reset() {
@@ -369,6 +387,7 @@ class AdminOrderApiIntegrationTest {
             failure = null;
             page = new Page(List.of(), 0);
             search = null;
+            detail = sampleDetail();
             lastInvoice = null;
         }
 
@@ -388,7 +407,7 @@ class AdminOrderApiIntegrationTest {
         @Override public Detail detail(long actorUserId, long requestedOrderId) {
             called("detail", actorUserId);
             orderId = requestedOrderId;
-            return sampleDetail();
+            return detail;
         }
 
         @Override public Transition transition(long actorUserId, long requestedOrderId, String targetState) {

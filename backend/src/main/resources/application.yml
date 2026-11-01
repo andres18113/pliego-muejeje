@@ -43,6 +43,8 @@ pliego:
     poll-interval: ${PLIEGO_HOME_DELIVERY_POLL_INTERVAL:PT10S}
     batch-size: ${PLIEGO_HOME_DELIVERY_BATCH_SIZE:100}
   mail:
+    webhook:
+      secret: ${PLIEGO_MAILTRAP_WEBHOOK_SECRET:}
     enabled: ${PLIEGO_MAIL_ENABLED:false}
     endpoint: ${PLIEGO_MAIL_ENDPOINT:https://send.api.mailtrap.io/api/send}
     token: ${PLIEGO_MAILTRAP_API_TOKEN:${PLIEGO_MAIL_TOKEN:}}

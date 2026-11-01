@@ -76,7 +76,8 @@ public class AuthService {
         Instant expiresAt = issuedAt.plusSeconds(ACCESS_TOKEN_TTL_SECONDS);
         Instant sessionExpiresAt = Instant.now().plusSeconds(SESSION_TTL_SECONDS);
         String refreshToken = sessionCredentials.newSessionToken();
-        if (!identityGateway.createSession(user.userId(), hashRefreshToken(refreshToken), sessionExpiresAt, user.passwordHash())) {
+        if (!identityGateway.createSession(user.userId(), hashRefreshToken(refreshToken), sessionExpiresAt,
+                user.passwordHash(), user.email())) {
             throw new InvalidCredentialsException();
         }
         String accessToken = jwtTokenIssuer.issue(Long.toString(user.userId()), user.role(), issuedAt, expiresAt,

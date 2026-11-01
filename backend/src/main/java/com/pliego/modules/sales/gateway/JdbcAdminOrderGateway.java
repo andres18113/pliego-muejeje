@@ -44,16 +44,16 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
         });
     }
 
-    private static final String SEARCH = "SELECT order_id,customer_id,customer_name,created_at,order_state,"
-            + "total,payment_state,total_count FROM pliego.fn_admin_orders(?,?,?,?,?,?,?)";
-    private static final String DETAIL = "SELECT order_id,customer_id,customer_email,customer_name,order_state,"
+    private static final String SEARCH = "SELECT order_id,order_reference,customer_id,customer_name,created_at,order_state,"
+            + "total,payment_state,total_count FROM pliego.fn_admin_orders(?,?,?,?,?,?,?,?)";
+    private static final String DETAIL = "SELECT order_id,order_reference,customer_id,customer_email,customer_name,order_state,"
             + "subtotal,total,created_at,updated_at,items::text AS items,address::text AS address,"
             + "payment::text AS payment,state_history::text AS state_history,"
             + "inventory_movements::text AS inventory_movements,purchase_state,fulfillment::text,shipment::text,"
             + "invoice::text,credit_notes::text,available_actions::text,tax_rate,tax_amount,shipping_amount "
             + "FROM pliego.fn_admin_order_detail_priced(?,?)";
     private static final String TRANSITION = "CALL pliego.sp_order_change_status(?,?,?,?,?,?)";
-    private static final String CANCEL = "CALL pliego.sp_order_cancel(?,?,?,?,?,?,?)";
+    private static final String CANCEL = "CALL pliego.sp_admin_order_cancel(?,?,?,?,?,?,?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
@@ -86,9 +86,10 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
             nullableLong(statement, 5, search.customerId());
             statement.setInt(6, page);
             statement.setInt(7, search.pageSize());
+            nullableString(statement, 8, search.q());
         }, (rs, row) -> new CountedSummary(new Summary(id(rs, "order_id"), id(rs, "customer_id"),
                 rs.getString("customer_name"), rs.getObject("created_at", OffsetDateTime.class).toInstant(),
-                rs.getString("order_state"), rs.getBigDecimal("total"), rs.getString("payment_state")),
+                rs.getString("order_state"), rs.getBigDecimal("total"), rs.getString("payment_state"), rs.getString("order_reference")),
                 rs.getLong("total_count")));
     }
 
@@ -168,7 +169,7 @@ public class JdbcAdminOrderGateway extends JdbcGatewaySupport implements AdminOr
                             decimal(payment, "monto"), text(payment, "referencia"),
                             text(payment, "detalle_resultado"), timestamp(payment, "fecha_creacion"),
                             timestamp(payment, "fecha_actualizacion")),
-                    parseHistory(history), parseMovements(movements),extras);
+                    parseHistory(history), parseMovements(movements),extras,rs.getString("order_reference"));
         };
     }
 
