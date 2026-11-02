@@ -55,3 +55,6 @@
 - [0048 — Resultados de entrega y retención por destinatario](0048-mailtrap-delivery-outcomes.md)
 
 - [ADR 0049 — Cambio de correo pendiente de confirmación](0049-pending-email-change.md)
+- [ADR 0050 — Continuidad del registro y sesión tras verificar](0050-registration-session-continuation.md)
+- [ADR 0051 — Retiro a diez minutos y avisos durables](0051-pickup-readiness-and-durable-notifications.md)
+- [ADR 0052 — Creación condicional de ofertas sin reemplazar historia](0052-conditional-creation-for-edition-offers.md)

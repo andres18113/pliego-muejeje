@@ -184,6 +184,30 @@ describe("CartPage", () => {
     expect(screen.getByText("Ajusta o quita los libros no disponibles para continuar con la compra.")).toBeInTheDocument();
   });
 
+  it("asks before removing: Conservar or Escape keep the line and send nothing, and focus returns to Quitar", async () => {
+    const api = stubApi({ "GET /api/v1/cart": () => json(cartBody([{ quantity: 2, currentSubtotal: "37.00" }])) });
+    const user = userEvent.setup();
+    renderPurchaseRoute(routes, "/cart");
+    const control = await screen.findByRole("button", { name: "Quitar Cien años de soledad del carrito" });
+
+    await user.click(control);
+    const question = await screen.findByRole("dialog", { name: "¿Quitar del carrito?" });
+    expect(within(question).getByText("Cien años de soledad", { selector: "strong" })).toBeInTheDocument();
+    expect(within(question).getByRole("button", { name: "Conservar" })).toHaveFocus();
+    await user.click(within(question).getByRole("button", { name: "Conservar" }));
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "¿Quitar del carrito?" })).not.toBeInTheDocument());
+    await waitFor(() => expect(control).toHaveFocus());
+
+    await user.click(control);
+    await screen.findByRole("dialog", { name: "¿Quitar del carrito?" });
+    await user.keyboard("{Escape}");
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "¿Quitar del carrito?" })).not.toBeInTheDocument());
+
+    expect(api.count("DELETE", "/api/v1/cart/items/100")).toBe(0);
+    expect(screen.queryByText("Quitado del carrito")).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Cien años de soledad" })).toBeInTheDocument();
+  });
+
   it("removes an item with DELETE and offers to put it back with its quantity", async () => {
     const api = stubApi({
       "GET /api/v1/cart": [() => json(cartBody([{ quantity: 2, currentSubtotal: "37.00" }])), () => json(cartBody([])), () => json(cartBody([{ cartItemId: "101", quantity: 2, currentSubtotal: "37.00" }]))],
@@ -194,6 +218,7 @@ describe("CartPage", () => {
     renderPurchaseRoute(routes, "/cart");
 
     await user.click(await screen.findByRole("button", { name: "Quitar Cien años de soledad del carrito" }));
+    await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Quitar" }));
 
     expect(await screen.findByText("Quitado del carrito")).toBeInTheDocument();
     const empty = await screen.findByRole("heading", { name: "Tu carrito está vacío." });
@@ -215,6 +240,7 @@ describe("CartPage", () => {
     const user = userEvent.setup();
     renderPurchaseRoute(routes, "/cart");
     await user.click(await screen.findByRole("button", { name: "Quitar Cien años de soledad del carrito" }));
+    await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Quitar" }));
     await user.click(await screen.findByRole("button", { name: "Deshacer" }));
     const recovery = await screen.findByRole("button", { name: "Consultar carrito" }, { timeout: 4000 });
     readAvailable = true;

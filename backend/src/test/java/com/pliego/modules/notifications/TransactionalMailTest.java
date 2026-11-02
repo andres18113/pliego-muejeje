@@ -168,6 +168,18 @@ class TransactionalMailTest {
   assertThrows(IllegalArgumentException.class,()->templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"229\",\"method\":\"HOME_DELIVERY\",\"state\":\"TELEPORTED\"}")));
   assertThrows(IllegalArgumentException.class,()->templates().render("ORDER_STATUS",json.readTree("{\"orderId\":\"229\",\"method\":\"STORE_PICKUP\",\"state\":\"DELIVERED\"}")));
  }
+ @Test void pickupPolicyExplainsTotalTenMinutesWithoutInventingHistoricalTiming() throws Exception {
+  var data=json.createObjectNode().put("orderId","12").put("method","STORE_PICKUP").put("state","PREPARING");
+  var pickup=data.putObject("pickup").put("preparationMinutes",10).put("readyAt","2026-11-01T15:10:00Z").put("pickupCode","P-AB234567");
+  pickup.putObject("location").put("name","Centro").put("timezone","America/Guayaquil");
+  var message=templates().render("ORDER_STATUS",data);
+  assertTrue(message.text().contains("10 minutos desde la aprobación del pago"));
+  assertTrue(message.text().contains("6 minutos para cancelar y 4 minutos adicionales de preparación"));
+  assertTrue(message.text().contains("próxima apertura"));
+  assertTrue(message.text().contains("https://pliego.example/orders/12"));
+  pickup.put("preparationMinutes",25);
+  assertFalse(templates().render("ORDER_STATUS",data).text().contains("10 minutos desde"));
+ }
  @Test void cancellationSpeaksOfTheOrderAndTheMoneyOnly() throws Exception {
   var msg=preview("order-cancelled-refunded",templates().render("ORDER_CANCELLED",json.readTree("{\"orderId\":\"229\",\"paymentState\":\"REFUNDED\",\"refundAmount\":\"171.30\",\"actionPath\":\"/orders/229\","+ITEMS+"}")));
   assertEquals("Pedido #229 cancelado",msg.subject());

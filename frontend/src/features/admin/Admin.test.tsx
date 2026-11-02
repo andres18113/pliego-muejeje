@@ -191,10 +191,23 @@ describe("Retiros en tienda", () => {
   it("AC-2.1: a preparing order inside its cancellation window is expected when the window ends, not earlier", async () => {
     stubApi({ "GET /api/v1/admin/pickups/701": () => json(detail({ state: "PENDING", orderState: "CONFIRMED", readyAt: "2026-11-01T18:08:00Z",
       availableActions: { cancel: true, cancellationDeadline: "2026-11-01T18:13:00Z" } })) });
+    vi.spyOn(Date, "now").mockReturnValue(Date.parse("2026-11-01T18:05:00Z"));
     renderPurchaseRoute(routes, "/admin/retiros/701", { role: "ADMIN" });
     const line = await screen.findByText(/Estará listo aproximadamente el/);
     expect(line.textContent).toContain(adminMomentLabel("2026-11-01T18:13:00Z")!);
     expect(line.textContent).not.toContain(adminMomentLabel("2026-11-01T18:08:00Z")!);
+    vi.restoreAllMocks();
+  });
+
+  it("ADR 0051: a pending order whose time has passed says why it waits, never promising a moment already gone", async () => {
+    stubApi({ "GET /api/v1/admin/pickups/701": () => json(detail({ state: "PENDING", orderState: "CONFIRMED", readyAt: "2026-11-01T21:59:00Z",
+      availableActions: { cancel: false, cancellationDeadline: null } })) });
+    vi.spyOn(Date, "now").mockReturnValue(Date.parse("2026-11-02T03:00:00Z"));
+    renderPurchaseRoute(routes, "/admin/retiros/701", { role: "ADMIN" });
+    expect(await screen.findByText(/fuera de su horario de atención o el pago sigue pendiente/)).toBeInTheDocument();
+    expect(screen.queryByText(/Estará listo aproximadamente el/)).toBeNull();
+    expect(screen.queryByRole("button", { name: "Confirmar entrega" })).toBeNull();
+    vi.restoreAllMocks();
   });
 
   it("AC-6.3: a not-ready order offers no handover", async () => {

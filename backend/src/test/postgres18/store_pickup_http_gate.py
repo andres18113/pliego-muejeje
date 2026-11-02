@@ -33,7 +33,7 @@ def main():
     status, locations=request('/api/v1/pickup-locations')
     assert status==200 and locations
     location=next(p for p in locations if 'PUCE' in p['name'])
-    assert location['active'] and location['preparationMinutes']==25
+    assert location['active'] and location['preparationMinutes']==10
     assert location['provinceId']=='17' and location['cityId']=='893' and not location['cityNeedsReview']
     assert location['latitude']==-.21 and location['longitude']==-78.4914
     assert location['openingHours']=={'opensAt':'09:00:00','closesAt':'17:00:00'}
@@ -101,7 +101,12 @@ def main():
     assert request(path,actor,'POST',{'pickupCode':pickup['pickupCode']})[0]==403
     assert request(path,admin,'POST',{'pickupCode':pickup['pickupCode']},admin=True)[0]==400
     assert request(path,admin,'POST',{'pickupCode':pickup['pickupCode'],'identityVerified':True},admin=True)[1]['code']=='P5018'
-    query(f"ALTER TABLE pliego.pedido_retiro DISABLE TRIGGER trg_pedido_retiro_snapshot; UPDATE pliego.pedido_retiro SET estimado_desde=estimado_desde-INTERVAL '1 day',listo_desde=listo_desde-INTERVAL '1 day' WHERE pedido_id={oid}; ALTER TABLE pliego.pedido_retiro ENABLE TRIGGER trg_pedido_retiro_snapshot; UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id={oid}")
+    query(f"""ALTER TABLE pliego.pedido_retiro DISABLE TRIGGER trg_pedido_retiro_snapshot;
+        UPDATE pliego.pedido_retiro SET estimado_desde=estimado_desde-INTERVAL '1 day',listo_desde=listo_desde-INTERVAL '1 day',
+         zona_horaria='UTC',apertura=(clock_timestamp() AT TIME ZONE 'UTC')::TIME-INTERVAL '1 hour',
+         cierre=(clock_timestamp() AT TIME ZONE 'UTC')::TIME+INTERVAL '1 hour' WHERE pedido_id={oid};
+        ALTER TABLE pliego.pedido_retiro ENABLE TRIGGER trg_pedido_retiro_snapshot;
+        UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id={oid}""")
     status, ready=request(lookup_path,admin,'POST',{'code':pickup['pickupCode']},admin=True)
     assert status==200 and ready['state']=='READY' and ready['identityVerified'] is None
     status, collected=request(path,admin,'POST',{'pickupCode':pickup['pickupCode'],'identityVerified':True},admin=True)

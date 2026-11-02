@@ -200,13 +200,15 @@ El retiro es para libros impresos. Si el pedido también tiene eBooks o audiolib
 
 ## Cuándo y cómo recogerlo
 
-En el detalle del pedido, en [Mis pedidos](/orders), ves la hora estimada de retiro y tu código de retiro, que empieza con P-. El código también llega en el correo de confirmación.
+Los pedidos nuevos están listos 10 minutos después de aprobarse el pago: 6 minutos para cancelar y 4 minutos adicionales de preparación. Si el punto está cerrado al cumplirse ese plazo, puedes retirarlo desde la próxima apertura. El retiro solo está disponible dentro del horario del punto.
 
-Ve al punto dentro de su horario de atención y presenta el código. Cuando lo recoges, el pedido pasa a Retirado.
+En el detalle del pedido, en [Mis pedidos](/orders), ves la hora de retiro y tu código, que empieza con P-. Te avisamos por correo cuando está listo. Los pedidos anteriores conservan la hora indicada en su detalle.
+
+Ve al punto dentro de su horario de atención y presenta el código y tu documento de identidad. Cuando lo recoges, el pedido pasa a Retirado y recibes una confirmación por correo.
 
 ## Cancelar
 
-Tienes 6 minutos desde que haces el pedido para cancelarlo, desde su detalle en Mis pedidos.$expected_retiro$),
+Tienes 6 minutos desde que se aprueba el pago para cancelarlo, desde su detalle en Mis pedidos.$expected_retiro$),
   ('pagos','Con qué puedes pagar y cómo hacerlo con tarjeta o transferencia.',$expected_pagos$## Formas de pago
 
 - Tarjeta de crédito o débito: Visa, Mastercard, American Express o Diners Club.
@@ -232,7 +234,7 @@ Los precios están en dólares estadounidenses. Los libros tienen IVA 0 %.
 En el detalle de cada pedido, en [Mis pedidos](/orders): el método de pago, el subtotal, el IVA, el envío y el total.$expected_pagos$),
   ('cancelaciones-y-reembolsos','Cuándo puedes cancelar un pedido y qué pasa con tu pago.',$expected_cancelaciones_y_reembolsos$## Cuándo puedes cancelar
 
-- Pedidos de eBooks, audiolibros o retiro en tienda: durante los primeros 6 minutos después de hacer el pedido.
+- Pedidos de eBooks, audiolibros o retiro en tienda: durante los primeros 6 minutos desde que se aprueba el pago.
 - Pedidos con entrega a domicilio: mientras están En preparación.
 
 Mientras puedes cancelar, el detalle del pedido muestra Cancelar pedido.

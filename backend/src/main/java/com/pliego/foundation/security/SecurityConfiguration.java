@@ -79,7 +79,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/mailtrap").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login",
-                                "/api/v1/auth/refresh", "/api/v1/auth/logout", "/api/v1/auth/verify-email",
+                                "/api/v1/auth/refresh", "/api/v1/auth/logout", "/api/v1/auth/registration-session", "/api/v1/auth/verify-email",
                                 "/api/v1/auth/resend-verification", "/api/v1/auth/forgot-password", "/api/v1/auth/reset-password",
                                 "/api/v1/auth/email-change/confirm", "/api/v1/auth/email-change/cancel").permitAll()
                         .requestMatchers("/api/v1/catalog/**").permitAll()
@@ -117,7 +117,7 @@ public class SecurityConfiguration {
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Idempotency-Key",
                 AuthSessionRequestFilter.HEADER_NAME));
-        configuration.setExposedHeaders(List.of("X-Trace-Id"));
+        configuration.setExposedHeaders(List.of("X-Trace-Id", HttpHeaders.RETRY_AFTER));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

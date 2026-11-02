@@ -2,6 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { requestEmailAction, resetPassword, verifyEmail } from "@/shared/api/emailActions";
+import type { RegistrationSession } from "@/shared/api/registrationSession";
 
 export function useEmailRequest(purpose: "verification" | "recovery", from = "/") {
   return useMutation({ mutationFn: (email: string) => requestEmailAction(purpose, email, from === "/" ? undefined : from), retry: false });
@@ -19,10 +20,10 @@ export function useEmailTokenAction(purpose: "verification" | "recovery") {
   // Verification has no editable payload: reuse its original pending/result for
   // every visit to that link on this view, including an uncertain failure. This
   // stays in component memory, never in the query cache or browser storage.
-  const verificationRuns = useRef(new Map<string, Promise<void>>());
+  const verificationRuns = useRef(new Map<string, Promise<RegistrationSession | null>>());
   const mutation = useMutation({
     mutationFn: (command: { token: string; password?: string }) => {
-      if (purpose === "recovery") return resetPassword(command.token, command.password ?? "");
+      if (purpose === "recovery") return resetPassword(command.token, command.password ?? "").then(() => null);
       let result = verificationRuns.current.get(command.token);
       if (!result) {
         result = verifyEmail(command.token);

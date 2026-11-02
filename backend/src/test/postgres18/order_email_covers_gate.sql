@@ -84,6 +84,11 @@ BEGIN
  CALL pg_temp.assert_mail_covers(home,'ORDER_STATUS','OUT_FOR_DELIVERY');
  CALL pg_temp.assert_mail_covers(home,'ORDER_STATUS','DELIVERED');
 
+ -- This transactional fixture is explicitly open now, including in night-time CI.
+ UPDATE pliego.ubicacion_retiro SET zona_horaria='UTC',
+  apertura=(clock_timestamp() AT TIME ZONE 'UTC')::TIME-INTERVAL '1 hour',
+  cierre=(clock_timestamp() AT TIME ZONE 'UTC')::TIME+INTERVAL '1 hour'
+ WHERE ubicacion_retiro_id=location;
  CALL pliego.sp_cart_add_item(actor,physical,1,cart,cart_item,quantity);
  CALL pliego.sp_checkout_idempotent(actor,uuidv4(),NULL,'TRANSFER','APPROVED',cart,'STORE_PICKUP',location,pickup,state,payment,total,reference);
  CALL pg_temp.assert_mail_covers(pickup,'ORDER_CONFIRMED','CONFIRMED');
@@ -93,6 +98,7 @@ BEGIN
  UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id=pickup;
  CALL pliego.sp_home_delivery_advance_due(100);
  CALL pg_temp.assert_mail_covers(pickup,'ORDER_STATUS','PREPARING');
+ CALL pg_temp.assert_mail_covers(pickup,'ORDER_STATUS','READY');
  SELECT codigo INTO pickup_code FROM pliego.pedido_retiro WHERE pedido_id=pickup;
  CALL pliego.sp_pickup_collect(admin_id,pickup,pickup_code,TRUE);
  CALL pg_temp.assert_mail_covers(pickup,'ORDER_STATUS','COLLECTED');

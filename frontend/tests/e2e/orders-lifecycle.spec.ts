@@ -5,6 +5,7 @@ import { pickupOrder } from "../../src/test/pickup";
 async function install(page: Page, detail: ReturnType<typeof orderDetailFixture>) {
   const reads: string[] = [];
   await page.route("https://www.openstreetmap.org/**", route => route.fulfill({ contentType: "text/html",body: "<html><body>Mapa de prueba</body></html>" }));
+  await page.route("https://tile.openstreetmap.org/**", route => route.fulfill({ contentType: "image/png", body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64") }));
   await page.route("**/api/v1/**",route => {
     const path = new URL(route.request().url()).pathname;
     if (path === "/api/v1/auth/refresh" || path === "/api/v1/auth/login") return route.fulfill({ json: {

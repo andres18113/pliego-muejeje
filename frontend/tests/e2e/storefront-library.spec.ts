@@ -12,6 +12,7 @@ async function install(page: Page, mixed = false) {
   const physicalReads: string[] = [];
   const formats = mixed ? ["PAPERBACK", "EBOOK"] : ["EBOOK"];
   await page.route("https://www.openstreetmap.org/**", route => route.fulfill({ contentType: "text/html", body: "<!doctype html><title>Mapa</title>" }));
+  await page.route("https://tile.openstreetmap.org/**", route => route.fulfill({ contentType: "image/png", body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64") }));
   await page.route("**/api/v1/**", route => {
     const request = route.request(); const url = new URL(request.url()); const path = url.pathname;
     { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }

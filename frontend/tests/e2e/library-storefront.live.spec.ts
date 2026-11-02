@@ -32,7 +32,7 @@ test("real purchase ownership supports list, media filters, detail, purchase and
   await expect(page.locator(`a[href="/biblioteca/${fixture.ebookOwnedItemId}"]`)).toBeVisible();
   await expect(page.locator(`a[href="/biblioteca/${fixture.audioOwnedItemId}"]`)).toHaveCount(0);
   await page.locator(`a[href="/biblioteca/${fixture.ebookOwnedItemId}"]`).click();
-  await expect(page.getByText("Pertenece a tu cuenta", { exact: true })).toBeVisible();
+  await expect(page.getByText("Tuyo para leer", { exact: true })).toBeVisible();
   await expect(page.getByText("EPUB", { exact: true })).toBeVisible();
   await expect(page.getByRole("region", { name: "Información de compra" })).toContainText(fixture.mixedOrderId);
   await expect(page.getByRole("link", { name: /^(Leer|Escuchar|Continuar leyendo|Continuar escuchando|Descargar)$/ })).toHaveCount(0);

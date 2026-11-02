@@ -13,6 +13,11 @@ for name in "${required[@]}"; do
     fi
 done
 
+if [[ "${PLIEGO_TEST_DISPOSABLE_DB:-}" != '1' ]]; then
+    printf 'Set PLIEGO_TEST_DISPOSABLE_DB=1 only for an isolated disposable test database.\n' >&2
+    exit 2
+fi
+
 # These gates use urllib and may inherit a proxy that intercepts loopback traffic.
 export no_proxy="127.0.0.1,localhost"
 export NO_PROXY="$no_proxy"
@@ -89,8 +94,8 @@ fi
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '95:95' ]]; then
-    printf 'Expected 95 successful versioned Flyway migrations through V095; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '98:98' ]]; then
+    printf 'Expected 98 successful versioned Flyway migrations through V098; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"
@@ -99,6 +104,19 @@ for gate in geo_catalog_gate.sql geo_alias_gate.sql runtime_privileges_gate.sql 
     printf 'Running %s\n' "$gate"
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done
+
+for gate in offers_campaign_gate.sql pickup_timing_notifications_gate.sql; do
+    printf 'Running %s\n' "$gate"
+    psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
+done
+printf 'Running registration_continuation_gate.py\n'
+timeout 180s python3 "$script_dir/registration_continuation_gate.py"
+printf 'Running pickup_notifications_concurrency.py\n'
+timeout 180s python3 "$script_dir/pickup_notifications_concurrency.py"
+printf 'Running pickup_closing_boundary_gate.py\n'
+timeout 180s python3 "$script_dir/pickup_closing_boundary_gate.py"
+printf 'Running offers_campaign_concurrency.py\n'
+timeout 180s python3 "$script_dir/offers_campaign_concurrency.py"
 
 for gate in checkout_last_unit.py order_cancel_concurrency.py address_primary_concurrency.py \
     admin_order_concurrency.py register_email_concurrency.py mail_deliverability_concurrency.py pending_email_change_concurrency.py pending_email_change_security_concurrency.py p1_integrity_concurrency.py person_validation_database_gate.py transactional_email_concurrency.py store_pickup_concurrency.py verified_pickup_concurrency.py home_delivery_lifecycle_gate.py offers_concurrency.py order_offer_snapshot_concurrency.py automatic_billing_concurrency.py ecuador_cedula_cases_gate.py invoice_artifacts_gate.py invoice_artifacts_concurrency.py digital_single_copy_concurrency.py cart_saved_for_later_concurrency.py post_purchase_digital_access_concurrency.py; do
@@ -126,7 +144,11 @@ for gate in geo_catalog_http_gate.py geo_alias_http_gate.py checkout_http_gate.p
 done
 
 PLIEGO_TEST_API_BASE_URL="$application_url" timeout 180s python3 "$script_dir/auth_session_http_gate.py"
+printf 'Running registration_continuation_http_gate.py\n'
+PLIEGO_TEST_API_BASE_URL="$application_url" timeout 180s python3 "$script_dir/registration_continuation_http_gate.py"
 timeout 180s python3 "$script_dir/auth_adversarial_http_gate.py"
+printf 'Running offers_campaign_http_gate.py\n'
+timeout 180s python3 "$script_dir/offers_campaign_http_gate.py"
 printf 'Running customer_query_plan_gate.py\n'
 plan_gate_args=()
 if [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]]; then

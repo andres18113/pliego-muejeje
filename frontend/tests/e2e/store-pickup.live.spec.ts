@@ -45,14 +45,17 @@ for (const [fulfillment, payment, width] of [["STORE_PICKUP", "CARD", 1440], ["S
       await page.getByRole("radio").first().click();
       await expect(page.getByRole("button", { name: "Cambiar punto" })).toBeFocused();
       await expect(page.getByRole("tabpanel")).toContainText(locations[0].name);
-      await expect(page.getByRole("tabpanel")).toContainText(`Preparación estimada: ~${locations[0].preparationMinutes} min.`);
-      await expect(page.getByTitle(`Mapa de ${locations[0].name}`)).toHaveCount(0);
+      // ADR 0051: new pickups are ready ten minutes after payment approval, within opening hours.
+      expect(locations[0].preparationMinutes).toBe(10);
+      await expect(page.getByRole("tabpanel")).toContainText(`Listo unos ${locations[0].preparationMinutes} minutos después de aprobarse el pago, en horario de atención.`);
+      await expect(page.getByRole("tabpanel")).toContainText("Si el punto está cerrado, estará listo cuando abra.");
+      await expect(page.getByRole("img", { name: `Mapa de ${locations[0].name}` })).toHaveCount(0);
       await page.getByRole("tab", { name: "Entrega", exact: true }).click();
       if (addresses.length) await expect(page.getByText((addresses.find((address: { primary: boolean }) => address.primary) ?? addresses[0]).line1, { exact: true })).toBeVisible();
       else await expect(page.getByText(/Aún no tienes una dirección guardada/)).toBeVisible();
       await page.getByRole("tab", { name: "Retiro", exact: true }).click();
       await expect(page.getByRole("tabpanel")).toContainText(locations[0].name);
-      await expect(page.getByTitle(`Mapa de ${locations[0].name}`)).toHaveCount(0);
+      await expect(page.getByRole("img", { name: `Mapa de ${locations[0].name}` })).toHaveCount(0);
     } else await expect(page.getByText("Calle de prueba 123")).toBeVisible();
     if (payment === "CARD") {
       await page.getByRole("button", { name: "Tarjeta de crédito o débito" }).click();
@@ -91,12 +94,17 @@ for (const [fulfillment, payment, width] of [["STORE_PICKUP", "CARD", 1440], ["S
       await expect(page.locator(`time[datetime="${pickup.readyAt}"]`)).toBeVisible();
       await expect(page.getByText(pickup.location.timezone, { exact: true })).toHaveCount(0);
       await expect(page.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeVisible();
-      await expect(page.getByTitle(`Mapa de ${pickup.location.name}`)).toHaveAttribute("src", new RegExp(`marker=${pickup.location.latitude}%2C${pickup.location.longitude}`.replaceAll(".", "\\.")));
+      // The map is drawn from tiles (LocationMap): one labelled image, and a link at the backend's exact coordinate.
+      await expect(page.getByRole("img", { name: `Mapa de ${pickup.location.name}` })).toBeVisible();
+      const { latitude, longitude } = pickup.location;
+      await expect(page.getByRole("link", { name: "Ver ubicación en el mapa" })).toHaveAttribute("href",
+        `https://www.openstreetmap.org/?mlat=${latitude}&mlon=${longitude}#map=17/${latitude}/${longitude}`);
       await expect(page.getByText(/Transportista|Código de seguimiento/)).toHaveCount(0);
     } else {
       expect(detail.fulfillment.method).toBe("HOME_DELIVERY"); expect(detail.address.line1).toBe("Calle de prueba 123");
       await expect(page.getByRole("region", { name: "Destino confirmado" }).getByText(detail.address.recipient, { exact: true })).toBeVisible();
-      await expect(page.getByRole("region", { name: "Destino confirmado" }).getByTitle("Mapa de referencia de PUCE")).toHaveAttribute("src", /marker=-0\.21%2C-78\.4914/);
+      await expect(page.getByRole("region", { name: "Destino confirmado" }).getByRole("img", { name: "Mapa de referencia de PUCE" })).toBeVisible();
+      await expect(page.getByRole("region", { name: "Destino confirmado" }).locator("a[href*='mlat=-0.21&mlon=-78.4914']")).toHaveCount(1);
       await expect(page.getByText("Referencia PUCE en la entrada principal.")).toBeVisible();
     }
     await expect(page.getByRole("heading", { name: "Es momento de celebrar" })).toBeVisible();

@@ -11,14 +11,14 @@ import { useBlockedDigitalEligibility } from "@/features/library/digitalEligibil
 import type { DigitalEligibility } from "@/shared/api/digitalEligibility";
 import { DigitalConflictLink } from "@/features/library/DigitalConflictLink";
 import { StockStatus } from "@/features/catalog/StockStatus";
-import { resolveStockStatus } from "@/features/catalog/stockStatusModel";
+import { availabilityConflictMessage, resolveStockStatus } from "@/features/catalog/stockStatusModel";
 import { formatEdition, formatUsd } from "@/features/catalog/formatters";
-import { removeCartItem, updateCartItemQuantity, type CartLine } from "@/shared/api/cart";
+import { addEditionToCart, removeCartItem, updateCartItemQuantity, type CartLine } from "@/shared/api/cart";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
-import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { QuantityPicker } from "@/shared/ui/QuantityPicker";
 import { cartQuantityChoices, isSingleDigitalCopy, useCustomerCart } from "./cartQuery";
+import { CartRemovalDialog } from "./CartRemovalDialog";
 import { DigitalCopyNote } from "./DigitalCopyNote";
 import { hasSaving, toCartPricingViewModel, type CartLinePricingViewModel } from "./cartPricingViewModel";
 import { ivaLabel, unitsLabel } from "./purchaseText";
@@ -91,9 +91,10 @@ function CartPreviewContent({ addedEditionId, onConfirmingChange }: { addedEditi
         : "No pudimos confirmar el cambio. Mostramos el estado actual del carrito.") });
     },
   });
-  // The line waiting for "¿Quitar del carrito?", and the last one removed (it replaces the "Agregaste" line).
+  // The line waiting for "¿Quitar del carrito?", and what the opening line now reports in place of "Agregaste":
+  // a confirmed removal (with its Deshacer), the book back in the cart, or why it could not come back.
   const [removing, setRemoving] = useState<CartLine | null>(null);
-  const [removed, setRemoved] = useState<string | null>(null);
+  const [notice, setNotice] = useState<DrawerNotice | null>(null);
   const confirmationRef = useRef<HTMLParagraphElement>(null);
   useEffect(() => { onConfirmingChange(removing !== null); }, [removing, onConfirmingChange]);
   useEffect(() => () => onConfirmingChange(false), [onConfirmingChange]);
@@ -115,7 +116,7 @@ function CartPreviewContent({ addedEditionId, onConfirmingChange }: { addedEditi
       const index = cartQuery.data?.items.findIndex((item) => item.cartItemId === line.cartItemId) ?? 0;
       await cartQuery.refetch();
       if (!issued.isCurrent()) return;
-      setRemoving(null); setFeedback(null); setRemoved(line.title);
+      setRemoving(null); setFeedback(null); setNotice({ kind: "removed", departed: departedFrom(line) });
       focusRemoveControl(null, Math.max(index, 0));
     },
     onError: async (error: Error, { line, scope: issued }) => {
@@ -127,13 +128,39 @@ function CartPreviewContent({ addedEditionId, onConfirmingChange }: { addedEditi
       if (!issued.isCurrent()) return;
       // Already gone (another tab, or an earlier attempt that did reach the server): the cart shows the truth.
       if (refreshed.data && !refreshed.data.items.some((item) => item.cartItemId === line.cartItemId)) {
-        setFeedback(null); setRemoved(line.title); focusRemoveControl(null, Math.max(index, 0)); return;
+        setFeedback(null); setNotice({ kind: "removed", departed: departedFrom(line) }); focusRemoveControl(null, Math.max(index, 0)); return;
       }
       setFeedback({ cartItemId: line.cartItemId, tone: "error", message: "No pudimos quitar este libro. Sigue en tu carrito; inténtalo otra vez." });
       focusRemoveControl(line.cartItemId, index);
     },
   });
-  const busy = change.isPending || remove.isPending;
+  /** Deshacer: the same edition and quantity go back through the cart API's own checks (stock, sale, digital copy). */
+  const restore = useMutation({
+    meta: { authRequired: true },
+    mutationFn: ({ departed, scope: issued }: { departed: Departed; scope: SessionOperationScope }) => { issued.assertCurrent(); return addEditionToCart(departed.editionId, departed.quantity); },
+    retry: false,
+    onSuccess: async (added, { departed, scope: issued }) => {
+      if (!issued.isCurrent()) return;
+      await cartQuery.refetch();
+      if (!issued.isCurrent()) return;
+      setNotice({ kind: "restored", title: departed.title });
+      focusRemoveControl(added.cartItemId, 0);
+    },
+    onError: async (error: Error, { departed, scope: issued }) => {
+      if (!issued.isCurrent()) return;
+      if (error instanceof ApiRequestError && error.status === 401) { clearSession("expired"); return; }
+      // A lost add can still have committed: the server's cart decides, and an add is never retried blindly.
+      const refreshed = await cartQuery.refetch();
+      if (!issued.isCurrent()) return;
+      const back = refreshed.data?.items.find((item) => item.editionId === departed.editionId);
+      if (back) { setNotice({ kind: "restored", title: departed.title }); focusRemoveControl(back.cartItemId, 0); return; }
+      const definitive = error instanceof ApiRequestError && error.status < 500;
+      setNotice({ kind: "restoreFailed", title: departed.title, message: (error instanceof ApiRequestError ? availabilityConflictMessage(error.code) : null)
+        ?? (definitive ? "Ya no se puede devolver al carrito." : "No pudimos confirmar si volvió al carrito. Revisa el carrito antes de añadirlo otra vez.") });
+      window.requestAnimationFrame(() => confirmationRef.current?.focus());
+    },
+  });
+  const busy = change.isPending || remove.isPending || restore.isPending;
 
   const data = cartQuery.data;
   if (cartQuery.isPending) return <p className={classes.status} role="status">Consultando tu carrito…</p>;
@@ -143,6 +170,8 @@ function CartPreviewContent({ addedEditionId, onConfirmingChange }: { addedEditi
   </div>;
 
   const added = data.items.find((line) => line.editionId === addedEditionId);
+  // An undo for an edition that is already back (another tab, the page behind) would add it a second time.
+  const undoable = notice?.kind === "removed" && !data.items.some((line) => line.editionId === notice.departed.editionId) ? notice.departed : null;
   const blocked = data.items.some((line) => !resolveStockStatus(line).canAddToCart);
   // As in the cart: with the server's saving, the subtotal before offers and that saving; otherwise the plain subtotal.
   const pricing = toCartPricingViewModel(data);
@@ -159,10 +188,20 @@ function CartPreviewContent({ addedEditionId, onConfirmingChange }: { addedEditi
   return <>
     <div className={classes.scroll}>
       {/* Focus lands here when the drawer opens, so the confirmation is the first thing read. */}
-      <p className={classes.confirmation} ref={confirmationRef} tabIndex={-1} data-autofocus role="status">
-        <MaterialSymbol name="check_circle" size={22} fill />
-        <span>{removed ? <>Quitaste <strong>{removed}</strong> del carrito</> : added ? <>Agregaste <strong>{added.title}</strong></> : "Agregado al carrito"}</span>
-      </p>
+      <div className={classes.confirmationRow}>
+        <p className={classes.confirmation} ref={confirmationRef} tabIndex={-1} data-autofocus role="status" data-tone={notice?.kind === "restoreFailed" ? "error" : undefined}>
+          <MaterialSymbol name={notice?.kind === "restoreFailed" ? "error" : "check_circle"} size={22} fill />
+          <span>{notice?.kind === "removed" ? <>Quitaste <strong>{notice.departed.title}</strong> del carrito</>
+            : notice?.kind === "restored" ? <>Devolviste <strong>{notice.title}</strong> al carrito</>
+            : notice?.kind === "restoreFailed" ? <><strong>{notice.title}</strong>: {notice.message}</>
+            : added ? <>Agregaste <strong>{added.title}</strong></> : "Agregado al carrito"}</span>
+        </p>
+        {undoable && <Button variant="text" type="button" className={classes.undo} aria-label={`Deshacer: devolver ${undoable.title} al carrito`}
+          aria-disabled={busy || undefined} aria-busy={restore.isPending || undefined}
+          onClick={() => { if (!busy) restore.mutate({ departed: undoable, scope }); }}>
+          {restore.isPending ? "Devolviendo…" : "Deshacer"}
+        </Button>}
+      </div>
       {cartQuery.isError && <p className={classes.notice} role="alert">No pudimos actualizar el carrito. Lo que ves puede estar desactualizado.</p>}
       {data.items.length === 0 && <p className={classes.empty}>Tu carrito está vacío.</p>}
       {data.items.length > 0 && <ul className={classes.lines} aria-label="Libros en tu carrito">
@@ -185,14 +224,18 @@ function CartPreviewContent({ addedEditionId, onConfirmingChange }: { addedEditi
         <Link className={classes.secondary} to="/cart">Ver carrito</Link>
       </div>
     </div>
-    <ConfirmDialog opened={removing !== null} zIndex={300} title="¿Quitar del carrito?" pill destructive
-      confirmLabel="Quitar" keepLabel="Cancelar" busyLabel="Quitando…" busy={remove.isPending}
-      onConfirm={() => { if (removing) remove.mutate({ line: removing, scope }); }}
-      onKeep={() => { const line = removing; setRemoving(null); if (line) focusRemoveControl(line.cartItemId, 0); }}>
-      <p>Se quitará <strong>{removing?.title}</strong> de tu carrito.</p>
-    </ConfirmDialog>
+    <CartRemovalDialog line={removing} zIndex={300} busy={remove.isPending}
+      onConfirm={(line) => remove.mutate({ line, scope })}
+      onKeep={(line) => { setRemoving(null); focusRemoveControl(line.cartItemId, 0); }} />
   </>;
 }
+
+type Departed = { editionId: string; title: string; quantity: number };
+type DrawerNotice =
+  | { kind: "removed"; departed: Departed }
+  | { kind: "restored"; title: string }
+  | { kind: "restoreFailed"; title: string; message: string };
+const departedFrom = (line: CartLine): Departed => ({ editionId: line.editionId, title: line.title, quantity: line.quantity });
 
 function PreviewLine({ line, eligibility, pricing, added, busy, feedback, onQuantity, onRemove }: {
   eligibility?: DigitalEligibility;

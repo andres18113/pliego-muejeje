@@ -3,7 +3,9 @@ BEGIN;
 -- Age only test fixtures; production snapshots remain immutable.
 CREATE PROCEDURE pg_temp.ready_pickup(p_order BIGINT) LANGUAGE plpgsql AS $$ BEGIN
  ALTER TABLE pliego.pedido_retiro DISABLE TRIGGER trg_pedido_retiro_snapshot;
- UPDATE pliego.pedido_retiro SET estimado_desde=estimado_desde-INTERVAL '1 day',listo_desde=listo_desde-INTERVAL '1 day' WHERE pedido_id=p_order;
+ UPDATE pliego.pedido_retiro SET estimado_desde=estimado_desde-INTERVAL '1 day',listo_desde=listo_desde-INTERVAL '1 day',
+  zona_horaria='UTC',apertura=(clock_timestamp() AT TIME ZONE 'UTC')::TIME-INTERVAL '1 hour',
+  cierre=(clock_timestamp() AT TIME ZONE 'UTC')::TIME+INTERVAL '1 hour' WHERE pedido_id=p_order;
  ALTER TABLE pliego.pedido_retiro ENABLE TRIGGER trg_pedido_retiro_snapshot;
  UPDATE pliego.pedido SET cancelacion_hasta=clock_timestamp()-INTERVAL '1 second' WHERE pedido_id=p_order;
 END; $$;
@@ -20,7 +22,7 @@ BEGIN
  IF pickup IS NULL THEN RAISE EXCEPTION 'RED: active real pickup location not listed'; END IF;
  IF NOT EXISTS(SELECT FROM pliego.fn_pickup_locations() WHERE pickup_location_id=pickup
   AND latitude=-0.210000 AND longitude=-78.491400 AND timezone='America/Guayaquil'
-  AND opens_at='09:00'::TIME AND closes_at='17:00'::TIME AND preparation_minutes=25)
+  AND opens_at='09:00'::TIME AND closes_at='17:00'::TIME AND preparation_minutes=10)
  THEN RAISE EXCEPTION 'location contract not typed or seed incorrect'; END IF;
  INSERT INTO pliego.usuario(email_normalizado,password_hash,rol,estado)
  VALUES('pickup-gate-admin@example.invalid','fixture','ADMIN','ACTIVE') RETURNING usuario_id INTO a;
@@ -76,8 +78,8 @@ BEGIN
  snapshot:=d.fulfillment; confirmation:=pliego.fn_order_fulfillment(o,TRUE);
  code:=snapshot->'pickup'->>'pickupCode'; first_code:=code;
  IF code !~ '^P-[2-9A-HJ-NP-Z]{6,8}$' THEN RAISE EXCEPTION 'pickup code not human friendly'; END IF;
- IF (snapshot->'pickup'->>'readyAt')::TIMESTAMPTZ-(snapshot->'pickup'->>'estimatedAt')::TIMESTAMPTZ<>INTERVAL '25 minutes'
- OR (snapshot->'pickup'->>'estimatedAt')::TIMESTAMPTZ>clock_timestamp()
+ IF (snapshot->'pickup'->>'readyAt')::TIMESTAMPTZ-(snapshot->'pickup'->>'estimatedAt')::TIMESTAMPTZ<>INTERVAL '10 minutes'
+ OR (snapshot->'pickup'->>'readyAt')::TIMESTAMPTZ<(SELECT fecha_aprobacion+INTERVAL '10 minutes' FROM pliego.pago WHERE pedido_id=o)
  OR snapshot->'pickup'->'location'->>'timezone'<>'America/Guayaquil'
  THEN RAISE EXCEPTION 'readyAt not authoritative, timezone missing'; END IF;
  IF (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_CONFIRMED:'||o)<>1
@@ -122,7 +124,7 @@ BEGIN
  OR (SELECT count(*) FROM pliego.pedido_estado_historial WHERE pedido_id=o AND estado_nuevo='DELIVERED')<>1
  THEN RAISE EXCEPTION 'collection not idempotent or not terminal'; END IF;
  IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
-      WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') IS DISTINCT FROM 'PREPARING,COLLECTED'
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||o||':%') IS DISTINCT FROM 'PREPARING,READY,COLLECTED'
  OR (SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED')<>1
  OR EXISTS(SELECT FROM pliego.correo_outbox WHERE evento_clave='ORDER_STATUS:'||o||':STORE_PICKUP:COLLECTED'
       AND (((datos->'pickup') ? 'pickupCode') OR ((datos->'fulfillment'->'pickup') ? 'pickupCode')))
@@ -198,7 +200,7 @@ BEGIN
     OR pliego.fn_order_fulfillment(replay,FALSE)->>'state'<>'COLLECTED'
  THEN RAISE EXCEPTION 'Pickup collection stopped after cancellation window'; END IF;
  IF (SELECT string_agg(datos->>'state',',' ORDER BY correo_id) FROM pliego.correo_outbox
-      WHERE evento_clave LIKE 'ORDER_STATUS:'||replay||':%') IS DISTINCT FROM 'PREPARING,COLLECTED'
+      WHERE evento_clave LIKE 'ORDER_STATUS:'||replay||':%') IS DISTINCT FROM 'PREPARING,READY,COLLECTED'
  THEN RAISE EXCEPTION 'pickup preparation/collection emails were not caught up once'; END IF;
 END $gate$;
 ROLLBACK;

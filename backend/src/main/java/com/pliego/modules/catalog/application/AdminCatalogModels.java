@@ -32,7 +32,7 @@ public final class AdminCatalogModels {
             String coverLicense, String coverSourceUrl,
             String coverAttribution, String state,
             Integer stockActual, String createdAt, String updatedAt,
-            String ebookFileFormat, Integer audioDurationSeconds, List<String> narrators) {
+            String ebookFileFormat, Integer audioDurationSeconds, List<String> narrators, boolean offerRowExists) {
         public EditionRow { narrators = List.copyOf(narrators); }
     }
 

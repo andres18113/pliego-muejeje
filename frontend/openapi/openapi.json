@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:18095",
+      "url": "http://127.0.0.1:18097",
       "description": "Generated server url"
     }
   ],
@@ -940,7 +940,7 @@
           "Administración de catálogo"
         ],
         "summary": "Establecer una oferta de edición",
-        "description": "Reemplaza la única oferta de la edición. PostgreSQL valida el precio inferior al precio base y el intervalo de fechas.",
+        "description": "Reemplaza la única oferta de la edición. Con If-None-Match: *, X-Expected-Base-Price y X-Expected-Stock crea solo si no existe ninguna fila y la base/stock siguen iguales; NONE representa stock digital. Las tres cabeceras se requieren juntas. PostgreSQL valida bajo bloqueo; precondición fallida devuelve P1001/400.",
         "operationId": "set",
         "parameters": [
           {
@@ -951,6 +951,33 @@
               "type": "integer",
               "format": "int64",
               "exclusiveMinimum": 0
+            }
+          },
+          {
+            "name": "If-None-Match",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "\\*"
+            }
+          },
+          {
+            "name": "X-Expected-Base-Price",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "(?:0|[1-9][0-9]{0,8})\\.[0-9]{2}"
+            }
+          },
+          {
+            "name": "X-Expected-Stock",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "pattern": "NONE|0|[1-9][0-9]{0,9}"
             }
           }
         ],
@@ -1951,8 +1978,15 @@
           "Authentication"
         ],
         "summary": "Verificar correo",
-        "description": "Consume un token de uso único que vence a las 24 horas. No inicia sesión automáticamente.",
+        "description": "Consume un token de uso único que vence a las 24 horas. Con la continuidad válida del mismo usuario, verifica y crea una sesión en una sola transacción; requiere X-PLIEGO-SESSION-REQUEST: 1 cuando existe esa cookie. Desde otro navegador solo verifica.",
         "operationId": "verify",
+        "parameters": [
+          {
+            "name": "X-PLIEGO-SESSION-REQUEST",
+            "in": "header",
+            "description": "Valor 1 requerido si se envía la cookie pliego_registration"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1964,8 +1998,24 @@
           "required": true
         },
         "responses": {
+          "200": {
+            "description": "Correo verificado y sesión creada en el navegador de registro",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Sesión y eliminación de continuidad",
+                "style": "simple"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationSessionResponse"
+                }
+              }
+            }
+          },
           "204": {
-            "description": "Correo verificado"
+            "description": "Correo verificado sin sesión, incluso si se agota la cuota de intercambio; no envía Set-Cookie y conserva la continuidad para reintentar en registration-session"
           },
           "400": {
             "description": "Enlace inválido, vencido o utilizado",
@@ -2057,13 +2107,87 @@
         }
       }
     },
+    "/api/v1/auth/registration-session": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Continuar el registro verificado",
+        "description": "La cookie de continuidad no concede acceso. Devuelve 202 mientras falta verificar; una cuenta verificada consume la credencial y crea una única familia de sesión. Una repetición durante cinco minutos devuelve REFRESH_REQUIRED: renovar mediante /refresh, reintentando brevemente si otra pestaña aún no recibió la cookie. Cuotas: 1200 intentos por IP/hora y 600 por credencial/hora. Si se agota una cuota, devuelve 202 con RETRY_LATER y Retry-After en segundos, sin consumir la continuidad ni enviar Set-Cookie; reintentar con la misma cookie después de la espera indicada.",
+        "operationId": "registrationSession",
+        "parameters": [
+          {
+            "name": "X-PLIEGO-SESSION-REQUEST",
+            "in": "header",
+            "description": "Valor requerido: 1",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Sesión creada; destino local validado",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Sesión HttpOnly y eliminación de la continuidad",
+                "style": "simple"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationSessionResponse"
+                }
+              }
+            }
+          },
+          "202": {
+            "description": "Verificación pendiente, sesión creada por otra petición o cuota agotada; en REFRESH_REQUIRED llamar a refresh y en RETRY_LATER conservar la cookie y reintentar después, sin Set-Cookie",
+            "headers": {
+              "Retry-After": {
+                "description": "Segundos hasta el próximo intento cuando el estado es RETRY_LATER",
+                "style": "simple",
+                "schema": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationSessionState"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "Continuidad ausente, inválida, vencida o consumida fuera de la ventana; cookie eliminada"
+          },
+          "403": {
+            "description": "Marcador de sesión requerido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "registrationContinuationCookie": []
+          }
+        ]
+      }
+    },
     "/api/v1/auth/register": {
       "post": {
         "tags": [
           "Authentication"
         ],
         "summary": "Registrar una cuenta CUSTOMER",
-        "description": "Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Confirma el enlace antes de iniciar sesión.",
+        "description": "Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.",
         "operationId": "register",
         "requestBody": {
           "content": {
@@ -2078,6 +2202,12 @@
         "responses": {
           "201": {
             "description": "Cuenta de cliente creada",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Continuidad HttpOnly, Secure, SameSite=Strict, host-only; máximo 24 horas",
+                "style": "simple"
+              }
+            },
             "content": {
               "application/json": {
                 "schema": {
@@ -7362,6 +7492,52 @@
           "token"
         ]
       },
+      "AuthenticatedUser": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "example": "100",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "email": {
+            "type": "string",
+            "example": "usuario@example.com"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "CUSTOMER",
+              "ADMIN"
+            ],
+            "example": "CUSTOMER"
+          }
+        }
+      },
+      "RegistrationSessionResponse": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string"
+          },
+          "tokenType": {
+            "type": "string"
+          },
+          "expiresInSeconds": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/AuthenticatedUser"
+          },
+          "returnTo": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
       "PasswordResetRequest": {
         "type": "object",
         "properties": {
@@ -7408,6 +7584,19 @@
         "properties": {
           "message": {
             "type": "string"
+          }
+        }
+      },
+      "RegistrationSessionState": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string",
+            "enum": [
+              "PENDING_VERIFICATION",
+              "REFRESH_REQUIRED",
+              "RETRY_LATER"
+            ]
           }
         }
       },
@@ -7488,28 +7677,6 @@
               "PENDING_VERIFICATION"
             ],
             "example": "PENDING_VERIFICATION"
-          }
-        }
-      },
-      "AuthenticatedUser": {
-        "type": "object",
-        "properties": {
-          "userId": {
-            "type": "string",
-            "example": "100",
-            "pattern": "^[1-9][0-9]*$"
-          },
-          "email": {
-            "type": "string",
-            "example": "usuario@example.com"
-          },
-          "role": {
-            "type": "string",
-            "enum": [
-              "CUSTOMER",
-              "ADMIN"
-            ],
-            "example": "CUSTOMER"
           }
         }
       },
@@ -10791,6 +10958,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "offerRowExists": {
+            "type": "boolean",
+            "description": "Existe una fila de oferta, incluso vencida o inactiva."
           }
         }
       },
@@ -11024,6 +11195,11 @@
       "authSessionCookie": {
         "type": "apiKey",
         "name": "pliego_session",
+        "in": "cookie"
+      },
+      "registrationContinuationCookie": {
+        "type": "apiKey",
+        "name": "pliego_registration",
         "in": "cookie"
       }
     }

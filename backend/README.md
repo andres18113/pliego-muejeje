@@ -152,6 +152,11 @@ Flyway runs `classpath:db/migration` on startup. It keeps its history in Postgre
 
 Run the complete PostgreSQL 18 CI-equivalent gate from a disposable PostgreSQL 18 database after building the app with `mvn verify`. The `src/test/postgres18/run_ci_gates.sh` runner checks the required environment, starts the application, verifies Flyway, runs SQL and concurrency checks, then exercises the live HTTP API. GitHub Actions also runs this PostgreSQL 18 gate on pushes and pull requests to `main`; it uses the native PostgreSQL packages and does not use Docker. H2 is not a substitute for PostgreSQL verification.
 
+Set `PLIEGO_TEST_DISPOSABLE_DB=1` explicitly for this isolated test database.
+The runner now validates all 98 migrations and includes registration continuation,
+pickup timing/notification concurrency and guarded campaign application gates.
+It must never target a production database or a forwarded production connection.
+
 ## Build and run
 
 From this directory, with Java 25 and Maven installed:

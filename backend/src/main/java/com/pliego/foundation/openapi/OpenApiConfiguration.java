@@ -24,7 +24,10 @@ public class OpenApiConfiguration {
                         new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"))
                         .addSecuritySchemes("authSessionCookie",
                                 new SecurityScheme().type(SecurityScheme.Type.APIKEY)
-                                        .in(SecurityScheme.In.COOKIE).name("pliego_session")));
+                                        .in(SecurityScheme.In.COOKIE).name("pliego_session"))
+                        .addSecuritySchemes("registrationContinuationCookie",
+                                new SecurityScheme().type(SecurityScheme.Type.APIKEY)
+                                        .in(SecurityScheme.In.COOKIE).name("pliego_registration")));
     }
 
     @Bean

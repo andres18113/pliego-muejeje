@@ -18,6 +18,7 @@ import { addEditionToCart, getSavedForLater, moveSavedItemToCart, removeCartItem
 import { ApiRequestError, fieldErrorMessages, readRecoveryDetail } from "@/shared/api/errors";
 import { QuantityPicker } from "@/shared/ui/QuantityPicker";
 import { UndoToast, type UndoToastMessage } from "@/shared/ui/UndoToast";
+import { CartRemovalDialog } from "./CartRemovalDialog";
 import { SavedForLater, type SavedFeedback } from "./SavedForLater";
 import { cartQuantityChoices, cartQueryKey, isSingleDigitalCopy, useCustomerCart } from "./cartQuery";
 import { DigitalCopyNote } from "./DigitalCopyNote";
@@ -58,6 +59,8 @@ function CartContent() {
   const toastKey = useRef(0);
   const [lineFeedback, setLineFeedback] = useState<LineFeedback | null>(null);
   const [toast, setToast] = useState<CartToast | null>(null);
+  /** The line waiting for "¿Quitar del carrito?". Nothing leaves the cart before the answer; the undo toast follows it. */
+  const [removing, setRemoving] = useState<CartLine | null>(null);
   const savedQuery = useQuery({
     queryKey: savedForLaterQueryKey,
     ...stockReadOptions,
@@ -120,6 +123,7 @@ function CartContent() {
         return;
       }
       setLineFeedback(null);
+      setRemoving(null);
       setToast({
         key: ++toastKey.current,
         message: "Quitado del carrito",
@@ -130,6 +134,7 @@ function CartContent() {
     },
     onError: async (error: Error, next) => {
       if (!next.scope.isCurrent()) return;
+      if (next.kind === "remove") setRemoving(null);
       if (error instanceof ApiRequestError && error.status === 401) {
         clearSession("expired");
         return;
@@ -156,8 +161,9 @@ function CartContent() {
       if (stillInCart === false) setToast({ key: ++toastKey.current, message });
       else setLineFeedback({ cartItemId: next.line.cartItemId, tone: "error", message });
     },
-    onSettled: () => {
+    onSettled: (_, __, next) => {
       commandLock.current = false;
+      if (next.kind === "remove") setRemoving(null);
     },
   });
 
@@ -365,7 +371,7 @@ function CartContent() {
                       feedback={lineFeedback?.cartItemId === line.cartItemId ? lineFeedback : null}
                       onQuantity={(quantity) => run({ kind: "quantity", line, quantity })}
                       onSave={() => run({ kind: "save", line })}
-                      onRemove={() => run({ kind: "remove", line })}
+                      onRemove={() => { if (!locked && !commandLock.current) setRemoving(line); }}
                     />
                   </li>
                 ))}
@@ -376,6 +382,12 @@ function CartContent() {
         </>
       ) : null}
       <p className="visually-hidden" role="status" aria-live="polite" aria-atomic="true">{announcement}</p>
+      <CartRemovalDialog line={removing} busy={command.isPending && command.variables?.kind === "remove"}
+        onConfirm={(line) => run({ kind: "remove", line })}
+        onKeep={(line) => {
+          setRemoving(null);
+          window.requestAnimationFrame(() => document.querySelector<HTMLElement>(`[data-cart-remove="${CSS.escape(line.cartItemId)}"]`)?.focus());
+        }} />
       <UndoToast onDismiss={() => setToast(null)} toast={toast && {
         key: toast.key,
         message: toast.message,
@@ -465,7 +477,7 @@ function CartLineItem({ line, eligibility, pricing, busy, locked, feedback, onQu
         <Button variant="text" type="button" aria-label={`Guardar ${line.title} para después`} aria-disabled={locked || undefined} onClick={() => !locked && onSave()}>
           Guardar para después
         </Button>
-        <Button variant="text" type="button" aria-label={`Quitar ${line.title} del carrito`} aria-disabled={locked || undefined} onClick={() => !locked && onRemove()}>
+        <Button variant="text" type="button" data-cart-remove={line.cartItemId} aria-label={`Quitar ${line.title} del carrito`} aria-disabled={locked || undefined} onClick={() => !locked && onRemove()}>
           Quitar
         </Button>
       </div>

@@ -128,16 +128,26 @@ it.each(["P6002", "P6003"])("links a blocked digital %s line to its acquisition 
 });
 
 /** A server cart the DELETE route really changes, so every read after it reflects the removal. */
-function removableCart(lines = [{}, { quantity: 2, currentSubtotal: "37.00" }], deleteStatus = 204) {
+function removableCart(lines = [{}, { quantity: 2, currentSubtotal: "37.00" }], deleteStatus = 204, restore?: (request: Request) => Response | undefined) {
   let items = cartBody(lines).items;
+  const removed: typeof items = [];
   const body = () => json(cartBody(items.map(({ cartItemId, ...rest }) => ({ ...rest, cartItemId })),
     items.reduce((sum, line) => sum + Number(line.currentSubtotal), 0).toFixed(2)));
   return stubApi({
     "GET /api/v1/cart": body,
-    "POST /api/v1/cart/items": () => json({ cartItemId: "100", quantity: 1 }),
+    "POST /api/v1/cart/items": async (request) => {
+      const refused = restore?.(request.clone());
+      if (refused) return refused;
+      // Deshacer: the removed line comes back with its quantity, as the cart API would add it.
+      const { editionId, quantity } = await request.json() as { editionId: string; quantity: number };
+      const back = removed.find((line) => line.editionId === editionId);
+      if (back) { items = [...items, { ...back, quantity }]; return json({ cartItemId: back.cartItemId, quantity }); }
+      return json({ cartItemId: "100", quantity: 1 });
+    },
     "DELETE /api/v1/cart/items/*": (request) => {
       if (deleteStatus >= 400) return problem(deleteStatus, "INTERNAL_ERROR", "Error", "Fallo temporal.");
       const id = new URL(request.url).pathname.split("/").pop();
+      removed.push(...items.filter((line) => line.cartItemId === id));
       items = items.filter((line) => line.cartItemId !== id);
       return new Response(null, { status: deleteStatus });
     },
@@ -161,7 +171,7 @@ it("removes only the confirmed line and shows the server's new count and totals 
   await user.click(within(drawer).getByRole("button", { name: "Quitar Edición 1 del carrito" }));
   const question = await screen.findByRole("dialog", { name: "¿Quitar del carrito?" });
   expect(within(question).getByText("Edición 1", { selector: "strong" })).toBeInTheDocument();
-  expect(within(question).getByRole("button", { name: "Cancelar" })).toHaveFocus();
+  expect(within(question).getByRole("button", { name: "Conservar" })).toHaveFocus();
   await user.click(within(question).getByRole("button", { name: "Quitar" }));
 
   await waitFor(() => expect(screen.queryByRole("dialog", { name: "¿Quitar del carrito?" })).not.toBeInTheDocument());
@@ -176,13 +186,50 @@ it("removes only the confirmed line and shows the server's new count and totals 
   await waitFor(() => expect(within(drawer).getByRole("button", { name: "Quitar Cien años de soledad del carrito" })).toHaveFocus());
 });
 
+it("offers Deshacer only after a confirmed removal and puts the same edition and quantity back", async () => {
+  const adds: Request[] = [];
+  const api = removableCart([{ quantity: 2, currentSubtotal: "37.00" }, {}], 204, (request) => { adds.push(request); return undefined; });
+  const { user, drawer } = await openDrawer();
+  expect(within(drawer).queryByRole("button", { name: /Deshacer/ })).not.toBeInTheDocument();
+
+  await user.click(within(drawer).getAllByRole("button", { name: /^Quitar .* del carrito$/ })[0]);
+  await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Quitar" }));
+  const undo = await within(drawer).findByRole("button", { name: /^Deshacer: devolver .* al carrito$/ });
+  expect(within(drawer).getByRole("list", { name: "Libros en tu carrito" }).children).toHaveLength(1);
+
+  await user.click(undo);
+  await waitFor(() => expect(within(drawer).getByRole("list", { name: "Libros en tu carrito" }).children).toHaveLength(2));
+  const posts = api.calls.filter((call) => call.method === "POST" && call.path === "/api/v1/cart/items");
+  expect(posts).toHaveLength(2); // the original add, then exactly one undo
+  expect(await adds.at(-1)!.json()).toMatchObject({ quantity: 2 });
+  expect(within(drawer).getByRole("status", { name: "" })).toHaveTextContent(/Devolviste .* al carrito$/);
+  expect(within(drawer).queryByRole("button", { name: /Deshacer/ })).not.toBeInTheDocument();
+});
+
+it("explains a refused undo from the server and never retries the add on its own", async () => {
+  let refuse = false;
+  const api = removableCart(undefined, 204, () => refuse ? problem(409, "P2042", "Edición no disponible", "Esta edición ya no está a la venta.") : undefined);
+  const { user, drawer } = await openDrawer();
+  refuse = true;
+  const before = api.calls.filter((call) => call.method === "POST").length;
+
+  await user.click(within(drawer).getByRole("button", { name: "Quitar Edición 1 del carrito" }));
+  await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Quitar" }));
+  await user.click(await within(drawer).findByRole("button", { name: "Deshacer: devolver Edición 1 al carrito" }));
+
+  await waitFor(() => expect(within(drawer).getByRole("status", { name: "" })).toHaveTextContent(/Edición 1:/));
+  expect(api.calls.filter((call) => call.method === "POST")).toHaveLength(before + 1);
+  expect(within(drawer).getByRole("list", { name: "Libros en tu carrito" }).children).toHaveLength(1);
+  expect(within(drawer).queryByRole("button", { name: /Deshacer/ })).not.toBeInTheDocument();
+});
+
 it("keeps every line when the question is cancelled or dismissed with Escape, without closing the drawer", async () => {
   const api = removableCart();
   const { user, drawer } = await openDrawer();
   const control = within(drawer).getByRole("button", { name: "Quitar Edición 1 del carrito" });
 
   await user.click(control);
-  await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Cancelar" }));
+  await user.click(within(await screen.findByRole("dialog", { name: "¿Quitar del carrito?" })).getByRole("button", { name: "Conservar" }));
   await waitFor(() => expect(screen.queryByRole("dialog", { name: "¿Quitar del carrito?" })).not.toBeInTheDocument());
   await waitFor(() => expect(control).toHaveFocus());
 

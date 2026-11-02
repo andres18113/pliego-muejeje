@@ -265,7 +265,7 @@ export interface paths {
         get?: never;
         /**
          * Establecer una oferta de edición
-         * @description Reemplaza la única oferta de la edición. PostgreSQL valida el precio inferior al precio base y el intervalo de fechas.
+         * @description Reemplaza la única oferta de la edición. Con If-None-Match: *, X-Expected-Base-Price y X-Expected-Stock crea solo si no existe ninguna fila y la base/stock siguen iguales; NONE representa stock digital. Las tres cabeceras se requieren juntas. PostgreSQL valida bajo bloqueo; precondición fallida devuelve P1001/400.
          */
         put: operations["set"];
         post?: never;
@@ -661,7 +661,7 @@ export interface paths {
         put?: never;
         /**
          * Verificar correo
-         * @description Consume un token de uso único que vence a las 24 horas. No inicia sesión automáticamente.
+         * @description Consume un token de uso único que vence a las 24 horas. Con la continuidad válida del mismo usuario, verifica y crea una sesión en una sola transacción; requiere X-PLIEGO-SESSION-REQUEST: 1 cuando existe esa cookie. Desde otro navegador solo verifica.
          */
         post: operations["verify"];
         delete?: never;
@@ -710,6 +710,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/auth/registration-session": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Continuar el registro verificado
+         * @description La cookie de continuidad no concede acceso. Devuelve 202 mientras falta verificar; una cuenta verificada consume la credencial y crea una única familia de sesión. Una repetición durante cinco minutos devuelve REFRESH_REQUIRED: renovar mediante /refresh, reintentando brevemente si otra pestaña aún no recibió la cookie. Cuotas: 1200 intentos por IP/hora y 600 por credencial/hora. Si se agota una cuota, devuelve 202 con RETRY_LATER y Retry-After en segundos, sin consumir la continuidad ni enviar Set-Cookie; reintentar con la misma cookie después de la espera indicada.
+         */
+        post: operations["registrationSession"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/auth/register": {
         parameters: {
             query?: never;
@@ -721,7 +741,7 @@ export interface paths {
         put?: never;
         /**
          * Registrar una cuenta CUSTOMER
-         * @description Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Confirma el enlace antes de iniciar sesión.
+         * @description Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.
          */
         post: operations["register"];
         delete?: never;
@@ -2482,6 +2502,25 @@ export interface components {
         EmailVerificationRequest: {
             token: string;
         };
+        AuthenticatedUser: {
+            /** @example 100 */
+            userId?: string;
+            /** @example usuario@example.com */
+            email?: string;
+            /**
+             * @example CUSTOMER
+             * @enum {string}
+             */
+            role?: "CUSTOMER" | "ADMIN";
+        };
+        RegistrationSessionResponse: {
+            accessToken?: string;
+            tokenType?: string;
+            /** Format: int32 */
+            expiresInSeconds?: number;
+            user?: components["schemas"]["AuthenticatedUser"];
+            returnTo?: string | null;
+        };
         PasswordResetRequest: {
             token: string;
             /** Format: password */
@@ -2498,6 +2537,10 @@ export interface components {
         };
         AcceptedResponse: {
             message?: string;
+        };
+        RegistrationSessionState: {
+            /** @enum {string} */
+            state?: "PENDING_VERIFICATION" | "REFRESH_REQUIRED" | "RETRY_LATER";
         };
         /** @description Crea una cuenta CUSTOMER pendiente de verificación de correo. */
         RegisterRequest: {
@@ -2538,17 +2581,6 @@ export interface components {
              * @enum {string}
              */
             state?: "PENDING_VERIFICATION";
-        };
-        AuthenticatedUser: {
-            /** @example 100 */
-            userId?: string;
-            /** @example usuario@example.com */
-            email?: string;
-            /**
-             * @example CUSTOMER
-             * @enum {string}
-             */
-            role?: "CUSTOMER" | "ADMIN";
         };
         LoginResponse: {
             /** Format: jwt */
@@ -3582,6 +3614,8 @@ export interface components {
             /** Format: int32 */
             audioDurationSeconds?: number | null;
             narrators?: string[];
+            /** @description Existe una fila de oferta, incluso vencida o inactiva. */
+            offerRowExists?: boolean;
         };
         PageResponseEdition: {
             items?: components["schemas"]["Edition"][];
@@ -4260,7 +4294,11 @@ export interface operations {
     set: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                "If-None-Match"?: string;
+                "X-Expected-Base-Price"?: string;
+                "X-Expected-Stock"?: string;
+            };
             path: {
                 editionId: number;
             };
@@ -4919,7 +4957,10 @@ export interface operations {
     verify: {
         parameters: {
             query?: never;
-            header?: never;
+            header?: {
+                /** @description Valor 1 requerido si se envía la cookie pliego_registration */
+                "X-PLIEGO-SESSION-REQUEST"?: string;
+            };
             path?: never;
             cookie?: never;
         };
@@ -4929,7 +4970,18 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Correo verificado */
+            /** @description Correo verificado y sesión creada en el navegador de registro */
+            200: {
+                headers: {
+                    /** @description Sesión y eliminación de continuidad */
+                    "Set-Cookie"?: unknown;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegistrationSessionResponse"];
+                };
+            };
+            /** @description Correo verificado sin sesión, incluso si se agota la cuota de intercambio; no envía Set-Cookie y conserva la continuidad para reintentar en registration-session */
             204: {
                 headers: {
                     [name: string]: unknown;
@@ -5011,6 +5063,58 @@ export interface operations {
             };
         };
     };
+    registrationSession: {
+        parameters: {
+            query?: never;
+            header: {
+                /** @description Valor requerido: 1 */
+                "X-PLIEGO-SESSION-REQUEST": string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Sesión creada; destino local validado */
+            200: {
+                headers: {
+                    /** @description Sesión HttpOnly y eliminación de la continuidad */
+                    "Set-Cookie"?: unknown;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegistrationSessionResponse"];
+                };
+            };
+            /** @description Verificación pendiente, sesión creada por otra petición o cuota agotada; en REFRESH_REQUIRED llamar a refresh y en RETRY_LATER conservar la cookie y reintentar después, sin Set-Cookie */
+            202: {
+                headers: {
+                    /** @description Segundos hasta el próximo intento cuando el estado es RETRY_LATER */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RegistrationSessionState"];
+                };
+            };
+            /** @description Continuidad ausente, inválida, vencida o consumida fuera de la ventana; cookie eliminada */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Marcador de sesión requerido */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     register: {
         parameters: {
             query?: never;
@@ -5027,6 +5131,8 @@ export interface operations {
             /** @description Cuenta de cliente creada */
             201: {
                 headers: {
+                    /** @description Continuidad HttpOnly, Secure, SameSite=Strict, host-only; máximo 24 horas */
+                    "Set-Cookie"?: unknown;
                     [name: string]: unknown;
                 };
                 content: {

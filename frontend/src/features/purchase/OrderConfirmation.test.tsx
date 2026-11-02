@@ -93,7 +93,7 @@ describe("successful order confirmation", () => {
     expect(within(destination).getByRole("heading", { name: "Enviar a" })).toBeInTheDocument();
     expect(within(destination).getByText("Punto de prueba Quito")).toBeInTheDocument();
     expect(within(destination).getByText("Calle de prueba 42")).toBeInTheDocument();
-    expect(within(destination).getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", expect.stringContaining("marker=-0.22%2C-78.5"));
+    expectLocationMap(within(destination), "Mapa de Punto de prueba Quito", "-0.22", "-78.5");
     expect(within(destination).queryByRole("heading", { name: "Retirar en" })).not.toBeInTheDocument();
     expect(screen.getAllByText("Calle de prueba 42")).toHaveLength(1);
   });
@@ -109,7 +109,7 @@ describe("successful order confirmation", () => {
     expect(delivery.getByText(/5.*7.*octubre/)).toBeInTheDocument();
     expect(screen.queryByText("Código de retiro")).not.toBeInTheDocument();
     expect(screen.queryByText("P-ABC234")).not.toBeInTheDocument();
-    expect(within(destination).getByTitle("Mapa de referencia de PUCE")).toHaveAttribute("src", expect.stringContaining("marker=-0.21%2C-78.4914"));
+    expectLocationMap(within(destination), "Mapa de referencia de PUCE", "-0.21", "-78.4914");
     expect(within(destination).getByText("Referencia PUCE en la entrada principal.")).toBeInTheDocument();
     expect(screen.queryByRole("list", { name: "Progreso del envío" })).not.toBeInTheDocument();
     expect(screen.getAllByText(/Av\. Principal 123/)).toHaveLength(1);
@@ -188,3 +188,10 @@ it("classifies confirmation items from server capabilities despite display forma
   expect(delivery.queryByText("Compra digital autorizada")).not.toBeInTheDocument();
   expect(screen.getByRole("region", { name: "Compras digitales" })).toHaveTextContent("Compra digital autorizada");
 });
+
+/** The pickup map: the point's map image, and a link to the full map at the exact backend coordinate. */
+function expectLocationMap(scope: Pick<typeof screen, "getByRole">, name: string, latitude: string, longitude: string) {
+  const map = scope.getByRole("img", { name }).closest("[data-location-map]")?.parentElement;
+  expect(map).toBeTruthy();
+  expect([...map!.querySelectorAll("a")].some((link) => link.getAttribute("href")?.includes(`mlat=${latitude}&mlon=${longitude}`))).toBe(true);
+}

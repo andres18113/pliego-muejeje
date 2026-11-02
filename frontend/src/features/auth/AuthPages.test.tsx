@@ -2,22 +2,26 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { createMemoryRouter, RouterProvider } from "react-router-dom";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SessionProvider } from "@/app/session";
 import { setApiAccessToken } from "@/shared/api/client";
-import { login, register } from "@/shared/api/auth";
+import { exchangeRegistrationSession, login, refreshSession, register } from "@/shared/api/auth";
 import { ApiRequestError } from "@/shared/api/errors";
 import { RegisterPage, SignInPage } from "./AuthPages";
 
 vi.mock("@/shared/api/auth", () => ({
   login: vi.fn(),
   register: vi.fn(),
+  exchangeRegistrationSession: vi.fn(),
+  refreshSession: vi.fn(),
 }));
+const mockExchange = vi.mocked(exchangeRegistrationSession);
+const mockRefresh = vi.mocked(refreshSession);
 
 const mockLogin = vi.mocked(login);
 const mockRegister = vi.mocked(register);
 
-function renderAuth(initialEntry: string) {
+function renderAuth(initialEntry: string | { pathname: string; search?: string; state?: unknown }) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const router = createMemoryRouter([
     { path: "/sign-in", element: <SignInPage /> },
@@ -25,6 +29,7 @@ function renderAuth(initialEntry: string) {
     { path: "/", element: <h1>Catálogo</h1> },
     { path: "/catalog", element: <h1>Catálogo</h1> },
     { path: "/admin", element: <h1>Administración</h1> },
+    { path: "/cart", element: <h1>Carrito de destino</h1> },
   ], { initialEntries: [initialEntry] });
 
   return render(
@@ -61,6 +66,10 @@ afterEach(() => {
   setApiAccessToken(null);
   vi.clearAllMocks();
 });
+// Until a test says otherwise, the registering browser's continuation is still waiting for verification.
+beforeEach(() => { mockExchange.mockResolvedValue({ kind: "pending" }); mockRefresh.mockResolvedValue(null); });
+const continuationSession = (returnTo: string | null = null) => ({ accessToken: "continued", tokenType: "Bearer" as const, expiresInSeconds: 1800,
+  user: { userId: "10", email: "ana@example.com", role: "CUSTOMER" as const }, returnTo });
 
 describe("authentication forms", () => {
   it("sends and preserves the cart origin while explaining that verification precedes sign-in", async () => {
@@ -72,7 +81,7 @@ describe("authentication forms", () => {
     expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
     expect(mockRegister).toHaveBeenCalledWith(expect.objectContaining({ returnTo: "/cart" }));
     expect(screen.getByRole("link", { name: "Reenviar verificación" })).toHaveAttribute("href", "/reenviar-verificacion?from=%2Fcart");
-    expect(screen.getByText(/Después de verificarlo/)).toHaveTextContent("volver a tu carrito");
+    expect(screen.getByText(/esta página iniciará tu sesión/)).toHaveTextContent("te llevará a tu carrito");
   });
   describe.each(["/sign-in", "/register"])("contextual returns from %s", (authPath) => {
     it.each([
@@ -142,8 +151,100 @@ describe("authentication forms", () => {
     await completeRegistration(user);
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
     expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("Verifica tu correo");
+    expect(screen.getByRole("status")).toHaveTextContent("Abre el enlace que te enviamos para verificarla");
     expect(screen.getByRole("link", { name: "Reenviar verificación" })).toHaveAttribute("href", "/reenviar-verificacion");
+  });
+
+  it("runs a check pressed inside the browser's check gap once the gap ends, never dropping it", async () => {
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
+    renderAuth("/register?from=%2Fcart");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    await screen.findByRole("heading", { name: "Revisa tu correo" });
+    await waitFor(() => expect(mockExchange).toHaveBeenCalledTimes(1));
+    mockExchange.mockResolvedValueOnce({ kind: "wait", nextAt: Date.now() + 150 }).mockResolvedValueOnce({ kind: "pending" });
+    await user.click(screen.getByRole("button", { name: "Ya verifiqué mi correo" }));
+    // Inside the gap nothing is claimed yet: the button keeps checking instead of answering "todavía no".
+    expect(await screen.findByRole("button", { name: "Comprobando…" })).toHaveAttribute("aria-disabled", "true");
+    expect(screen.queryByText(/Todavía no vemos la verificación/)).not.toBeInTheDocument();
+    expect(await screen.findByText(/Todavía no vemos la verificación/)).toBeInTheDocument();
+    expect(mockExchange).toHaveBeenCalledTimes(3);
+  });
+
+  it("moves a return to the tab inside the check gap to the gap's end, then continues signed in", async () => {
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
+    renderAuth("/register?from=%2Fcart");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    await screen.findByRole("heading", { name: "Revisa tu correo" });
+    await waitFor(() => expect(mockExchange).toHaveBeenCalledTimes(1));
+    mockExchange.mockResolvedValueOnce({ kind: "wait", nextAt: Date.now() + 150 })
+      .mockResolvedValueOnce({ kind: "authenticated", session: continuationSession("/cart") });
+    window.dispatchEvent(new Event("focus"));
+    expect(await screen.findByText(/Tu cuenta está lista/)).toBeInTheDocument();
+    expect(mockExchange).toHaveBeenCalledTimes(3);
+  });
+
+  it("keeps waiting calmly, without ending the continuation, while the server's quota is spent", async () => {
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
+    mockExchange.mockResolvedValue({ kind: "retry", retryAt: Date.now() + 300_000 });
+    renderAuth("/register?from=%2Fcart");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    await screen.findByRole("heading", { name: "Revisa tu correo" });
+    await user.click(screen.getByRole("button", { name: "Ya verifiqué mi correo" }));
+    expect(await screen.findByText(/Volveremos a intentarlo en unos minutos; no tienes que hacer nada/)).toBeInTheDocument();
+    // Still the waiting view: never "Inicia sesión para continuar", which a 204 alone may show.
+    expect(screen.getByText("Falta un paso: verificar tu correo")).toBeInTheDocument();
+    expect(screen.queryByText("Inicia sesión para continuar")).not.toBeInTheDocument();
+  });
+
+  it("continues on its own, signed in, once the address is verified, to the original destination", async () => {
+    mockRegister.mockResolvedValue({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
+    renderAuth("/register?from=%2Fcart");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    await screen.findByRole("heading", { name: "Revisa tu correo" });
+    await waitFor(() => expect(mockExchange).toHaveBeenCalledTimes(1));
+
+    // Not yet: a pending answer grants nothing and says so only when asked.
+    await user.click(screen.getByRole("button", { name: "Ya verifiqué mi correo" }));
+    expect(await screen.findByText(/Todavía no vemos la verificación/)).toBeInTheDocument();
+
+    mockExchange.mockResolvedValue({ kind: "authenticated", session: continuationSession("/cart") });
+    await user.click(screen.getByRole("button", { name: "Ya verifiqué mi correo" }));
+    expect(await screen.findByRole("heading", { name: "Correo verificado" })).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("Volviendo a tu carrito");
+    expect(await screen.findByRole("heading", { name: "Carrito de destino" }, { timeout: 2000 })).toBeInTheDocument();
+    expect(mockLogin).not.toHaveBeenCalled();
+  });
+
+  it("keeps the waiting view across a refresh and checks right away", async () => {
+    renderAuth({ pathname: "/register", search: "?from=%2Fcart", state: { pliegoRegistration: { email: "ana@example.com" } } });
+    expect(screen.getByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("ana@example.com");
+    await waitFor(() => expect(mockExchange).toHaveBeenCalledTimes(1));
+    expect(screen.queryByRole("button", { name: "Crear cuenta" })).not.toBeInTheDocument();
+  });
+
+  it("offers ordinary sign-in when this browser no longer holds a continuation", async () => {
+    mockExchange.mockResolvedValue({ kind: "ended" });
+    renderAuth({ pathname: "/register", state: { pliegoRegistration: { email: "ana@example.com" } } });
+    expect(await screen.findByText("Inicia sesión para continuar")).toBeInTheDocument();
+    expect(within(screen.getByRole("main")).getByRole("link", { name: "Iniciar sesión" })).toHaveAttribute("href", "/sign-in?from=%2F");
+  });
+
+  it("adopts the session another tab of this browser just created instead of exchanging twice", async () => {
+    mockExchange.mockResolvedValue({ kind: "refresh" });
+    mockRefresh.mockResolvedValue({ ...validLoginResponse(), user: { userId: "10", email: "ana@example.com", role: "CUSTOMER" } } as never);
+    renderAuth({ pathname: "/register", search: "?from=%2Fcart", state: { pliegoRegistration: { email: "ana@example.com" } } });
+    expect(await screen.findByRole("heading", { name: "Correo verificado" })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Carrito de destino" }, { timeout: 2000 })).toBeInTheDocument();
+    expect(mockExchange).toHaveBeenCalledTimes(1);
   });
 
   it("requires a sign-in email and focuses its associated Spanish error", async () => {
@@ -334,7 +435,7 @@ describe("authentication forms", () => {
       phone: "+59325550134",
     }));
     expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("La cuenta se creó correctamente");
+    expect(screen.getByRole("status")).toHaveTextContent("La cuenta se creó para ana@example.com");
 
     await user.click(within(screen.getByRole("main")).getByRole("link", { name: "Iniciar sesión" }));
     expect(await screen.findByRole("heading", { name: "Iniciar sesión" })).toBeInTheDocument();

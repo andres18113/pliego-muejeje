@@ -32,7 +32,9 @@ test("live Home, navigation, physical/digital catalog, detail, search and offers
     await expect(page.getByText("Recibimos una respuesta incompleta", { exact: false })).toHaveCount(0);
     await page.goto(`/catalog?format=${format}&que=${encodeURIComponent(edition.title)}`);
     await page.locator(`a[href^="/catalog/editions/${edition.editionId}"]`).first().click();
-    await expect(page.getByRole("heading", { name: edition.title, exact: true })).toBeVisible();
+    // Campaign fixtures repeat titles across editions: wait for this edition's page and read only its own heading.
+    await page.waitForURL(url => url.pathname.startsWith(`/catalog/editions/${edition.editionId}`));
+    await expect(page.getByRole("heading", { level: 1, name: edition.title, exact: true })).toBeVisible();
     const detail = await (await page.request.get(`/api/v1/catalog/editions/${edition.editionId}`)).json();
     if (detail.format === "EBOOK" && detail.ebookFileFormat) await expect(page.getByRole("region", { name: "Datos de la edición" })).toContainText(detail.ebookFileFormat);
     if (detail.format === "AUDIOBOOK") {

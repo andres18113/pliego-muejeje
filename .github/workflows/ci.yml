@@ -144,8 +144,16 @@ jobs:
           CREATE ROLE pliego LOGIN PASSWORD :'ci_password';
           SQL
           sudo -u postgres createdb -p 55432 --owner=pliego pliego
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_registration_ci
           psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180006" \
             | grep -qx t
+      - name: Verify registration continuation with disposable PostgreSQL
+        working-directory: backend
+        env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
+          PGDATABASE: pliego_registration_ci
+          PLIEGO_DB_URL: jdbc:postgresql://127.0.0.1:55432/pliego_registration_ci
+        run: mvn --batch-mode --no-transfer-progress -Dtest=RegistrationContinuationPostgresIntegrationTest test
       - name: Set up Node.js for live browser contracts
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -159,6 +167,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Run live SQL, concurrency, HTTP, Flyway, and browser gates
         env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
           PLIEGO_RUN_LIVE_BROWSER: '1'
           PLIEGO_BILLING_ENABLED: 'true'
           PLIEGO_BILLING_POLL_INTERVAL: PT0.1S

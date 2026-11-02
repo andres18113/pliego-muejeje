@@ -2,15 +2,20 @@ import { expect, test, type Page, type Route } from "@playwright/test";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
 
 const token = "x".repeat(43);
+/** The registering browser's verification answer (ADR 0050): verified and signed in, destination left to the page. */
+const signedInBody = { accessToken: "verified-session", tokenType: "Bearer", expiresInSeconds: 1800,
+  user: { userId: "1", email: "ana@example.invalid", role: "CUSTOMER" }, returnTo: null };
 async function installApi(page: Page, verify?: (route: Route) => Promise<void>) {
   const calls: { path: string; body: unknown }[] = [];
   await page.route("**/api/v1/**", async route => {
     const request = route.request();
     const path = new URL(request.url()).pathname;
     if (path === "/api/v1/auth/refresh") return route.fulfill({ status: 204 });
+    // The waiting page's continuation checks: still waiting for the address to be verified.
+    if (path === "/api/v1/auth/registration-session") return route.fulfill({ status: 202, json: { state: "PENDING_VERIFICATION" } });
     if (path.startsWith("/api/v1/auth/")) {
       calls.push({ path, body: request.postDataJSON() });
-      if (path.endsWith("verify-email") && verify) return verify(route);
+      if (path.endsWith("verify-email")) return verify ? verify(route) : route.fulfill({ status: 200, json: signedInBody });
       if (path.endsWith("/register")) return route.fulfill({ status: 201, json: { userId: "1", customerId: "1", state: "PENDING_VERIFICATION" } });
       if (path.endsWith("resend-verification") || path.endsWith("forgot-password")) {
         return route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ message: "Si la cuenta cumple los requisitos, recibirás un correo con los pasos a seguir." }) });
@@ -31,7 +36,7 @@ async function installApi(page: Page, verify?: (route: Route) => Promise<void>) 
   return calls;
 }
 
-test("opening the verification link automatically returns to the guarded profile without signing in", async ({ page }) => {
+test("verifying in another browser shows the account is active and offers sign-in for the guarded profile, without signing in", async ({ page }) => {
   let release!: () => void;
   const pending = new Promise<void>(resolve => { release = resolve; });
   const calls = await installApi(page, async route => {
@@ -50,10 +55,13 @@ test("opening the verification link automatically returns to the guarded profile
   expect(new URL(page.url()).pathname).toBe("/verificar-correo");
   release();
   await expect(page.getByRole("heading", { name: "Correo verificado", exact: true })).toBeVisible();
-  await expect(page).toHaveURL(new URL("/account", page.url()).href);
-  await expect(page.getByRole("heading", { name: /^Inicia sesión para / })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("Tu cuenta ya está activa.");
+  // No session here: the page does not travel to a customer page on its own.
+  await page.waitForTimeout(1400);
+  expect(new URL(page.url()).pathname).toBe("/verificar-correo");
   expect(calls).toEqual([{ path: "/api/v1/auth/verify-email", body: { token } }]);
-  const signIn = page.getByRole("main").getByRole("link", { name: "Iniciar sesión", exact: true });
+  // The outcome's own action (the page's way back also leads to sign-in).
+  const signIn = page.getByRole("main").locator("section").getByRole("link", { name: "Iniciar sesión", exact: true });
   await expect(signIn).toHaveAttribute("href", `/sign-in?${from}`);
   await signIn.click();
   await expect(page).toHaveURL(new RegExp(`/sign-in\\?${from}$`));
@@ -65,7 +73,7 @@ for (const destination of [
   "/catalog?que=historia&category=historia&language=es&minPrice=5.00&maxPrice=30.00&sort=PRICE_ASC&page=2#resultados",
   "/catalog/editions/42?from=%2Fcatalog%3Fque%3Dhistoria#descripcion",
 ]) {
-  test(`successful verification automatically returns to ${destination}`, async ({ page }) => {
+  test(`verification in the registering browser signs in and returns to ${destination}`, async ({ page }) => {
     const calls = await installApi(page);
     await page.goto(`/verificar-correo?${new URLSearchParams({ from: destination })}#token=${token}`);
     await expect(page.getByRole("heading", { name: "Correo verificado", exact: true })).toBeVisible();
@@ -118,15 +126,60 @@ for (const destination of [
   });
 }
 
-test("verification returns to the guarded cart while preserving the sign-in intent", async ({ page }) => {
+test("verification in the registering browser lands on the guarded cart already signed in", async ({ page }) => {
   const calls = await installApi(page);
   const destination = "/cart?source=verification#items";
   const from = new URLSearchParams({ from: destination }).toString();
   await page.goto(`/verificar-correo?${from}#token=${token}`);
+  await expect(page.getByRole("status")).toContainText("Ya iniciaste sesión");
   await expect(page).toHaveURL(new URL(destination, page.url()).href);
-  await expect(page.getByRole("heading", { name: /^Inicia sesión para / })).toBeVisible();
-  await expect(page.getByRole("main").getByRole("link", { name: "Iniciar sesión", exact: true })).toHaveAttribute("href", `/sign-in?${from}`);
+  await expect(page.getByRole("heading", { name: /^Inicia sesión para / })).toHaveCount(0);
   expect(calls).toEqual([{ path: "/api/v1/auth/verify-email", body: { token } }]);
+});
+
+test("the registration page continues on its own once the address is verified in another tab", async ({ page, context }) => {
+  let verified = false;
+  let checks = 0;
+  await page.clock.install();
+  await installApi(page);
+  await page.route("**/api/v1/auth/registration-session", route => {
+    checks += 1;
+    return verified
+      ? route.fulfill({ status: 200, json: { ...signedInBody, returnTo: "/catalog" } })
+      : route.fulfill({ status: 202, json: { state: "PENDING_VERIFICATION" } });
+  });
+  await page.goto("/register?from=%2Fcatalog");
+  await page.getByLabel("Nombres", { exact: true }).fill("Ana María");
+  await page.getByLabel("Apellidos", { exact: true }).fill("Pérez");
+  await page.getByLabel("Correo electrónico", { exact: true }).fill("ana@example.invalid");
+  await page.getByLabel("Contraseña", { exact: true }).fill("synthetic-registration-42");
+  await page.getByRole("button", { name: "Crear cuenta", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Revisa tu correo", exact: true })).toBeVisible();
+  // A refresh keeps the waiting view (history state), never the address in the URL.
+  const beforeReload = checks;
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Revisa tu correo", exact: true })).toBeVisible();
+  // PPA-02: a reload is no way around the browser's 12 s check gap — the reloaded view's own check waits for its end.
+  expect(checks).toBe(beforeReload);
+  await page.clock.runFor(12_500);
+  await expect.poll(() => checks).toBe(beforeReload + 1);
+  await expect(page.getByRole("status").first()).toContainText("ana@example.invalid");
+  expect(page.url()).not.toContain("ana");
+  // The link is opened elsewhere; coming back to this tab is enough.
+  verified = true;
+  const other = await context.newPage(); await other.close();
+  await page.bringToFront();
+  const before = checks;
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  // The return falls inside the gap again (the reloaded view just asked), so nothing is sent at once;
+  // the check is moved, not dropped, and runs when the gap ends.
+  await page.clock.runFor(1_000);
+  expect(checks).toBe(before);
+  await page.clock.runFor(11_500);
+  await expect(page.getByRole("heading", { name: "Correo verificado", exact: true })).toBeVisible();
+  expect(checks).toBe(before + 1);
+  await page.clock.runFor(1_000);
+  await expect(page).toHaveURL(new URL("/catalog", page.url()).href);
 });
 
 test("an expired verification link offers another link without automatic retries", async ({ page }) => {
@@ -157,56 +210,39 @@ test("a malformed verification link never submits a verification command", async
   expect(calls).toHaveLength(0);
 });
 
-for (const completion of ["earlier-first", "latest-first"] as const) {
-  test(`a newer verification link survives the previous pending request (${completion})`, async ({ page }) => {
-    const latestToken = "y".repeat(43);
-    let releaseEarlier!: () => void;
-    let releaseLatest!: () => void;
-    const earlierPending = new Promise<void>(resolve => { releaseEarlier = resolve; });
-    const latestPending = new Promise<void>(resolve => { releaseLatest = resolve; });
-    const calls = await installApi(page, async route => {
-      if (route.request().postDataJSON().token === token) {
-        await earlierPending;
-        await route.fulfill({ status: 204 });
-      } else {
-        await latestPending;
-        await route.fulfill({ status: 204 });
-      }
-    });
-    await page.goto(`/verificar-correo#token=${token}`);
-    await expect.poll(() => calls.length).toBe(1);
-    await expect.poll(() => new URL(page.url()).hash).toBe("");
-    // Simulate another mail link entering the existing SPA while the first request is pending.
-    await page.evaluate(nextToken => {
-      window.history.pushState({}, "", `/verificar-correo?from=%2Faccount#token=${nextToken}`);
-      window.dispatchEvent(new PopStateEvent("popstate"));
-    }, latestToken);
-    await expect.poll(() => calls.length).toBe(2);
-    await expect.poll(() => new URL(page.url()).hash).toBe("");
-    const earlierFinished = page.waitForResponse(response => response.url().endsWith("/api/v1/auth/verify-email") && response.request().postDataJSON().token === token);
-    if (completion === "earlier-first") {
-      releaseEarlier();
-      await earlierFinished;
-      await expect(page.getByRole("heading", { name: "Verificando tu correo", exact: true })).toBeVisible();
-      await expect(page.getByRole("heading", { name: "Este enlace ya no está disponible", exact: true })).toHaveCount(0);
-      await page.waitForTimeout(1400);
-      expect(new URL(page.url()).pathname).toBe("/verificar-correo");
-      releaseLatest();
+test("a newer verification link waits for the previous pending one and keeps its own result", async ({ page }) => {
+  // Verifications share the browser's session lock (one can sign in), so the newer link starts once the older settles.
+  const latestToken = "y".repeat(43);
+  let releaseEarlier!: () => void;
+  const earlierPending = new Promise<void>(resolve => { releaseEarlier = resolve; });
+  const calls = await installApi(page, async route => {
+    if (route.request().postDataJSON().token === token) {
+      await earlierPending;
+      await route.fulfill({ status: 400, contentType: "application/problem+json", body: JSON.stringify({ status: 400, title: "Enlace no válido", code: "EMAIL_ACTION_INVALID" }) });
     } else {
-      releaseLatest();
-      await expect(page.getByRole("heading", { name: "Correo verificado", exact: true })).toBeVisible();
-      releaseEarlier();
-      await earlierFinished;
+      await route.fulfill({ status: 200, json: signedInBody });
     }
-    await expect(page.getByRole("heading", { name: "Correo verificado", exact: true })).toBeVisible();
-    await expect(page).toHaveURL(new URL("/account", page.url()).href);
-    await expect(page.getByRole("heading", { name: /^Inicia sesión para / })).toBeVisible();
-    expect(calls).toEqual([
-      { path: "/api/v1/auth/verify-email", body: { token } },
-      { path: "/api/v1/auth/verify-email", body: { token: latestToken } },
-    ]);
   });
-}
+  await page.goto(`/verificar-correo#token=${token}`);
+  await expect.poll(() => calls.length).toBe(1);
+  await expect.poll(() => new URL(page.url()).hash).toBe("");
+  await page.evaluate(nextToken => {
+    window.history.pushState({}, "", `/verificar-correo?from=%2Faccount#token=${nextToken}`);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }, latestToken);
+  await expect.poll(() => new URL(page.url()).hash).toBe("");
+  await expect(page.getByRole("heading", { name: "Verificando tu correo", exact: true })).toBeVisible();
+  expect(calls).toHaveLength(1);
+  releaseEarlier();
+  await expect.poll(() => calls.length).toBe(2);
+  // The older link's rejection never replaces the current link's result.
+  await expect(page.getByRole("heading", { name: "Este enlace ya no está disponible", exact: true })).toHaveCount(0);
+  await expect(page).toHaveURL(new URL("/account", page.url()).href);
+  expect(calls).toEqual([
+    { path: "/api/v1/auth/verify-email", body: { token } },
+    { path: "/api/v1/auth/verify-email", body: { token: latestToken } },
+  ]);
+});
 
 test("an older successful response cannot redirect away from the current invalid link", async ({ page }) => {
   const latestToken = "w".repeat(43);
@@ -225,10 +261,10 @@ test("an older successful response cannot redirect away from the current invalid
     window.history.pushState({}, "", `/verificar-correo?from=%2Faccount#token=${nextToken}`);
     window.dispatchEvent(new PopStateEvent("popstate"));
   }, latestToken);
-  await expect(page.getByRole("heading", { name: "Este enlace ya no está disponible", exact: true })).toBeVisible();
   const earlierFinished = page.waitForResponse(response => response.url().endsWith("/api/v1/auth/verify-email") && response.request().postDataJSON().token === token);
   releaseEarlier();
   await earlierFinished;
+  await expect(page.getByRole("heading", { name: "Este enlace ya no está disponible", exact: true })).toBeVisible();
   await page.waitForTimeout(1400);
   expect(new URL(page.url()).pathname).toBe("/verificar-correo");
   await expect(page.getByRole("heading", { name: "Este enlace ya no está disponible", exact: true })).toBeVisible();

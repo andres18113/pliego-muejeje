@@ -8,6 +8,7 @@ async function install(page: Page) {
   const posts: { body: Record<string, unknown>; key: string | undefined }[] = [];
   let locationState: "ok" | "error" | "empty" = "ok";
   await page.route("https://www.openstreetmap.org/**", route => route.fulfill({ contentType: "text/html", body: "<!doctype html><html lang='es'><title>Mapa de prueba</title><body>Mapa</body></html>" }));
+  await page.route("https://tile.openstreetmap.org/**", route => route.fulfill({ contentType: "image/png", body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64") }));
   await page.route("**/api/v1/**", async route => {
     const request = route.request(); const path = new URL(request.url()).pathname;
     { const geo = geoResponse(path.replace(/^\/api\/v1/, "")); if (geo) return route.fulfill({ json: geo }); }
@@ -83,10 +84,11 @@ for (const width of [1440, 1024, 768, 390, 320]) {
     await page.getByRole("radio", { name: /Punto de prueba Quito/ }).click();
     await expect(page.getByRole("button", { name: "Cambiar punto" })).toBeFocused();
     await expect(destination).toContainText("Punto de prueba Quito");
-    await expect(destination).toContainText("Preparación estimada: ~37 min.");
+    await expect(destination).toContainText("Listo unos 37 minutos después de aprobarse el pago, en horario de atención.");
+    await expect(destination).toContainText("Si el punto está cerrado, estará listo cuando abra.");
     await expect(page.getByRole("button", { name: "Hacer pedido" })).toBeDisabled();
     await expect(summary.locator("dt")).toHaveText(["Subtotal", "IVA (15 %)", "Gastos de envío", "Total"]);
-    await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveCount(0);
+    await expect(page.getByRole("img", { name: "Mapa de Punto de prueba Quito" })).toHaveCount(0);
     await noOverflow(page); await axe(page);
     await page.screenshot({ path: info.outputPath(`pickup-${width}.png`), fullPage: true });
     await delivery.click(); await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible();
@@ -94,7 +96,7 @@ for (const width of [1440, 1024, 768, 390, 320]) {
     await expect(summary.locator("dt")).toHaveText(["Subtotal", "IVA (15 %)", "Gastos de envío", "Total"]);
     await page.getByRole("tab", { name: "Retiro", exact: true }).click();
     await expect(destination).toContainText("Punto de prueba Quito");
-    await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveCount(0);
+    await expect(page.getByRole("img", { name: "Mapa de Punto de prueba Quito" })).toHaveCount(0);
   });
 }
 
@@ -113,7 +115,7 @@ test("loading error, retry, multiple locations and empty-state recovery", async 
   await expect(page.getByRole("radio").first()).toBeFocused();
   await page.getByRole("radio", { name: /Otro punto de retiro/ }).focus(); await page.keyboard.press("Space");
   await expect(page.getByRole("tabpanel")).toContainText("Otro punto de retiro");
-  await expect(page.getByTitle("Mapa de Otro punto de retiro")).toHaveCount(0);
+  await expect(page.getByRole("img", { name: "Mapa de Otro punto de retiro" })).toHaveCount(0);
   api.locations("empty");
   await page.getByRole("tab", { name: "Entrega", exact: true }).click();
   await page.getByRole("tab", { name: "Retiro", exact: true }).click();
@@ -122,6 +124,19 @@ test("loading error, retry, multiple locations and empty-state recovery", async 
   expect(api.posts).toHaveLength(0);
   await page.getByRole("tab", { name: "Entrega", exact: true }).click();
   await expect(page.getByText("Av. Principal 123", { exact: true })).toBeVisible();
+});
+
+test("pickup order facts fit a 320px phone at 200% text", async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 900 }); await install(page);
+  await page.goto("/sign-in?from=%2Forders%2F700");
+  await page.getByLabel("Correo electrónico").fill("ana@example.com");
+  await page.getByLabel("Contraseña", { exact: true }).fill("Lectura-segura-2026");
+  await page.getByRole("button", { name: "Iniciar sesión", exact: true }).click();
+  await expect(page).toHaveURL(/\/orders\/700$/);
+  await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+  await expect(page.getByText("P-ABC234")).toBeVisible();
+  // The facts grid's minimum track must never exceed its cell (9.5rem is 304px at 200% text).
+  await noOverflow(page); await axe(page);
 });
 
 for (const payment of ["CARD", "TRANSFER"] as const) {
@@ -151,7 +166,9 @@ for (const payment of ["CARD", "TRANSFER"] as const) {
     await expect(page.locator('time[datetime="2026-10-05T00:32:12Z"]')).toContainText("19:32:12");
     await expect(page.getByText("America/Guayaquil")).toHaveCount(0);
     await expect(page.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeVisible();
-    await expect(page.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", /marker=-0\.22%2C-78\.5/);
+    await expect(page.getByRole("img", { name: "Mapa de Punto de prueba Quito" })).toBeVisible();
+    await expect(page.locator("[data-location-map]").first()).toHaveAttribute("data-state", "ready");
+    await expect(page.getByRole("link", { name: /Ver ubicación en el mapa|Abrir en el mapa|mapa/ }).first()).toHaveAttribute("href", /mlat=-0\.22&mlon=-78\.5/);
     // The receipt once (totals, no books); the pickup facts and the books to collect lead beside it.
     await expect(page.getByRole("complementary", { name: "Tu pedido" })).not.toContainText(/Cien años/);
     await expect(page.locator('[data-confirmation="details"]')).toContainText("IVA (15 %)");

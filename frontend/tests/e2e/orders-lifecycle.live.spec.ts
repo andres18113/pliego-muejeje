@@ -42,6 +42,7 @@ test("Mis pedidos reads real home transitions, cutoff, pickup collection and can
     return route.continue({ url: `${apiOrigin}${url.pathname}${url.search}` });
   });
   await page.route("https://www.openstreetmap.org/**",route => route.fulfill({ contentType: "text/html",body: "<html><body>Mapa</body></html>" }));
+  await page.route("https://tile.openstreetmap.org/**", route => route.fulfill({ contentType: "image/png", body: Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=", "base64") }));
   await page.goto("/sign-in?from=%2Forders");
   await page.getByLabel("Correo electrónico").fill(data.email);
   await page.getByLabel("Contraseña",{ exact: true }).fill(data.password);

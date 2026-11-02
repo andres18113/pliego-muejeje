@@ -1,0 +1,3 @@
+Tests run:554, passed:553, failures:0, errors:0, skipped:1.
+BUILD SUCCESS
+Skipped: opt-in R2LiveSmokeTest; PLIEGO_R2_LIVE_TEST unset.

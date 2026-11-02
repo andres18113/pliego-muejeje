@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope } from "@/app/sessionOperation";
 import { adminReturnHref, authLocation, emailActionLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
@@ -15,9 +15,10 @@ import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
-import { stateAfterRegistration, stateAfterSignIn } from "@/features/favorites/favoriteIntent";
-import { AuthState, authFlowClasses as flow } from "./AuthFlow";
+import { stateAfterSignIn } from "@/features/favorites/favoriteIntent";
+import { authFlowClasses as flow } from "./AuthFlow";
 import { PasswordInput } from "@/shared/ui/PasswordInput";
+import { RegistrationWaiting } from "./RegistrationWaiting";
 
 const MAX_PASSWORD_UTF8_BYTES = 72;
 
@@ -221,8 +222,13 @@ export function RegisterPage() {
   const from = intent;
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [registered, setRegistered] = useState(false);
-  const [registeredEmail, setRegisteredEmail] = useState("");
+  // The waiting view survives a refresh through history state (never storage or the URL); the original state,
+  // including any pending catalog action, rides along for the sign-in that follows.
+  const remembered = readRegistration(location.state);
+  const [registered, setRegistered] = useState(Boolean(remembered));
+  const [registeredEmail, setRegisteredEmail] = useState(remembered ?? "");
+  const navigate = useNavigate();
+  const returnState = withoutRegistration(location.state);
   const [phoneVisible, setPhoneVisible] = useState(false);
   const {
     register: registerField,
@@ -270,8 +276,9 @@ export function RegisterPage() {
       });
       reset({ email: values.email, password: "", firstNames: "", lastNames: "", phone: "" });
       setRegisteredEmail(values.email);
-      setFeedback({ state: "success", message: "La cuenta se creó correctamente. Verifica tu correo antes de iniciar sesión." });
+      setFeedback({ state: "success", message: "La cuenta se creó correctamente. Verifica tu correo para continuar." });
       setRegistered(true);
+      navigate({ pathname: location.pathname, search: location.search }, { replace: true, state: rememberRegistration(location.state, values.email) });
     } catch (error: unknown) {
       const fields=(["firstNames","lastNames","email","password","phone"] as const).filter((field) => {
         const message=fieldErrorMessages(error,field);
@@ -312,15 +319,7 @@ export function RegisterPage() {
         <div className="auth-content" data-auth-state={registered ? "success" : activeFeedback.state} data-auth-view={registered ? undefined : "register"}>
           <BackToCatalogLink to={from} />
           {registered ? (
-            <section aria-labelledby="register-success-heading">
-              <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Revisa tu correo</h1>
-              <AuthState tone="waiting" scene title="Falta un paso: verificar tu correo"
-                actions={<><ButtonLink variant="secondary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink><Link to={emailActionLocation("/reenviar-verificacion", intent)} state={{ email: registeredEmail }}>Reenviar verificación</Link></>}>
-                <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong>{registeredEmail}</strong>. Verifica tu correo con el enlace enviado antes de iniciar sesión.</p>
-                <p>Si no lo ves, mira en la carpeta de correo no deseado.</p>
-                <p>Después de verificarlo, inicia sesión{intent.startsWith("/cart") ? " para volver a tu carrito." : " para continuar donde estabas."}</p>
-              </AuthState>
-            </section>
+            <RegistrationWaiting email={registeredEmail} intent={intent} returnState={returnState} headingRef={successRef} />
           ) : (
             <>
               <h1>Crear cuenta</h1>
@@ -501,4 +500,22 @@ function clearErrorFeedback(
 ) {
   if (feedback?.state === "error") setFeedback(null);
   if (serverError) setServerError(null);
+}
+
+const REGISTRATION_KEY = "pliegoRegistration";
+function isStateRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+function readRegistration(state: unknown): string | null {
+  const entry = isStateRecord(state) ? state[REGISTRATION_KEY] : null;
+  const email = isStateRecord(entry) ? entry.email : null;
+  return typeof email === "string" && email.includes("@") ? email : null;
+}
+function withoutRegistration(state: unknown): unknown {
+  if (!isStateRecord(state) || !(REGISTRATION_KEY in state)) return state;
+  const { [REGISTRATION_KEY]: _registration, ...rest } = state;
+  return Object.keys(rest).length ? rest : null;
+}
+function rememberRegistration(state: unknown, email: string) {
+  return { ...(isStateRecord(state) ? state : {}), [REGISTRATION_KEY]: { email } };
 }

@@ -415,6 +415,7 @@ ufw status verbose
 Read only relevant, sanitized Nginx/unit settings. Preserve existing loopback bind,
 JVM/pool/hardening, proxy headers, SPA fallback, no-store HTML and immutable hashed
 assets. Do not dump all service configuration if it might contain inline secrets.
+Confirm read-only that the `pliego-api` Nginx site sets `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;`; Spring trusts forwarded addresses only from loopback proxies.
 
 Record whether this is frontend-only, backend-only, or coordinated. A frontend-only
 release does not require DB membership changes, a backend restart or Flyway work.

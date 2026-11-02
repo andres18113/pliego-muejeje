@@ -13,6 +13,7 @@ import { AuthState, authFlowClasses as flow } from "./AuthFlow";
 import { useEmailRequest, useEmailTokenAction, useFragmentToken } from "./emailActionHooks";
 import { emailActionLocation, safeAuthReturnHref } from "./authLocation";
 import { PasswordInput } from "@/shared/ui/PasswordInput";
+import { adoptSharedSession, registrationDestination, sessionFromRegistration } from "./registrationContinuation";
 
 function useEmailReturnHref() {
   const location = useLocation();
@@ -113,6 +114,7 @@ export function VerifyEmailPage() {
   const navigate = useNavigate();
   const navigation = useNavigation();
   const from = useEmailReturnHref();
+  const { session, establish } = useSession();
   const { token, mutation } = useEmailTokenAction("verification");
   const attempted = useRef("");
   const verify = mutation.mutate;
@@ -128,20 +130,44 @@ export function VerifyEmailPage() {
     attempted.current = token;
     verify({ token });
   }, [token, verify, idle]);
-  const verified = mutation.isSuccess;
+
+  // In the browser that registered, verifying also signed in (ADR 0050): install that session once. Its broadcast
+  // lets the "Revisa tu correo" tab restore the same cookie and continue on its own.
+  const created = mutation.isSuccess ? mutation.data ?? null : null;
+  const installed = useRef<object | null>(null);
   useEffect(() => {
-    // Let the confirmation be read, then continue without another required click.
-    // A new fragment belongs to a new verification, even before its effect resets
-    // the previous result. Leaving this view always cancels the return.
-    if (!verified || location.hash || navigation.state !== "idle") return;
-    const timer = window.setTimeout(() => navigate(from, { replace: true }), 1200);
+    if (!created || installed.current === created) return;
+    installed.current = created;
+    establish(sessionFromRegistration(created));
+  }, [created, establish]);
+  // A lost answer may still have verified and signed in: the cookie decides, before any new link is suggested.
+  const uncertain = mutation.isError && mutation.error instanceof EmailActionOutcomeUnknown;
+  const restoreTried = useRef(false);
+  useEffect(() => {
+    if (!uncertain || session || restoreTried.current) return;
+    restoreTried.current = true;
+    void adoptSharedSession(establish);
+  }, [uncertain, session, establish]);
+
+  const signedIn = Boolean(session) && (mutation.isSuccess || uncertain);
+  const destination = created ? registrationDestination(created, from) : from;
+  useEffect(() => {
+    // Let the confirmation be read, then continue without another required click — only with a session, since
+    // the destination may be a customer page. A new fragment belongs to a new verification; leaving cancels it.
+    if (!signedIn || location.hash || navigation.state !== "idle") return;
+    const timer = window.setTimeout(() => navigate(destination, { replace: true }), 1200);
     return () => window.clearTimeout(timer);
-  }, [verified, location.hash, navigation.state, from, navigate]);
+  }, [signedIn, location.hash, navigation.state, destination, navigate]);
   const another = <Link to={emailActionLocation("/reenviar-verificacion", from)}>Solicitar otro enlace</Link>;
   return <EmailActionFrame title="Verificación de correo">
-    {mutation.isSuccess ? <AuthState tone="success" title="Correo verificado" actions={<ButtonLink variant="primary" to={from} replace>Continuar</ButtonLink>}>
-      <p role="status">{from === "/" ? "Abriendo el inicio…" : "Volviendo a donde estabas…"}</p>
+    {signedIn ? <AuthState tone="success" title="Correo verificado" actions={<ButtonLink variant="primary" to={destination} replace>Continuar</ButtonLink>}>
+      <p role="status">{destination === "/" ? "Ya iniciaste sesión. Abriendo el inicio…" : "Ya iniciaste sesión. Volviendo a donde estabas…"}</p>
     </AuthState>
+      : mutation.isSuccess ? <AuthState tone="success" title="Correo verificado"
+        actions={<ButtonLink variant="primary" to={emailActionLocation("/sign-in", from)}>Iniciar sesión</ButtonLink>}>
+        <p role="status">Tu cuenta ya está activa.</p>
+        <p>Si la creaste en otro navegador o dispositivo, vuelve a esa página: continuará sola. Aquí, inicia sesión para seguir.</p>
+      </AuthState>
       : mutation.isError ? <ActionFailure error={mutation.error} another={another} />
         : !token && !mutation.isPending ? <MissingLink another={another}>Abre el enlace completo del correo para verificar tu cuenta.</MissingLink>
           : <AuthState tone="info" symbol="mail" title="Verificando tu correo">

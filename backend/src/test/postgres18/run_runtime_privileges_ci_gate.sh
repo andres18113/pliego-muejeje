@@ -174,8 +174,8 @@ stop_backend() {
 start_backend migration
 flyway_state="$(admin_psql "$database_name" -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '95:95' ]]; then
-    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 95 migrations; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '98:98' ]]; then
+    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 98 migrations; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'Runtime privilege CI stage: Spring Boot migration Flyway=%s as pliego_app\n' "$flyway_state"
@@ -196,6 +196,10 @@ PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app 
 PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/mail_deliverability_gate.sql" \
         -f "$script_dir/pending_email_change_gate.sql" \
-        -f "$script_dir/pending_email_change_security_gate.sql"
+        -f "$script_dir/pending_email_change_security_gate.sql" \
+        -f "$script_dir/offers_campaign_gate.sql" \
+        -f "$script_dir/pickup_timing_notifications_gate.sql"
+PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
+    python3 "$script_dir/registration_continuation_gate.py"
 stop_backend
 printf 'Runtime privilege CI lifecycle stage passed; strict mode required, cleanup idempotent, database isolated\n'

@@ -10,12 +10,18 @@
 .status p { margin: 0; }
 .notice { margin: 0 0 12px; color: var(--pliego-text-muted); font-size: .875rem; }
 
+.confirmationRow { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.confirmationRow > .confirmation { flex: 1; min-width: 0; }
+/* Deshacer sits on the opening line it answers: the drawer is modal, so a page toast behind it could not be reached. */
+.undo { flex: none; min-height: 44px; margin-top: 2px; }
 .confirmation { display: flex; align-items: flex-start; gap: 10px; margin: 0 0 8px; padding: 12px 0 16px; color: var(--pliego-text); font-size: .9375rem; line-height: 1.4; }
 .confirmation :global(.material-symbol) { flex: none; color: var(--store-blue); }
 .confirmation strong { font-weight: 600; }
 .confirmation:focus { outline: none; }
 .confirmation:focus-visible { outline: 3px solid var(--store-blue); outline-offset: 2px; border-radius: 4px; }
 :global([data-mantine-color-scheme="dark"]) .confirmation :global(.material-symbol) { color: #c5bcff; }
+.confirmation[data-tone="error"] :global(.material-symbol) { color: var(--mantine-color-red-8); }
+:global([data-mantine-color-scheme="dark"]) .confirmation[data-tone="error"] :global(.material-symbol) { color: var(--mantine-color-red-3); }
 
 .lines { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--pliego-border); }
 .lines > li { border-bottom: 1px solid var(--pliego-border); }

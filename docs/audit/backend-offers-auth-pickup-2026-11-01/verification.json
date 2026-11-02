@@ -1,0 +1,110 @@
+{
+  "scope": "LOCAL_ONLY_NO_PRODUCTION_NO_COMMIT_PUSH_DEPLOY",
+  "branch": "feat/digital-ownership-post-purchase-search",
+  "java": 25,
+  "postgresServerVersionNum": 180006,
+  "flyway": {
+    "count": 98,
+    "maxVersion": 98,
+    "allPackagedResourcesMatchSource": true
+  },
+  "preservation": {
+    "existingMigrationFilesUnchanged": 95,
+    "approvedZipUnchanged": true,
+    "approvedZipSha256": "3e60eb902e6d25fabc9602aad5f2226b50a0c65c000de315eb03cdfa929ef178"
+  },
+  "backendJarSha256": "17bef79d8a4c2dba8788492bd933a99463704f9a85832e35d3c5359059284eef",
+  "maven": {
+    "total": 554,
+    "passed": 553,
+    "failures": 0,
+    "errors": 0,
+    "skipped": [
+      {
+        "class": "com.pliego.modules.billing.application.R2LiveSmokeTest",
+        "test": "putPresignFetchAndDeleteOnePrivateSmokeObject",
+        "reason": "Environment variable [PLIEGO_R2_LIVE_TEST] does not exist"
+      }
+    ],
+    "exitCode": 0
+  },
+  "frontend": {
+    "testFiles": 103,
+    "testsPassed": 1257,
+    "testsExitCode": 0,
+    "productionBuildExitCode": 0
+  },
+  "postgresCi": {
+    "primarySqlGates": 52,
+    "primaryPythonGates": 60,
+    "primaryGateTotal": 112,
+    "strictRuntimeLifecyclePassed": true,
+    "strictRuntimeAdditionalSqlGates": 8,
+    "strictRuntimeAdditionalPythonGates": 1,
+    "exitCode": 0
+  },
+  "offers": {
+    "pythonTests": 17,
+    "nativeConcurrencyRaces": 4,
+    "localCampaignCount": 21,
+    "formats": {
+      "PHYSICAL": 7,
+      "EBOOK": 7,
+      "AUDIOBOOK": 7
+    },
+    "endingSoon": 6,
+    "previousOffersPreserved": 23,
+    "cartPricesVerified": 21,
+    "ordersCreated": 0,
+    "productionCandidateEligibility": "UNVERIFIED_REQUIRES_AUTHORIZED_PREFLIGHT"
+  },
+  "registration": {
+    "observedLockRaces": 7,
+    "sameAndOtherBrowserHttpPassed": true,
+    "quotasAndPublicAclPassed": true,
+    "frontendIntegrationRequiredBeforeRelease": true
+  },
+  "pickup": {
+    "targetMinutesFromApproval": 10,
+    "unchangedCancellationMinutes": 6,
+    "packagedUpgrade96To97Passed": true,
+    "historicalSnapshotPreservationPassed": true,
+    "readyAndCollectedEnqueueDedupePassed": true,
+    "customerInboxDeliveryVerified": false
+  },
+  "review": {
+    "independentReviewCompleted": true,
+    "unresolvedConfirmedBlockers": 0,
+    "resolvedLockRegressions": [
+      "registration IP/user inversion",
+      "conditional offer/inventory inversion"
+    ]
+  },
+  "privateLogs": "/tmp/pliego-nov01/logs/",
+  "changes": {
+    "Shared gates/documentation": {
+      "files": 7,
+      "insertions": 81,
+      "deletions": 7,
+      "newFiles": 1
+    },
+    "Task 2 registration": {
+      "files": 20,
+      "insertions": 1156,
+      "deletions": 67,
+      "newFiles": 12
+    },
+    "Task 1 offers": {
+      "files": 33,
+      "insertions": 3826,
+      "deletions": 13,
+      "newFiles": 24
+    },
+    "Task 3 pickup": {
+      "files": 16,
+      "insertions": 777,
+      "deletions": 23,
+      "newFiles": 7
+    }
+  }
+}

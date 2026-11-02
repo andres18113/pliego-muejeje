@@ -243,6 +243,8 @@ public final class MailTemplates {
   if(!waiting)return;
   if(pickup.hasNonNull("readyAt")&&location.hasNonNull("timezone"))
    mail.facts(List.of(Fact.of("Hora estimada de retiro",MailLayout.dateTime(pickup.path("readyAt").asText(),ZoneId.of(location.path("timezone").asText())))));
+  if(pickup.path("preparationMinutes").asInt()==10)
+   mail.muted("El retiro se habilita a los 10 minutos desde la aprobación del pago: 6 minutos para cancelar y 4 minutos adicionales de preparación. Si el punto está cerrado, estará disponible desde la próxima apertura y dentro de su horario de atención.");
   if(pickup.hasNonNull("pickupCode"))mail.code("Código de retiro",pickup.path("pickupCode").asText()).muted("Al retirar, muestra tu código de retiro y tu documento de identidad.");
  }
  private static String joined(JsonNode node,String... fields) {

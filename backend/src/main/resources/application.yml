@@ -73,6 +73,10 @@ pliego:
       secret: ${PLIEGO_JWT_SECRET}
 
 server:
+  forward-headers-strategy: native
+  tomcat:
+    remoteip:
+      internal-proxies: '127\.0\.0\.1|::1|0:0:0:0:0:0:0:1'
   error:
     include-message: never
     include-stacktrace: never

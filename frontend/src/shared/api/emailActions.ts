@@ -1,5 +1,7 @@
 import { apiClient } from "./client";
 import { toApiRequestError } from "./errors";
+import { withAuthSessionLock } from "./auth";
+import { registrationSessionSchema, type RegistrationSession } from "./registrationSession";
 
 /** A lost response can follow a committed command. Tokens must not be retried automatically. */
 export class EmailActionOutcomeUnknown extends Error {
@@ -19,10 +21,23 @@ export async function requestEmailAction(purpose: "verification" | "recovery", e
   return data.message;
 }
 
-export async function verifyEmail(token: string): Promise<void> {
-  const result = await apiClient.POST("/api/v1/auth/verify-email", { body: { token } })
-    .catch(() => { throw new EmailActionOutcomeUnknown(); });
+/**
+ * Verifies the address. In the browser that registered (its HttpOnly continuation cookie travels with the request,
+ * hence the session marker) the same transaction also signs in and answers with the session; anywhere else the
+ * account is verified without a session (null). The link alone never signs anyone in.
+ */
+export async function verifyEmail(token: string): Promise<RegistrationSession | null> {
+  const result = await withAuthSessionLock((signal) => apiClient.POST("/api/v1/auth/verify-email", {
+    body: { token }, params: { header: { "X-PLIEGO-SESSION-REQUEST": "1" } }, signal,
+  })).catch(() => { throw new EmailActionOutcomeUnknown(); });
+  if (result.response.status === 200) {
+    const session = registrationSessionSchema.safeParse(result.data);
+    // Verified and signed in, but unreadable: the session is restored from its cookie instead.
+    if (!session.success) throw new EmailActionOutcomeUnknown();
+    return session.data;
+  }
   requireConsumed(result.response, result.error);
+  return null;
 }
 
 export async function resetPassword(token: string, password: string): Promise<void> {

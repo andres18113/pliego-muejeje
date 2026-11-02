@@ -99,6 +99,16 @@ class AuthApiIntegrationTest {
     @Autowired
     FakeIdentityGateway identityGateway;
 
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.gateway.RegistrationContinuationGateway continuationGateway;
+
+    @BeforeEach
+    void continuationFixture() {
+        org.mockito.Mockito.when(continuationGateway.issue(org.mockito.ArgumentMatchers.anyLong(),
+                org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.nullable(String.class)))
+                .thenReturn(Instant.now().plusSeconds(86400));
+    }
+
     @TestConfiguration(proxyBeanMethods = false)
     static class NoDatabaseTransactionConfiguration {
 
@@ -307,6 +317,25 @@ class AuthApiIntegrationTest {
         mvc.perform(post("/api/v1/auth/refresh").cookie(firstCookie)
                 .header(com.pliego.foundation.security.AuthSessionRequestFilter.HEADER_NAME, "1"))
                 .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void registrationIssuesSeparateSecureContinuationWithoutAccess() throws Exception {
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON).content(REGISTER_JSON))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.accessToken").doesNotExist())
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(
+                        result.getResponse().getHeaders("Set-Cookie"))
+                        .anySatisfy(value -> org.assertj.core.api.Assertions.assertThat(value)
+                                .startsWith("pliego_registration=").contains("HttpOnly", "Secure", "SameSite=Strict", "Path=/api/v1/auth")
+                                .doesNotContain("Domain=")));
+    }
+
+    @Test
+    void registrationSessionRequiresBrowserMarker() throws Exception {
+        mvc.perform(post("/api/v1/auth/registration-session"))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.code").value("ACCESS_DENIED"));
     }
 
     @Test

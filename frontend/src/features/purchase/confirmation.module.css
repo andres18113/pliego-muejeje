@@ -30,7 +30,7 @@
 /* 2. What happens next */
 .next { display: grid; gap: 20px; min-width: 0; }
 .destination { position: relative; min-width: 0; min-height: 17rem; }
-.confirmation .destination iframe { height: max(220px, 13.75rem); border-radius: 24px; background: color-mix(in srgb, var(--pf-ink) 6%, var(--cf-card)); }
+.confirmation .destination [data-location-map] { --map-height: max(220px, 13.75rem); --map-radius: 24px; --map-ground: color-mix(in srgb, var(--pf-ink) 6%, var(--cf-card)); }
 .calloutCopy h2 { margin: 0 0 5px; font-size: .9375rem; font-weight: 650; line-height: 1.35; }
 .calloutCopy address { display: grid; gap: 2px; font-style: normal; font-size: .9375rem; line-height: 1.35; overflow-wrap: anywhere; }
 .mapReference { margin: 8px 0 0; color: var(--pf-muted); font-size: .8125rem; line-height: 1.45; }
@@ -43,7 +43,10 @@
 .facts div { display: grid; gap: 2px; min-width: 0; }
 .facts dt { color: var(--pf-muted); font-size: .875rem; }
 .facts dd { margin: 0; font-weight: 600; line-height: 1.45; overflow-wrap: anywhere; }
-.facts .code dd { font: 650 1.375rem/1.2 var(--pf-display); letter-spacing: .02em; }
+.facts .code dd { font: 650 1.375rem/1.2 var(--pf-display); letter-spacing: .07em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* The code stays whole; it may wrap only when the row is narrower than the code (large text on a phone). */
+.facts { container-type: inline-size; }
+@container (max-width: 12rem) { .facts .code dd { white-space: normal; } }
 .note { margin: 0; color: var(--pf-muted); font-size: .9375rem; line-height: 1.45; }
 /* One line grammar for printed and digital titles: cover, then the title and what belongs to it. */
 .lines { display: grid; gap: 16px; margin: 0; padding: 16px 0 0; border-top: 1px solid var(--pf-line); list-style: none; }

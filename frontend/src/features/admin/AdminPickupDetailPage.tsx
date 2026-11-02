@@ -111,12 +111,25 @@ function expectedReadyAt(order: AdminPickupOrder) {
   return times.length ? times.reduce((later, value) => (Date.parse(value) > Date.parse(later) ? value : later)) : null;
 }
 
+/**
+ * READY is the server's (ADR 0051: approval + 10 minutes, only within opening hours). When the expected time has
+ * passed and the server still says PENDING, say why it may be waiting instead of promising a moment already gone.
+ */
+function pendingHandoverLine(order: AdminPickupOrder) {
+  const expected = expectedReadyAt(order);
+  const label = adminMomentLabel(expected);
+  if (expected && Date.parse(expected) <= Date.now()) {
+    return "Aún no se puede entregar: la hora prevista ya pasó, pero el punto está fuera de su horario de atención o el pago sigue pendiente. No entregues los libros todavía.";
+  }
+  return `Aún no está listo para retirar.${label ? ` Estará listo aproximadamente el ${label}.` : ""} No entregues los libros todavía.`;
+}
+
 function PickupState({ order, onNotice }: { order: AdminPickupOrder; onNotice: (notice: Notice | null) => void }) {
   switch (order.state) {
     case "READY": return <Handover order={order} onNotice={onNotice} />;
     case "PENDING": return <>
       <p className={classes.outcome}><MaterialSymbol name="schedule" size={20} aria-hidden="true" />
-        <span>Aún no está listo para retirar.{adminMomentLabel(expectedReadyAt(order)) ? ` Estará listo aproximadamente el ${adminMomentLabel(expectedReadyAt(order))}.` : ""} No entregues los libros todavía.</span></p>
+        <span>{pendingHandoverLine(order)}</span></p>
       <CancelOrder order={order} onNotice={onNotice} />
     </>;
     case "COLLECTED": return <p className={classes.outcome} data-tone="success"><MaterialSymbol name="check_circle" size={20} aria-hidden="true" />

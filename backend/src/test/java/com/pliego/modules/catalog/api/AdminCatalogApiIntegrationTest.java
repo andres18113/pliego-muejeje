@@ -193,7 +193,7 @@ class AdminCatalogApiIntegrationTest {
         gateway.editionPage = new Page<>(List.of(new EditionRow("250", "90", "1984", "8", "Penguin",
                 "PLG-LIT-001", "9780306406157", "es", "PAPERBACK", 328, LocalDate.of(2024, 1, 15),
                 new BigDecimal("18.50"), null, null, null, null, "ACTIVE", 4,
-                "2024-01-15T10:00:00Z", "2024-01-15T10:00:00Z", null, null, List.of())), 1);
+                "2024-01-15T10:00:00Z", "2024-01-15T10:00:00Z", null, null, List.of(), false)), 1);
         String body = mvc.perform(get("/api/v1/admin/editions").header("Authorization", adminToken("17")))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.items[0].editionId").value("250"))
                 .andExpect(jsonPath("$.items[0].bookId").value("90"))
@@ -202,6 +202,7 @@ class AdminCatalogApiIntegrationTest {
                 .andExpect(jsonPath("$.items[0].coverUrl").value(org.hamcrest.Matchers.nullValue()))
                 .andExpect(jsonPath("$.items[0].publicationDate").value("2024-01-15"))
                 .andExpect(jsonPath("$.items[0].stockActual").value(4))
+                .andExpect(jsonPath("$.items[0].offerRowExists").value(false))
                 .andReturn().getResponse().getContentAsString();
         assertTrue(body.contains("\"editionId\":\"250\""));
         assertFalse(body.contains("18.5\""));

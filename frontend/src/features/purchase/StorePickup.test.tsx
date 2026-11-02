@@ -40,14 +40,15 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(screen.getByRole("tab", { name: "Retiro" })).toHaveFocus();
     await user.click(await screen.findByRole("radio", { name: /Punto de prueba Quito/ }));
     expect(screen.queryByText("Av. Principal 123")).not.toBeInTheDocument();
-    expect(screen.queryByTitle("Mapa de Punto de prueba Quito")).not.toBeInTheDocument();
-    expect(screen.getByText(/Preparación estimada: ~37 min/)).toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Mapa de Punto de prueba Quito" })).not.toBeInTheDocument();
+    expect(screen.getByText("Listo unos 37 minutos después de aprobarse el pago, en horario de atención.", { selector: "strong" })).toBeInTheDocument();
+    expect(screen.getByText(/Si el punto está cerrado, estará listo cuando abra\. Al retirar, muestra tu código de retiro y tu documento de identidad\./)).toBeInTheDocument();
     expect(within(screen.getByRole("complementary")).queryByText(/Retiro en tienda|Punto de prueba Quito|Recepción/)).not.toBeInTheDocument();
     await user.click(delivery); expect(await screen.findByText("Av. Principal 123")).toBeInTheDocument();
     await user.click(screen.getByRole("tab", { name: "Retiro" }));
     expect(screen.getByRole("button", { name: "Cambiar punto" })).toBeInTheDocument();
     expect(screen.getByText("Punto de prueba Quito")).toBeInTheDocument();
-    expect(screen.queryByTitle("Mapa de Punto de prueba Quito")).not.toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Mapa de Punto de prueba Quito" })).not.toBeInTheDocument();
   });
 
   it.each(["CARD", "TRANSFER"] as const)("checks out pickup with %s and no address, then shows the order snapshot", async (method) => {
@@ -73,7 +74,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(screen.getByText(/Al retirar, muestra tu código de retiro y tu documento de identidad/)).toBeInTheDocument();
     expect(screen.getByText(/19:32:12/)).toBeInTheDocument();
     expect(screen.queryByText(/America\/Guayaquil/)).not.toBeInTheDocument();
-    expect(screen.getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", expect.stringContaining("marker=-0.22%2C-78.5"));
+    expectLocationMap(screen, "Mapa de Punto de prueba Quito", "-0.22", "-78.5");
     // The receipt once: totals beside the one way to the full order; the books stay with the pickup facts.
     const receipt = within(screen.getByRole("complementary", { name: "Tu pedido" }));
     expect(receipt.getByText("IVA (15 %)" )).toBeInTheDocument();
@@ -95,7 +96,7 @@ describe("STORE_PICKUP transport and checkout", () => {
     expect(transport.count("POST", "/api/v1/checkout")).toBe(0);
     expect(screen.getAllByRole("radio")[0]).toHaveFocus();
     await user.click(second); expect(screen.getByText("Segundo punto")).toBeInTheDocument();
-    expect(screen.queryByTitle("Mapa de Segundo punto")).not.toBeInTheDocument();
+    expect(screen.queryByRole("img", { name: "Mapa de Segundo punto" })).not.toBeInTheDocument();
   });
 
   it("announces loading, recovers a location error and handles an empty list", async () => {
@@ -152,3 +153,10 @@ describe("STORE_PICKUP transport and checkout", () => {
     await waitFor(() => expect(screen.getByRole("heading", { level: 1 })).toHaveFocus());
   });
 });
+
+/** The pickup map: the point's map image, and a link to the full map at the exact backend coordinate. */
+function expectLocationMap(scope: Pick<typeof screen, "getByRole">, name: string, latitude: string, longitude: string) {
+  const map = scope.getByRole("img", { name }).closest("[data-location-map]")?.parentElement;
+  expect(map).toBeTruthy();
+  expect([...map!.querySelectorAll("a")].some((link) => link.getAttribute("href")?.includes(`mlat=${latitude}&mlon=${longitude}`))).toBe(true);
+}

@@ -112,11 +112,11 @@
 /* The shared pickup facts, set compactly: the point, then its facts in one wrapping row, then a shorter map. */
 .destination[data-kind="pickup"] > div { gap: 14px; font-size: .9375rem; }
 .destination[data-kind="pickup"] address { gap: 1px; }
-.destination[data-kind="pickup"] dl { grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: 12px 20px; }
+.destination[data-kind="pickup"] dl { grid-template-columns: repeat(auto-fit, minmax(min(9.5rem, 100%), 1fr)); gap: 12px 20px; }
 .destination[data-kind="pickup"] dt { font-size: .8125rem; }
 .destination[data-kind="pickup"] dd { margin-top: 2px; }
 .destination[data-kind="pickup"] p { margin: 0; color: var(--acc-muted); }
-.destination[data-kind="pickup"] iframe { height: 168px; }
+.destination[data-kind="pickup"] [data-location-map] { --map-height: 168px; }
 .address { display: grid; gap: 1px; font-style: normal; font-size: .9375rem; line-height: 1.5; overflow-wrap: anywhere; }
 .quiet { margin: 0; color: var(--acc-muted); line-height: 1.5; }
 
