@@ -63,7 +63,8 @@ test("customer navigates profile, address book and orders across desktop and mob
     const bounds = await page.locator(".delivery-country-trigger").boundingBox();
     expect(bounds).not.toBeNull();
     // The country field is a form field like its neighbours: it takes its column's width.
-    const city = await page.getByLabel("Ciudad").boundingBox();
+    // The trigger itself, by its exact role: while a picker closes its search and list share the label.
+    const city = await page.getByRole("combobox", { name: "Ciudad", exact: true }).boundingBox();
     expect(Math.abs(bounds!.width - city!.width)).toBeLessThanOrEqual(1);
     const fits = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth);
     if (!fits) {

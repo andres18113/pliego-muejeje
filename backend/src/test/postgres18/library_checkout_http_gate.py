@@ -124,7 +124,8 @@ def main():
         path=os.environ['PLIEGO_LIBRARY_FIXTURE_PATH']; fd=os.open(path,os.O_CREAT|os.O_TRUNC|os.O_WRONLY,0o600)
         with os.fdopen(fd,'w') as output:
             json.dump({'email':email,'password':password,'ebookOwnedItemId':owned['ownedItemId'],'audioOwnedItemId':audio['ownedItemId'],
-                'ebookEditionId':editions['EBOOK'],'audioEditionId':editions['AUDIOBOOK'],'digitalOrderId':order['orderId'],'mixedOrderId':mixed['orderId']},output)
+                'ebookEditionId':editions['EBOOK'],'audioEditionId':editions['AUDIOBOOK'],'digitalOrderId':order['orderId'],'mixedOrderId':mixed['orderId'],
+                'mixedOrderReference':mixed['orderReference']},output)
     print('Library checkout HTTP passed: digital-only/mixed snapshots, authoritative cart requirements, retry/conflict, isolation, ownership metadata, public order references in list/detail and revoked/repurchased sources, rejected/refunded access and inactive edition.')
 
 if __name__=='__main__': main()

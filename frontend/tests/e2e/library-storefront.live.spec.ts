@@ -11,6 +11,8 @@ interface LibraryFixture {
   ebookOwnedItemId: string;
   audioOwnedItemId: string;
   mixedOrderId: string;
+  /** The customer-facing order reference (ADR 0047); the internal id never appears on the page. */
+  mixedOrderReference: string;
 }
 
 test("real purchase ownership supports list, media filters, detail, purchase and Help", async ({ page }) => {
@@ -34,7 +36,8 @@ test("real purchase ownership supports list, media filters, detail, purchase and
   await page.locator(`a[href="/biblioteca/${fixture.ebookOwnedItemId}"]`).click();
   await expect(page.getByText("Tuyo para leer", { exact: true })).toBeVisible();
   await expect(page.getByText("EPUB", { exact: true })).toBeVisible();
-  await expect(page.getByRole("region", { name: "Información de compra" })).toContainText(fixture.mixedOrderId);
+  expect(fixture.mixedOrderReference).toMatch(/^PL-\d{4}-\d{4}$/);
+  await expect(page.getByRole("region", { name: "Información de compra" })).toContainText(fixture.mixedOrderReference);
   await expect(page.getByRole("link", { name: /^(Leer|Escuchar|Continuar leyendo|Continuar escuchando|Descargar)$/ })).toHaveCount(0);
   await page.getByRole("link", { name: "Volver a Mi biblioteca" }).click();
   await page.getByRole("group", { name: "Mostrar" }).getByRole("button", { name: "Audiolibros" }).click();
