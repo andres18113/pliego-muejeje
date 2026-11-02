@@ -362,3 +362,67 @@ test("a small address collection sits centered and fills out as it grows", async
   expect(await offCenter()).toMatchObject({ perRow: 1 });
   expect(await noPageOverflow(page)).toBe(true);
 });
+
+for (const viewport of [{ name: "desktop", width: 1280, height: 800 }, { name: "phone", width: 390, height: 844 }]) {
+  test(`province and city are chosen by typing alone (${viewport.name})`, async ({ page }) => {
+    test.setTimeout(60_000);
+    const api = new FakeAddresses();
+    await api.install(page);
+    await page.setViewportSize(viewport);
+    await openAddresses(page);
+    await page.getByRole("button", { name: "Agregar dirección" }).click();
+    const creator = page.getByRole("dialog", { name: "Nueva dirección" });
+    await creator.getByLabel("Nombre de la dirección").fill("Valle");
+    await creator.getByLabel("Dirección", { exact: true }).fill("Av. General Enríquez 10");
+    const province = creator.getByRole("combobox", { name: "Provincia", exact: true });
+    const city = creator.getByRole("combobox", { name: "Ciudad", exact: true });
+    const search = (name: string) => page.getByRole("combobox", { name: `Buscar ${name}` });
+    const expectActive = async (name: string, option: string | RegExp) =>
+      expect(search(name)).toHaveAttribute("aria-activedescendant", (await page.getByRole("option", { name: option }).getAttribute("id"))!);
+
+    // Focus, then type at full speed: the search opens with every key, its best match already active.
+    await creator.getByLabel("Dirección", { exact: true }).press("Tab");
+    await expect(province).toBeFocused();
+    await page.keyboard.type("PICH");
+    await expect(search("provincia")).toBeFocused();
+    await expect(search("provincia")).toHaveValue("PICH");
+    await expectActive("provincia", "Pichincha");
+    await page.keyboard.press("Enter");
+    await expect(province).toContainText("Pichincha");
+    await expect(province).toBeFocused();
+
+    // The city follows its province; accents are optional; Escape keeps the value.
+    await expect(city).toBeEnabled();
+    await page.keyboard.press("Tab");
+    await expect(city).toBeFocused();
+    await page.keyboard.type("xyz");
+    await expect(page.getByText("No encontramos «xyz». Prueba con otro nombre.")).toBeVisible();
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Escape");
+    await expect(city).toBeFocused();
+    await expect(city).toContainText("Elige una ciudad");
+    await page.keyboard.type("sangolqui");
+    await expect(search("ciudad")).toHaveValue("sangolqui");
+    await expectActive("ciudad", /^Sangolquí/);
+    await page.keyboard.press("Enter");
+    await expect(city).toContainText("Sangolquí");
+    expect(await noPageOverflow(page)).toBe(true);
+
+    // Another province clears the city it no longer contains; choosing the same one again would not.
+    await province.focus();
+    await page.keyboard.type("gua");
+    await expectActive("provincia", "Guayas");
+    await page.keyboard.press("Enter");
+    await expect(city).toContainText("Elige una ciudad");
+    await city.focus();
+    await page.keyboard.type("guayaquil");
+    await page.keyboard.press("Enter");
+    await expect(city).toContainText("Guayaquil");
+
+    await creator.getByLabel("Teléfono de contacto").fill("991234567");
+    await creator.getByRole("button", { name: "Guardar dirección" }).click();
+    await expect(creator).toBeHidden();
+    expect(api.posts).toBe(1);
+    expect(api.addresses.find(address => address.alias === "Valle")).toMatchObject({ provinceId: "9", cityId: "432", city: "Guayaquil", province: "Guayas" });
+  });
+}

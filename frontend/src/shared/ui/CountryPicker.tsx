@@ -1,6 +1,6 @@
 import { Drawer, FocusTrap, Popover } from "@mantine/core";
 import { useMediaQuery, useReducedMotion } from "@mantine/hooks";
-import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type MutableRefObject, type ReactNode } from "react";
 import type { CountryReference } from "@/shared/api/reference";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { CountryFlag } from "./CountryFlag";
@@ -42,11 +42,51 @@ export function CountryPicker({ countries, searchPlaceholder = "Busca un país",
 }
 
 /**
+ * What a search compares: no accents, no case, punctuation as spaces, single spaces ("Cañar" = "canar",
+ * "+593" = "593", "  santo   domingo " = "santo domingo").
+ */
+export function searchKey(text: string) {
+  return text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("es")
+    .replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+}
+
+/**
+ * The options a search shows, best first and always in the same order: names that start with what was typed,
+ * then names with a word that starts with it, then names that contain it, then other terms (aliases, codes).
+ * Ties keep the catalog's order. An empty search shows every option as given.
+ */
+export function rankOptions<T extends PickerOption>(options: T[], query: string, searchTerms?: (option: T) => string) {
+  const needle = searchKey(query);
+  if (!needle) return options;
+  const ranked: { option: T; rank: number; index: number }[] = [];
+  options.forEach((option, index) => {
+    const name = searchKey(option.name);
+    const rank = name.startsWith(needle) ? 0
+      : ` ${name}`.includes(` ${needle}`) ? 1
+        : name.includes(needle) ? 2
+          : searchKey(`${option.code} ${searchTerms?.(option) ?? ""}`).includes(needle) ? 3 : -1;
+    if (rank >= 0) ranked.push({ option, rank, index });
+  });
+  return ranked.sort((a, b) => a.rank - b.rank || a.index - b.index).map(({ option }) => option);
+}
+
+/** What the trigger may ask of the open list while its search has no focus yet (a sheet still sliding in). */
+type ListControl = { chooseActive: () => void; move: (by: number) => void };
+/** Keys that reached the trigger before the list existed (its panel mounts with its transition): applied on mount. */
+type PendingKeys = { moves: number; choose: boolean };
+
+/** A key that types text into a search (a letter, digit, space or sign), not a shortcut or a navigation key. */
+const typesText = (event: KeyboardEvent) => event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey;
+
+/**
  * PLIEGO's choice from a known list: a field-shaped trigger that opens one search field over one list.
  * Desktop anchors a compact panel to the trigger; phones get a bottom sheet with taller rows. The panel's
  * search is the only search chrome; the list is a listbox driven from that field (arrows, Page keys, Enter,
  * Escape), keeps the selected option in view and marks it (ultramar + check). Escape, a choice or a click
  * outside close it and return focus to the trigger. Never a native select.
+ * Keyboard first: typing on the focused trigger opens the search with what was typed, its best match active;
+ * keys typed before the search takes focus are kept, in order. Only Enter or a click chooses; Escape and Tab
+ * close without changing the value.
  */
 export function SearchPicker<T extends PickerOption>({
   id,
@@ -93,6 +133,18 @@ export function SearchPicker<T extends PickerOption>({
   // Keyboard opening goes straight to the search; a tap on a phone does not raise the on-screen keyboard.
   const [byKeyboard, setByKeyboard] = useState(false);
   const [sheetReady, setSheetReady] = useState(false);
+  // The search belongs to the picker, so keys typed on the trigger reach it before its field has focus.
+  const [query, setQuery] = useState("");
+  // Each opening is a new list, even one that starts while the last is still fading out: it must take focus again.
+  const [openings, setOpenings] = useState(0);
+  const listControl = useRef<ListControl | null>(null);
+  const pending = useRef<PendingKeys>({ moves: 0, choose: false });
+  // Arrows used on the trigger since this opening: with a search, they make Enter a deliberate choice.
+  const navigated = useRef(false);
+  const open = (typed: string) => { pending.current = { moves: 0, choose: false }; navigated.current = false; setByKeyboard(true); setQuery(typed); setOpenings((count) => count + 1); setOpened(true); };
+  // A new list (another province's cities) starts without the previous search, even if the panel was still closing.
+  const [shownOptions, setShownOptions] = useState(options);
+  if (shownOptions !== options) { setShownOptions(options); setQuery(""); }
   const triggerRef = useRef<HTMLButtonElement>(null);
   const wasOpen = useRef(false);
   // Closing (Escape, a choice, Cerrar, a click outside) returns focus to the trigger without scrolling, unless the
@@ -126,11 +178,40 @@ export function SearchPicker<T extends PickerOption>({
     aria-describedby={describedBy}
     disabled={disabled}
     data-open={opened || undefined}
+    // While open, Escape on the trigger belongs to this picker, not to Mantine's window-level Escape around it.
+    data-mantine-stop-propagation={opened || undefined}
     className={`country-picker-trigger ${classes.trigger}${className ? ` ${className}` : ""}`}
-    onClick={(event) => { setByKeyboard(event.detail === 0); setOpened((open) => !open); }}
+    onClick={(event) => {
+      setByKeyboard(event.detail === 0);
+      if (!opened) { setQuery(""); setOpenings((count) => count + 1); pending.current = { moves: 0, choose: false }; navigated.current = false; }
+      setOpened((isOpen) => !isOpen);
+    }}
     onKeyDown={(event) => {
       // Arrow keys open the list, as on a native select.
-      if ((event.key === "ArrowDown" || event.key === "ArrowUp") && !opened) { event.preventDefault(); setByKeyboard(true); setOpened(true); }
+      if ((event.key === "ArrowDown" || event.key === "ArrowUp") && !opened) {
+        event.preventDefault(); open("");
+      } else if (!opened && typesText(event) && event.key !== " ") {
+        // Typing searches at once: the panel opens with the first key already in its field.
+        event.preventDefault(); open(event.key);
+      } else if (opened && typesText(event) && !(event.key === " " && !query)) {
+        // Still on the trigger while the search takes focus: keep every key, in order.
+        event.preventDefault(); setQuery((typed) => typed + event.key);
+      } else if (opened && event.key === "Backspace") {
+        event.preventDefault(); setQuery((typed) => typed.slice(0, -1));
+      } else if (opened && event.key === "Escape") {
+        // The sheet is still sliding in and its search has no focus yet: Escape closes only this picker.
+        event.preventDefault(); event.stopPropagation(); setOpened(false);
+      } else if (opened && event.key === "Enter") {
+        event.preventDefault();
+        if (!searchKey(query) && !navigated.current) setOpened(false);
+        // A search or an arrow made the active row a deliberate pick: same as Enter in the search.
+        else if (listControl.current) listControl.current.chooseActive(); else pending.current.choose = true;
+      } else if (opened && (event.key === "ArrowDown" || event.key === "ArrowUp")) {
+        event.preventDefault();
+        const by = event.key === "ArrowDown" ? 1 : -1;
+        navigated.current = true;
+        if (listControl.current) listControl.current.move(by); else pending.current.moves += by;
+      }
     }}
   >
     <span className={classes.value}>{selected
@@ -140,7 +221,9 @@ export function SearchPicker<T extends PickerOption>({
   </button>;
 
   const list = <OptionList
+    key={openings}
     id={id} label={label} options={options} value={value} onChoose={choose} onDismiss={() => setOpened(false)} wording={wording} leading={leading}
+    query={query} onQueryChange={setQuery} control={listControl} pending={pending}
     optionDetail={optionDetail} searchTerms={searchTerms} placeholder={searchPlaceholder} autoFocus={!phone || byKeyboard} sheet={phone}
   />;
 
@@ -155,8 +238,8 @@ export function SearchPicker<T extends PickerOption>({
       <Popover.Target>{trigger}</Popover.Target>
       <Popover.Dropdown id={phone ? undefined : panelId} role="dialog" aria-label={label} className={classes.panel} data-country-panel="">{!phone && list}</Popover.Dropdown>
     </Popover>
-    {/* The sheet traps focus only once it has slid in: focusing inside it while it is still below the screen
-        would scroll the page under it. */}
+    {/* The sheet traps focus only once it has slid in (focusing inside it while it is still below the screen
+        would scroll the page under it) and lets go as soon as it starts to close, so focus can return to the trigger. */}
     <Drawer.Root
       opened={opened && phone} onClose={() => setOpened(false)} position="bottom" size="min(85dvh, 640px)" trapFocus={false} returnFocus
       transitionProps={{ duration: reduceMotion ? 0 : 220, onEntered: () => setSheetReady(true), onExited: () => setSheetReady(false) }}
@@ -164,7 +247,7 @@ export function SearchPicker<T extends PickerOption>({
     >
       <Drawer.Overlay />
       <Drawer.Content id={phone ? panelId : undefined} data-country-panel="">
-        <FocusTrap active={sheetReady}>
+        <FocusTrap active={sheetReady && opened}>
           <div className={classes.sheetFrame}>
             <Drawer.Header>
               <Drawer.Title>{label}</Drawer.Title>
@@ -187,9 +270,7 @@ function revealOption(list: HTMLElement | null, optionId: string, center: boolea
   else if (bottom > list.scrollTop + list.clientHeight) list.scrollTop = bottom - list.clientHeight;
 }
 
-const normalize = (text: string) => text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("es");
-
-function OptionList<T extends PickerOption>({ id, label, options, value, onChoose, onDismiss, wording, leading, optionDetail, searchTerms, placeholder, autoFocus, sheet }: {
+function OptionList<T extends PickerOption>({ id, label, options, value, onChoose, onDismiss, wording, leading, optionDetail, searchTerms, placeholder, autoFocus, sheet, query, onQueryChange, control, pending }: {
   id: string;
   label: string;
   options: T[];
@@ -203,33 +284,34 @@ function OptionList<T extends PickerOption>({ id, label, options, value, onChoos
   placeholder: string;
   autoFocus: boolean;
   sheet: boolean;
+  query: string;
+  onQueryChange: (query: string) => void;
+  control: MutableRefObject<ListControl | null>;
+  pending: MutableRefObject<PendingKeys>;
 }) {
-  const [query, setQuery] = useState("");
-  // A new list (another province's cities) starts without the previous search, even if the panel was still closing.
-  const [shownOptions, setShownOptions] = useState(options);
-  if (shownOptions !== options) { setShownOptions(options); setQuery(""); }
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   // The anchored panel focuses its search only once it is placed, without scrolling the page: focusing
   // before positioning would jump to the top and detach the panel from a trigger lower on the page.
   useEffect(() => {
     if (!autoFocus || sheet) return;
-    const frame = requestAnimationFrame(() => inputRef.current?.focus({ preventScroll: true }));
+    const frame = requestAnimationFrame(() => {
+      const input = inputRef.current;
+      input?.focus({ preventScroll: true });
+      // What was typed on the trigger is kept; the caret continues after it.
+      input?.setSelectionRange(input.value.length, input.value.length);
+    });
     return () => cancelAnimationFrame(frame);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   const listId = `${id}-listbox`;
   const optionId = (code: string) => `${id}-option-${code}`;
-  const visible = useMemo(() => {
-    const needle = normalize(query.trim()).replace(/^\+/, "");
-    if (!needle) return options;
-    return options.filter((option) => normalize(`${option.name} ${option.code} ${searchTerms?.(option) ?? ""}`).includes(needle));
-  }, [options, query, searchTerms]);
+  const visible = useMemo(() => rankOptions(options, query, searchTerms), [options, query, searchTerms]);
   const selectedIndex = visible.findIndex((option) => option.code === value);
   const [active, setActive] = useState(Math.max(0, selectedIndex));
   const activeCountry = visible[Math.min(active, visible.length - 1)];
 
-  // A new search starts on its first match; clearing it returns to the selected country.
-  useEffect(() => { setActive(query.trim() ? 0 : Math.max(0, selectedIndex)); }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
+  // A new search starts on its best match; clearing it returns to the selected option.
+  useEffect(() => { setActive(searchKey(query) ? 0 : Math.max(0, selectedIndex)); }, [query]); // eslint-disable-line react-hooks/exhaustive-deps
   // Open on the selected country, centered, so the current choice is visible without scrolling; then keep
   // the keyboard row in view. Only the list scrolls — never the page behind the panel.
   useEffect(() => {
@@ -238,6 +320,23 @@ function OptionList<T extends PickerOption>({ id, label, options, value, onChoos
   useEffect(() => {
     if (activeCountry) revealOption(listRef.current, optionId(activeCountry.code), false);
   }, [activeCountry?.code]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    control.current = {
+      chooseActive: () => { if (activeCountry) onChoose(activeCountry.code); },
+      move: (by) => setActive((current) => Math.max(0, Math.min(visible.length - 1, current + by))),
+    };
+  });
+  useEffect(() => () => { control.current = null; }, [control]);
+  // Keys typed on the trigger before this list mounted: same result as if they had come a frame later.
+  useEffect(() => {
+    const { moves, choose } = pending.current;
+    pending.current = { moves: 0, choose: false };
+    if (!moves && !choose) return;
+    const start = searchKey(query) ? 0 : Math.max(0, selectedIndex);
+    const index = Math.max(0, Math.min(visible.length - 1, start + moves));
+    if (choose) { if (visible[index]) onChoose(visible[index].code); } else setActive(index);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     const last = visible.length - 1;
@@ -271,7 +370,11 @@ function OptionList<T extends PickerOption>({ id, label, options, value, onChoos
         value={query}
         ref={inputRef}
         data-autofocus={(autoFocus && sheet) || undefined}
-        onChange={(event) => setQuery(event.currentTarget.value)}
+        // Escape here closes only this search. Mantine's window-level Escape (the sheet, an address form around the
+        // picker) skips events from elements marked like this; React's stopPropagation cannot reach those listeners.
+        data-mantine-stop-propagation="true"
+        onChange={(event) => onQueryChange(event.currentTarget.value)}
+        onFocus={(event) => { const end = event.currentTarget.value.length; event.currentTarget.setSelectionRange(end, end); }}
         onKeyDown={onKeyDown}
       />
     </div>

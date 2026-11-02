@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { citiesQueryKey, geoStaleTime, getCities, getProvinces, provincesQueryKey, type City } from "@/shared/api/geo";
-import { SearchPicker, type PickerWording } from "./CountryPicker";
+import { SearchPicker, searchKey, type PickerWording } from "./CountryPicker";
 import { FieldMessage } from "./Field";
 
 const provinceWording: PickerWording = { choose: "Elige una provincia", one: "provincia", many: "provincias", noMatch: "Prueba con otro nombre" };
@@ -10,7 +10,8 @@ const cityWording = (provinceChosen: boolean): PickerWording => ({
   choose: provinceChosen ? "Elige una ciudad" : "Elige primero la provincia", one: "lugar", many: "lugares", noMatch: "Prueba con otro nombre",
 });
 
-const fold = (text: string) => text.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLocaleLowerCase("es");
+/** The same comparison the picker's search uses, so an alias shows exactly when it is why a row matched. */
+const fold = searchKey;
 /** The canton, shortened for a row ("Distrito Metropolitano de Quito" reads "Quito"). */
 const cantonLabel = (city: City) => city.cantonName.replace(/^Distrito Metropolitano de /, "");
 

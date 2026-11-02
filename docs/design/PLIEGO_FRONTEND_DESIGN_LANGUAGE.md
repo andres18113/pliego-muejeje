@@ -305,10 +305,17 @@ retain their existing flow.
   compact paper panel anchored under the trigger (≥320px, ≤420px wide, list ≤264px; flips above when needed).
   Phones: a bottom sheet of fixed height (`min(85dvh, 640px)`) with 48px rows. Selected = ultramar + check and is
   centred on open; hover/keyboard row = lavender tint; focus is always ultramar.
-- **Keyboard and focus**: ↓/↑ on the trigger open it; the search is a `combobox` driving the `listbox`
-  (↓/↑, PageUp/PageDown, Enter); Escape, Tab, a choice or a click outside close it and return focus to the trigger
-  without scrolling the page. Only the list scrolls. A tap on a phone does not raise the on-screen keyboard; opening
-  from a keyboard focuses the search. A polite status announces the result count.
+- **Keyboard and focus**: ↓/↑ on the trigger open it, and so does typing: a letter or digit on the focused trigger
+  opens the search with that key already in it and its best match active — no extra step to begin searching. Every key
+  typed before the search takes focus (a frame on desktop, the sheet's slide-in on phones) is kept in order, and
+  Enter, ↓/↑ and Escape pressed in that moment act as they would in the search. The search is a `combobox` driving the
+  `listbox` (↓/↑, PageUp/PageDown, Enter); only Enter or a click chooses. Escape, Tab, a choice or a click outside close
+  it and return focus to the trigger without scrolling the page; Escape closes only the picker, never a form or sheet
+  around it. Each opening starts a fresh search (a click shows the whole list on the current choice). Results are
+  ranked and deterministic: names that start with the text, then a word that starts with it, then names that contain
+  it, then other terms (aliases, codes), ties in catalog order — all ignoring accents, case, punctuation and extra
+  spaces ("canar" finds Cañar). Only the list scrolls. A tap on a phone does not raise the on-screen keyboard; opening
+  from a keyboard focuses the search. A polite status announces the result count; no match says so and chooses nothing.
 - **SearchPicker** (`shared/ui/CountryPicker.tsx`): the CountryPicker's trigger, panel, sheet, search and keyboard model
   as one generic choice from a known list (`options` with a `code` and a `name`, an optional leading mark and quiet
   detail, and its own wording for the empty trigger, the count and the no-match hint). CountryPicker is SearchPicker
