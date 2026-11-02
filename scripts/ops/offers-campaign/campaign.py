@@ -268,6 +268,9 @@ class NoRedirect(HTTPRedirectHandler):
         raise CampaignError("La API devolvió una redirección; operación detenida.")
 
 
+USER_AGENT = "PLIEGO-offers-campaign/1.0"
+
+
 class Api:
     def __init__(self, base_url, token):
         self.base = base_url.rstrip("/")
@@ -275,7 +278,8 @@ class Api:
         self.opener = build_opener(ProxyHandler({}), NoRedirect())
 
     def request(self, path, method="GET", body=None, authenticated=True, extra_headers=None):
-        headers = {"Accept": "application/json"}
+        # Cloudflare rejects Python's default urllib User-Agent (error 1010) before the API sees the request.
+        headers = {"Accept": "application/json", "User-Agent": USER_AGENT}
         if authenticated:
             headers["Authorization"] = "Bearer " + self.token
         if body is not None:

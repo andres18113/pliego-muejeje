@@ -232,3 +232,19 @@ class CampaignTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class UserAgentTest(unittest.TestCase):
+    def test_every_request_names_the_tool_instead_of_pythons_default_user_agent(self):
+        campaign = importlib.util.module_from_spec(SPEC)
+        SPEC.loader.exec_module(campaign)
+        sent = []
+        class Opener:
+            def open(self, request, timeout):
+                sent.append(request.get_header("User-agent"))
+                raise campaign.URLError("stop")
+        api = campaign.Api("https://api.example.test", "token")
+        api.opener = Opener()
+        with self.assertRaises(campaign.CampaignError):
+            api.get("/api/v1/catalog/editions")
+        self.assertEqual(sent, ["PLIEGO-offers-campaign/1.0"])

@@ -415,7 +415,7 @@ ufw status verbose
 Read only relevant, sanitized Nginx/unit settings. Preserve existing loopback bind,
 JVM/pool/hardening, proxy headers, SPA fallback, no-store HTML and immutable hashed
 assets. Do not dump all service configuration if it might contain inline secrets.
-Confirm read-only that the `pliego-api` Nginx site sets `proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;`; Spring trusts forwarded addresses only from loopback proxies.
+Confirm read-only that the `pliego-api` Nginx site forwards the real client address. Production (verified 2026-11-02) sets `proxy_set_header X-Forwarded-For $http_cf_connecting_ip;` and `X-Real-IP` the same way, replacing any client-supplied value; this is trustworthy only because the site enforces Cloudflare Authenticated Origin Pulls (`ssl_verify_client on` with the AOP CA), so only Cloudflare can reach it. Spring trusts forwarded addresses only from loopback proxies. Acceptance: one failed login through Cloudflare and one from loopback must create two distinct `IP:` rows in `pliego.login_intento_limite` (use a synthetic `@example.invalid` address).
 
 Record whether this is frontend-only, backend-only, or coordinated. A frontend-only
 release does not require DB membership changes, a backend restart or Flyway work.
@@ -628,7 +628,7 @@ COMMIT;
 
 Execute as the administrative operator using `runuser -u postgres -- psql -X
 -v ON_ERROR_STOP=1 -d pliego`, with SQL passed through a quoted heredoc or a private
-file opened by the privileged shell. Do not run it as the application login.
+file opened by the privileged shell and fed on stdin (`-f -`): `postgres` cannot read files inside the root-only `0700` deployment directory, and `-f <path>` fails there (observed 2026-11-02; the transaction rolled back and the step was re-run). Do not run it as the application login.
 This is environment privilege provisioning, not manual business-schema migration.
 
 An already-open transaction can retain earlier privileges until it ends. A revoke
