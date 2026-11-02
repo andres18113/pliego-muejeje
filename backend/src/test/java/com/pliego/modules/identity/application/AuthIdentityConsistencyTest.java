@@ -20,7 +20,8 @@ class AuthIdentityConsistencyTest {
     private final SecretKeySpec key = new SecretKeySpec("local-identity-race-secret-32bytes".getBytes(StandardCharsets.US_ASCII), "HmacSHA256");
     private final AuthService service = new AuthService(gateway, passwords, mock(DummyPasswordHash.class),
             new JwtTokenIssuer(key), new AuthSessionCredentialService(key),
-            new EmailActionTokens("local-email-action-secret-32-bytes"));
+            new EmailActionTokens("local-email-action-secret-32-bytes"), mock(LoginAttemptGateway.class),
+            mock(LoginAttemptAdmissionService.class));
 
     @Test
     void promotionAfterPasswordSnapshotCannotCreateARefreshSessionUsingTheOldAddress() {
@@ -28,7 +29,7 @@ class AuthIdentityConsistencyTest {
             gateway.currentEmail = "new@example.com"; // Confirmation committed after fn_user_auth_data's snapshot.
             return true;
         });
-        assertThrows(InvalidCredentialsException.class, () -> service.login("old@example.com", "correct-password"));
+        assertThrows(InvalidCredentialsException.class, () -> service.login("old@example.com", "correct-password", "127.0.0.1"));
         assertEquals(0, gateway.createdSessions);
         assertEquals("old@example.com", gateway.expectedEmail);
     }
@@ -36,7 +37,7 @@ class AuthIdentityConsistencyTest {
     @Test
     void sessionCreationBindsTheCanonicalEmailReadForPasswordAuthentication() {
         when(passwords.matches(anyString(), anyString())).thenReturn(true);
-        var result = service.login("OLD@Example.com", "correct-password");
+        var result = service.login("OLD@Example.com", "correct-password", "127.0.0.1");
         assertEquals("old@example.com", result.email());
         assertEquals("old@example.com", gateway.expectedEmail);
         assertEquals(1, gateway.createdSessions);

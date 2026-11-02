@@ -127,6 +127,15 @@ public final class ApiExceptionHandler {
                 HttpStatus.UNAUTHORIZED, "El correo o la contraseña son incorrectos.");
     }
 
+    @ExceptionHandler(com.pliego.foundation.security.LoginAttemptLimitedException.class)
+    public ResponseEntity<ProblemDetail> loginAttemptLimited(
+            com.pliego.foundation.security.LoginAttemptLimitedException exception, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header(org.springframework.http.HttpHeaders.RETRY_AFTER, Integer.toString(exception.retryAfterSeconds()))
+                .body(problems.create("AUTH_LOGIN_RATE_LIMITED", "Demasiados intentos", HttpStatus.TOO_MANY_REQUESTS,
+                        "Espera unos minutos antes de volver a intentarlo.", request));
+    }
+
     @ExceptionHandler(CurrentPasswordMismatchException.class)
     public ResponseEntity<ProblemDetail> currentPasswordMismatch(CurrentPasswordMismatchException exception,
             HttpServletRequest request) {

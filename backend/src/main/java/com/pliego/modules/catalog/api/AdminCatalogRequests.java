@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.DecimalMax;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -30,23 +31,30 @@ public final class AdminCatalogRequests {
             @NotBlank(message = "El slug de la categoría no puede estar vacío.")
             @Size(max = 140, message = "El slug de la categoría excede la longitud permitida.") String slug,
             @Size(max = 1000, message = "La descripción excede la longitud permitida.") String description,
-            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador de la categoría padre no es válido.") String parentCategoryId) { }
+            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador de la categoría padre no es válido.")
+            @DecimalMax(value = "9223372036854775807", message = "El identificador de la categoría padre no es válido.") String parentCategoryId) { }
 
     public record Book(@NotBlank(message = "El título del libro no puede estar vacío.")
             @Size(max = 300, message = "El título del libro excede la longitud permitida.") String title,
             @Size(max = 300, message = "El subtítulo excede la longitud permitida.") String subtitle,
             @Size(max = 10000, message = "La sinopsis excede la longitud permitida.") String synopsis,
-            @NotNull(message = "La lista de autores es obligatoria.") List<@Valid AuthorAssignment> authors,
+            @NotNull(message = "La lista de autores es obligatoria.")
+            List<@NotNull(message = "El autor no puede ser nulo.") @Valid AuthorAssignment> authors,
             @NotNull(message = "La lista de categorías es obligatoria.")
-            List<@Pattern(regexp = "[1-9][0-9]*", message = "Un identificador de categoría no es válido.") String> categoryIds) { }
+            List<@NotNull(message = "Un identificador de categoría no es válido.")
+                @Pattern(regexp = "[1-9][0-9]*", message = "Un identificador de categoría no es válido.")
+                @DecimalMax(value = "9223372036854775807", message = "Un identificador de categoría no es válido.") String> categoryIds) { }
     public record AuthorAssignment(@NotBlank(message = "El identificador del autor no puede estar vacío.")
-            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador del autor no es válido.") String authorId,
+            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador del autor no es válido.")
+            @DecimalMax(value = "9223372036854775807", message = "El identificador del autor no es válido.") String authorId,
             @NotNull(message = "El orden del autor es obligatorio.") Integer order) { }
 
     public record EditionCreate(@NotBlank(message = "El identificador del libro no puede estar vacío.")
-            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador del libro no es válido.") String bookId,
+            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador del libro no es válido.")
+            @DecimalMax(value = "9223372036854775807", message = "El identificador del libro no es válido.") String bookId,
             @NotBlank(message = "El identificador de la editorial no puede estar vacío.")
-            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador de la editorial no es válido.") String publisherId,
+            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador de la editorial no es válido.")
+            @DecimalMax(value = "9223372036854775807", message = "El identificador de la editorial no es válido.") String publisherId,
             @NotBlank(message = "El SKU no puede estar vacío.") String sku,
             @Pattern(regexp = "(?:[0-9]{13})?", message = "El ISBN debe contener 13 dígitos.") String isbn13,
             @NotBlank(message = "El idioma no puede estar vacío.")
@@ -70,7 +78,8 @@ public final class AdminCatalogRequests {
 
     /** bookId and sku are deliberately absent because they are immutable after creation. */
     public record EditionUpdate(@NotBlank(message = "El identificador de la editorial no puede estar vacío.")
-            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador de la editorial no es válido.") String publisherId,
+            @Pattern(regexp = "[1-9][0-9]*", message = "El identificador de la editorial no es válido.")
+            @DecimalMax(value = "9223372036854775807", message = "El identificador de la editorial no es válido.") String publisherId,
             @Pattern(regexp = "(?:[0-9]{13})?", message = "El ISBN debe contener 13 dígitos.") String isbn13,
             @NotBlank(message = "El idioma no puede estar vacío.")
             @Pattern(regexp = "(?i)[a-z]{2,3}", message = "El idioma no tiene un formato válido.") String language,

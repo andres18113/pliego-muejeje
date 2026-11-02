@@ -73,9 +73,12 @@ public class AuthController {
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "401", description = "Credenciales inválidas", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "403", description = "Correo pendiente de verificación (EMAIL_NOT_VERIFIED)", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "429", description = "Demasiados intentos (AUTH_LOGIN_RATE_LIMITED). Conserva las credenciales y reintenta después de la espera; no revela si la cuenta existe.",
+            headers = @Header(name = "Retry-After", description = "Segundos hasta el próximo intento", schema = @Schema(type = "integer", minimum = "1", maximum = "3600")),
+            content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
-    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        LoginResult result = continuation.login(request.email(), request.password());
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request, HttpServletRequest servletRequest) {
+        LoginResult result = continuation.login(request.email(), request.password(), servletRequest.getRemoteAddr());
         return loginResponse(result, true);
     }
 

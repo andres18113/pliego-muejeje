@@ -5,7 +5,11 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 backend_dir="$(cd "$script_dir/../../.." && pwd)"
 repo_dir="$(cd "$backend_dir/.." && pwd)"
 runbook="$repo_dir/docs/deployment/production-runbook.md"
-database_name="pliego_runtime_privileges_ci"
+database_name="${PLIEGO_CI_RUNTIME_DATABASE:-pliego_runtime_privileges_ci}"
+if [[ ! "$database_name" =~ ^[a-z][a-z0-9_]{0,62}$ ]]; then
+    printf 'Invalid disposable runtime database name\n' >&2
+    exit 2
+fi
 application_port="${PLIEGO_CI_RUNTIME_APP_PORT:-18081}"
 application_url="http://127.0.0.1:$application_port"
 admin_mode="${PLIEGO_CI_ADMIN_MODE:-postgres_socket}"
@@ -128,12 +132,12 @@ cat > "$setup_sql" <<'SQL'
 CREATE ROLE pliego_owner NOLOGIN INHERIT NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS;
 \getenv runtime_password PLIEGO_CI_RUNTIME_PASSWORD
 CREATE ROLE pliego_app LOGIN INHERIT NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION NOBYPASSRLS PASSWORD :'runtime_password';
-CREATE DATABASE pliego_runtime_privileges_ci OWNER pliego_owner TEMPLATE template0;
-GRANT CONNECT ON DATABASE pliego_runtime_privileges_ci TO pliego_app;
+CREATE DATABASE :"runtime_database" OWNER pliego_owner TEMPLATE template0;
+GRANT CONNECT ON DATABASE :"runtime_database" TO pliego_app;
 GRANT pliego_owner TO pliego_app;
 SQL
 printf 'Runtime privilege CI stage: creating isolated database with restricted production-style roles\n'
-admin_psql postgres -f - < "$setup_sql"
+admin_psql postgres -v "runtime_database=$database_name" -f - < "$setup_sql"
 
 server_version_num="$(psql -X -v ON_ERROR_STOP=1 -At -c 'SHOW server_version_num')"
 if (( server_version_num < 180000 )); then
@@ -174,8 +178,8 @@ stop_backend() {
 start_backend migration
 flyway_state="$(admin_psql "$database_name" -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '98:98' ]]; then
-    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 98 migrations; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '100:100' ]]; then
+    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 100 migrations; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'Runtime privilege CI stage: Spring Boot migration Flyway=%s as pliego_app\n' "$flyway_state"
@@ -198,8 +202,15 @@ PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app 
         -f "$script_dir/pending_email_change_gate.sql" \
         -f "$script_dir/pending_email_change_security_gate.sql" \
         -f "$script_dir/offers_campaign_gate.sql" \
+        -f "$script_dir/offer_timestamp_gate.sql" \
         -f "$script_dir/pickup_timing_notifications_gate.sql"
 PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
     python3 "$script_dir/registration_continuation_gate.py"
+PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
+    PLIEGO_LOGIN_GATE_STRICT=1 python3 "$script_dir/login_attempt_gate.py"
+PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
+    PLIEGO_TEST_DISPOSABLE_DB=1 python3 "$script_dir/credential_expiry_gate.py"
+PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
+    PLIEGO_TEST_DISPOSABLE_DB=1 python3 "$script_dir/worker_lease_gate.py"
 stop_backend
 printf 'Runtime privilege CI lifecycle stage passed; strict mode required, cleanup idempotent, database isolated\n'

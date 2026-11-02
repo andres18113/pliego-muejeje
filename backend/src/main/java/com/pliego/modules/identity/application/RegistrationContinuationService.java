@@ -7,6 +7,10 @@ import java.util.regex.Pattern;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.pliego.foundation.security.JwtTokenIssuer;
+import com.pliego.foundation.security.JwtAccessTokenClaims;
+import com.pliego.foundation.security.InvalidCredentialsException;
+import com.pliego.foundation.security.EmailNotVerifiedException;
+import com.pliego.foundation.security.LoginAttemptLimitedException;
 import com.pliego.modules.identity.gateway.RegistrationContinuationGateway;
 import com.pliego.modules.identity.gateway.RegistrationContinuationGateway.Outcome;
 import com.pliego.modules.identity.gateway.RegistrationResult;
@@ -43,9 +47,10 @@ public class RegistrationContinuationService {
         return result(gateway.verify(EmailActionTokens.hash(token),valid(secret)?EmailActionTokens.hash(secret):null,
                 EmailActionTokens.hash(refresh),Instant.now().plus(30,ChronoUnit.DAYS),EmailActionTokens.hash(remoteAddress)),refresh);
     }
-    @Transactional
-    public LoginResult login(String email,String password) {
-        LoginResult result=auth.login(email,password);
+    @Transactional(noRollbackFor = {InvalidCredentialsException.class, EmailNotVerifiedException.class,
+            LoginAttemptLimitedException.class})
+    public LoginResult login(String email,String password,String remoteAddress) {
+        LoginResult result=auth.login(email,password,remoteAddress);
         gateway.invalidate(result.userId(),null);
         return result;
     }
@@ -59,8 +64,8 @@ public class RegistrationContinuationService {
         if(outcome==null)return null;
         if(!"AUTHENTICATED".equals(outcome.state()))return new Result(outcome.state(),null,null,outcome.retryAfterSeconds());
         Instant issued=Instant.now().truncatedTo(ChronoUnit.SECONDS);
-        String access=issuer.issue(Long.toString(outcome.userId()),outcome.role(),issued,issued.plusSeconds(1800),UUID.randomUUID().toString());
-        return new Result(outcome.state(),new LoginResult(access,1800,outcome.userId(),outcome.email(),outcome.role(),refresh,outcome.expiresAt()),
+        String access=issuer.issue(Long.toString(outcome.userId()),outcome.role(),issued,issued.plus(JwtAccessTokenClaims.LIFETIME),UUID.randomUUID().toString());
+        return new Result(outcome.state(),new LoginResult(access,JwtAccessTokenClaims.LIFETIME.toSeconds(),outcome.userId(),outcome.email(),outcome.role(),refresh,outcome.expiresAt()),
                 AuthReturnPaths.safeOrNull(outcome.returnTo()),null);
     }
     private static boolean valid(String secret) {return secret!=null&&SECRET.matcher(secret).matches();}

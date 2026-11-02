@@ -147,13 +147,13 @@ jobs:
           sudo -u postgres createdb -p 55432 --owner=pliego pliego_registration_ci
           psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180006" \
             | grep -qx t
-      - name: Verify registration continuation with disposable PostgreSQL
+      - name: Verify registration continuation and login protection with disposable PostgreSQL
         working-directory: backend
         env:
           PLIEGO_TEST_DISPOSABLE_DB: '1'
           PGDATABASE: pliego_registration_ci
           PLIEGO_DB_URL: jdbc:postgresql://127.0.0.1:55432/pliego_registration_ci
-        run: mvn --batch-mode --no-transfer-progress -Dtest=RegistrationContinuationPostgresIntegrationTest test
+        run: mvn --batch-mode --no-transfer-progress -Dtest=RegistrationContinuationPostgresIntegrationTest,LoginAttemptPostgresIntegrationTest test
       - name: Set up Node.js for live browser contracts
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -182,6 +182,15 @@ jobs:
           PGDATABASE=pliego_billing_upgrade_ci \
             PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_billing_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/automatic_billing_upgrade_gate.py
+      - name: Verify login protection and credential fixes across populated V098 to V100 upgrade
+        shell: bash
+        env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_login_upgrade_ci
+          PGDATABASE=pliego_login_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_login_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/login_attempt_upgrade_gate.py
       - name: Verify stored cédulas survive the required, correctable cédula and RUC upgrades
         shell: bash
         run: |

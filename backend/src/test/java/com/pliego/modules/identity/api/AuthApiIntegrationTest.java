@@ -102,6 +102,12 @@ class AuthApiIntegrationTest {
     @org.springframework.test.context.bean.override.mockito.MockitoBean
     com.pliego.modules.identity.gateway.RegistrationContinuationGateway continuationGateway;
 
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.gateway.LoginAttemptGateway loginAttempts;
+
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.application.LoginAttemptAdmissionService loginAdmission;
+
     @BeforeEach
     void continuationFixture() {
         org.mockito.Mockito.when(continuationGateway.issue(org.mockito.ArgumentMatchers.anyLong(),
@@ -548,8 +554,15 @@ class AuthApiIntegrationTest {
         return jws.serialize();
     }
 
-    private void assertInvalidToken(String token) {
+    private void assertInvalidToken(String token) throws Exception {
         org.junit.jupiter.api.Assertions.assertThrows(JwtException.class, () -> jwtDecoder.decode(token));
+        mvc.perform(get("/api/v1/me").header("Authorization", "Bearer " + token))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.code").value("AUTH_INVALID_TOKEN"))
+                .andExpect(jsonPath("$.title").value("Token inválido"))
+                .andExpect(jsonPath("$.detail").value("El token de acceso no es válido o ha vencido."))
+                .andExpect(result -> org.junit.jupiter.api.Assertions.assertEquals("Bearer error=\"invalid_token\"",
+                        result.getResponse().getHeader("WWW-Authenticate")));
     }
 
     private JsonNode withoutTraceId(JsonNode problem) {

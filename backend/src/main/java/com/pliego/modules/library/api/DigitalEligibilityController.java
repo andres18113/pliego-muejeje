@@ -13,6 +13,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -46,7 +47,8 @@ public class DigitalEligibilityController {
             @RequestParam(required = false)
             @NotEmpty(message = "Debes indicar al menos una edición.")
             @Size(max = 50, message = "Puedes consultar hasta cincuenta ediciones.")
-            List<@Positive(message = "El identificador de edición debe ser positivo.") Long> editionIds) {
+            List<@NotNull(message = "El identificador de edición debe ser positivo.")
+                @Positive(message = "El identificador de edición debe ser positivo.") Long> editionIds) {
         return service.get(Long.parseLong(jwt.getSubject()), editionIds);
     }
 }

@@ -5294,6 +5294,17 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
             };
+            /** @description Demasiados intentos (AUTH_LOGIN_RATE_LIMITED). Conserva las credenciales y reintenta después de la espera; no revela si la cuenta existe. */
+            429: {
+                headers: {
+                    /** @description Segundos hasta el próximo intento */
+                    "Retry-After"?: number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
             /** @description Error interno */
             500: {
                 headers: {

@@ -26,6 +26,14 @@ def main():
     endpoint = f'/api/v1/admin/editions/{edition}/offer'
     now = datetime.now(timezone.utc)
     offer = {'offerPrice': '15.00', 'startsAt': (now-timedelta(days=1)).isoformat(), 'endsAt': (now+timedelta(days=1)).isoformat(), 'offerCopy': 'Texto editorial de la oferta', 'terms': 'Aplica a esta edición.'}
+    # pgjdbc maps these valid OffsetDateTime values to PostgreSQL infinities.
+    # Reject them before an unbounded end can break public date projections.
+    for changes in [
+        {'startsAt': '-999999999-01-01T00:00:00+18:00'},
+        {'endsAt': '+999999999-12-31T23:59:59.999999999-18:00'},
+    ]:
+        problem(endpoint, admin, 'PUT', {**offer, **changes}, 'P1001')
+        assert query(f"SELECT count(*) FROM pliego.edicion_oferta WHERE edicion_id={edition}") == '0'
     # This route is the first missing production behavior in the pre-integration baseline.
     ok(endpoint, admin, 'PUT', offer, 204)
     detail = ok('/api/v1/catalog/editions/'+edition)

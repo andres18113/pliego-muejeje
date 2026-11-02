@@ -10,6 +10,8 @@ import java.util.UUID;
 import com.pliego.modules.library.application.DigitalEligibility;
 import com.pliego.modules.library.gateway.DigitalEligibilityGateway;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 /** Same Spring/security/transaction fixture as the customer batch status endpoints. */
@@ -48,6 +50,18 @@ class DigitalEligibilityApiIntegrationTest extends CustomerApiIntegrationTest {
                             .header("Authorization", auth("20", "CUSTOMER")))
                     .andExpect(status().isBadRequest());
         }
+        verifyNoInteractions(eligibilityGateway);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"3,,4", ",3", "3,"})
+    void batchRejectsEmptyIdentifierEntriesBeforeGateway(String editionIds) throws Exception {
+        mvc.perform(get("/api/v1/me/digital-eligibility").param("editionIds", editionIds)
+                        .header("Authorization", auth("20", "CUSTOMER")))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.title").value("Datos inválidos"))
+                .andExpect(jsonPath("$.detail").value("Revisa los datos enviados e intenta nuevamente."));
         verifyNoInteractions(eligibilityGateway);
     }
 
