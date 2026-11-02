@@ -73,7 +73,7 @@ export function rankOptions<T extends PickerOption>(options: T[], query: string,
 /** What the trigger may ask of the open list while its search has no focus yet (a sheet still sliding in). */
 type ListControl = { chooseActive: () => void; move: (by: number) => void };
 /** Keys that reached the trigger before the list existed (its panel mounts with its transition): applied on mount. */
-type PendingKeys = { moves: number; choose: boolean };
+type PendingKeys = { moves: number[]; choose: boolean };
 
 /** A key that types text into a search (a letter, digit, space or sign), not a shortcut or a navigation key. */
 const typesText = (event: KeyboardEvent) => event.key.length === 1 && !event.ctrlKey && !event.metaKey && !event.altKey;
@@ -138,10 +138,10 @@ export function SearchPicker<T extends PickerOption>({
   // Each opening is a new list, even one that starts while the last is still fading out: it must take focus again.
   const [openings, setOpenings] = useState(0);
   const listControl = useRef<ListControl | null>(null);
-  const pending = useRef<PendingKeys>({ moves: 0, choose: false });
+  const pending = useRef<PendingKeys>({ moves: [], choose: false });
   // Arrows used on the trigger since this opening: with a search, they make Enter a deliberate choice.
   const navigated = useRef(false);
-  const open = (typed: string) => { pending.current = { moves: 0, choose: false }; navigated.current = false; setByKeyboard(true); setQuery(typed); setOpenings((count) => count + 1); setOpened(true); };
+  const open = (typed: string) => { pending.current = { moves: [], choose: false }; navigated.current = false; setByKeyboard(true); setQuery(typed); setOpenings((count) => count + 1); setOpened(true); };
   // A new list (another province's cities) starts without the previous search, even if the panel was still closing.
   const [shownOptions, setShownOptions] = useState(options);
   if (shownOptions !== options) { setShownOptions(options); setQuery(""); }
@@ -183,10 +183,12 @@ export function SearchPicker<T extends PickerOption>({
     className={`country-picker-trigger ${classes.trigger}${className ? ` ${className}` : ""}`}
     onClick={(event) => {
       setByKeyboard(event.detail === 0);
-      if (!opened) { setQuery(""); setOpenings((count) => count + 1); pending.current = { moves: 0, choose: false }; navigated.current = false; }
+      if (!opened) { setQuery(""); setOpenings((count) => count + 1); pending.current = { moves: [], choose: false }; navigated.current = false; }
       setOpened((isOpen) => !isOpen);
     }}
     onKeyDown={(event) => {
+      // A composing keyboard (IME, dead keys) is still building a character: nothing here acts on its keys.
+      if (event.nativeEvent.isComposing || event.keyCode === 229) return;
       // Arrow keys open the list, as on a native select.
       if ((event.key === "ArrowDown" || event.key === "ArrowUp") && !opened) {
         event.preventDefault(); open("");
@@ -210,7 +212,7 @@ export function SearchPicker<T extends PickerOption>({
         event.preventDefault();
         const by = event.key === "ArrowDown" ? 1 : -1;
         navigated.current = true;
-        if (listControl.current) listControl.current.move(by); else pending.current.moves += by;
+        if (listControl.current) listControl.current.move(by); else pending.current.moves.push(by);
       }
     }}
   >
@@ -331,14 +333,17 @@ function OptionList<T extends PickerOption>({ id, label, options, value, onChoos
   // Keys typed on the trigger before this list mounted: same result as if they had come a frame later.
   useEffect(() => {
     const { moves, choose } = pending.current;
-    pending.current = { moves: 0, choose: false };
-    if (!moves && !choose) return;
-    const start = searchKey(query) ? 0 : Math.max(0, selectedIndex);
-    const index = Math.max(0, Math.min(visible.length - 1, start + moves));
+    pending.current = { moves: [], choose: false };
+    if (!moves.length && !choose) return;
+    // Each arrow stops at the list's ends, in the order pressed, exactly as on a mounted list (↑ at the top, then ↓).
+    const last = visible.length - 1;
+    const index = moves.reduce((at, by) => Math.max(0, Math.min(last, at + by)), searchKey(query) ? 0 : Math.max(0, selectedIndex));
     if (choose) { if (visible[index]) onChoose(visible[index].code); } else setActive(index);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
+    // Enter that confirms an IME composition is the keyboard's, never a choice.
+    if (event.nativeEvent.isComposing || event.keyCode === 229) return;
     const last = visible.length - 1;
     const move = (to: number) => { event.preventDefault(); setActive(Math.max(0, Math.min(last, to))); };
     if (event.key === "ArrowDown") move(active + 1);

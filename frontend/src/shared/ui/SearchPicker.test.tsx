@@ -92,6 +92,41 @@ describe("keyboard-first search", () => {
     await waitFor(() => expect(trigger).toHaveTextContent("Guayas"));
   });
 
+  it("applies early arrows in order, each stopping at the list's ends, the same as on a mounted list", async () => {
+    const early = vi.fn();
+    const { unmount } = render(<Harness onChange={early} />);
+    const trigger = screen.getByRole("combobox", { name: "Provincia" });
+    trigger.focus();
+    // ↑ at the top stays on Galápagos, then ↓ reaches Guayas — never summed to zero first.
+    for (const key of ["g", "ArrowUp", "ArrowDown", "Enter"]) fireEvent.keyDown(trigger, { key });
+    await waitFor(() => expect(early).toHaveBeenCalledExactlyOnceWith("10"));
+    unmount();
+
+    const mounted = vi.fn();
+    render(<Harness onChange={mounted} />);
+    const user = userEvent.setup();
+    screen.getByRole("combobox", { name: "Provincia" }).focus();
+    await user.keyboard("g");
+    await waitFor(() => expect(search()).toHaveFocus());
+    await user.keyboard("{ArrowUp}{ArrowDown}{Enter}");
+    expect(mounted).toHaveBeenCalledExactlyOnceWith("10");
+  });
+
+  it("leaves a composing keyboard alone: the Enter that confirms a composition chooses nothing", async () => {
+    const onChange = vi.fn();
+    render(<Harness onChange={onChange} />);
+    const user = userEvent.setup();
+    screen.getByRole("combobox", { name: "Provincia" }).focus();
+    await user.keyboard("g");
+    await waitFor(() => expect(search()).toHaveFocus());
+    fireEvent.keyDown(search(), { key: "Enter", isComposing: true });
+    fireEvent.keyDown(search(), { key: "Enter", keyCode: 229 });
+    expect(onChange).not.toHaveBeenCalled();
+    expect(screen.getByRole("combobox", { name: "Provincia" })).toHaveAttribute("aria-expanded", "true");
+    await user.keyboard("{Enter}");
+    expect(onChange).toHaveBeenCalledExactlyOnceWith("9");
+  });
+
   it("never chooses by accident: Enter on an open trigger without a search or arrows only closes it", async () => {
     const onChange = vi.fn();
     render(<Harness onChange={onChange} />);
