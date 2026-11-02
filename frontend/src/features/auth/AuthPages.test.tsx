@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { SessionProvider } from "@/app/session";
 import { setApiAccessToken } from "@/shared/api/client";
 import { exchangeRegistrationSession, login, refreshSession, register } from "@/shared/api/auth";
-import { ApiRequestError } from "@/shared/api/errors";
+import { ApiRequestError, LoginRateLimitedError } from "@/shared/api/errors";
 import { RegisterPage, SignInPage } from "./AuthPages";
 
 vi.mock("@/shared/api/auth", () => ({
@@ -124,6 +124,46 @@ describe("authentication forms", () => {
     expect(notice).toHaveTextContent("Verifica tu correo");
     expect(notice).toHaveAttribute("data-tone", "info");
     expect(within(notice).getByRole("link", { name: "Solicitar enlace de verificación" })).toHaveAttribute("href", "/reenviar-verificacion");
+  });
+
+  // ADR 0053: a paused sign-in keeps what was typed, sends nothing more and never says whether the account exists.
+  it("pauses sign-in after too many attempts, keeping the typed data and offering password recovery", async () => {
+    const retryAt = Date.now() + 5 * 60_000;
+    mockLogin.mockRejectedValueOnce(new LoginRateLimitedError(new ApiRequestError(429, "AUTH_LOGIN_RATE_LIMITED", "Demasiados intentos", "Espera unos minutos antes de volver a intentarlo."), retryAt));
+    renderAuth("/sign-in");
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("Correo electrónico"), "ana@example.com");
+    await user.type(screen.getByLabelText("Contraseña"), "segura123");
+    await user.click(screen.getByRole("button", { name: "Iniciar sesión" }));
+    const notice = await screen.findByRole("alert");
+    expect(notice).toHaveTextContent("Demasiados intentos");
+    const at = new Date(retryAt).toLocaleTimeString("es-EC", { hour: "2-digit", minute: "2-digit" });
+    expect(notice).toHaveTextContent(`Podrás volver a intentarlo en 5 minutos, a las ${at}.`);
+    expect(notice).not.toHaveTextContent(/cuenta (bloqueada|existe)|no existe/i);
+    expect(within(notice).getByRole("link", { name: "¿Olvidaste tu contraseña? Restablécela" })).toHaveAttribute("href", "/recuperar-contrasena");
+    const paused = screen.getByRole("button", { name: "En pausa" });
+    expect(paused).toHaveAttribute("aria-disabled", "true");
+    await user.click(paused);
+    await user.type(screen.getByLabelText("Contraseña"), "4");
+    expect(mockLogin).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("alert")).toHaveTextContent("Demasiados intentos");
+    expect(screen.getByLabelText("Correo electrónico")).toHaveValue("ana@example.com");
+    expect(screen.getByLabelText("Contraseña")).toHaveValue("segura1234");
+  });
+
+  it("lets the customer try again once the pause ends", async () => {
+    mockLogin.mockRejectedValueOnce(new LoginRateLimitedError(new ApiRequestError(429, "AUTH_LOGIN_RATE_LIMITED", "Demasiados intentos", "Espera."), Date.now() + 200))
+      .mockRejectedValueOnce(new ApiRequestError(401, "AUTH_INVALID_CREDENTIALS", "No autorizado", "Credenciales inválidas."));
+    renderAuth("/sign-in");
+    const user = userEvent.setup();
+    await user.type(screen.getByLabelText("Correo electrónico"), "ana@example.com");
+    await user.type(screen.getByLabelText("Contraseña"), "segura123");
+    await user.click(screen.getByRole("button", { name: "Iniciar sesión" }));
+    expect(await screen.findByText(/Podrás volver a intentarlo en unos segundos/)).toBeInTheDocument();
+    expect(await screen.findByText("Ya puedes volver a intentarlo")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Iniciar sesión" }));
+    expect(await screen.findByText("El correo o la contraseña no son correctos.")).toBeInTheDocument();
+    expect(mockLogin).toHaveBeenCalledTimes(2);
   });
 
   it("does not offer a verification link for wrong credentials", async () => {

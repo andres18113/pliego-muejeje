@@ -1,6 +1,6 @@
 import type { components } from "./generated";
 import { apiClient } from "./client";
-import { toApiRequestError } from "./errors";
+import { LoginRateLimitedError, toApiRequestError } from "./errors";
 import { registrationSessionSchema, registrationSessionStateSchema, type RegistrationSession } from "./registrationSession";
 
 export type LoginResponse = components["schemas"]["LoginResponse"];
@@ -11,6 +11,10 @@ let refreshInFlight: Promise<Required<LoginResponse> | null> | null = null;
 export async function login(body: components["schemas"]["LoginRequest"]) {
   return withAuthSessionLock(async (signal) => {
   const { data, error, response } = await apiClient.POST("/api/v1/auth/login", { body, signal });
+  if (response.status === 429) {
+    const base = toApiRequestError(429, error, "Demasiados intentos", "Espera unos minutos antes de volver a intentarlo.");
+    throw new LoginRateLimitedError(base, retryAtFrom(response.headers.get("Retry-After")));
+  }
   if (error) {
     throw toApiRequestError(response.status, error, "No se pudo iniciar sesión", "Revisa tus datos e inténtalo otra vez.");
   }

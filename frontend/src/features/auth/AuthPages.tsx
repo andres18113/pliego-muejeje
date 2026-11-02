@@ -8,7 +8,7 @@ import { useSession } from "@/app/session";
 import { useSessionOperationScope } from "@/app/sessionOperation";
 import { adminReturnHref, authLocation, emailActionLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { login, register } from "@/shared/api/auth";
-import { ApiRequestError, describeApiError, fieldErrorMessages } from "@/shared/api/errors";
+import { ApiRequestError, describeApiError, fieldErrorMessages, LoginRateLimitedError } from "@/shared/api/errors";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
 import { personNameSchema, personNameError, phoneError, optionalPhoneSchema } from "@/shared/validation/person";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
@@ -67,6 +67,17 @@ export function SignInPage() {
   // The server refuses the sign-in until the address is verified; the address typed goes on to the resend page.
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
+  // ADR 0053: too many attempts from here. Until then the form keeps what was typed and sends nothing.
+  const [pausedUntil, setPausedUntil] = useState<number | null>(null);
+  const paused = pausedUntil !== null;
+  useEffect(() => {
+    if (pausedUntil === null) return;
+    const timer = window.setTimeout(() => {
+      setPausedUntil(null);
+      setServerError({ title: "Ya puedes volver a intentarlo", detail: "Revisa tu correo y tu contraseña antes de enviar." });
+    }, Math.max(0, pausedUntil - Date.now()));
+    return () => window.clearTimeout(timer);
+  }, [pausedUntil]);
   const {
     register: registerField,
     handleSubmit,
@@ -116,6 +127,13 @@ export function SignInPage() {
         return Boolean(message);
       });
       if(fields.length) { setFocus(fields[0]); setFeedback({state:"error",message:"Revisa los campos señalados."}); return; }
+      if (error instanceof LoginRateLimitedError) {
+        // Never says whether the account exists: the pause belongs to these attempts, not to an account.
+        setPausedUntil(error.retryAt);
+        setServerError({ title: "Demasiados intentos", detail: `Por seguridad pausamos el inicio de sesión desde aquí. Podrás volver a intentarlo ${retryMoment(error.retryAt)}.` });
+        setFeedback({ state: "error", message: "Inicio de sesión en pausa." });
+        return;
+      }
       setUnverifiedEmail(error instanceof ApiRequestError && error.code === "EMAIL_NOT_VERIFIED" ? values.email : null);
       setServerError(authFailure(error, "No se pudo iniciar sesión", "Comprueba tu conexión e inténtalo otra vez.", true));
       setFeedback({ state: "error", message: "No se pudo iniciar sesión." });
@@ -127,8 +145,10 @@ export function SignInPage() {
   });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (submitLockRef.current) {
+    if (submitLockRef.current || paused) {
       event.preventDefault();
+      // While paused nothing is sent; the explanation is brought back into view and focus.
+      if (paused) errorRef.current?.focus();
       return;
     }
     submitLockRef.current = true;
@@ -148,12 +168,13 @@ export function SignInPage() {
           <h1>Iniciar sesión</h1>
           <p>Ingresa con el correo y la contraseña de tu cuenta.</p>
 
-          <form className="auth-form" onSubmit={onSubmit} onChangeCapture={() => clearErrorFeedback(feedback, serverError, setFeedback, setServerError)} noValidate aria-busy={isSubmitting || isValidating}>
+          <form className="auth-form" onSubmit={onSubmit} onChangeCapture={() => { if (!paused) clearErrorFeedback(feedback, serverError, setFeedback, setServerError); }} noValidate aria-busy={isSubmitting || isValidating}>
             {serverError && (
               <div className="auth-error" role="alert" tabIndex={-1} ref={errorRef} data-tone={unverifiedEmail ? "info" : undefined}>
                 <h2>{serverError.title}</h2>
                 <p>{serverError.detail}</p>
                 {unverifiedEmail && <Link to={emailActionLocation("/reenviar-verificacion", intent)} state={{ email: unverifiedEmail }}>Solicitar enlace de verificación</Link>}
+                {paused && <Link to={emailActionLocation("/recuperar-contrasena", intent)}>¿Olvidaste tu contraseña? Restablécela</Link>}
               </div>
             )}
 
@@ -194,10 +215,10 @@ export function SignInPage() {
             <Button
               variant="primary"
               type="submit"
-              aria-disabled={isSubmitting || isValidating || activeFeedback.state === "success"}
+              aria-disabled={isSubmitting || isValidating || activeFeedback.state === "success" || paused}
               aria-busy={isSubmitting || isValidating}
             >
-              {activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Ingresando…" : activeFeedback.state === "success" ? "Sesión iniciada…" : "Iniciar sesión"}
+              {paused ? "En pausa" : activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Ingresando…" : activeFeedback.state === "success" ? "Sesión iniciada…" : "Iniciar sesión"}
             </Button>
           </form>
 
@@ -464,6 +485,15 @@ export function RegisterPage() {
   );
 }
 
+
+/** "en unos segundos" / "en 1 minuto, a las 14:05" / "en 5 minutos, a las 14:09" — local time of this device. */
+function retryMoment(retryAt: number) {
+  const seconds = Math.max(1, Math.ceil((retryAt - Date.now()) / 1000));
+  if (seconds < 60) return "en unos segundos";
+  const minutes = Math.ceil(seconds / 60);
+  const at = new Date(retryAt).toLocaleTimeString("es-EC", { hour: "2-digit", minute: "2-digit" });
+  return `en ${minutes === 1 ? "1 minuto" : `${minutes} minutos`}, a las ${at}`;
+}
 
 function registrationEmailFromState(state: unknown) {
   if (state === null || typeof state !== "object" || !("registeredEmail" in state)) return "";

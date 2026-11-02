@@ -29,6 +29,14 @@ export class ApiRequestError extends Error {
   }
 }
 
+/** ADR 0053: too many sign-in attempts from here; nothing is checked again before `retryAt`. Says nothing about the account. */
+export class LoginRateLimitedError extends ApiRequestError {
+  constructor(base: ApiRequestError, readonly retryAt: number) {
+    super(base.status, base.code, base.title, base.detail, base.traceId, base.violations);
+    this.name = "LoginRateLimitedError";
+  }
+}
+
 export function toApiRequestError(
   status: number,
   problem: unknown,

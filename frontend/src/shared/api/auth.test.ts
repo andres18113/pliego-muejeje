@@ -1,7 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { json, stubApi } from "@/test/purchase";
-import { CHECK_GAP_MS, exchangeRegistrationSession, forgetRegistrationPacing, logoutSession, refreshSession, register, retryAtFrom } from "./auth";
+import { CHECK_GAP_MS, exchangeRegistrationSession, forgetRegistrationPacing, login, logoutSession, refreshSession, register, retryAtFrom } from "./auth";
 import { apiClient, setApiAccessToken } from "./client";
+import { LoginRateLimitedError } from "./errors";
 
 const registration = { email: "ana@example.com", password: "lecturaSegura123", firstNames: "Ana", lastNames: "Pérez" };
 
@@ -192,5 +193,18 @@ describe("registration continuation exchange", () => {
   ])("reads Retry-After %s as a bounded wait", (header, wait) => {
     const now = Date.parse("2026-11-02T12:00:00Z");
     expect(retryAtFrom(header, now) - now).toBe(wait);
+  });
+});
+
+describe("sign-in attempt protection", () => {
+  afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
+
+  it("turns 429 AUTH_LOGIN_RATE_LIMITED into a pause until Retry-After, with the server's Spanish copy", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] }); vi.setSystemTime(new Date("2026-11-02T12:00:00Z"));
+    stubApi({ "POST /api/v1/auth/login": () => new Response(JSON.stringify({ code: "AUTH_LOGIN_RATE_LIMITED", title: "Demasiados intentos", detail: "Espera unos minutos antes de volver a intentarlo.", status: 429 }), {
+      status: 429, headers: { "Content-Type": "application/problem+json", "Retry-After": "90" } }) });
+    const failure = await login({ email: "ana@example.com", password: "segura123" }).catch((error: unknown) => error);
+    expect(failure).toBeInstanceOf(LoginRateLimitedError);
+    expect(failure).toMatchObject({ status: 429, code: "AUTH_LOGIN_RATE_LIMITED", title: "Demasiados intentos", retryAt: Date.parse("2026-11-02T12:01:30Z") });
   });
 });
