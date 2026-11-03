@@ -77,6 +77,7 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint(entryPoint)
                         .accessDeniedHandler(deniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(HttpMethod.GET, "/api/v1/auth/events").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/webhooks/mailtrap").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register", "/api/v1/auth/login",
                                 "/api/v1/auth/refresh", "/api/v1/auth/logout", "/api/v1/auth/registration-session", "/api/v1/auth/verify-email",
@@ -116,7 +117,7 @@ public class SecurityConfiguration {
         configuration.setAllowedOrigins(origins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "Idempotency-Key",
-                AuthSessionRequestFilter.HEADER_NAME));
+                AuthSessionRequestFilter.HEADER_NAME, "Last-Event-ID"));
         configuration.setExposedHeaders(List.of("X-Trace-Id", HttpHeaders.RETRY_AFTER));
         configuration.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

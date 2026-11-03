@@ -37,9 +37,12 @@ def gateway_queries():
     excluded = {"JdbcAdminCatalogGateway", "JdbcAdminCustomerGateway",
                 "JdbcAdminOrderGateway", "JdbcInventoryGateway",
                 "JdbcMailOutboxGateway", "JdbcMailEventGateway", "JdbcHomeDeliveryGateway",
-                "JdbcEditionOfferGateway"}
+                "JdbcEditionOfferGateway", "JdbcRealtimeGateway"}
     queries = {}
-    for path in sorted(MODULES.glob("*/gateway/Jdbc*Gateway.java")):
+    sources = list(MODULES.glob("*/gateway/Jdbc*Gateway.java"))
+    sources += list(MODULES.glob("*/gateway/RegistrationAttemptGateway.java"))
+    sources += list(MODULES.glob("*/gateway/RegistrationContinuationGateway.java"))
+    for path in sorted(sources):
         if path.stem in excluded:
             continue
         source = path.read_text()
@@ -195,6 +198,14 @@ def cases(data):
         "fn_invoice_artifact_metadata": [invoice_actor, invoice_order],
         "fn_invoice_artifact_access_v085": [invoice_actor, invoice_order, "'PDF'"],
         "fn_invoice_artifact_download": [invoice_actor, invoice_order, "'PDF'"],
+        "fn_registration_attempt_admit": ["'plan-registration@example.invalid'", literal('a' * 64)],
+        "fn_registration_attempt_cleanup": [],
+        "fn_registration_decoy_cleanup": [],
+        "fn_registration_decoy_issue": [literal('a' * 64)],
+        "fn_registration_session_issue": [actor, literal('a' * 64), null],
+        "fn_registration_session_exchange": [literal('a' * 64), literal('b' * 64), "CURRENT_TIMESTAMP + INTERVAL '1 day'", literal('c' * 64)],
+        "fn_registration_verify_exchange": [literal('a' * 64), literal('b' * 64), literal('c' * 64), "CURRENT_TIMESTAMP + INTERVAL '1 day'", literal('d' * 64)],
+        "fn_registration_session_invalidate": [actor, null],
         "fn_user_auth_data": [literal(data['owned']['email'])],
         "fn_auth_session_create_identity_checked": [actor, "'plan-gate-unused'", "CURRENT_TIMESTAMP + INTERVAL '1 day'", "'unused'", literal(data['owned']['email'])],
         "fn_auth_session_create_checked": [actor, "'plan-gate-unused'", "CURRENT_TIMESTAMP + INTERVAL '1 day'", "'unused'"],
@@ -230,7 +241,7 @@ def cases(data):
         assert sql.count("?") == len(params), name
         parts = sql.split("?")
         bound = parts[0] + "".join(value + part for value, part in zip(params, parts[1:]))
-        analyze = not name.startswith(("JdbcIdentityGateway.", "JdbcEmailChangeGateway.")) or name.endswith(".AUTH_QUERY")
+        analyze = not name.startswith(("JdbcIdentityGateway.", "JdbcEmailChangeGateway.", "RegistrationAttemptGateway.", "RegistrationContinuationGateway.")) or name.endswith(".AUTH_QUERY")
         yield name, bound, analyze, ""
         if name in {"JdbcCartGateway.CART_GET", "JdbcCustomerOrderGateway.DETAIL",
                     "JdbcDigitalEligibilityGateway.fn_customer_digital_eligibility",
