@@ -67,8 +67,14 @@ for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites"
   test(`Digital ${format} ${surface}: one copy and no false success`, async ({ page }) => {
     const state = { quantity: 1, format, posts: 0 }; await mockApi(page, state); await page.setViewportSize({ width: 390, height: 900 }); await page.goto(surface);
     const row = page.locator('[data-favorite-row][data-edition-id="42"]');
-    await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible(); await expect(row.getByRole("button", { name: /Ya está en el carrito/ })).toBeDisabled();
+    // The state stays, with a persistent way back to the cart (never a dead button).
+    await expect(row.getByText("Ya está en el carrito", { exact: true })).toBeVisible();
+    const shortcut = row.getByRole("button", { name: "Ver carrito: Cien años de soledad" });
+    await expect(shortcut).toBeEnabled(); await expect(row.getByRole("button", { name: /Agregar al carrito/ })).toHaveCount(0);
     expect(state.posts).toBe(0); await expect(cartDrawer(page)).toHaveCount(0);
+    await page.setViewportSize({ width: 1280, height: 800 }); await expect(shortcut).toBeVisible();
+    await page.screenshot({ path: test.info().outputPath(`digital-in-cart-${format}-1280.png`), fullPage: false, animations: "disabled" });
+    await shortcut.click(); await expect(page).toHaveURL(/\/cart$/); expect(state.posts).toBe(0);
   });
 }
 for (const width of [320, 390]) for (const format of ["EBOOK", "AUDIOBOOK"]) for (const surface of ["/favorites"]) {
@@ -77,13 +83,16 @@ for (const width of [320, 390]) for (const format of ["EBOOK", "AUDIOBOOK"]) for
   const row = page.locator('[data-favorite-row][data-edition-id="42"]');
   const add = row.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }); await add.focus(); await page.keyboard.press("Enter");
   await expect(cartDrawer(page)).toBeVisible();
-  await expect(row.getByText("En el carrito: 1 unidad")).toBeVisible();
-  await expect(row.getByRole("button", { name: /Ya está en el carrito/ })).toBeDisabled();
+  await expect(row.getByText("Ya está en el carrito", { exact: true })).toBeVisible();
   expect(state.posts).toBe(1);
   await page.screenshot({ path: test.info().outputPath(`first-digital-drawer-${format}-${surface.slice(1)}-${width}.png`), fullPage: false, animations: "disabled" });
   await page.keyboard.press("Escape"); await expect(cartDrawer(page)).toHaveCount(0);
-  // Its add button is now disabled, so focus lands on the row's heart rather than falling to the page.
-  await expect(row.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toBeFocused();
+  // The add action became the row's "Ver carrito" in place, so focus returns to that shortcut, not to the page.
+  const shortcut = row.getByRole("button", { name: "Ver carrito: Cien años de soledad" });
+  await expect(shortcut).toBeFocused();
+  const box = (await shortcut.boundingBox())!; expect(box.height).toBeGreaterThanOrEqual(44);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
+  await page.screenshot({ path: test.info().outputPath(`digital-in-cart-${format}-${width}.png`), fullPage: false, animations: "disabled" });
  });
 }
 test("Favorites does not announce the old zero after a confirmed addition and failed cart refresh", async ({ page }) => {
@@ -91,7 +100,8 @@ test("Favorites does not announce the old zero after a confirmed addition and fa
  await expect(page.getByRole("link", { name: "Carrito, 0 unidades" })).toBeVisible();
  await page.getByRole("button", { name: "Agregar al carrito: Cien años de soledad" }).click();
  await expect(page.getByRole("link", { name: "Carrito, unidades no disponibles" })).toBeVisible();
- await expect(page.getByText("En el carrito: 1 unidad")).toBeVisible();
+ // A confirmed digital copy reads as in the cart (not the old zero), with its way back to the cart.
+ await expect(page.getByText("Ya está en el carrito", { exact: true })).toBeVisible();
  // The add is confirmed: the drawer opens and says plainly that what it shows may be out of date.
  await expect(cartDrawer(page)).toBeVisible();
  await expect(cartDrawer(page).getByRole("alert")).toContainText("No pudimos");

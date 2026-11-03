@@ -5,7 +5,7 @@ import { useSession } from "@/app/session";
 import { isDigitalFormat } from "@/shared/api/editionFormats";
 import { useAvailabilityFocus } from "@/features/catalog/useAvailabilityFocus";
 import { useCallback, useId, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import type { QueryKey } from "@tanstack/react-query";
 import { ConfirmDialog } from "@/shared/ui/ConfirmDialog";
 import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
@@ -58,9 +58,14 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
   const favoriteLabel = favoriteActionLabel(favorite);
   // Saved-list actions remain actions; the persistent quantity carries their confirmed result.
   const cartAction = resolveCartAction(book, cart.state === "success" ? { ...cart, state: "ready" } : cart, "row");
-  const cartText = digitalInCart && cart.state !== "pending" ? "Ya está en el carrito" : cartAction.text;
-  const cartLabel = digitalInCart && cart.state !== "pending" ? "Ya está en el carrito" : cartAction.label;
-  const cartFocus = useAvailabilityFocus(!cartAction.unavailable && !digitalInCart, () => {
+  // A digital copy already in the cart cannot be added again: the row says so in one quiet line, and the cart action
+  // itself becomes the way back to the cart. It stays the same, never natively disabled, button (a disabled control
+  // would drop focus before the "Tu carrito" drawer records where to return), so closing the drawer lands on it.
+  const inCart = digitalInCart && cart.state !== "pending";
+  const navigate = useNavigate();
+  const cartText = cartAction.text;
+  const cartLabel = inCart ? "Ver carrito" : cartAction.label;
+  const cartFocus = useAvailabilityFocus(inCart || (!cartAction.unavailable && !digitalInCart), () => {
     const favorite = document.getElementById(`${uid}-favorite-action`) as HTMLButtonElement | null;
     return favorite && !favorite.disabled ? favorite : document.getElementById(`${uid}-edition-link`);
   });
@@ -88,13 +93,18 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
       <p className={classes.stock} id={`${uid}-stock`}><StockStatus available={book.available} size="compact" variant="quiet" /></p>
     </div>
     <div className={classes.actions} data-bookcard-actions>
-      <button type="button" className={classes.cart}
-        aria-label={`${cartLabel}: ${book.title}`} aria-busy={cartAction.busy || undefined}
-        aria-describedby={`${uid}-price ${uid}-stock`}
-        disabled={digitalInCart || cartAction.unavailable || (!cartAction.enabled && !cartAction.busy)} aria-disabled={!cartAction.enabled || undefined} {...cartFocus} onClick={"onPress" in cart ? cart.onPress : undefined}
-        data-unavailable={cartAction.unavailable || undefined} data-bookcard-cart>
-        <MaterialSymbol name={cartAction.icon} size={20} aria-hidden="true" /><span>{cartText}</span>
-      </button>
+      {inCart
+        ? <button type="button" className={classes.cart} data-in-cart aria-label={`${cartLabel}: ${book.title}`} aria-describedby={`${uid}-in-cart`}
+          {...cartFocus} onClick={() => navigate("/cart")} data-bookcard-cart>
+          <span>Ver carrito</span><MaterialSymbol name="chevron_right" size={18} aria-hidden="true" />
+        </button>
+        : <button type="button" className={classes.cart}
+          aria-label={`${cartLabel}: ${book.title}`} aria-busy={cartAction.busy || undefined}
+          aria-describedby={`${uid}-price ${uid}-stock`}
+          disabled={cartAction.unavailable || (!cartAction.enabled && !cartAction.busy)} aria-disabled={digitalInCart || !cartAction.enabled || undefined} {...cartFocus} onClick={!digitalInCart && "onPress" in cart ? cart.onPress : undefined}
+          data-unavailable={cartAction.unavailable || undefined} data-bookcard-cart>
+          <MaterialSymbol name={cartAction.icon} size={20} aria-hidden="true" /><span>{cartText}</span>
+        </button>}
       <button ref={favoriteButton} id={`${uid}-favorite-action`} type="button" className={classes.favorite}
         aria-label={`${favoriteLabel}: ${book.title}`} aria-pressed={"selected" in favorite ? favorite.selected : undefined} aria-busy={favorite.state === "pending" || undefined}
         disabled={!("onPress" in favorite) && favorite.state !== "pending"} aria-disabled={favorite.state === "pending" || undefined} onClick={pressFavorite ? (confirmRemoval && selected === true ? () => setConfirming(true) : pressFavorite) : undefined} data-bookcard-favorite>
@@ -102,9 +112,14 @@ export function FavoriteRow({ edition, detailHref, returnHref, queryKey, onRemov
         <span className={classes.favoriteText}>{favorite.state === "uncertain" ? "Consultar" : selected === false ? "Guardar de nuevo" : "Quitar"}</span>
       </button>
     </div>
-    {(confirmedQuantity > 0 || reasons.length > 0 || feedback || cart.state === "uncertain") && <div className={classes.feedback}>
+    {(inCart || confirmedQuantity > 0 || reasons.length > 0 || feedback || cart.state === "uncertain") && <div className={classes.feedback}>
       {reasons.filter((reason) => reason !== feedback?.message).map((reason) => <p key={reason}>{reason}</p>)}
-      {confirmedQuantity > 0 && <p className={classes.cartQuantity}>En el carrito: {confirmedQuantity} {confirmedQuantity === 1 ? "unidad" : "unidades"}</p>}
+      {inCart
+        ? <p className={classes.inCart} id={`${uid}-in-cart`}><MaterialSymbol name="check_circle" size={18} aria-hidden="true" /><span>Ya está en el carrito</span></p>
+        : confirmedQuantity > 0 && <p className={classes.cartQuantity}>
+          <span>En el carrito: {confirmedQuantity} {confirmedQuantity === 1 ? "unidad" : "unidades"}</span>
+          <Link className={classes.cartLink} to="/cart" aria-label={`Ver carrito: ${book.title}`}>Ver carrito<MaterialSymbol name="chevron_right" size={18} aria-hidden="true" /></Link>
+        </p>}
       {feedback && <p role={feedback.kind === "error" ? "alert" : "status"} aria-atomic="true" data-bookcard-feedback>{feedback.message}</p>}
       {cart.state === "uncertain" && <Link to={cart.recoveryTo}>Consultar carrito</Link>}
     </div>}

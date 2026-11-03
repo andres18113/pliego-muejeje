@@ -28,6 +28,8 @@ it.each(["favorites"] as const)("%s answers a confirmed add with the Tu carrito 
  expect(await within(cart).findByRole("status", { name: "" })).toHaveTextContent("Agregaste Cien años de soledad");
  expect(screen.queryByText("¡Agregado al carrito!")).not.toBeInTheDocument();
  expect(screen.getByText("En el carrito: 3 unidades")).toBeInTheDocument();
+ // A physical book can still take more, so "Agregar" stays and the quantity line carries the way to the cart.
+ expect(screen.getByRole("link", { name: "Ver carrito: Cien años de soledad" })).toHaveAttribute("href", "/cart");
  expect(screen.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveAttribute("aria-pressed", "true");
  await user.click(within(cart).getByRole("button", { name: "Cerrar carrito" }));
  await waitFor(noDrawer);
@@ -37,8 +39,15 @@ it.each(["favorites"] as const)("%s answers a confirmed add with the Tu carrito 
  await user.click(within(await drawer()).getByRole("link", { name: "Ver carrito" })); expect(await screen.findByRole("heading", { name: "Carrito de destino" })).toBeInTheDocument();
 });
 it.each(["EBOOK", "AUDIOBOOK"])("%s already in cart remains at one without a false success", async format => {
- const { post } = setup("favorites", format, 1); expect(await screen.findByText("En el carrito: 1 unidad")).toBeInTheDocument();
- expect(screen.getByRole("button", { name: /Ya está en el carrito/ })).toBeDisabled(); expect(post).not.toHaveBeenCalled(); noDrawer();
+ const { post } = setup("favorites", format, 1); expect(await screen.findByText("Ya está en el carrito")).toBeInTheDocument();
+ expect(screen.queryByText("En el carrito: 1 unidad")).not.toBeInTheDocument();
+ // The state stays, and the row keeps a way back to the cart instead of a dead button.
+ const shortcut = screen.getByRole("button", { name: "Ver carrito: Cien años de soledad" });
+ expect(shortcut).toBeEnabled(); expect(shortcut).toHaveAccessibleDescription("Ya está en el carrito");
+ expect(screen.queryByRole("button", { name: /Agregar al carrito/ })).not.toBeInTheDocument();
+ expect(post).not.toHaveBeenCalled(); noDrawer();
+ await userEvent.setup().click(shortcut); expect(await screen.findByRole("heading", { name: "Carrito de destino" })).toBeInTheDocument();
+ expect(post).not.toHaveBeenCalled();
 });
 it("locks pending requests and shows retryable error without success", async () => {
  let finish!: (value: Response) => void; const response = new Promise<Response>(resolve => { finish = resolve; });
@@ -80,9 +89,10 @@ it("a failed command cannot claim success even when a later read finds the reque
 it.each(["EBOOK", "AUDIOBOOK"])("a new %s confirms one copy then disables another addition", async format => {
  const { post } = setup("favorites", format, 0);
  await userEvent.setup().click(await screen.findByRole("button", { name: "Agregar al carrito: Cien años de soledad" }));
- expect(await screen.findByText("En el carrito: 1 unidad")).toBeInTheDocument();
+ expect(await screen.findByText("Ya está en el carrito")).toBeInTheDocument();
  expect(within(await drawer()).getByRole("list", { name: "Libros en tu carrito" })).toBeInTheDocument();
- expect(screen.getByRole("button", { name: /Ya está en el carrito/ })).toBeDisabled();
+ expect(screen.getByRole("button", { name: "Ver carrito: Cien años de soledad" })).toBeEnabled();
+ expect(screen.queryByRole("button", { name: /Agregar al carrito/ })).not.toBeInTheDocument();
  expect(post).toHaveBeenCalledTimes(1);
 });
 
@@ -90,11 +100,12 @@ it.each(["EBOOK", "AUDIOBOOK"])("first %s addition opens the drawer and, once it
  setup("favorites", format, 0); const user = userEvent.setup();
  const add = await screen.findByRole("button", { name: "Agregar al carrito: Cien años de soledad" });
  add.focus(); await user.keyboard("{Enter}");
- expect(await screen.findByText("En el carrito: 1 unidad")).toBeInTheDocument();
- expect(screen.getByRole("button", { name: /Ya está en el carrito/ })).toBeDisabled();
+ expect(await screen.findByText("Ya está en el carrito")).toBeInTheDocument();
  await drawer(); await user.keyboard("{Escape}"); await waitFor(noDrawer);
- // The add button is now disabled, so focus must not fall to the page: it returns to the row's heart.
- await waitFor(() => expect(screen.getByRole("button", { name: "Quitar de favoritos: Cien años de soledad" })).toHaveFocus());
+ // The add action became the row's "Ver carrito" in place, so closing the drawer returns focus to that shortcut.
+ const shortcut = screen.getByRole("button", { name: "Ver carrito: Cien años de soledad" });
+ await waitFor(() => expect(shortcut).toHaveFocus());
+ await user.keyboard("{Enter}"); expect(await screen.findByRole("heading", { name: "Carrito de destino" })).toBeInTheDocument();
 });
 
 it("a physical addition closes back onto its own add button", async () => {
