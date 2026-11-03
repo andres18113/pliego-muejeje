@@ -19,7 +19,7 @@ function renderPage(routes: Parameters<typeof stubApi>[0], start = "/account/ide
     { path: "/account", element: <AccountPage /> },
     { path: "/account/identity", element: <IdentityCorrectionPage /> },
   ], start);
-  return { api, router: view.router, user: userEvent.setup() };
+  return { api, router: view.router, queryClient: view.queryClient, user: userEvent.setup() };
 }
 const number = () => screen.getByLabelText("Número correcto");
 afterEach(() => vi.unstubAllGlobals());
@@ -182,11 +182,73 @@ it.each([
   expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests/17/withdraw")).toBe(1);
 });
 
-it("states a recent rejection with its reason above a fresh correction", async () => {
-  renderPage({ "GET /api/v1/me/billing-identity": used("0912345675", { ...pendingRequest, status: "REJECTED", decidedAt: "2026-10-27T15:00:00Z",
-    decisionReason: "La documentación no permite confirmar el cambio." }) });
-  expect(await screen.findByText(/No aplicamos tu solicitud del/)).toHaveTextContent("No aplicamos tu solicitud del 25 oct 2026 para cambiarla a 1710034065: La documentación no permite confirmar el cambio.");
-  expect(screen.getByRole("heading", { name: "Corregir identificación" })).toBeVisible();
+const rejected = { ...pendingRequest, status: "REJECTED", decidedAt: "2026-10-27T15:00:00Z", decisionReason: "La documentación no permite confirmar el cambio." };
+const approved = { ...pendingRequest, status: "APPROVED", decidedAt: "2026-10-27T15:00:00Z" };
+const ack = "POST /api/v1/me/billing-identity/correction-requests/17/acknowledgment";
+
+it("states a rejection as its own outcome, with its reason, and never beside a new correction form", async () => {
+  renderPage({ "GET /api/v1/me/billing-identity": used("0912345675", rejected) });
+  const sheet = (await screen.findByRole("heading", { name: "Revisamos tu solicitud" })).closest("section")!;
+  expect(within(sheet).getByText("No aplicada")).toBeVisible();
+  expect(within(sheet).getByText("1710034065")).toBeVisible();
+  expect(within(sheet).getByText("La documentación no permite confirmar el cambio.")).toBeVisible();
+  expect(within(sheet).getByText(/Tu cédula no cambió\. Si el número correcto es otro/)).toBeVisible();
+  // The identification in use stays at the top; the new-request form is not on the page while the outcome is.
+  expect(screen.getByText("Cédula en uso")).toBeVisible();
+  expect(screen.queryByRole("heading", { name: "Corregir identificación" })).not.toBeInTheDocument();
+  expect(screen.queryByLabelText("Número correcto")).not.toBeInTheDocument();
+});
+
+it("acknowledges a rejection with Entendido and returns to Mi perfil", async () => {
+  let current: object | null = rejected;
+  const { api, user, router } = renderPage({ "GET /api/v1/me/billing-identity": () => used("0912345675", current)(), [ack]: () => { current = null; return done(); } });
+  await user.click(await screen.findByRole("button", { name: "Entendido" }));
+  await waitFor(() => expect(router.state.location.pathname).toBe("/account"));
+  expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests/17/acknowledgment")).toBe(1);
+  expect(await screen.findByRole("link", { name: "Corregir cédula o RUC" })).toBeVisible();
+  expect(screen.queryByText(/No aplicamos tu corrección/)).not.toBeInTheDocument();
+});
+
+it("starts another request after a rejection only once the outcome is acknowledged, focusing the form", async () => {
+  let current: object | null = rejected;
+  const { api, user } = renderPage({ "GET /api/v1/me/billing-identity": () => used("0912345675", current)(), [ack]: () => { current = null; return done(); } });
+  await user.click(await screen.findByRole("button", { name: "Enviar otra solicitud" }));
+  const heading = await screen.findByRole("heading", { name: "Corregir identificación" });
+  await waitFor(() => expect(heading).toHaveFocus());
+  expect(screen.queryByRole("heading", { name: "Revisamos tu solicitud" })).not.toBeInTheDocument();
+  expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests/17/acknowledgment")).toBe(1);
+  expect(number()).toHaveValue("0912345675");
+});
+
+it("states an approval as applied, without offering another request", async () => {
+  renderPage({ "GET /api/v1/me/billing-identity": used("1710034065", approved) });
+  const sheet = (await screen.findByRole("heading", { name: "Revisamos tu solicitud" })).closest("section")!;
+  expect(within(sheet).getByText("Corrección aplicada")).toBeVisible();
+  expect(within(sheet).getByText(/Ya usamos la cédula nueva en tus compras\. Las facturas ya emitidas no cambian\./)).toBeVisible();
+  expect(within(sheet).queryByText("Motivo de la decisión")).not.toBeInTheDocument();
+  expect(within(sheet).getByRole("button", { name: "Entendido" })).toBeVisible();
+  expect(screen.queryByRole("button", { name: "Enviar otra solicitud" })).not.toBeInTheDocument();
+});
+
+it("keeps the outcome and says so when the acknowledgment fails", async () => {
+  const { api, user } = renderPage({ "GET /api/v1/me/billing-identity": used("0912345675", rejected), [ack]: () => problem(500, "INTERNAL", "Error", "Falló.") });
+  await user.click(await screen.findByRole("button", { name: "Entendido" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("No pudimos registrar que lo viste. Inténtalo otra vez.");
+  expect(screen.getByRole("heading", { name: "Revisamos tu solicitud" })).toBeVisible();
+  expect(screen.queryByLabelText("Número correcto")).not.toBeInTheDocument();
+  expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests/17/acknowledgment")).toBe(1);
+});
+
+it("replaces the request in review with its outcome when the decision arrives while the page is open", async () => {
+  let current: object | null = pendingRequest;
+  const { queryClient } = renderPage({ "GET /api/v1/me/billing-identity": () => used("0912345675", current)() });
+  expect(await screen.findByRole("heading", { name: "Solicitud de corrección" })).toBeVisible();
+  current = rejected;
+  // What a stream hint does: the identity is re-read from the server.
+  await queryClient.invalidateQueries({ queryKey: ["customer-billing-identity"] });
+  expect(await screen.findByRole("heading", { name: "Revisamos tu solicitud" })).toBeVisible();
+  expect(screen.queryByRole("heading", { name: "Solicitud de corrección" })).not.toBeInTheDocument();
+  expect(screen.getByText("Revisamos tu solicitud y no aplicamos la corrección.")).toHaveAttribute("aria-live", "polite");
 });
 
 it("sends an account without a cédula or RUC to Mi perfil to add one", async () => {

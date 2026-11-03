@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { Button, ButtonLink } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope } from "@/app/sessionOperation";
 import { ApiRequestError, fieldErrorMessages } from "@/shared/api/errors";
-import { billingIdentityQueryKey, BillingIdentityOutcomeUnknown, correctBillingIdentity, getBillingIdentity, requestBillingIdentityCorrection, withdrawBillingIdentityCorrection } from "@/shared/api/customer";
+import { acknowledgeBillingIdentityCorrection, billingIdentityQueryKey, BillingIdentityOutcomeUnknown, correctBillingIdentity, getBillingIdentity, requestBillingIdentityCorrection, withdrawBillingIdentityCorrection } from "@/shared/api/customer";
 import { isSamePersonIdentification, type BillingIdentityCorrectionRequest, type CorrectionReason, type StoredBillingIdentity } from "@/shared/api/billing";
 import { identificationError, identificationType, normalizeIdentification, type IdentificationType } from "@/shared/validation/identification";
 import { orderShortDateLabel } from "@/features/purchase/purchaseText";
@@ -67,6 +67,9 @@ function IdentityCorrection() {
   const identity = query.data;
   const request = identity?.correctionRequest ?? null;
   const pending = request?.status === "PENDING" ? request : null;
+  // A decision the customer has not acknowledged yet is the page's one step: the outcome, never mixed with a new form.
+  const decided = request && (request.status === "APPROVED" || request.status === "REJECTED") ? request : null;
+  const announcement = useDecisionArrival(query.isPending || query.isError ? undefined : request);
   const refetch: Refetch = () => query.refetch();
 
   return <AccountShell title="Cédula o RUC" before={<ParentLink to="/account">Volver a Mi perfil</ParentLink>}
@@ -81,32 +84,103 @@ function IdentityCorrection() {
           </div>
         </section>
           : <div className={classes.column}>
-            <CurrentIdentity identity={identity} request={pending ? null : request} />
+            <p className="visually-hidden" aria-live="polite">{announcement}</p>
+            <CurrentIdentity identity={identity} />
             {notice && <p ref={noticeRef} tabIndex={-1} className={`${classes.notice} ${notice.error ? classes.noticeError : ""}`} role={notice.error ? "alert" : "status"}>
               <MaterialSymbol name={notice.error ? "info" : "check_circle"} aria-hidden="true" size={18} />{notice.message}
             </p>}
             {pending
               ? <PendingRequest identity={identity} request={pending} refetch={refetch} onExpired={onExpired} onNotice={setNotice} />
-              : <CorrectionForm key={identity.number} identity={identity} refetch={refetch} onExpired={onExpired} onNotice={setNotice}
+              : decided
+                ? <DecisionOutcome key={decided.id} request={decided} onDone={() => navigate("/account")}
+                  onAnother={() => requestAnimationFrame(() => document.getElementById("identity-correction-heading")?.focus({ preventScroll: false }))} />
+                : <CorrectionForm key={identity.number} identity={identity} refetch={refetch} onExpired={onExpired} onNotice={setNotice}
                 onCorrected={() => navigate("/account", { state: { identityFeedback: correctedMessage } satisfies IdentityCorrectionState })} />}
           </div>}
   </AccountShell>;
 }
 
-/** The identification in use, large enough to compare digit by digit, and a recent decision on the last request. */
-function CurrentIdentity({ identity, request }: { identity: StoredBillingIdentity; request: BillingIdentityCorrectionRequest | null }) {
+/** The identification in use, large enough to compare digit by digit. Decisions live in their own sheet below. */
+function CurrentIdentity({ identity }: { identity: StoredBillingIdentity }) {
   return <section className={classes.current} aria-labelledby="identity-current-heading">
     <h2 id="identity-current-heading" className={classes.eyebrow}>{typeName(identity.type)} en uso</h2>
     <p className={classes.number}>{identity.number}</p>
     <p className={classes.meta}>Tus compras y facturas nuevas usan este número.</p>
-    {request?.status === "APPROVED" && <p className={classes.history}>
-      <MaterialSymbol name="check_circle" aria-hidden="true" size={16} />
-      <span>Aplicamos la corrección que pediste el {orderShortDateLabel(request.createdAt)}.</span>
-    </p>}
-    {request?.status === "REJECTED" && <p className={classes.history}>
-      <MaterialSymbol name="info" aria-hidden="true" size={16} />
-      <span>No aplicamos tu solicitud del {orderShortDateLabel(request.createdAt)} para cambiarla a <span className={classes.inlineNumber}>{request.proposedNumber}</span>{request.decisionReason ? `: ${request.decisionReason}` : "."}</span>
-    </p>}
+  </section>;
+}
+
+/** Announces a decision that arrives while the page is open (a stream hint re-reads the identity), never one already there. */
+function useDecisionArrival(request: BillingIdentityCorrectionRequest | null | undefined) {
+  const seen = useRef<string | null | undefined>(undefined);
+  const [message, setMessage] = useState("");
+  const decided = request && (request.status === "APPROVED" || request.status === "REJECTED") ? `${request.id}:${request.status}` : null;
+  useEffect(() => {
+    if (request === undefined) return;
+    if (seen.current !== undefined && decided && decided !== seen.current)
+      setMessage(request?.status === "APPROVED" ? "Revisamos tu solicitud y aplicamos la corrección." : "Revisamos tu solicitud y no aplicamos la corrección.");
+    seen.current = decided;
+  }, [decided, request]);
+  return message;
+}
+
+/**
+ * The outcome of a reviewed request, read once (ADR 0055): what was asked, what we decided and why, when. The
+ * identification in use is already stated above it. Acknowledging closes it everywhere; after a rejection the
+ * customer may instead start another request, which acknowledges it and opens the form in its place.
+ */
+function DecisionOutcome({ request, onDone, onAnother }: {
+  request: BillingIdentityCorrectionRequest; onDone: () => void; onAnother: () => void;
+}) {
+  const queryClient = useQueryClient();
+  const scope = useSessionOperationScope(`identity-decision:${request.id}`);
+  const [sending, setSending] = useState<"done" | "another" | null>(null);
+  const [failed, setFailed] = useState(false);
+  const approved = request.status === "APPROVED";
+  const kind = request.proposedType === "EC_RUC" ? "RUC" : "cédula";
+  async function acknowledge(next: "done" | "another") {
+    if (sending) return;
+    setSending(next);
+    setFailed(false);
+    try {
+      await acknowledgeBillingIdentityCorrection(request.id);
+    } catch {
+      if (scope.isCurrent()) { setFailed(true); setSending(null); }
+      return;
+    }
+    if (!scope.isCurrent()) return;
+    queryClient.setQueryData<StoredBillingIdentity | null>(billingIdentityQueryKey, current =>
+      current?.correctionRequest?.id === request.id ? { ...current, correctionRequest: null } : current);
+    void queryClient.invalidateQueries({ queryKey: billingIdentityQueryKey });
+    if (next === "done") onDone(); else onAnother();
+  }
+  return <section className={classes.panel} aria-labelledby="identity-decision-heading">
+    <div className={classes.panelHead}>
+      <h2 id="identity-decision-heading" className={classes.panelTitle}>Revisamos tu solicitud</h2>
+      <span className={classes.outcome} data-outcome={approved ? "approved" : "rejected"}>
+        <MaterialSymbol name={approved ? "check_circle" : "info"} aria-hidden="true" size={16} />{approved ? "Corrección aplicada" : "No aplicada"}
+      </span>
+    </div>
+    <dl className={classes.facts}>
+      <div className={classes.requested}><dt>{request.proposedType === "EC_RUC" ? "RUC solicitado" : "Cédula solicitada"}</dt><dd>{request.proposedNumber}</dd></div>
+      {!approved && <div className={classes.reason}><dt>Motivo de la decisión</dt><dd>{request.decisionReason ?? "No registramos un motivo."}</dd></div>}
+      {request.decidedAt && <div><dt>{approved ? "Aplicada el" : "Revisada el"}</dt><dd>{orderShortDateLabel(request.decidedAt)}</dd></div>}
+      <div><dt>Enviada el</dt><dd>{orderShortDateLabel(request.createdAt)}</dd></div>
+    </dl>
+    <div className={classes.decisionFoot}>
+      {/* The number in use is stated once, above; this line only says what the decision means now. */}
+      <p className={classes.lead}>{approved
+        ? `Ya usamos ${kind === "RUC" ? "el RUC nuevo" : "la cédula nueva"} en tus compras. Las facturas ya emitidas no cambian.`
+        : `Tu ${kind} no cambió. Si el número correcto es otro, puedes enviar una nueva solicitud.`}</p>
+      {failed && <p className={`${classes.notice} ${classes.noticeError}`} role="alert"><MaterialSymbol name="info" aria-hidden="true" size={18} />No pudimos registrar que lo viste. Inténtalo otra vez.</p>}
+      <div className={classes.decisionActions}>
+        <Button variant="primary" type="button" className={classes.primary} aria-disabled={sending !== null || undefined} onClick={() => void acknowledge("done")}>
+          <TransactionButtonLabel state={sending === "done" ? "pending" : "idle"} idle="Entendido" pending="Guardando…" success="" />
+        </Button>
+        {!approved && <Button variant="secondary" type="button" className={classes.secondary} aria-disabled={sending !== null || undefined} onClick={() => void acknowledge("another")}>
+          <TransactionButtonLabel state={sending === "another" ? "pending" : "idle"} idle="Enviar otra solicitud" pending="Abriendo…" success="" />
+        </Button>}
+      </div>
+    </div>
   </section>;
 }
 
@@ -305,7 +379,7 @@ function CorrectionForm({ identity, refetch, onExpired, onNotice, onCorrected }:
 
   const describedBy = ["identity-correction-mode", "identity-number-status", reviewMode && samePerson ? "identity-number-same" : null].filter(Boolean).join(" ");
   return <section className={classes.panel} aria-labelledby="identity-correction-heading">
-    <h2 id="identity-correction-heading" className={classes.panelTitle}>Corregir identificación</h2>
+    <h2 id="identity-correction-heading" className={classes.panelTitle} tabIndex={-1}>Corregir identificación</h2>
     <p id="identity-correction-mode" className={classes.lead}>{reviewMode
       ? "Ya figura en una factura: revisaremos la corrección y te responderemos en un plazo de 15 días. Hasta entonces usamos la actual."
       : "Todavía no figura en ninguna factura: la corrección se aplica en cuanto la confirmes."}</p>
