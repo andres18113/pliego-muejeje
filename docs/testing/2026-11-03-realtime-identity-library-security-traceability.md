@@ -112,3 +112,10 @@ PostgreSQL auth tests 101/101, V100→V104 populated upgrade 4/4. Frontend: `tsc
 | RQ-UI-REG-01 | Registration 429 pauses like sign-in (time stated, typed data kept, "En pausa", resumes) without revealing account existence | `AuthPages.test.tsx` "pauses registration…" | Pass |
 | RQ-UI-REG-02 | The waiting page never claims an account was created (neutral duplicates) and offers sign-in / password reset | `AuthPages.test.tsx`, `registration-return.spec.ts`, `email-actions.spec.ts` | Pass |
 | RQ-UI-FAV-01 | Favorites keeps "Ya está en el carrito" with a persistent "Ver carrito" (digital: the cart action in place, focus returns there after the drawer; physical: link on the quantity line); no cart rule changes | `CartFeedback.test.tsx`; `cart-add-feedback.spec.ts` at 320/390/1280px | Pass |
+
+## Release preparation (proxy, capacity, live journeys)
+
+Reverse-proxy rows RQ-RT-PROXY-01…10 and capacity rows RQ-RT-CAP-01…14 plus the release-correction rows RQ-RT-CAP-15+
+live in [2026-11-03-sse-proxy-and-capacity.md](2026-11-03-sse-proxy-and-capacity.md). Real-stack journey evidence
+(identity notifications, order updates, cancelled ownership, registration protection, Favorites shortcut) and the
+production read-only preflight are in [the release-candidate record](../deployment/2026-11-03-release-candidate-v101-v105.md).

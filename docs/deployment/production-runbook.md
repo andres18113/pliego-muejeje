@@ -747,6 +747,164 @@ Preserve SPA routing and refresh of `/account`, `/catalog`, `/checkout`, etc.
 HTML uses no-store; versioned assets use immutable caching. Retain old chunks for
 open tabs. Do not change Cloudflare caching or purge DNS to mask an artifact error.
 
+## 8b. SSE location for `/api/v1/auth/events` (ADR 0054; pending, not applied to production)
+
+Local reverse-proxy qualification passed. The release correction below fixes the
+initial lease-write starvation finding; use the linked report's final artifact,
+measurements and gate verdict. No production configuration was applied here.
+
+`GET /api/v1/auth/events` uses the existing HttpOnly session cookie and explicit
+CORS origins. [Local nginx/capacity evidence](../testing/2026-11-03-sse-proxy-and-capacity.md)
+compares nginx 1.24.0 with the operator-supplied production location and a
+separate exact SSE location. **The existing location is sufficient for the
+measured healthy stream:** nginx honors the backend's `X-Accel-Buffering: no`,
+and default `gzip_types` does not include `text/event-stream`. The explicit
+location below makes that policy independent of future general proxy/gzip
+changes; it is recommended operational configuration, not a measured latency
+fix. Local HTTP tests do not certify Cloudflare, TLS/AOP or browser cookie policy.
+
+For a future authorized release, add this exact location inside the existing API
+server block. Preserve the existing root location, certificates, AOP and
+Cloudflare-only exposure. These forwarding headers reproduce the operator's
+actual production policy; do not replace them with `$host`, `$scheme` or
+`$proxy_add_x_forwarded_for`, or trust arbitrary client forwarding headers.
+
+```nginx
+location = /api/v1/auth/events {
+    default_type text/plain;
+    proxy_pass http://127.0.0.1:8080;
+    proxy_http_version 1.1;
+    proxy_set_header Host api.pliegolibros.com;
+    proxy_set_header X-Forwarded-Host api.pliegolibros.com;
+    proxy_set_header X-Forwarded-Proto https;
+    proxy_set_header X-Forwarded-Port 443;
+    proxy_set_header X-Forwarded-For $http_cf_connecting_ip;
+    proxy_set_header X-Real-IP $http_cf_connecting_ip;
+    proxy_set_header Forwarded "";
+    proxy_set_header Connection "";
+    client_max_body_size 1m;
+    client_body_timeout 15s;
+    proxy_connect_timeout 5s;
+    proxy_send_timeout 30s;
+    proxy_read_timeout 30s;
+    proxy_buffering off;
+    proxy_cache off;
+    gzip off;
+}
+```
+
+Keep the real **30 s** upstream read timeout. It measures inactivity between
+upstream reads, not the total response lifetime. Healthy heartbeats arrive about
+every 16 s (15 s target checked by a 2 s poll), leaving about 14 s of inactivity
+margin (measured max 16.020 s); a healthy 60 s stream survives. The heartbeat check
+also runs when a stream cannot acquire a read permit. Its 2 s permit wait and
+2 s poll can stretch the interval under contention; CPU suspension and socket
+backpressure have no hard scheduling guarantee. Pausing the JVM beyond 30 s closes the
+already-started 200 response with an incomplete body, requiring reconnect; it
+cannot turn that established response into a new 504. Database stalls, CPU
+suspension and blocked writes can exceed the healthy heartbeat interval. The old
+75 s read/15 s send draft was not the production configuration and has no local
+requirement. `proxy_send_timeout 30s` concerns writes to the upstream; it is not a
+bound on sending response bytes to a slow browser. Slow downstream backpressure
+and Cloudflare require separate observation.
+
+The backend sends `Cache-Control: no-cache`, `X-Accel-Buffering: no`, retry 3000 ms
+and immediate/periodic heartbeat comments. Connections expire after 60 s and
+reauthenticate on reconnect; healthy session revocation closes on the next 2 s
+read. Four leases/user are database-wide; 128 streams/process share the main
+Hikari 8 pool. The initial read-only budget did not bound disconnect writes: a
+lease-table lock queued unrelated REST for 1.54–5.52 s. The corrected backend uses
+one fair four-permit budget for admission, reads and disconnect cleanup, acquired
+before Spring starts the transaction/borrows from Hikari. The independent publisher
+remains one extra connection per instance, so SSE contributes at most 5 of 8 active
+pool connections, leaving 3 for other work when SSE is the source of contention.
+This is not a reservation against unrelated REST/background transactions.
+
+Admission/read budget waits are at most 2 s. Cleanup waits at most 100 ms for the
+same budget, then uses existing 60 s lease expiry if capacity/SQL fails. Connect,
+read and disconnect transactions use 1 s Spring timeouts and gateway-local 100 ms
+lock /1 s statement limits. They reset after commit/rollback on a reused physical
+connection and do not alter publisher/REST execution settings. Hikari acquisition
+itself is not covered by the server's statement deadline. Budget exhaustion or
+admission 55P03/57014 uses the existing 429/Retry-After 60 contract and Spanish
+problem. Other approved SQLSTATE mappings remain stable. No migration is required.
+
+No permit is held during socket writes. The heartbeat check also runs after a
+failed timed budget acquisition. Healthy idle disconnects were observed after
+approximately 16 s on the next write; healthy session revocation closed after
+approximately 2 s. Failed cleanup may retain its SQL lease for the remainder of
+60 s. These are different recovery observations.
+
+An already committed SSE response cannot accept a ProblemDetail. The global
+handler treats recognized client abort/async completion as a normal close at most
+DEBUG, scoped to the exact SSE URI/content type; unexpected established-stream
+server errors remain ERROR with the exception. REST and pre-stream errors retain
+the existing Spanish problems. Monitor main-pool active/pending/timeouts, total
+PG connections, CPU/RSS, publication backlog, normal/abnormal closes and client
+reconnects. Do not raise caps from short local cache/JIT-influenced results alone.
+
+After an authorized release has selected the tested backend and site file, the
+operator can apply the stanza on the VPS (these commands were **not run** here):
+
+```bash
+set -e
+sse_backup="/etc/nginx/sites-available/pliego-api.sse-backup.$(date -u +%Y%m%dT%H%M%SZ)"
+sudo cp -a /etc/nginx/sites-available/pliego-api "$sse_backup"
+# Edit only the exact SSE location in /etc/nginx/sites-available/pliego-api.
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+Record the backup path. If `nginx -t` fails, fix or restore the file before any
+reload. To roll back this proxy change, remove the added exact location (so the
+previous root location handles SSE), or restore that backup if the site has had
+no intervening changes, then validate and reload:
+
+```bash
+set -e
+test -n "${sse_backup:-}"
+sudo cp -a "$sse_backup" /etc/nginx/sites-available/pliego-api
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+After deployment, the operator must verify the public Cloudflare path with an
+already-authorized session, without printing its cookie. Use an explicit browser
+User-Agent: the operator reported Cloudflare 1010 for Python's default UA. A
+private 0600 curl configuration holds `cookie = "pliego_session=..."`; never
+commit it, place the cookie in a URL, or retain cookie-bearing verbose traces.
+The following is a **future public-path check**, not evidence from this work:
+
+```bash
+curl --config "$PLIEGO_SSE_PRIVATE_CURL_CONFIG" \
+  --user-agent 'Mozilla/5.0 PLIEGO-SSE-Verification/1.0' \
+  --no-buffer --http1.1 --max-time 70 --dump-header - \
+  --header 'Origin: https://pliegolibros.com' \
+  --header 'Accept: text/event-stream' --header 'Accept-Encoding: gzip' \
+  'https://api.pliegolibros.com/api/v1/auth/events'
+```
+
+Require prompt `retry:3000`/heartbeat bytes, explicit origin/credentials headers,
+no `Content-Encoding`, heartbeat gaps within the healthy bound and clean close
+near 60 s. Repeat with `--header "Last-Event-ID: $PLIEGO_SSE_CURSOR"` using a
+captured decimal cursor and existing authorized activity; distinguish replay from
+`resync`. Also verify 401 without a cookie,429/Retry-After 60 with controlled
+leases, public OPTIONS/Last-Event-ID, and a real browser on
+`https://pliegolibros.com` using `withCredentials:true`: Secure/Strict cookie path,
+automatic 3 s reconnect and cursor resume. Do not create production fixture data
+merely to obtain a green check. Verify edge cache/buffering, WAF and connection
+behavior independently; no Cloudflare success is claimed here.
+
+`pliego.realtime.enabled=false` disables publication/cleanup for historical-schema
+tests; it is true by default. Keep the existing order lifecycle scheduler enabled
+for cancellation finalization and READY observation. Committed hints survive
+restart and retain replay for one hour after publication. Missing/expired cursors
+produce `resync` and require REST refetch. Graceful shutdown remains within the
+existing 45 s unit timeout; failed lease cleanup self-recovers within 60 s. Backend
+rollback must review notification templates and Database API contracts; never
+reverse schema automatically. No live service or nginx configuration was changed
+for this work.
+
 ## 9. Acceptance checks
 
 Use observed preflight values and the candidate's migration set; do not hardcode
