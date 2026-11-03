@@ -16,7 +16,7 @@ import com.pliego.foundation.database.JdbcGatewaySupport;
 @Repository
 public class JdbcIdentityGateway extends JdbcGatewaySupport implements IdentityGateway {
 
-    private static final String REGISTER_CALL = "CALL pliego.sp_customer_register_with_verification(?,?,?,?,?,?,?,?,?,?)";
+    private static final String REGISTER_CALL = "CALL pliego.sp_customer_register_neutral(?,?,?,?,?,?,?,?,?,?)";
     private static final String AUTH_QUERY = "SELECT user_id, email_canonical, password_hash, role, state "
             + "FROM pliego.fn_user_auth_data(?)";
     private static final String CREATE_SESSION_QUERY = "SELECT pliego.fn_auth_session_create_checked(?,?,?,?)";

@@ -119,7 +119,7 @@ def main():
             status, _, registered = request('/api/v1/auth/register', {'email': email, 'password': password,
                 'firstNames': 'Ana', 'lastNames': 'Pérez'})
             assert status == 201 and registered['state'] == 'PENDING_VERIFICATION'
-            actor = int(registered['userId'])
+            actor = int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
             auth = {'Authorization': 'Bearer ' + fixture_jwt(actor)}
             initial_message, verification = wait_mail(email, 'VERIFY_EMAIL')
             raw = re.search(r'/verificar-correo#token=([A-Za-z0-9_-]{43})', verification['text']).group(1)

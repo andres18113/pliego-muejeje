@@ -270,7 +270,7 @@ class RegistrationContinuationPostgresIntegrationTest {
         var response = post("/register", Map.of("email", email, "password", "test-only-password-123",
                 "firstNames", "Ana", "lastNames", "Pérez", "returnTo", "/checkout"), null, null);
         assertThat(response.statusCode()).isEqualTo(201);
-        long actor = Long.parseLong(json.readTree(response.body()).get("userId").asString());
+        long actor = jdbc.queryForObject("SELECT usuario_id FROM pliego.usuario WHERE email_normalizado=?",Long.class,email);
         String cookie = response.headers().allValues("Set-Cookie").stream()
                 .filter(value -> value.startsWith("pliego_registration=")).findFirst().orElseThrow().split(";", 2)[0];
         String nonce = jdbc.queryForObject("SELECT datos->>'nonce' FROM pliego.correo_outbox WHERE usuario_id=? AND tipo='VERIFY_EMAIL' ORDER BY correo_id DESC LIMIT 1",

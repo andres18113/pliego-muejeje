@@ -64,7 +64,7 @@ public class AuthService {
         var credential = emailTokens.issue("VERIFY_EMAIL");
         RegistrationResult result = identityGateway.register(email, passwordHash, firstNames, lastNames, phone, credential.hash(), credential.nonce());
         String safePath = AuthReturnPaths.safeOrNull(returnTo);
-        if (safePath != null) identityGateway.setEmailActionReturnPath(credential.nonce(), safePath);
+        if (result.userId() > 0 && safePath != null) identityGateway.setEmailActionReturnPath(credential.nonce(), safePath);
         return result;
     }
 

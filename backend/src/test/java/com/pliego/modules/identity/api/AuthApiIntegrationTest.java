@@ -108,6 +108,9 @@ class AuthApiIntegrationTest {
     @org.springframework.test.context.bean.override.mockito.MockitoBean
     com.pliego.modules.identity.application.LoginAttemptAdmissionService loginAdmission;
 
+    @org.springframework.test.context.bean.override.mockito.MockitoBean
+    com.pliego.modules.identity.application.RegistrationAttemptAdmissionService registrationAdmission;
+
     @BeforeEach
     void continuationFixture() {
         org.mockito.Mockito.when(continuationGateway.issue(org.mockito.ArgumentMatchers.anyLong(),
@@ -162,8 +165,8 @@ class AuthApiIntegrationTest {
                         .content(REGISTER_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.userId").value("100"))
-                .andExpect(jsonPath("$.customerId").value("87"))
+                .andExpect(jsonPath("$.userId").doesNotExist())
+                .andExpect(jsonPath("$.customerId").doesNotExist())
                 .andExpect(jsonPath("$.state").value("PENDING_VERIFICATION"))
                 .andReturn();
 
@@ -232,20 +235,32 @@ class AuthApiIntegrationTest {
     }
 
     @Test
-    void duplicateEmailMapsToConflictWithoutDatabaseDetails() throws Exception {
-        identityGateway.registrationFailure = exceptionTranslator
-                .translate(new SQLException("private uq_usuario_email detail", "P1101"));
-
+    void duplicateEmailKeepsNeutralStateAndSecureCookieWithoutAccountIdentifiers() throws Exception {
+        identityGateway.registrationResult = new RegistrationResult(0, 0, "PENDING_VERIFICATION");
         mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON).content(REGISTER_JSON))
-                .andExpect(status().isConflict())
+                .andExpect(status().isCreated())
+                .andExpect(content().json("{\"state\":\"PENDING_VERIFICATION\"}"))
+                .andExpect(jsonPath("$.userId").doesNotExist())
+                .andExpect(jsonPath("$.customerId").doesNotExist())
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(result.getResponse().getHeader("Set-Cookie"))
+                        .contains("pliego_registration=", "HttpOnly", "Secure", "Max-Age=86400"));
+        org.mockito.Mockito.verify(continuationGateway,org.mockito.Mockito.never())
+                .issue(org.mockito.ArgumentMatchers.anyLong(),org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.any());
+        org.mockito.Mockito.verify(continuationGateway).issueNeutral(org.mockito.ArgumentMatchers.anyString());
+    }
+
+    @Test
+    void registrationQuotaHasSpanishProblemAndRetryAfterWithoutCookie() throws Exception {
+        org.mockito.Mockito.when(registrationAdmission.admit(org.mockito.ArgumentMatchers.anyString(),org.mockito.ArgumentMatchers.anyString())).thenReturn(42);
+        mvc.perform(post("/api/v1/auth/register").contentType(MediaType.APPLICATION_JSON).content(REGISTER_JSON))
+                .andExpect(status().isTooManyRequests())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_PROBLEM_JSON))
-                .andExpect(jsonPath("$.code").value("P1101"))
-                .andExpect(jsonPath("$.type").value("urn:pliego:problem:P1101"))
-                .andExpect(jsonPath("$.title").value("Correo ya registrado"))
-                .andExpect(jsonPath("$.traceId").isNotEmpty())
-                .andExpect(jsonPath("$.detail").value("Ya existe una cuenta con ese correo electrónico."))
-                .andExpect(result -> org.junit.jupiter.api.Assertions.assertFalse(
-                        result.getResponse().getContentAsString().contains("uq_usuario_email")));
+                .andExpect(jsonPath("$.code").value("AUTH_REGISTER_RATE_LIMITED"))
+                .andExpect(jsonPath("$.title").value("Demasiados intentos"))
+                .andExpect(jsonPath("$.detail").value("Espera unos minutos antes de volver a intentarlo."))
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(result.getResponse().getHeader("Retry-After")).isEqualTo("42"))
+                .andExpect(result -> org.assertj.core.api.Assertions.assertThat(result.getResponse().getHeader("Set-Cookie")).isNull());
+        org.assertj.core.api.Assertions.assertThat(identityGateway.registeredEmail).isNull();
     }
 
     @Test

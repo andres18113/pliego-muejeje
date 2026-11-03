@@ -45,9 +45,11 @@ def register(path='/checkout'):
     assert 'Domain=' not in header
     max_age=int(header.split('Max-Age=')[1].split(';')[0])
     assert 0<max_age<=86400
+    actor=int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
+    assert body == {'state': 'PENDING_VERIFICATION'}
     stored_hash=hashlib.sha256(continuation.split('=',1)[1].encode()).hexdigest()
-    assert query(f"SELECT token_hash='{stored_hash}' FROM pliego.registro_continuacion WHERE usuario_id={int(body['userId'])}")=='t'
-    return email,password,int(body['userId']),continuation,verification_token(email)
+    assert query(f"SELECT token_hash='{stored_hash}' FROM pliego.registro_continuacion WHERE usuario_id={actor}")=='t'
+    return email,password,actor,continuation,verification_token(email)
 
 
 def count(actor):

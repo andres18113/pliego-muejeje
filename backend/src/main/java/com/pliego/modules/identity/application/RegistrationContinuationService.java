@@ -18,20 +18,30 @@ import com.pliego.modules.identity.application.AuthService.LoginResult;
 
 @Service
 public class RegistrationContinuationService {
+    private static final org.slf4j.Logger LOG=org.slf4j.LoggerFactory.getLogger(RegistrationContinuationService.class);
     private static final Pattern SECRET=Pattern.compile("[A-Za-z0-9_-]{43}");
     private final AuthService auth;
     private final AuthSessionCredentialService credentials;
     private final RegistrationContinuationGateway gateway;
     private final JwtTokenIssuer issuer;
+    private final RegistrationAttemptAdmissionService registrationAdmission;
     public RegistrationContinuationService(AuthService auth,AuthSessionCredentialService credentials,
-            RegistrationContinuationGateway gateway,JwtTokenIssuer issuer) {
-        this.auth=auth; this.credentials=credentials; this.gateway=gateway; this.issuer=issuer;
+            RegistrationContinuationGateway gateway,JwtTokenIssuer issuer,RegistrationAttemptAdmissionService registrationAdmission) {
+        this.auth=auth; this.credentials=credentials; this.gateway=gateway; this.issuer=issuer; this.registrationAdmission=registrationAdmission;
     }
     @Transactional
-    public Registered register(String email,String password,String firstNames,String lastNames,String phone,String returnTo) {
+    public Registered register(String email,String password,String firstNames,String lastNames,String phone,String returnTo,String remoteAddress) {
+        int retryAfter=registrationAdmission.admit(email,EmailActionTokens.hash(remoteAddress));
+        if(retryAfter>0) {
+            LOG.warn("registration_attempt state=LIMITED code=AUTH_REGISTER_RATE_LIMITED retry_after_seconds={} trace_id={}",
+                    retryAfter,org.slf4j.MDC.get("traceId"));
+            throw new com.pliego.foundation.security.RegistrationAttemptLimitedException(retryAfter);
+        }
         RegistrationResult result=auth.register(email,password,firstNames,lastNames,phone,returnTo);
         String secret=credentials.newSessionToken();
-        Instant expires=gateway.issue(result.userId(),EmailActionTokens.hash(secret),AuthReturnPaths.safeOrNull(returnTo));
+        Instant expires=result.userId()>0
+                ?gateway.issue(result.userId(),EmailActionTokens.hash(secret),AuthReturnPaths.safeOrNull(returnTo))
+                :gateway.issueNeutral(EmailActionTokens.hash(secret));
         return new Registered(result,secret,expires);
     }
     @Transactional

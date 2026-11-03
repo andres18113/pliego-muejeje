@@ -15,6 +15,10 @@ public final class RegistrationContinuationCookie {
     public String issue(String secret,Instant expires) {
         return cookie(secret,Duration.ofSeconds(Math.max(0,Duration.between(Instant.now(),expires).getSeconds())));
     }
+    public String issueRegistration(String secret) {
+        // One public lifetime for fresh and neutral receipts; PostgreSQL owns actual validity.
+        return cookie(secret,Duration.ofDays(1));
+    }
     public String clear(){return cookie("",Duration.ZERO);}
     private String cookie(String secret,Duration maxAge){
         return ResponseCookie.from(NAME,secret).httpOnly(true).secure(secure).sameSite("Strict")

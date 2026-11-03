@@ -100,8 +100,7 @@ def main():
     status, headers, problem = request("/api/v1/auth/register", method="POST", body={
         "email": email, "password": "Secreta-journey-1",
         "firstNames": "Cliente", "lastNames": "Journey"})
-    assert status == 409, (status, problem)
-    assert_spanish_problem(status, headers, problem, "P1101")
+    assert status == 201 and problem == {"state": "PENDING_VERIFICATION"}, (status, problem)
     status, _, session = request("/api/v1/auth/login", method="POST", body={
         "email": email, "password": "Secreta-journey-1"})
     assert status == 200 and session["tokenType"] == "Bearer", (status, session)

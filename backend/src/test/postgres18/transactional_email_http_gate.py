@@ -107,7 +107,7 @@ def main():
             password = 'Mail-fixture-2026'
             status, _, registered = request(base, '/api/v1/auth/register', {'email': email, 'password': password, 'firstNames': 'Ana', 'lastNames': 'Pérez'})
             assert status == 201 and registered['state'] == 'PENDING_VERIFICATION'
-            uid = int(registered['userId'])
+            uid = int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
             assert query(f"SELECT count(*) FROM pliego.correo_outbox WHERE usuario_id={uid} AND tipo='VERIFY_EMAIL'") == '1'
             wait_for(lambda: any(p['category'] == 'VERIFY_EMAIL' and p['to'][0]['email'] == email for _, p, _ in MailtrapStub.deliveries))
             assert query(f"SELECT estado||':'||intentos||':'||ultimo_error FROM pliego.correo_outbox WHERE usuario_id={uid}") == 'PENDING:1:MAILTRAP_HTTP_503'

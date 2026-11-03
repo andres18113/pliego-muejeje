@@ -19,6 +19,10 @@ public class RegistrationContinuationGateway extends JdbcGatewaySupport {
         return withDatabaseErrorTranslation(() -> jdbc.queryForObject(
                 "SELECT pliego.fn_registration_session_issue(?,?,?)", Timestamp.class,userId,hash,returnTo).toInstant());
     }
+    public Instant issueNeutral(String hash) {
+        return withDatabaseErrorTranslation(() -> jdbc.queryForObject(
+                "SELECT pliego.fn_registration_decoy_issue(?)", Timestamp.class,hash).toInstant());
+    }
     public Outcome exchange(String hash,String refreshHash,Instant expires,String requestHash) {
         return withDatabaseErrorTranslation(() -> jdbc.query(
                 "SELECT * FROM pliego.fn_registration_session_exchange(?,?,?,?)",

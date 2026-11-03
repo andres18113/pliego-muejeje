@@ -25,14 +25,20 @@ def request(path, method="GET", body=None, actor=None, key=None):
         return response.status,json.loads(content) if content else None
 
 def register(first="Ana",last="Pérez",phone=None):
-    return request("/api/v1/auth/register","POST",{"email":uuid.uuid4().hex+"@validation.example.invalid",
+    email=uuid.uuid4().hex+"@validation.example.invalid"
+    status,result=request("/api/v1/auth/register","POST",{"email":email,
         "password":"Lectura-segura-2026","firstNames":first,"lastNames":last,"phone":phone})
+    if status==201:
+        assert result=={"state":"PENDING_VERIFICATION"},result
+        # Fixture lookup is independent of the public, existence-neutral response.
+        result={**result,"fixtureActor":int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))}
+    return status,result
 
 def recipient_limits():
     full="A"*120+" "+"B"*120
     status,registered=register("A"*120,"B"*120)
     assert status==201,(status,registered)
-    actor=int(registered["userId"])
+    actor=int(registered["fixtureActor"])
     body={"alias":"Casa","recipient":full,"line1":"Calle 1","provinceId":"17","cityId":"893",
           "countryCode":"EC","phone":"+593991234567","makePrimary":True}
     key=str(uuid.uuid4())
@@ -54,7 +60,7 @@ def personal_names():
     assert status==400 and any(v["field"]=="firstNames" for v in problem["violations"]),(status,problem)
     status,registered=register("A\u0301na","O’Connor-Pérez")
     assert status==201,(status,registered)
-    actor=int(registered["userId"])
+    actor=int(registered["fixtureActor"])
     _,profile=request("/api/v1/me",actor=actor)
     assert profile["firstNames"]=="Ána",profile
     status,problem=request("/api/v1/me","PATCH",{"field":"lastNames","value":"Pérez7","expectedVersion":profile["version"]},actor)
@@ -70,7 +76,7 @@ def phone_rule():
         assert status==400,(phone,status,problem)
     status,registered=register(phone="+593 (99) 123-4567")
     assert status==201,(status,registered)
-    actor=int(registered["userId"])
+    actor=int(registered["fixtureActor"])
     _,profile=request("/api/v1/me",actor=actor)
     assert profile["phone"]=="+593991234567",profile
     status,problem=request("/api/v1/me","PATCH",{"field":"phone","value":"+44 020 7946 0018","expectedVersion":profile["version"]},actor)

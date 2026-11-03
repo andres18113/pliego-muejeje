@@ -136,6 +136,15 @@ public final class ApiExceptionHandler {
                         "Espera unos minutos antes de volver a intentarlo.", request));
     }
 
+    @ExceptionHandler(com.pliego.foundation.security.RegistrationAttemptLimitedException.class)
+    public ResponseEntity<ProblemDetail> registrationAttemptLimited(
+            com.pliego.foundation.security.RegistrationAttemptLimitedException exception, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)
+                .header(org.springframework.http.HttpHeaders.RETRY_AFTER, Integer.toString(exception.retryAfterSeconds()))
+                .body(problems.create("AUTH_REGISTER_RATE_LIMITED", "Demasiados intentos", HttpStatus.TOO_MANY_REQUESTS,
+                        "Espera unos minutos antes de volver a intentarlo.", request));
+    }
+
     @ExceptionHandler(CurrentPasswordMismatchException.class)
     public ResponseEntity<ProblemDetail> currentPasswordMismatch(CurrentPasswordMismatchException exception,
             HttpServletRequest request) {

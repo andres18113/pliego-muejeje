@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.pliego.foundation.web.ProblemResponse;
 import com.pliego.modules.identity.application.AuthService;
 import com.pliego.modules.identity.application.AuthService.LoginResult;
-import com.pliego.modules.identity.gateway.RegistrationResult;
 import com.pliego.modules.identity.application.RegistrationContinuationService;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -50,19 +49,19 @@ public class AuthController {
     }
 
     @PostMapping(path = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @Operation(summary = "Registrar una cuenta CUSTOMER", description = "Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.")
+    @Operation(summary = "Registrar una cuenta CUSTOMER", description = "Respuesta neutral 201 tanto para correo nuevo como existente, sin identificadores de cuenta. Permite 120 registros por IP/hora y 5 por correo normalizado/hora antes de BCrypt. Una continuidad neutral de un correo existente nunca autoriza la cuenta. Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.")
     @ApiResponse(responseCode = "201", description = "Cuenta de cliente creada", headers=@Header(name="Set-Cookie",description="Continuidad HttpOnly, Secure, SameSite=Strict, host-only; máximo 24 horas"), content = @Content(schema = @Schema(implementation = RegisterResponse.class)))
     @ApiResponse(responseCode = "400", description = "Datos inválidos", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
-    @ApiResponse(responseCode = "409", description = "Correo ya registrado", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
+    @ApiResponse(responseCode = "429", description = "Demasiados intentos (AUTH_REGISTER_RATE_LIMITED). No revela si la cuenta existe.",
+            headers = @Header(name = "Retry-After", description = "Segundos hasta el próximo intento", schema = @Schema(type = "integer", minimum = "1", maximum = "3600")),
+            content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
     @ApiResponse(responseCode = "500", description = "Error interno", content = @Content(mediaType = "application/problem+json", schema = @Schema(implementation = ProblemResponse.class)))
-    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request, HttpServletRequest servletRequest) {
         var registered = continuation.register(request.email(), request.password(), request.firstNames(),
-                request.lastNames(), request.phone(), request.returnTo());
-        RegistrationResult result = registered.registration();
-        RegisterResponse response = new RegisterResponse(Long.toString(result.userId()),
-                Long.toString(result.customerId()), result.state());
+                request.lastNames(), request.phone(), request.returnTo(), servletRequest.getRemoteAddr());
+        RegisterResponse response = new RegisterResponse("PENDING_VERIFICATION");
         return ResponseEntity.status(HttpStatus.CREATED)
-                .header(HttpHeaders.SET_COOKIE, continuationCookie.issue(registered.secret(), registered.expiresAt())).body(response);
+                .header(HttpHeaders.SET_COOKIE, continuationCookie.issueRegistration(registered.secret())).body(response);
     }
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)

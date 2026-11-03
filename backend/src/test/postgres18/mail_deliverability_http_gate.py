@@ -85,7 +85,7 @@ def main():
             status, registered = request('/api/v1/auth/register', {'email': email, 'password': password,
                 'firstNames': 'Ana', 'lastNames': 'Pérez'})
             assert status == 201, registered
-            actor = int(registered['userId'])
+            actor = int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
             wait_for(lambda: query(f"SELECT count(*) FROM pliego.correo_outbox WHERE usuario_id={actor} AND id_mensaje_proveedor IS NOT NULL") == '1')
             message_id = query(f"SELECT id_mensaje_proveedor FROM pliego.correo_outbox WHERE usuario_id={actor}")
             occurred = int(__import__('time').time())
