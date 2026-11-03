@@ -1,0 +1,2591 @@
+{
+  "postgres_version": "18.6 (Ubuntu 18.6-1.pgdg26.04+2)",
+  "migration_versions": "001,002,003,004,005,006,007,008,009,010,011,012,013,014,015,016,017,018,019,020,021,022,023,024,025,026,027,028,029,030,031,032,033,034,035,036,037,038,039,040,041,042,043,044,045,046,047,048,049,050,051,052,053,054,055,056,057,058,059,060,061,062,063,064,065,066,067,068,069,070,071,072,073,074,075,076,077,078,079,080,081,082,083,084,085,086,087,088,089,090,091,092,093,094,095,096,097,098,099,100,103",
+  "foreign_key_count": 72,
+  "missing_any_prefix": 11,
+  "missing_unconditional_prefix": 18,
+  "catalog": [
+    {
+      "table": "pliego.address_create_attempt",
+      "parent": "pliego.usuario",
+      "columns": [
+        "actor_user_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.address_create_attempt_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX address_create_attempt_pkey ON pliego.address_create_attempt USING btree (actor_user_id, attempt_key)"
+        }
+      ],
+      "constraint": "address_create_attempt_actor_user_id_fkey",
+      "definition": "FOREIGN KEY (actor_user_id) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.ayuda_articulo",
+      "parent": "pliego.ayuda_categoria",
+      "columns": [
+        "categoria_id"
+      ],
+      "indexes": [],
+      "constraint": "ayuda_articulo_categoria_id_fkey",
+      "definition": "FOREIGN KEY (categoria_id) REFERENCES pliego.ayuda_categoria(categoria_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.carrito",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_carrito_cliente_fecha",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_carrito_cliente_fecha ON pliego.carrito USING btree (cliente_id, fecha_creacion DESC, carrito_id DESC)"
+        },
+        {
+          "name": "pliego.uqx_carrito_cliente_active",
+          "predicate": "((estado)::text = 'ACTIVE'::text)",
+          "definition": "CREATE UNIQUE INDEX uqx_carrito_cliente_active ON pliego.carrito USING btree (cliente_id) WHERE ((estado)::text = 'ACTIVE'::text)"
+        }
+      ],
+      "constraint": "fk_carrito_cliente",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.carrito_item",
+      "parent": "pliego.carrito",
+      "columns": [
+        "carrito_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.uq_carrito_item_edicion",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_carrito_item_edicion ON pliego.carrito_item USING btree (carrito_id, edicion_id)"
+        }
+      ],
+      "constraint": "fk_carrito_item_carrito",
+      "definition": "FOREIGN KEY (carrito_id) REFERENCES pliego.carrito(carrito_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.carrito_item",
+      "parent": "pliego.edicion",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_carrito_item_edicion",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_carrito_item_edicion ON pliego.carrito_item USING btree (edicion_id, carrito_id)"
+        }
+      ],
+      "constraint": "fk_carrito_item_edicion",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.edicion(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.categoria",
+      "parent": "pliego.categoria",
+      "columns": [
+        "categoria_padre_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_categoria_padre",
+          "predicate": "(categoria_padre_id IS NOT NULL)",
+          "definition": "CREATE INDEX idx_categoria_padre ON pliego.categoria USING btree (categoria_padre_id) WHERE (categoria_padre_id IS NOT NULL)"
+        }
+      ],
+      "constraint": "fk_categoria_padre",
+      "definition": "FOREIGN KEY (categoria_padre_id) REFERENCES pliego.categoria(categoria_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.checkout_attempt",
+      "parent": "pliego.usuario",
+      "columns": [
+        "actor_user_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.checkout_attempt_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX checkout_attempt_pkey ON pliego.checkout_attempt USING btree (actor_user_id, attempt_key)"
+        }
+      ],
+      "constraint": "checkout_attempt_actor_user_id_fkey",
+      "definition": "FOREIGN KEY (actor_user_id) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.checkout_attempt",
+      "parent": "pliego.pedido",
+      "columns": [
+        "order_id"
+      ],
+      "indexes": [],
+      "constraint": "checkout_attempt_order_id_fkey",
+      "definition": "FOREIGN KEY (order_id) REFERENCES pliego.pedido(pedido_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.checkout_billing_attempt",
+      "parent": "pliego.checkout_attempt",
+      "columns": [
+        "actor_user_id",
+        "attempt_key"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.checkout_billing_attempt_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX checkout_billing_attempt_pkey ON pliego.checkout_billing_attempt USING btree (actor_user_id, attempt_key)"
+        }
+      ],
+      "constraint": "checkout_billing_attempt_actor_user_id_attempt_key_fkey",
+      "definition": "FOREIGN KEY (actor_user_id, attempt_key) REFERENCES pliego.checkout_attempt(actor_user_id, attempt_key)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.ciudad",
+      "parent": "pliego.provincia",
+      "columns": [
+        "provincia_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_ciudad_active_province_name",
+          "predicate": "activo",
+          "definition": "CREATE INDEX ix_ciudad_active_province_name ON pliego.ciudad USING btree (provincia_id, search_key, canton_nombre, codigo_dpa) WHERE activo"
+        },
+        {
+          "name": "pliego.uq_ciudad_provincia_dpa",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_ciudad_provincia_dpa ON pliego.ciudad USING btree (provincia_id, codigo_dpa)"
+        },
+        {
+          "name": "pliego.uq_ciudad_provincia_id",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_ciudad_provincia_id ON pliego.ciudad USING btree (provincia_id, ciudad_id)"
+        }
+      ],
+      "constraint": "ciudad_provincia_id_fkey",
+      "definition": "FOREIGN KEY (provincia_id) REFERENCES pliego.provincia(provincia_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.ciudad_alias",
+      "parent": "pliego.ciudad",
+      "columns": [
+        "provincia_id",
+        "ciudad_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_ciudad_alias_target",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_ciudad_alias_target ON pliego.ciudad_alias USING btree (provincia_id, ciudad_id)"
+        }
+      ],
+      "constraint": "fk_ciudad_alias_target",
+      "definition": "FOREIGN KEY (provincia_id, ciudad_id) REFERENCES pliego.ciudad(provincia_id, ciudad_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.uq_cliente_usuario",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_cliente_usuario ON pliego.cliente USING btree (usuario_id)"
+        }
+      ],
+      "constraint": "fk_cliente_usuario",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES pliego.usuario(usuario_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_favorito",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_cliente_favorito_reciente",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_cliente_favorito_reciente ON pliego.cliente_favorito USING btree (cliente_id, fecha_creacion DESC, edicion_id DESC)"
+        },
+        {
+          "name": "pliego.pk_cliente_favorito",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pk_cliente_favorito ON pliego.cliente_favorito USING btree (cliente_id, edicion_id)"
+        }
+      ],
+      "constraint": "fk_cliente_favorito_cliente",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_favorito",
+      "parent": "pliego.edicion",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [],
+      "constraint": "fk_cliente_favorito_edicion",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.edicion(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_guardado_despues",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_cliente_guardado_despues_reciente",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_cliente_guardado_despues_reciente ON pliego.cliente_guardado_despues USING btree (cliente_id, fecha_actualizacion DESC, guardado_despues_id DESC)"
+        },
+        {
+          "name": "pliego.uq_cliente_guardado_despues_edicion",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_cliente_guardado_despues_edicion ON pliego.cliente_guardado_despues USING btree (cliente_id, edicion_id)"
+        }
+      ],
+      "constraint": "fk_cliente_guardado_despues_cliente",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_guardado_despues",
+      "parent": "pliego.edicion",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_cliente_guardado_despues_edicion",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_cliente_guardado_despues_edicion ON pliego.cliente_guardado_despues USING btree (edicion_id)"
+        },
+        {
+          "name": "pliego.ix_cliente_guardado_despues_edicion",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_cliente_guardado_despues_edicion ON pliego.cliente_guardado_despues USING btree (edicion_id)"
+        }
+      ],
+      "constraint": "fk_cliente_guardado_despues_edicion",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.edicion(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_identificacion",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.cliente_identificacion_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX cliente_identificacion_pkey ON pliego.cliente_identificacion USING btree (cliente_id)"
+        }
+      ],
+      "constraint": "cliente_identificacion_cliente_id_fkey",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_identificacion_evento",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_cliente_identificacion_evento_cliente",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_cliente_identificacion_evento_cliente ON pliego.cliente_identificacion_evento USING btree (cliente_id, evento_id)"
+        }
+      ],
+      "constraint": "cliente_identificacion_evento_cliente_id_fkey",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_identificacion_solicitud_correccion",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.uq_cliente_identificacion_solicitud_clave",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_cliente_identificacion_solicitud_clave ON pliego.cliente_identificacion_solicitud_correccion USING btree (cliente_id, clave_idempotencia)"
+        },
+        {
+          "name": "pliego.uq_cliente_identificacion_solicitud_pending",
+          "predicate": "((estado)::text = 'PENDING'::text)",
+          "definition": "CREATE UNIQUE INDEX uq_cliente_identificacion_solicitud_pending ON pliego.cliente_identificacion_solicitud_correccion USING btree (cliente_id) WHERE ((estado)::text = 'PENDING'::text)"
+        }
+      ],
+      "constraint": "cliente_identificacion_solicitud_correccion_cliente_id_fkey",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.cliente_identificacion_solicitud_correccion",
+      "parent": "pliego.usuario",
+      "columns": [
+        "decidido_por"
+      ],
+      "indexes": [],
+      "constraint": "cliente_identificacion_solicitud_correccion_decidido_por_fkey",
+      "definition": "FOREIGN KEY (decidido_por) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.correo_cambio",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_correo_cambio_usuario",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_correo_cambio_usuario ON pliego.correo_cambio USING btree (usuario_id, fecha_creacion DESC)"
+        },
+        {
+          "name": "pliego.uq_correo_cambio_pendiente",
+          "predicate": "((estado)::text = 'PENDING'::text)",
+          "definition": "CREATE UNIQUE INDEX uq_correo_cambio_pendiente ON pliego.correo_cambio USING btree (usuario_id) WHERE ((estado)::text = 'PENDING'::text)"
+        }
+      ],
+      "constraint": "correo_cambio_usuario_id_fkey",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.correo_cambio_token",
+      "parent": "pliego.correo_cambio",
+      "columns": [
+        "cambio_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_correo_cambio_token_cambio",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_correo_cambio_token_cambio ON pliego.correo_cambio_token USING btree (cambio_id)"
+        },
+        {
+          "name": "pliego.uq_correo_cambio_token_activo",
+          "predicate": "(invalidado_en IS NULL)",
+          "definition": "CREATE UNIQUE INDEX uq_correo_cambio_token_activo ON pliego.correo_cambio_token USING btree (cambio_id, tipo) WHERE (invalidado_en IS NULL)"
+        }
+      ],
+      "constraint": "correo_cambio_token_cambio_id_fkey",
+      "definition": "FOREIGN KEY (cambio_id) REFERENCES pliego.correo_cambio(cambio_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.correo_evento_proveedor",
+      "parent": "pliego.correo_outbox",
+      "columns": [
+        "correo_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_correo_evento_outbox",
+          "predicate": "(correo_id IS NOT NULL)",
+          "definition": "CREATE INDEX ix_correo_evento_outbox ON pliego.correo_evento_proveedor USING btree (correo_id) WHERE (correo_id IS NOT NULL)"
+        }
+      ],
+      "constraint": "correo_evento_proveedor_correo_id_fkey",
+      "definition": "FOREIGN KEY (correo_id) REFERENCES pliego.correo_outbox(correo_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.correo_outbox",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_correo_outbox_token",
+          "predicate": "((estado)::text = 'PENDING'::text)",
+          "definition": "CREATE INDEX ix_correo_outbox_token ON pliego.correo_outbox USING btree (usuario_id, tipo) WHERE ((estado)::text = 'PENDING'::text)"
+        }
+      ],
+      "constraint": "correo_outbox_usuario_id_fkey",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.correo_token",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.correo_token_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX correo_token_pkey ON pliego.correo_token USING btree (usuario_id, tipo)"
+        }
+      ],
+      "constraint": "correo_token_usuario_id_fkey",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES pliego.usuario(usuario_id) ON DELETE CASCADE",
+      "delete_action": "c",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.digital_grant",
+      "parent": "pliego.digital_ownership",
+      "columns": [
+        "owned_item_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_digital_grant_active_ownership",
+          "predicate": "((state)::text = 'ACTIVE'::text)",
+          "definition": "CREATE INDEX ix_digital_grant_active_ownership ON pliego.digital_grant USING btree (owned_item_id, pedido_item_id) WHERE ((state)::text = 'ACTIVE'::text)"
+        },
+        {
+          "name": "pliego.ix_digital_grant_ownership",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_digital_grant_ownership ON pliego.digital_grant USING btree (owned_item_id, acquired_at, pedido_item_id)"
+        }
+      ],
+      "constraint": "digital_grant_owned_item_id_fkey",
+      "definition": "FOREIGN KEY (owned_item_id) REFERENCES pliego.digital_ownership(owned_item_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.digital_grant",
+      "parent": "pliego.pedido_item",
+      "columns": [
+        "pedido_item_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.digital_grant_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX digital_grant_pkey ON pliego.digital_grant USING btree (pedido_item_id)"
+        }
+      ],
+      "constraint": "digital_grant_pedido_item_id_fkey",
+      "definition": "FOREIGN KEY (pedido_item_id) REFERENCES pliego.pedido_item(pedido_item_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.digital_ownership",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.digital_ownership_cliente_id_edicion_id_key",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX digital_ownership_cliente_id_edicion_id_key ON pliego.digital_ownership USING btree (cliente_id, edicion_id)"
+        }
+      ],
+      "constraint": "digital_ownership_cliente_id_fkey",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.digital_ownership",
+      "parent": "pliego.edicion",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_digital_ownership_edicion",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_digital_ownership_edicion ON pliego.digital_ownership USING btree (edicion_id)"
+        }
+      ],
+      "constraint": "digital_ownership_edicion_id_fkey",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.edicion(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.direccion",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_direccion_cliente",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_direccion_cliente ON pliego.direccion USING btree (cliente_id)"
+        },
+        {
+          "name": "pliego.uqx_direccion_cliente_principal",
+          "predicate": "es_principal",
+          "definition": "CREATE UNIQUE INDEX uqx_direccion_cliente_principal ON pliego.direccion USING btree (cliente_id) WHERE es_principal"
+        }
+      ],
+      "constraint": "fk_direccion_cliente",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.direccion",
+      "parent": "pliego.ciudad",
+      "columns": [
+        "provincia_id",
+        "ciudad_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_direccion_geo_pair",
+          "predicate": "(provincia_id IS NOT NULL)",
+          "definition": "CREATE INDEX ix_direccion_geo_pair ON pliego.direccion USING btree (provincia_id, ciudad_id) WHERE (provincia_id IS NOT NULL)"
+        }
+      ],
+      "constraint": "fk_direccion_provincia_ciudad",
+      "definition": "FOREIGN KEY (provincia_id, ciudad_id) REFERENCES pliego.ciudad(provincia_id, ciudad_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.edicion",
+      "parent": "pliego.editorial",
+      "columns": [
+        "editorial_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_edicion_editorial",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_edicion_editorial ON pliego.edicion USING btree (editorial_id, edicion_id)"
+        }
+      ],
+      "constraint": "fk_edicion_editorial",
+      "definition": "FOREIGN KEY (editorial_id) REFERENCES pliego.editorial(editorial_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.edicion",
+      "parent": "pliego.libro",
+      "columns": [
+        "libro_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_edicion_libro",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_edicion_libro ON pliego.edicion USING btree (libro_id, edicion_id)"
+        }
+      ],
+      "constraint": "fk_edicion_libro",
+      "definition": "FOREIGN KEY (libro_id) REFERENCES pliego.libro(libro_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.edicion_oferta",
+      "parent": "pliego.edicion",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.edicion_oferta_edicion_id_key",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX edicion_oferta_edicion_id_key ON pliego.edicion_oferta USING btree (edicion_id)"
+        }
+      ],
+      "constraint": "edicion_oferta_edicion_id_fkey",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.edicion(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.envio",
+      "parent": "pliego.pedido_entrega",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.envio_pedido_id_key",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX envio_pedido_id_key ON pliego.envio USING btree (pedido_id)"
+        },
+        {
+          "name": "pliego.ix_envio_simulation_due",
+          "predicate": "((fecha_confirmacion IS NOT NULL) AND ((estado)::text = ANY ((ARRAY['PENDING'::character varying, 'PREPARING'::character varying, 'SHIPPED'::character varying, 'IN_TRANSIT'::character varying, 'OUT_FOR_DELIVERY'::character varying])::text[])))",
+          "definition": "CREATE INDEX ix_envio_simulation_due ON pliego.envio USING btree (pedido_id) WHERE ((fecha_confirmacion IS NOT NULL) AND ((estado)::text = ANY ((ARRAY['PENDING'::character varying, 'PREPARING'::character varying, 'SHIPPED'::character varying, 'IN_TRANSIT'::character varying, 'OUT_FOR_DELIVERY'::character varying])::text[])))"
+        }
+      ],
+      "constraint": "envio_pedido_id_fkey",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido_entrega(pedido_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.envio_historial",
+      "parent": "pliego.envio",
+      "columns": [
+        "envio_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_envio_historial_envio",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_envio_historial_envio ON pliego.envio_historial USING btree (envio_id, fecha, envio_historial_id)"
+        },
+        {
+          "name": "pliego.uq_envio_simulation_event",
+          "predicate": "(((tipo)::text = 'STATUS'::text) AND ((origen)::text = 'SYSTEM'::text) AND ((estado_nuevo)::text = ANY ((ARRAY['PREPARING'::character varying, 'IN_TRANSIT'::character varying, 'OUT_FOR_DELIVERY'::character varying, 'DELIVERED'::character varying])::text[])))",
+          "definition": "CREATE UNIQUE INDEX uq_envio_simulation_event ON pliego.envio_historial USING btree (envio_id, estado_nuevo) WHERE (((tipo)::text = 'STATUS'::text) AND ((origen)::text = 'SYSTEM'::text) AND ((estado_nuevo)::text = ANY ((ARRAY['PREPARING'::character varying, 'IN_TRANSIT'::character varying, 'OUT_FOR_DELIVERY'::character varying, 'DELIVERED'::character varying])::text[])))"
+        }
+      ],
+      "constraint": "envio_historial_envio_id_fkey",
+      "definition": "FOREIGN KEY (envio_id) REFERENCES pliego.envio(envio_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.envio_historial",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_actor_id"
+      ],
+      "indexes": [],
+      "constraint": "envio_historial_usuario_actor_id_fkey",
+      "definition": "FOREIGN KEY (usuario_actor_id) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura",
+      "parent": "pliego.pedido",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.factura_pedido_id_key",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX factura_pedido_id_key ON pliego.factura USING btree (pedido_id)"
+        },
+        {
+          "name": "pliego.ix_factura_account_recipient_pedido",
+          "predicate": "((destinatario_tipo IS NULL) OR ((destinatario_tipo)::text = 'ACCOUNT'::text))",
+          "definition": "CREATE INDEX ix_factura_account_recipient_pedido ON pliego.factura USING btree (pedido_id) WHERE ((destinatario_tipo IS NULL) OR ((destinatario_tipo)::text = 'ACCOUNT'::text))"
+        }
+      ],
+      "constraint": "factura_pedido_id_fkey",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido(pedido_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_emisor_id"
+      ],
+      "indexes": [],
+      "constraint": "factura_usuario_emisor_id_fkey",
+      "definition": "FOREIGN KEY (usuario_emisor_id) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura_archivo",
+      "parent": "pliego.factura",
+      "columns": [
+        "factura_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.factura_archivo_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX factura_archivo_pkey ON pliego.factura_archivo USING btree (factura_id, tipo)"
+        }
+      ],
+      "constraint": "factura_archivo_factura_id_fkey",
+      "definition": "FOREIGN KEY (factura_id) REFERENCES pliego.factura(factura_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura_archivo_contenido",
+      "parent": "pliego.factura_archivo_trabajo",
+      "columns": [
+        "factura_id",
+        "tipo"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.factura_archivo_contenido_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX factura_archivo_contenido_pkey ON pliego.factura_archivo_contenido USING btree (factura_id, tipo)"
+        }
+      ],
+      "constraint": "factura_archivo_contenido_factura_id_tipo_fkey",
+      "definition": "FOREIGN KEY (factura_id, tipo) REFERENCES pliego.factura_archivo_trabajo(factura_id, tipo)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura_archivo_trabajo",
+      "parent": "pliego.factura",
+      "columns": [
+        "factura_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.factura_archivo_trabajo_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX factura_archivo_trabajo_pkey ON pliego.factura_archivo_trabajo USING btree (factura_id, tipo)"
+        }
+      ],
+      "constraint": "factura_archivo_trabajo_factura_id_fkey",
+      "definition": "FOREIGN KEY (factura_id) REFERENCES pliego.factura(factura_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura_direccion",
+      "parent": "pliego.factura",
+      "columns": [
+        "factura_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.factura_direccion_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX factura_direccion_pkey ON pliego.factura_direccion USING btree (factura_id)"
+        }
+      ],
+      "constraint": "factura_direccion_factura_id_fkey",
+      "definition": "FOREIGN KEY (factura_id) REFERENCES pliego.factura(factura_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura_emision_electronica",
+      "parent": "pliego.factura",
+      "columns": [
+        "factura_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.factura_emision_electronica_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX factura_emision_electronica_pkey ON pliego.factura_emision_electronica USING btree (factura_id)"
+        }
+      ],
+      "constraint": "factura_emision_electronica_factura_id_fkey",
+      "definition": "FOREIGN KEY (factura_id) REFERENCES pliego.factura(factura_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura_item",
+      "parent": "pliego.factura",
+      "columns": [
+        "factura_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.factura_item_factura_id_pedido_item_id_key",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX factura_item_factura_id_pedido_item_id_key ON pliego.factura_item USING btree (factura_id, pedido_item_id)"
+        }
+      ],
+      "constraint": "factura_item_factura_id_fkey",
+      "definition": "FOREIGN KEY (factura_id) REFERENCES pliego.factura(factura_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.factura_item",
+      "parent": "pliego.pedido_item",
+      "columns": [
+        "pedido_item_id"
+      ],
+      "indexes": [],
+      "constraint": "factura_item_pedido_item_id_fkey",
+      "definition": "FOREIGN KEY (pedido_item_id) REFERENCES pliego.pedido_item(pedido_item_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.inventario",
+      "parent": "pliego.edicion",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.pk_inventario",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pk_inventario ON pliego.inventario USING btree (edicion_id)"
+        }
+      ],
+      "constraint": "fk_inventario_edicion",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.edicion(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.libro_autor",
+      "parent": "pliego.autor",
+      "columns": [
+        "autor_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_libro_autor_autor",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_libro_autor_autor ON pliego.libro_autor USING btree (autor_id, libro_id)"
+        }
+      ],
+      "constraint": "fk_libro_autor_autor",
+      "definition": "FOREIGN KEY (autor_id) REFERENCES pliego.autor(autor_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.libro_autor",
+      "parent": "pliego.libro",
+      "columns": [
+        "libro_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.pk_libro_autor",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pk_libro_autor ON pliego.libro_autor USING btree (libro_id, autor_id)"
+        },
+        {
+          "name": "pliego.uq_libro_autor_orden",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_libro_autor_orden ON pliego.libro_autor USING btree (libro_id, orden_autoria)"
+        }
+      ],
+      "constraint": "fk_libro_autor_libro",
+      "definition": "FOREIGN KEY (libro_id) REFERENCES pliego.libro(libro_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.libro_categoria",
+      "parent": "pliego.categoria",
+      "columns": [
+        "categoria_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_libro_categoria_categoria",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_libro_categoria_categoria ON pliego.libro_categoria USING btree (categoria_id, libro_id)"
+        }
+      ],
+      "constraint": "fk_libro_categoria_categoria",
+      "definition": "FOREIGN KEY (categoria_id) REFERENCES pliego.categoria(categoria_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.libro_categoria",
+      "parent": "pliego.libro",
+      "columns": [
+        "libro_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.pk_libro_categoria",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pk_libro_categoria ON pliego.libro_categoria USING btree (libro_id, categoria_id)"
+        }
+      ],
+      "constraint": "fk_libro_categoria_libro",
+      "definition": "FOREIGN KEY (libro_id) REFERENCES pliego.libro(libro_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.movimiento_inventario",
+      "parent": "pliego.inventario",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_movimiento_edicion_fecha",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_movimiento_edicion_fecha ON pliego.movimiento_inventario USING btree (edicion_id, fecha DESC, movimiento_inventario_id DESC)"
+        }
+      ],
+      "constraint": "fk_movimiento_inventario_edicion",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.inventario(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.movimiento_inventario",
+      "parent": "pliego.pedido",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_movimiento_pedido",
+          "predicate": "(pedido_id IS NOT NULL)",
+          "definition": "CREATE INDEX idx_movimiento_pedido ON pliego.movimiento_inventario USING btree (pedido_id) WHERE (pedido_id IS NOT NULL)"
+        },
+        {
+          "name": "pliego.uqx_movimiento_pedido_edicion_tipo",
+          "predicate": "((tipo)::text = ANY ((ARRAY['SALE'::character varying, 'CANCELLATION'::character varying])::text[]))",
+          "definition": "CREATE UNIQUE INDEX uqx_movimiento_pedido_edicion_tipo ON pliego.movimiento_inventario USING btree (pedido_id, edicion_id, tipo) WHERE ((tipo)::text = ANY ((ARRAY['SALE'::character varying, 'CANCELLATION'::character varying])::text[]))"
+        }
+      ],
+      "constraint": "fk_movimiento_inventario_pedido",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido(pedido_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.movimiento_inventario",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_actor_id"
+      ],
+      "indexes": [],
+      "constraint": "fk_movimiento_inventario_usuario",
+      "definition": "FOREIGN KEY (usuario_actor_id) REFERENCES pliego.usuario(usuario_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.nota_credito",
+      "parent": "pliego.factura",
+      "columns": [
+        "factura_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.nota_credito_factura_id_key",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX nota_credito_factura_id_key ON pliego.nota_credito USING btree (factura_id)"
+        }
+      ],
+      "constraint": "nota_credito_factura_id_fkey",
+      "definition": "FOREIGN KEY (factura_id) REFERENCES pliego.factura(factura_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.nota_credito",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_emisor_id"
+      ],
+      "indexes": [],
+      "constraint": "nota_credito_usuario_emisor_id_fkey",
+      "definition": "FOREIGN KEY (usuario_emisor_id) REFERENCES pliego.usuario(usuario_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pago",
+      "parent": "pliego.pedido",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.uq_pago_pedido",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_pago_pedido ON pliego.pago USING btree (pedido_id)"
+        }
+      ],
+      "constraint": "fk_pago_pedido",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido(pedido_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido",
+      "parent": "pliego.cliente",
+      "columns": [
+        "cliente_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_pedido_cliente_fecha",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_pedido_cliente_fecha ON pliego.pedido USING btree (cliente_id, fecha_creacion DESC, pedido_id DESC)"
+        },
+        {
+          "name": "pliego.ix_pedido_open_digital_customer",
+          "predicate": "(((estado)::text <> 'CANCELLED'::text) AND (finalizado_en IS NULL))",
+          "definition": "CREATE INDEX ix_pedido_open_digital_customer ON pliego.pedido USING btree (cliente_id, pedido_id) WHERE (((estado)::text <> 'CANCELLED'::text) AND (finalizado_en IS NULL))"
+        }
+      ],
+      "constraint": "fk_pedido_cliente",
+      "definition": "FOREIGN KEY (cliente_id) REFERENCES pliego.cliente(cliente_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_direccion",
+      "parent": "pliego.pedido",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.pk_pedido_direccion",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pk_pedido_direccion ON pliego.pedido_direccion USING btree (pedido_id)"
+        }
+      ],
+      "constraint": "fk_pedido_direccion_pedido",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido(pedido_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_entrega",
+      "parent": "pliego.pedido",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.pedido_entrega_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pedido_entrega_pkey ON pliego.pedido_entrega USING btree (pedido_id)"
+        }
+      ],
+      "constraint": "pedido_entrega_pedido_id_fkey",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido(pedido_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_estado_historial",
+      "parent": "pliego.pedido",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_pedido_historial_pedido_fecha",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_pedido_historial_pedido_fecha ON pliego.pedido_estado_historial USING btree (pedido_id, fecha, pedido_estado_historial_id)"
+        },
+        {
+          "name": "pliego.uqx_pedido_historial_inicial",
+          "predicate": "(estado_anterior IS NULL)",
+          "definition": "CREATE UNIQUE INDEX uqx_pedido_historial_inicial ON pliego.pedido_estado_historial USING btree (pedido_id) WHERE (estado_anterior IS NULL)"
+        }
+      ],
+      "constraint": "fk_pedido_estado_historial_pedido",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido(pedido_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_estado_historial",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_actor_id"
+      ],
+      "indexes": [],
+      "constraint": "fk_pedido_estado_historial_usuario",
+      "definition": "FOREIGN KEY (usuario_actor_id) REFERENCES pliego.usuario(usuario_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_item",
+      "parent": "pliego.edicion",
+      "columns": [
+        "edicion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.idx_pedido_item_edicion",
+          "predicate": null,
+          "definition": "CREATE INDEX idx_pedido_item_edicion ON pliego.pedido_item USING btree (edicion_id, pedido_id)"
+        }
+      ],
+      "constraint": "fk_pedido_item_edicion",
+      "definition": "FOREIGN KEY (edicion_id) REFERENCES pliego.edicion(edicion_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_item",
+      "parent": "pliego.pedido",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.uq_pedido_item_edicion",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX uq_pedido_item_edicion ON pliego.pedido_item USING btree (pedido_id, edicion_id)"
+        }
+      ],
+      "constraint": "fk_pedido_item_pedido",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido(pedido_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_retiro",
+      "parent": "pliego.pedido_entrega",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.pedido_retiro_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pedido_retiro_pkey ON pliego.pedido_retiro USING btree (pedido_id)"
+        }
+      ],
+      "constraint": "pedido_retiro_pedido_id_fkey",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido_entrega(pedido_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_retiro",
+      "parent": "pliego.usuario",
+      "columns": [
+        "retirado_por"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_pedido_retiro_actor",
+          "predicate": "(retirado_por IS NOT NULL)",
+          "definition": "CREATE INDEX ix_pedido_retiro_actor ON pliego.pedido_retiro USING btree (retirado_por) WHERE (retirado_por IS NOT NULL)"
+        }
+      ],
+      "constraint": "pedido_retiro_retirado_por_fkey",
+      "definition": "FOREIGN KEY (retirado_por) REFERENCES pliego.usuario(usuario_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_retiro",
+      "parent": "pliego.ubicacion_retiro",
+      "columns": [
+        "ubicacion_retiro_id"
+      ],
+      "indexes": [],
+      "constraint": "pedido_retiro_ubicacion_retiro_id_fkey",
+      "definition": "FOREIGN KEY (ubicacion_retiro_id) REFERENCES pliego.ubicacion_retiro(ubicacion_retiro_id)",
+      "delete_action": "a",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.pedido_retiro_aviso",
+      "parent": "pliego.pedido_retiro",
+      "columns": [
+        "pedido_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_pedido_retiro_aviso_pending",
+          "predicate": "(listo_procesado_en IS NULL)",
+          "definition": "CREATE INDEX ix_pedido_retiro_aviso_pending ON pliego.pedido_retiro_aviso USING btree (pedido_id) WHERE (listo_procesado_en IS NULL)"
+        },
+        {
+          "name": "pliego.pedido_retiro_aviso_pkey",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX pedido_retiro_aviso_pkey ON pliego.pedido_retiro_aviso USING btree (pedido_id)"
+        }
+      ],
+      "constraint": "pedido_retiro_aviso_pedido_id_fkey",
+      "definition": "FOREIGN KEY (pedido_id) REFERENCES pliego.pedido_retiro(pedido_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.registro_continuacion",
+      "parent": "pliego.sesion_autenticacion",
+      "columns": [
+        "sesion_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_registro_continuacion_sesion",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_registro_continuacion_sesion ON pliego.registro_continuacion USING btree (sesion_id)"
+        }
+      ],
+      "constraint": "registro_continuacion_sesion_id_fkey",
+      "definition": "FOREIGN KEY (sesion_id) REFERENCES pliego.sesion_autenticacion(sesion_id) ON DELETE CASCADE",
+      "delete_action": "c",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.registro_continuacion",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.registro_continuacion_usuario_id_key",
+          "predicate": null,
+          "definition": "CREATE UNIQUE INDEX registro_continuacion_usuario_id_key ON pliego.registro_continuacion USING btree (usuario_id)"
+        }
+      ],
+      "constraint": "registro_continuacion_usuario_id_fkey",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES pliego.usuario(usuario_id) ON DELETE CASCADE",
+      "delete_action": "c",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.sesion_autenticacion",
+      "parent": "pliego.usuario",
+      "columns": [
+        "usuario_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_sesion_autenticacion_usuario",
+          "predicate": null,
+          "definition": "CREATE INDEX ix_sesion_autenticacion_usuario ON pliego.sesion_autenticacion USING btree (usuario_id)"
+        },
+        {
+          "name": "pliego.ix_sesion_autenticacion_usuario_activa",
+          "predicate": "(fecha_revocacion IS NULL)",
+          "definition": "CREATE INDEX ix_sesion_autenticacion_usuario_activa ON pliego.sesion_autenticacion USING btree (usuario_id, fecha_expiracion) WHERE (fecha_revocacion IS NULL)"
+        }
+      ],
+      "constraint": "fk_sesion_autenticacion_usuario",
+      "definition": "FOREIGN KEY (usuario_id) REFERENCES pliego.usuario(usuario_id) ON DELETE CASCADE",
+      "delete_action": "c",
+      "update_action": "a"
+    },
+    {
+      "table": "pliego.ubicacion_retiro",
+      "parent": "pliego.ciudad",
+      "columns": [
+        "provincia_id",
+        "ciudad_id"
+      ],
+      "indexes": [
+        {
+          "name": "pliego.ix_ubicacion_retiro_geo_pair",
+          "predicate": "(provincia_id IS NOT NULL)",
+          "definition": "CREATE INDEX ix_ubicacion_retiro_geo_pair ON pliego.ubicacion_retiro USING btree (provincia_id, ciudad_id) WHERE (provincia_id IS NOT NULL)"
+        }
+      ],
+      "constraint": "fk_ubicacion_retiro_provincia_ciudad",
+      "definition": "FOREIGN KEY (provincia_id, ciudad_id) REFERENCES pliego.ciudad(provincia_id, ciudad_id) ON DELETE RESTRICT",
+      "delete_action": "r",
+      "update_action": "a"
+    }
+  ],
+  "benchmark": {
+    "validated_foreign_keys": 72,
+    "cases": [
+      {
+        "constraint": "ayuda_articulo_categoria_id_fkey",
+        "routine": "fn_help_search",
+        "table_rows": 249,
+        "heap_bytes": 57344,
+        "existing_index_bytes": 90112,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.ayuda_articulo x WHERE x.categoria_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.046,
+          "median_shared_blocks": 7,
+          "plan": {
+            "execution_ms": 0.046,
+            "planning_ms": 0.213,
+            "shared_hit_blocks": 7,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 249,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.044,
+            0.048,
+            0.046,
+            0.044,
+            0.046
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT slug FROM pliego.ayuda_articulo WHERE estado='PUBLISHED' AND categoria_id=(SELECT min(categoria_id) FROM pliego.ayuda_categoria) ORDER BY posicion,slug LIMIT 20",
+          "median_execution_ms": 0.102,
+          "median_shared_blocks": 14,
+          "plan": {
+            "execution_ms": 0.096,
+            "planning_ms": 0.321,
+            "shared_hit_blocks": 14,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "Aggregate",
+              "Seq Scan",
+              "Sort",
+              "Seq Scan"
+            ],
+            "rows": 20.0,
+            "rows_removed": 56,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.098,
+            0.115,
+            0.102,
+            0.111,
+            0.096
+          ]
+        }
+      },
+      {
+        "constraint": "checkout_attempt_order_id_fkey",
+        "routine": "sp_checkout_idempotent",
+        "table_rows": 20000,
+        "heap_bytes": 2187264,
+        "existing_index_bytes": 1146880,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.checkout_attempt x WHERE x.order_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.713,
+          "median_shared_blocks": 267,
+          "plan": {
+            "execution_ms": 0.7,
+            "planning_ms": 0.15,
+            "shared_hit_blocks": 267,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 20000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.723,
+            0.775,
+            0.662,
+            0.713,
+            0.7
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT * FROM pliego.checkout_attempt WHERE actor_user_id=1000020 AND attempt_key=md5('attempt-20')::uuid",
+          "median_execution_ms": 0.03,
+          "median_shared_blocks": 6,
+          "plan": {
+            "execution_ms": 0.033,
+            "planning_ms": 0.384,
+            "shared_hit_blocks": 6,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "checkout_attempt_pkey"
+            ],
+            "nodes": [
+              "Index Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.029,
+            0.03,
+            0.028,
+            0.03,
+            0.033
+          ]
+        }
+      },
+      {
+        "constraint": "fk_cliente_favorito_edicion",
+        "routine": "fn_customer_favorite_status",
+        "table_rows": 20000,
+        "heap_bytes": 1048576,
+        "existing_index_bytes": 2048000,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.cliente_favorito x WHERE x.edicion_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.52,
+          "median_shared_blocks": 128,
+          "plan": {
+            "execution_ms": 0.568,
+            "planning_ms": 0.198,
+            "shared_hit_blocks": 128,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 20000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.468,
+            0.555,
+            0.52,
+            0.474,
+            0.568
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT EXISTS(SELECT FROM pliego.cliente_favorito WHERE cliente_id=1000020 AND edicion_id=1000020)",
+          "median_execution_ms": 0.053,
+          "median_shared_blocks": 6,
+          "plan": {
+            "execution_ms": 0.054,
+            "planning_ms": 0.224,
+            "shared_hit_blocks": 6,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "pk_cliente_favorito"
+            ],
+            "nodes": [
+              "Result",
+              "Index Only Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.051,
+            0.057,
+            0.053,
+            0.053,
+            0.054
+          ]
+        }
+      },
+      {
+        "constraint": "cliente_identificacion_solicitud_correccion_decidido_por_fkey",
+        "routine": "fn_admin_billing_identity_correction_requests",
+        "table_rows": 20000,
+        "heap_bytes": 4972544,
+        "existing_index_bytes": 2629632,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.cliente_identificacion_solicitud_correccion x WHERE x.decidido_por=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 1.422,
+          "median_shared_blocks": 607,
+          "plan": {
+            "execution_ms": 1.414,
+            "planning_ms": 0.228,
+            "shared_hit_blocks": 607,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 20000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            1.336,
+            1.422,
+            1.458,
+            1.648,
+            1.414
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT * FROM pliego.cliente_identificacion_solicitud_correccion WHERE estado='APPROVED' ORDER BY vence_en,solicitud_id LIMIT 20",
+          "median_execution_ms": 0.024,
+          "median_shared_blocks": 3,
+          "plan": {
+            "execution_ms": 0.024,
+            "planning_ms": 0.265,
+            "shared_hit_blocks": 3,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "ix_cliente_identificacion_solicitud_estado_vence"
+            ],
+            "nodes": [
+              "Limit",
+              "Index Scan"
+            ],
+            "rows": 20.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.024,
+            0.023,
+            0.025,
+            0.026,
+            0.024
+          ]
+        }
+      },
+      {
+        "constraint": "digital_ownership_edicion_id_fkey",
+        "routine": "fn_guard_owned_digital_format",
+        "table_rows": 20000,
+        "heap_bytes": 1048576,
+        "existing_index_bytes": 1286144,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.digital_ownership x WHERE x.edicion_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.028,
+          "median_shared_blocks": 5,
+          "plan": {
+            "execution_ms": 0.029,
+            "planning_ms": 0.212,
+            "shared_hit_blocks": 5,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "ix_digital_ownership_edicion"
+            ],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Index Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.026,
+            0.028,
+            0.03,
+            0.027,
+            0.029
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT EXISTS(SELECT FROM pliego.digital_ownership WHERE edicion_id=1002001)",
+          "median_execution_ms": 0.039,
+          "median_shared_blocks": 5,
+          "plan": {
+            "execution_ms": 0.039,
+            "planning_ms": 0.204,
+            "shared_hit_blocks": 5,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "ix_digital_ownership_edicion"
+            ],
+            "nodes": [
+              "Result",
+              "Index Only Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.037,
+            0.038,
+            0.039,
+            0.039,
+            0.039
+          ]
+        }
+      },
+      {
+        "constraint": "envio_historial_usuario_actor_id_fkey",
+        "routine": "fn_order_post_purchase_internal_v043",
+        "table_rows": 10000,
+        "heap_bytes": 1097728,
+        "existing_index_bytes": 679936,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.envio_historial x WHERE x.usuario_actor_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.439,
+          "median_shared_blocks": 134,
+          "plan": {
+            "execution_ms": 0.459,
+            "planning_ms": 0.263,
+            "shared_hit_blocks": 134,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 10000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.473,
+            0.418,
+            0.439,
+            0.407,
+            0.459
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT * FROM pliego.envio_historial WHERE envio_id=1000001 ORDER BY fecha,envio_historial_id",
+          "median_execution_ms": 0.026,
+          "median_shared_blocks": 6,
+          "plan": {
+            "execution_ms": 0.028,
+            "planning_ms": 0.33,
+            "shared_hit_blocks": 6,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "ix_envio_historial_envio"
+            ],
+            "nodes": [
+              "Index Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.026,
+            0.026,
+            0.026,
+            0.048,
+            0.028
+          ]
+        }
+      },
+      {
+        "constraint": "factura_usuario_emisor_id_fkey",
+        "routine": "fn_invoice_snapshot_data_internal_v088",
+        "table_rows": 20000,
+        "heap_bytes": 3489792,
+        "existing_index_bytes": 2637824,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.factura x WHERE x.usuario_emisor_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 1.455,
+          "median_shared_blocks": 426,
+          "plan": {
+            "execution_ms": 1.327,
+            "planning_ms": 0.263,
+            "shared_hit_blocks": 426,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 20000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            1.765,
+            1.409,
+            1.455,
+            1.487,
+            1.327
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT * FROM pliego.factura WHERE factura_id=1000001",
+          "median_execution_ms": 0.051,
+          "median_shared_blocks": 6,
+          "plan": {
+            "execution_ms": 0.052,
+            "planning_ms": 0.328,
+            "shared_hit_blocks": 6,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "factura_pkey"
+            ],
+            "nodes": [
+              "Index Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.051,
+            0.053,
+            0.042,
+            0.05,
+            0.052
+          ]
+        }
+      },
+      {
+        "constraint": "factura_item_pedido_item_id_fkey",
+        "routine": "fn_invoice_snapshot_data_internal_v088",
+        "table_rows": 20000,
+        "heap_bytes": 2342912,
+        "existing_index_bytes": 1114112,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.factura_item x WHERE x.pedido_item_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.485,
+          "median_shared_blocks": 90,
+          "plan": {
+            "execution_ms": 0.485,
+            "planning_ms": 0.209,
+            "shared_hit_blocks": 90,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "factura_item_factura_id_pedido_item_id_key"
+            ],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Index Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.645,
+            0.399,
+            0.518,
+            0.482,
+            0.485
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT l.*,i.precio_original_snapshot FROM pliego.factura_item l JOIN pliego.pedido_item i USING(pedido_item_id) WHERE l.factura_id=1000001",
+          "median_execution_ms": 0.049,
+          "median_shared_blocks": 9,
+          "plan": {
+            "execution_ms": 0.048,
+            "planning_ms": 0.454,
+            "shared_hit_blocks": 9,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "factura_item_factura_id_pedido_item_id_key",
+              "pk_pedido_item"
+            ],
+            "nodes": [
+              "Nested Loop",
+              "Index Scan",
+              "Index Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.066,
+            0.049,
+            0.047,
+            0.059,
+            0.048
+          ]
+        }
+      },
+      {
+        "constraint": "fk_movimiento_inventario_usuario",
+        "routine": "fn_inventory_movements",
+        "table_rows": 20000,
+        "heap_bytes": 2187264,
+        "existing_index_bytes": 1597440,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.movimiento_inventario x WHERE x.usuario_actor_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.671,
+          "median_shared_blocks": 267,
+          "plan": {
+            "execution_ms": 0.671,
+            "planning_ms": 0.24,
+            "shared_hit_blocks": 267,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 20000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.718,
+            0.762,
+            0.667,
+            0.609,
+            0.671
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT * FROM pliego.movimiento_inventario WHERE edicion_id=1000001 ORDER BY fecha DESC,movimiento_inventario_id DESC LIMIT 20",
+          "median_execution_ms": 0.122,
+          "median_shared_blocks": 31,
+          "plan": {
+            "execution_ms": 0.104,
+            "planning_ms": 0.271,
+            "shared_hit_blocks": 31,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "idx_movimiento_edicion_fecha"
+            ],
+            "nodes": [
+              "Limit",
+              "Sort",
+              "Bitmap Heap Scan",
+              "Bitmap Index Scan"
+            ],
+            "rows": 20.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.126,
+            0.116,
+            0.122,
+            0.129,
+            0.104
+          ]
+        }
+      },
+      {
+        "constraint": "nota_credito_usuario_emisor_id_fkey",
+        "routine": "fn_order_post_purchase_internal_v043",
+        "table_rows": 2000,
+        "heap_bytes": 286720,
+        "existing_index_bytes": 262144,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.nota_credito x WHERE x.usuario_emisor_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.123,
+          "median_shared_blocks": 35,
+          "plan": {
+            "execution_ms": 0.118,
+            "planning_ms": 0.168,
+            "shared_hit_blocks": 35,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 2000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.151,
+            0.113,
+            0.147,
+            0.123,
+            0.118
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT n.* FROM pliego.nota_credito n JOIN pliego.factura f USING(factura_id) WHERE f.pedido_id=1000001",
+          "median_execution_ms": 0.045,
+          "median_shared_blocks": 9,
+          "plan": {
+            "execution_ms": 0.045,
+            "planning_ms": 0.483,
+            "shared_hit_blocks": 9,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "factura_pedido_id_key",
+              "nota_credito_factura_id_key"
+            ],
+            "nodes": [
+              "Nested Loop",
+              "Index Scan",
+              "Index Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.054,
+            0.042,
+            0.045,
+            0.044,
+            0.045
+          ]
+        }
+      },
+      {
+        "constraint": "fk_pedido_estado_historial_usuario",
+        "routine": "fn_admin_order_detail_internal_v017",
+        "table_rows": 20000,
+        "heap_bytes": 1867776,
+        "existing_index_bytes": 1302528,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.pedido_estado_historial x WHERE x.usuario_actor_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.651,
+          "median_shared_blocks": 228,
+          "plan": {
+            "execution_ms": 0.651,
+            "planning_ms": 0.205,
+            "shared_hit_blocks": 228,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 20000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.721,
+            0.616,
+            0.597,
+            0.664,
+            0.651
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT * FROM pliego.pedido_estado_historial WHERE pedido_id=1000001 ORDER BY fecha,pedido_estado_historial_id",
+          "median_execution_ms": 0.041,
+          "median_shared_blocks": 6,
+          "plan": {
+            "execution_ms": 0.039,
+            "planning_ms": 0.219,
+            "shared_hit_blocks": 6,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "idx_pedido_historial_pedido_fecha"
+            ],
+            "nodes": [
+              "Index Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.041,
+            0.043,
+            0.041,
+            0.039,
+            0.039
+          ]
+        }
+      },
+      {
+        "constraint": "pedido_retiro_ubicacion_retiro_id_fkey",
+        "routine": "fn_admin_pickup_detail",
+        "table_rows": 10000,
+        "heap_bytes": 1998848,
+        "existing_index_bytes": 933888,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.pedido_retiro x WHERE x.ubicacion_retiro_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.49,
+          "median_shared_blocks": 244,
+          "plan": {
+            "execution_ms": 0.49,
+            "planning_ms": 0.288,
+            "shared_hit_blocks": 244,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Seq Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 10000,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.727,
+            0.541,
+            0.466,
+            0.454,
+            0.49
+          ]
+        },
+        "supported_statement": {
+          "sql": "SELECT * FROM pliego.pedido_retiro WHERE pedido_id=1000002",
+          "median_execution_ms": 0.051,
+          "median_shared_blocks": 6,
+          "plan": {
+            "execution_ms": 0.045,
+            "planning_ms": 0.237,
+            "shared_hit_blocks": 6,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "pedido_retiro_pkey"
+            ],
+            "nodes": [
+              "Index Scan"
+            ],
+            "rows": 1.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.104,
+            0.051,
+            0.056,
+            0.051,
+            0.045
+          ]
+        }
+      },
+      {
+        "constraint": "fk_sesion_autenticacion_usuario",
+        "routine": "fn_auth_session_revoke_all",
+        "table_rows": 40000,
+        "heap_bytes": 6275072,
+        "existing_index_bytes": 5865472,
+        "fk_miss": {
+          "sql": "SELECT 1 FROM ONLY pliego.sesion_autenticacion x WHERE x.usuario_id=9999999 LIMIT 1 FOR KEY SHARE OF x",
+          "median_execution_ms": 0.036,
+          "median_shared_blocks": 5,
+          "plan": {
+            "execution_ms": 0.036,
+            "planning_ms": 0.31,
+            "shared_hit_blocks": 5,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 0,
+            "indexes": [
+              "ix_sesion_autenticacion_usuario"
+            ],
+            "nodes": [
+              "Limit",
+              "LockRows",
+              "Index Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.041,
+            0.033,
+            0.053,
+            0.035,
+            0.036
+          ]
+        },
+        "supported_statement": {
+          "sql": "UPDATE pliego.sesion_autenticacion SET fecha_revocacion=coalesce(fecha_revocacion,clock_timestamp()) WHERE usuario_id=1000020",
+          "median_execution_ms": 0.819,
+          "median_shared_blocks": 390,
+          "plan": {
+            "execution_ms": 0.774,
+            "planning_ms": 0.249,
+            "shared_hit_blocks": 388,
+            "shared_read_blocks": 0,
+            "shared_dirtied_blocks": 0,
+            "wal_bytes": 11775,
+            "indexes": [
+              "ix_sesion_autenticacion_usuario"
+            ],
+            "nodes": [
+              "ModifyTable",
+              "Bitmap Heap Scan",
+              "Bitmap Index Scan"
+            ],
+            "rows": 0.0,
+            "rows_removed": 0,
+            "triggers": []
+          },
+          "execution_ms_samples": [
+            0.984,
+            0.819,
+            0.87,
+            0.738,
+            0.774
+          ]
+        }
+      }
+    ],
+    "parent_ri_checks": {
+      "unused_user": {
+        "sql": "DELETE FROM pliego.usuario WHERE usuario_id=9999999",
+        "median_execution_ms": 7.306,
+        "median_shared_blocks": 54,
+        "plan": {
+          "execution_ms": 7.306,
+          "planning_ms": 0.181,
+          "shared_hit_blocks": 54,
+          "shared_read_blocks": 0,
+          "shared_dirtied_blocks": 0,
+          "wal_bytes": 54,
+          "indexes": [
+            "pk_usuario"
+          ],
+          "nodes": [
+            "ModifyTable",
+            "Index Scan"
+          ],
+          "rows": 0.0,
+          "rows_removed": 0,
+          "triggers": [
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25089",
+              "Constraint Name": "fk_cliente_usuario",
+              "Relation": "usuario",
+              "Time": 0.189,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25496",
+              "Constraint Name": "fk_pedido_estado_historial_usuario",
+              "Relation": "usuario",
+              "Time": 0.827,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25532",
+              "Constraint Name": "fk_movimiento_inventario_usuario",
+              "Relation": "usuario",
+              "Time": 0.946,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25667",
+              "Constraint Name": "fk_sesion_autenticacion_usuario",
+              "Relation": "usuario",
+              "Time": 0.196,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25792",
+              "Constraint Name": "envio_historial_usuario_actor_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.639,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25845",
+              "Constraint Name": "factura_usuario_emisor_id_fkey",
+              "Relation": "usuario",
+              "Time": 1.574,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25978",
+              "Constraint Name": "nota_credito_usuario_emisor_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.26,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26011",
+              "Constraint Name": "checkout_attempt_actor_user_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.234,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26033",
+              "Constraint Name": "address_create_attempt_actor_user_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.076,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26079",
+              "Constraint Name": "correo_token_usuario_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.067,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26116",
+              "Constraint Name": "correo_outbox_usuario_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.168,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26802",
+              "Constraint Name": "cliente_identificacion_solicitud_correccion_decidido_por_fkey",
+              "Relation": "usuario",
+              "Time": 1.523,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_27005",
+              "Constraint Name": "pedido_retiro_retirado_por_fkey",
+              "Relation": "usuario",
+              "Time": 0.2,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_27099",
+              "Constraint Name": "correo_cambio_usuario_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.129,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_27155",
+              "Constraint Name": "registro_continuacion_usuario_id_fkey",
+              "Relation": "usuario",
+              "Time": 0.089,
+              "Calls": 1
+            }
+          ]
+        },
+        "execution_ms_samples": [
+          7.513,
+          7.174,
+          7.437,
+          7.256,
+          7.306
+        ]
+      },
+      "unused_edition": {
+        "sql": "DELETE FROM pliego.edicion WHERE edicion_id=1002001",
+        "median_execution_ms": 1.574,
+        "median_shared_blocks": 30,
+        "plan": {
+          "execution_ms": 1.425,
+          "planning_ms": 0.242,
+          "shared_hit_blocks": 30,
+          "shared_read_blocks": 0,
+          "shared_dirtied_blocks": 0,
+          "wal_bytes": 54,
+          "indexes": [
+            "pk_edicion"
+          ],
+          "nodes": [
+            "ModifyTable",
+            "Index Scan"
+          ],
+          "rows": 0.0,
+          "rows_removed": 0,
+          "triggers": [
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25309",
+              "Constraint Name": "fk_inventario_edicion",
+              "Relation": "edicion",
+              "Time": 0.201,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25356",
+              "Constraint Name": "fk_carrito_item_edicion",
+              "Relation": "edicion",
+              "Time": 0.088,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25418",
+              "Constraint Name": "fk_pedido_item_edicion",
+              "Relation": "edicion",
+              "Time": 0.158,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_25693",
+              "Constraint Name": "fk_cliente_favorito_edicion",
+              "Relation": "edicion",
+              "Time": 0.578,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26330",
+              "Constraint Name": "edicion_oferta_edicion_id_fkey",
+              "Relation": "edicion",
+              "Time": 0.076,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26368",
+              "Constraint Name": "digital_ownership_edicion_id_fkey",
+              "Relation": "edicion",
+              "Time": 0.1,
+              "Calls": 1
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_a_26959",
+              "Constraint Name": "fk_cliente_guardado_despues_edicion",
+              "Relation": "edicion",
+              "Time": 0.094,
+              "Calls": 1
+            }
+          ]
+        },
+        "execution_ms_samples": [
+          1.75,
+          1.482,
+          1.574,
+          1.62,
+          1.425
+        ]
+      }
+    },
+    "approved_public_command": {
+      "sql": "SELECT pliego.fn_auth_session_revoke_all(1000020)",
+      "median_execution_ms": 1.794,
+      "median_shared_blocks": 807,
+      "plan": {
+        "execution_ms": 1.73,
+        "planning_ms": 0.038,
+        "shared_hit_blocks": 885,
+        "shared_read_blocks": 0,
+        "shared_dirtied_blocks": 0,
+        "wal_bytes": 13289,
+        "indexes": [],
+        "nodes": [
+          "Result"
+        ],
+        "rows": 1.0,
+        "rows_removed": 0,
+        "triggers": []
+      },
+      "execution_ms_samples": [
+        1.877,
+        1.794,
+        1.691,
+        1.941,
+        1.73
+      ]
+    },
+    "edition_format_update": {
+      "sql": "UPDATE pliego.edicion SET formato='AUDIOBOOK',numero_paginas=NULL,audio_duracion_segundos=3600,audio_narradores=ARRAY['Narrador de prueba'] WHERE edicion_id=1002001",
+      "median_execution_ms": 1.456,
+      "median_shared_blocks": 524,
+      "plan": {
+        "execution_ms": 1.518,
+        "planning_ms": 0.274,
+        "shared_hit_blocks": 524,
+        "shared_read_blocks": 0,
+        "shared_dirtied_blocks": 0,
+        "wal_bytes": 660,
+        "indexes": [
+          "pk_edicion"
+        ],
+        "nodes": [
+          "ModifyTable",
+          "Index Scan"
+        ],
+        "rows": 0.0,
+        "rows_removed": 0,
+        "triggers": [
+          {
+            "Trigger Name": "trg_edicion_owned_media",
+            "Relation": "edicion",
+            "Time": 0.445,
+            "Calls": 1
+          },
+          {
+            "Trigger Name": "trg_edicion_set_updated_at",
+            "Relation": "edicion",
+            "Time": 0.024,
+            "Calls": 1
+          },
+          {
+            "Trigger Name": "trg_edicion_validate_fulfillment",
+            "Relation": "edicion",
+            "Time": 0.088,
+            "Calls": 1
+          }
+        ]
+      },
+      "execution_ms_samples": [
+        1.415,
+        1.532,
+        1.456,
+        1.411,
+        1.518
+      ]
+    },
+    "writes": {
+      "ownership_2000_inserts": {
+        "sql": "INSERT INTO pliego.digital_ownership(cliente_id,edicion_id) SELECT 1000000+n,1002001 FROM generate_series(1,2000) n",
+        "median_execution_ms": 17.344,
+        "median_shared_blocks": 16655,
+        "plan": {
+          "execution_ms": 18.541,
+          "planning_ms": 0.058,
+          "shared_hit_blocks": 16655,
+          "shared_read_blocks": 0,
+          "shared_dirtied_blocks": 24,
+          "wal_bytes": 607796,
+          "indexes": [],
+          "nodes": [
+            "ModifyTable",
+            "Function Scan"
+          ],
+          "rows": 0.0,
+          "rows_removed": 0,
+          "triggers": [
+            {
+              "Trigger Name": "RI_ConstraintTrigger_c_26365",
+              "Constraint Name": "digital_ownership_cliente_id_fkey",
+              "Relation": "digital_ownership",
+              "Time": 6.897,
+              "Calls": 2000
+            },
+            {
+              "Trigger Name": "RI_ConstraintTrigger_c_26370",
+              "Constraint Name": "digital_ownership_edicion_id_fkey",
+              "Relation": "digital_ownership",
+              "Time": 6.335,
+              "Calls": 2000
+            }
+          ]
+        },
+        "execution_ms_samples": [
+          17.256,
+          18.222,
+          17.344,
+          15.087,
+          18.541
+        ]
+      },
+      "sessions_2000_inserts": {
+        "sql": "INSERT INTO pliego.sesion_autenticacion(usuario_id,token_refresco_hash,fecha_expiracion) SELECT 1000000+n,md5('write-'||n)||md5('write-tail-'||n),now()+interval '1 day' FROM generate_series(1,2000) n",
+        "median_execution_ms": 31.734,
+        "median_shared_blocks": 28375,
+        "plan": {
+          "execution_ms": 32.266,
+          "planning_ms": 0.082,
+          "shared_hit_blocks": 30055,
+          "shared_read_blocks": 0,
+          "shared_dirtied_blocks": 49,
+          "wal_bytes": 1225840,
+          "indexes": [],
+          "nodes": [
+            "ModifyTable",
+            "Function Scan"
+          ],
+          "rows": 0.0,
+          "rows_removed": 0,
+          "triggers": [
+            {
+              "Trigger Name": "RI_ConstraintTrigger_c_25669",
+              "Constraint Name": "fk_sesion_autenticacion_usuario",
+              "Relation": "sesion_autenticacion",
+              "Time": 6.346,
+              "Calls": 2000
+            }
+          ]
+        },
+        "execution_ms_samples": [
+          31.734,
+          32.535,
+          31.632,
+          29.397,
+          32.266
+        ]
+      }
+    }
+  }
+}
