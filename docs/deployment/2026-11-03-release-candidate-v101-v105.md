@@ -1,7 +1,8 @@
 # Release candidate: V101–V105 (identity decisions, active library, registration protection, FK indexes, SSE)
 
-Status: **prepared, not deployed.** Branch `feat/digital-ownership-post-purchase-search`; the exact release SHA and its
-green CI run are recorded at the end of this file. Deployment follows the [production runbook](production-runbook.md)
+Status: **prepared, not deployed.** Branch `feat/digital-ownership-post-purchase-search`. The release SHA is the branch
+head selected at deployment time; it must have its own green "PLIEGO CI" run (runbook section 4), and the deployment
+record (section 11) captures that SHA, the run and the artifact checksums. Deployment follows the [production runbook](production-runbook.md)
 sections 4–9 with the section 7 privilege lifecycle (five pending migrations).
 
 ## Production read-only preflight (2026-11-03, 15:5x -05:00)
