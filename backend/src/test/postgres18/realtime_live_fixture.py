@@ -7,16 +7,19 @@ Commands (JSON on stdout):
   approve-payment <order_id>           -> an ADMIN payment approval through the public API
   evidence <email> <request_id>        -> acknowledgment and decision-email outbox rows (aggregates only)
   digital-edition                      -> an active eBook for the Favorites cart-shortcut journey
+  admin-login                          -> disposable ADMIN credentials for the real browser login (local DB only)
 
 Requires the same environment as the other PG18 HTTP gates (PG*, PLIEGO_JWT_SECRET, CHECKOUT_BASE_URL).
 """
 import json
 import os
 import random
+import secrets
 import sys
 import urllib.error
 import urllib.request
 import uuid
+from urllib.parse import urlparse
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from admin_orders_http_gate import token  # noqa: E402
@@ -57,6 +60,27 @@ def user_id(email: str) -> int:
 
 def admin_id() -> int:
     return int(query("SELECT min(usuario_id) FROM pliego.usuario WHERE rol='ADMIN' AND estado='ACTIVE'"))
+
+
+def admin_login():
+    """Create a new test principal; never change an existing administrator's password."""
+    if (os.environ.get('PLIEGO_TEST_DISPOSABLE_DB') != '1'
+            or os.environ.get('PGHOST') not in ('127.0.0.1', 'localhost', '::1')
+            or os.environ.get('PGPORT', '5432') in ('5432', '55436', '55539')
+            or urlparse(BASE).hostname not in ('127.0.0.1', 'localhost', '::1')):
+        raise RuntimeError('admin-login requires an explicitly disposable local PostgreSQL/API stack on an isolated port')
+    email = f'cross-device-admin-{uuid.uuid4().hex}@pliego.local'
+    password = 'Disposable-' + secrets.token_urlsafe(24)
+    body = json.dumps({'email': email, 'password': password, 'firstNames': 'Admin', 'lastNames': 'Prueba'}).encode()
+    req = urllib.request.Request(BASE + '/api/v1/auth/register', data=body,
+                                 headers={'Content-Type': 'application/json', 'User-Agent': UA})
+    with urllib.request.urlopen(req, timeout=15) as response:
+        assert response.status == 201, 'Disposable administrator registration failed'
+    from email_verification_fixture import verify_registered_email
+    verify_registered_email(email, BASE)
+    # No public role-management command exists. Promote only the newly registered, verified fixture principal.
+    query(f"UPDATE pliego.usuario SET rol='ADMIN' WHERE email_normalizado='{email}' AND rol='CUSTOMER'")
+    return {'email': email, 'password': password}
 
 
 def prepare(email: str):
@@ -139,5 +163,5 @@ def evidence(email: str, request_id: str):
 
 if __name__ == '__main__':
     command, *args = sys.argv[1:]
-    handlers = {'digital-edition': digital_edition, 'prepare': prepare, 'request': request, 'decide': decide, 'approve-payment': approve_payment, 'evidence': evidence}
+    handlers = {'admin-login': admin_login, 'digital-edition': digital_edition, 'prepare': prepare, 'request': request, 'decide': decide, 'approve-payment': approve_payment, 'evidence': evidence}
     print(json.dumps(handlers[command](*args)))

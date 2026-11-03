@@ -8,6 +8,7 @@ import time
 import urllib.parse
 import uuid
 from checkout_last_unit import query, fixture
+from admin_orders_http_gate import token
 
 
 def main():
@@ -15,7 +16,8 @@ def main():
     url=urllib.parse.urlsplit(os.environ['CHECKOUT_BASE_URL'])
     assert url.hostname in ('127.0.0.1','localhost')
     actors,_=fixture()
-    a,b=[p[0] for p in actors]
+    a,address=actors[0]
+    b,_=actors[1]
     admin=int(query(f"INSERT INTO pliego.usuario(email_normalizado,password_hash,rol,estado) VALUES('realtime-http-admin-{uuid.uuid4().hex}@example.invalid','fixture-hash','ADMIN','ACTIVE') RETURNING usuario_id").splitlines()[0])
     secrets={}
     for actor in (a,b,admin):
@@ -66,6 +68,57 @@ def main():
     replay=event(r)
     assert json.loads(replay['data'])['resourceId']=='90001'
     c.close()
+    # A public ADMIN decision must reach streams that were already open before
+    # the request existed. No synthetic enqueue or manual publisher invocation
+    # can substitute for the correction trigger and scheduled committed sweep.
+    def rest(path,actor,role='CUSTOMER',method='GET',body=None):
+        connection=http.client.HTTPConnection(url.hostname,url.port,timeout=15)
+        headers={'Authorization':'Bearer '+token(actor,role)}
+        data=None
+        if body is not None:
+            data=json.dumps(body).encode()
+            headers['Content-Type']='application/json'
+        if method=='POST':headers['Idempotency-Key']=str(uuid.uuid4())
+        try:
+            connection.request(method,path,body=data,headers=headers)
+            response=connection.getresponse()
+            payload=response.read()
+            return response.status,json.loads(payload) if payload else None
+        finally:connection.close()
+
+    def identity_event(stream,name,request_id):
+        connection,response,_=stream
+        deadline=time.monotonic()+12
+        try:
+            while time.monotonic()<deadline:
+                connection.sock.settimeout(max(0.1,deadline-time.monotonic()))
+                message=event(response)
+                assert message is not None,f'stream closed before {name}'
+                if message['event']!=name:continue
+                payload=json.loads(message['data'])
+                if payload.get('resourceId')!=request_id:continue
+                assert payload=={'resourceType':'billingIdentity','resourceId':request_id}
+                assert int(message['id'])>int(stream[2])
+                return
+        except TimeoutError as error:
+            raise AssertionError(f'preopened stream did not receive {name}') from error
+        raise AssertionError(f'preopened stream did not receive {name}')
+
+    query(f"CALL pliego.sp_customer_billing_identity_register({a},'EC_CEDULA','0912345675')")
+    query(f"""CALL pliego.sp_checkout_billed_quoted({a},'{uuid.uuid4()}',{address},'TRANSFER','PENDING',NULL,
+      'HOME_DELIVERY',NULL,NULL,'EC_CEDULA','0912345675','Comprador SSE','Fiscal SSE',NULL,
+      'Quito','Pichincha','EC',NULL,NULL,NULL,NULL,NULL,NULL,NULL)""")
+    status,created=rest('/api/v1/me/billing-identity/correction-requests',a,method='POST',body={
+        'type':'EC_CEDULA','currentNumber':'0912345675','number':'1710034065','reasonCode':'DOCUMENT_TYPO'})
+    assert status==201 and created['status']=='PENDING',(status,created)
+    request_id=created['id']
+    for stream in (streams[0],streams[2]):identity_event(stream,'identity.correction.created',request_id)
+    status,approved=rest(f'/api/v1/admin/billing-identity-corrections/{request_id}/decision',admin,'ADMIN','POST',{'decision':'APPROVE'})
+    assert status==200 and approved['status']=='APPROVED' and approved['decidedBy']==str(admin),(status,approved)
+    for stream in (streams[0],streams[2]):identity_event(stream,'identity.correction.decided',request_id)
+    status,identity=rest('/api/v1/me/billing-identity',a)
+    assert status==200 and identity['number']=='1710034065',(status,identity)
+    assert identity['correctionRequest']['id']==request_id and identity['correctionRequest']['status']=='APPROVED'
     # Revocation closes an already-open stream on the next poll, and refuses reconnect.
     query(f"SELECT pliego.fn_auth_session_revoke('{secrets[b][1]}')")
     deadline=time.monotonic()+8
@@ -102,7 +155,8 @@ def main():
     assert time.monotonic()-started<18
     for c,r in opened:c.close()
     for c,r,_ in streams:c.close()
-    print(json.dumps({'cases_passed':10,'cases_total':10,'wire':'real HTTP/SSE','revocation_bound_seconds':8,'concurrent_subscribers':12}))
+    print(json.dumps({'cases_passed':11,'cases_total':11,'wire':'real HTTP/SSE','revocation_bound_seconds':8,'concurrent_subscribers':12,
+        'public_admin_approval_to_preopened_customer_and_admin_streams':True}))
 
 
 if __name__=='__main__':main()
