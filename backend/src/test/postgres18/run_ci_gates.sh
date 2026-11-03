@@ -94,8 +94,8 @@ fi
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '100:100' ]]; then
-    printf 'Expected 100 successful versioned Flyway migrations through V100; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '105:105' ]]; then
+    printf 'Expected 105 successful versioned Flyway migrations through V105; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"
@@ -105,7 +105,7 @@ for gate in geo_catalog_gate.sql geo_alias_gate.sql runtime_privileges_gate.sql 
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done
 
-for gate in offers_campaign_gate.sql offer_timestamp_gate.sql pickup_timing_notifications_gate.sql; do
+for gate in offers_campaign_gate.sql offer_timestamp_gate.sql pickup_timing_notifications_gate.sql billing_identity_decisions_gate.sql active_library_gate.sql fk_index_gate.sql realtime_resource_events_gate.sql; do
     printf 'Running %s\n' "$gate"
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done
@@ -113,6 +113,14 @@ printf 'Running registration_continuation_gate.py\n'
 timeout 180s python3 "$script_dir/registration_continuation_gate.py"
 printf 'Running login_attempt_gate.py\n'
 timeout 180s python3 "$script_dir/login_attempt_gate.py"
+printf 'Running registration_attempt_gate.py\n'
+timeout 180s python3 "$script_dir/registration_attempt_gate.py"
+printf 'Running realtime_events_gate.py\n'
+timeout 180s python3 "$script_dir/realtime_events_gate.py"
+printf 'Running realtime_events_http_gate.py\n'
+timeout 180s python3 "$script_dir/realtime_events_http_gate.py"
+printf 'Running identity_decision_concurrency.py\n'
+timeout 180s python3 "$script_dir/identity_decision_concurrency.py"
 printf 'Running credential_expiry_gate.py\n'
 timeout 180s python3 "$script_dir/credential_expiry_gate.py"
 printf 'Running worker_lease_gate.py\n'

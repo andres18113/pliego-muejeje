@@ -178,8 +178,8 @@ stop_backend() {
 start_backend migration
 flyway_state="$(admin_psql "$database_name" -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '100:100' ]]; then
-    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 100 migrations; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '105:105' ]]; then
+    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 105 migrations; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'Runtime privilege CI stage: Spring Boot migration Flyway=%s as pliego_app\n' "$flyway_state"
@@ -203,11 +203,18 @@ PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app 
         -f "$script_dir/pending_email_change_security_gate.sql" \
         -f "$script_dir/offers_campaign_gate.sql" \
         -f "$script_dir/offer_timestamp_gate.sql" \
-        -f "$script_dir/pickup_timing_notifications_gate.sql"
+        -f "$script_dir/pickup_timing_notifications_gate.sql" \
+        -f "$script_dir/active_library_gate.sql" \
+        -f "$script_dir/fk_index_gate.sql" \
+        -f "$script_dir/realtime_resource_events_gate.sql"
 PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
     python3 "$script_dir/registration_continuation_gate.py"
 PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
     PLIEGO_LOGIN_GATE_STRICT=1 python3 "$script_dir/login_attempt_gate.py"
+PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
+    PLIEGO_TEST_DISPOSABLE_DB=1 python3 "$script_dir/registration_attempt_gate.py"
+PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
+    PLIEGO_TEST_DISPOSABLE_DB=1 python3 "$script_dir/realtime_events_gate.py"
 PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \
     PLIEGO_TEST_DISPOSABLE_DB=1 python3 "$script_dir/credential_expiry_gate.py"
 PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app PGPASSWORD="$runtime_password" \

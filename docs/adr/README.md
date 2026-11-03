@@ -58,3 +58,8 @@
 - [ADR 0050 — Continuidad del registro y sesión tras verificar](0050-registration-session-continuation.md)
 - [ADR 0051 — Retiro a diez minutos y avisos durables](0051-pickup-readiness-and-durable-notifications.md)
 - [ADR 0052 — Creación condicional de ofertas sin reemplazar historia](0052-conditional-creation-for-edition-offers.md)
+- [ADR 0053 — Protección de intentos de inicio de sesión](0053-login-attempt-protection.md)
+- [ADR 0054 — Durable scoped server-sent invalidation events](0054-durable-scoped-server-sent-events.md)
+- [ADR 0055 — Avisos de corrección, acuse durable y biblioteca activa](0055-identity-decisions-and-active-library.md)
+- [ADR 0056 — Protección del registro sin enumeración](0056-registration-attempt-protection.md)
+- [ADR 0057 — Evidence-based foreign-key indexes](0057-evidence-based-foreign-key-indexes.md)

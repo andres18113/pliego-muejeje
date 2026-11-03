@@ -26,6 +26,7 @@ class OpenApiCoverageTest {
 
     private static final List<Class<?>> CONTROLLERS = List.of(
             com.pliego.modules.identity.api.AuthController.class,
+            com.pliego.modules.realtime.api.RealtimeController.class,
             com.pliego.modules.identity.api.EmailActionController.class,
             com.pliego.modules.identity.api.EmailChangeController.class,
             com.pliego.modules.sales.api.PickupLocationController.class,
@@ -70,7 +71,7 @@ class OpenApiCoverageTest {
             }
         }
         assertThat(endpoints).as("REST total including registration continuation, catalog, saved-for-later, billing-identity corrections, invoice access, verified pickup and post-purchase routes")
-                .isEqualTo(109);
+                .isEqualTo(111);
     }
 
     @Test
@@ -87,7 +88,9 @@ class OpenApiCoverageTest {
         for (Class<?> controller : CONTROLLERS) {
             boolean secured = controller.isAnnotationPresent(SecurityRequirement.class);
             String name = controller.getSimpleName();
-            if (name.equals("EmailChangeController")) {
+            if (name.equals("RealtimeController")) {
+                assertThat(controller.getAnnotation(SecurityRequirement.class).name()).isEqualTo("authSessionCookie");
+            } else if (name.equals("EmailChangeController")) {
                 assertThat(secured).isFalse();
                 for (Method method : controller.getDeclaredMethods()) {
                     if (isEndpoint(method)) {

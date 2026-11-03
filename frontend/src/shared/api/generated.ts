@@ -515,6 +515,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/me/billing-identity/correction-requests/{id}/acknowledgment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Confirmar que leí la decisión de mi corrección
+         * @description Oculta una decisión aprobada o rechazada de la vista de cliente. Repetir el acuse no cambia su fecha ni el historial administrativo.
+         */
+        post: operations["acknowledgeBillingIdentityCorrection"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/me/addresses": {
         parameters: {
             query?: never;
@@ -741,7 +761,7 @@ export interface paths {
         put?: never;
         /**
          * Registrar una cuenta CUSTOMER
-         * @description Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.
+         * @description Respuesta neutral 201 tanto para correo nuevo como existente, sin identificadores de cuenta. Permite 120 registros por IP/hora y 5 por correo normalizado/hora antes de BCrypt. Una continuidad neutral de un correo existente nunca autoriza la cuenta. Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.
          */
         post: operations["register"];
         delete?: never;
@@ -1307,7 +1327,7 @@ export interface paths {
         };
         /**
          * Consultar títulos digitales propios
-         * @description Incluye propiedad revocada para conservar historial de compra.
+         * @description Incluye solo títulos con al menos una adquisición activa. El historial comercial permanece en Mis pedidos.
          */
         get: operations["listOwnedDigitalItems"];
         put?: never;
@@ -1629,6 +1649,26 @@ export interface paths {
         };
         /** Consultar artículos guardados para después */
         get: operations["getSavedForLater"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/events": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Recibir avisos de actualización
+         * @description SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready y library.changed. Datos: {resourceType,resourceId}, identificadores como cadenas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat cada 16s como máximo, conexión máxima 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).
+         */
+        get: operations["streamResourceEvents"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2571,12 +2611,8 @@ export interface components {
             returnTo?: string | null;
         };
         RegisterResponse: {
-            /** @example 100 */
-            userId?: string;
-            /** @example 87 */
-            customerId?: string;
             /**
-             * @description Requiere verificar correo antes de iniciar sesión.
+             * @description Si corresponde, recibirás un correo para verificar tu cuenta. Esta respuesta no confirma si existe.
              * @example PENDING_VERIFICATION
              * @enum {string}
              */
@@ -3231,6 +3267,28 @@ export interface components {
             inCart: boolean;
             /** @description Edición digital activa sin propiedad ni pedido abierto. Estar en el carrito no impide comprar. Checkout vuelve a validar dentro de su transacción. */
             purchasable: boolean;
+        };
+        StoredBillingIdentity: {
+            type?: string;
+            number?: string;
+            used?: boolean;
+            correctionMode?: string;
+            /** @description Solicitud pendiente o última reciente. Tras reconocer una decisión APPROVED/REJECTED devuelve null, sin recuperar decisiones anteriores; se conserva la recencia histórica de 30 días. */
+            correctionRequest?: components["schemas"]["StoredBillingIdentityCorrectionRequest"] | null;
+        };
+        StoredBillingIdentityCorrectionRequest: {
+            id?: string;
+            status?: string;
+            proposedType?: string;
+            proposedNumber?: string;
+            reasonCode?: string;
+            /** Format: date-time */
+            createdAt?: string;
+            /** Format: date-time */
+            dueAt?: string;
+            /** Format: date-time */
+            decidedAt?: string;
+            decisionReason?: string;
         };
         CustomerAddress: {
             /** @example 15 */
@@ -3957,14 +4015,21 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description OK */
+            /** @description Identificación y solicitud vigente; correctionRequest es null tras reconocer la última decisión */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["BillingIdentity"];
+                    "application/json": components["schemas"]["StoredBillingIdentity"];
                 };
+            };
+            /** @description La cuenta todavía no registró una identificación */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
         };
     };
@@ -4716,6 +4781,44 @@ export interface operations {
             };
         };
     };
+    acknowledgeBillingIdentityCorrection: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Acuse guardado o ya existente; sin cuerpo */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Solicitud ajena o inexistente; P1109 */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+            /** @description La solicitud está pendiente o retirada; P1111 */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ProblemDetail"];
+                };
+            };
+        };
+    };
     listAddresses: {
         parameters: {
             query?: never;
@@ -5148,9 +5251,11 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ProblemDetail"];
                 };
             };
-            /** @description Correo ya registrado */
-            409: {
+            /** @description Demasiados intentos (AUTH_REGISTER_RATE_LIMITED). No revela si la cuenta existe. */
+            429: {
                 headers: {
+                    /** @description Segundos hasta el próximo intento */
+                    "Retry-After"?: number;
                     [name: string]: unknown;
                 };
                 content: {
@@ -6728,6 +6833,55 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["SavedForLater"];
+                };
+            };
+        };
+    };
+    streamResourceEvents: {
+        parameters: {
+            query?: never;
+            header?: {
+                "Last-Event-ID"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Flujo SSE; ver ADR0054 para recursos que invalidar */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": string;
+                };
+            };
+            /** @description Cursor inválido */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": Record<string, never>;
+                };
+            };
+            /** @description Sesión ausente, inválida, revocada o vencida */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": Record<string, never>;
+                };
+            };
+            /** @description Límite de conexiones; Retry-After: 60 */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/event-stream": Record<string, never>;
                 };
             };
         };

@@ -33,6 +33,13 @@ public class OpenApiConfiguration {
     @Bean
     OpenApiCustomizer pendingEmailNullableContract() {
         return openApi -> {
+            var identity = openApi.getComponents().getSchemas().get("StoredBillingIdentity");
+            if (identity != null && identity.getProperties() != null) {
+                identity.addProperty("correctionRequest", new ComposedSchema()
+                        .addAnyOfItem(new Schema<>().$ref("#/components/schemas/StoredBillingIdentityCorrectionRequest"))
+                        .addAnyOfItem(new Schema<>().types(java.util.Set.of("null")))
+                        .description("Solicitud pendiente o última reciente. Tras reconocer una decisión APPROVED/REJECTED devuelve null, sin recuperar decisiones anteriores; se conserva la recencia histórica de 30 días."));
+            }
             var profile = openApi.getComponents().getSchemas().get("CustomerProfile");
             if (profile != null && profile.getProperties() != null) {
                 // A nullable $ref sibling is ignored by some 3.1 clients. Model the union explicitly.

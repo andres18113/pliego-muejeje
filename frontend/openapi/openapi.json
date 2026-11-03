@@ -45,6 +45,10 @@
       "description": "Confirmación y recuperación del cambio de correo."
     },
     {
+      "name": "Realtime",
+      "description": "Avisos privados de invalidación mediante SSE."
+    },
+    {
       "name": "Billing identity",
       "description": "Identificación privada para facturación académica."
     },
@@ -407,14 +411,17 @@
         "operationId": "get",
         "responses": {
           "200": {
-            "description": "OK",
+            "description": "Identificación y solicitud vigente; correctionRequest es null tras reconocer la última decisión",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BillingIdentity"
+                  "$ref": "#/components/schemas/StoredBillingIdentity"
                 }
               }
             }
+          },
+          "204": {
+            "description": "La cuenta todavía no registró una identificación"
           }
         },
         "security": [
@@ -1600,6 +1607,58 @@
         ]
       }
     },
+    "/api/v1/me/billing-identity/correction-requests/{id}/acknowledgment": {
+      "post": {
+        "tags": [
+          "Billing identity"
+        ],
+        "summary": "Confirmar que leí la decisión de mi corrección",
+        "description": "Oculta una decisión aprobada o rechazada de la vista de cliente. Repetir el acuse no cambia su fecha ni el historial administrativo.",
+        "operationId": "acknowledgeBillingIdentityCorrection",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "exclusiveMinimum": 0
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Acuse guardado o ya existente; sin cuerpo"
+          },
+          "404": {
+            "description": "Solicitud ajena o inexistente; P1109",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "La solicitud está pendiente o retirada; P1111",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProblemDetail"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearerJwt": []
+          }
+        ]
+      }
+    },
     "/api/v1/me/addresses": {
       "get": {
         "tags": [
@@ -2187,7 +2246,7 @@
           "Authentication"
         ],
         "summary": "Registrar una cuenta CUSTOMER",
-        "description": "Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.",
+        "description": "Respuesta neutral 201 tanto para correo nuevo como existente, sin identificadores de cuenta. Permite 120 registros por IP/hora y 5 por correo normalizado/hora antes de BCrypt. Una continuidad neutral de un correo existente nunca autoriza la cuenta. Aplica BCrypt y crea cuenta pendiente de verificación junto con el correo en outbox, en una única transacción. Establece una credencial HttpOnly independiente, válida como máximo 24 horas, para continuar en este navegador después de verificar; no concede acceso por sí sola.",
         "operationId": "register",
         "requestBody": {
           "content": {
@@ -2226,8 +2285,19 @@
               }
             }
           },
-          "409": {
-            "description": "Correo ya registrado",
+          "429": {
+            "description": "Demasiados intentos (AUTH_REGISTER_RATE_LIMITED). No revela si la cuenta existe.",
+            "headers": {
+              "Retry-After": {
+                "description": "Segundos hasta el próximo intento",
+                "style": "simple",
+                "schema": {
+                  "type": "integer",
+                  "maximum": 3600,
+                  "minimum": 1
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2438,8 +2508,8 @@
                 "style": "simple",
                 "schema": {
                   "type": "integer",
-                  "minimum": 1,
-                  "maximum": 3600
+                  "maximum": 3600,
+                  "minimum": 1
                 }
               }
             },
@@ -3969,7 +4039,7 @@
           "Mi biblioteca"
         ],
         "summary": "Consultar títulos digitales propios",
-        "description": "Incluye propiedad revocada para conservar historial de compra.",
+        "description": "Incluye solo títulos con al menos una adquisición activa. El historial comercial permanece en Mis pedidos.",
         "operationId": "listOwnedDigitalItems",
         "parameters": [
           {
@@ -4966,6 +5036,73 @@
         "security": [
           {
             "bearerJwt": []
+          }
+        ]
+      }
+    },
+    "/api/v1/auth/events": {
+      "get": {
+        "tags": [
+          "Realtime"
+        ],
+        "summary": "Recibir avisos de actualización",
+        "description": "SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready y library.changed. Datos: {resourceType,resourceId}, identificadores como cadenas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat cada 16s como máximo, conexión máxima 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).",
+        "operationId": "streamResourceEvents",
+        "parameters": [
+          {
+            "name": "Last-Event-ID",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flujo SSE; ver ADR0054 para recursos que invalidar",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cursor inválido",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Sesión ausente, inválida, revocada o vencida",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Límite de conexiones; Retry-After: 60",
+            "content": {
+              "text/event-stream": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "authSessionCookie": []
           }
         ]
       }
@@ -7681,19 +7818,9 @@
       "RegisterResponse": {
         "type": "object",
         "properties": {
-          "userId": {
-            "type": "string",
-            "example": "100",
-            "pattern": "^[1-9][0-9]*$"
-          },
-          "customerId": {
-            "type": "string",
-            "example": "87",
-            "pattern": "^[1-9][0-9]*$"
-          },
           "state": {
             "type": "string",
-            "description": "Requiere verificar correo antes de iniciar sesión.",
+            "description": "Si corresponde, recibirás un correo para verificar tu cuenta. Esta respuesta no confirma si existe.",
             "enum": [
               "PENDING_VERIFICATION"
             ],
@@ -9779,6 +9906,69 @@
           "pendingOrder",
           "purchasable"
         ]
+      },
+      "StoredBillingIdentity": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "number": {
+            "type": "string"
+          },
+          "used": {
+            "type": "boolean"
+          },
+          "correctionMode": {
+            "type": "string"
+          },
+          "correctionRequest": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/StoredBillingIdentityCorrectionRequest"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Solicitud pendiente o última reciente. Tras reconocer una decisión APPROVED/REJECTED devuelve null, sin recuperar decisiones anteriores; se conserva la recencia histórica de 30 días."
+          }
+        }
+      },
+      "StoredBillingIdentityCorrectionRequest": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "proposedType": {
+            "type": "string"
+          },
+          "proposedNumber": {
+            "type": "string"
+          },
+          "reasonCode": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dueAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "decidedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "decisionReason": {
+            "type": "string"
+          }
+        }
       },
       "CustomerAddress": {
         "type": "object",

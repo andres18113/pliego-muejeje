@@ -31,7 +31,8 @@ def snapshot():
       'tokens',(SELECT jsonb_agg(to_jsonb(t) ORDER BY usuario_id,tipo) FROM pliego.correo_token t),
       'orders',(SELECT jsonb_agg(to_jsonb(p)-'referencia_publica' ORDER BY pedido_id) FROM pliego.pedido p),
       'orderItems',(SELECT jsonb_agg(to_jsonb(i) ORDER BY pedido_item_id) FROM pliego.pedido_item i),
-      'pickup',(SELECT jsonb_agg(to_jsonb(r)-ARRAY['retirado_por','identidad_verificada'] ORDER BY pedido_id)
+      'pickup',(SELECT jsonb_agg(to_jsonb(r)-ARRAY['retirado_por','identidad_verificada',
+          'programacion_version','aprobacion_programada_en'] ORDER BY pedido_id)
           FROM pliego.pedido_retiro r),
       'payments',(SELECT jsonb_agg(to_jsonb(p) ORDER BY pago_id) FROM pliego.pago p),
       'invoices',(SELECT jsonb_agg(to_jsonb(f) ORDER BY factura_id) FROM pliego.factura f),
@@ -97,6 +98,10 @@ def verify(evidence):
     assert scalar('SELECT count(*) FROM public.flyway_schema_history WHERE success AND version IS NOT NULL') == str(latest)
     after = snapshot()
     assert after == evidence['before'], 'Pending migrations changed historical identity/session/order/invoice/outbox rows'
+    # V097 adds nullable policy metadata. Historical pickup schedules keep their
+    # original policy and approval anchor rather than adopting the new policy.
+    assert scalar(f"SELECT programacion_version IS NULL AND aprobacion_programada_en IS NULL FROM pliego.pedido_retiro WHERE pedido_id={evidence['pickup']}") == 't', \
+        'V097 assigned new scheduling policy metadata to a historical pickup'
     assert scalar("SELECT count(*)=count(DISTINCT referencia_publica) AND bool_and(referencia_publica ~ '^PL-[0-9]{4}-[0-9]{4}$') FROM pliego.pedido") == 't'
     actor, home = evidence['actor'], evidence['home']
     assert scalar(f"SELECT order_reference FROM pliego.fn_checkout_resolve({actor},'{evidence['homeKey']}')") == scalar(f'SELECT referencia_publica FROM pliego.pedido WHERE pedido_id={home}')
