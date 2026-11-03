@@ -52,7 +52,7 @@ No. Cada cuenta tiene una sola copia de cada eBook. Si ya lo tienes, la página 
 
 ## ¿Y si cancelo el pedido?
 
-El eBook sale de Mi biblioteca. Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).''',
+El eBook sale de Mi biblioteca. El pedido cancelado y su reembolso siguen en [Mis pedidos](/orders). Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).''',
         },
         'audiolibros': {
             'summary': 'Dónde encuentras los audiolibros que compras y qué incluye tu compra.',
@@ -74,7 +74,7 @@ No. Cada cuenta tiene una sola copia de cada audiolibro. Si ya lo tienes, la pá
 
 ## ¿Y si cancelo el pedido?
 
-El audiolibro sale de Mi biblioteca. Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).''',
+El audiolibro sale de Mi biblioteca. El pedido cancelado y su reembolso siguen en [Mis pedidos](/orders). Mira cuándo puedes cancelar en [Cancelaciones y reembolsos](/ayuda/cancelaciones-y-reembolsos).''',
         },
         'compras': {
             'summary': 'Cómo hacer un pedido, qué necesitas y dónde ves tu factura.',
@@ -240,7 +240,7 @@ Se aplica al momento si tu número todavía no aparece en ninguna factura, o si 
 
 ## Mientras la revisamos
 
-Te respondemos en un plazo de 15 días. Mientras tanto, tu solicitud aparece como En revisión.
+Te respondemos en un plazo de 15 días. Mientras tanto, tu solicitud aparece como En revisión. Cuando la revisemos, te avisamos por correo y en Mi perfil.
 
 Tus compras siguen usando tu número actual. Las facturas ya emitidas no cambian.
 
