@@ -38,15 +38,25 @@ deployment boundary need their own authorization.
 
 ## 2. Known environment — revalidate, do not assume
 
-Last verified deployment: **2026-11-01**, release `20261101T232546Z-788311a`, source
+Last verified deployment: **2026-11-03**, release `20261103T204931Z-ec48e07`, source
+`ec48e071854916cdf1051016e0c49fac9145e216`,
+[CI run 41709777442](https://github.com/andres18113/pliego-muejeje/actions/runs/41709777442),
+Flyway **105** (V101–V105 applied through the section 7 privilege lifecycle).
+The previous release, `20261102T220936Z-64e3c60` (`64e3c60`, deployed 2026-11-02,
+Flyway **100**), is qualified on V105 for **availability-only emergency rollback**:
+it has no SSE, acknowledgment or registration protection, and new identity-decision
+mails would fail rendering. It is not a full-feature fallback; see section 10 and
+the [deployment outcome](2026-11-03-release-candidate-v101-v105.md#deployment-outcome).
+
+Earlier verified reference: release `20261101T232546Z-788311a`, source
 `788311a81ad7ab19951d6cb32bcb2580439f97ea`,
 [CI run 41360875235](https://github.com/andres18113/pliego-muejeje/actions/runs/41360875235),
-Flyway **95** (V088–V095 applied through the section 7 privilege lifecycle; previous
-release `20261101T004004Z-4100391` proven to start on V095 for availability rollback).
-The same day a one-time customer-data reset ran after this release (see
-[`docs/testing/data-reset.md`](../testing/data-reset.md)); it is not a Flyway migration. These operator-verified values are
-historical references, not instructions to redeploy that release or assume they
-remain current.
+Flyway **95** (V088–V095 via section 7; previous `20261101T004004Z-4100391`
+qualified for availability rollback on V095). A one-time customer-data reset ran
+after that release (see [`docs/testing/data-reset.md`](../testing/data-reset.md));
+it is not a Flyway migration. These operator-verified values are historical
+references, not instructions to redeploy those releases or assume they remain
+current. Revalidate the live environment before each deployment.
 
 | Component | Expected arrangement |
 | --- | --- |
@@ -428,55 +438,126 @@ digits, underscores and hyphens in values used as paths/commands. Never interpol
 unvalidated input or secret values into shell commands. Do not reuse a partially
 prepared release directory by overwriting it.
 
-1. Hash the JAR, each current `dist` file and the frontend archive with SHA-256.
-   A frontend archive contains relative regular files rooted at `dist` contents;
-   reject traversal, absolute paths and links. Exclude source, `.env`, keys,
-   `node_modules` and source maps that embed source. Only explicitly public
-   configuration belongs in the bundle.
+The reviewed, release-agnostic tools live in
+[`scripts/ops/deploy/`](../../scripts/ops/deploy/). They require only Ubuntu 24.04's
+Python 3 standard library. Keep all seven together: `release_common.py`,
+`compare_migrations.py`, `prepare_frontend.py`, `poll_catalog.py`, `release_json.py`,
+`rollback.py` and `service_state.py`. Do not execute helpers from a deploy-writable
+staging directory as root. The preparation order below matches the 2026-11-03
+operation; helper fixes must follow the audited correction procedure in section 10.
+
+1. Hash the JAR, each current `dist` file, the frontend archive, non-secret input
+   manifests and every helper with SHA-256. A frontend archive contains relative
+   regular files rooted at `dist` contents; reject traversal, absolute paths and
+   links. Exclude source, `.env`, keys, `node_modules` and source maps that embed
+   source. Only explicitly public configuration belongs in the bundle.
 2. Transfer through `ssh -F /home/andres18123/.ssh/config pliego-vps` into a unique
    `0700` deploy-owned staging directory. A safe implementation uses a binary file
    as SSH stdin and a fixed remote file destination. Avoid local recompilation or
-   uploading the repository. Compare remote hashes before installation.
-3. Compare every **already-applied** migration's bytes in the installed executable
-   JAR (`BOOT-INF/classes/db/migration/`) with the candidate. Compare the original
-   migrations with the approved ZIP too. Matching filenames are insufficient.
-   The VPS has no `unzip`; use Python `zipfile` to compare migration entry bytes.
+   uploading the repository. In the locked privileged shell, create a new
+   `/opt/pliego/deployment/$R` with `mkdir -m 0700` (fail if it exists), create its
+   `staging/scripts` directories as `root:root 0700`, and install the artifacts,
+   input manifests and the seven helpers there as `root:root 0600`. Verify the
+   **copied** files against the locally reviewed SHA-256 set before running any
+   Python helper as root; computing a new checksum set alone does not verify it.
+   Set `D=/opt/pliego/deployment/$R`, `W=$D/staging`, `S=$W/scripts`; all subsequent
+   helper commands run from `$S` against these pinned copies, never the upload.
+3. Record the section 5 observations in `$D/preflight.json` (`0600`, root-owned),
+   with `releaseId`, `sourceSha`, `ciRunId`, `previousReleaseId`,
+   `previousSourceSha`, `previousBackendSha256`, `previousIndexSha256`,
+   `expectedCatalogTotalCount`, `previousMaxFlyway` and `candidateMaxFlyway`.
+   Capture the previous pointers and configuration hashes too. Catalog count is
+   the actual preflight observation normalized to an integer, not a historical
+   constant; source/CI and candidate migration maximum come from the pinned build.
+   Use these reviewed values for `$R`, `$P`, `$previous_max` and `$candidate_max`.
+   Compare every **already-applied** migration's bytes in the actual installed
+   executable JAR (`BOOT-INF/classes/db/migration/`) with the candidate:
+
+   ```bash
+   cd "$S"
+   python3 compare_migrations.py \
+     "/opt/pliego/releases/$P/pliego-backend-0.1.0-SNAPSHOT.jar" \
+     "$W/pliego-backend-0.1.0-SNAPSHOT.jar" \
+     --previous-max "$previous_max" --candidate-max "$candidate_max" > "$D/migrations.json"
+   chmod 0600 "$D/migrations.json"
+   ```
+
+   Compare the original migrations with the approved ZIP too. Matching filenames
+   are insufficient. The VPS has no `unzip`; the helper uses Python `zipfile`.
    Stop on any discrepancy; do not repair Flyway or edit an applied migration.
-4. Before activation, capture both previous pointer targets and configuration
-   hashes in `/opt/pliego/deployment/<release>/release.json` (`0700` directory,
-   `0600` manifest). Store candidate hashes, source SHA, expected migration set,
-   previous backend/frontend, deployment scope and planned rollback there.
-5. Back up relevant Nginx/unit files. Since the environment file is unchanged,
+4. Back up relevant Nginx/unit files. Since the environment file is unchanged,
    preserve it in place: do not duplicate secrets into the release. If an authorized
    configuration change is necessary, design its private recovery separately.
-6. Create a root-only PostgreSQL custom-format backup before schema changes.
+   Create a root-only PostgreSQL custom-format backup before schema changes.
    In a privileged shell, open the `0600` output before invoking `pg_dump` as
    postgres; ensure it completed, then verify the archive with `pg_restore --list`.
    A Python `os.open(..., O_CREAT|O_EXCL, 0o600)` plus subprocess stdout is suitable.
-   A successful archive listing checks structure; it does not prove full restore.
-   Capture non-secret owner/grant state because the database dump alone does not
-   recreate global roles. Never print role password hashes or dump contents.
-7. Install backend directories as `root:pliego 0750`, JAR `0640`; frontend dirs
-   `root:root 0755`, files `0644`. Verify `pliego`/Nginx can traverse/read them.
-   Keep secrets/private documents out of the static tree.
-8. Retain missing **hashed static assets** from the previous release without
-   overwriting candidate files, so existing tabs do not receive chunk 404s. Never
-   copy the old index over the new one. Keep both versioned releases for rollback.
-   Prepare the reverse direction too: a separate versioned rollback frontend tree
-   can contain the previous build plus missing candidate hashed assets. Verify its
-   index is byte-identical to the previous build and record `rollbackFrontend`
-   separately from `previousFrontend`. This serves new tabs' lazy chunks after a
-   rollback without modifying an immutable previous release in place.
-9. Prepare a release-specific `rollback.py` or equivalent with a genuine read-only
-   `--dry-run`. It must validate old targets, planned ownership cleanup, schema/binary
-   compatibility and `nginx -t`; see section 10. It must not change privileges,
-   pointers or service state during preflight. Syntax-check it and exercise its
-   preflight before changing pointers. Include section 7's early-failure recovery
-   so a failure before the temporary owner grant restores previous availability.
+   Feed the archive on stdin when listing it as postgres: that user cannot traverse
+   the root-only deployment directory. A successful listing checks structure; it
+   does not prove full restore. Capture non-secret owner/grant state because the
+   database dump alone does not recreate global roles. Never print role password
+   hashes or dump contents.
+5. Create a new backend release directory exclusively; install it as
+   `root:pliego 0750`, JAR `0640`, and verify `pliego` can traverse/read it.
+   Never overwrite the previous release or reuse an existing candidate tree.
+6. Validate the frontend archive completely before creating either public tree,
+   then prepare the candidate and separate recovery frontend:
 
-Immediately before activation, compare the live pointers and installed artifact
-hashes with the captured preflight state. Stop on unexpected drift instead of
-overwriting another operator's release.
+   ```bash
+   python3 prepare_frontend.py "$W/frontend-dist.tar" \
+     "/var/www/pliego/releases/$P" "/var/www/pliego/releases/$R" \
+     "/var/www/pliego/releases/$P-rollback-web-for-$R" \
+     --release "$R" --previous-release "$P" > "$D/frontend-prepare.json"
+   ```
+
+   The helper creates frontend directories `root:root 0755`, files `0644`; verify
+   Nginx can traverse/read them. Keep secrets/private documents out of the static
+   tree. It retains missing **hashed static assets** in both directions without
+   overwriting candidate files or modifying the immutable previous release.
+   Never copy the old index over the new one. The separate recovery tree's index
+   must be byte-identical to the previous build; record `rollbackFrontend`
+   separately from `previousFrontend`. Retain both versioned releases.
+7. Create the private, create-exclusive release manifest after validating installed
+   trees, migration evidence, configuration, compatibility and helper hashes:
+
+   ```bash
+   python3 release_json.py --release "$R" --preflight "$D/preflight.json" \
+     --candidate-manifest "$W/candidate-manifest.json" \
+     --migrations "$D/migrations.json" \
+     --compatibility-evidence "$W/compatibility-evidence.json" \
+     --frontend-archive "$W/frontend-dist.tar" \
+     --config /etc/nginx/sites-available/pliego-api \
+     --config /etc/nginx/sites-available/pliegolibros.com \
+     --config /etc/systemd/system/pliego.service
+   ```
+
+   Use the actual verified configuration paths. `release.json` remains `0600` in
+   the `0700` deployment directory; it binds the source/CI, expected migration
+   set, candidate/previous/recovery hashes and trees, configuration hashes, helper
+   hashes, preflight catalog count, deployment scope and recovery qualification.
+   It records the environment hash, never secret contents. Refuse existing
+   manifests rather than silently replacing prepared evidence.
+8. Syntax-check the helpers locally and exercise the genuine read-only rollback
+   preflight before changing pointers:
+
+   ```bash
+   python3 rollback.py --release "$R" --dry-run > "$D/rollback-dryrun.json"
+   chmod 0600 "$D"/*.json
+   ```
+
+   It checks pinned targets, schema/binary compatibility, restricted privileges,
+   hashes/configuration/helpers, the loopback catalog and `nginx -t`; it never
+   changes privileges, pointers, service state, Nginx or backups. Its accepted
+   Flyway states are the full original history or full candidate history, derived
+   from preflight maxima; partial prefixes stay stopped. Prepare section 7's
+   early-failure recovery too, so a failure before the temporary grant restores
+   previous availability after the original history/restrictions are verified.
+9. Immediately before activation, compare live pointers, installed JAR/index and
+   tree hashes, complete Flyway history, configuration and helper hashes with the
+   captured preflight/manifest. Stop on unexpected drift instead of overwriting
+   another operator's release. Then perform section 7, including both drains,
+   exact ACL cleanup and postflight, before the section 8 frontend switch.
+   Repeat `rollback.py --release "$R" --dry-run` after deployment (section 10).
 
 Avoid replacing an existing symlink non-atomically with `rm` then `ln`. Example
 helper for a privileged remote shell (targets must have been installed/verified):
@@ -515,9 +596,15 @@ If there are pending migrations:
 
 1. Confirm the backup, compatibility tests, rollback and operator sudo access.
    Use a bounded maintenance window; this is not a zero-downtime procedure.
-2. Stop `pliego.service`, draining its connection pool; verify the stopped state
-   as described below. As the administrative DB operator, grant migration-time
-   inherited ownership:
+2. Stop `pliego.service`, draining its connection pool with the verified staged
+   helper; keep the deployment lock held:
+
+   ```bash
+   python3 "$S/service_state.py" drain pliego --timeout 45
+   ```
+
+   Verify the stopped state as described below. As the administrative DB operator,
+   grant migration-time inherited ownership:
 
    ```sql
    GRANT pliego_owner TO pliego_app;
@@ -526,24 +613,40 @@ If there are pending migrations:
 
    This temporary membership is not a runtime setting. Never change passwords,
    make the runtime SUPERUSER, or set pooled connections' role to `pliego_owner`.
-3. Atomically select the verified candidate backend; start the normal service.
+3. Atomically select the verified candidate backend using section 6's atomic
+   pointer helper; start the normal service with
+   `python3 "$S/service_state.py" start pliego` (reset-failed, then start).
    Its ordinary Flyway startup applies pending migrations. Do not run SQL migration
    files manually or launch a second backend against the same DB concurrently.
-4. Poll the local DB-backed catalog endpoint with a bounded timeout, inspect the
+4. Run `python3 "$S/poll_catalog.py" --manifest "$D/release.json"` to poll the
+   local DB-backed catalog endpoint with a bounded timeout, inspect the
    startup journal and verify the planned Flyway versions/checksums succeeded.
    Do not publish the new frontend or declare completion while privileges remain.
-5. **Stop the service again**, then run the administrative transaction below.
+5. **Stop the service again** with
+   `python3 "$S/service_state.py" drain pliego --timeout 45`, then run the exact
+   `PLIEGO_RUNTIME_ACL_CLEANUP_SQL` administrative transaction below.
    New objects may belong to `pliego_app` because Flyway ran under that session
    identity; reassignment and explicit grants are required.
-6. Assert runtime privilege booleans are false, then restart the normal service.
-   Recheck Flyway, local catalog, unit/worker logs and runtime privileges. Only
-   this restricted, fresh pool is the accepted runtime state.
+6. Assert runtime privilege booleans are false and app-owned objects are zero,
+   then run `python3 "$S/service_state.py" start pliego` and
+   `python3 "$S/poll_catalog.py" --manifest "$D/release.json"`.
+   Recheck Flyway, unit/worker logs and the exact read-only postflight block below
+   (every value must be `t`). Only this restricted, fresh pool is the accepted
+   runtime state.
 
 **Stop/start procedure.** Java exits 143 on SIGTERM, so `systemctl stop pliego`
 can leave `ActiveState=failed`, `Result=exit-code`. Treat either failed or inactive
-with `MainPID=0` as drained; waiting only for inactive times out. Inspect
-`systemctl show pliego --property=ActiveState,Result,MainPID` and run
-`systemctl reset-failed pliego` before the next start, including recovery starts.
+with `MainPID=0` as drained; waiting only for inactive times out. Read
+`ActiveState` and `MainPID` **by property name**: parse `key=value` lines from
+`systemctl show pliego --property=ActiveState,Result,MainPID` without `--value`,
+or issue separate `--property=ActiveState --value` and `--property=MainPID --value`
+queries. Never pattern-match combined `--value` output: systemd orders the
+properties itself. On **2026-11-03**, `0 failed` was misread as not drained and
+the fail-safe restarted the unchanged previous release, causing about 45 seconds
+of downtime. The shared `service_state.py` reads named properties and requires
+both the allowed state and zero PID before any pointer switch. Run
+`systemctl reset-failed pliego` before the next start, including recovery starts;
+the helper's `start` command does this.
 On 2026-11-01, attempt 1 waited only for inactive and caused about 1.5 minutes of
 downtime before a manual restart.
 
@@ -560,7 +663,13 @@ Any partial migration prefix stays stopped pending reviewed recovery.
 Suggested startup budget: a **90-second monotonic deadline**, polls about every
 2 seconds, each request capped at 3 seconds and by the remaining deadline. Require
 HTTP 200, parse JSON, validate `items` is a list and `totalCount` is a nonnegative
-integer/string integer, and compare with preflight observations. An HTML response,
+integer/string integer, and compare with preflight observations. The API returns
+`totalCount` as a **decimal string**: accept an integer excluding booleans, or a
+nonempty ASCII-digit string, then compare exactly. Reject negatives, booleans and
+non-ASCII digits. The 2026-11-03 integer-only helper rejected a healthy candidate
+after all migrations succeeded; the same acceptance defect would have blocked an
+emergency rollback. Both paths now share `poll_catalog.py`, with expected count
+from the preflight observation in `release.json`. An HTML response,
 malformed JSON or an unexpectedly empty catalog is not a successful check. A
 measured startup requirement can justify a different recorded budget; do not wait
 indefinitely or hide an automatic restart loop.
@@ -958,8 +1067,9 @@ Prepare recovery **before** switching. A release rollback selects the recorded
 compatible recovery targets and restores explicitly backed-up config changes; it
 keeps current business data, applied Flyway migrations and owner/runtime separation.
 
-1. Stop/drain the backend if it was elevated, unhealthy, or needs a pointer switch;
-   accept failed/inactive with `MainPID=0` and reset-failed before starting.
+1. Stop/drain the backend if it was elevated, unhealthy, or needs a pointer switch,
+   using `python3 "$S/service_state.py" drain pliego --timeout 45`; read failed/
+   inactive and `MainPID=0` by property name, and reset-failed before starting.
 2. Apply section 7's schema-appropriate cleanup and verify no owner membership/
    CREATE. Exact-original-history recovery revokes only the temporary grant;
    do not run the V082-dependent block on an older schema. A partial migration
@@ -983,6 +1093,53 @@ keeps current business data, applied Flyway migrations and owner/runtime separat
    rollback tree or roll the backend back with it, then re-run the Email assets check.
 5. Verify public requests, workers, ports and logs. Report whether rollback was
    actually executed or only preflight-tested. Keep failed releases/logs for review.
+
+For coordinated application recovery, use the staged repository `rollback.py`
+whose hash is bound in this release's manifest. Run it read-only before activation
+and again **after** the frontend switch, with distinct private output files:
+
+```bash
+python3 "$S/rollback.py" --release "$R" --dry-run > "$D/rollback-dryrun-postdeploy.json"
+chmod 0600 "$D/rollback-dryrun-postdeploy.json"
+# Actual recovery, only within the authorized operation after required ACL cleanup:
+python3 "$S/rollback.py" --release "$R" --lock-fd 9
+```
+
+FD 9 is inherited from the already-held exclusive lock in section 3. Do not open
+a second independent lock while holding it. With no outer lock, the helper can
+acquire the same lock itself; dry-run never opens/creates it or calls systemctl.
+Real rollback revalidates after drain, atomically selects the pinned previous
+backend and separate recovery frontend, resets failed state, starts restricted
+runtime, polls the manifest's catalog count and rechecks history/privileges. It
+refuses owner membership/CREATE, app-owned objects, failed/partial Flyway history,
+changed targets, helpers or configuration. It performs no privilege cleanup,
+Nginx changes, business-data writes or backup restore. The operator must complete
+section 7's schema-appropriate cleanup before it can run.
+
+**Audited helper correction after preparation.** Never hand-edit helper hashes
+in `release.json`. Review and test the replacement locally, retain its reviewed
+SHA-256, stage it as `root:root 0600` beside the other verified helpers and verify
+the copied bytes before execution as root. Keep the deployment lock held. Supply
+the recorded old helper hash and independently reviewed new helper hash explicitly:
+
+```bash
+python3 "$S/release_json.py" --release "$R" \
+  --correct-helper poll_catalog.py --previous-sha256 "$old_helper_sha256" \
+  --sha256 "$reviewed_new_helper_sha256" --reason poll-totalcount \
+  --explanation 'Reviewed correction: accept decimal-string totalCount as required by section 7' \
+  --lock-fd 9
+python3 "$S/rollback.py" --release "$R" --dry-run
+```
+
+Use a unique safe reason for each correction and the actual changed helper name.
+The correction helper preserves the exact original manifest create-exclusively as
+`release.json.superseded-<reason>`, appends `corrections[]` with timestamp, helper,
+previous/new SHA-256, reason and explanation, and replaces the manifest atomically.
+It refuses mismatched old/new hashes, existing superseded files and unrelated
+helper drift. This makes the 2026-11-03 `poll-totalcount` recovery reproducible
+without erasing the prepared evidence. A successful correction does not certify
+compatibility or deployment health: repeat the rollback dry-run and all relevant
+acceptance checks before relying on the changed helper.
 
 A dump is emergency recovery material, not a routine rollback command. Restoring
 production data is a separate explicit recovery decision because it can erase

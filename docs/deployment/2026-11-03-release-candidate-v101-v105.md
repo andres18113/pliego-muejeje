@@ -1,6 +1,6 @@
 # Release candidate: V101–V105 (identity decisions, active library, registration protection, FK indexes, SSE)
 
-Status: **prepared, not deployed.** Branch `feat/digital-ownership-post-purchase-search`. The release SHA is the branch
+Preparation status (historical; see Deployment outcome below): **prepared, not deployed.** Branch `feat/digital-ownership-post-purchase-search`. The release SHA is the branch
 head selected at deployment time; it must have its own green "PLIEGO CI" run (runbook section 4), and the deployment
 record (section 11) captures that SHA, the run and the artifact checksums. Deployment follows the [production runbook](production-runbook.md)
 sections 4–9 with the section 7 privilege lifecycle (five pending migrations).
@@ -80,3 +80,45 @@ Not run, environment limits (not product failures): `offers.live` and the two `d
 need the seeded development catalog and an active offers campaign; `orders-lifecycle.live` / `store-pickup.live`
 need a dedicated fixture generator that is not in the repository. The same transitions are covered by the CI PG18
 gates and the mocked Playwright specs.
+
+## Deployment outcome
+
+Deployed and verified **2026-11-03**: release `20261103T204931Z-ec48e07`, source
+`ec48e071854916cdf1051016e0c49fac9145e216`,
+[CI 41709777442](https://github.com/andres18113/pliego-muejeje/actions/runs/41709777442).
+V101–V105 applied at **21:15:08–21:15:09Z**, followed by stop/drain, the exact
+runbook ACL cleanup and all-`t` postflight. The restricted backend was healthy at
+**21:19:15Z**; the frontend switched atomically at **21:19:46Z**, without changes to
+Nginx, the unit or environment file. R2 and mail remained enabled.
+
+Two contained tooling incidents extended downtime without data changes: the first
+drain check pattern-matched combined `systemctl --value` output, which arrived as
+`0 failed`; the fail-safe restarted the unchanged previous release
+(**21:12:55–21:13:40Z**, 45 s). Reading `ActiveState` and `MainPID` separately fixed
+the check. The second attempt rejected a healthy candidate because `totalCount`
+arrives as a decimal string; Flyway had already completed and the service was
+stopped safely. The corrected poll accepts an integer (excluding booleans) or
+ASCII-digit string and compares exactly. After cleanup, restricted startup passed
+(second downtime **21:14:59–21:19:15Z**, 4 min 16 s). The original manifest was
+retained as `release.json.superseded-poll-totalcount`; its correction records the
+old/new helper hashes and reason.
+
+Authenticated Cloudflare smoke passed **22/22**: SSE first bytes in 0.243 s,
+heartbeat gap at most 16.07 s, close at 60.30 s, cursor resume, live correction
+events, 401/429, neutral registration with throttling, and owned-only library.
+The authorized correction request was created then withdrawn, with cédula
+unchanged; six duplicate-email registration attempts left the account unchanged,
+and the smoke session was logged out. Separate anonymous checks passed public
+index identity, SPA reload/no-store, canonical redirect, catalog, PNG brand assets,
+401 and CORS. Monitoring at **21:26:16Z** showed Flyway 105/105, no failed migrations,
+zero ERROR records or restarts, restricted runtime, no SSE leases or unpublished
+hints, and 16 R2 artifacts with 16 READY billing jobs.
+
+Post-deploy rollback dry-run passed read-only on V105, with `f|f|f|f`, zero app-owned
+objects and both R2/mail enabled. The previous `20261102T220936Z-64e3c60` and a
+separate rollback frontend retaining both generations of hashed assets remain
+available. This is an **availability-only emergency rollback**: no SSE,
+acknowledgment or registration protection; new identity-decision mails would fail
+rendering. No full-compatible fallback was prepared, and no post-migration rollback
+was executed. The custom-format backup was listed successfully (1,315 entries,
+63 table-data entries); this did not constitute a restore test.
