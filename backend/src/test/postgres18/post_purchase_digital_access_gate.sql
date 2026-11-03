@@ -134,9 +134,10 @@ BEGIN
   OR (SELECT stock_actual FROM pliego.inventario WHERE edicion_id=physical)<>stock_checkpoint
   OR (SELECT estado FROM pliego.envio WHERE pedido_id=purchase) IS DISTINCT FROM 'CANCELLED'
   OR (SELECT count(*) FROM pliego.movimiento_inventario WHERE pedido_id=purchase AND tipo='CANCELLATION')<>1
-  OR (pliego.fn_customer_library_detail(actor,owned)->>'ownershipState') IS DISTINCT FROM 'REVOKED' THEN
+  OR (pliego.fn_library_item(owned)->>'ownershipState') IS DISTINCT FROM 'REVOKED' THEN
   RAISE EXCEPTION 'Customer mixed cancellation failed full refund, source revocation or physical restoration';
  END IF;
+ BEGIN PERFORM pliego.fn_customer_library_detail(actor,owned); RAISE EXCEPTION 'Cancelled mixed item remains in library'; EXCEPTION WHEN SQLSTATE 'P6001' THEN NULL; END;
 
  -- Repurchase reuses the identity but the cancelled source must never borrow its link.
  CALL pliego.sp_cart_add_item(actor,physical,1,cart,item,quantity);
@@ -161,9 +162,10 @@ BEGIN
   OR (SELECT monto FROM pliego.pago WHERE pedido_id=replacement)<>total
   OR (SELECT stock_actual FROM pliego.inventario WHERE edicion_id=physical)<>stock_checkpoint
   OR (SELECT count(*) FROM pliego.movimiento_inventario WHERE pedido_id=replacement AND tipo='CANCELLATION')<>1
-  OR (pliego.fn_customer_library_detail(actor,owned)->>'ownershipState') IS DISTINCT FROM 'REVOKED' THEN
+  OR (pliego.fn_library_item(owned)->>'ownershipState') IS DISTINCT FROM 'REVOKED' THEN
   RAISE EXCEPTION 'Admin mixed cancellation failed full refund, source revocation or physical restoration';
  END IF;
+ BEGIN PERFORM pliego.fn_customer_library_detail(actor,owned); RAISE EXCEPTION 'Admin-cancelled mixed item remains in library'; EXCEPTION WHEN SQLSTATE 'P6001' THEN NULL; END;
 
  -- A pending mixed transfer has no grant or SALE; admin capture creates both atomically.
  CALL pliego.sp_cart_add_item(actor,physical,1,cart,item,quantity);

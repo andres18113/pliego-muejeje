@@ -59,6 +59,11 @@ public class JdbcBillingIdentityCorrectionGateway extends JdbcGatewaySupport imp
                 "CALL pliego.sp_customer_billing_identity_correction_request_withdraw(?,?)", actorUserId, requestId));
     }
 
+    @Override public void acknowledge(long actorUserId, long requestId) {
+        withDatabaseErrorTranslation(() -> jdbc.update(
+                "CALL pliego.sp_customer_billing_identity_correction_request_acknowledge(?,?)", actorUserId, requestId));
+    }
+
     @Override
     public BillingIdentityCorrectionPage search(long actorUserId, String status, int page, int pageSize) {
         return withDatabaseErrorTranslation(() -> {

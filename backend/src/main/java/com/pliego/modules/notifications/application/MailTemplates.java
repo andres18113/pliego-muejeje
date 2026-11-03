@@ -37,8 +37,31 @@ public final class MailTemplates {
    case "ORDER_STATUS" -> orderStatus(data,base);
    case "ORDER_CANCELLED" -> orderCancelled(data,base);
    case "INVOICE_ISSUED" -> invoiceIssued(data,base);
+   case "BILLING_IDENTITY_DECIDED" -> billingIdentityDecision(data,base);
    default -> throw new IllegalArgumentException("Tipo de correo inválido.");
   };
+ }
+
+ private MailMessage billingIdentityDecision(JsonNode data,String base) {
+  String state=data.path("status").asText("");
+  var mail=new MailLayout("Revisamos tu solicitud de corrección de identificación.",base);
+  String subject;
+  if("APPROVED".equals(state)) {
+   String type=data.path("identityType").asText("");
+   String number=data.path("identityNumber").asText("");
+   if(!(("EC_CEDULA".equals(type)&&number.matches("[0-9]{10}"))
+     ||("EC_RUC".equals(type)&&number.matches("[0-9]{13}"))))
+    throw new IllegalArgumentException("Datos de identificación inválidos.");
+   subject="Aprobamos tu corrección de identificación";
+   mail.heading(subject).lead("Tu cuenta ahora usa "+("EC_CEDULA".equals(type)?"la cédula ":"el RUC ")+number+".")
+    .paragraph("Las facturas ya emitidas conservan sus datos originales.");
+  } else if("REJECTED".equals(state)) {
+   String reason=data.path("decisionReason").asText("");
+   if(reason.isBlank())throw new IllegalArgumentException("El motivo de la decisión es obligatorio.");
+   subject="Revisamos tu corrección de identificación";
+   mail.heading(subject).lead("No aprobamos el cambio solicitado.").paragraph(reason);
+  } else throw new IllegalArgumentException("Decisión de identificación inválida.");
+  return mail.button("Ver identificación",base+"/account/identity").build(subject);
  }
 
  /** A pending identity keeps its confirmation and its recovery action on separate credentials. */

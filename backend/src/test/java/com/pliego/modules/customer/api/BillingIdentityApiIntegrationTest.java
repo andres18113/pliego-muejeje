@@ -11,6 +11,15 @@ import org.springframework.http.MediaType;
 class BillingIdentityApiIntegrationTest extends CustomerApiIntegrationTest {
     @MockitoBean com.pliego.modules.customer.gateway.BillingIdentityGateway billingGateway;
 
+    @Test
+    void openApiKeepsProfileDecisionSeparateFromCheckoutIdentityAndAllowsAcknowledgedNull() throws Exception {
+        mvc.perform(get("/v3/api-docs"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.components.schemas.StoredBillingIdentity.properties.used").exists())
+                .andExpect(jsonPath("$.components.schemas.StoredBillingIdentity.properties.correctionRequest.anyOf[1].type").value("null"))
+                .andExpect(jsonPath("$.components.schemas.BillingIdentity.properties.correctionRequest").doesNotExist());
+    }
+
     private String auth(long actor) {
         var now = java.time.Instant.now();
         return "Bearer " + tokenIssuer.issue(Long.toString(actor), "CUSTOMER", now, now.plusSeconds(1800), java.util.UUID.randomUUID().toString());

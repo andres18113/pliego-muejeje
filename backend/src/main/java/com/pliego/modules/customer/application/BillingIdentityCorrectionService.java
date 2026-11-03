@@ -23,6 +23,9 @@ public class BillingIdentityCorrectionService {
     @Transactional
     public void withdraw(long actorUserId, long requestId) { gateway.withdraw(actorUserId, requestId); }
 
+    @Transactional
+    public void acknowledge(long actorUserId, long requestId) { gateway.acknowledge(actorUserId, requestId); }
+
     @Transactional(readOnly = true)
     public BillingIdentityCorrectionPage search(long actorUserId, String status, int page, int pageSize) {
         return gateway.search(actorUserId, status, page, pageSize);

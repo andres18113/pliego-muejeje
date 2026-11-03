@@ -81,17 +81,17 @@ def main():
     assert ok('/api/v1/me/library',other)['items']==[]
     problem('/api/v1/me/library?productType=PHYSICAL',customer,'GET',None,'VALIDATION_ERROR')
     assert ok('/api/v1/me/library?page=100',customer)['totalCount']=='1'
-    # Cancel/refund revokes only this source and retains detail/history.
+    # Cancel/refund retains commercial history but removes customer library access.
     ok('/api/v1/orders/'+order['orderId']+'/cancel',customer,'POST',{},200)
-    revoked=ok('/api/v1/me/library/'+owned['ownedItemId'],customer)
-    assert revoked['ownershipState']=='REVOKED' and revoked['sourcePurchases'][0]['grantState']=='REVOKED'
-    assert revoked['sourcePurchases'][0]['orderId']==order['orderId']
-    assert revoked['sourcePurchases'][0]['orderReference']==order['orderReference']
-    assert ok('/api/v1/me/library',customer)['items'][0]==revoked
+    problem('/api/v1/me/library/'+owned['ownedItemId'],customer,'GET',None,'P6001',404)
+    empty=ok('/api/v1/me/library',customer)
+    assert empty['items']==[] and empty['totalCount']=='0'
+    assert ok('/api/v1/me/library?page=100',customer)['totalCount']=='0'
+    assert ok('/api/v1/orders/'+order['orderId'],customer)['orderReference']==order['orderReference']
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['EBOOK'],'quantity':1})
     status,rejected=checkout(customer,{'fulfillmentMethod':'DIGITAL_ONLY','paymentMethod':'TRANSFER','simulationOutcome':'REJECTED'},str(uuid.uuid4()))
     assert status==201 and rejected['paymentState']=='REJECTED'
-    assert ok('/api/v1/me/library/'+owned['ownedItemId'],customer)['ownershipState']=='REVOKED'
+    problem('/api/v1/me/library/'+owned['ownedItemId'],customer,'GET',None,'P6001',404)
     # Rejected checkout leaves the cart active; add audiobook+physical and purchase one mixed order.
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['AUDIOBOOK'],'quantity':1})
     ok('/api/v1/cart/items',customer,'POST',{'editionId':editions['PAPERBACK'],'quantity':1})

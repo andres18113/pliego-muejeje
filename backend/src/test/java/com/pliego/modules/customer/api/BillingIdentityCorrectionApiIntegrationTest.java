@@ -73,6 +73,42 @@ class BillingIdentityCorrectionApiIntegrationTest extends CustomerApiIntegration
     }
 
     @Test
+    void acknowledgmentUsesTheAuthenticatedCustomerAndReturnsNoStoredContent() throws Exception {
+        mvc.perform(post("/api/v1/me/billing-identity/correction-requests/55/acknowledgment")
+                        .header("Authorization", customerToken(10)))
+                .andExpect(status().isNoContent())
+                .andExpect(header().string("Cache-Control", "no-store"));
+        verify(correctionGateway).acknowledge(10, 55);
+    }
+
+    @Test
+    void acknowledgmentHidesForeignRequestsAndRejectsPendingWithoutChangingTheirErrorCodes() throws Exception {
+        doThrow(exceptionTranslator.translate(new SQLException("private", "P1109")))
+                .when(correctionGateway).acknowledge(10, 999);
+        doThrow(exceptionTranslator.translate(new SQLException("private", "P1111")))
+                .when(correctionGateway).acknowledge(10, 55);
+        mvc.perform(post("/api/v1/me/billing-identity/correction-requests/999/acknowledgment")
+                        .header("Authorization", customerToken(10)))
+                .andExpect(status().isNotFound()).andExpect(jsonPath("$.code").value("P1109"));
+        mvc.perform(post("/api/v1/me/billing-identity/correction-requests/55/acknowledgment")
+                        .header("Authorization", customerToken(10)))
+                .andExpect(status().isConflict()).andExpect(jsonPath("$.code").value("P1111"));
+    }
+
+    @Test
+    void acknowledgmentRequiresACustomerAndAPositiveRequestIdentifier() throws Exception {
+        mvc.perform(post("/api/v1/me/billing-identity/correction-requests/55/acknowledgment"))
+                .andExpect(status().isUnauthorized());
+        mvc.perform(post("/api/v1/me/billing-identity/correction-requests/55/acknowledgment")
+                        .header("Authorization", adminToken(30)))
+                .andExpect(status().isForbidden());
+        mvc.perform(post("/api/v1/me/billing-identity/correction-requests/0/acknowledgment")
+                        .header("Authorization", customerToken(10)))
+                .andExpect(status().isBadRequest()).andExpect(jsonPath("$.code").value("VALIDATION_ERROR"));
+        verifyNoInteractions(correctionGateway);
+    }
+
+    @Test
     void withdrawOnlyCallsTheOwnerScopedDatabaseCommand() throws Exception {
         mvc.perform(post("/api/v1/me/billing-identity/correction-requests/55/withdraw")
                         .header("Authorization", customerToken(10)))

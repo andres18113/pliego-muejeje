@@ -68,8 +68,10 @@ BEGIN
  THEN RAISE EXCEPTION 'customer cancellation/refund email is missing or exposes internals'; END IF;
  CALL pliego.sp_credit_note_issue(a,o,'LIBRARY-CREDIT','Reembolso de fixture',credit);
  IF credit IS NULL THEN RAISE EXCEPTION 'Digital refund missing credit note'; END IF;
- IF (pliego.fn_customer_library_detail(u,own)->>'ownershipState')<>'REVOKED' THEN RAISE EXCEPTION 'Refund failed to revoke'; END IF;
- IF pliego.fn_customer_library_detail(u,own)#>>'{sourcePurchases,0,orderReference}'
+ IF (pliego.fn_library_item(own)->>'ownershipState')<>'REVOKED' THEN RAISE EXCEPTION 'Refund failed to revoke'; END IF;
+ BEGIN PERFORM pliego.fn_customer_library_detail(u,own); RAISE EXCEPTION 'Revoked item remains customer-visible'; EXCEPTION WHEN SQLSTATE 'P6001' THEN NULL; END;
+ IF EXISTS(SELECT FROM pliego.fn_customer_library(u,NULL,0,20)) THEN RAISE EXCEPTION 'Revoked item still counted/listed'; END IF;
+ IF pliego.fn_library_item(own)#>>'{sourcePurchases,0,orderReference}'
  IS DISTINCT FROM (SELECT referencia_publica FROM pliego.pedido WHERE pedido_id=o)
  THEN RAISE EXCEPTION 'Refund changed the library source public reference'; END IF;
  CALL pliego.sp_cart_add_item(u,ebook,1,cart,item,qty);
@@ -85,7 +87,8 @@ BEGIN
  BEGIN UPDATE pliego.digital_ownership SET cliente_id=c2 WHERE owned_item_id=own;
  RAISE EXCEPTION 'Ownership can be reassigned'; EXCEPTION WHEN SQLSTATE 'P1001' THEN NULL; END;
  CALL pliego.sp_order_cancel(u,o2,o2,previous,os,ps,restored);
- IF (pliego.fn_customer_library_detail(u,own)->>'ownershipState')<>'REVOKED' THEN RAISE EXCEPTION 'Refund failed to revoke'; END IF;
+ IF (pliego.fn_library_item(own)->>'ownershipState')<>'REVOKED' THEN RAISE EXCEPTION 'Refund failed to revoke'; END IF;
+ BEGIN PERFORM pliego.fn_customer_library_detail(u,own); RAISE EXCEPTION 'Revoked repurchase remains visible'; EXCEPTION WHEN SQLSTATE 'P6001' THEN NULL; END;
  CALL pliego.sp_cart_add_item(u,audio,1,cart,item,qty);
  CALL pliego.sp_checkout(u,NULL,'TRANSFER','REJECTED','DIGITAL_ONLY',NULL,o,os,ps,total,ref);
  IF EXISTS(SELECT FROM pliego.digital_ownership WHERE cliente_id=c AND edicion_id=audio) THEN RAISE EXCEPTION 'Rejected payment grants ownership'; END IF;

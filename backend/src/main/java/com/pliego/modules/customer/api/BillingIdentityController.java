@@ -34,6 +34,8 @@ public class BillingIdentityController {
     }
     @GetMapping
     @Operation(summary = "Consultar mi identificación de facturación")
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="200",description="Identificación y solicitud vigente; correctionRequest es null tras reconocer la última decisión")
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="204",description="La cuenta todavía no registró una identificación",content=@io.swagger.v3.oas.annotations.media.Content)
     public ResponseEntity<BillingIdentity> get(@AuthenticationPrincipal Jwt jwt) {
         BillingIdentity result = service.find(Long.parseLong(jwt.getSubject()));
         return result == null ? ResponseEntity.noContent().header("Cache-Control", "no-store").build()
@@ -71,6 +73,18 @@ public class BillingIdentityController {
     public ResponseEntity<Void> withdrawCorrection(@AuthenticationPrincipal Jwt jwt,
             @PathVariable("id") @jakarta.validation.constraints.Positive long requestId) {
         corrections.withdraw(Long.parseLong(jwt.getSubject()), requestId);
+        return ResponseEntity.noContent().header("Cache-Control", "no-store").build();
+    }
+
+    @PostMapping(path = "/correction-requests/{id}/acknowledgment")
+    @Operation(operationId = "acknowledgeBillingIdentityCorrection", summary = "Confirmar que leí la decisión de mi corrección",
+            description = "Oculta una decisión aprobada o rechazada de la vista de cliente. Repetir el acuse no cambia su fecha ni el historial administrativo.")
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="204",description="Acuse guardado o ya existente; sin cuerpo",content=@io.swagger.v3.oas.annotations.media.Content)
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="404",description="Solicitud ajena o inexistente; P1109",content=@io.swagger.v3.oas.annotations.media.Content(mediaType="application/problem+json",schema=@io.swagger.v3.oas.annotations.media.Schema(implementation=com.pliego.foundation.web.ProblemResponse.class)))
+    @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode="409",description="La solicitud está pendiente o retirada; P1111",content=@io.swagger.v3.oas.annotations.media.Content(mediaType="application/problem+json",schema=@io.swagger.v3.oas.annotations.media.Schema(implementation=com.pliego.foundation.web.ProblemResponse.class)))
+    public ResponseEntity<Void> acknowledgeCorrection(@AuthenticationPrincipal Jwt jwt,
+            @PathVariable("id") @jakarta.validation.constraints.Positive(message = "La solicitud debe ser un identificador positivo.") long requestId) {
+        corrections.acknowledge(Long.parseLong(jwt.getSubject()), requestId);
         return ResponseEntity.noContent().header("Cache-Control", "no-store").build();
     }
 

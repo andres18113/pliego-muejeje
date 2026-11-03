@@ -12,6 +12,7 @@ public interface BillingIdentityCorrectionGateway {
     BillingIdentityCorrection submit(long actorUserId, UUID idempotencyKey, String currentNumber,
             String proposedType, String proposedNumber, String reasonCode, String note);
     void withdraw(long actorUserId, long requestId);
+    void acknowledge(long actorUserId, long requestId);
     BillingIdentityCorrectionPage search(long actorUserId, String status, int page, int pageSize);
     BillingIdentityCorrectionDecision decide(long actorUserId, long requestId, String decision, String decisionReason);
 }

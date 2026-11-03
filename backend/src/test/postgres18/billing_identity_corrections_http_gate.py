@@ -62,6 +62,8 @@ key = uuid.uuid4()
 status, headers, created = request(identity_path + '/correction-requests', owner, method='POST', body=payload, key=key)
 assert status == 201 and created['status'] == 'PENDING' and 'no-store' in headers.get('Cache-Control', '')
 request_id = int(created['id'])
+status, _, pending_ack = request(f'{identity_path}/correction-requests/{request_id}/acknowledgment', owner, method='POST')
+assert status == 409 and pending_ack['code'] == 'P1111', (status, pending_ack)
 assert query(f"SELECT nota FROM pliego.cliente_identificacion_solicitud_correccion WHERE solicitud_id={request_id}") == 'El documento se capturó mal.'
 status, _, replay = request(identity_path + '/correction-requests', owner, method='POST', body=payload, key=key)
 assert status == 201 and replay['id'] == created['id'], (status, replay)
@@ -85,6 +87,7 @@ assert status == 400 and pagination_problem['code'] == 'P1006', (status, paginat
 
 status, _, withdrawn = request(f'{identity_path}/correction-requests/{request_id}/withdraw', owner, method='POST')
 assert status == 204 and withdrawn is None
+assert query(f"SELECT count(*) FROM pliego.correo_outbox WHERE tipo='BILLING_IDENTITY_DECIDED' AND datos->>'requestId'='{request_id}'") == '0'
 status, _, replay = request(identity_path + '/correction-requests', owner, method='POST', body=payload, key=key)
 assert status == 201 and replay['status'] == 'WITHDRAWN' and replay['id'] == created['id']
 status, _, owner_read = request(identity_path, owner)
@@ -97,17 +100,37 @@ decision_reason = 'La documentación no permite confirmar el cambio solicitado.'
 status, _, rejected = request(f'{admin_path}/{rejected_request["id"]}/decision', admin, role='ADMIN', method='POST',
                               body={'decision': 'REJECT', 'decisionReason': decision_reason})
 assert status == 200 and rejected['status'] == 'REJECTED' and rejected['decisionReason'] == decision_reason
+rejected_id = rejected_request['id']
+status, _, rejected_read = request(identity_path, owner)
+assert status == 200 and rejected_read['correctionRequest']['id'] == rejected_id
+for hidden_id in (rejected_id, '9223372036854775807'):
+    status, _, hidden_ack = request(f'{identity_path}/correction-requests/{hidden_id}/acknowledgment', other_owner, method='POST')
+    assert status == 404 and hidden_ack['code'] == 'P1109', (status, hidden_ack)
+for _ in range(2):
+    status, headers, ack = request(f'{identity_path}/correction-requests/{rejected_id}/acknowledgment', owner, method='POST')
+    assert status == 204 and ack is None and 'no-store' in headers.get('Cache-Control', '')
+status, _, after_ack = request(identity_path, owner)
+assert status == 200 and after_ack['correctionRequest'] is None
+assert query(f"SELECT count(*) FROM pliego.cliente_identificacion_solicitud_acuse WHERE solicitud_id={rejected_id}") == '1'
+assert query(f"SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='BILLING_IDENTITY_DECIDED:{rejected_id}:REJECTED'") == '1'
 assert query(f"SELECT identidad_numero FROM pliego.cliente_identificacion WHERE cliente_id=(SELECT cliente_id FROM pliego.cliente WHERE usuario_id={owner})") == '0912345675'
 
 third_key = uuid.uuid4()
 status, _, approval_request = request(identity_path + '/correction-requests', owner, method='POST', body=payload, key=third_key)
 assert status == 201 and approval_request['status'] == 'PENDING'
+status, _, new_pending = request(identity_path, owner)
+assert status == 200 and new_pending['correctionRequest']['id'] == approval_request['id']
 status, _, approved = request(f'{admin_path}/{approval_request["id"]}/decision', admin, role='ADMIN', method='POST',
                               body={'decision': 'APPROVE'})
 assert status == 200 and approved['status'] == 'APPROVED' and approved['decidedBy'] == str(admin)
+status, _, _ = request(f'{identity_path}/correction-requests/{approval_request["id"]}/acknowledgment', owner, method='POST')
+assert status == 204
+status, _, approved_ack_read = request(identity_path, owner)
+assert status == 200 and approved_ack_read['correctionRequest'] is None
+assert query(f"SELECT count(*) FROM pliego.correo_outbox WHERE evento_clave='BILLING_IDENTITY_DECIDED:{approval_request['id']}:APPROVED' AND datos->>'identityNumber'='1710034065'") == '1'
 status, _, reviewed_page = request(admin_path + '?status=APPROVED', admin, role='ADMIN')
 reviewed = next(row for row in reviewed_page['items'] if row['id'] == approval_request['id'])
 assert reviewed['customerHasBilledInvoices'] is True and reviewed['decidedByEmail'] == query(f'SELECT email_normalizado FROM pliego.usuario WHERE usuario_id={admin}')
 assert query(f"SELECT identidad_numero FROM pliego.cliente_identificacion WHERE cliente_id=(SELECT cliente_id FROM pliego.cliente WHERE usuario_id={owner})") == '1710034065'
 assert query(f"SELECT estado||'|'||identidad_numero FROM pliego.factura WHERE factura_id={invoice_id}") == 'DRAFT|0912345675'
-print('PostgreSQL 18 correction HTTP/JDBC gate passed: no-password tier, request replay/uniqueness/withdraw, ADMIN list/reject/approve, ownership 404, Spanish problems, and unchanged DRAFT invoice.')
+print('PostgreSQL 18 correction HTTP/JDBC gate passed: request replay/withdraw, ADMIN decisions plus atomic mail, owner-only durable acknowledgment, pending rejection, preserved audit, and unchanged DRAFT invoice.')
