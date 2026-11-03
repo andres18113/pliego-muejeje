@@ -204,3 +204,15 @@ business commits, concurrent caps, revoked sessions, retention gaps and cleanup.
 `RealtimeControllerTest` covers anonymous/bearer refusal,429, malformed cursors,
 SSE headers/retry/heartbeat/resync. The consolidated traceability document records
 the final integration and HTTP gate results.
+
+## Frontend contract correction (2026-11-04)
+
+The first production frontend built the stream URL by appending `/auth/events` to `VITE_API_BASE_URL`. Production
+configures the bare API origin, so browsers requested `https://api.pliegolibros.com/auth/events` — a path that does
+not exist and to which the `/api/v1/auth`-scoped cookie is not sent — and never synchronized (investigation:
+`docs/testing/2026-11-04-cross-device-realtime-investigation.md`). The stream URL is now built like every API call,
+`apiUrl("/api/v1/auth/events")` from the shared normalized origin; tests pin every accepted form of the variable.
+The client also coordinates tabs only with both Web Locks and BroadcastChannel, reconnects on `online` only as the
+leader, yields stream and lock on `freeze`/`pagehide`, rejoins on `resume`/`pageshow`, and re-reads mounted private
+views when a tab returns to view. A build ID and `/version.json` let open tabs offer a reload after a release. No
+backend, protocol, polling or WebSocket change was needed.

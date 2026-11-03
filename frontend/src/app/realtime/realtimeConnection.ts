@@ -4,20 +4,32 @@ import { parseRealtimeHint, realtimeEventNames, type RealtimeHint } from "./real
  * One stream per browser and account (ADR 0054 caps open streams per user, and a refused EventSource never retries
  * by itself). The tab holding the Web Lock opens the stream and relays each hint to the other tabs over a
  * BroadcastChannel; when it closes, the next waiting tab takes the lock and reconnects. Every tab applies the hint to
- * its own queries. Without Web Locks each tab connects on its own; without BroadcastChannel nothing is relayed.
+ * its own queries. Tabs coordinate only when both Web Locks and BroadcastChannel exist; otherwise each connects on
+ * its own (a lock without a relay would leave the other tabs deaf).
+ *
+ * Leadership follows the page lifecycle: a tab about to be frozen or put in the back/forward cache releases its
+ * stream and its lock, so a waiting tab takes over at once (a frozen leader would otherwise keep every other tab
+ * silent); it rejoins the queue when it resumes. A tab coming back into view re-reads its mounted private views once
+ * (at most every few seconds) — a recovery after suspension, never polling. Only the leader reconnects when the
+ * network returns; a waiting tab never opens a stream outside its lock.
  */
+export type LifecycleEvent = "online" | "visible" | "freeze" | "resume" | "pagehide" | "pageshow";
+
 export type RealtimeEnvironment = {
   EventSource?: typeof EventSource;
   BroadcastChannel?: typeof BroadcastChannel;
   locks?: LockManager;
   setTimeout: (callback: () => void, ms: number) => unknown;
   clearTimeout: (handle: unknown) => void;
-  addOnline: (listener: () => void) => () => void;
+  listen: (event: LifecycleEvent, listener: () => void) => () => void;
+  now: () => number;
   random: () => number;
 };
 
 export const realtimeChannelName = "pliego-realtime";
 const lockName = (userId: string) => `pliego-realtime:${userId}`;
+/** Returning to a tab re-reads its private views at most this often. */
+export const revalidateInterval = 5_000;
 
 /** Backoff after a refused or failed stream: 3s, 6s, 12s … capped at 60s (the server's connection-limit Retry-After). */
 export function reconnectDelay(attempt: number, random: () => number) {
@@ -26,13 +38,19 @@ export function reconnectDelay(attempt: number, random: () => number) {
 }
 
 export function browserRealtimeEnvironment(): RealtimeEnvironment {
+  const on = (target: EventTarget, name: string, listener: () => void) => { target.addEventListener(name, listener); return () => target.removeEventListener(name, listener); };
   return {
     EventSource: typeof EventSource === "undefined" ? undefined : EventSource,
     BroadcastChannel: typeof BroadcastChannel === "undefined" ? undefined : BroadcastChannel,
     locks: typeof navigator !== "undefined" && "locks" in navigator ? navigator.locks : undefined,
     setTimeout: (callback, ms) => window.setTimeout(callback, ms),
     clearTimeout: handle => window.clearTimeout(handle as number),
-    addOnline: listener => { window.addEventListener("online", listener); return () => window.removeEventListener("online", listener); },
+    listen: (event, listener) => {
+      if (event === "online" || event === "pagehide" || event === "pageshow") return on(window, event, listener);
+      if (event === "freeze" || event === "resume") return on(document, event, listener);
+      return on(document, "visibilitychange", () => { if (document.visibilityState === "visible") listener(); });
+    },
+    now: () => Date.now(),
     random: Math.random,
   };
 }
@@ -47,6 +65,7 @@ export function startRealtime({ userId, url, onHint, env }: { userId: string; ur
   if (!Source) return () => undefined;
   let stopped = false;
   const channel = env.BroadcastChannel ? new env.BroadcastChannel(realtimeChannelName) : null;
+  const coordinated = Boolean(env.locks && channel);
   if (channel) channel.onmessage = (message: MessageEvent) => {
     if (stopped || !isRelay(message.data, userId)) return;
     // Relayed hints are re-validated like a stream message, never trusted as they arrive.
@@ -58,6 +77,9 @@ export function startRealtime({ userId, url, onHint, env }: { userId: string; ur
   let source: EventSource | null = null;
   let retry: unknown = null;
   let attempt = 0;
+  let leading = false;
+  let lockAbort: AbortController | null = null;
+  let revalidatedAt = -Infinity;
   const receive = (event: string) => (message: MessageEvent) => {
     const hint = parseRealtimeHint(event, typeof message.data === "string" ? message.data : "");
     if (!hint || stopped) return;
@@ -72,7 +94,7 @@ export function startRealtime({ userId, url, onHint, env }: { userId: string; ur
   };
   const connect = () => {
     close();
-    if (stopped) return;
+    if (stopped || !leading) return;
     const next = new Source(url, { withCredentials: true });
     source = next;
     for (const name of realtimeEventNames) next.addEventListener(name, receive(name) as EventListener);
@@ -86,22 +108,49 @@ export function startRealtime({ userId, url, onHint, env }: { userId: string; ur
       retry = env.setTimeout(() => { retry = null; connect(); }, reconnectDelay(attempt++, env.random));
     };
   };
-  const removeOnline = env.addOnline(() => { if (!stopped && !source) { attempt = 0; connect(); } });
-
-  const abort = new AbortController();
-  if (env.locks) {
-    env.locks.request(lockName(userId), { signal: abort.signal }, () => new Promise<void>(release => {
-      if (stopped) return release();
+  /** Takes leadership: at once without coordination, otherwise by waiting for the account's Web Lock. */
+  const lead = () => {
+    if (stopped || leading || lockAbort) return;
+    if (!coordinated) { leading = true; connect(); return; }
+    const abort = new AbortController();
+    lockAbort = abort;
+    env.locks!.request(lockName(userId), { signal: abort.signal }, () => new Promise<void>(release => {
+      if (stopped || abort.signal.aborted) return release();
+      leading = true;
       connect();
-      abort.signal.addEventListener("abort", () => release(), { once: true });
-    })).catch(() => undefined);
-  } else connect();
+      abort.signal.addEventListener("abort", () => { leading = false; close(); release(); }, { once: true });
+    })).catch(() => undefined).finally(() => {
+      if (lockAbort === abort) { lockAbort = null; leading = false; close(); }
+    });
+  };
+  /** Gives up the stream and the lock (or the place in its queue) so another tab can lead. */
+  const yieldLeadership = () => {
+    const abort = lockAbort;
+    lockAbort = null;
+    abort?.abort();
+    leading = false;
+    close();
+  };
+  const revalidate = () => {
+    const now = env.now();
+    if (stopped || now - revalidatedAt < revalidateInterval) return;
+    revalidatedAt = now;
+    onHint({ event: "resync" });
+  };
+  const removers = [
+    env.listen("online", () => { if (!stopped && leading && !source) { attempt = 0; connect(); } }),
+    env.listen("freeze", yieldLeadership),
+    env.listen("pagehide", yieldLeadership),
+    env.listen("resume", () => { lead(); revalidate(); }),
+    env.listen("pageshow", () => { lead(); revalidate(); }),
+    env.listen("visible", revalidate),
+  ];
+  lead();
 
   return () => {
     stopped = true;
-    abort.abort();
-    removeOnline();
-    close();
+    yieldLeadership();
+    for (const remove of removers) remove();
     channel?.close();
   };
 }
