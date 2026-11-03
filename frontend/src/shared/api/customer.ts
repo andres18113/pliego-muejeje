@@ -234,6 +234,19 @@ export async function withdrawBillingIdentityCorrection(requestId: string): Prom
   throw toApiRequestError(result.response.status, result.error, "No pudimos retirar la solicitud", "Consulta su estado e inténtalo otra vez.");
 }
 
+/**
+ * ADR 0055: the customer has read the decision on their correction. Idempotent (the first date is kept); afterwards
+ * the private projection no longer returns that decision. 404 (not theirs or unknown) and 409 (no longer decided)
+ * mean there is nothing left to acknowledge.
+ */
+export async function acknowledgeBillingIdentityCorrection(requestId: string): Promise<void> {
+  const result = await apiClient.POST("/api/v1/me/billing-identity/correction-requests/{id}/acknowledgment", {
+    params: { path: { id: requestId as unknown as number } },
+  });
+  if (result.response.ok || result.response.status === 404 || result.response.status === 409) return;
+  throw toApiRequestError(result.response.status, result.error, "No pudimos cerrar el aviso", "Inténtalo otra vez en unos segundos.");
+}
+
 /** Sends the pending change's confirmation link again (rate-limited by the server). */
 export async function resendEmailChange(): Promise<void> {
   const { error, response } = await apiClient.POST("/api/v1/me/email-change/resend", {});

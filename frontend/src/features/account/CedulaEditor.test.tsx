@@ -10,8 +10,8 @@ const stored = (number: string) => () => json({ type: "EC_CEDULA", number });
 const done = () => new Response(null, { status: 204 });
 function renderAccount(routes: Parameters<typeof stubApi>[0]) {
   const api = stubApi({ "GET /api/v1/me": () => json(profile), ...routes });
-  renderPurchaseRoute([{ path: "/account", element: <AccountPage /> }], "/account");
-  return { api, user: userEvent.setup() };
+  const { queryClient } = renderPurchaseRoute([{ path: "/account", element: <AccountPage /> }], "/account");
+  return { api, user: userEvent.setup(), queryClient };
 }
 const row = () => screen.getByText("Cédula o RUC", { selector: "span,label" }).closest("li")!;
 afterEach(() => vi.unstubAllGlobals());
@@ -93,12 +93,65 @@ it("states a request in review in one quiet line and leads to it, with nothing t
   expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests")).toBe(0);
 });
 
+const rejectedRequest = { ...pendingRequest, status: "REJECTED", decidedAt: "2026-10-27T15:00:00Z", decisionReason: "La documentación no permite confirmar el cambio." };
+const approvedRequest = { ...pendingRequest, status: "APPROVED", decidedAt: "2026-10-27T15:00:00Z" };
+
 it("says a request was not applied and leaves the reason to the correction page", async () => {
-  renderAccount({ "GET /api/v1/me/billing-identity": used("0912345675", { ...pendingRequest, status: "REJECTED", decidedAt: "2026-10-27T15:00:00Z",
-    decisionReason: "La documentación no permite confirmar el cambio." }) });
+  renderAccount({ "GET /api/v1/me/billing-identity": used("0912345675", rejectedRequest) });
   expect(await screen.findByText(/No aplicamos tu corrección a/)).toHaveTextContent("No aplicamos tu corrección a 1710034065.");
   expect(screen.queryByText(/La documentación/)).not.toBeInTheDocument();
+  expect(screen.getByRole("link", { name: "Ver motivo" })).toHaveAttribute("href", "/account/identity");
   expect(screen.getByRole("link", { name: "Corregir cédula o RUC" })).toBeVisible();
+});
+
+it("reads an approval once: closing the notice acknowledges it and the row returns to its normal presentation", async () => {
+  let current: object | null = approvedRequest;
+  const { api, user } = renderAccount({
+    "GET /api/v1/me/billing-identity": () => used("1710034065", current)(),
+    "POST /api/v1/me/billing-identity/correction-requests/17/acknowledgment": () => { current = null; return done(); },
+  });
+  expect(await screen.findByText(/Aprobamos tu corrección/)).toBeVisible();
+  // No permanent history line: the old "Corregida según tu solicitud" never appears.
+  expect(screen.queryByText(/Corregida según/)).not.toBeInTheDocument();
+  await user.click(within(row()).getByRole("button", { name: "Cerrar aviso de corrección aprobada" }));
+  await waitFor(() => expect(screen.queryByText(/Aprobamos tu corrección/)).not.toBeInTheDocument());
+  expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests/17/acknowledgment")).toBe(1);
+  await waitFor(() => expect(screen.getByRole("link", { name: "Corregir cédula o RUC" })).toHaveFocus());
+  expect(within(row()).getByText("1710034065")).toBeVisible();
+});
+
+it("keeps a decision that could not be acknowledged and says so, without hiding it", async () => {
+  const { api, user } = renderAccount({
+    "GET /api/v1/me/billing-identity": used("0912345675", rejectedRequest),
+    "POST /api/v1/me/billing-identity/correction-requests/17/acknowledgment": () => problem(500, "INTERNAL", "Error", "Falló."),
+  });
+  await user.click(await screen.findByRole("button", { name: "Cerrar aviso de corrección no aplicada" }));
+  expect(await screen.findByRole("alert")).toHaveTextContent("No pudimos cerrar el aviso. Inténtalo otra vez.");
+  expect(screen.getByText(/No aplicamos tu corrección a/)).toBeVisible();
+  expect(api.count("POST", "/api/v1/me/billing-identity/correction-requests/17/acknowledgment")).toBe(1);
+});
+
+it("treats a decision already acknowledged elsewhere as closed", async () => {
+  let current: object | null = rejectedRequest;
+  const { user } = renderAccount({
+    "GET /api/v1/me/billing-identity": () => used("0912345675", current)(),
+    "POST /api/v1/me/billing-identity/correction-requests/17/acknowledgment": () => { current = null; return problem(409, "P1111", "Sin decisión", "No hay decisión."); },
+  });
+  await user.click(await screen.findByRole("button", { name: "Cerrar aviso de corrección no aplicada" }));
+  await waitFor(() => expect(screen.queryByText(/No aplicamos tu corrección/)).not.toBeInTheDocument());
+  expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+});
+
+it("announces a decision that arrives while Mi perfil is open, and shows it without a reload", async () => {
+  let current: object | null = pendingRequest;
+  const { queryClient } = renderAccount({ "GET /api/v1/me/billing-identity": () => used("0912345675", current)() });
+  expect(await screen.findByText("En revisión")).toBeVisible();
+  expect(screen.queryByText("Aprobamos tu corrección de cédula o RUC.")).not.toBeInTheDocument();
+  current = approvedRequest;
+  // What a stream hint does: the billing identity is re-read from the server.
+  await queryClient.invalidateQueries({ queryKey: ["customer-billing-identity"] });
+  expect(await screen.findByText(/Aprobamos tu corrección\. Tus próximas/)).toBeVisible();
+  expect(screen.getByText("Aprobamos tu corrección de cédula o RUC.")).toHaveAttribute("aria-live", "polite");
 });
 
 it("explains a stale registration without overwriting the stored cédula", async () => {

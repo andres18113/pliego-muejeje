@@ -41,6 +41,25 @@
 .valueDetail > :global(.material-symbol) { flex: none; margin-top: 2px; color: var(--acc-blue); }
 .valueDetail > span:last-child { flex: 1 1 18ch; min-width: 0; }
 .detailNumber { color: var(--acc-ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+/* A decided correction: news read once. One quiet neutral field (ink ≈5%, like the order's cancellation strip;
+   never green or red) with the outcome in one sentence and a round close control; closing acknowledges it. */
+.decision { display: grid; gap: 4px; margin-top: 6px; }
+.decisionBody {
+  display: flex; align-items: flex-start; gap: 8px; padding: 8px 4px 8px 12px; border-radius: 12px;
+  background: color-mix(in srgb, var(--acc-ink) 5%, transparent); color: var(--acc-ink); font-size: .9375rem; line-height: 1.4;
+}
+.decisionBody > :global(.material-symbol) { flex: none; margin-top: 1px; color: var(--acc-blue); }
+.decisionBody > span { flex: 1 1 auto; min-width: 0; padding-top: 0; text-wrap: pretty; }
+.decisionLink { color: var(--acc-blue); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.decisionClose {
+  flex: none; display: inline-grid; place-items: center; width: 44px; height: 44px; margin: -12px 0 -12px 0; padding: 0;
+  border: 0; border-radius: 999px; background: transparent; color: var(--acc-muted); cursor: pointer;
+}
+.decisionClose[aria-disabled="true"] { cursor: progress; }
+.decisionClose:focus-visible { outline: 3px solid var(--acc-blue); outline-offset: -6px; }
+@media (hover: hover) { .decisionClose:hover { background: color-mix(in srgb, var(--acc-ink) 7%, transparent); color: var(--acc-ink); } }
+.decisionError { color: var(--error, #b3261e); font-size: .875rem; }
+
 /* A pending correction: the chip and its `info` toggletip as one status; the explanation is portalled, so it
    reads the global PLIEGO tokens rather than the Account's. */
 .reviewStatus { display: inline-flex; align-items: center; gap: 2px; }

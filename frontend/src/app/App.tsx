@@ -11,6 +11,7 @@ import { BrandLogo } from "@/shared/ui/BrandLogo";
 import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
 import { SessionProvider, useSession } from "./session";
+import { RealtimeSync } from "./realtime/RealtimeSync";
 
 const catalogCriteriaKeys = ["que", "category", "minPrice", "maxPrice", "language", "format", "productType", "sort", "page", "pageSize"];
 
@@ -224,6 +225,7 @@ export function App() {
 function RootSessionLayout() {
   return (
     <SessionProvider>
+      <RealtimeSync />
       <BackNavigationProvider><RootLayout /></BackNavigationProvider>
     </SessionProvider>
   );

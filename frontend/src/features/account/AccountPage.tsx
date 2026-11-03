@@ -1,10 +1,10 @@
 import { useEffect, useId, useRef, useState, type ReactNode } from "react";
-import { useQuery, type QueryObserverResult } from "@tanstack/react-query";
+import { useQuery, useQueryClient, type QueryObserverResult } from "@tanstack/react-query";
 import { z } from "zod";
 import { parsePhoneNumberFromString } from "libphonenumber-js/max";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
-import { billingIdentityQueryKey, cancelEmailChange, changeEmail, resendEmailChange, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
+import { acknowledgeBillingIdentityCorrection, billingIdentityQueryKey, cancelEmailChange, changeEmail, resendEmailChange, EmailChangeOutcomeUnknown, getBillingIdentity, getProfile, profileQueryKey, patchProfile, type ProfileField, type CustomerProfile } from "@/shared/api/customer";
 import type { BillingIdentityCorrectionRequest, StoredBillingIdentity } from "@/shared/api/billing";
 import { orderShortDateLabel } from "@/features/purchase/purchaseText";
 import { personNameSchema, personNameError, phoneError, normalizePhonePresentation } from "@/shared/validation/person";
@@ -72,9 +72,11 @@ type IdentityState = {
 
 /**
  * A correction request under the number, in one quiet line: pending is the "En revisión" chip with an `info`
- * toggletip holding what was asked and when we answer; a recent decision says what happened. Dates, the reason and withdrawing live on the correction page. A withdrawn request needs no line.
+ * toggletip holding what was asked and when we answer. A decision is news, not history: it reads once as a small
+ * dismissible notice (it can arrive while the page is open), and once closed the row returns to its normal
+ * presentation — the server stops returning an acknowledged decision (ADR 0055). Withdrawn requests need no line.
  */
-function CorrectionStatus({ request }: { request: BillingIdentityCorrectionRequest | null }) {
+function CorrectionStatus({ request, onDismissed }: { request: BillingIdentityCorrectionRequest | null; onDismissed: () => void }) {
   if (!request || request.status === "WITHDRAWN") return null;
   if (request.status === "PENDING") return <span className={classes.valueDetail}>
     <span className={classes.reviewStatus}>
@@ -86,14 +88,56 @@ function CorrectionStatus({ request }: { request: BillingIdentityCorrectionReque
       </InfoToggletip>
     </span>
   </span>;
-  if (request.status === "APPROVED") return <span className={classes.valueDetail}>
-    <MaterialSymbol name="check_circle" aria-hidden="true" size={16} />
-    <span>Corregida según tu solicitud del {orderShortDateLabel(request.createdAt)}.</span>
+  return <CorrectionDecision key={request.id} request={request} onDismissed={onDismissed} />;
+}
+
+function CorrectionDecision({ request, onDismissed }: { request: BillingIdentityCorrectionRequest; onDismissed: () => void }) {
+  const queryClient = useQueryClient();
+  const [state, setState] = useState<"idle" | "sending" | "failed">("idle");
+  const approved = request.status === "APPROVED";
+  const document = request.proposedType === "EC_RUC" ? "RUC" : "cédula";
+  const dismiss = async () => {
+    if (state === "sending") return;
+    setState("sending");
+    try {
+      await acknowledgeBillingIdentityCorrection(request.id);
+    } catch {
+      setState("failed");
+      return;
+    }
+    // Hide it now; the refetch (and the stream, in other tabs) confirms the server's projection.
+    queryClient.setQueryData<StoredBillingIdentity | null>(billingIdentityQueryKey, current =>
+      current?.correctionRequest?.id === request.id ? { ...current, correctionRequest: null } : current);
+    onDismissed();
+    void queryClient.invalidateQueries({ queryKey: billingIdentityQueryKey });
+  };
+  return <span className={classes.decision} data-outcome={approved ? "approved" : "rejected"}>
+    <span className={classes.decisionBody}>
+      <MaterialSymbol name={approved ? "check_circle" : "info"} aria-hidden="true" size={18} />
+      <span>{approved
+        ? <>Aprobamos tu corrección. Tus próximas facturas usan esta {document === "RUC" ? "identificación" : "cédula"}.</>
+        : <>No aplicamos tu corrección a <span className={classes.detailNumber}>{request.proposedNumber}</span>. <Link className={classes.decisionLink} to={identityCorrectionPath}>Ver motivo</Link></>}</span>
+      <button type="button" className={classes.decisionClose} onClick={() => void dismiss()} aria-disabled={state === "sending" || undefined}
+        aria-label={approved ? "Cerrar aviso de corrección aprobada" : "Cerrar aviso de corrección no aplicada"}>
+        <MaterialSymbol name="close" aria-hidden="true" size={18} />
+      </button>
+    </span>
+    {state === "failed" && <span className={classes.decisionError} role="alert">No pudimos cerrar el aviso. Inténtalo otra vez.</span>}
   </span>;
-  return <span className={classes.valueDetail}>
-    <MaterialSymbol name="info" aria-hidden="true" size={16} />
-    <span>No aplicamos tu corrección a <span className={classes.detailNumber}>{request.proposedNumber}</span>.</span>
-  </span>;
+}
+
+/** Announces a decision that arrives while Mi perfil is open (a refetch from the stream), never one already there. */
+function useDecisionAnnouncement(request: BillingIdentityCorrectionRequest | null | undefined) {
+  const seen = useRef<string | null | undefined>(undefined);
+  const [message, setMessage] = useState("");
+  const decided = request && (request.status === "APPROVED" || request.status === "REJECTED") ? `${request.id}:${request.status}` : null;
+  useEffect(() => {
+    if (request === undefined) return;
+    if (seen.current !== undefined && decided && decided !== seen.current)
+      setMessage(request?.status === "APPROVED" ? "Aprobamos tu corrección de cédula o RUC." : "Revisamos tu corrección de cédula o RUC y no la aplicamos.");
+    seen.current = decided;
+  }, [decided, request]);
+  return message;
 }
 
 /**
@@ -154,7 +198,7 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
       : identity.data && editing !== "cedula"
         // A stored number is corrected on its own page, never in this sheet: the row only says where it stands and
         // leads there — to correct it, or to the request staff are reviewing.
-        ? { field: "cedula", label: "Cédula o RUC", value: identity.data.number, detail: <CorrectionStatus request={identity.data.correctionRequest} />, to: identityCorrectionPath, editor: null,
+        ? { field: "cedula", label: "Cédula o RUC", value: identity.data.number, detail: <CorrectionStatus request={identity.data.correctionRequest} onDismissed={() => requestAnimationFrame(() => editButtons.current.cedula?.focus({ preventScroll: true }))} />, to: identityCorrectionPath, editor: null,
             ...identity.data.correctionRequest?.status === "PENDING" ? { action: "Ver solicitud", actionName: "de corrección de la cédula o RUC" } : { action: "Corregir" } }
         : { field: "cedula", label: "Cédula o RUC", value: identity.data?.number ?? null, missing: { tone: "required", hint: "Necesaria para comprar" }, action: "Agregar",
             editor: <CedulaEditor customerId={profile.customerId} refetch={identity.refetch} onExpired={onExpired} onDone={(result) => close("cedula", result)} /> };
@@ -170,7 +214,9 @@ function Profile({ profile, readCurrent, refetch, onExpired, identity, passwordR
       : { field: "password", label: "Contraseña", value: null, empty: "Verifica tu correo para cambiarla", action: "Cambiar", icon: "lock", disabled: true, editor: null },
   ];
 
+  const decisionAnnouncement = useDecisionAnnouncement(identity.pending || identity.failed ? undefined : identity.data?.correctionRequest ?? null);
   return <section className={classes.profile} aria-label="Perfil y datos personales">
+    <p className="visually-hidden" aria-live="polite">{decisionAnnouncement}</p>
     <header className={classes.identity}>
       <AccountMonogram firstNames={profile.firstNames} lastNames={profile.lastNames} size={76} />
       <div className={classes.identityCopy}>
