@@ -23,12 +23,12 @@ public class RealtimeController {
  public RealtimeController(RealtimeStreams streams,ProblemDetailFactory problems){this.streams=streams;this.problems=problems;}
  @GetMapping(path="/api/v1/auth/events",produces="text/event-stream")
  @Operation(operationId="streamResourceEvents",summary="Recibir avisos de actualización",
-  description="SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready y library.changed. Datos: {resourceType,resourceId}, identificadores como cadenas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat cada 16s como máximo, conexión máxima 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).")
+  description="SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready y library.changed. Datos: {resourceType,resourceId}, identificadores como cadenas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat objetivo 15s (normalmente 16s; la contención puede retrasarlo), vida nominal 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).")
  @SecurityRequirement(name="authSessionCookie")
  @ApiResponse(responseCode="200",description="Flujo SSE; ver ADR0054 para recursos que invalidar",content=@Content(mediaType="text/event-stream",schema=@Schema(type="string")))
  @ApiResponse(responseCode="400",description="Cursor inválido")
  @ApiResponse(responseCode="401",description="Sesión ausente, inválida, revocada o vencida")
- @ApiResponse(responseCode="429",description="Límite de conexiones; Retry-After: 60")
+ @ApiResponse(responseCode="429",description="Límite de conexiones o admisión temporalmente ocupada; Retry-After: 60")
  public ResponseEntity<?> events(@Parameter(hidden=true) @CookieValue(name=AuthSessionCookie.NAME,required=false)String cookie,
   @RequestHeader(name="Last-Event-ID",required=false)String lastEventId,HttpServletRequest request){
   Long cursor=null;

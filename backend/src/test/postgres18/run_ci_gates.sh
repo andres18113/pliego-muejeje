@@ -38,13 +38,15 @@ fi
 umask 077
 # Spring Boot reads nested classes lazily: a parallel Maven repackage must never
 # replace the bytes beneath the running gate's classloader.
-application_jar="$(mktemp /tmp/pliego-pg18-gates.XXXXXX.jar)"
+artifact_dir="${PLIEGO_GATE_LOG_DIR:-${TMPDIR:-/tmp}}"
+mkdir -p "$artifact_dir"
+application_jar="$(mktemp "$artifact_dir/pliego-pg18-gates.XXXXXX.jar")"
 cp "$source_jar" "$application_jar"
 if [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]]; then
     mkdir -p "$PLIEGO_GATE_LOG_DIR"
     application_log="$PLIEGO_GATE_LOG_DIR/backend.log"
 else
-    application_log="$(mktemp /tmp/pliego-pg18-gates.XXXXXX.log)"
+    application_log="$(mktemp "$artifact_dir/pliego-pg18-gates.XXXXXX.log")"
 fi
 application_port="${PLIEGO_PG18_APP_PORT:-18080}"
 application_pid=''

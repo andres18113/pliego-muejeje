@@ -2,6 +2,8 @@ package com.pliego.foundation.web;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.context.request.async.AsyncRequestNotUsableException;
+import org.springframework.web.context.request.async.AsyncRequestTimeoutException;
+import org.springframework.web.util.DisconnectedClientHelper;
 
 import com.pliego.foundation.database.DatabaseException;
 import com.pliego.foundation.security.CurrentPasswordMismatchException;
@@ -22,11 +27,13 @@ import com.pliego.modules.catalog.application.EditionNotFoundException;
 import com.pliego.modules.sales.application.InvalidCardNumberException;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.ConstraintViolationException;
 
 @RestControllerAdvice
 public final class ApiExceptionHandler {
 
+    private static final Logger LOG = LoggerFactory.getLogger(ApiExceptionHandler.class);
     private static final String VALIDATION_TITLE = "Datos inválidos";
     private static final String VALIDATION_DETAIL = "Revisa los datos enviados e intenta nuevamente.";
     private static final String CATALOG_FILTER_DETAIL = "Revisa los filtros enviados e intenta nuevamente.";
@@ -204,9 +211,43 @@ public final class ApiExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ProblemDetail> unexpected(Exception exception, HttpServletRequest request) {
+    public ResponseEntity<ProblemDetail> unexpected(Exception exception, HttpServletRequest request,
+            HttpServletResponse response) {
+        String contentType = response.getContentType();
+        if (request.getRequestURI().equals(request.getContextPath() + "/api/v1/auth/events")
+                && response.isCommitted() && contentType != null
+                && contentType.split(";", 2)[0].trim().equalsIgnoreCase("text/event-stream")) {
+            if (expectedSseEnd(exception)) {
+                LOG.debug("realtime state=STREAM_CLOSED");
+            } else {
+                LOG.error("realtime state=STREAM_FAILED", exception);
+            }
+            // A response argument marks this MVC request handled. No JSON can
+            // replace an already committed SSE response, even for a server error.
+            return null;
+        }
         return ProblemDetailSupport.response(problems, request, "INTERNAL_SERVER_ERROR", INTERNAL_TITLE,
                 HttpStatus.INTERNAL_SERVER_ERROR, INTERNAL_DETAIL);
+    }
+
+    private static boolean expectedSseEnd(Exception exception) {
+        if (exception instanceof AsyncRequestTimeoutException) return true;
+        if (!DisconnectedClientHelper.isClientDisconnectedException(exception)) return false;
+        Throwable failure = exception;
+        for (Throwable current = exception; current != null; current = current.getCause()) {
+            if (current instanceof AsyncRequestNotUsableException unusable) {
+                if (unusable.getCause() == null) {
+                    return "Response not usable after async request completion.".equals(unusable.getMessage())
+                            || "Response not usable after response errors.".equals(unusable.getMessage());
+                }
+                // This wrapper can also contain a real server-side I/O failure.
+                // Classify its cause rather than assuming every unusable response
+                // was caused by a disconnected client.
+                failure = unusable.getCause();
+            }
+            if (current == current.getCause()) break;
+        }
+        return DisconnectedClientHelper.isClientDisconnectedException(failure);
     }
 
     private static ProblemDetailSupport.Violation safeViolation(FieldError error) {

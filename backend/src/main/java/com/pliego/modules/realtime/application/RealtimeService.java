@@ -12,16 +12,16 @@ import com.pliego.modules.realtime.gateway.RealtimeGateway;
 public class RealtimeService {
  private final RealtimeGateway gateway;
  public RealtimeService(RealtimeGateway gateway){this.gateway=gateway;}
- @Transactional
+ @Transactional(timeout=1)
  public String connect(String cookie,UUID connection){
   if(cookie==null || !cookie.matches("[A-Za-z0-9_-]{43}"))return "UNAUTHORIZED";
   try{return gateway.connect(HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256")
    .digest(cookie.getBytes(StandardCharsets.US_ASCII))),connection);}
   catch(java.security.NoSuchAlgorithmException e){throw new IllegalStateException(e);}
  }
- @Transactional(readOnly=true)
+ @Transactional(readOnly=true,timeout=1)
  public RealtimeGateway.Batch read(UUID connection,Long cursor){return gateway.read(connection,cursor);}
- @Transactional
+ @Transactional(timeout=1)
  public void disconnect(UUID connection){gateway.disconnect(connection);}
  @Transactional
  public void publish(){gateway.publish();}

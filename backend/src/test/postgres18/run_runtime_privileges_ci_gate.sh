@@ -75,10 +75,12 @@ admin_psql() {
 
 umask 077
 runtime_password="$(openssl rand -hex 32)"
-application_jar="$(mktemp /tmp/pliego-runtime-acl.XXXXXX.jar)"
-application_log="$(mktemp /tmp/pliego-runtime-acl.XXXXXX.log)"
-cleanup_sql="$(mktemp /tmp/pliego-runtime-acl-cleanup.XXXXXX.sql)"
-setup_sql="$(mktemp /tmp/pliego-runtime-acl-setup.XXXXXX.sql)"
+artifact_dir="${PLIEGO_GATE_LOG_DIR:-${TMPDIR:-/tmp}}"
+mkdir -p "$artifact_dir"
+application_jar="$(mktemp "$artifact_dir/pliego-runtime-acl.XXXXXX.jar")"
+application_log="$(mktemp "$artifact_dir/pliego-runtime-acl.XXXXXX.log")"
+cleanup_sql="$(mktemp "$artifact_dir/pliego-runtime-acl-cleanup.XXXXXX.sql")"
+setup_sql="$(mktemp "$artifact_dir/pliego-runtime-acl-setup.XXXXXX.sql")"
 cp "$source_jar" "$application_jar"
 
 application_pid=''
@@ -93,7 +95,8 @@ cleanup() {
         admin_psql postgres -c "DROP DATABASE IF EXISTS $database_name WITH (FORCE)" >/dev/null 2>&1 || true
         admin_psql postgres -c 'DROP ROLE IF EXISTS pliego_app; DROP ROLE IF EXISTS pliego_owner' >/dev/null 2>&1 || true
     fi
-    rm -f "$application_jar" "$application_log" "$cleanup_sql" "$setup_sql"
+    rm -f "$application_jar" "$cleanup_sql" "$setup_sql"
+    if [[ -z "${PLIEGO_GATE_LOG_DIR:-}" ]]; then rm -f "$application_log"; fi
     exit "$result"
 }
 trap cleanup EXIT
@@ -150,6 +153,9 @@ if [[ "$jdbc_host" == *:* && "$jdbc_host" != \[*\] ]]; then jdbc_host="[$jdbc_ho
 runtime_url="jdbc:postgresql://$jdbc_host:$PGPORT/$database_name"
 start_backend() {
     local phase="$1"
+    if [[ -n "${PLIEGO_GATE_LOG_DIR:-}" ]]; then
+        application_log="$PLIEGO_GATE_LOG_DIR/runtime-$phase.log"
+    fi
     printf 'Runtime privilege CI stage: starting Spring Boot as pliego_app (%s)\n' "$phase"
     PLIEGO_DB_URL="$runtime_url" PLIEGO_DB_USERNAME=pliego_app PLIEGO_DB_PASSWORD="$runtime_password" \
         PLIEGO_MAIL_ENABLED=false PLIEGO_BILLING_ENABLED=false \
