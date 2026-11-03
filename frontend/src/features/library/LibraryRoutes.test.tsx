@@ -60,7 +60,11 @@ describe("Mi biblioteca functional routes", () => {
   it("retains the isolated 404 state without a catalog fallback", async () => {
     const api = stubApi({ "GET /api/v1/me/library/8": () => problem(404, "RESOURCE_NOT_FOUND", "No disponible", "Esta adquisición no está disponible.") });
     renderPurchaseRoute(routes, "/biblioteca/8");
-    await screen.findByRole("heading", { name: "Adquisición no disponible" });
+    await screen.findByRole("heading", { name: "Este título no está en tu biblioteca" });
+    // A cancelled purchase answers like an unknown title (ADR 0055); its history is in Mis pedidos.
+    expect(screen.getByText(/El pedido y su reembolso siguen en Mis pedidos/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Ver mis pedidos" })).toHaveAttribute("href", "/orders");
+    expect(screen.getByRole("link", { name: "Ir a Mi biblioteca" })).toHaveAttribute("href", "/biblioteca");
     expect(api.count("GET", "/api/v1/catalog/editions/42")).toBe(0);
   });
   it("presents a revoked audiobook with a readable duration and only the server's actions", async () => {

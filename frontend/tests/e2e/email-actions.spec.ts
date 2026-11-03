@@ -13,10 +13,12 @@ async function installApi(page: Page, verify?: (route: Route) => Promise<void>) 
     if (path === "/api/v1/auth/refresh") return route.fulfill({ status: 204 });
     // The waiting page's continuation checks: still waiting for the address to be verified.
     if (path === "/api/v1/auth/registration-session") return route.fulfill({ status: 202, json: { state: "PENDING_VERIFICATION" } });
+    // A signed-in session opens the live-update stream (ADR 0054); it carries no command, so it is not recorded.
+    if (path === "/api/v1/auth/events") return route.fulfill({ status: 200, headers: { "Content-Type": "text/event-stream" }, body: "retry: 60000\n\n" });
     if (path.startsWith("/api/v1/auth/")) {
       calls.push({ path, body: request.postDataJSON() });
       if (path.endsWith("verify-email")) return verify ? verify(route) : route.fulfill({ status: 200, json: signedInBody });
-      if (path.endsWith("/register")) return route.fulfill({ status: 201, json: { userId: "1", customerId: "1", state: "PENDING_VERIFICATION" } });
+      if (path.endsWith("/register")) return route.fulfill({ status: 201, json: { state: "PENDING_VERIFICATION" } });
       if (path.endsWith("resend-verification") || path.endsWith("forgot-password")) {
         return route.fulfill({ status: 202, contentType: "application/json", body: JSON.stringify({ message: "Si la cuenta cumple los requisitos, recibirás un correo con los pasos a seguir." }) });
       }

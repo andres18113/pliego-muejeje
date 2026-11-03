@@ -2,7 +2,7 @@
    never lavender. Orders en curso are few and lead: a white card each, the server-reported state in ultramar display type, an ultramar "Ver pedido".
    Finished orders are quiet outlined sheets read as identity, date, total, "Ver pedido", then the
    state and its books. A finished order (Entregado, Compra completada) says so in words, in display type
-   and a quiet success green; cancelled steps back to muted functional text. No status icons.
+   and a quiet success green; cancelled reads at the same weight in neutral ink. No status icons.
    Every unit is one link; books carry a small cover beside the purchased title. */
 .history { --ol-card: var(--acc-card); --ol-edge: var(--acc-card-edge); --ol-savings: #1e7a3c; --ol-done: #1e6b3a; display: grid; gap: clamp(28px, 4vw, 40px); width: 100%; max-width: 920px; min-width: 0; margin-inline: auto; }
 :global([data-mantine-color-scheme="dark"]) .history { --ol-savings: #8fdca6; --ol-done: #9fdcb2; }
@@ -60,7 +60,8 @@
 /* Finished: the outcome in display type and a quiet success green; the words carry it, not the colour. */
 .unit[data-outcome="done"] .state { color: var(--ol-done); font: 650 1.0625rem/1.3 var(--acc-display); letter-spacing: -.02em; }
 .unit[data-group="past"] .note { color: var(--acc-muted); font-size: .8125rem; }
-.unit[data-outcome="closed"] .state { color: var(--acc-muted); font-weight: 500; }
+/* Cancelled: the same display weight as a finished order, in neutral ink rather than the success green. */
+.unit[data-outcome="closed"] .state { color: var(--acc-ink); font: 650 1.0625rem/1.3 var(--acc-display); letter-spacing: -.02em; }
 .unit[data-outcome="closed"] .bookTitle, .unit[data-outcome="closed"] .total { color: var(--acc-muted); }
 .unit[data-outcome="closed"] .total { font-weight: 400; }
 .unit[data-outcome="closed"] .cover { opacity: .6; }

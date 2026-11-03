@@ -113,10 +113,12 @@ function OwnedItemDetail({ ownedItemId }: { ownedItemId: string }) {
     </>}
 
     {state.status === "error" && <section className={classes.notice} role="alert">
-      <h1>{state.httpStatus === 404 ? "Adquisición no disponible" : state.title}</h1>
-      <p>{state.detail}</p>
+      {/* Mi biblioteca holds only what the customer owns now (ADR 0055): a title whose order was cancelled answers
+          like an unknown one. The order, its refund and the title's history stay in Mis pedidos. */}
+      <h1>{state.httpStatus === 404 ? "Este título no está en tu biblioteca" : state.title}</h1>
+      <p>{state.httpStatus === 404 ? "Si cancelaste su pedido, el título salió de Mi biblioteca. El pedido y su reembolso siguen en Mis pedidos." : state.detail}</p>
       {state.httpStatus === 404
-        ? <ButtonLink variant="secondary" to={libraryRoutes.list}>Ir a Mi biblioteca</ButtonLink>
+        ? <div className={classes.noticeActions}><ButtonLink variant="secondary" to={libraryRoutes.list}>Ir a Mi biblioteca</ButtonLink><Link className={classes.noticeLink} to="/orders">Ver mis pedidos</Link></div>
         : <Button variant="secondary" type="button" onClick={() => void query.refetch()}>Reintentar</Button>}
     </section>}
 

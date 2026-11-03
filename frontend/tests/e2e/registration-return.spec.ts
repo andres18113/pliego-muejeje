@@ -58,7 +58,7 @@ for (const width of [320, 390, 1280]) {
       await created;
       await expect(page.getByRole("heading", { name: "Revisa tu correo", exact: true })).toBeVisible();
       await expect(page.getByText("Falta un paso: verificar tu correo", { exact: true })).toBeVisible();
-      await expect(page.getByRole("status").first()).toContainText(`La cuenta se creó para ${email}`);
+      await expect(page.getByRole("status").first()).toContainText(`Enviamos a ${email}`);
       await expect(page.getByText(/esta página iniciará tu sesión/)).toContainText("te llevará a tu carrito");
       await expect(page.getByRole("link", { name: "Reenviar verificación", exact: true })).toHaveAttribute("href", `/reenviar-verificacion?${from}`);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);

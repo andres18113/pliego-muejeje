@@ -248,6 +248,18 @@ export function RegisterPage() {
   const remembered = readRegistration(location.state);
   const [registered, setRegistered] = useState(Boolean(remembered));
   const [registeredEmail, setRegisteredEmail] = useState(remembered ?? "");
+  // ADR 0056: registration paused from here. The form keeps what was typed and sends nothing until then; the
+  // explanation never says whether the address already has an account.
+  const [pausedUntil, setPausedUntil] = useState<number | null>(null);
+  const paused = pausedUntil !== null;
+  useEffect(() => {
+    if (pausedUntil === null) return;
+    const timer = window.setTimeout(() => {
+      setPausedUntil(null);
+      setServerError({ title: "Ya puedes volver a intentarlo", detail: "Revisa tus datos antes de crear la cuenta." });
+    }, Math.max(0, pausedUntil - Date.now()));
+    return () => window.clearTimeout(timer);
+  }, [pausedUntil]);
   const navigate = useNavigate();
   const returnState = withoutRegistration(location.state);
   const [phoneVisible, setPhoneVisible] = useState(false);
@@ -311,6 +323,12 @@ export function RegisterPage() {
         requestAnimationFrame(() => focusRegistrationField(fields[0]));
         setFeedback({state:"error",message:"Revisa los campos señalados."}); return;
       }
+      if (error instanceof LoginRateLimitedError) {
+        setPausedUntil(error.retryAt);
+        setServerError({ title: "Demasiados intentos", detail: `Por seguridad pausamos la creación de cuentas desde aquí. Podrás volver a intentarlo ${retryMoment(error.retryAt)}.` });
+        setFeedback({ state: "error", message: "Creación de cuenta en pausa." });
+        return;
+      }
       setServerError(authFailure(error, "No pudimos crear tu cuenta", "Comprueba tu conexión e inténtalo otra vez."));
       setFeedback({ state: "error", message: "No pudimos crear tu cuenta." });
     }
@@ -321,8 +339,10 @@ export function RegisterPage() {
   });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (submitLockRef.current) {
+    if (submitLockRef.current || paused) {
       event.preventDefault();
+      // While paused nothing is sent; the explanation is brought back into view and focus.
+      if (paused) errorRef.current?.focus();
       return;
     }
     submitLockRef.current = true;
@@ -345,7 +365,7 @@ export function RegisterPage() {
             <>
               <h1>Crear cuenta</h1>
               <p className="auth-form-note">Todos los campos son obligatorios, excepto el teléfono.</p>
-              <form className="auth-form register-form" onSubmit={onSubmit} onChangeCapture={() => clearErrorFeedback(feedback, serverError, setFeedback, setServerError)} noValidate aria-busy={isSubmitting || isValidating}>
+              <form className="auth-form register-form" onSubmit={onSubmit} onChangeCapture={() => { if (!paused) clearErrorFeedback(feedback, serverError, setFeedback, setServerError); }} noValidate aria-busy={isSubmitting || isValidating}>
                 {serverError && (
                   <div className="auth-error" role="alert" tabIndex={-1} ref={errorRef}>
                     <h2>{serverError.title}</h2>
@@ -467,10 +487,10 @@ export function RegisterPage() {
                 <Button
                   variant="primary"
                   type="submit"
-                  aria-disabled={isSubmitting || isValidating}
+                  aria-disabled={isSubmitting || isValidating || paused}
                   aria-busy={isSubmitting || isValidating}
                 >
-                  {activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Creando cuenta…" : "Crear cuenta"}
+                  {paused ? "En pausa" : activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Creando cuenta…" : "Crear cuenta"}
                 </Button>
               </form>
               <p className="auth-switch">

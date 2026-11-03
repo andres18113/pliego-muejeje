@@ -150,9 +150,12 @@ export function RegistrationWaiting({ email, intent, returnState, headingRef }: 
           {resend}
           <Link to={authLocation("/sign-in", intent)} state={stateAfterRegistration(returnState, email)}>Iniciar sesión</Link>
         </>}>
-        <p role="status">La cuenta se creó para <strong>{email}</strong>. Abre el enlace que te enviamos para verificarla.</p>
+        {/* ADR 0056: registering answers the same whether or not the address already has an account, so this page
+            never says an account was created; it says what to open, and how to continue if one already existed. */}
+        <p role="status">Enviamos a <strong>{email}</strong> el enlace para verificar tu nueva cuenta, si este correo aún no tenía una en PLIEGO.</p>
         <p>Cuando lo abras, aquí o en otro dispositivo, esta página iniciará tu sesión y te llevará {going}.</p>
         <p>Si no lo ves, mira en la carpeta de correo no deseado.</p>
+        <p>¿Ya tenías una cuenta con este correo? <Link to={authLocation("/sign-in", intent)} state={stateAfterRegistration(returnState, email)}>Inicia sesión</Link> o <Link to={emailActionLocation("/recuperar-contrasena", intent)} state={{ email }}>restablece tu contraseña</Link>.</p>
         <p aria-live="polite">{phase.manual === "pending" ? "Todavía no vemos la verificación. Abre el enlace del correo e inténtalo de nuevo."
           : phase.manual === "failed" ? "No pudimos comprobarlo ahora. Seguiremos intentándolo."
           : phase.manual === "later" ? "Comprobamos muchas veces seguidas. Volveremos a intentarlo en unos minutos; no tienes que hacer nada." : ""}</p>

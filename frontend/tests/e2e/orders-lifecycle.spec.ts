@@ -74,8 +74,17 @@ test("cancelled home delivery remains a cancelled purchase",async ({ page }) => 
     payment: { method: "CARD",state: "REFUNDED",amount: "42.55",reference: "SIM-1" },availableActions: { cancel: false,changeShippingAddress: false } });
   await install(page,detail);
   await page.goto("/orders");
-  await page.getByRole("link",{ name: /Pedido cancelado.*Pedido #700/ }).click();
+  const unit = page.getByRole("link",{ name: /Pedido cancelado.*Pedido #700/ });
+  // A cancelled order reads at a finished order's prominence (display face, 650) in neutral ink, never the success green.
+  const listState = await unit.locator("strong").first().evaluate(element => { const style = getComputedStyle(element); return { weight: style.fontWeight, family: style.fontFamily, color: style.color }; });
+  expect(listState.weight).toBe("650");
+  expect(listState.family).toMatch(/Bricolage/);
+  expect(listState.color).toBe("rgb(37, 39, 64)");
+  await page.screenshot({ path: test.info().outputPath("cancelled-order-list.png"),fullPage: true,animations: "disabled" });
+  await unit.click();
   await expect(page.getByRole("heading",{ level: 2,name: "Pedido cancelado" })).toBeVisible();
+  expect(await page.getByRole("heading",{ level: 2,name: "Pedido cancelado" }).evaluate(element => getComputedStyle(element).color)).toBe("rgb(37, 39, 64)");
+  await page.screenshot({ path: test.info().outputPath("cancelled-order-detail.png"),fullPage: true,animations: "disabled" });
   await expect(page.getByRole("list",{ name: "Progreso del envío" })).toHaveCount(0);
   await expect(page.getByRole("button",{ name: "Cancelar pedido" })).toHaveCount(0);
 });

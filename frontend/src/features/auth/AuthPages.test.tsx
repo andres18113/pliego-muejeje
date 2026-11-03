@@ -151,6 +151,30 @@ describe("authentication forms", () => {
     expect(screen.getByLabelText("Contraseña")).toHaveValue("segura1234");
   });
 
+  // ADR 0056: the same pause on registration, which never says whether the address already has an account.
+  it("pauses registration after too many attempts, keeps the typed data and resumes when the pause ends", async () => {
+    mockRegister.mockRejectedValueOnce(new LoginRateLimitedError(new ApiRequestError(429, "AUTH_REGISTER_RATE_LIMITED", "Demasiados intentos", "Espera unos minutos antes de volver a intentarlo."), Date.now() + 300))
+      .mockResolvedValueOnce({ state: "PENDING_VERIFICATION" });
+    renderAuth("/register");
+    const user = userEvent.setup();
+    await completeRegistration(user);
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    const notice = await screen.findByRole("alert");
+    expect(notice).toHaveTextContent("Por seguridad pausamos la creación de cuentas desde aquí. Podrás volver a intentarlo en unos segundos.");
+    expect(notice).not.toHaveTextContent(/ya (existe|tiene)|registrad/i);
+    const paused = screen.getByRole("button", { name: "En pausa" });
+    expect(paused).toHaveAttribute("aria-disabled", "true");
+    await user.click(paused);
+    expect(mockRegister).toHaveBeenCalledTimes(1);
+    expect(screen.getByLabelText("Correo electrónico")).toHaveValue("ANA@EXAMPLE.COM");
+    expect(await screen.findByText("Ya puedes volver a intentarlo")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
+    expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
+    expect(mockRegister).toHaveBeenCalledTimes(2);
+    // Neutral for an address that may already have an account: it says how to continue in that case.
+    expect(screen.getByRole("link", { name: "restablece tu contraseña" })).toHaveAttribute("href", "/recuperar-contrasena");
+  });
+
   it("lets the customer try again once the pause ends", async () => {
     mockLogin.mockRejectedValueOnce(new LoginRateLimitedError(new ApiRequestError(429, "AUTH_LOGIN_RATE_LIMITED", "Demasiados intentos", "Espera."), Date.now() + 200))
       .mockRejectedValueOnce(new ApiRequestError(401, "AUTH_INVALID_CREDENTIALS", "No autorizado", "Credenciales inválidas."));
@@ -191,7 +215,7 @@ describe("authentication forms", () => {
     await completeRegistration(user);
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
     expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("Abre el enlace que te enviamos para verificarla");
+    expect(screen.getByRole("status")).toHaveTextContent("el enlace para verificar tu nueva cuenta, si este correo aún no tenía una en PLIEGO");
     expect(screen.getByRole("link", { name: "Reenviar verificación" })).toHaveAttribute("href", "/reenviar-verificacion");
   });
 
@@ -475,7 +499,7 @@ describe("authentication forms", () => {
       phone: "+59325550134",
     }));
     expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
-    expect(screen.getByRole("status")).toHaveTextContent("La cuenta se creó para ana@example.com");
+    expect(screen.getByRole("status")).toHaveTextContent("Enviamos a ana@example.com el enlace para verificar tu nueva cuenta");
 
     await user.click(within(screen.getByRole("main")).getByRole("link", { name: "Iniciar sesión" }));
     expect(await screen.findByRole("heading", { name: "Iniciar sesión" })).toBeInTheDocument();

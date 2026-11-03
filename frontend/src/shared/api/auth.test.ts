@@ -10,8 +10,8 @@ describe("registration response contract", () => {
   afterEach(() => { setApiAccessToken(null); vi.unstubAllGlobals(); });
 
   it("accepts the backend verification-pending state instead of rejecting a successful registration", async () => {
-    stubApi({ "POST /api/v1/auth/register": () => json({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" }, 201) });
-    await expect(register(registration)).resolves.toEqual({ userId: "10", customerId: "21", state: "PENDING_VERIFICATION" });
+    stubApi({ "POST /api/v1/auth/register": () => json({ state: "PENDING_VERIFICATION" }, 201) });
+    await expect(register(registration)).resolves.toEqual({ state: "PENDING_VERIFICATION" });
   });
 
   it("rejects a stale immediate-active response that omits required verification", async () => {

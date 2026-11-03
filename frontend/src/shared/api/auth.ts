@@ -52,12 +52,19 @@ export async function logoutSession() {
   });
 }
 
-export async function register(body: RegisterRequest) {
+// Response objects may carry additive fields from an older server/consumer fixture;
+// only the neutral state is part of the current registration contract.
+export async function register(body: RegisterRequest): Promise<components["schemas"]["RegisterResponse"] & Record<string, unknown>> {
   const { data, error, response } = await apiClient.POST("/api/v1/auth/register", { body });
+  // ADR 0056: too many registrations from here or for this address — the same pause grammar as sign-in.
+  if (response.status === 429) {
+    const base = toApiRequestError(429, error, "Demasiados intentos", "Espera unos minutos antes de volver a intentarlo.");
+    throw new LoginRateLimitedError(base, retryAtFrom(response.headers.get("Retry-After")));
+  }
   if (error) {
     throw toApiRequestError(response.status, error, "No pudimos crear tu cuenta", "Revisa tus datos e inténtalo otra vez.");
   }
-  if (!data?.customerId || data.state !== "PENDING_VERIFICATION") {
+  if (data?.state !== "PENDING_VERIFICATION") {
     throw toApiRequestError(502, {}, "No pudimos crear tu cuenta", "La respuesta del servidor está incompleta. Inténtalo otra vez.");
   }
   return data;
