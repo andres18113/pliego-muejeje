@@ -153,7 +153,8 @@ describe("authentication forms", () => {
 
   // ADR 0056: the same pause on registration, which never says whether the address already has an account.
   it("pauses registration after too many attempts, keeps the typed data and resumes when the pause ends", async () => {
-    mockRegister.mockRejectedValueOnce(new LoginRateLimitedError(new ApiRequestError(429, "AUTH_REGISTER_RATE_LIMITED", "Demasiados intentos", "Espera unos minutos antes de volver a intentarlo."), Date.now() + 300))
+    // The pause starts when the request is answered, not when the test is set up.
+    mockRegister.mockImplementationOnce(() => Promise.reject(new LoginRateLimitedError(new ApiRequestError(429, "AUTH_REGISTER_RATE_LIMITED", "Demasiados intentos", "Espera unos minutos antes de volver a intentarlo."), Date.now() + 2_500)))
       .mockResolvedValueOnce({ state: "PENDING_VERIFICATION" });
     renderAuth("/register");
     const user = userEvent.setup();
@@ -167,7 +168,8 @@ describe("authentication forms", () => {
     await user.click(paused);
     expect(mockRegister).toHaveBeenCalledTimes(1);
     expect(screen.getByLabelText("Correo electrónico")).toHaveValue("ANA@EXAMPLE.COM");
-    expect(await screen.findByText("Ya puedes volver a intentarlo")).toBeInTheDocument();
+    // The pause is long enough to be asserted on a slow runner, then it lifts by itself.
+    expect(await screen.findByText("Ya puedes volver a intentarlo", undefined, { timeout: 6_000 })).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Crear cuenta" }));
     expect(await screen.findByRole("heading", { name: "Revisa tu correo" })).toBeInTheDocument();
     expect(mockRegister).toHaveBeenCalledTimes(2);
