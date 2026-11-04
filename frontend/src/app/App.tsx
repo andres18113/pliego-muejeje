@@ -12,6 +12,7 @@ import { NotFoundScene } from "@/shared/ui/NotFoundScene";
 import { useDelayedPending } from "@/shared/hooks/useDelayedPending";
 import { SessionProvider, useSession } from "./session";
 import { RealtimeSync } from "./realtime/RealtimeSync";
+import { OfferRefreshSync } from "./realtime/OfferRefreshSync";
 import { BuildUpdateNotice } from "./version/BuildUpdateNotice";
 
 const catalogCriteriaKeys = ["que", "category", "minPrice", "maxPrice", "language", "format", "productType", "sort", "page", "pageSize"];
@@ -227,6 +228,7 @@ function RootSessionLayout() {
   return (
     <SessionProvider>
       <RealtimeSync />
+      <OfferRefreshSync />
       <BuildUpdateNotice />
       <BackNavigationProvider><RootLayout /></BackNavigationProvider>
     </SessionProvider>

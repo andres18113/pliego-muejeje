@@ -16,6 +16,7 @@ export const realtimeEventNames = [
   "order.cancellation-window.expired",
   "pickup.ready",
   "library.changed",
+  "catalog.offers.changed",
   "resync",
 ] as const;
 
@@ -40,12 +41,21 @@ export function parseRealtimeHint(event: string, data: string): RealtimeHint | n
   }
 }
 
-/** Every private, server-owned view: the customer's and the administration's. Public catalog data is not touched. */
+/** Every private, server-owned view: the customer's and the administration's. */
 const isPrivateKey = (key: QueryKey) => typeof key[0] === "string" && (key[0].startsWith("customer-") || key[0].startsWith("admin-"));
+
+/**
+ * Every view that shows an offer or a price (ADR 0058): the public catalog (shelves, search pages, Ofertas, the edition
+ * page, previews), the navigation's offer counts, and the customer's cart, saved-for-later and favorites.
+ */
+const offerPriceRoots: readonly string[] = ["public-catalog", "storefront-navigation", "customer-cart", "customer-saved-for-later", "customer-favorites"];
+export const isOfferPriceKey = (key: QueryKey) => typeof key[0] === "string" && offerPriceRoots.includes(key[0]);
 
 export function realtimeQueryKeys(role: RealtimeRole, hint: RealtimeHint): QueryKey[] {
   if (hint.event === "resync") return [];
   const id = hint.resourceId ?? "";
+  // A public offer hint, for both roles: an edition's offer started, ended or was edited. Its price shows on many views.
+  if (hint.event === "catalog.offers.changed") return offerPriceRoots.map(root => [root]);
   if (role === "ADMIN") {
     if (hint.event.startsWith("identity.correction.")) return hint.event === "identity.correction.acknowledged" ? [] : [["admin-identity-corrections"]];
     if (hint.event === "library.changed") return [];
@@ -60,8 +70,11 @@ export function realtimeQueryKeys(role: RealtimeRole, hint: RealtimeHint): Query
   ];
 }
 
-/** Refetches the mounted views a hint concerns (inactive ones are only marked stale), or every private view on resync. */
+/**
+ * Refetches the mounted views a hint concerns (inactive ones are only marked stale). On resync — a hint may have been
+ * missed — every private view and every price view, since a missed offer hint leaves public prices stale too.
+ */
 export function applyRealtimeHint(queryClient: QueryClient, role: RealtimeRole, hint: RealtimeHint) {
-  if (hint.event === "resync") return queryClient.invalidateQueries({ predicate: query => isPrivateKey(query.queryKey) });
+  if (hint.event === "resync") return queryClient.invalidateQueries({ predicate: query => isPrivateKey(query.queryKey) || isOfferPriceKey(query.queryKey) });
   return Promise.all(realtimeQueryKeys(role, hint).map(queryKey => queryClient.invalidateQueries({ queryKey })));
 }

@@ -408,6 +408,13 @@ marketing blocks; phones stack brand over links.
   deadline. Only news the customer must act on or acknowledge (a correction decision) gets its own quiet notice.
   Leadership follows the page lifecycle: a tab being frozen or cached yields the stream to a waiting tab and rejoins
   on resume, and a tab returning to view re-reads its mounted private views once (never polling).
+- **Offers keep time (ADR 0058).** Every open page — guest or signed in — re-reads its prices when an offer starts
+  or ends, as a reload would: `app/realtime/OfferRefreshSync` asks the server's refresh clock (requested before the
+  app renders) for the next offer transition and re-reads the mounted price views (catalog, Ofertas, edition, the
+  navigation's offer counts, cart, saved, favorites) just after it, measured on the server's clock, never the
+  browser's. It asks again within the server's bound (60s) to catch an administrator's edit, never while the tab is
+  hidden, and once when the tab returns or the connection comes back. Signed-in tabs also take the stream's
+  `catalog.offers.changed` hint, and a stream resync re-reads prices too. No toast, motion or countdown.
 - **A newer release.** An open tab keeps the code it loaded. When `/version.json` names a newer build (checked on
   start and when the tab comes back, at most once a minute), the shared snackbar says "Hay una versión nueva de
   PLIEGO." with "Actualizar"; it never reloads by itself, so typed work is never lost.

@@ -91,9 +91,9 @@ describe("realtime hints", () => {
     expect(realtimeQueryKeys("CUSTOMER", library)).toEqual([["customer-library"], ["customer-cart", "digital-eligibility"]]);
   });
 
-  it("refetches only the concerned private views; resync refetches every private view and never the catalog", async () => {
+  it("refetches only the concerned private views; resync refetches every private and price view, never other public data", async () => {
     const client = new QueryClient();
-    for (const key of [["customer-order", "9"], ["customer-order", "10"], ["customer-billing-identity"], ["public-catalog", "x"], ["admin-pickups"]]) client.setQueryData(key, 1);
+    for (const key of [["customer-order", "9"], ["customer-order", "10"], ["customer-billing-identity"], ["public-catalog", "x"], ["admin-pickups"], ["reference-countries"]]) client.setQueryData(key, 1);
     await applyRealtimeHint(client, "CUSTOMER", parseRealtimeHint("order.changed", '{"resourceType":"order","resourceId":"9"}')!);
     const stale = (key: string[]) => client.getQueryState(key)?.isInvalidated;
     expect(stale(["customer-order", "9"])).toBe(true);
@@ -103,7 +103,26 @@ describe("realtime hints", () => {
     expect(stale(["customer-order", "10"])).toBe(true);
     expect(stale(["customer-billing-identity"])).toBe(true);
     expect(stale(["admin-pickups"])).toBe(true);
-    expect(stale(["public-catalog", "x"])).toBe(false);
+    // ADR 0058: a missed offer hint leaves public prices stale too, so a resync re-reads them.
+    expect(stale(["public-catalog", "x"])).toBe(true);
+    expect(stale(["reference-countries"])).toBe(false);
+  });
+
+  it("maps the public offer hint to every price view for both roles, and nothing else", async () => {
+    const hint = parseRealtimeHint("catalog.offers.changed", '{"resourceType":"edition","resourceId":"42"}')!;
+    expect(hint).toEqual({ event: "catalog.offers.changed", resourceType: "edition", resourceId: "42" });
+    const priceViews = [["public-catalog"], ["storefront-navigation"], ["customer-cart"], ["customer-saved-for-later"], ["customer-favorites"]];
+    expect(realtimeQueryKeys("CUSTOMER", hint)).toEqual(priceViews);
+    expect(realtimeQueryKeys("ADMIN", hint)).toEqual(priceViews);
+    const client = new QueryClient();
+    for (const key of [["public-catalog", "edition", "42"], ["storefront-navigation"], ["customer-cart"], ["customer-orders"], ["admin-pickups"]]) client.setQueryData(key, 1);
+    await applyRealtimeHint(client, "CUSTOMER", hint);
+    const stale = (key: string[]) => client.getQueryState(key)?.isInvalidated;
+    expect(stale(["public-catalog", "edition", "42"])).toBe(true);
+    expect(stale(["storefront-navigation"])).toBe(true);
+    expect(stale(["customer-cart"])).toBe(true);
+    expect(stale(["customer-orders"])).toBe(false);
+    expect(stale(["admin-pickups"])).toBe(false);
   });
 });
 
