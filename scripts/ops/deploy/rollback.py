@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Pinned coordinated application rollback. --dry-run makes no writes or service calls.
+"""Pinned application rollback with independent backend/frontend recovery targets.
+
+--dry-run makes no writes or service calls.
 
 Never changes database privileges, data, environment, Nginx or Flyway history.
 Elevated runtime and partial migration prefixes require reviewed operator recovery.
@@ -55,18 +57,13 @@ def preflight(paths,require_root=True,helper_override=None):
     C.require(stat.S_IMODE(manifest_path.stat().st_mode) == 0o600 and stat.S_IMODE(manifest_path.parent.stat().st_mode) == 0o700,'release metadata must remain private')
     if require_root:
         C.require(manifest_path.stat().st_uid == 0 and manifest_path.parent.stat().st_uid == 0,'release metadata must be root-owned')
-    pins = C.validate_preflight(manifest.get('preflight'),paths.release)
-    paths = paths.with_previous(pins['previousReleaseId'])
-    C.require_sha(manifest.get('preflightSha256'))
-    required = {'manifestVersion':2,'releaseId':pins['releaseId'],'sourceSha':pins['sourceSha'],'ciRunId':pins['ciRunId'],'previousSourceSha':pins['previousSourceSha'],'scope':'coordinated-backend-frontend','candidateBackend':paths.production_name(paths.backend(pins['releaseId'])),'candidateFrontend':paths.production_name(paths.frontend(pins['releaseId'])),'previousBackend':paths.production_name(paths.backend(pins['previousReleaseId'])),'previousFrontend':paths.production_name(paths.frontend(pins['previousReleaseId'])),'rollbackFrontend':paths.production_name(paths.frontend(paths.rollback_release())),'previousBackendSha256':pins['previousBackendSha256'],'previousIndexSha256':pins['previousIndexSha256']}
-    for key,value in required.items():
-        C.require(type(manifest.get(key)) is type(value) and manifest[key] == value,'release metadata identity/path/hash differs from pinned recovery')
+    pins, paths = C.manifest_identity(manifest, paths)
     C.validate_compatibility(manifest.get('compatibility'),pins,manifest.get('candidateBackendSha256'))
     C.require_sha(manifest.get('compatibilityEvidenceSha256'))
     backend = paths.backend(pins['releaseId'])
-    previous_backend = paths.backend(pins['previousReleaseId'])
+    previous_backend = paths.backend(paths.previous_backend)
     frontend = paths.frontend(pins['releaseId'])
-    previous_frontend = paths.frontend(pins['previousReleaseId'])
+    previous_frontend = paths.frontend(paths.previous_frontend)
     rollback_frontend = paths.frontend(paths.rollback_release())
     backend_current = C.resolve_current(paths,'backend',[backend,previous_backend])
     frontend_current = C.resolve_current(paths,'frontend',[frontend,previous_frontend,rollback_frontend])
@@ -98,7 +95,7 @@ def preflight(paths,require_root=True,helper_override=None):
     recorded = manifest.get('migrations')
     C.require(isinstance(recorded,dict) and recorded == actual,'recorded migrations do not match the installed recovery/candidate JARs')
     plan = manifest.get('plannedRollback')
-    C.require(isinstance(plan,dict) and plan.get('acceptedFlywayVersions') == C.accepted_versions(pins) and plan.get('runtimePrivileges') == 'f|f|f|f' and type(plan.get('appOwnedObjects')) is int and plan['appOwnedObjects'] == 0 and plan.get('r2MustRemainEnabled') is True and plan.get('mailMustRemainEnabled') is True and plan.get('databaseWrites') is False and plan.get('nginxChanges') is False and plan.get('backupRestore') is False and plan.get('backend') == required['previousBackend'] and plan.get('frontend') == required['rollbackFrontend'] and type(plan.get('catalogTotalCount')) is int and plan['catalogTotalCount'] == pins['expectedCatalogTotalCount'],'planned rollback safety contract differs')
+    C.require(isinstance(plan,dict) and plan.get('acceptedFlywayVersions') == C.accepted_versions(pins) and plan.get('runtimePrivileges') == 'f|f|f|f' and type(plan.get('appOwnedObjects')) is int and plan['appOwnedObjects'] == 0 and plan.get('r2MustRemainEnabled') is True and plan.get('mailMustRemainEnabled') is True and plan.get('databaseWrites') is False and plan.get('nginxChanges') is False and plan.get('backupRestore') is False and type(plan.get('catalogTotalCount')) is int and plan['catalogTotalCount'] == pins['expectedCatalogTotalCount'],'planned rollback safety contract differs')
     if require_root:
         for path in [previous_backend,backend]:
             C.validate_tree_modes(path,backend=True)
@@ -106,7 +103,7 @@ def preflight(paths,require_root=True,helper_override=None):
             C.validate_tree_modes(path)
     version = database_state(actual)
     command(['nginx','-t'])
-    return {'releaseId':pins['releaseId'],'flywayVersion':version,'backendCurrent':paths.production_name(backend_current),'frontendCurrent':paths.production_name(frontend_current),'rollbackBackend':required['previousBackend'],'rollbackFrontend':required['rollbackFrontend'],'runtimePrivileges':'f|f|f|f','appOwnedObjects':0,'r2Enabled':True,'mailEnabled':True,'compatibility':manifest['compatibility'],'manifestSha256':C.sha256(manifest_path),'expectedCatalogTotalCount':pins['expectedCatalogTotalCount']}
+    return {'releaseId':pins['releaseId'],'flywayVersion':version,'backendCurrent':paths.production_name(backend_current),'frontendCurrent':paths.production_name(frontend_current),'rollbackBackend':manifest['previousBackend'],'rollbackFrontend':manifest['rollbackFrontend'],'rollbackComponents':C.rollback_components(manifest),'runtimePrivileges':'f|f|f|f','appOwnedObjects':0,'r2Enabled':True,'mailEnabled':True,'compatibility':manifest['compatibility'],'manifestSha256':C.sha256(manifest_path),'expectedCatalogTotalCount':pins['expectedCatalogTotalCount']}
 
 
 @contextlib.contextmanager
@@ -147,39 +144,55 @@ def atomic_link(paths,kind,target):
             temporary.unlink()
 
 
-def rollback(paths,dry_run=False,require_root=True,lock_fd=None,url=URL):
+def rollback(paths,dry_run=False,require_root=True,lock_fd=None,url=URL,component=None):
     if dry_run:
         report = preflight(paths,require_root)
+        manifest = C.load_json(paths.deployment()/'release.json')
+        C.require(C.sha256(paths.deployment()/'release.json') == report['manifestSha256'], 'manifest changed during dry-run')
+        report['rollbackComponents'] = C.rollback_components(manifest,component)
         catalog = poll(url=url,expected=report['expectedCatalogTotalCount'])
         return dict(report,dryRun=True,writesPerformed=False,catalog=catalog)
     C.require(not require_root or os.geteuid() == 0,'root is required for application rollback')
     with deploy_lock(paths,lock_fd,require_root):
         initial = preflight(paths,require_root)
-        stop_and_drain(runner=command)
-        current = preflight(paths,require_root)
-        C.require(current['manifestSha256'] == initial['manifestSha256'] and current['flywayVersion'] == initial['flywayVersion'] and current['backendCurrent'] == initial['backendCurrent'] and current['frontendCurrent'] == initial['frontendCurrent'],'release state changed while draining; backend remains stopped')
         manifest = C.load_json(paths.deployment()/'release.json')
+        C.require(C.sha256(paths.deployment()/'release.json') == initial['manifestSha256'], 'manifest changed before rollback')
+        components = C.rollback_components(manifest,component)
+        if 'backend' in components:
+            stop_and_drain(runner=command)
+        current = preflight(paths,require_root)
+        drift_message = ('release state changed while draining; backend remains stopped' if 'backend' in components
+                         else 'release state changed before frontend recovery; backend was not stopped')
+        C.require(current['manifestSha256'] == initial['manifestSha256'] and current['flywayVersion'] == initial['flywayVersion'] and current['backendCurrent'] == initial['backendCurrent'] and current['frontendCurrent'] == initial['frontendCurrent'],drift_message)
         pins = C.validate_preflight(manifest['preflight'],paths.release)
-        paths = paths.with_previous(pins['previousReleaseId'])
-        atomic_link(paths,'backend',paths.backend(pins['previousReleaseId']))
-        atomic_link(paths,'frontend',paths.frontend(paths.rollback_release()))
-        start(runner=command)
+        paths = paths.with_preflight(pins)
+        if 'backend' in components:
+            atomic_link(paths,'backend',paths.backend(paths.previous_backend))
+        if 'frontend' in components:
+            atomic_link(paths,'frontend',paths.frontend(paths.rollback_release()))
+        if 'backend' in components:
+            start(runner=command)
         catalog = poll(url=url,expected=pins['expectedCatalogTotalCount'])
         # A fresh runtime must still have no migration privileges or ownership.
         after_version = database_state(manifest['migrations'])
         C.require(after_version == initial['flywayVersion'],'Flyway history changed during rollback startup')
         C.validate_config(paths.at('/etc/pliego/pliego.env'))
-        return dict(current,dryRun=False,writesPerformed=True,backendCurrent=paths.production_name(paths.backend(pins['previousReleaseId'])),frontendCurrent=paths.production_name(paths.frontend(paths.rollback_release())),catalog=catalog)
+        backend_expected = paths.backend(paths.previous_backend) if 'backend' in components else paths.at(initial['backendCurrent'])
+        frontend_expected = paths.frontend(paths.rollback_release()) if 'frontend' in components else paths.at(initial['frontendCurrent'])
+        C.resolve_current(paths,'backend',[backend_expected])
+        C.resolve_current(paths,'frontend',[frontend_expected])
+        return dict(current,dryRun=False,writesPerformed=True,rollbackComponents=components,backendCurrent=paths.production_name(backend_expected),frontendCurrent=paths.production_name(frontend_expected),catalog=catalog)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--release',required=True,type=C.validate_release_name)
     parser.add_argument('--dry-run',action='store_true')
+    parser.add_argument('--component',choices=('all','backend','frontend'),help='subset of the recorded plan; default: execute that plan')
     parser.add_argument('--lock-fd',type=int,help='inherited already-held /run/lock/pliego-deploy.lock FD')
     args = parser.parse_args()
     C.require(args.lock_fd is None or args.lock_fd >= 3,'invalid deployment lock descriptor')
-    C.emit(rollback(C.Paths(args.release),dry_run=args.dry_run,lock_fd=args.lock_fd))
+    C.emit(rollback(C.Paths(args.release),dry_run=args.dry_run,lock_fd=args.lock_fd,component=args.component))
 
 
 if __name__ == '__main__':

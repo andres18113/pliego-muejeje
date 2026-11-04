@@ -13,10 +13,11 @@ import release_common as C
 from compare_migrations import compare
 
 
-def prepare_manifest(candidate_input,migration_input,compatibility_input,paths=None,configs=(),require_root=True,archive_path=None,preflight_input=None):
+def prepare_manifest(candidate_input,migration_input,compatibility_input,paths=None,configs=(),require_root=True,archive_path=None,preflight_input=None,rollback_component='all'):
     C.require(preflight_input is not None, 'captured preflight is required')
     pins = C.validate_preflight(C.load_json(preflight_input), paths.release if paths else None)
-    paths = (paths or C.Paths(pins['releaseId'])).with_previous(pins['previousReleaseId'])
+    paths = (paths or C.Paths(pins['releaseId'])).with_preflight(pins)
+    identities = C.previous_identities(pins)
     C.require(not require_root or os.geteuid() == 0,'root is required for a private production release manifest')
     candidate = C.load_json(candidate_input)
     planned = C.load_json(migration_input)
@@ -24,8 +25,8 @@ def prepare_manifest(candidate_input,migration_input,compatibility_input,paths=N
     C.require(candidate.get('sourceSha') == pins['sourceSha'] and type(candidate.get('ciRunId')) is int and candidate['ciRunId'] == pins['ciRunId'],'candidate source/CI identity differs from pinned release')
     backend = paths.backend(pins['releaseId'])
     frontend = paths.frontend(pins['releaseId'])
-    previous_backend = paths.backend(pins['previousReleaseId'])
-    previous_frontend = paths.frontend(pins['previousReleaseId'])
+    previous_backend = paths.backend(paths.previous_backend)
+    previous_frontend = paths.frontend(paths.previous_frontend)
     rollback_frontend = paths.frontend(paths.rollback_release())
     C.require(C.resolve_current(paths,'backend',[previous_backend]) == previous_backend,'previous backend pointer changed')
     C.require(C.resolve_current(paths,'frontend',[previous_frontend]) == previous_frontend,'previous frontend pointer changed')
@@ -77,7 +78,17 @@ def prepare_manifest(candidate_input,migration_input,compatibility_input,paths=N
         for target in [previous_frontend,frontend,rollback_frontend]:
             C.validate_tree_modes(target)
     scripts = C.helper_hashes()
-    manifest = {'manifestVersion':2,'preflight':pins,'preflightSha256':C.sha256(preflight_input),'releaseId':pins['releaseId'],'sourceSha':pins['sourceSha'],'ciRunId':pins['ciRunId'],'ciUrl':'https://github.com/andres18113/pliego-muejeje/actions/runs/' + str(pins['ciRunId']),'scope':'coordinated-backend-frontend','candidateBackend':paths.production_name(backend),'candidateFrontend':paths.production_name(frontend),'candidateBackendSha256':candidate['backendSha256'],'frontendArchiveSha256':candidate['frontendArchiveSha256'],'candidateFrontendFiles':files,'previousSourceSha':pins['previousSourceSha'],'previousBackend':paths.production_name(previous_backend),'previousFrontend':paths.production_name(previous_frontend),'rollbackFrontend':paths.production_name(rollback_frontend),'previousBackendSha256':pins['previousBackendSha256'],'previousIndexSha256':pins['previousIndexSha256'],'previousFrontendFiles':previous_files,'rollbackFrontendFiles':rollback_files,'migrations':actual_migrations,'configurationSha256':config_hashes,'requiredConfiguration':config_state,'scriptsSha256':scripts,'compatibility':compatibility,'compatibilityEvidenceSha256':C.sha256(compatibility_input),'plannedRollback':{'backend':paths.production_name(previous_backend),'frontend':paths.production_name(rollback_frontend),'acceptedFlywayVersions':C.accepted_versions(pins),'runtimePrivileges':'f|f|f|f','appOwnedObjects':0,'r2MustRemainEnabled':True,'mailMustRemainEnabled':True,'databaseWrites':False,'nginxChanges':False,'backupRestore':False,'catalogTotalCount':pins['expectedCatalogTotalCount'],'partialMigrationPrefix':'REFUSE_AND_KEEP_STOPPED','elevatedRuntime':'REFUSE_ADMIN_CLEANUP_REQUIRED'}}
+    manifest = {'manifestVersion':2,'preflight':pins,'preflightSha256':C.sha256(preflight_input),'releaseId':pins['releaseId'],'sourceSha':pins['sourceSha'],'ciRunId':pins['ciRunId'],'ciUrl':'https://github.com/andres18113/pliego-muejeje/actions/runs/' + str(pins['ciRunId']),'scope':'coordinated-backend-frontend','candidateBackend':paths.production_name(backend),'candidateFrontend':paths.production_name(frontend),'candidateBackendSha256':candidate['backendSha256'],'frontendArchiveSha256':candidate['frontendArchiveSha256'],'candidateFrontendFiles':files,'previousSourceSha':identities['previousBackendSourceSha'],'previousBackend':paths.production_name(previous_backend),'previousFrontend':paths.production_name(previous_frontend),'rollbackFrontend':paths.production_name(rollback_frontend),'previousBackendSha256':pins['previousBackendSha256'],'previousIndexSha256':pins['previousIndexSha256'],'previousFrontendFiles':previous_files,'rollbackFrontendFiles':rollback_files,'migrations':actual_migrations,'configurationSha256':config_hashes,'requiredConfiguration':config_state,'scriptsSha256':scripts,'compatibility':compatibility,'compatibilityEvidenceSha256':C.sha256(compatibility_input),'plannedRollback':{'backend':paths.production_name(previous_backend),'frontend':paths.production_name(rollback_frontend),'acceptedFlywayVersions':C.accepted_versions(pins),'runtimePrivileges':'f|f|f|f','appOwnedObjects':0,'r2MustRemainEnabled':True,'mailMustRemainEnabled':True,'databaseWrites':False,'nginxChanges':False,'backupRestore':False,'catalogTotalCount':pins['expectedCatalogTotalCount'],'partialMigrationPrefix':'REFUSE_AND_KEEP_STOPPED','elevatedRuntime':'REFUSE_ADMIN_CLEANUP_REQUIRED'}}
+    if 'previousReleaseId' not in pins:
+        manifest['manifestVersion'] = 3
+        del manifest['previousSourceSha']
+        manifest.update(identities, rollbackFrontendReleaseId=paths.rollback_release(),
+                        rollbackFrontendSourceSha=identities['previousFrontendSourceSha'])
+        C.require(rollback_component in {'all', 'backend', 'frontend'}, 'invalid rollback component')
+        manifest['plannedRollback']['components'] = ['backend', 'frontend'] if rollback_component == 'all' else [rollback_component]
+    else:
+        C.require(rollback_component == 'all', 'component plans require independent previous identities')
+    C.manifest_identity(manifest, paths)
     target_dir = paths.deployment()
     C.reject_symlink_components(target_dir)
     target_dir.mkdir(parents=True,exist_ok=True,mode=0o700)
@@ -158,6 +169,7 @@ def main():
     for name in ('preflight','candidate-manifest','migrations','compatibility-evidence','frontend-archive'):
         parser.add_argument('--'+name,type=lambda value:Path(value).absolute())
     parser.add_argument('--config',action='append',default=[],type=Path)
+    parser.add_argument('--rollback-component',choices=('all','backend','frontend'),help='record a restricted recovery plan (default: all)')
     parser.add_argument('--correct-helper',choices=C.HELPER_NAMES)
     parser.add_argument('--previous-sha256')
     parser.add_argument('--sha256')
@@ -168,13 +180,13 @@ def main():
     paths = C.Paths(args.release)
     C.require(args.lock_fd is None or args.lock_fd >= 3, 'invalid deployment lock descriptor')
     if args.correct_helper:
-        C.require(not any((args.preflight,args.candidate_manifest,args.migrations,args.compatibility_evidence,args.frontend_archive,args.config)), 'correction cannot change preparation inputs')
+        C.require(not any((args.preflight,args.candidate_manifest,args.migrations,args.compatibility_evidence,args.frontend_archive,args.config,args.rollback_component)), 'correction cannot change preparation inputs')
         C.emit(correct_helper(paths,args.correct_helper,args.previous_sha256,args.sha256,args.reason,args.explanation,args.lock_fd))
     else:
         C.require(not any((args.previous_sha256,args.sha256,args.reason,args.explanation,args.lock_fd)), 'correction options require --correct-helper')
         C.require(all((args.preflight,args.candidate_manifest,args.migrations,args.compatibility_evidence,args.frontend_archive)), 'all preparation inputs are required')
         C.emit(prepare_manifest(args.candidate_manifest,args.migrations,args.compatibility_evidence,paths=paths,
-                               configs=args.config,archive_path=args.frontend_archive,preflight_input=args.preflight))
+                               configs=args.config,archive_path=args.frontend_archive,preflight_input=args.preflight,rollback_component=args.rollback_component or 'all'))
 
 
 if __name__ == '__main__':

@@ -11,7 +11,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
-from release_common import ReleaseError, cli, emit, load_json, require
+from release_common import ReleaseError, Paths, cli, emit, load_json, manifest_identity, require
 
 URL = 'http://127.0.0.1:8080/api/v1/catalog/editions?page=0&pageSize=1'
 
@@ -83,7 +83,11 @@ def main():
     baseline.add_argument('--expected',type=int,help='preflight catalog count')
     baseline.add_argument('--manifest',type=lambda value:Path(value).absolute(),help='prepared release.json')
     args = parser.parse_args()
-    expected = args.expected if args.manifest is None else load_json(args.manifest)['plannedRollback']['catalogTotalCount']
+    expected = args.expected
+    if args.manifest is not None:
+        manifest = load_json(args.manifest)
+        pins, _ = manifest_identity(manifest, Paths(manifest.get('releaseId')))
+        expected = pins['expectedCatalogTotalCount']
     emit(poll(args.url,expected))
 
 

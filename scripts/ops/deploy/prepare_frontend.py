@@ -112,7 +112,7 @@ def main():
     parser.add_argument('--release',required=True,type=validate_release_name)
     parser.add_argument('--previous-release',required=True,type=validate_release_name)
     args = parser.parse_args()
-    paths = Paths(args.release,args.previous_release)
+    paths = Paths(args.release,previous_frontend=args.previous_release)
     require(args.previous == paths.frontend(args.previous_release),'previous frontend path differs from the pinned release')
     require(args.candidate == paths.frontend(args.release),'candidate frontend path differs from the pinned release')
     require(args.rollback == paths.frontend(paths.rollback_release()),'rollback frontend path differs from the pinned release')

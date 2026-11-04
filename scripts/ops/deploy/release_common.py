@@ -125,10 +125,14 @@ def cli(function):
 
 class Paths:
     """Production paths are fixed; a root override exists only for offline fixtures."""
-    def __init__(self, release, previous=None, root=Path('/')):
+    def __init__(self, release, previous=None, root=Path('/'), *, previous_backend=None, previous_frontend=None):
         self.release = validate_release_name(release)
-        self.previous = validate_release_name(previous) if previous is not None else None
-        require(self.previous != self.release, 'previous and candidate release must differ')
+        if previous is not None:
+            require(previous_backend in (None, previous) and previous_frontend in (None, previous), 'conflicting previous release identities')
+            previous_backend = previous_frontend = previous
+        self.previous_backend = validate_release_name(previous_backend) if previous_backend is not None else None
+        self.previous_frontend = validate_release_name(previous_frontend) if previous_frontend is not None else None
+        require(self.release not in {self.previous_backend, self.previous_frontend}, 'previous and candidate release must differ')
         self.root = Path(root)
         directory(self.root)
 
@@ -137,16 +141,19 @@ class Paths:
         return self.root / str(absolute).lstrip('/')
 
     def backend(self, release):
-        require(release in {self.release, self.previous}, 'unknown backend release')
+        require(release in {self.release, self.previous_backend}, 'unknown backend release')
         return self.at('/opt/pliego/releases') / validate_release_name(release)
 
     def frontend(self, release):
-        require(release in {self.release, self.previous, self.rollback_release()}, 'unknown frontend release')
+        allowed = {self.release, self.previous_frontend}
+        if self.previous_frontend is not None:
+            allowed.add(self.rollback_release())
+        require(release in allowed, 'unknown frontend release')
         return self.at('/var/www/pliego/releases') / validate_release_name(release)
 
     def rollback_release(self):
-        require(self.previous is not None, 'previous release is not recorded')
-        return rollback_release(self.previous, self.release)
+        require(self.previous_frontend is not None, 'previous frontend release is not recorded')
+        return rollback_release(self.previous_frontend, self.release)
 
     def deployment(self):
         return self.at('/opt/pliego/deployment') / self.release
@@ -155,8 +162,16 @@ class Paths:
         return '/' + str(Path(path).relative_to(self.root))
 
     def with_previous(self, previous):
-        require(self.previous is None or self.previous == previous, 'previous release identity changed')
-        return Paths(self.release, previous, self.root)
+        return self.with_previous_releases(previous, previous)
+
+    def with_previous_releases(self, backend, frontend):
+        require(self.previous_backend is None or self.previous_backend == backend, 'previous backend identity changed')
+        require(self.previous_frontend is None or self.previous_frontend == frontend, 'previous frontend identity changed')
+        return Paths(self.release, root=self.root, previous_backend=backend, previous_frontend=frontend)
+
+    def with_preflight(self, pins):
+        identities = previous_identities(pins)
+        return self.with_previous_releases(identities['previousBackendReleaseId'], identities['previousFrontendReleaseId'])
 
 
 BRAND_PNGS = ('brand/pliego-logo-email.png','brand/pliego-logo.png')
@@ -195,13 +210,17 @@ def helper_hashes():
 
 def validate_preflight(value, release=None):
     require(isinstance(value, dict), 'preflight object required')
-    for name in ('releaseId', 'previousReleaseId'):
-        validate_release_name(value.get(name))
-    require(value['releaseId'] != value['previousReleaseId'], 'previous and candidate must differ')
+    identities = previous_identities(value)
+    validate_release_name(value.get('releaseId'))
+    for name in ('previousBackendReleaseId', 'previousFrontendReleaseId'):
+        validate_release_name(identities[name])
+        require(value['releaseId'] != identities[name], 'previous and candidate must differ')
     if release is not None:
         require(value['releaseId'] == release, 'preflight names another release')
-    for name in ('sourceSha', 'previousSourceSha'):
-        require(isinstance(value.get(name), str) and re.fullmatch(r'[0-9a-f]{40}', value[name]), 'invalid source SHA')
+    for source in (value.get('sourceSha'), identities['previousBackendSourceSha'], identities['previousFrontendSourceSha']):
+        require(isinstance(source, str) and re.fullmatch(r'[0-9a-f]{40}', source), 'invalid source SHA')
+    if identities['previousBackendReleaseId'] == identities['previousFrontendReleaseId']:
+        require(identities['previousBackendSourceSha'] == identities['previousFrontendSourceSha'], 'same previous release must have one source SHA')
     for name in ('previousBackendSha256', 'previousIndexSha256'):
         require_sha(value.get(name))
     require(type(value.get('ciRunId')) is int and value['ciRunId'] > 0, 'invalid CI run')
@@ -210,6 +229,67 @@ def validate_preflight(value, release=None):
     require(value['candidateMaxFlyway'] >= value['previousMaxFlyway'], 'candidate cannot remove migrations')
     require(type(value.get('expectedCatalogTotalCount')) is int and value['expectedCatalogTotalCount'] >= 0, 'invalid preflight catalog count')
     return value
+
+
+def previous_identities(pins):
+    """Legacy pins explicitly describe a common ID/source; split pins must be complete.
+
+    Never infer a missing component from the other component or from a live link.
+    """
+    names = ('previousBackendReleaseId', 'previousFrontendReleaseId',
+             'previousBackendSourceSha', 'previousFrontendSourceSha')
+    if any(name in pins for name in names):
+        require(all(name in pins for name in names), 'independent previous identities must all be recorded')
+        require('previousReleaseId' not in pins and 'previousSourceSha' not in pins, 'mixed legacy and independent previous identities')
+        return {name: pins[name] for name in names}
+    require('previousReleaseId' in pins and 'previousSourceSha' in pins, 'previous release identity is missing')
+    return dict(zip(names, (pins['previousReleaseId'], pins['previousReleaseId'], pins['previousSourceSha'], pins['previousSourceSha'])))
+
+
+def manifest_identity(manifest, paths):
+    """Validate both manifest generations without any service or database calls."""
+    pins = validate_preflight(manifest.get('preflight'), paths.release)
+    identities = previous_identities(pins)
+    paths = paths.with_preflight(pins)
+    legacy = 'previousReleaseId' in pins
+    required = {
+        'manifestVersion': 2 if legacy else 3,
+        'releaseId': pins['releaseId'], 'sourceSha': pins['sourceSha'], 'ciRunId': pins['ciRunId'],
+        'scope': 'coordinated-backend-frontend',
+        'candidateBackend': paths.production_name(paths.backend(paths.release)),
+        'candidateFrontend': paths.production_name(paths.frontend(paths.release)),
+        'previousBackend': paths.production_name(paths.backend(paths.previous_backend)),
+        'previousFrontend': paths.production_name(paths.frontend(paths.previous_frontend)),
+        'rollbackFrontend': paths.production_name(paths.frontend(paths.rollback_release())),
+        'previousBackendSha256': pins['previousBackendSha256'], 'previousIndexSha256': pins['previousIndexSha256'],
+    }
+    if legacy:
+        require(not any(name in manifest for name in (*identities, 'rollbackFrontendReleaseId', 'rollbackFrontendSourceSha')), 'legacy manifest cannot contain independent identities')
+        required['previousSourceSha'] = pins['previousSourceSha']
+    else:
+        require('previousSourceSha' not in manifest and 'previousReleaseId' not in manifest, 'mixed manifest identities')
+        required.update(identities, rollbackFrontendReleaseId=paths.rollback_release(),
+                        rollbackFrontendSourceSha=identities['previousFrontendSourceSha'])
+    for key, value in required.items():
+        require(type(manifest.get(key)) is type(value) and manifest[key] == value, 'release metadata identity/path/hash differs from pinned recovery')
+    require_sha(manifest.get('preflightSha256'))
+    plan = manifest.get('plannedRollback')
+    require(isinstance(plan, dict) and plan.get('backend') == required['previousBackend'] and
+            plan.get('frontend') == required['rollbackFrontend'] and
+            type(plan.get('catalogTotalCount')) is int and plan['catalogTotalCount'] == pins['expectedCatalogTotalCount'], 'planned rollback identity/count differs')
+    rollback_components(manifest)
+    return pins, paths
+
+
+def rollback_components(manifest, component=None):
+    allowed = manifest['plannedRollback'].get('components')
+    if manifest['manifestVersion'] == 2:
+        require(allowed is None, 'legacy rollback plan cannot change coordinated scope')
+        allowed = ['backend', 'frontend']
+    require(allowed in (['backend'], ['frontend'], ['backend', 'frontend']), 'invalid rollback components')
+    selected = allowed if component is None else (['backend', 'frontend'] if component == 'all' else [component])
+    require(all(kind in allowed for kind in selected), 'requested rollback exceeds recorded plan components')
+    return list(selected)
 
 
 def accepted_versions(pins):
@@ -272,7 +352,7 @@ def validate_compatibility(value, pins, candidate_sha256=None):
     require_sha(value.get('candidateJarSha256'))
     if candidate_sha256 is not None:
         require(value['candidateJarSha256'] == require_sha(candidate_sha256), 'compatibility evidence names another candidate JAR')
-    require(value.get('previousSourceSha') == pins['previousSourceSha'], 'compatibility evidence names another backend')
+    require(value.get('previousSourceSha') == previous_identities(pins)['previousBackendSourceSha'], 'compatibility evidence names another backend')
     require(value.get('supportedSchemaVersions') == accepted_versions(pins), 'previous backend is not approved for both recorded schemas')
     require(value.get('restrictedRuntime') is True, 'restricted-runtime compatibility was not proven')
     require(value.get('emergencyRollbackCompatible') is True, 'emergency rollback compatibility was not approved')

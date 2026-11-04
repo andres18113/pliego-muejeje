@@ -38,6 +38,12 @@ deployment boundary need their own authorization.
 
 ## 2. Known environment — revalidate, do not assume
 
+**Pending candidate, 2026-11-04 (America/Guayaquil):**
+[V106 release preparation](2026-11-04-release-candidate-v106.md) is prepared,
+**not deployed**. Final SHA/CI, independent previous backend/frontend recovery
+pins and all live checks remain pending; this note does not change the recorded
+deployment baseline below.
+
 Last verified deployment: **2026-11-03**, release `20261103T204931Z-ec48e07`, source
 `ec48e071854916cdf1051016e0c49fac9145e216`,
 [CI run 41709777442](https://github.com/andres18113/pliego-muejeje/actions/runs/41709777442),
@@ -463,20 +469,27 @@ operation; helper fixes must follow the audited correction procedure in section 
    Set `D=/opt/pliego/deployment/$R`, `W=$D/staging`, `S=$W/scripts`; all subsequent
    helper commands run from `$S` against these pinned copies, never the upload.
 3. Record the section 5 observations in `$D/preflight.json` (`0600`, root-owned),
-   with `releaseId`, `sourceSha`, `ciRunId`, `previousReleaseId`,
-   `previousSourceSha`, `previousBackendSha256`, `previousIndexSha256`,
+   with `releaseId`, `sourceSha`, `ciRunId`, `previousBackendReleaseId`,
+   `previousFrontendReleaseId`, `previousBackendSourceSha`,
+   `previousFrontendSourceSha`, `previousBackendSha256`, `previousIndexSha256`,
    `expectedCatalogTotalCount`, `previousMaxFlyway` and `candidateMaxFlyway`.
    Capture the previous pointers and configuration hashes too. Catalog count is
    the actual preflight observation normalized to an integer, not a historical
    constant; source/CI and candidate migration maximum come from the pinned build.
-   Use these reviewed values for `$R`, `$P`, `$previous_max` and `$candidate_max`.
+   Use these reviewed values for `$R`, `$PB` (previous backend), `$PF` (previous
+   frontend), `$previous_max` and `$candidate_max`; capture each pointer/source
+   independently even when their IDs match. Do not mix these fields with legacy
+   `previousReleaseId`/`previousSourceSha`. Complete legacy inputs/manifests
+   (version 2) remain supported for an explicitly common previous ID/source;
+   independent inputs produce version 3. Compatibility evidence's
+   `previousSourceSha` continues to identify the previous **backend**.
    Compare every **already-applied** migration's bytes in the actual installed
    executable JAR (`BOOT-INF/classes/db/migration/`) with the candidate:
 
    ```bash
    cd "$S"
    python3 compare_migrations.py \
-     "/opt/pliego/releases/$P/pliego-backend-0.1.0-SNAPSHOT.jar" \
+     "/opt/pliego/releases/$PB/pliego-backend-0.1.0-SNAPSHOT.jar" \
      "$W/pliego-backend-0.1.0-SNAPSHOT.jar" \
      --previous-max "$previous_max" --candidate-max "$candidate_max" > "$D/migrations.json"
    chmod 0600 "$D/migrations.json"
@@ -505,9 +518,9 @@ operation; helper fixes must follow the audited correction procedure in section 
 
    ```bash
    python3 prepare_frontend.py "$W/frontend-dist.tar" \
-     "/var/www/pliego/releases/$P" "/var/www/pliego/releases/$R" \
-     "/var/www/pliego/releases/$P-rollback-web-for-$R" \
-     --release "$R" --previous-release "$P" > "$D/frontend-prepare.json"
+     "/var/www/pliego/releases/$PF" "/var/www/pliego/releases/$R" \
+     "/var/www/pliego/releases/$PF-rollback-web-for-$R" \
+     --release "$R" --previous-release "$PF" > "$D/frontend-prepare.json"
    ```
 
    The helper creates frontend directories `root:root 0755`, files `0644`; verify
@@ -537,6 +550,11 @@ operation; helper fixes must follow the audited correction procedure in section 
    hashes, preflight catalog count, deployment scope and recovery qualification.
    It records the environment hash, never secret contents. Refuse existing
    manifests rather than silently replacing prepared evidence.
+   Version 3 records independent previous backend/frontend release IDs and source
+   SHAs, plus the separate PF-based `rollbackFrontendReleaseId`, frontend source
+   SHA and complete tree hashes. The default rollback plan includes both components;
+   `--rollback-component backend` or `--rollback-component frontend` restricts a
+   version-3 plan at preparation time. All artifact/compatibility gates still apply.
 8. Syntax-check the helpers locally and exercise the genuine read-only rollback
    preflight before changing pointers:
 
@@ -1105,12 +1123,22 @@ chmod 0600 "$D/rollback-dryrun-postdeploy.json"
 python3 "$S/rollback.py" --release "$R" --lock-fd 9
 ```
 
+For component-only recovery, pass the same `--component frontend` or
+`--component backend` to both the dry-run and actual command. It must be a subset
+of the recorded plan; omission executes that plan (both components for version 2).
+Frontend-only recovery never calls systemctl or repoints the backend; backend-only
+recovery leaves the frontend link untouched. Both pointer/hash/configuration and
+database safety gates still run. `poll_catalog.py --manifest "$D/release.json"`
+accepts versions 2 and 3, validates their recorded identities and plan/count, and
+requires no new arguments.
+
 FD 9 is inherited from the already-held exclusive lock in section 3. Do not open
 a second independent lock while holding it. With no outer lock, the helper can
 acquire the same lock itself; dry-run never opens/creates it or calls systemctl.
-Real rollback revalidates after drain, atomically selects the pinned previous
-backend and separate recovery frontend, resets failed state, starts restricted
-runtime, polls the manifest's catalog count and rechecks history/privileges. It
+Real rollback revalidates before changing pointers (after drain when the backend
+is selected), atomically selects each planned recovery target independently,
+resets failed state and starts restricted runtime only for backend recovery,
+polls the manifest's catalog count and rechecks history/privileges and pointers. It
 refuses owner membership/CREATE, app-owned objects, failed/partial Flyway history,
 changed targets, helpers or configuration. It performs no privilege cleanup,
 Nginx changes, business-data writes or backup restore. The operator must complete
