@@ -57,6 +57,8 @@ function IdentityCorrection() {
   const query = useQuery({ queryKey: billingIdentityQueryKey, queryFn: ({ signal }) => getBillingIdentity(signal), meta: { authRequired: true }, refetchOnMount: "always", retry: false });
   const noticeRef = useRef<HTMLParagraphElement>(null);
   const [notice, setNotice] = useState<Notice | null>(null);
+  // Set by "Enviar otra solicitud": the form focuses its heading in its own mount effect, once it exists.
+  const [focusForm, setFocusForm] = useState(false);
   const onExpired = () => clear("expired");
 
   useEffect(() => {
@@ -93,8 +95,9 @@ function IdentityCorrection() {
               ? <PendingRequest identity={identity} request={pending} refetch={refetch} onExpired={onExpired} onNotice={setNotice} />
               : decided
                 ? <DecisionOutcome key={decided.id} request={decided} onDone={() => navigate("/account")}
-                  onAnother={() => requestAnimationFrame(() => document.getElementById("identity-correction-heading")?.focus({ preventScroll: false }))} />
+                  onAnother={() => setFocusForm(true)} />
                 : <CorrectionForm key={identity.number} identity={identity} refetch={refetch} onExpired={onExpired} onNotice={setNotice}
+                  focusHeading={focusForm} onHeadingFocused={() => setFocusForm(false)}
                 onCorrected={() => navigate("/account", { state: { identityFeedback: correctedMessage } satisfies IdentityCorrectionState })} />}
           </div>}
   </AccountShell>;
@@ -264,9 +267,17 @@ function PendingRequest({ identity, request, refetch, onExpired, onNotice }: {
  * on no invoice; reviewed by staff once it is, except the same person's cédula ↔ RUC switch. Every change is read
  * back before it is sent. A password is not asked: it would prove the session, not the number.
  */
-function CorrectionForm({ identity, refetch, onExpired, onNotice, onCorrected }: {
+function CorrectionForm({ identity, refetch, onExpired, onNotice, onCorrected, focusHeading = false, onHeadingFocused }: {
   identity: StoredBillingIdentity; refetch: Refetch; onExpired: () => void; onNotice: (notice: Notice | null) => void; onCorrected: () => void;
+  focusHeading?: boolean; onHeadingFocused?: () => void;
 }) {
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  // Runs after the heading is in the document, so focus never races the render that creates it.
+  useEffect(() => {
+    if (!focusHeading) return;
+    headingRef.current?.focus({ preventScroll: false });
+    onHeadingFocused?.();
+  }, [focusHeading, onHeadingFocused]);
   const scope = useSessionOperationScope(`identity-correction:${identity.number}`);
   // The current number is the starting point: a typo is fixed in place, not retyped from nothing.
   const [value, setValue] = useState(identity.number);
@@ -379,7 +390,7 @@ function CorrectionForm({ identity, refetch, onExpired, onNotice, onCorrected }:
 
   const describedBy = ["identity-correction-mode", "identity-number-status", reviewMode && samePerson ? "identity-number-same" : null].filter(Boolean).join(" ");
   return <section className={classes.panel} aria-labelledby="identity-correction-heading">
-    <h2 id="identity-correction-heading" className={classes.panelTitle} tabIndex={-1}>Corregir identificación</h2>
+    <h2 ref={headingRef} id="identity-correction-heading" className={classes.panelTitle} tabIndex={-1}>Corregir identificación</h2>
     <p id="identity-correction-mode" className={classes.lead}>{reviewMode
       ? "Ya figura en una factura: revisaremos la corrección y te responderemos en un plazo de 15 días. Hasta entonces usamos la actual."
       : "Todavía no figura en ninguna factura: la corrección se aplica en cuanto la confirmes."}</p>
