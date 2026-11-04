@@ -1,6 +1,6 @@
 # Release candidate: V106 (offer expiration, checkout pricing instant and browser refresh)
 
-Preparation date: **2026-11-04, America/Guayaquil. Prepared, NOT deployed.**
+Preparation date: **2026-11-04, America/Guayaquil.** Preparation status is historical: **deployed 2026-11-04** as release `20261104T211242Z-672b0f0`; see [Deployment outcome](#deployment-outcome).
 The release SHA is the branch head selected at deployment time; it must have its
 own green **PLIEGO CI** run (runbook section 4). The deployment record (section 11)
 captures that SHA, the run and artifact checksums, following the
@@ -705,3 +705,31 @@ backup paths/listing, exact stored offer deadlines, activation/drain/cleanup tim
 full V106 history, all-t ACL postflight, public/SSE/Actuator/listener/browser/
 worker/resource checks and postdeploy rollback dry-run. Until those exist,
 **production activation and all live acceptance results remain pending**.
+
+## Deployment outcome
+
+Deployed **2026-11-04** (times UTC; Guayaquil is UTC−05:00) by Claude Code from the
+operator's locked root tmux session, following this record and runbook sections 4–11.
+
+| Item | Result |
+|---|---|
+| Release | `20261104T211242Z-672b0f0`, source `672b0f0d1aee0e9bc4ec40ad884d181877109be8`, [PLIEGO CI 41909140337](https://github.com/andres18113/pliego-muejeje/actions/runs/41909140337) (all three jobs successful) |
+| Frozen artifacts | backend JAR `d591a8f50a85d3a5679833afa6201a9e3e0611bbe5204a558f15430c7acef477`; frontend archive `ec0c582ec9b4ebf6e80243f5627dad1dadf4b83ce2374da3eaed1b7e5898dfbd` (380 files, `PLIEGO_BUILD_ID` = release, `VITE_API_BASE_URL=https://api.pliegolibros.com`); index `94bed3f1d044d44e7b98c1dbd15d38a2c8b7f9ebe16635fd5d5e07e302292aa4`; copied bytes verified against the locally retained hash set before any helper ran as root |
+| Preflight (21:11:55) | backend `ec48e07` (JAR `5cc182c4…`), frontend `33b4ef5` (index `cf0c532f…`); Flyway 105/105 successful; `f\|f\|f\|f`, owner owns all 280 objects; no scheduler/management overrides; catalog 425; offer ends stored at exactly **2026-11-05/07/09 17:21:55 −05:00** (6/6/9 offers, 21 active) |
+| Migrations | 105 applied migrations byte-identical in installed and candidate JARs; single pending V106 (`c5c1d6d8…`, Flyway checksum −1466890365); 19 approved-ZIP migrations identical |
+| Backup | pre-migration `pg_dump -Fc`, root 0600, 2,348,070 bytes, `pg_restore --list` 1,400 entries / 69 table data; config files backed up privately |
+| Manifest | version 3: previous backend `20261103T204931Z-ec48e07`, previous frontend `20261104T021801Z-33b4ef5`, recovery frontend `…33b4ef5-rollback-web-for-20261104T211242Z-672b0f0`; read-only rollback dry-run passed before activation |
+| Backend window | drain 21:17:38 → temporary owner grant → pointer switch → normal startup applied V106 in 89 ms (21:18:18) → drain → canonical ACL cleanup (`f\|f\|f\|f`, 0 app-owned) → restricted start; service up **21:18:33** (≈55 s unavailable); Flyway 106/106 |
+| Backend acceptance | canonical section 7 postflight all `t`; all 14 V106 routines present, app EXECUTE, definitions md5-identical to a local V106 database; triggers, validated constraints, columns and each DML grant present; lifecycle worker advancing (success 36→44 in 8 s, 205 at 21:22, 0 failures, 0 pending, 0 lag); `nextTransitionAt` 2026-11-05T22:21:55Z |
+| HTTP checks | `offer-refresh` 200 + `no-store` on loopback and through Cloudflare; `/actuator`, `/actuator/health`, `/actuator/env`, `/actuator/heapdump`, `/actuator/metrics` → backend 401 `AUTH_REQUIRED` problem+json anonymously, on loopback and on the public host; anonymous SSE 401; listening sockets identical to preflight (no management port); 0 journal errors since restart |
+| Frontend | switched **21:20:26**, no Nginx edit or reload; public index/version/brand PNGs/SPA route/`www` redirect/immutable assets verified; production browser check (1440 and 390 touch): 24 cards per catalog page, 21 Ofertas cards, offer-refresh 200, zero console errors and failed responses, phone sheet aligned |
+| Postdeploy | rollback dry-run passed (Flyway 106, both rollback targets, `f\|f\|f\|f`, R2 and mail enabled); transfer staging removed; deployment lock released |
+
+Not performed in production (by design or without an existing session): authenticated
+CUSTOMER/ADMIN Actuator 404 and authenticated SSE stream checks (covered by
+`ActuatorExposureIntegrationTest`, the packaged-JAR runtime check and CI), and any
+checkout execution (no production orders, payments, mail or invoices were created;
+covered by CI and the local gates). The first natural offer end at
+**2026-11-05 17:21:55 −05:00** remains to be observed: base prices on the six
+editions, a lifecycle transition and `catalog.offers.changed` hints.
+

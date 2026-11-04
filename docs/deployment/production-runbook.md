@@ -38,13 +38,16 @@ deployment boundary need their own authorization.
 
 ## 2. Known environment — revalidate, do not assume
 
-**Pending candidate, 2026-11-04 (America/Guayaquil):**
-[V106 release preparation](2026-11-04-release-candidate-v106.md) is prepared,
-**not deployed**. Final SHA/CI, independent previous backend/frontend recovery
-pins and all live checks remain pending; this note does not change the recorded
-deployment baseline below.
+Last verified deployment: **2026-11-04**, release `20261104T211242Z-672b0f0`, source
+`672b0f0d1aee0e9bc4ec40ad884d181877109be8`,
+[CI run 41909140337](https://github.com/andres18113/pliego-muejeje/actions/runs/41909140337),
+Flyway **106** (V106 applied through the section 7 privilege lifecycle; first
+version-3 split-pointer manifest). Backend and frontend both point to this release.
+Recovery pins: backend `20261103T204931Z-ec48e07` (availability-only on V106) and
+frontend `20261104T021801Z-33b4ef5-rollback-web-for-20261104T211242Z-672b0f0`.
+See the [deployment outcome](2026-11-04-release-candidate-v106.md#deployment-outcome).
 
-Last verified deployment: **2026-11-03**, release `20261103T204931Z-ec48e07`, source
+Previous verified deployment: **2026-11-03**, release `20261103T204931Z-ec48e07`, source
 `ec48e071854916cdf1051016e0c49fac9145e216`,
 [CI run 41709777442](https://github.com/andres18113/pliego-muejeje/actions/runs/41709777442),
 Flyway **105** (V101–V105 applied through the section 7 privilege lifecycle).
