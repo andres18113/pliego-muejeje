@@ -191,6 +191,10 @@ def cases(data):
         "fn_customer_orders": [actor, "0", "20"],
         "fn_order_item_offer_snapshots": [actor, order],
         "fn_pickup_locations": [],
+        "fn_offer_refresh_clock": [],
+        "fn_offer_lifecycle_status": [],
+        "fn_offer_lifecycle_advance": ["1000"],
+        "fn_offer_lifecycle_failure": ["'DATABASE_ERROR'"],
         "fn_storefront_navigation": [],
         "fn_help_categories": [],
         "fn_help_search": [null, null, null, "0", "20"],
@@ -242,6 +246,9 @@ def cases(data):
         parts = sql.split("?")
         bound = parts[0] + "".join(value + part for value, part in zip(params, parts[1:]))
         analyze = not name.startswith(("JdbcIdentityGateway.", "JdbcEmailChangeGateway.", "RegistrationAttemptGateway.", "RegistrationContinuationGateway.")) or name.endswith(".AUTH_QUERY")
+        # Public clock/status reads are measured. Worker mutation behavior is
+        # covered by lifecycle/rollback gates; inspect its plans without running it.
+        analyze = analyze and function not in {"fn_offer_lifecycle_advance", "fn_offer_lifecycle_failure"}
         yield name, bound, analyze, ""
         if name in {"JdbcCartGateway.CART_GET", "JdbcCustomerOrderGateway.DETAIL",
                     "JdbcDigitalEligibilityGateway.fn_customer_digital_eligibility",

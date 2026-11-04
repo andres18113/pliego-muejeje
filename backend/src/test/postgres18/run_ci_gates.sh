@@ -74,30 +74,33 @@ cleanup() {
 }
 trap cleanup EXIT
 
-java -jar "$application_jar" "--server.port=$application_port" >"$application_log" 2>&1 &
-application_pid=$!
+start_backend() {
+    local offer_worker="$1"
+    PLIEGO_OFFERS_SCHEDULER_ENABLED="$offer_worker" java -jar "$application_jar" "--server.port=$application_port" >>"$application_log" 2>&1 &
+    application_pid=$!
+    local ready=false
+    for _ in $(seq 1 60); do
+        if curl --noproxy '*' --fail --silent --output /dev/null "$application_url/v3/api-docs"; then
+            ready=true
+            break
+        fi
+        if ! kill -0 "$application_pid" 2>/dev/null; then break; fi
+        sleep 1
+    done
+    if [[ "$ready" != true ]]; then
+        printf 'Backend did not become ready; application log follows:\n' >&2
+        tail -n 120 "$application_log" >&2
+        exit 1
+    fi
+}
 application_url="${CHECKOUT_BASE_URL%/}"
-ready=false
-for _ in $(seq 1 60); do
-    if curl --noproxy '*' --fail --silent --output /dev/null "$application_url/v3/api-docs"; then
-        ready=true
-        break
-    fi
-    if ! kill -0 "$application_pid" 2>/dev/null; then
-        break
-    fi
-    sleep 1
-done
-if [[ "$ready" != true ]]; then
-    printf 'Backend did not become ready; application log follows:\n' >&2
-    tail -n 120 "$application_log" >&2
-    exit 1
-fi
+# Explicit runners own the queue during deterministic database/concurrency gates.
+start_backend false
 
 flyway_state="$(psql -X -v ON_ERROR_STOP=1 -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '105:105' ]]; then
-    printf 'Expected 105 successful versioned Flyway migrations through V105; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '106:106' ]]; then
+    printf 'Expected 106 successful versioned Flyway migrations through V106; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'PostgreSQL server_version_num=%s; Flyway successful migrations=%s\n' "$server_version_num" "$flyway_state"
@@ -107,7 +110,7 @@ for gate in geo_catalog_gate.sql geo_alias_gate.sql runtime_privileges_gate.sql 
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done
 
-for gate in offers_campaign_gate.sql offer_timestamp_gate.sql pickup_timing_notifications_gate.sql billing_identity_decisions_gate.sql active_library_gate.sql fk_index_gate.sql realtime_resource_events_gate.sql; do
+for gate in offers_campaign_gate.sql offer_timestamp_gate.sql offer_lifecycle_gate.sql pickup_timing_notifications_gate.sql billing_identity_decisions_gate.sql active_library_gate.sql fk_index_gate.sql realtime_resource_events_gate.sql; do
     printf 'Running %s\n' "$gate"
     psql -X -v ON_ERROR_STOP=1 -f "$script_dir/$gate"
 done
@@ -139,6 +142,10 @@ printf 'Running pickup_notifications_concurrency.py\n'
 timeout 180s python3 "$script_dir/pickup_notifications_concurrency.py"
 printf 'Running pickup_closing_boundary_gate.py\n'
 timeout 180s python3 "$script_dir/pickup_closing_boundary_gate.py"
+printf 'Running offer_lifecycle_concurrency.py\n'
+timeout 180s python3 "$script_dir/offer_lifecycle_concurrency.py"
+printf 'Running offer_expiry_checkout_gate.py\n'
+timeout 180s python3 "$script_dir/offer_expiry_checkout_gate.py"
 printf 'Running offers_campaign_concurrency.py\n'
 timeout 180s python3 "$script_dir/offers_campaign_concurrency.py"
 
@@ -161,8 +168,14 @@ for gate in checkout_last_unit.py order_cancel_concurrency.py address_primary_co
     fi
 done
 
+# Verify the real scheduled worker only after deterministic manual-runner tests.
+kill "$application_pid"
+wait "$application_pid" 2>/dev/null || true
+application_pid=''
+start_backend true
+
 for gate in geo_catalog_http_gate.py geo_alias_http_gate.py checkout_http_gate.py customer_orders_http_gate.py admin_orders_http_gate.py \
-    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py accepted_quote_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py admin_pickup_handover_http_gate.py home_delivery_http_gate.py offers_http_gate.py cart_order_offer_http_gate.py library_checkout_http_gate.py storefront_help_http_gate.py automatic_billing_http_gate.py checkout_billing_recipient_http_gate.py billing_identity_corrections_http_gate.py digital_single_copy_http_gate.py digital_mixed_single_copy_http_gate.py cart_saved_for_later_http_gate.py catalog_search_fold_http_gate.py post_purchase_digital_access_http_gate.py post_purchase_invoice_http_gate.py; do
+    admin_customers_http_gate.py full_journey_http_gate.py digital_editions_http_gate.py post_purchase_http_gate.py p1_integrity_http_gate.py accepted_quote_http_gate.py person_validation_http_gate.py numeric_validation_http_gate.py store_pickup_http_gate.py admin_pickup_handover_http_gate.py home_delivery_http_gate.py offers_http_gate.py offer_refresh_http_gate.py cart_order_offer_http_gate.py library_checkout_http_gate.py storefront_help_http_gate.py automatic_billing_http_gate.py checkout_billing_recipient_http_gate.py billing_identity_corrections_http_gate.py digital_single_copy_http_gate.py digital_mixed_single_copy_http_gate.py cart_saved_for_later_http_gate.py catalog_search_fold_http_gate.py post_purchase_digital_access_http_gate.py post_purchase_invoice_http_gate.py; do
     printf 'Running %s\n' "$gate"
     timeout 180s python3 "$script_dir/$gate"
 done

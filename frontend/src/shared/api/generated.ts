@@ -1546,6 +1546,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/catalog/offer-refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Consultar la próxima actualización de ofertas
+         * @description Proyección pública sin caché con hora de PostgreSQL, próximo inicio o fin estrictamente futuro de una oferta activa y plazo de revalidación. El límite es global y conservador: puede incluir ofertas de ediciones ocultas y solo expone su hora agregada. Consultar antes de leer el contenido; el cliente relee el catálogo al alcanzar el plazo y nunca calcula precios, descuentos ni vigencia.
+         */
+        get: operations["getOfferRefreshClock"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/catalog/filter-options": {
         parameters: {
             query?: never;
@@ -1666,7 +1686,7 @@ export interface paths {
         };
         /**
          * Recibir avisos de actualización
-         * @description SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready y library.changed. Datos: {resourceType,resourceId}, identificadores como cadenas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat cada 16s como máximo, conexión máxima 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).
+         * @description SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Ambos reciben catalog.offers.changed con metadatos públicos de edición; no cambia el ámbito de los avisos privados. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready, library.changed y catalog.offers.changed. Datos: {resourceType,resourceId}, identificadores como cadenas; catalog.offers.changed usa resourceType edition e identificador positivo de edición y obliga a releer catálogo, navegación y vistas de compra activas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat objetivo 15s (normalmente 16s; la contención puede retrasarlo), vida nominal 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).
          */
         get: operations["streamResourceEvents"];
         put?: never;
@@ -3447,6 +3467,25 @@ export interface components {
         Sort: {
             code?: string;
             label?: string;
+        };
+        /** @description Reloj de PostgreSQL y próxima actualización temporal del catálogo; no determina precios ni vigencia en el cliente. */
+        OfferRefreshResponse: {
+            /**
+             * Format: date-time
+             * @description Hora de PostgreSQL usada para calcular esta proyección.
+             */
+            serverTime: string;
+            /**
+             * Format: date-time
+             * @description Próximo inicio o fin estrictamente futuro de una oferta activa. Es una proyección global conservadora que puede incluir ofertas de ediciones ocultas; no revela sus identificadores ni contenido. null cuando no queda ningún límite futuro. Al alcanzarlo se releen los recursos públicos activos.
+             */
+            nextTransitionAt: string | null;
+            /**
+             * Format: int32
+             * @description Plazo máximo para volver a consultar este reloj y descubrir cambios administrativos.
+             * @example 60
+             */
+            revalidateAfterSeconds: number;
         };
         PublicCatalogFilterOptionsResponse: {
             languages?: string[];
@@ -6647,6 +6686,26 @@ export interface operations {
             };
         };
     };
+    getOfferRefreshClock: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Reloj y próxima transición pública */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OfferRefreshResponse"];
+                };
+            };
+        };
+    };
     filterOptions: {
         parameters: {
             query?: {
@@ -6875,7 +6934,7 @@ export interface operations {
                     "text/event-stream": Record<string, never>;
                 };
             };
-            /** @description Límite de conexiones; Retry-After: 60 */
+            /** @description Límite de conexiones o admisión temporalmente ocupada; Retry-After: 60 */
             429: {
                 headers: {
                     [name: string]: unknown;

@@ -218,3 +218,19 @@ Orders expose an immutable random `orderReference` (`PL-NNNN-NNNN`) alongside th
 ADMIN pickup operations are `POST /api/v1/admin/pickups/lookup` (`{code}` in the body), `GET /api/v1/admin/pickups?state=&q=&page=0&pageSize=20` (max50), and `POST /api/v1/admin/orders/{orderId}/pickup/collect` (`{pickupCode,identityVerified:true}`). Collection now returns `200 PickupView`, requires database-owned READY, and rejects repeat collection with 409. Pickup views include registered billing identity for staff verification and never include the pickup code. New codes use a CSPRNG; historical codes remain valid. READY follows approved payment, the six-minute cancellation deadline, and `readyAt`.
 
 The admin billing correction list adds `customerHasBilledInvoices` and nullable `decidedByEmail`; decisions remain `APPROVE|REJECT`, with a rejection reason required. See the [complete endpoint, JSON and error contract](../docs/api-amendments/2026-11-01-public-order-references-and-verified-pickup.md) and [ADR-0047](../docs/adr/0047-public-order-references-and-verified-pickup.md). PostgreSQL gates include reference upgrade/backfill preservation, code generation, state transitions, verified collection concurrency and restricted runtime ACLs.
+
+## Offer expiration and refresh
+
+ADR0058 / V106 keep current pricing authoritative at read time and capture one
+database wall-clock pricing instant after checkout locks. A dedicated Spring
+worker observes starts/ends every second and enqueues durable catalog hints;
+`PLIEGO_OFFERS_SCHEDULER_ENABLED=false` disables observation only, never expiry.
+The default is enabled. No cron installation or replacement promotions are used.
+
+Public clients can read `GET /api/v1/catalog/offer-refresh` before content and
+schedule refresh from `serverTime`, `nextTransitionAt` and
+`revalidateAfterSeconds`. Signed-in clients also receive
+`catalog.offers.changed` in the existing stream. Claude owns view invalidation.
+`fn_offer_lifecycle_status()` / `OfferLifecycleService.status()` expose durable
+last-run and lag state for the separate monitoring integration. See ADR0058 and
+`docs/testing/2026-11-04-offer-expiration.md` for bindings and evidence.

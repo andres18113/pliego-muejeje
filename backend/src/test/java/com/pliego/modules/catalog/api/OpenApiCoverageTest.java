@@ -36,7 +36,7 @@ class OpenApiCoverageTest {
             com.pliego.modules.customer.api.AdminBillingIdentityCorrectionController.class,
             com.pliego.modules.billing.api.BillingController.class,
             com.pliego.modules.customer.api.AdminCustomerController.class,
-            com.pliego.modules.catalog.api.CatalogController.class, EditionOfferController.class,
+            com.pliego.modules.catalog.api.CatalogController.class, EditionOfferController.class, OfferRefreshController.class,
             com.pliego.modules.catalog.api.AdminCatalogController.class,
             com.pliego.modules.inventory.api.AdminInventoryController.class,
             com.pliego.modules.cart.api.CartController.class,
@@ -71,7 +71,7 @@ class OpenApiCoverageTest {
             }
         }
         assertThat(endpoints).as("REST total including registration continuation, catalog, saved-for-later, billing-identity corrections, invoice access, verified pickup and post-purchase routes")
-                .isEqualTo(111);
+                .isEqualTo(112);
     }
 
     @Test
@@ -100,7 +100,7 @@ class OpenApiCoverageTest {
                                 .isEqualTo(authenticated);
                     }
                 }
-            } else if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("PickupLocationController") || name.equals("GeoController")
+            } else if (name.equals("AuthController") || name.equals("EmailActionController") || name.equals("CatalogController") || name.equals("OfferRefreshController") || name.equals("PickupLocationController") || name.equals("GeoController")
                     || name.equals("StorefrontController") || name.equals("HelpController")) {
                 assertThat(secured).as("%s must stay public", name).isFalse();
             } else {

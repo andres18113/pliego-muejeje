@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:18097",
+      "url": "http://127.0.0.1:18081",
       "description": "Generated server url"
     }
   ],
@@ -4672,6 +4672,28 @@
         }
       }
     },
+    "/api/v1/catalog/offer-refresh": {
+      "get": {
+        "tags": [
+          "Catálogo público"
+        ],
+        "summary": "Consultar la próxima actualización de ofertas",
+        "description": "Proyección pública sin caché con hora de PostgreSQL, próximo inicio o fin estrictamente futuro de una oferta activa y plazo de revalidación. El límite es global y conservador: puede incluir ofertas de ediciones ocultas y solo expone su hora agregada. Consultar antes de leer el contenido; el cliente relee el catálogo al alcanzar el plazo y nunca calcula precios, descuentos ni vigencia.",
+        "operationId": "getOfferRefreshClock",
+        "responses": {
+          "200": {
+            "description": "Reloj y próxima transición pública",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OfferRefreshResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/catalog/filter-options": {
       "get": {
         "tags": [
@@ -5046,7 +5068,7 @@
           "Realtime"
         ],
         "summary": "Recibir avisos de actualización",
-        "description": "SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready y library.changed. Datos: {resourceType,resourceId}, identificadores como cadenas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat cada 16s como máximo, conexión máxima 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).",
+        "description": "SSE con cookie de sesión HttpOnly; CUSTOMER recibe sus recursos y ADMIN el ámbito administrativo. Ambos reciben catalog.offers.changed con metadatos públicos de edición; no cambia el ámbito de los avisos privados. Sin tokens en URL. Eventos de invalidación: identity.correction.created/decided/withdrawn/acknowledged, order.changed, order.cancellation-window.expired, pickup.ready, library.changed y catalog.offers.changed. Datos: {resourceType,resourceId}, identificadores como cadenas; catalog.offers.changed usa resourceType edition e identificador positivo de edición y obliga a releer catálogo, navegación y vistas de compra activas. resync: {reason:replay-unavailable} obliga a releer recursos activos. Cursor id decimal global; Last-Event-ID permite repetir durante una hora. retry 3000ms, heartbeat objetivo 15s (normalmente 16s; la contención puede retrasarlo), vida nominal 60s, cuatro por usuario. Reautentica al reconectar; cierre por revocación en el siguiente sondeo (2s).",
         "operationId": "streamResourceEvents",
         "parameters": [
           {
@@ -5090,7 +5112,7 @@
             }
           },
           "429": {
-            "description": "Límite de conexiones; Retry-After: 60",
+            "description": "Límite de conexiones o admisión temporalmente ocupada; Retry-After: 60",
             "content": {
               "text/event-stream": {
                 "schema": {
@@ -10449,6 +10471,37 @@
             "type": "string"
           }
         }
+      },
+      "OfferRefreshResponse": {
+        "type": "object",
+        "description": "Reloj de PostgreSQL y próxima actualización temporal del catálogo; no determina precios ni vigencia en el cliente.",
+        "properties": {
+          "serverTime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Hora de PostgreSQL usada para calcular esta proyección."
+          },
+          "nextTransitionAt": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time",
+            "description": "Próximo inicio o fin estrictamente futuro de una oferta activa. Es una proyección global conservadora que puede incluir ofertas de ediciones ocultas; no revela sus identificadores ni contenido. null cuando no queda ningún límite futuro. Al alcanzarlo se releen los recursos públicos activos."
+          },
+          "revalidateAfterSeconds": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Plazo máximo para volver a consultar este reloj y descubrir cambios administrativos.",
+            "example": 60,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "nextTransitionAt",
+          "revalidateAfterSeconds",
+          "serverTime"
+        ]
       },
       "PublicCatalogFilterOptionsResponse": {
         "type": "object",

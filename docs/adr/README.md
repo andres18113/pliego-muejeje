@@ -63,3 +63,5 @@
 - [ADR 0055 — Avisos de corrección, acuse durable y biblioteca activa](0055-identity-decisions-and-active-library.md)
 - [ADR 0056 — Protección del registro sin enumeración](0056-registration-attempt-protection.md)
 - [ADR 0057 — Evidence-based foreign-key indexes](0057-evidence-based-foreign-key-indexes.md)
+
+- [ADR 0058 — Offer expiration, checkout clocks and browser refresh](0058-offer-expiration-and-refresh.md)

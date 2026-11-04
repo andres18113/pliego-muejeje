@@ -158,6 +158,7 @@ start_backend() {
     fi
     printf 'Runtime privilege CI stage: starting Spring Boot as pliego_app (%s)\n' "$phase"
     PLIEGO_DB_URL="$runtime_url" PLIEGO_DB_USERNAME=pliego_app PLIEGO_DB_PASSWORD="$runtime_password" \
+        PLIEGO_OFFERS_SCHEDULER_ENABLED=false \
         PLIEGO_MAIL_ENABLED=false PLIEGO_BILLING_ENABLED=false \
         java -jar "$application_jar" "--server.port=$application_port" >"$application_log" 2>&1 &
     application_pid=$!
@@ -184,8 +185,8 @@ stop_backend() {
 start_backend migration
 flyway_state="$(admin_psql "$database_name" -At -F: -c \
     'SELECT count(*), max(version)::integer FROM public.flyway_schema_history WHERE success AND version IS NOT NULL')"
-if [[ "$flyway_state" != '105:105' ]]; then
-    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 105 migrations; found %s\n' "$flyway_state" >&2
+if [[ "$flyway_state" != '106:106' ]]; then
+    printf 'Expected Spring Boot Flyway startup as pliego_app to apply 106 migrations; found %s\n' "$flyway_state" >&2
     exit 1
 fi
 printf 'Runtime privilege CI stage: Spring Boot migration Flyway=%s as pliego_app\n' "$flyway_state"
@@ -209,6 +210,7 @@ PGHOST="$PGHOST" PGPORT="$PGPORT" PGDATABASE="$database_name" PGUSER=pliego_app 
         -f "$script_dir/pending_email_change_security_gate.sql" \
         -f "$script_dir/offers_campaign_gate.sql" \
         -f "$script_dir/offer_timestamp_gate.sql" \
+        -f "$script_dir/offer_lifecycle_gate.sql" \
         -f "$script_dir/pickup_timing_notifications_gate.sql" \
         -f "$script_dir/active_library_gate.sql" \
         -f "$script_dir/fk_index_gate.sql" \
