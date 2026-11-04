@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { storefrontNavigationFixture } from "../../src/test/storefrontFixture";
+import { CATALOG_PAGE_SIZE } from "../../src/features/catalog/catalogUrl";
 
 const editionSummary = {
   editionId: "42",
@@ -99,11 +100,14 @@ async function openCatalogSearch(page: import("@playwright/test").Page) {
   return page.getByRole("searchbox", { name: "Buscar en el catálogo" });
 }
 
+const PAGE_TWO_FIRST_ID = String(42 + CATALOG_PAGE_SIZE);
+
 async function mockPaginatedCatalogApi(page: import("@playwright/test").Page) {
-  const editions = Array.from({ length: 40 }, (_, index) => ({
+  // Two full shelf pages at the catalog's own page size; page 2 starts at edition 42 + CATALOG_PAGE_SIZE.
+  const editions = Array.from({ length: 2 * CATALOG_PAGE_SIZE }, (_, index) => ({
     ...editionSummary,
     editionId: String(42 + index),
-    title: index < 20 ? `Página 1 · Libro ${index + 1}` : `Página 2 · Libro ${index - 19}`,
+    title: index < CATALOG_PAGE_SIZE ? `Página 1 · Libro ${index + 1}` : `Página 2 · Libro ${index - CATALOG_PAGE_SIZE + 1}`,
   }));
 
   await page.route("**/api/v1/storefront/navigation", route => route.fulfill({ contentType: "application/json", body: JSON.stringify(storefrontNavigationFixture) }));
@@ -120,11 +124,11 @@ async function mockPaginatedCatalogApi(page: import("@playwright/test").Page) {
   }));
   await page.route("**/api/v1/catalog/editions**", (route) => {
     const url = new URL(route.request().url());
-    if (url.pathname.endsWith("/62")) {
+    if (url.pathname.endsWith(`/${PAGE_TWO_FIRST_ID}`)) {
       return route.fulfill({
         status: 200,
         contentType: "application/json",
-        body: JSON.stringify({ ...editionDetail, editionId: "62", title: "Página 2 · Libro 1" }),
+        body: JSON.stringify({ ...editionDetail, editionId: PAGE_TWO_FIRST_ID, title: "Página 2 · Libro 1" }),
       });
     }
 
@@ -385,7 +389,7 @@ test("paginates to the results and restores catalog context after an edition det
   await expect.poll(() => results.evaluate((element) => element.getBoundingClientRect().top)).toBeCloseTo(104, 0);
 
   await page.locator("[data-bookcard-link]").filter({ has: page.getByRole("heading", { name: "Página 2 · Libro 1", exact: true }) }).click();
-  await expect(page).toHaveURL(/\/catalog\/editions\/62\?from=%2Fcatalog%3FproductType%3DPHYSICAL%26page%3D1/);
+  await expect(page).toHaveURL(new RegExp(`/catalog/editions/${PAGE_TWO_FIRST_ID}\\?from=%2Fcatalog%3FproductType%3DPHYSICAL%26page%3D1`));
   await expect(page.getByRole("heading", { level: 1, name: "Página 2 · Libro 1" })).toBeVisible();
   await expect(page.getByRole("link", { name: "Volver al catálogo" }).first()).toHaveAttribute("href", "/catalog?productType=PHYSICAL&page=1");
   await page.getByRole("link", { name: "Volver al catálogo" }).first().click();
