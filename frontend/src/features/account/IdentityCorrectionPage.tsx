@@ -27,7 +27,8 @@ export const identityCorrectionPath = "/account/identity";
 /** Read by Mi perfil after a direct correction sends the customer back to it. */
 export type IdentityCorrectionState = { identityFeedback?: string };
 
-type Notice = Result;
+/** `supersededByDecision`: a confirmation (such as "request sent") that a later decision makes obsolete. */
+type Notice = Result & { supersededByDecision?: boolean };
 type Refetch = () => Promise<{ data?: StoredBillingIdentity | null; isError: boolean }>;
 /** `review`: the number is already on an invoice, so the change goes to staff as a request (ADR 0043). */
 type Pending = { type: IdentificationType; number: string; review: boolean };
@@ -72,6 +73,12 @@ function IdentityCorrection() {
   // A decision the customer has not acknowledged yet is the page's one step: the outcome, never mixed with a new form.
   const decided = request && (request.status === "APPROVED" || request.status === "REJECTED") ? request : null;
   const announcement = useDecisionArrival(query.isPending || query.isError ? undefined : request);
+  // A decision that arrives (live or on a re-read) supersedes the "Enviamos tu solicitud…" confirmation, which would
+  // otherwise sit above the outcome and contradict it.
+  const decidedKey = decided ? `${decided.id}:${decided.status}` : null;
+  // Only notices marked as superseded are cleared: an explanation caused by the decision itself (e.g. a withdrawal
+  // that found the request already reviewed) must stay.
+  useEffect(() => { if (decidedKey) setNotice(current => current?.supersededByDecision ? null : current); }, [decidedKey]);
   const refetch: Refetch = () => query.refetch();
 
   return <AccountShell title="Cédula o RUC" before={<ParentLink to="/account">Volver a Mi perfil</ParentLink>}
@@ -324,7 +331,7 @@ function CorrectionForm({ identity, refetch, onExpired, onNotice, onCorrected, f
 
   function finished(requested: Pending) {
     setConfirming(null);
-    if (requested.review) onNotice({ message: requestedMessage, error: false });
+    if (requested.review) onNotice({ message: requestedMessage, error: false, supersededByDecision: true });
     else onCorrected();
   }
 

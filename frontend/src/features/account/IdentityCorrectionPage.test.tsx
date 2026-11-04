@@ -251,6 +251,26 @@ it("replaces the request in review with its outcome when the decision arrives wh
   expect(screen.getByText("Revisamos tu solicitud y no aplicamos la corrección.")).toHaveAttribute("aria-live", "polite");
 });
 
+it.each([["rejection", rejected], ["approval", approved]] as const)("clears the request confirmation when a %s arrives, so it never contradicts the outcome", async (_kind, decision) => {
+  let current: object | null = null;
+  const { user, queryClient } = renderPage({
+    "GET /api/v1/me/billing-identity": () => used("0912345675", current)(),
+    "POST /api/v1/me/billing-identity/correction-requests": () => { current = pendingRequest; return json(pendingRequest, 201); },
+  });
+  await screen.findByRole("heading", { name: "Corregir identificación" });
+  await user.clear(number());
+  await user.type(number(), "1710034065");
+  await user.click(screen.getByRole("radio", { name: "Lo escribí mal" }));
+  await user.click(screen.getByRole("button", { name: "Enviar solicitud" }));
+  await user.click(within(await screen.findByRole("dialog")).getByRole("button", { name: "Enviar solicitud" }));
+  expect(await screen.findByText(/Enviamos tu solicitud/)).toBeVisible();
+  current = decision;
+  await queryClient.invalidateQueries({ queryKey: ["customer-billing-identity"] });
+  expect(await screen.findByRole("heading", { name: "Revisamos tu solicitud" })).toBeVisible();
+  expect(screen.getByText(decision.status === "APPROVED" ? "Corrección aplicada" : "No aplicada")).toBeVisible();
+  expect(screen.queryByText(/Enviamos tu solicitud/)).not.toBeInTheDocument();
+});
+
 it("sends an account without a cédula or RUC to Mi perfil to add one", async () => {
   renderPage({ "GET /api/v1/me/billing-identity": none });
   expect(await screen.findByRole("heading", { name: "Todavía no registraste tu cédula o RUC" })).toBeVisible();
