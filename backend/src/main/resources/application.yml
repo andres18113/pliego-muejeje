@@ -72,6 +72,11 @@ pliego:
     jwt:
       secret: ${PLIEGO_JWT_SECRET}
 
+management:
+  # Exposure is deferred to the performance-assessment task.
+  server:
+    port: -1
+
 server:
   forward-headers-strategy: native
   tomcat:
