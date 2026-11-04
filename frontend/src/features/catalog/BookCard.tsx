@@ -6,7 +6,8 @@ import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
 import { BookCover } from "./BookCover";
 import { StockStatus } from "./StockStatus";
 import { favoriteActionLabel, resolveCartAction, type BookCardProps } from "./bookCardModel";
-import { offerEndLabel, savingsPercentLabel } from "./offersPresentation";
+import { offerUrgencyLabel } from "./offersPresentation";
+import { SavingsChip, UrgencyChip } from "./OfferChips";
 import classes from "./BookCard.module.css";
 export type { BookCardProps, BookCardData, FavoriteControl, CartControl, BookCardFeedback } from "./bookCardModel";
 
@@ -29,7 +30,8 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
   const reasons = [...new Set(["reason" in favorite ? favorite.reason : null, cart && "reason" in cart ? cart.reason : null].filter((reason): reason is string => Boolean(reason)))];
   const reasonId = (reason: string) => feedback?.message === reason ? `${uid}-feedback` : `${uid}-reason-${reasons.indexOf(reason)}`;
   const Heading = headingOrder === 4 ? "h4" : "h3";
-  const savingsPercent = book.offer ? savingsPercentLabel(book.offer.savingsPercent) : null;
+  const urgency = book.offer ? offerUrgencyLabel(book.offer.daysRemaining) : null;
+  const offerId = book.offer && book.discountLabel ? `${uid}-offer` : null;
   const favoriteControl = (
   <Tooltip label={favoriteLabel} events={{ hover: true, focus: true, touch: false }} position="top" multiline maw="calc(100vw - 32px)" withArrow>
     <ActionIcon id={`${uid}-favorite-action`} type="button" size={44} radius="md" variant="transparent"
@@ -43,7 +45,7 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
 
   return <article className={[classes.card, className].filter(Boolean).join(" ")} data-bookcard data-edition-id={book.id} data-media={media} data-unavailable={!book.available || undefined}>
     <Anchor id={`${uid}-edition-link`} component={Link} to={to} state={navigationState} onClick={onNavigate} underline="never" className={classes.mainLink}
-      aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.formatLabel}. ${book.editionLabel}`} aria-describedby={`${uid}-authors ${uid}-price ${uid}-availability`} data-bookcard-link>
+      aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.formatLabel}. ${book.editionLabel}`} aria-describedby={`${uid}-authors ${uid}-price${offerId ? ` ${offerId}` : ""} ${uid}-availability`} data-bookcard-link>
       <div className={classes.shelf} data-bookcard-shelf>
         <BookCover url={book.cover.url} license={null} attribution={null} title={book.title} size="card" decorative loading="lazy" />
       </div>
@@ -64,12 +66,11 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
           <p className={classes.price} id={`${uid}-price`} data-bookcard-price>{book.priceLabel}</p>
           {book.originalPriceLabel && <p className={classes.was}><span className="visually-hidden">Precio anterior </span><s>{book.originalPriceLabel}</s></p>}
         </div>
-        {book.originalPriceLabel && <p className={classes.saving}>Ahorras {book.discountLabel}{savingsPercent && <span> ({savingsPercent})</span>}</p>}
-        {book.offer && <div className={classes.offer} data-bookcard-offer>
-          {book.offer.offerCopy && <p className={classes.offerCopy}>{book.offer.offerCopy}</p>}
-          <p className={classes.offerTime} data-ending-soon={book.offer.endingSoon || undefined}><MaterialSymbol name="schedule" size={16} /><span>{book.offer.remainingLabel}</span></p>
-          <p className={classes.offerEnds}>Termina el <time dateTime={book.offer.endsAt}>{offerEndLabel(book.offer.endsAt)}</time></p>
-          {book.offer.terms && <details className={classes.terms}><summary>Términos de la oferta</summary><p>{book.offer.terms}</p></details>}
+        {/* The offer as Ofertas and the edition page read it: the saving as one chip, then the days left only
+            when the server says five or fewer. No percentage, end date, copy or terms on a shelf card. */}
+        {offerId && <div className={classes.offerChips} id={offerId} data-bookcard-offer>
+          <SavingsChip amountLabel={book.discountLabel!} />
+          {urgency && <UrgencyChip label={urgency} data-offer-urgency />}
         </div>}
       </div>
       <p className={classes.availability} id={`${uid}-availability`} data-bookcard-availability><StockStatus available={book.available} size="compact" variant="quiet" /></p>
