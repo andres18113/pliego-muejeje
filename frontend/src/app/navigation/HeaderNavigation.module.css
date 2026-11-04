@@ -127,16 +127,20 @@
 .sheetNavigation p { margin: 0; }
 .sheetNavigation .pending { flex-direction: column; align-items: flex-start; gap: 22px; padding: 16px 0; }
 .sheetList > li { border-bottom: 1px solid var(--pliego-border); }
-.sheetRow { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; min-height: 56px; padding: 8px 2px; border: 0; border-radius: 8px; background: none; color: var(--pliego-text); font-family: inherit; font-size: 1.125rem; font-weight: 600; line-height: 1.3; text-align: left; text-decoration: none; cursor: pointer; overflow-wrap: anywhere; }
+.sheetRow { display: flex; align-items: center; justify-content: flex-start; gap: 10px; width: 100%; min-height: 56px; padding: 8px 2px; border: 0; border-radius: 8px; background: none; color: var(--pliego-text); font-family: inherit; font-size: 1.125rem; font-weight: 600; line-height: 1.3; text-align: left; text-decoration: none; cursor: pointer; overflow-wrap: anywhere; }
 .sheetRow[aria-current="page"], .sheetRow[aria-expanded="true"] { color: var(--header-accent); }
-.sheetRow[aria-current="page"]::before { content: ""; flex: 0 0 auto; width: 8px; height: 8px; margin-right: -4px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
+/* Every label starts on the same edge; the current section's yellow "here" dot follows its name (as in the
+   account menu, where it closes the row), so it never pushes the label away from the others. */
+.sheetRow[aria-current="page"]::after { content: ""; flex: 0 0 auto; width: 8px; height: 8px; border-radius: 50%; background: var(--store-yellow, #f3df83); }
 .sheetRow :global(.material-symbol) { margin-left: auto; color: var(--pliego-text-muted); }
 /* A section row with a menu: the name (the row's link) and, at its end, the chevron that unfolds it. */
 .sheetSplit { display: flex; align-items: center; gap: 4px; }
 .sheetSplit > .sheetRow { flex: 1 1 auto; min-width: 0; }
 .sheetSplit[data-open] > .sheetRow { color: var(--header-accent); }
 .sheetToggle { display: inline-grid; flex: none; place-items: center; width: 44px; height: 44px; border: 0; border-radius: 999px; background: none; color: var(--pliego-text-muted); cursor: pointer; }
-.sheetToggle:hover, .sheetToggle[aria-expanded="true"] { background: var(--store-hover, rgb(40 61 168 / .06)); color: var(--header-accent); }
+/* Touch keeps :hover after a tap, so only a real pointer gets the hover disc; an open section keeps it. */
+@media (hover: hover) { .sheetToggle:hover { background: var(--store-hover, rgb(40 61 168 / .06)); color: var(--header-accent); } }
+.sheetToggle[aria-expanded="true"] { background: var(--store-hover, rgb(40 61 168 / .06)); color: var(--header-accent); }
 .sheetToggle:focus-visible { outline: 3px solid var(--header-accent); outline-offset: 2px; }
 .sheetSection { display: grid; gap: 14px; min-width: 0; padding: 0 2px 18px; }
 :global([data-mantine-color-scheme="dark"]) .sheetFeatured { display: grid; gap: 4px; }
@@ -145,4 +149,4 @@
 .sheetSection .more a { min-height: 52px; padding-left: 18px; }
 .sheetSection .eyebrow { margin-top: 6px; }
 @media (prefers-reduced-motion: reduce) { .panel { animation: none; } .chevron, .product, .browseAll, .browseArrow, .more a { transition: none; } }
-@media (forced-colors: active) { .panel { border: 1px solid CanvasText; } }
+@media (forced-colors: active) { .panel { border: 1px solid CanvasText; } .sheetRow[aria-current="page"]::after { background: CanvasText; } }

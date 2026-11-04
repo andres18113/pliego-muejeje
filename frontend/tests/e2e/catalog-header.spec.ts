@@ -245,6 +245,47 @@ test("compact navigation keeps the same server destinations with keyboard recove
   await expect(page.getByRole("heading", { level: 1, name: "Estamos aquí para ayudarte." })).toBeVisible();
 });
 
+test("phone sheet rows share one start edge, the here dot follows the current name and a tap leaves no hover disc", async ({ browser }) => {
+  const context = await browser.newContext({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  const page = await context.newPage();
+  await mockPublicCatalog(page);
+  // As in production: each medium has a menu (bestsellers and offers), so its row carries the chevron.
+  const withMenus = { sections: storefrontNavigationFixture.sections.map(section => ["PHYSICAL", "EBOOK", "AUDIOBOOK"].includes(section.key)
+    ? { ...section, bestSellingHref: `${section.href}&sort=BEST_SELLING`, offersHref: `/ofertas?productType=${section.key}`, activeOfferCount: "7" } : section) };
+  await page.route("**/api/v1/storefront/navigation", route => route.fulfill({ contentType: "application/json", body: JSON.stringify(withMenus) }));
+  await page.goto("/catalog?productType=PHYSICAL");
+  await page.getByRole("button", { name: "Abrir navegación" }).tap();
+  const menu = page.getByRole("dialog", { name: "Navegación", exact: true });
+  const rows = menu.getByRole("navigation", { name: "Navegación principal" }).locator(":scope > ul > li > a, :scope > ul > li > div:first-child > a");
+  await expect(rows).toHaveText(["Libros", "eBooks", "Audiolibros", "Ofertas", "Ayuda"]);
+  const current = menu.getByRole("link", { name: "Libros", exact: true });
+  await expect(current).toHaveAttribute("aria-current", "page");
+  const toggle = menu.getByRole("button", { name: "Menú de Libros" });
+  // The current section opens in place; one tap folds it again.
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await toggle.tap();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+  const labels = await rows.evaluateAll(links => links.map(link => {
+    const range = document.createRange(); range.selectNodeContents(link);
+    const text = range.getBoundingClientRect(); const box = link.getBoundingClientRect();
+    return { left: text.left, right: text.right, height: box.height };
+  }));
+  for (const label of labels) {
+    expect(Math.abs(label.left - labels[1].left)).toBeLessThanOrEqual(0.5);
+    expect(label.height).toBeGreaterThanOrEqual(44);
+  }
+  const toggleBox = (await toggle.boundingBox())!;
+  expect(toggleBox.width).toBeGreaterThanOrEqual(44); expect(toggleBox.height).toBeGreaterThanOrEqual(44);
+  // The name stays at the start, not pushed against the chevron; the dot is drawn after it.
+  expect(toggleBox.x - labels[0].right).toBeGreaterThan(120);
+  expect(await current.evaluate(link => getComputedStyle(link, "::after").content)).not.toBe("none");
+  expect(await current.evaluate(link => getComputedStyle(link, "::before").content)).toBe("none");
+  // Touch keeps :hover after a tap: a folded section must not keep the hover disc.
+  expect(await toggle.evaluate(button => getComputedStyle(button).backgroundColor)).toBe("rgba(0, 0, 0, 0)");
+  await context.close();
+});
+
 test("larger text collapses the desktop bar to the compact menu instead of overlapping", async ({ page }) => {
   await mockPublicCatalog(page);
   await page.setViewportSize({ width: 1440, height: 1000 });
