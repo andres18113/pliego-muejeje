@@ -43,8 +43,8 @@ jobs:
           cache-dependency-path: frontend/package-lock.json
       - name: Install frontend dependencies
         run: npm ci
-      - name: Test frontend audit gate and audit dependencies
-        run: node --test ../scripts/npm-audit-gate.test.mjs && node ../scripts/npm-audit-gate.mjs
+      - name: Audit frontend dependencies
+        run: npm audit --audit-level=low
       - name: Install and audit root dependencies
         working-directory: .
         run: |
@@ -207,9 +207,13 @@ jobs:
         env:
           PLIEGO_TEST_DISPOSABLE_DB: '1'
         run: |
-          sudo -u postgres createdb -p 55432 --owner=pliego pliego_offer_expiry_upgrade_ci
-          PGDATABASE=pliego_offer_expiry_upgrade_ci \
-            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_offer_expiry_upgrade_ci \
+          sudo -u postgres createdb -p 55432 --owner=pliego offers_upgrade_ci
+          # The installation-race check clones the populated V105 database (createdb --template);
+          # grant CREATEDB for this step only and always take it back.
+          sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -c 'ALTER ROLE pliego CREATEDB'
+          trap "sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -c 'ALTER ROLE pliego NOCREATEDB'" EXIT
+          PGDATABASE=offers_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/offers_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/offer_expiry_upgrade_gate.py
       - name: Verify stored cédulas survive the required, correctable cédula and RUC upgrades
         shell: bash

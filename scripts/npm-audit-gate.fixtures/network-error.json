@@ -1,7 +1,0 @@
-{
-  "error": {
-    "code": "ENOAUDIT",
-    "summary": "Audit endpoint unavailable",
-    "detail": "The registry audit request failed."
-  }
-}
