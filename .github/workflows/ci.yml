@@ -23,6 +23,8 @@ jobs:
           .venv-covers/bin/python -m pip install -r scripts/requirements-covers.txt
       - name: Run all Python catalog and cover tests
         run: .venv-covers/bin/python -m unittest discover -s scripts -p 'test_*.py'
+      - name: Verify deployment helper safety
+        run: python3 -m unittest discover -s scripts/ops/deploy -p 'test_*.py'
 
   frontend:
     name: Frontend quality gates
@@ -144,8 +146,16 @@ jobs:
           CREATE ROLE pliego LOGIN PASSWORD :'ci_password';
           SQL
           sudo -u postgres createdb -p 55432 --owner=pliego pliego
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_registration_ci
           psql -X -v ON_ERROR_STOP=1 -At -c "SELECT current_setting('server_version_num')::integer >= 180006" \
             | grep -qx t
+      - name: Verify registration continuation and login protection with disposable PostgreSQL
+        working-directory: backend
+        env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
+          PGDATABASE: pliego_registration_ci
+          PLIEGO_DB_URL: jdbc:postgresql://127.0.0.1:55432/pliego_registration_ci
+        run: mvn --batch-mode --no-transfer-progress -Dtest=RegistrationContinuationPostgresIntegrationTest,LoginAttemptPostgresIntegrationTest,RegistrationAttemptPostgresIntegrationTest,OfferLifecyclePostgresIntegrationTest,RealtimeTransactionPostgresIntegrationTest test
       - name: Set up Node.js for live browser contracts
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
@@ -159,6 +169,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Run live SQL, concurrency, HTTP, Flyway, and browser gates
         env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
           PLIEGO_RUN_LIVE_BROWSER: '1'
           PLIEGO_BILLING_ENABLED: 'true'
           PLIEGO_BILLING_POLL_INTERVAL: PT0.1S
@@ -173,6 +184,37 @@ jobs:
           PGDATABASE=pliego_billing_upgrade_ci \
             PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_billing_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/automatic_billing_upgrade_gate.py
+      - name: Verify login protection and credential fixes across populated V098 to V100 upgrade
+        shell: bash
+        env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_login_upgrade_ci
+          PGDATABASE=pliego_login_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_login_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/login_attempt_upgrade_gate.py
+      - name: Verify realtime identity library and registration on populated V100 upgrade
+        shell: bash
+        env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_realtime_upgrade_ci
+          PGDATABASE=pliego_realtime_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_realtime_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/realtime_identity_library_upgrade_gate.py
+      - name: Verify offer expiry and concurrent installation across populated V105 to V106 upgrade
+        shell: bash
+        env:
+          PLIEGO_TEST_DISPOSABLE_DB: '1'
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego offers_upgrade_ci
+          # The installation-race check clones the populated V105 database (createdb --template);
+          # grant CREATEDB for this step only and always take it back.
+          sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -c 'ALTER ROLE pliego CREATEDB'
+          trap "sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -c 'ALTER ROLE pliego NOCREATEDB'" EXIT
+          PGDATABASE=offers_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/offers_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/offer_expiry_upgrade_gate.py
       - name: Verify stored cédulas survive the required, correctable cédula and RUC upgrades
         shell: bash
         run: |
@@ -180,6 +222,13 @@ jobs:
           PGDATABASE=pliego_identity_upgrade_ci \
             PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_identity_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/billing_identity_upgrade_gate.py
+      - name: Verify public references preserve orders, invoices and files across V087 upgrade
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_order_reference_upgrade_ci
+          PGDATABASE=pliego_order_reference_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_order_reference_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/order_reference_upgrade_gate.py
       - name: Verify transactional email with local Mailtrap stub
         shell: bash
         run: |
@@ -208,6 +257,15 @@ jobs:
           PGDATABASE=pliego_ecuador_contact_upgrade_ci \
             PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_ecuador_contact_upgrade_ci \
             timeout 180s python3 backend/src/test/postgres18/ecuador_contact_upgrade_gate.py
+      - name: Verify the INEC province/city catalog links legacy addresses and keeps snapshots across Flyway upgrade
+        shell: bash
+        run: |
+          sudo -u postgres createdb -p 55432 --owner=pliego pliego_geo_upgrade_ci
+          # Production's runtime role, so the gate proves V082 leaves it SELECT-only on the catalog.
+          sudo -u postgres psql -p 55432 -v ON_ERROR_STOP=1 -c 'CREATE ROLE pliego_app NOLOGIN'
+          PGDATABASE=pliego_geo_upgrade_ci \
+            PLIEGO_DB_URL=jdbc:postgresql://127.0.0.1:55432/pliego_geo_upgrade_ci \
+            timeout 180s python3 backend/src/test/postgres18/geo_upgrade_gate.py
       - name: Retain backend failure diagnostics
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

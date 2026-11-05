@@ -104,14 +104,14 @@ def run_checks(base):
                 'returnTo': '/cart?source=edition#items', **({'phone': phone} if phone else {})}
         status, registered = request_json(base, '/api/v1/auth/register', body)
         assert status == 201 and registered['state'] == 'PENDING_VERIFICATION'
-        user_id = int(registered['userId'])
+        user_id = int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
         assert query(f'SELECT email_verificado_en IS NULL FROM pliego.usuario WHERE usuario_id={user_id}') == 't'
-        assert query(f'SELECT telefono IS NOT DISTINCT FROM {"NULL" if phone is None else chr(39)+phone+chr(39)} FROM pliego.cliente WHERE cliente_id={registered["customerId"]}') == 't'
+        assert query(f'SELECT telefono IS NOT DISTINCT FROM {"NULL" if phone is None else chr(39)+phone+chr(39)} FROM pliego.cliente WHERE usuario_id={user_id}') == 't'
         status, failure = request_json(base, '/api/v1/auth/login', {'email': email, 'password': password})
         assert status == 403 and failure['code'] == 'EMAIL_NOT_VERIFIED'
         assert request_json(base, '/api/v1/auth/login', {'email': email, 'password': 'wrong-local-fixture'})[0] == 401
         status, duplicate = request_json(base, '/api/v1/auth/register', {**body, 'email': email.upper()})
-        assert status == 409 and duplicate['code'] == 'P1101', f'Duplicate rejection status={status}, code={duplicate.get("code")}'
+        assert status == 201 and duplicate == registered == {"state": "PENDING_VERIFICATION"}, "Duplicate registration must be neutral"
         assert query(f"SELECT count(*) FROM pliego.usuario WHERE email_normalizado='{email}'") == '1'
         wait_for(lambda: query(f"SELECT estado FROM pliego.correo_outbox WHERE usuario_id={user_id}") == 'SENT')
         link = email_link(email)
@@ -136,7 +136,7 @@ def run_checks(base):
     status, registered = request_json(base, '/api/v1/auth/register', {'email': email, 'password': password,
         'firstNames': 'Ana', 'lastNames': 'Pérez', 'returnTo': '/cart'})
     assert status == 201
-    user_id = int(registered['userId'])
+    user_id = int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
     wait_for(lambda: query(f"SELECT estado||':'||intentos||':'||ultimo_error FROM pliego.correo_outbox WHERE usuario_id={user_id}") == 'PENDING:1:MAILTRAP_HTTP_503')
     LocalMailtrap.status = 200
     query(f"UPDATE pliego.correo_outbox SET proximo_intento=clock_timestamp() WHERE usuario_id={user_id}")

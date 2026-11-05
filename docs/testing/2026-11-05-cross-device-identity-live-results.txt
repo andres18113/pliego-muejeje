@@ -1,0 +1,36 @@
+PLIEGO cross-device identity regression — evidence label 2026-11-05
+Branch: feat/digital-ownership-post-purchase-search; reviewed HEAD e443a2ef3536b0caa050f95c30ef7dbe3eea32c8.
+Spec: frontend/tests/e2e/cross-device-identity.live.spec.ts (PLIEGO_E2E_LIVE opt-in, five separate tests).
+Spec SHA256: 212f02d6985bd11aa76e3e53a026581cf563c797704424ace80f72206161278d.
+Fixture: backend/src/test/postgres18/realtime_live_fixture.py; additive admin-login creates a fresh random principal/password, verifies email, promotes only that principal, and requires a disposable loopback stack on an isolated PG port.
+
+Stack: fresh native PostgreSQL 18.6 on 55461; cluster 7704087543608770572; 105 successful migrations through V105.
+Backend: current-tree Maven package, Java 25, copied jar on 18105; frontend: current-tree Vite build passed, executions used current Vite modules on 5195 with same-origin API proxy.
+Customer: isolated native desktop Chromium via connectOverCDP(noDefaults:true), with real visibility/freeze behavior. ADMIN: separate Playwright Pixel 7 context, real login, /admin/correcciones, ConfirmDialog and typed rejection reason.
+Run command (frontend directory, with disposable PG/JWT/API environment and DISPLAY): PLIEGO_E2E_LIVE=1 npx playwright test tests/e2e/cross-device-identity.live.spec.ts --workers=1 --reporter=list,json
+Run 1 actual UTC start: 2026-11-03T23:22:17.152Z; 5 passed, 0 failed/skipped/flaky; 56.7s.
+Run 2 actual UTC start: 2026-11-03T23:23:46.697Z; 5 passed, 0 failed/skipped/flaky; 54.2s. Identical final spec in both runs.
+
+Scenario                                                        Run 1   Run 2   Peak in-flight customer SSE
+Mobile ADMIN approval -> Mi perfil notice and new number          PASS    PASS    1 / 1
+Mobile rejection -> profile notice + open identity outcome/reason  PASS    PASS    1 / 1
+Mi perfil genuinely hidden behind another focused tab             PASS    PASS    1 / 1
+Frozen original leader -> visible profile updates BEFORE thaw     PASS    PASS    1 / 1
+Two customer tabs + online bursts + real mobile rejection         PASS    PASS    1 / 1
+Every events URL ends in /api/v1/auth/events. Frozen cases each opened two historical requests, with peak concurrency one. Original-document handles prove no customer reload; hidden/visible states are asserted before and after the relevant decisions.
+
+Compiler (once): cd frontend && npx tsc --noEmit — exit 0.
+Vitest (once): npx vitest run src/app/realtime/realtime.test.ts src/app/version/buildVersion.test.tsx src/features/account/IdentityCorrectionPage.test.tsx src/features/account/AccountPage.test.tsx — exit 0; 4 files, 65 tests passed.
+Independent review included git status, full diff and untracked files, with the requested exclusions; original tracked sections remained unchanged through the final review.
+B1: none. Six intentional IdentityCorrectionPage replacements retain the complete rejection reason at frontend/src/features/account/IdentityCorrectionPage.test.tsx:196.
+B2: none. Accepted origin/versioned-base/trailing-slash forms and production https://api.pliegolibros.com produce the full stream path.
+B3: none confirmed. Leadership, native/CLOSED reconnects, freeze/pagehide release, leader-only online recovery, background revalidation and stop cleanup reviewed.
+B4: P2 defect, frontend/vite.config.ts:20: define stamps a build ID during Vite serve/development. Effective resolveConfig({}, 'serve') reports buildIdDefined=true, versionPluginActive=false; frontend/src/app/version/buildVersion.ts:50 therefore starts fetch/listeners at :63-64 rather than remaining inert. Well-formed/different published IDs, inert Vitest configuration, conditional mounting and explicit-only reload otherwise satisfy review.
+B5: none. No production credentials, local config, databases or unrelated assets in the reviewed changeset; private disposable runtime files remain ignored under .release-evidence.
+
+Evidence: .release-evidence/2026-11-05/verified-results.json, verified-run-{1,2}.{json,log}, backend-build.log, frontend-build.log, tsc.log, vitest-targeted.log and review/final-static-review.json.
+Earlier attempts remain retained: attempt-1 (admin redirect/heading selectors), attempt-2 and run-1 (identity text-node selectors; optional pagehide accounting), run-2 (four passed; optional pagehide accounting), final-run-1 (four passed; invalid offline-disconnect assumption). These are not qualified final runs.
+Independent review/network-navigation-probe.{mjs,json} proves document destruction can omit both Playwright and CDP request-terminal events despite server close preceding replacement open; the final spec keeps documents alive for accounting and exercises handoff through real CDP freeze. Browser offline emulation also did not terminate an existing SSE; that optional assumption was removed. Required concurrency assertions remain unconditional in every final test.
+Limitations: native desktop Chromium/display required (Linux CI may use Xvfb); no new live pagehide/BFCache or long-session qualification is claimed. The static scanner could not resolve custom fixtures; those constructs were reviewed manually.
+Application-source preservation: all 809 frontend/src and backend/src/main files matched their pre-final-run hashes; no application, CSS or design document edits by this task.
+Cleanup: task-owned ports 55461/18105/5195 closed; PGDATA retained under .release-evidence/2026-11-05/pgdata. No production access, commit, push, merge or deployment.

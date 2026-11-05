@@ -77,7 +77,7 @@ class PostPurchaseHttpGate(unittest.TestCase):
         invoice_request = {"documentNumber": "COMM-" + uuid.uuid4().hex,
             "buyerName": "Comprador facturado", "identityType": "OTHER", "identityNumber": "fixture-identity",
             "buyerEmail": "billing@example.invalid", "billingAddress": {"line1": "Dirección de cobro",
-            "line2": None, "city": "Quito", "province": "Pichincha", "countryCode": "EC", "postalCode": None}}
+            "line2": None, "provinceId": "17", "cityId": "893", "countryCode": "EC", "postalCode": None}}
         status, result = request(self.admin_path + "/invoice", self.admin, method="POST", body=invoice_request)
         self.assertEqual(201, status, result)
         invoice = self.detail()["invoice"]

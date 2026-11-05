@@ -1,6 +1,7 @@
 package com.pliego.modules.cart.application;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -58,4 +59,15 @@ public final class CartModels {
     }
 
     public record CartItemResult(String cartId, String cartItemId, int quantity) { }
+
+    public record SavedForLaterList(List<SavedItem> items, long totalCount) { }
+
+    public record SavedForLaterState(Cart cart, SavedForLaterList saved) { }
+
+    /** Live commercial projection for an item that is outside the active cart. */
+    public record SavedItem(String savedItemId, String editionId, String title, String authors, String sku,
+            String coverUrl, int quantity, BigDecimal currentPrice, BigDecimal currentSubtotal,
+            boolean available, String unavailabilityReason, String format, boolean requiresPhysicalFulfillment,
+            boolean quantityEditable, BigDecimal originalPrice, BigDecimal unitSavings,
+            BigDecimal originalSubtotal, BigDecimal lineSavings, Instant savedAt, Instant updatedAt) { }
 }

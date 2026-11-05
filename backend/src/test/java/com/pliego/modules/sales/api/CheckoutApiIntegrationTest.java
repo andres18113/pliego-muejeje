@@ -73,9 +73,10 @@ class CheckoutApiIntegrationTest {
                 null, new com.pliego.foundation.money.MonetaryAmounts(new BigDecimal("39.80"), new BigDecimal("15.00"),
                         new BigDecimal("5.97"), new BigDecimal("0.00"), new BigDecimal("45.77")),
                 new com.pliego.modules.sales.application.PostPurchaseModels.OfferPricing(
-                        new BigDecimal("44.31"), new BigDecimal("4.51"), new BigDecimal("39.80"), true));
+                        new BigDecimal("44.31"), new BigDecimal("4.51"), new BigDecimal("39.80"), true), "PL-0123-4567");
         perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.orderReference").value("PL-0123-4567"))
                 .andExpect(jsonPath("$.originalSubtotal").value("44.31"))
                 .andExpect(jsonPath("$.savingsTotal").value("4.51"))
                 .andExpect(jsonPath("$.currentSubtotal").value("39.80"))
@@ -89,6 +90,7 @@ class CheckoutApiIntegrationTest {
                         .header("Authorization", token("42", "CUSTOMER")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.state").value("CREATED"))
+                .andExpect(jsonPath("$.order.orderReference").value("PL-0123-4567"))
                 .andExpect(jsonPath("$.order.originalSubtotal").value("44.31"))
                 .andExpect(jsonPath("$.order.savingsTotal").value("4.51"))
                 .andExpect(jsonPath("$.order.currentSubtotal").value("39.80"))
@@ -114,6 +116,20 @@ class CheckoutApiIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(billed("{\"fulfillmentMethod\":\"STORE_PICKUP\",\"pickupLocationId\":\"1\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")))
                 .andExpect(status().isCreated()).andExpect(jsonPath("$.orderState").value("CONFIRMED"));
+    }
+
+    @Test
+    void invalidBillingCityProvincePairReturnsSpanishProblemDetails() throws Exception {
+        gateway.failure = translator.translate(new SQLException("private geographic details", "P5014"));
+        perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("P5014"))
+                .andExpect(jsonPath("$.detail").value("La ciudad no pertenece a la provincia seleccionada."));
+        gateway.failure = translator.translate(new SQLException("private geographic details", "P5015"));
+        perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"APPROVED\"}")
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("P5015"))
+                .andExpect(jsonPath("$.detail").value("Elige una ciudad de la lista."));
     }
 
     @Test
@@ -171,6 +187,43 @@ class CheckoutApiIntegrationTest {
         assertEquals(15L, gateway.address);
         assertEquals("CARD", gateway.method);
         assertEquals("APPROVED", gateway.outcome);
+    }
+
+    @Test
+    void otherBillingRecipientIsPassedToTheCheckoutDatabaseCommand() throws Exception {
+        perform("{\"addressId\":\"15\",\"paymentMethod\":\"TRANSFER\",\"simulationOutcome\":\"PENDING\",\"billingRecipient\":\"OTHER\"}")
+                .andExpect(status().isCreated());
+        assertEquals("OTHER", gateway.recipientKind);
+    }
+
+    @Test
+    void legacyOtherBillingAddressNamesArePassedToTheStrictDatabaseAdapter() throws Exception {
+        performRaw("""
+                {"addressId":"15","paymentMethod":"TRANSFER","simulationOutcome":"APPROVED",
+                 "billingRecipient":"OTHER","billingIdentity":{"type":"EC_CEDULA","number":"0912345675"},
+                 "buyerName":"Comprador anterior","billingAddress":{"line1":"Calle fiscal",
+                 "city":"Bucay","province":"Guayas","countryCode":"EC"}}
+                """)
+                .andExpect(status().isCreated());
+        assertEquals("OTHER", gateway.recipientKind);
+        assertEquals("Bucay", gateway.billingAddress.city());
+        assertEquals("Guayas", gateway.billingAddress.province());
+        assertEquals(null, gateway.billingAddress.cityId());
+        assertEquals(null, gateway.billingAddress.provinceId());
+    }
+
+    @Test
+    void mixedCatalogIdsAndLegacyNamesAreRejectedWithSpanishValidation() throws Exception {
+        performRaw("""
+                {"addressId":"15","paymentMethod":"TRANSFER","simulationOutcome":"APPROVED",
+                 "billingIdentity":{"type":"EC_CEDULA","number":"0912345675"},"buyerName":"Comprador",
+                 "billingAddress":{"line1":"Calle fiscal","provinceId":"17","cityId":"801",
+                 "city":"Quito","province":"Pichincha","countryCode":"EC"}}
+                """)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.code").value("VALIDATION_ERROR"))
+                .andExpect(jsonPath("$.detail").value("Revisa los datos enviados e intenta nuevamente."));
+        assertEquals(0, gateway.calls);
     }
 
     @Test
@@ -264,6 +317,8 @@ class CheckoutApiIntegrationTest {
     void databaseErrorsPreserveCodesAndUseSafeSpanishFeedback(CapturedOutput output) throws Exception {
         record Case(String state, int status, String title, String detail) { }
         Case[] cases = {
+                new Case("P6002", 409, "Ya tienes esta edición digital", "Esta edición digital ya está en tu biblioteca. Puedes consultarla sin volver a comprarla."),
+                new Case("P6003", 409, "Compra digital pendiente", "Ya tienes un pedido abierto con esta edición digital. Revisa ese pedido antes de intentar otra compra."),
                 new Case("P4001", 409, "Carrito no disponible", "No hay un carrito activo para finalizar la compra."),
                 new Case("P4002", 409, "Carrito vacío", "Agrega al menos un libro antes de finalizar la compra."),
                 new Case("P2042", 409, "Edición no disponible", "Una de las ediciones del carrito ya no está disponible."),
@@ -300,7 +355,7 @@ class CheckoutApiIntegrationTest {
     }
 
     private static final String BILLING = "\"billingIdentity\":{\"type\":\"EC_CEDULA\",\"number\":\"0912345675\"},"
-            + "\"buyerName\":\"Comprador Prueba\",\"billingAddress\":{\"line1\":\"Calle Fiscal\",\"city\":\"Quito\",\"province\":\"Pichincha\",\"countryCode\":\"EC\"}";
+            + "\"buyerName\":\"Comprador Prueba\",\"billingAddress\":{\"line1\":\"Calle Fiscal\",\"provinceId\":\"17\",\"cityId\":\"801\",\"countryCode\":\"EC\"}";
 
     /** Every purchase is billed (ADR 0040): the fiscal data joins each request body. */
     private static String billed(String body) {
@@ -355,6 +410,8 @@ class CheckoutApiIntegrationTest {
         Long address;
         String method;
         String outcome;
+        String recipientKind;
+        com.pliego.modules.sales.application.PostPurchaseModels.BillingAddressInput billingAddress;
         String fingerprint;
         DatabaseException failure;
         CheckoutResult result;
@@ -368,6 +425,8 @@ class CheckoutApiIntegrationTest {
             address = 0L;
             method = null;
             outcome = null;
+            recipientKind = null;
+            billingAddress = null;
             fingerprint = null;
             failure = null;
             result = new CheckoutResult("700", "CONFIRMED", "APPROVED", new BigDecimal("39.80"), APPROVED_REFERENCE);
@@ -377,6 +436,8 @@ class CheckoutApiIntegrationTest {
                 String paymentOutcome, Long cartId, String fulfillmentMethod, Long pickupLocationId, String quoteFingerprint,
                 com.pliego.modules.sales.application.PostPurchaseModels.CheckoutBilling billing) {
             assertEquals("0912345675", billing.identityNumber());
+            recipientKind = billing.recipientKind();
+            billingAddress = billing.address();
             return checkout(actorUserId,key,addressId,paymentMethod,paymentOutcome,cartId,fulfillmentMethod,pickupLocationId,quoteFingerprint);
         }
 

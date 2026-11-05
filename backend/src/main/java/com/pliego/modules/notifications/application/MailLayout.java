@@ -28,7 +28,8 @@ final class MailLayout {
  private final String logoUrl;
 
  /** {@code base} is the store's public address; the logo is the raster copy of the approved lockup it serves. */
- MailLayout(String preheader,String base) { this.preheader=preheader; this.logoUrl=base+"/brand/pliego-logo.png"; }
+ /** The email lockup carries its own white plate (clients that darken a message recolour backgrounds, never images). */
+ MailLayout(String preheader,String base) { this.preheader=preheader; this.logoUrl=base+"/brand/pliego-logo-email.png"; }
 
  MailLayout heading(String value) {
   html.append("<h1 style=\"margin:0 0 12px;").append(FONT).append("font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-0.02em;color:").append(INK).append("\">").append(escape(value)).append("</h1>");
@@ -38,6 +39,14 @@ final class MailLayout {
  MailLayout lead(String value) { return paragraph(value,"17px",INK); }
  MailLayout paragraph(String value) { return paragraph(value,"15px",INK); }
  MailLayout muted(String value) { return paragraph(value,"14px",MUTED); }
+ /** A short value (such as an invoice number) that email clients must keep together when wrapping. */
+ MailLayout paragraphWithNoWrap(String before,String value,String after) {
+  html.append("<p style=\"margin:0 0 12px;").append(FONT).append("font-size:15px;line-height:1.55;color:").append(INK).append("\">")
+   .append(escape(before)).append("<span style=\"white-space:nowrap;word-break:normal;overflow-wrap:normal\">")
+   .append(escape(value)).append("</span>").append(escape(after)).append("</p>");
+  text.append(before).append(value.replace("-", "-\u2060")).append(after).append("\n");
+  return this;
+ }
  private MailLayout paragraph(String value,String size,String color) {
   html.append("<p style=\"margin:0 0 12px;").append(FONT).append("font-size:").append(size).append(";line-height:1.55;color:").append(color).append("\">").append(escape(value)).append("</p>");
   text.append(value).append("\n");
@@ -131,7 +140,7 @@ final class MailLayout {
  }
  /** The address itself, for clients that do not draw the button. */
  MailLayout fallback(String url) {
-  html.append("<p style=\"margin:16px 0 0;").append(FONT).append("font-size:13px;line-height:1.5;color:").append(MUTED).append(";word-break:break-all\">Si el botón no funciona, copia este enlace en tu navegador:<br>").append(escape(url)).append("</p>");
+  html.append("<p style=\"margin:16px 0 0;").append(FONT).append("font-size:13px;line-height:1.5;color:").append(MUTED).append("\">Si el botón no funciona, copia este enlace en tu navegador:<br><span style=\"word-break:break-all\">").append(escape(url)).append("</span></p>");
   return this;
  }
 
@@ -145,7 +154,7 @@ final class MailLayout {
    +"<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\""+PAPER+"\" style=\"background:"+PAPER+"\"><tr><td align=\"center\" class=\"frame\" style=\"padding:28px 12px\">"
    +"<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" bgcolor=\"#ffffff\" style=\"max-width:600px;background:#ffffff;border-radius:16px\"><tr><td class=\"sheet\" style=\"padding:40px 40px 36px\">"
    // The name stays as the image's text, styled, for clients that do not load images.
-   +"<div style=\"margin:0 0 28px\"><img src=\""+escape(logoUrl)+"\" width=\"129\" height=\"30\" alt=\"PLIEGO\" style=\"display:block;width:129px;height:30px;border:0;"+FONT+"font-size:26px;line-height:30px;font-weight:800;letter-spacing:-0.04em;color:"+BLUE+"\"></div>"
+   +"<div style=\"margin:0 0 22px\"><img src=\""+escape(logoUrl)+"\" width=\"141\" height=\"42\" alt=\"PLIEGO\" style=\"display:block;width:141px;height:42px;border:0;"+FONT+"font-size:26px;line-height:30px;font-weight:800;letter-spacing:-0.04em;color:"+BLUE+"\"></div>"
    +html
    +"</td></tr></table>"
    +"<table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"max-width:600px\"><tr><td align=\"center\" style=\"padding:20px 24px 0;"+FONT+"font-size:12px;line-height:1.6;color:"+MUTED+"\">"

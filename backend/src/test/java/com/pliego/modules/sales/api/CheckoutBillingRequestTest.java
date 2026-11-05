@@ -10,19 +10,32 @@ class CheckoutBillingRequestTest {
     private static final String BILLING = """
         {"paymentMethod":"TRANSFER","simulationOutcome":"PENDING","fulfillmentMethod":"DIGITAL_ONLY",
          "billingIdentity":{"type":"EC_CEDULA","number":" 0912345675 "},
-         "buyerName":"Comprador Fiscal","billingAddress":{"line1":"Calle Fiscal","city":"Quito","province":"Pichincha","countryCode":"EC"}}
+         "buyerName":"Comprador Fiscal","billingAddress":{"line1":"Calle Fiscal","provinceId":"17","cityId":"801","countryCode":"EC"}}
         """;
 
     @Test void preservesIndependentFiscalSnapshotAndRedactsItFromToString() {
         CheckoutRequest request = mapper.readValue(BILLING, CheckoutRequest.class);
         var json = mapper.valueToTree(request);
+        assertEquals("ACCOUNT", json.path("billingRecipient").asText());
         assertEquals("0912345675", json.path("billingIdentity").path("number").asText());
         assertEquals("Comprador Fiscal", json.path("buyerName").asText());
         assertEquals("Calle Fiscal", json.path("billingAddress").path("line1").asText());
+        assertEquals("17", json.path("billingAddress").path("provinceId").asText());
+        assertEquals("801", json.path("billingAddress").path("cityId").asText());
+        assertFalse(json.path("billingAddress").has("city"));
+        assertFalse(json.path("billingAddress").has("province"));
         assertFalse(request.toString().contains("0912345675"));
         assertFalse(request.toString().contains("Comprador Fiscal"));
         try (var factory = Validation.buildDefaultValidatorFactory()) {
             assertTrue(factory.getValidator().validate(request).isEmpty());
+        }
+    }
+    @Test void acceptsOtherRecipientAndRejectsUnknownRecipientKinds() {
+        CheckoutRequest other = mapper.readValue(BILLING.replace("{\"paymentMethod\"", "{\"billingRecipient\":\"OTHER\",\"paymentMethod\""), CheckoutRequest.class);
+        assertEquals("OTHER", mapper.valueToTree(other).path("billingRecipient").asText());
+        try (var factory = Validation.buildDefaultValidatorFactory()) {
+            CheckoutRequest invalid = mapper.readValue(BILLING.replace("{\"paymentMethod\"", "{\"billingRecipient\":\"SOMEONE_ELSE\",\"paymentMethod\""), CheckoutRequest.class);
+            assertFalse(factory.getValidator().validate(invalid).isEmpty());
         }
     }
     @Test void rejectsInvalidIdentityAndPartialBillingBeforeGateway() {

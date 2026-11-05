@@ -1,4 +1,5 @@
 import AxeBuilder from "@axe-core/playwright";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { expect, test, type Page } from "@playwright/test";
 import { mockFavoritesApi } from "./shared/favorites-api";
 
@@ -36,7 +37,7 @@ test("keyboard removal moves focus to a surviving row then the empty heading", a
   await rows.first().locator("[data-bookcard-favorite]").focus(); await page.keyboard.press("Enter"); await page.getByRole("dialog", { name: "¿Quitar de Favoritos?" }).getByRole("button", { name: "Quitar de Favoritos" }).press("Enter");
   await expect(rows).toHaveCount(1); await expect(rows.first().locator("[data-bookcard-favorite]")).toBeFocused();
   await page.keyboard.press("Enter"); await page.getByRole("dialog", { name: "¿Quitar de Favoritos?" }).getByRole("button", { name: "Quitar de Favoritos" }).press("Enter");
-  await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeFocused();
+  await expect(page.getByRole("heading", { name: "Todavía no tienes favoritos" })).toBeFocused();
   await page.keyboard.press("Tab"); await expect(page.getByRole("link", { name: "Explorar el catálogo" })).toBeFocused();
 });
 test("search name includes its visible label", async ({ page }) => {
@@ -127,7 +128,7 @@ for (const adaptation of ["200% text", "200% zoom", "320px reflow"] as const) {
     await page.locator(".auth-switch a").focus(); await page.keyboard.press("Enter");
     await signIn(page, "/favorites"); await adapt();
     await page.locator("[data-bookcard-favorite]").focus(); await page.keyboard.press("Enter"); await page.getByRole("dialog", { name: "¿Quitar de Favoritos?" }).getByRole("button", { name: "Quitar de Favoritos" }).press("Enter");
-    await expect(page.getByRole("heading", { name: "Aún no guardaste favoritos." })).toBeFocused();
+    await expect(page.getByRole("heading", { name: "Todavía no tienes favoritos" })).toBeFocused();
     await page.keyboard.press("Tab"); await expect(page.getByRole("link", { name: "Explorar el catálogo" })).toBeFocused();
     await page.screenshot({ path: testInfo.outputPath("favorites-adaptation.png"), fullPage: true });
     await openAccountSection(page, "Perfil"); await adapt();
@@ -152,6 +153,7 @@ for (const colorScheme of ["light", "dark"] as const) {
       await page.goto(path);
       const link = page.locator(".auth-switch a");
       await expect(link).toBeVisible();
+      await expectLightAppearance(page); if (colorScheme === "dark") await expectUnchangedByDarkPreference(page);
       const result = await new AxeBuilder({ page }).include(".auth-switch").withRules(["color-contrast"]).analyze();
       expect(result.violations).toEqual([]);
       await link.focus();

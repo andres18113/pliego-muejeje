@@ -93,7 +93,7 @@ def main():
     verify_registered_email(email, os.environ['CHECKOUT_BASE_URL'])
     customer = 'Bearer ' + ok('/api/v1/auth/login', None, 'POST', {'email': email, 'password': 'Digital-fixture-1'})['accessToken']
     address = ok('/api/v1/me/addresses', customer, 'POST', {'alias': 'Casa', 'recipient': 'Cliente Digital', 'line1': 'Calle Digital',
-                 'line2': None, 'city': 'Quito', 'province': 'Pichincha', 'countryCode': 'EC', 'postalCode': None, 'reference': None,
+                 'line2': None, 'provinceId': '17', 'cityId': '893', 'countryCode': 'EC', 'postalCode': None, 'reference': None,
                  'phone': '+59325550134', 'makePrimary': True}, 201)['addressId']
     ok('/api/v1/me/favorites/' + ids['EBOOK'], customer, 'PUT', expected=204)
     favorites = ok('/api/v1/me/favorites', customer)

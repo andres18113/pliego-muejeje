@@ -63,7 +63,7 @@ it("keeps email verification help brief and separates it from the unsaved state"
   renderProfile(); const user = userEvent.setup();
   await user.click(await screen.findByRole("button", { name: "Editar correo electrónico" }));
   const form = screen.getByRole("form", { name: "Cambiar correo electrónico" });
-  expect(within(form).getByText("Te enviaremos un enlace para verificar el nuevo correo.")).toBeInTheDocument();
+  expect(within(form).getByText("Te enviaremos un enlace a la dirección nueva. Tu correo actual sigue en uso hasta que lo confirmes.")).toBeInTheDocument();
   expect(within(form).queryByText(/sesiones anteriores|vence según su duración/)).not.toBeInTheDocument();
   expect(within(form).queryByText("Cambios sin guardar")).not.toBeInTheDocument();
   await user.type(screen.getByLabelText("Nuevo correo"), "nueva@example.invalid");
@@ -76,7 +76,9 @@ it("keeps email verification help brief and separates it from the unsaved state"
   expect(disclosure.closest("details")).not.toHaveAttribute("open");
   await user.click(disclosure);
   expect(disclosure.closest("details")).toHaveAttribute("open");
-  expect(within(form).getByText(/Cuando tu sesión termine, tendrás que iniciar sesión de nuevo/)).toBeVisible();
+  // The disclosure names the recovery path (the current address can cancel) and when sessions close (on confirmation).
+  expect(within(form).getByText(/avisaremos a tu correo actual, desde donde se puede cancelar el cambio/)).toBeVisible();
+  expect(within(form).getByText(/Al confirmar la dirección nueva cerraremos tus sesiones/)).toBeVisible();
 });
 
 it("does not show a length error on each phone keystroke, but validates when leaving", async () => {

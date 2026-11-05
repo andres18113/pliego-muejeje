@@ -3,21 +3,22 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { z } from "zod";
-import { Button, ButtonLink } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { useSession } from "@/app/session";
 import { useSessionOperationScope } from "@/app/sessionOperation";
-import { authLocation, emailActionLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
+import { adminReturnHref, authLocation, emailActionLocation, safeAuthReturnHref } from "@/features/auth/authLocation";
 import { login, register } from "@/shared/api/auth";
-import { ApiRequestError, describeApiError, fieldErrorMessages } from "@/shared/api/errors";
+import { ApiRequestError, describeApiError, fieldErrorMessages, LoginRateLimitedError } from "@/shared/api/errors";
 import { BackToCatalogLink } from "@/shared/ui/BackToCatalogLink";
 import { personNameSchema, personNameError, phoneError, optionalPhoneSchema } from "@/shared/validation/person";
 import { PersonNameInput } from "@/shared/ui/PersonNameInput";
 import { InternationalPhoneField } from "@/shared/ui/InternationalPhoneField";
 import { Field, FieldMessage } from "@/shared/ui/Field";
 import { SiteFooter } from "@/shared/ui/SiteFooter";
-import { stateAfterRegistration, stateAfterSignIn } from "@/features/favorites/favoriteIntent";
-import { AuthState, authFlowClasses as flow } from "./AuthFlow";
+import { stateAfterSignIn } from "@/features/favorites/favoriteIntent";
+import { authFlowClasses as flow } from "./AuthFlow";
 import { PasswordInput } from "@/shared/ui/PasswordInput";
+import { RegistrationWaiting } from "./RegistrationWaiting";
 
 const MAX_PASSWORD_UTF8_BYTES = 72;
 
@@ -66,6 +67,17 @@ export function SignInPage() {
   // The server refuses the sign-in until the address is verified; the address typed goes on to the resend page.
   const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
+  // ADR 0053: too many attempts from here. Until then the form keeps what was typed and sends nothing.
+  const [pausedUntil, setPausedUntil] = useState<number | null>(null);
+  const paused = pausedUntil !== null;
+  useEffect(() => {
+    if (pausedUntil === null) return;
+    const timer = window.setTimeout(() => {
+      setPausedUntil(null);
+      setServerError({ title: "Ya puedes volver a intentarlo", detail: "Revisa tu correo y tu contraseña antes de enviar." });
+    }, Math.max(0, pausedUntil - Date.now()));
+    return () => window.clearTimeout(timer);
+  }, [pausedUntil]);
   const {
     register: registerField,
     handleSubmit,
@@ -105,7 +117,7 @@ export function SignInPage() {
       setFeedback({ state: "success", message: "Inicio de sesión correcto. Abriendo tu cuenta…" });
       await new Promise<void>((resolve) => window.setTimeout(resolve, 220));
       if (!acceptedAuthority.isCurrent() || !scope.isViewCurrent()) return;
-      if (response.user.role === "ADMIN") navigate("/admin", { replace: true });
+      if (response.user.role === "ADMIN") navigate(adminReturnHref(new URLSearchParams(location.search).get("from")), { replace: true });
       else navigate(intent, { replace: true, state: stateAfterSignIn(location.state) });
     } catch (error: unknown) {
       if (!scope.isCurrent()) return;
@@ -115,6 +127,13 @@ export function SignInPage() {
         return Boolean(message);
       });
       if(fields.length) { setFocus(fields[0]); setFeedback({state:"error",message:"Revisa los campos señalados."}); return; }
+      if (error instanceof LoginRateLimitedError) {
+        // Never says whether the account exists: the pause belongs to these attempts, not to an account.
+        setPausedUntil(error.retryAt);
+        setServerError({ title: "Demasiados intentos", detail: `Por seguridad pausamos el inicio de sesión desde aquí. Podrás volver a intentarlo ${retryMoment(error.retryAt)}.` });
+        setFeedback({ state: "error", message: "Inicio de sesión en pausa." });
+        return;
+      }
       setUnverifiedEmail(error instanceof ApiRequestError && error.code === "EMAIL_NOT_VERIFIED" ? values.email : null);
       setServerError(authFailure(error, "No se pudo iniciar sesión", "Comprueba tu conexión e inténtalo otra vez.", true));
       setFeedback({ state: "error", message: "No se pudo iniciar sesión." });
@@ -126,8 +145,10 @@ export function SignInPage() {
   });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (submitLockRef.current) {
+    if (submitLockRef.current || paused) {
       event.preventDefault();
+      // While paused nothing is sent; the explanation is brought back into view and focus.
+      if (paused) errorRef.current?.focus();
       return;
     }
     submitLockRef.current = true;
@@ -147,12 +168,13 @@ export function SignInPage() {
           <h1>Iniciar sesión</h1>
           <p>Ingresa con el correo y la contraseña de tu cuenta.</p>
 
-          <form className="auth-form" onSubmit={onSubmit} onChangeCapture={() => clearErrorFeedback(feedback, serverError, setFeedback, setServerError)} noValidate aria-busy={isSubmitting || isValidating}>
+          <form className="auth-form" onSubmit={onSubmit} onChangeCapture={() => { if (!paused) clearErrorFeedback(feedback, serverError, setFeedback, setServerError); }} noValidate aria-busy={isSubmitting || isValidating}>
             {serverError && (
               <div className="auth-error" role="alert" tabIndex={-1} ref={errorRef} data-tone={unverifiedEmail ? "info" : undefined}>
                 <h2>{serverError.title}</h2>
                 <p>{serverError.detail}</p>
                 {unverifiedEmail && <Link to={emailActionLocation("/reenviar-verificacion", intent)} state={{ email: unverifiedEmail }}>Solicitar enlace de verificación</Link>}
+                {paused && <Link to={emailActionLocation("/recuperar-contrasena", intent)}>¿Olvidaste tu contraseña? Restablécela</Link>}
               </div>
             )}
 
@@ -193,10 +215,10 @@ export function SignInPage() {
             <Button
               variant="primary"
               type="submit"
-              aria-disabled={isSubmitting || isValidating || activeFeedback.state === "success"}
+              aria-disabled={isSubmitting || isValidating || activeFeedback.state === "success" || paused}
               aria-busy={isSubmitting || isValidating}
             >
-              {activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Ingresando…" : activeFeedback.state === "success" ? "Sesión iniciada…" : "Iniciar sesión"}
+              {paused ? "En pausa" : activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Ingresando…" : activeFeedback.state === "success" ? "Sesión iniciada…" : "Iniciar sesión"}
             </Button>
           </form>
 
@@ -221,8 +243,25 @@ export function RegisterPage() {
   const from = intent;
   const [serverError, setServerError] = useState<{ title: string; detail: string } | null>(null);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
-  const [registered, setRegistered] = useState(false);
-  const [registeredEmail, setRegisteredEmail] = useState("");
+  // The waiting view survives a refresh through history state (never storage or the URL); the original state,
+  // including any pending catalog action, rides along for the sign-in that follows.
+  const remembered = readRegistration(location.state);
+  const [registered, setRegistered] = useState(Boolean(remembered));
+  const [registeredEmail, setRegisteredEmail] = useState(remembered ?? "");
+  // ADR 0056: registration paused from here. The form keeps what was typed and sends nothing until then; the
+  // explanation never says whether the address already has an account.
+  const [pausedUntil, setPausedUntil] = useState<number | null>(null);
+  const paused = pausedUntil !== null;
+  useEffect(() => {
+    if (pausedUntil === null) return;
+    const timer = window.setTimeout(() => {
+      setPausedUntil(null);
+      setServerError({ title: "Ya puedes volver a intentarlo", detail: "Revisa tus datos antes de crear la cuenta." });
+    }, Math.max(0, pausedUntil - Date.now()));
+    return () => window.clearTimeout(timer);
+  }, [pausedUntil]);
+  const navigate = useNavigate();
+  const returnState = withoutRegistration(location.state);
   const [phoneVisible, setPhoneVisible] = useState(false);
   const {
     register: registerField,
@@ -270,8 +309,9 @@ export function RegisterPage() {
       });
       reset({ email: values.email, password: "", firstNames: "", lastNames: "", phone: "" });
       setRegisteredEmail(values.email);
-      setFeedback({ state: "success", message: "La cuenta se creó correctamente. Verifica tu correo antes de iniciar sesión." });
+      setFeedback({ state: "success", message: "La cuenta se creó correctamente. Verifica tu correo para continuar." });
       setRegistered(true);
+      navigate({ pathname: location.pathname, search: location.search }, { replace: true, state: rememberRegistration(location.state, values.email) });
     } catch (error: unknown) {
       const fields=(["firstNames","lastNames","email","password","phone"] as const).filter((field) => {
         const message=fieldErrorMessages(error,field);
@@ -283,6 +323,12 @@ export function RegisterPage() {
         requestAnimationFrame(() => focusRegistrationField(fields[0]));
         setFeedback({state:"error",message:"Revisa los campos señalados."}); return;
       }
+      if (error instanceof LoginRateLimitedError) {
+        setPausedUntil(error.retryAt);
+        setServerError({ title: "Demasiados intentos", detail: `Por seguridad pausamos la creación de cuentas desde aquí. Podrás volver a intentarlo ${retryMoment(error.retryAt)}.` });
+        setFeedback({ state: "error", message: "Creación de cuenta en pausa." });
+        return;
+      }
       setServerError(authFailure(error, "No pudimos crear tu cuenta", "Comprueba tu conexión e inténtalo otra vez."));
       setFeedback({ state: "error", message: "No pudimos crear tu cuenta." });
     }
@@ -293,8 +339,10 @@ export function RegisterPage() {
   });
 
   const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    if (submitLockRef.current) {
+    if (submitLockRef.current || paused) {
       event.preventDefault();
+      // While paused nothing is sent; the explanation is brought back into view and focus.
+      if (paused) errorRef.current?.focus();
       return;
     }
     submitLockRef.current = true;
@@ -312,20 +360,12 @@ export function RegisterPage() {
         <div className="auth-content" data-auth-state={registered ? "success" : activeFeedback.state} data-auth-view={registered ? undefined : "register"}>
           <BackToCatalogLink to={from} />
           {registered ? (
-            <section aria-labelledby="register-success-heading">
-              <h1 id="register-success-heading" ref={successRef} tabIndex={-1}>Revisa tu correo</h1>
-              <AuthState tone="waiting" scene title="Falta un paso: verificar tu correo"
-                actions={<><ButtonLink variant="secondary" to={authLocation("/sign-in", intent)} state={stateAfterRegistration(location.state, registeredEmail)}>Iniciar sesión</ButtonLink><Link to={emailActionLocation("/reenviar-verificacion", intent)} state={{ email: registeredEmail }}>Reenviar verificación</Link></>}>
-                <p role="status" aria-live="polite">La cuenta se creó correctamente para <strong>{registeredEmail}</strong>. Verifica tu correo con el enlace enviado antes de iniciar sesión.</p>
-                <p>Si no lo ves, mira en la carpeta de correo no deseado.</p>
-                <p>Después de verificarlo, inicia sesión{intent.startsWith("/cart") ? " para volver a tu carrito." : " para continuar donde estabas."}</p>
-              </AuthState>
-            </section>
+            <RegistrationWaiting email={registeredEmail} intent={intent} returnState={returnState} headingRef={successRef} />
           ) : (
             <>
               <h1>Crear cuenta</h1>
               <p className="auth-form-note">Todos los campos son obligatorios, excepto el teléfono.</p>
-              <form className="auth-form register-form" onSubmit={onSubmit} onChangeCapture={() => clearErrorFeedback(feedback, serverError, setFeedback, setServerError)} noValidate aria-busy={isSubmitting || isValidating}>
+              <form className="auth-form register-form" onSubmit={onSubmit} onChangeCapture={() => { if (!paused) clearErrorFeedback(feedback, serverError, setFeedback, setServerError); }} noValidate aria-busy={isSubmitting || isValidating}>
                 {serverError && (
                   <div className="auth-error" role="alert" tabIndex={-1} ref={errorRef}>
                     <h2>{serverError.title}</h2>
@@ -447,10 +487,10 @@ export function RegisterPage() {
                 <Button
                   variant="primary"
                   type="submit"
-                  aria-disabled={isSubmitting || isValidating}
+                  aria-disabled={isSubmitting || isValidating || paused}
                   aria-busy={isSubmitting || isValidating}
                 >
-                  {activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Creando cuenta…" : "Crear cuenta"}
+                  {paused ? "En pausa" : activeFeedback.state === "validating" ? "Revisando…" : activeFeedback.state === "submitting" ? "Creando cuenta…" : "Crear cuenta"}
                 </Button>
               </form>
               <p className="auth-switch">
@@ -465,6 +505,15 @@ export function RegisterPage() {
   );
 }
 
+
+/** "en unos segundos" / "en 1 minuto, a las 14:05" / "en 5 minutos, a las 14:09" — local time of this device. */
+function retryMoment(retryAt: number) {
+  const seconds = Math.max(1, Math.ceil((retryAt - Date.now()) / 1000));
+  if (seconds < 60) return "en unos segundos";
+  const minutes = Math.ceil(seconds / 60);
+  const at = new Date(retryAt).toLocaleTimeString("es-EC", { hour: "2-digit", minute: "2-digit" });
+  return `en ${minutes === 1 ? "1 minuto" : `${minutes} minutos`}, a las ${at}`;
+}
 
 function registrationEmailFromState(state: unknown) {
   if (state === null || typeof state !== "object" || !("registeredEmail" in state)) return "";
@@ -501,4 +550,22 @@ function clearErrorFeedback(
 ) {
   if (feedback?.state === "error") setFeedback(null);
   if (serverError) setServerError(null);
+}
+
+const REGISTRATION_KEY = "pliegoRegistration";
+function isStateRecord(value: unknown): value is Record<string, unknown> {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+function readRegistration(state: unknown): string | null {
+  const entry = isStateRecord(state) ? state[REGISTRATION_KEY] : null;
+  const email = isStateRecord(entry) ? entry.email : null;
+  return typeof email === "string" && email.includes("@") ? email : null;
+}
+function withoutRegistration(state: unknown): unknown {
+  if (!isStateRecord(state) || !(REGISTRATION_KEY in state)) return state;
+  const { [REGISTRATION_KEY]: _registration, ...rest } = state;
+  return Object.keys(rest).length ? rest : null;
+}
+function rememberRegistration(state: unknown, email: string) {
+  return { ...(isStateRecord(state) ? state : {}), [REGISTRATION_KEY]: { email } };
 }

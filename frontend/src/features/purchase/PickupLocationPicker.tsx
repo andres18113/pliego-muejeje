@@ -5,6 +5,12 @@ import { FieldMessage } from "@/shared/ui/Field";
 import { ReadFailure } from "./CartPage";
 import classes from "./purchaseFlow.module.css";
 import pickup from "./pickup.module.css";
+import { pickupHandoverNote } from "./PickupDetails";
+
+/** ADR 0051: readiness counts from the payment's approval (the six-minute cancellation window included) and only within opening hours. */
+export function pickupReadinessLine(minutes: number) {
+  return `Listo unos ${minutes} minutos después de aprobarse el pago, en horario de atención.`;
+}
 
 export function openingHoursLabel(location: PickupLocation) {
   return `${location.openingHours.opensAt.slice(0, 5)}–${location.openingHours.closesAt.slice(0, 5)}`;
@@ -40,7 +46,7 @@ export function PickupLocationPicker({ query, value, onChange, disabled, error, 
             }} />
             <span className={classes.choiceCopy}><strong>{location.name}</strong><span>{location.address}</span>
               <span>{location.city}, {location.province}</span><span>Horario: {openingHoursLabel(location)}</span>
-              <span>Preparación estimada: {location.preparationMinutes} minutos.</span>
+              <span>{pickupReadinessLine(location.preparationMinutes)}</span>
             </span>
           </label>)}
         </fieldset>}
@@ -48,8 +54,8 @@ export function PickupLocationPicker({ query, value, onChange, disabled, error, 
           <address className={classes.deliverTo}><strong>{selected.name}</strong><span>{selected.address}</span><span>{selected.city}, {selected.province}</span>
             <span>Horario: {openingHoursLabel(selected)}</span></address>
           <div className={pickup.instructions}>
-            <p>Presenta el correo de confirmación al retirar.</p>
-            <p className={pickup.estimate}><strong>Preparación estimada: ~{selected.preparationMinutes} min.</strong></p>
+            <p className={pickup.estimate}><strong>{pickupReadinessLine(selected.preparationMinutes)}</strong></p>
+            <p>Si el punto está cerrado, estará listo cuando abra. {pickupHandoverNote}</p>
           </div>
           {children}
         </>}

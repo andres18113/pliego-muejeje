@@ -101,3 +101,36 @@ describe("BookCard controlled contract", () => {
     expect(screen.queryByText(/Crédito técnico completo de la edición/)).not.toBeInTheDocument();
   });
 });
+
+describe("BookCard offer on the catalog shelf", () => {
+  const offer = { offerId: "7", originalPrice: "18.95", discountAmount: "2.84", effectivePrice: "16.11", savingsAmount: "2.84", savingsPercent: "15.00", startsAt: "2026-11-02T17:21:55-05:00", endsAt: "2026-11-09T17:21:55-05:00", daysRemaining: 12, endingSoon: false, offerCopy: "Una lectura para ti", terms: "Hasta agotar la vigencia" };
+  const offered = (daysRemaining: number) => toBookCardData({ ...edition, price: "16.11", offer: { ...offer, daysRemaining, endingSoon: daysRemaining <= 5 } });
+
+  it("reads like Ofertas: today's price, the previous one struck and one saving chip — nothing else", () => {
+    setup({ book: offered(12), cart: undefined, media: "physical" });
+    expect(screen.getByText(/16,11/)).toBeVisible();
+    expect(screen.getByText(/18,95/).closest("s")).not.toBeNull();
+    const saving = screen.getByText(/Ahorras \$\s*2,84/).parentElement!;
+    expect(saving.querySelector(".material-symbol")?.textContent).toBe("sell");
+    expect(saving.textContent).not.toMatch(/%/);
+    expect(screen.queryByText(/Quedan|Queda 1|Termina/)).toBeNull();
+    expect(screen.queryByText("Una lectura para ti")).toBeNull();
+    expect(screen.queryByText(/Términos de la oferta/)).toBeNull();
+    expect(screen.queryByRole("time")).toBeNull();
+    expect(document.querySelector("time")).toBeNull();
+    expect(screen.getByRole("link")).toHaveAccessibleDescription(/16,11.*Ahorras \$\s*2,84.*Disponible/);
+  });
+
+  it.each([[0, "Termina hoy"], [1, "Queda 1 día"], [5, "Quedan 5 días"], [6, null], [30, null]])("adds the days-left chip only for five days or fewer (%i)", (daysRemaining, label) => {
+    setup({ book: offered(daysRemaining), cart: undefined, media: "physical" });
+    const urgency = document.querySelector("[data-offer-urgency]");
+    if (label) expect(urgency).toHaveTextContent(label);
+    else expect(urgency).toBeNull();
+  });
+
+  it("shows no offer chips for an edition without an offer", () => {
+    setup({ cart: undefined, media: "physical" });
+    expect(document.querySelector("[data-bookcard-offer]")).toBeNull();
+    expect(screen.queryByText(/Ahorras/)).toBeNull();
+  });
+});

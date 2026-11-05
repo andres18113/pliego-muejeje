@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { json, renderPurchaseRoute, savedAddress, stubApi } from "@/test/purchase";
+import { json, renderPurchaseRoute, savedAddress, stubApi, choosePlace, problem } from "@/test/purchase";
 import { RegisterPage } from "@/features/auth/AuthPages";
 import { AccountPage } from "@/features/account/AccountPage";
 import { AddressForm } from "./AddressForm";
@@ -78,15 +78,16 @@ describe("confirmed validation audit regressions", () => {
   });
 
   it("routes a server city violation to the address control without losing other fields", async () => {
-    const api = stubApi({ "PUT /api/v1/me/addresses/15": () => fieldProblem("city", "Escribe una ciudad de hasta 100 caracteres.") });
+    const api = stubApi({ "PUT /api/v1/me/addresses/15": () => problem(400, "P5014", "Ciudad no válida", "La ciudad no pertenece a la provincia seleccionada.") });
     renderPurchaseRoute([{ path: "/address", element: <AddressForm address={savedAddress} firstAddress={false}
       onSaved={async () => undefined} onUncertain={async () => undefined} onSessionExpired={() => undefined} /> }], "/address");
     const user = userEvent.setup(); await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
-    const city = screen.getByLabelText("Ciudad");
+    const city = screen.getByRole("combobox", { name: "Ciudad" });
     await waitFor(() => expect(city).toHaveAttribute("aria-invalid", "true"));
-    expect(city).toHaveAccessibleDescription("Escribe una ciudad de hasta 100 caracteres.");
-    expect(city).toHaveValue("Quito"); expect(screen.getByLabelText("Dirección", { exact: true })).toHaveValue(savedAddress.line1);
+    expect(city).toHaveAccessibleDescription("La ciudad no pertenece a la provincia seleccionada.");
+    await waitFor(() => expect(city).toHaveFocus());
+    expect(city).toHaveTextContent("Quito"); expect(screen.getByLabelText("Dirección", { exact: true })).toHaveValue(savedAddress.line1);
     expect(api.count("PUT", "/api/v1/me/addresses/15")).toBe(1);
   });
 
@@ -97,7 +98,7 @@ describe("confirmed validation audit regressions", () => {
       onSaved={async () => undefined} onUncertain={async () => undefined} onSessionExpired={() => undefined} /> }], "/address");
     const user = userEvent.setup();
     await user.type(screen.getByLabelText("Dirección", { exact: true }), savedAddress.line1);
-    await user.type(screen.getByLabelText("Ciudad"), "Quito"); await user.type(screen.getByLabelText("Provincia"), "Pichincha");
+    await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
     await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
     if (frameOrder === "before commit") {

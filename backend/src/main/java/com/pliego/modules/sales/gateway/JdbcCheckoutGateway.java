@@ -20,7 +20,7 @@ import java.util.UUID;
 public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutGateway {
 
     private static final String CHECKOUT = "CALL pliego.sp_checkout_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-    private static final String CHECKOUT_BILLED = "CALL pliego.sp_checkout_billed_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    private static final String CHECKOUT_BILLED = "CALL pliego.sp_checkout_billed_quoted(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     private final JdbcTemplate jdbcTemplate;
     private final tools.jackson.databind.ObjectMapper objectMapper;
 
@@ -66,17 +66,23 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                 statement.setString(9, quoteFingerprint);
                 int outputStart = 10;
                 if (billing != null) {
-                    statement.setString(10, billing.identityType());
-                    statement.setString(11, billing.identityNumber());
-                    statement.setString(12, billing.buyerName());
-                    statement.setString(13, billing.address().line1());
-                    statement.setString(14, billing.address().line2());
-                    statement.setString(15, billing.address().city());
-                    statement.setString(16, billing.address().province());
-                    statement.setString(17, billing.address().countryCode());
-                    statement.setString(18, billing.address().postalCode());
-                    outputStart = 19;
-                    statement.setNull(24, Types.BIGINT);
+                    statement.setString(10, billing.recipientKind());
+                    statement.setString(11, billing.identityType());
+                    statement.setString(12, billing.identityNumber());
+                    statement.setString(13, billing.buyerName());
+                    statement.setString(14, billing.address().line1());
+                    statement.setString(15, billing.address().line2());
+                    if (billing.address().provinceId() == null) {
+                        statement.setString(16, billing.address().city());
+                        statement.setString(17, billing.address().province());
+                    } else {
+                        statement.setLong(16, billing.address().provinceId());
+                        statement.setLong(17, billing.address().cityId());
+                    }
+                    statement.setString(18, billing.address().countryCode());
+                    statement.setString(19, billing.address().postalCode());
+                    outputStart = 20;
+                    statement.setNull(25, Types.BIGINT);
                 }
                 statement.setNull(outputStart, Types.BIGINT);
                 statement.setNull(outputStart + 1, Types.VARCHAR);
@@ -87,7 +93,7 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                     if (!output.next()) throw new SQLException("Checkout Procedure returned no output", "02000");
                     return new CheckoutResult(Long.toString(output.getLong("o_order_id")),
                             output.getString("o_order_state"), output.getString("o_payment_state"),
-                            output.getBigDecimal("o_total"), output.getString("o_payment_reference"), fulfillment(output.getLong("o_order_id")),amounts(output.getLong("o_order_id")),offerPricing(output.getLong("o_order_id")));
+                            output.getBigDecimal("o_total"), output.getString("o_payment_reference"), fulfillment(output.getLong("o_order_id")),amounts(output.getLong("o_order_id")),offerPricing(output.getLong("o_order_id")),orderReference(output.getLong("o_order_id")));
                 }
             }
         }));
@@ -104,9 +110,12 @@ public class JdbcCheckoutGateway extends JdbcGatewaySupport implements CheckoutG
                     CheckoutResult order = "CREATED".equals(state) ? new CheckoutResult(
                             Long.toString(results.getLong("order_id")), results.getString("order_state"),
                             results.getString("payment_state"), results.getBigDecimal("total"),
-                            results.getString("payment_reference"), fulfillment(results.getLong("order_id")),amounts(results.getLong("order_id")),offerPricing(results.getLong("order_id"))) : null;
+                            results.getString("payment_reference"), fulfillment(results.getLong("order_id")),amounts(results.getLong("order_id")),offerPricing(results.getLong("order_id")),results.getString("order_reference")) : null;
                     return new CheckoutAttempt(state, order);
                 }));
+    }
+    private String orderReference(long orderId) {
+        return jdbcTemplate.queryForObject("SELECT pliego.fn_order_reference(?)", String.class, orderId);
     }
     private com.pliego.modules.sales.application.PostPurchaseModels.Fulfillment fulfillment(long orderId) throws SQLException {
         String value=jdbcTemplate.queryForObject("SELECT pliego.fn_order_fulfillment(?,TRUE)::text",String.class,orderId);

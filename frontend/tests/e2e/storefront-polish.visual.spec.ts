@@ -1,4 +1,6 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
+import { expectCoversDecoded } from "./covers";
 
 const env = (globalThis as { process?: { env: Record<string, string | undefined> } }).process?.env ?? {};
 const output = "/tmp/pliego-redesign-legacy/";
@@ -14,18 +16,25 @@ async function customerChrome(page: Page) {
     items: [50, 50, 25].map((quantity, index) => ({ cartItemId: String(index + 1), editionId: String(index + 42), title: "Edición de prueba", authors: "Autor", sku: `VISUAL-${index}`, coverUrl: null, requiresPhysicalFulfillment: true, quantityEditable: true, quantity, currentPrice: "20.00", currentSubtotal: `${quantity * 20}.00`, available: true, unavailabilityReason: null })),
   }) }));
   await page.route("**/api/v1/me/favorites/status**", (route) => route.fulfill({ contentType: "application/json", body: JSON.stringify(new URL(route.request().url()).searchParams.getAll("editionIds").map((editionId) => ({ editionId, favorite: false }))) }));
-  await page.route("**/api/v1/catalog/**", (route) => {
+  // The fixture token is not real: public reads (the catalog and the storefront's navigation) go out anonymous.
+  for (const publicApi of ["**/api/v1/catalog/**", "**/api/v1/storefront/**"]) await page.route(publicApi, (route) => {
     const headers = { ...route.request().headers() };
     delete headers.authorization;
     return route.continue({ headers });
   });
 }
 
-async function decoded(page: Page) {
-  await expect(page.locator("[data-bookcard]").first()).toBeVisible();
+// The Home presents the popular row's products; the catalog presents book cards. Both frame covers with BookCover.
+const popular = 'section[aria-labelledby="popular-heading"]';
+const products = { home: `${popular} [data-popular-track] > [data-media]`, catalog: "[data-bookcard]" } as const;
+// Each product's media stage (the popular frame or the card shelf), its link and its title.
+const parts = { home: { link: "a", media: ":scope > span:first-child", title: "a" }, catalog: { link: "[data-bookcard-link]", media: "[data-bookcard-link] > div:first-child", title: "[data-bookcard-title]" } } as const;
+
+async function decoded(page: Page, surface: keyof typeof products = "catalog") {
+  await expect(page.locator(products[surface]).first().locator("[data-bookcard-cover]")).toBeVisible();
   await page.locator("img").evaluateAll((images) => images.forEach((image) => (image as HTMLImageElement).loading = "eager"));
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.locator(".cover-image--loading")).toHaveCount(0, { timeout: 30_000 });
+  await expectCoversDecoded(page, 30_000);
 }
 
 async function unclipped(target: Locator, expansion = 0) {
@@ -73,23 +82,27 @@ for (const theme of ["light", "dark"] as const) for (const width of [320, 375, 7
       await page.emulateMedia({ colorScheme: theme, reducedMotion: "reduce" });
       await customerChrome(page);
       const measurements: unknown[] = [];
-      for (const [surface, route] of [["home", "/"], ["catalog", "/catalog"]]) {
+      for (const [surface, route] of [["home", "/"], ["catalog", "/catalog"]] as const) {
         const file = `${output}${surface}-${theme}-${width}-${touch ? "touch" : "mouse"}`;
         await page.goto(route);
-        await decoded(page);
+        await decoded(page, surface);
         await page.evaluate(() => scrollTo(0, 0));
-        await expect(page.locator("html")).toHaveAttribute("data-mantine-color-scheme", theme);
+        // One light appearance under either system preference; a dark preference changes no pixel.
+        await expectLightAppearance(page); if (theme === "dark") await expectUnchangedByDarkPreference(page);
         expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(width);
         if (surface === "home") {
           const collisions = await page.locator("main h1").evaluate((title) => {
             const box = title.getBoundingClientRect();
-            return [...document.querySelectorAll("[data-position]")].filter((book) => {
+            return [...document.querySelectorAll('section[aria-labelledby="popular-heading"] [data-bookcard-cover]')].filter((book) => {
               const rect = book.getBoundingClientRect();
               return rect.left < box.right && rect.right > box.left && rect.top < box.bottom && rect.bottom > box.top;
             }).length;
           });
           expect(collisions).toBe(0);
-          for (const image of await page.locator("[data-position] img").all()) await unclipped(image);
+          // Every cover in view is whole; covers on the row's later pages are inert and intentionally off the rail.
+          const shown = await page.locator(`${products.home}:not([inert]) img`).all();
+          expect(shown.length).toBeGreaterThan(0);
+          for (const image of shown) await unclipped(image);
         }
         await page.screenshot({ path: `${file}.png` });
         await page.screenshot({ path: `${file}-full.png`, fullPage: true });
@@ -97,8 +110,8 @@ for (const theme of ["light", "dark"] as const) for (const width of [320, 375, 7
         await page.evaluate(() => scrollTo(0, 400));
         await expect(page.getByTestId("site-header")).toHaveAttribute("data-scrolled", "true");
         await headerState(page, touch, `${file}-scroll`);
-        const first = page.locator("[data-bookcard]").first();
-        const link = first.locator("[data-bookcard-link]");
+        const first = page.locator(products[surface]).first();
+        const link = first.locator(parts[surface].link).first();
         await link.scrollIntoViewIfNeeded();
         if (!touch) await link.hover();
         await link.focus();
@@ -109,34 +122,40 @@ for (const theme of ["light", "dark"] as const) for (const width of [320, 375, 7
         expect(linkBounds.y).toBeGreaterThanOrEqual(headerBounds.y + headerBounds.height + 5);
         await unclipped(first.locator("img"));
         await page.screenshot({ path: `${file}-product-focus.png` });
-        const geometry = await page.locator("[data-bookcard]").evaluateAll((cards) => cards.map((card) => {
-          const media = card.querySelector("[data-bookcard-link] > div:first-child")!.getBoundingClientRect();
+        const geometry = await page.locator(products[surface]).evaluateAll((cards, part) => cards.map((card) => {
+          const media = card.querySelector(part.media)!.getBoundingClientRect();
           const cover = card.querySelector("[data-bookcard-cover]")!.getBoundingClientRect();
           const frame = card.querySelector(".cover-frame")!;
           const image = card.querySelector<HTMLImageElement>("img")!;
-          const title = card.querySelector("[data-bookcard-title]")!.getBoundingClientRect();
+          const title = card.querySelector(part.title)!.getBoundingClientRect();
           return { width: media.width, height: media.height, coverWidth: cover.width, coverHeight: cover.height, inside: cover.left >= media.left && cover.right <= media.right && cover.top >= media.top && cover.bottom <= media.bottom, titleGap: title.top - media.bottom, ratio: cover.width / cover.height, fit: getComputedStyle(image).objectFit, background: getComputedStyle(frame).backgroundColor, naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight };
-        }));
+        }), parts[surface]);
+        expect(geometry.length).toBeGreaterThan(0);
         for (const book of geometry) {
           expect(book.inside).toBe(true);
-          expect(book.titleGap).toBeGreaterThanOrEqual(15);
+          // The title keeps its designed step below the media: 14px on catalog cards, 18px under a popular frame.
+          expect(book.titleGap).toBeCloseTo(surface === "home" ? 18 : 14, 0);
           expect(book.ratio).toBeCloseTo(2 / 3, 2);
           expect(book.fit).toBe("contain");
           expect(book.background).toBe("rgba(0, 0, 0, 0)");
           expect(book.naturalWidth).toBeGreaterThan(0);
         }
         if (surface === "home") {
-          expect(geometry[0].coverWidth / geometry[0].width).toBeGreaterThan(.65);
-          const arrow = page.getByRole("button", { name: "Ver más libros" });
+          // The popular frame holds the jacket as an object at its designed size (41cqw of the frame), not shrunk.
+          for (const book of geometry) expect(book.coverWidth / book.width).toBeCloseTo(.41, 1);
+          const arrow = page.getByRole("button", { name: "Más títulos" });
           await arrow.scrollIntoViewIfNeeded();
           if (touch) await arrow.tap(); else await arrow.click();
-          await expect.poll(() => page.locator('[data-presentation="rail"]').evaluate((rail) => rail.scrollLeft)).toBeGreaterThan(0);
+          await expect(page.locator("[data-popular-track]")).toHaveAttribute("data-page", "1");
         }
         measurements.push({ surface, geometry });
         await page.getByRole("button", { name: "Buscar libros en el catálogo", exact: true }).click();
         const search = page.getByRole("searchbox", { name: "Buscar en el catálogo" });
         await expect(search).toBeFocused();
-        await unclipped(page.getByRole("search", { name: "Catálogo" }), 4);
+        // The search bar sits whole inside its sheet; its focus is the inset brand line, so nothing reaches past it.
+        const bar = page.getByRole("search", { name: "Catálogo" });
+        await unclipped(bar);
+        expect(await bar.evaluate((node) => getComputedStyle(node).boxShadow)).toMatch(/inset/);
         await page.keyboard.press("Escape");
       }
       await testInfo.attach("cover-geometry", { body: JSON.stringify({ theme, width, touch, measurements }, null, 2), contentType: "application/json" });

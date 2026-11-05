@@ -165,6 +165,12 @@ describe("checkout API", () => {
       .rejects.toBeInstanceOf(CheckoutOutcomeUnknown);
   });
 
+  it.each(["P6002", "P6003"])("treats %s as a definitive digital rejection", async code => {
+    respond(409, { code, title: "Compra digital bloqueada", detail: "Revisa tu biblioteca o tu pedido." });
+    await expect(submitCheckout({ ...billingFixturePayload, fulfillmentMethod: "DIGITAL_ONLY", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
+      .rejects.toMatchObject({ name: "ApiRequestError", status: 409, code });
+  });
+
   it("treats P5007 as a known, rolled-back failure", async () => {
     respond(500, { code: "P5007", title: "Error interno", detail: "No se completó." });
     await expect(submitCheckout({ ...billingFixturePayload, addressId: "15", paymentMethod: "TRANSFER" }, "550e8400-e29b-41d4-a716-446655440000"))
@@ -202,4 +208,53 @@ it("reads a pending order invoice with no issued timestamp instead of losing the
   const detail=await getOrder("700");
   expect(detail.invoice?.state).toBe("DRAFT");
   expect(detail.invoice?.issuedAt).toBeNull();
+});
+
+
+describe("per-line digital ownership projection", () => {
+  beforeEach(() => setApiAccessToken("customer-token"));
+  afterEach(() => { setApiAccessToken(null); vi.unstubAllGlobals(); });
+
+  it.each(["PENDING_PAYMENT", "AVAILABLE", "REVOKED", "UNAVAILABLE"] as const)("retains %s beside independent physical fulfillment", async state => {
+    const body = orderDetailFixture();
+    const digitalAccess = { state, ownedItemId: state === "AVAILABLE" ? "9007199254740993" : null };
+    respond(200, { ...body, items: [
+      { ...body.items[0], digitalAccess: null },
+      { ...body.items[0], orderItemId: "2", quantity: 1, format: "EBOOK", requiresPhysicalFulfillment: false, digitalAccess },
+    ] });
+    const detail = await getOrder("700");
+    expect(detail.items[0]).toHaveProperty("digitalAccess", null);
+    expect(detail.items[1]).toHaveProperty("digitalAccess", digitalAccess);
+    expect(detail.fulfillment?.method).toBe("HOME_DELIVERY");
+  });
+
+  it.each([
+    { state: "AVAILABLE", ownedItemId: null },
+    { state: "AVAILABLE", ownedItemId: 42 },
+    { state: "AVAILABLE", ownedItemId: "0" },
+    { state: "REVOKED", ownedItemId: "42" },
+    { state: "PENDING_PAYMENT", ownedItemId: "42" },
+    { state: "COMPLETED", ownedItemId: null },
+  ])("rejects malformed digital access %j", async digitalAccess => {
+    const body = orderDetailFixture();
+    respond(200, { ...body, items: [{ ...body.items[0], requiresPhysicalFulfillment: false, digitalAccess }] });
+    await expect(getOrder("700")).rejects.toMatchObject({ status: 502 });
+  });
+
+  it("rejects access on a physical line", async () => {
+    const body = orderDetailFixture();
+    respond(200, { ...body, items: [{ ...body.items[0], digitalAccess: { state: "AVAILABLE", ownedItemId: "42" } }] });
+    await expect(getOrder("700")).rejects.toMatchObject({ status: 502 });
+  });
+
+  it("rejects explicit null access on a digital line", async () => {
+    const body = orderDetailFixture();
+    respond(200, { ...body, items: [{ ...body.items[0], requiresPhysicalFulfillment: false, digitalAccess: null }] });
+    await expect(getOrder("700")).rejects.toMatchObject({ status: 502 });
+  });
+
+  it("keeps old-server access absent without inferring it from payment", async () => {
+    respond(200, orderDetailFixture());
+    expect((await getOrder("700")).items[0]).not.toHaveProperty("digitalAccess");
+  });
 });

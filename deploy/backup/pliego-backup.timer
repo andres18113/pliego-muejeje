@@ -1,0 +1,9 @@
+[Unit]
+Description=PLIEGO backup every six UTC hours
+[Timer]
+OnCalendar=*-*-* 00,06,12,18:15:00 UTC
+RandomizedDelaySec=5min
+Persistent=yes
+Unit=pliego-backup.service
+[Install]
+WantedBy=timers.target

@@ -129,7 +129,7 @@ def main(serve=False):
                     status, _, result = request(base, "/api/v1/auth/register", {
                         "email": email, "password": password, "firstNames": "Ana", "lastNames": "Pérez"})
                     assert status == 201 and result["state"] == "PENDING_VERIFICATION"
-                    user_id = int(result["userId"])
+                    user_id = int(query(f"SELECT usuario_id FROM pliego.usuario WHERE email_normalizado='{email}'"))
                     status, _, pending = request(base, "/api/v1/auth/forgot-password", {
                         "email": email, "returnTo": "/account"})
                     assert status == 202 and pending.get("message")

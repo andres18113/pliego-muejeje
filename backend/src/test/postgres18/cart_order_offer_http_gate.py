@@ -94,7 +94,13 @@ def main():
     assert new_cart['taxRate'] == '0.00' and new_cart['taxAmount'] == '0.00' and new_cart['total'] == '79.95'
     ok('/api/v1/orders/' + result['orderId'] + '/cancel', customer, 'POST', expected=200)
     cancelled = ok('/api/v1/orders/' + result['orderId'], customer)
-    assert cancelled['items'] == lines_before and all(cancelled[name] == value for name, value in pricing.items())
+    for previous, current in zip(lines_before, cancelled['items'], strict=True):
+        # Ownership access is live read data; all historical identity/pricing fields stay fixed.
+        assert {k: v for k, v in current.items() if k != 'digitalAccess'} == {
+            k: v for k, v in previous.items() if k != 'digitalAccess'}
+        if not current['requiresPhysicalFulfillment']:
+            assert current['digitalAccess'] == {'state': 'REVOKED', 'ownedItemId': None}
+    assert all(cancelled[name] == value for name, value in pricing.items())
     print('PASS: live REST cart, confirmation, Mis pedidos, detail, quantity, mixed formats, expiry, idempotency and cancellation preserve authoritative pricing.')
 
 

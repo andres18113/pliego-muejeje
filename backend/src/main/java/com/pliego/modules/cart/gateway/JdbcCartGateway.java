@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +22,8 @@ import com.pliego.modules.cart.application.CartModels.Cart;
 import com.pliego.modules.cart.application.CartModels.CartItem;
 import com.pliego.modules.cart.application.CartModels.CartItemResult;
 import com.pliego.modules.cart.application.CartModels.DeliveryWindow;
-import java.time.LocalDate;
+import com.pliego.modules.cart.application.CartModels.SavedForLaterList;
+import com.pliego.modules.cart.application.CartModels.SavedItem;
 import tools.jackson.core.JacksonException;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
@@ -35,6 +38,10 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
     private static final String CART_ADD_ITEM = "CALL pliego.sp_cart_add_item(?,?,?,?,?,?)";
     private static final String CART_UPDATE_ITEM = "CALL pliego.sp_cart_update_item(?,?,?,?,?,?)";
     private static final String CART_REMOVE_ITEM = "CALL pliego.sp_cart_remove_item(?,?)";
+    private static final String SAVED_GET = "SELECT items::text,total_count FROM pliego.fn_customer_saved_for_later(?)";
+    private static final String SAVE_FOR_LATER = "CALL pliego.sp_cart_save_for_later(?,?)";
+    private static final String SAVED_MOVE_TO_CART = "CALL pliego.sp_cart_saved_move_to_cart(?,?)";
+    private static final String SAVED_REMOVE = "CALL pliego.sp_cart_saved_remove(?,?)";
 
     private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
@@ -77,10 +84,35 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
 
     @Override
     public void removeItem(long actorId, long cartItemId) {
+        callSimpleMutation(CART_REMOVE_ITEM, actorId, cartItemId);
+    }
+
+    @Override
+    public SavedForLaterList getSavedForLater(long actorId) {
+        return withDatabaseErrorTranslation(() -> jdbcTemplate.queryForObject(SAVED_GET, (rs, row) ->
+                new SavedForLaterList(parseSavedItems(rs.getString("items")), rs.getLong("total_count")), actorId));
+    }
+
+    @Override
+    public void saveForLater(long actorId, long cartItemId) {
+        callSimpleMutation(SAVE_FOR_LATER, actorId, cartItemId);
+    }
+
+    @Override
+    public void moveSavedToCart(long actorId, long savedItemId) {
+        callSimpleMutation(SAVED_MOVE_TO_CART, actorId, savedItemId);
+    }
+
+    @Override
+    public void removeSavedItem(long actorId, long savedItemId) {
+        callSimpleMutation(SAVED_REMOVE, actorId, savedItemId);
+    }
+
+    private void callSimpleMutation(String call, long actorId, long itemId) {
         withDatabaseErrorTranslation(() -> jdbcTemplate.execute((ConnectionCallback<Void>) connection -> {
-            try (PreparedStatement statement = connection.prepareStatement(CART_REMOVE_ITEM)) {
+            try (PreparedStatement statement = connection.prepareStatement(call)) {
                 statement.setLong(1, actorId);
-                statement.setLong(2, cartItemId);
+                statement.setLong(2, itemId);
                 statement.execute();
                 return null;
             }
@@ -115,12 +147,7 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
     }
 
     private List<CartItem> parseItems(String json) throws SQLException {
-        JsonNode items;
-        try {
-            items = objectMapper.readTree(json);
-        } catch (JacksonException exception) {
-            throw new SQLException("Approved cart Function returned invalid items JSON", "XX000", exception);
-        }
+        JsonNode items = parseArray(json, "Approved cart Function");
         if (items == null || !items.isArray()) {
             throw new SQLException("Approved cart Function returned a non-array items value", "XX000");
         }
@@ -137,6 +164,35 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
         return List.copyOf(result);
     }
 
+    private List<SavedItem> parseSavedItems(String json) throws SQLException {
+        JsonNode items = parseArray(json, "Saved for Later Function");
+        if (items == null || !items.isArray()) {
+            throw new SQLException("Saved for Later Function returned a non-array items value", "XX000");
+        }
+        List<SavedItem> result = new ArrayList<>(items.size());
+        for (JsonNode item : items) {
+            result.add(new SavedItem(text(item, "savedItemId"), text(item, "editionId"),
+                    text(item, "title"), text(item, "authors"), text(item, "sku"), nullableText(item, "coverUrl"),
+                    item.path("quantity").intValue(), decimal(item, "currentPrice"), decimal(item, "currentSubtotal"),
+                    item.path("available").booleanValue(), nullableText(item, "unavailabilityReason"),
+                    text(item, "format"), item.path("requiresPhysicalFulfillment").booleanValue(),
+                    item.path("quantityEditable").booleanValue(), decimal(item, "originalPrice"),
+                    decimal(item, "unitSavings"), decimal(item, "originalSubtotal"), decimal(item, "lineSavings"),
+                    instant(item, "savedAt"), instant(item, "updatedAt")));
+        }
+        return List.copyOf(result);
+    }
+
+    private JsonNode parseArray(String json, String functionName) throws SQLException {
+        JsonNode items;
+        try {
+            items = objectMapper.readTree(json);
+        } catch (JacksonException exception) {
+            throw new SQLException(functionName + " returned invalid items JSON", "XX000", exception);
+        }
+        return items;
+    }
+
     private static String text(JsonNode object, String field) {
         JsonNode value = object.get(field);
         return value == null || value.isNull() ? null : value.asText();
@@ -149,6 +205,16 @@ public class JdbcCartGateway extends JdbcGatewaySupport implements CartGateway {
     private static BigDecimal decimal(JsonNode object, String field) {
         JsonNode value = object.get(field);
         return value == null || value.isNull() ? null : value.decimalValue();
+    }
+
+    private static Instant instant(JsonNode object, String field) throws SQLException {
+        String value = text(object, field);
+        if (value == null) return null;
+        try {
+            return Instant.parse(value);
+        } catch (RuntimeException exception) {
+            throw new SQLException("Saved for Later Function returned an invalid timestamp", "XX000", exception);
+        }
     }
 
     private static String id(ResultSet rs, String column) throws SQLException {

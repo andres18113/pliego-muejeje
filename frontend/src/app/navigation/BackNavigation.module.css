@@ -18,5 +18,3 @@
 /* Under the header: the arrow's glyph, not its 44px hit area, lines up with the content's left edge. */
 .inPage { display: inline-flex; flex: none; margin-inline-start: -11px; }
 
-/* A page's wayfinding row: the arrow on the content edge, a trail (when there is one) beside it. */
-.wayfinding { display: flex; align-items: center; gap: 4px; min-width: 0; min-height: 44px; }

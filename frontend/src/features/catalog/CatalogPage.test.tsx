@@ -104,7 +104,7 @@ describe("CatalogPage", () => {
     expect(requestedUrl?.searchParams.has("language")).toBe(false);
     expect(requestedUrl?.searchParams.has("format")).toBe(false);
     expect(requestedUrl?.searchParams.get("page")).toBe("0");
-    expect(requestedUrl?.searchParams.get("pageSize")).toBe("20");
+    expect(requestedUrl?.searchParams.get("pageSize")).toBe("24");
   });
 
   it("shows a recoverable error for an invalid totalCount and retries the read", async () => {
@@ -278,5 +278,5 @@ it("keeps the collection and bestseller order when clearing filters in an empty 
   const user = userEvent.setup();
   renderCatalog("/catalog?productType=EBOOK&category=tema-antiguo&language=en&sort=BEST_SELLING");
   await user.click(await screen.findByRole("link", { name: "Limpiar filtros" }));
-  await waitFor(() => expect(requested).toContain("?productType=EBOOK&sort=BEST_SELLING&page=0&pageSize=20"));
+  await waitFor(() => expect(requested).toContain("?productType=EBOOK&sort=BEST_SELLING&page=0&pageSize=24"));
 });

@@ -10,8 +10,11 @@ import classes from "./confirmDialog.module.css";
  * keeps things as they are, which Escape and the veil also give. The caller owns where focus returns.
  * `destructive` is for decisions that remove or undo something (deleting, cancelling): the decisive answer is
  * the dark red one, in every state.
+ * `readBack` is for a confirmation whose whole job is checking one value (a cédula before it is stored): the sheet
+ * centres on the value and its answers are PLIEGO pills.
+ * `pill` gives a plain question the same pill answers without centring it on a value (e.g. "¿Quitar del carrito?").
  */
-export function ConfirmDialog({ opened, title, children, confirmLabel, keepLabel, busyLabel, busy = false, destructive = false, zIndex, onConfirm, onKeep }: {
+export function ConfirmDialog({ opened, title, children, confirmLabel, keepLabel, busyLabel, busy = false, destructive = false, readBack = false, pill = false, zIndex, onConfirm, onKeep }: {
   opened: boolean;
   title: ReactNode;
   children: ReactNode;
@@ -21,13 +24,15 @@ export function ConfirmDialog({ opened, title, children, confirmLabel, keepLabel
   busyLabel?: string;
   busy?: boolean;
   destructive?: boolean;
+  readBack?: boolean;
+  pill?: boolean;
   zIndex?: number;
   onConfirm: () => void;
   onKeep: () => void;
 }) {
   const reduceMotion = useReducedMotion();
   return <Modal.Root opened={opened} onClose={() => { if (!busy) onKeep(); }} centered size={440} zIndex={zIndex} returnFocus={false}
-    classNames={{ content: `storefront-panel ${classes.dialog}`, title: classes.title, body: classes.body }}
+    classNames={{ content: `storefront-panel ${classes.dialog}${readBack ? ` ${classes.readBack}` : ""}${pill ? ` ${classes.pill}` : ""}`, title: classes.title, body: classes.body }}
     transitionProps={{ transition: "pop", duration: reduceMotion ? 0 : 180, timingFunction: "cubic-bezier(.32, .94, .6, 1)" }}>
     <Modal.Overlay className={classes.veil} />
     <Modal.Content>

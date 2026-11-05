@@ -7,7 +7,9 @@ export function PliegoThemeProvider({ children }: { children: ReactNode }) {
     <MantineProvider
       theme={pliegoTheme}
       cssVariablesResolver={pliegoCssVariablesResolver}
-      defaultColorScheme="auto"
+      // PLIEGO has one appearance: its light paper scheme, whatever the system or browser prefers.
+      defaultColorScheme="light"
+      forceColorScheme="light"
     >
       {children}
     </MantineProvider>

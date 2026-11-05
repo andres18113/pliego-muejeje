@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { expectLightAppearance, expectUnchangedByDarkPreference } from "./light-appearance";
 import { existsSync } from "node:fs";
 const immutableCoverPath = (url: string) => decodeURIComponent(new URL(`../../../covers/generated/r2-normalized${new URL(url).pathname}`, import.meta.url).pathname);
 
@@ -195,8 +196,12 @@ test("BookCard: Auto, touch, text expansion, 200% text and reduced motion", asyn
   await page.getByRole("radiogroup", { name: "Color scheme" }).getByText("Auto", { exact: true }).click();
   for (const colorScheme of ["dark", "light"] as const) {
     await page.emulateMedia({ colorScheme, reducedMotion: "reduce" });
-    await expect(page.locator("html")).toHaveAttribute("data-mantine-color-scheme", colorScheme);
+    // PLIEGO keeps its light appearance whatever the system prefers (even with the diagnostic set to "Auto").
+    await expectLightAppearance(page);
   }
+  await expectUnchangedByDarkPreference(page);
+  // The original sequence continued under the light preference.
+  await page.emulateMedia({ colorScheme: "light", reducedMotion: "reduce" });
   await page.setViewportSize({ width: 320, height: 1000 });
   await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
   const grid = page.locator("[data-bookcard-grid]");

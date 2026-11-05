@@ -1,7 +1,7 @@
 import { act, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { json, problem, renderPurchaseRoute, savedAddress, stubApi as stubPurchaseApi } from "@/test/purchase";
+import { json, problem, renderPurchaseRoute, savedAddress, stubApi as stubPurchaseApi, choosePlace } from "@/test/purchase";
 import { AccountPage } from "./AccountPage";
 import { AddressBookPage } from "./AddressBook";
 import { useSession } from "@/app/session";
@@ -50,6 +50,56 @@ describe("customer account", () => {
     renderPurchaseRoute(routes, "/account");
     await screen.findByRole("region", { name: "Perfil y datos personales" });
     expect(screen.queryByRole("link", { name: "Reenviar verificación de correo" })).not.toBeInTheDocument();
+  });
+
+  it.each([undefined, null, { status: "OK", since: null }])("states nothing about delivery while the address accepts mail (%o)", async (emailDelivery) => {
+    stubApi({ "GET /api/v1/me": () => json({ ...profile, emailDelivery }) });
+    renderPurchaseRoute(routes, "/account");
+    await screen.findByRole("region", { name: "Perfil y datos personales" });
+    expect(screen.queryByText("No recibe correos")).not.toBeInTheDocument();
+  });
+
+  it("says under the stored address that it stopped accepting mail, and keeps Editar as the fix", async () => {
+    stubApi({ "GET /api/v1/me": () => json({ ...profile, emailDelivery: { status: "UNDELIVERABLE", since: "2026-11-01T15:33:37Z" } }) });
+    renderPurchaseRoute(routes, "/account");
+    const region = await screen.findByRole("region", { name: "Perfil y datos personales" });
+    expect(within(region).getByText(profile.email)).toBeInTheDocument();
+    expect(within(region).getByText("No recibe correos")).toHaveAttribute("data-tone", "required");
+    expect(within(region).getByText("No pudimos entregarte mensajes. Corrígela para recibir los avisos de tus pedidos.")).toBeInTheDocument();
+    expect(within(region).getByRole("button", { name: "Editar correo electrónico" })).toBeEnabled();
+  });
+
+  it("resends or cancels a pending email change from the line under the sheet", async () => {
+    const pendingEmail = { address: "nueva@example.com", expiresAt: "2026-11-02T15:00:00Z", delivery: "OK" };
+    const api = stubApi({
+      "GET /api/v1/me": [() => json({ ...profile, pendingEmail }), () => json({ ...profile, pendingEmail }), () => json(profile)],
+      "POST /api/v1/me/email-change/resend": [() => new Response(null, { status: 202 }), () => problem(429, "EMAIL_CHANGE_RATE_LIMITED", "Demasiados intentos", "Espera unos minutos antes de pedir otro enlace.")],
+      "DELETE /api/v1/me/email-change": () => new Response(null, { status: 204 }),
+    });
+    renderPurchaseRoute(routes, "/account");
+    const user = userEvent.setup();
+    const region = await screen.findByRole("region", { name: "Perfil y datos personales" });
+    expect(within(region).getByText("Por confirmar")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Reenviar enlace" }));
+    expect(await screen.findByText("Te enviamos otro enlace a nueva@example.com.")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Reenviar enlace" }));
+    expect(await screen.findByText("Demasiados intentos. Espera unos minutos antes de pedir otro enlace.")).toBeInTheDocument();
+    await user.click(screen.getByRole("button", { name: "Cancelar cambio" }));
+    expect(await screen.findByText("Cancelamos el cambio. Sigues usando ana@example.com.")).toBeInTheDocument();
+    expect(api.count("DELETE", "/api/v1/me/email-change")).toBe(1);
+    expect(within(region).queryByText("Por confirmar")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Reenviar enlace" })).not.toBeInTheDocument();
+  });
+
+  it("says when a requested address could not receive its link, and offers only to correct or cancel it", async () => {
+    stubApi({ "GET /api/v1/me": () => json({ ...profile, pendingEmail: { address: "nueva@gmial.com", expiresAt: "2026-11-02T15:00:00Z", delivery: "UNDELIVERABLE" } }) });
+    renderPurchaseRoute(routes, "/account");
+    const region = await screen.findByRole("region", { name: "Perfil y datos personales" });
+    expect(within(region).getByText("No recibe correos")).toHaveAttribute("data-tone", "required");
+    expect(within(region).getByText("ana@example.com")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Reenviar enlace" })).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "cancela el cambio" })).toBeInTheDocument();
+    expect(within(region).getByRole("button", { name: "Editar correo electrónico" })).toBeEnabled();
   });
 
   it("keeps verification help for an explicitly unverified current email", async () => {
@@ -156,13 +206,13 @@ describe("customer account", () => {
     expect(await screen.findByText("Guardamos tu teléfono.")).toBeInTheDocument();
   });
 
-  it("changes the sign-in email only with the current password", async () => {
+  it("requests an email change only with the current password and keeps the address in use until it is confirmed", async () => {
     const api = stubApi({
-      "GET /api/v1/me": [() => json(profile), () => json({ ...profile, email: "nueva@example.com", emailVerified: false })],
+      "GET /api/v1/me": [() => json(profile), () => json({ ...profile, pendingEmail: { address: "nueva@example.com", expiresAt: "2026-11-02T15:00:00Z", delivery: "OK" } })],
       "PUT /api/v1/me/email": [
         () => problem(400, "CURRENT_PASSWORD_INVALID", "Contraseña incorrecta", "La contraseña actual no es correcta."),
         () => problem(409, "P1101", "Correo ya registrado", "Ya existe una cuenta con ese correo electrónico."),
-        () => json({ email: "nueva@example.com", emailVerified: false }),
+        () => json({ email: "ana@example.com", pendingEmail: { address: "nueva@example.com", expiresAt: "2026-11-02T15:00:00Z" } }, 202),
       ],
     });
     renderPurchaseRoute(routes, "/account");
@@ -187,17 +237,21 @@ describe("customer account", () => {
     expect(await screen.findByText("Ya existe una cuenta con ese correo.")).toBeInTheDocument();
 
     await user.click(screen.getByRole("button", { name: "Guardar" }));
-    expect(await screen.findByText("Correo actualizado. Revisa nueva@example.com para verificarlo.")).toBeInTheDocument();
+    expect(await screen.findByText("Te enviamos un enlace a nueva@example.com. Seguirás usando ana@example.com hasta que lo confirmes.")).toBeInTheDocument();
     expect(api.calls.filter((call) => call.method === "PUT").at(-1)?.body).toEqual({ newEmail: "Nueva@Example.com", currentPassword: "Lectura-segura-2026" });
-    expect(within(screen.getByRole("region", { name: "Perfil y datos personales" })).getByText("nueva@example.com")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Reenviar verificación de correo" })).toHaveAttribute("href", "/reenviar-verificacion");
+    const region = screen.getByRole("region", { name: "Perfil y datos personales" });
+    // The verified address stays in use (and stays verified); the new one waits for its link.
+    expect(within(region).getByText("ana@example.com")).toBeInTheDocument();
+    expect(within(region).getByText("Por confirmar")).toHaveAttribute("data-tone", "review");
+    expect(within(region).getByText("nueva@example.com")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Reenviar verificación de correo" })).not.toBeInTheDocument();
   });
 
   it("does not restore a cleared session when a pending email change finishes", async () => {
     let finishChange!: (response: Response) => void;
     const changeResponse = new Promise<Response>(resolve => { finishChange = resolve; });
     const api = stubApi({
-      "GET /api/v1/me": [() => json(profile), () => json({ ...profile, email: "nueva@example.com" })],
+      "GET /api/v1/me": [() => json(profile), () => json({ ...profile, pendingEmail: { address: "nueva@example.com", expiresAt: "2026-11-02T15:00:00Z", delivery: "OK" } })],
       "PUT /api/v1/me/email": () => changeResponse,
     });
     function SessionHarness() {
@@ -214,7 +268,7 @@ describe("customer account", () => {
     await waitFor(() => expect(api.count("PUT", "/api/v1/me/email")).toBe(1));
     await user.click(screen.getByRole("button", { name: "Cerrar sesión externa" }));
     expect(screen.getByLabelText("Estado de sesión")).toHaveTextContent("Sin sesión");
-    await act(async () => { finishChange(json({ email: "nueva@example.com" })); await changeResponse; });
+    await act(async () => { finishChange(json({ email: "ana@example.com", pendingEmail: { address: "nueva@example.com", expiresAt: "2026-11-02T15:00:00Z" } }, 202)); await changeResponse; });
     expect(api.calls.filter(call => call.method === "GET" && call.path === "/api/v1/me").length).toBe(1);
     expect(screen.getByLabelText("Estado de sesión")).toHaveTextContent("Sin sesión");
     expect(screen.getByRole("heading", { name: "Inicia sesión para ver tu cuenta." })).toBeInTheDocument();
@@ -241,8 +295,7 @@ describe("customer account", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar dirección" }));
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Av. Principal 123");
-    await user.type(screen.getByLabelText("Ciudad"), "Quito");
-    await user.type(screen.getByLabelText("Provincia"), "Pichincha");
+    await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
     await user.type(screen.getByLabelText("Teléfono de contacto"), "0991234567");
     await waitFor(() => expect(screen.getByRole("button", { name: "Guardar dirección" })).toBeEnabled());
     await user.click(screen.getByRole("button", { name: "Guardar dirección" }));
@@ -261,8 +314,7 @@ describe("customer account", () => {
     await user.click(await screen.findByRole("button", { name: "Agregar dirección" }));
     await screen.findByRole("dialog", { name: "Nueva dirección" });
     await user.type(screen.getByLabelText("Dirección", { exact: true }), "Calle 10");
-    await user.type(screen.getByLabelText("Ciudad"), "Quito");
-    await user.type(screen.getByLabelText("Provincia"), "Pichincha");
+    await choosePlace(document.querySelector<HTMLElement>(".address-form")!);
     expect(screen.getByLabelText("País de entrega")).toHaveValue("Ecuador");
     expect(screen.getByLabelText("País de entrega")).toHaveAttribute("readonly");
     expect(screen.queryByRole("combobox", { name: "País de entrega" })).not.toBeInTheDocument();
@@ -285,5 +337,12 @@ describe("customer account", () => {
     expect(api.count("DELETE", "/api/v1/me/addresses/15")).toBe(0);
     await user.click(within(confirm).getByRole("button", { name: "Eliminar dirección" }));
     expect(await screen.findByRole("heading", { name: "Aún no tienes direcciones guardadas." })).toBeInTheDocument();
+    // A short toast reports it; the page keeps no banner, and focus moves to what is left.
+    expect(await screen.findByText("Dirección eliminada")).toBeInTheDocument();
+    expect(screen.queryByText(/Eliminamos la dirección/)).not.toBeInTheDocument();
+    // Focus moves a frame after the list is read again; allow for a busy test runner.
+    await waitFor(() => expect(screen.getByRole("button", { name: "Agregar dirección" })).toHaveFocus(), { timeout: 3000 });
+    await user.click(screen.getByRole("button", { name: "Cerrar aviso" }));
+    expect(screen.queryByText("Dirección eliminada")).not.toBeInTheDocument();
   });
 });

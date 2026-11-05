@@ -6,7 +6,7 @@ import { LibraryPage, OwnedItemPage } from "./LibraryRoutes";
 
 const item = { ownedItemId: "8", editionId: "42", coverUrl: null, title: "Libro propio", authors: "Autora", productType: "EBOOK", acquiredAt: "2026-10-05T10:00:00Z", ownershipState: "OWNED", accessState: "OWNERSHIP_ONLY", contentAccessSupported: false,
   metadata: { isbn: "9780306406157", publisher: "Editorial", language: "es", pageCount: 120, publicationDate: "2020-01-01", ebookFileFormat: "EPUB", audioDurationSeconds: null, narrators: [] },
-  sourcePurchases: [{ orderId: "700", orderItemId: "1", acquiredAt: "2026-10-05T10:00:00Z", paymentState: "APPROVED", orderState: "CONFIRMED", grantState: "ACTIVE" }],
+  sourcePurchases: [{ orderId: "700", orderReference: "PL-4827-1093", orderItemId: "1", acquiredAt: "2026-10-05T10:00:00Z", paymentState: "APPROVED", orderState: "CONFIRMED", grantState: "ACTIVE" }],
   availableActions: [{ type: "VIEW_ORDER", label: "Ver pedido", href: "/orders/700" }, { type: "HELP", label: "Ayuda", href: "/ayuda/ebooks" }] };
 const routes = [{ path: "/biblioteca", element: <LibraryPage /> }, { path: "/biblioteca/:ownedItemId", element: <OwnedItemPage /> }];
 afterEach(() => vi.unstubAllGlobals());
@@ -31,23 +31,40 @@ describe("Mi biblioteca functional routes", () => {
     expect(await screen.findByText("1 título")).toBeInTheDocument();
     await user.click(await screen.findByRole("link", { name: "Libro propio" }));
     await screen.findByRole("heading", { name: "Libro propio" });
-    expect(screen.getByText("Pertenece a tu cuenta")).toBeInTheDocument();
+    // The title and what it is for lead; nothing about the product's own limits.
+    expect(screen.getByText("Tuyo para leer")).toBeInTheDocument();
+    expect(screen.getByText(/En tu biblioteca desde el/)).toBeInTheDocument();
+    expect(screen.queryByText(/no ofrece|en línea/i)).toBeNull();
     expect(screen.getByText("EPUB")).toBeInTheDocument();
     const purchases = screen.getByRole("region", { name: "Información de compra" });
-    for (const label of ["Pedido N.° 700", "Confirmado", "Aprobado", "Vigente"]) expect(within(purchases).getByText(label)).toBeInTheDocument();
+    for (const label of ["Pedido #PL-4827-1093", "Confirmado", "Aprobado", "Vigente"]) expect(within(purchases).getByText(label)).toBeInTheDocument();
     expect(purchases).not.toHaveTextContent(/CONFIRMED|APPROVED|ACTIVE/);
     expect(screen.getAllByText("5 de octubre de 2026").length).toBeGreaterThan(0);
     expect(screen.getByText("1 de enero de 2020")).toBeInTheDocument();
     expect(screen.getByText("Español")).toBeInTheDocument();
     expect(document.body).not.toHaveTextContent(/2026-10-05T|segundos/);
-    expect(screen.getByRole("link", { name: "Ver pedido" })).toHaveAttribute("href", "/orders/700");
+    // The order is administration: it sits in its purchase record, not beside the title.
+    expect(within(purchases).getByRole("link", { name: "Ver pedido #PL-4827-1093" })).toHaveAttribute("href", "/orders/700");
+    expect(screen.getAllByRole("link", { name: /Ver pedido/ })).toHaveLength(1);
     expect(screen.getByRole("link", { name: "Ayuda" })).toHaveAttribute("href", "/ayuda/ebooks");
     expect(screen.queryByRole("link", { name: /Leer|Escuchar|Continuar leyendo|Continuar escuchando/i })).not.toBeInTheDocument();
+  });
+
+  it("tells an audiobook owner it is theirs to listen to, with no player control", async () => {
+    stubApi({ "GET /api/v1/me/library/8": () => json({ ...item, productType: "AUDIOBOOK", metadata: { ...item.metadata, pageCount: null, ebookFileFormat: null, audioDurationSeconds: 31320, narrators: ["Voz Uno"] } }) });
+    renderPurchaseRoute(routes, "/biblioteca/8");
+    expect(await screen.findByText("Tuyo para escuchar")).toBeInTheDocument();
+    expect(screen.queryByText(/no ofrece|en línea/i)).toBeNull();
+    expect(screen.queryByRole("button", { name: /Reproducir|Escuchar/i })).not.toBeInTheDocument();
   });
   it("retains the isolated 404 state without a catalog fallback", async () => {
     const api = stubApi({ "GET /api/v1/me/library/8": () => problem(404, "RESOURCE_NOT_FOUND", "No disponible", "Esta adquisición no está disponible.") });
     renderPurchaseRoute(routes, "/biblioteca/8");
-    await screen.findByRole("heading", { name: "Adquisición no disponible" });
+    await screen.findByRole("heading", { name: "Este título no está en tu biblioteca" });
+    // A cancelled purchase answers like an unknown title (ADR 0055); its history is in Mis pedidos.
+    expect(screen.getByText(/El pedido y su reembolso siguen en Mis pedidos/)).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Ver mis pedidos" })).toHaveAttribute("href", "/orders");
+    expect(screen.getByRole("link", { name: "Ir a Mi biblioteca" })).toHaveAttribute("href", "/biblioteca");
     expect(api.count("GET", "/api/v1/catalog/editions/42")).toBe(0);
   });
   it("presents a revoked audiobook with a readable duration and only the server's actions", async () => {
@@ -60,10 +77,15 @@ describe("Mi biblioteca functional routes", () => {
     await screen.findByRole("heading", { name: "Libro propio" });
     expect(screen.getByText("Audiolibro")).toBeInTheDocument();
     expect(screen.getAllByText("Titularidad revocada")).toHaveLength(1);
+    // A revoked title is not described as being in the library or for reading.
+    expect(screen.queryByText(/Tuyo para|En tu biblioteca desde/)).toBeNull();
+    expect(screen.getByText(/Adquirido el/)).toBeInTheDocument();
     expect(screen.getByText("8 h 42 min")).toBeInTheDocument();
     expect(screen.getByText("Voz Uno, Voz Dos")).toBeInTheDocument();
     expect(screen.getByText("Revocada")).toBeInTheDocument();
-    expect(within(screen.getByRole("navigation", { name: "Acciones de la adquisición" })).getAllByRole("link")).toHaveLength(1);
+    // Only the server's actions: the order link in its record, no help link it did not offer.
+    expect(screen.getByRole("link", { name: "Ver pedido #PL-4827-1093" })).toHaveAttribute("href", "/orders/700");
+    expect(screen.queryByRole("link", { name: "Ayuda" })).toBeNull();
   });
   it("marks ownership cache private and scopes it to the authenticated account", async () => {
     stubApi({ "GET /api/v1/me/library": () => json({ items: [item], page: 0, pageSize: 20, totalCount: "1" }) });

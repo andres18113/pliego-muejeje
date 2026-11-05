@@ -5,6 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pliego.modules.cart.application.CartModels.Cart;
 import com.pliego.modules.cart.application.CartModels.CartItemResult;
+import com.pliego.modules.cart.application.CartModels.SavedForLaterList;
+import com.pliego.modules.cart.application.CartModels.SavedForLaterState;
 import com.pliego.modules.cart.gateway.CartGateway;
 
 /** Coordinates CUSTOMER cart commands; PostgreSQL owns cart state and availability. */
@@ -35,5 +37,31 @@ public class CartService {
     @Transactional
     public void removeItem(long actorId, long cartItemId) {
         gateway.removeItem(actorId, cartItemId);
+    }
+
+    @Transactional(readOnly = true)
+    public SavedForLaterList getSavedForLater(long actorId) {
+        return gateway.getSavedForLater(actorId);
+    }
+
+    @Transactional
+    public SavedForLaterState saveForLater(long actorId, long cartItemId) {
+        gateway.saveForLater(actorId, cartItemId);
+        return currentState(actorId);
+    }
+
+    @Transactional
+    public SavedForLaterState moveSavedToCart(long actorId, long savedItemId) {
+        gateway.moveSavedToCart(actorId, savedItemId);
+        return currentState(actorId);
+    }
+
+    @Transactional
+    public void removeSavedItem(long actorId, long savedItemId) {
+        gateway.removeSavedItem(actorId, savedItemId);
+    }
+
+    private SavedForLaterState currentState(long actorId) {
+        return new SavedForLaterState(gateway.get(actorId), gateway.getSavedForLater(actorId));
     }
 }

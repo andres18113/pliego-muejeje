@@ -35,7 +35,7 @@ describe("successful order confirmation", () => {
     };
     renderConfirmation(discounted);
     await screen.findByRole("heading", { level: 1, name: "Es momento de celebrar" });
-    const details = screen.getByRole("region", { name: "Tu pedido N.º 700" });
+    const details = screen.getByRole("complementary", { name: "Tu pedido" });
     const rows = [...details.querySelectorAll("dl > div")].map((row) => [row.querySelector("dt")?.textContent, row.querySelector("dd")?.textContent?.replace(/\s+/g, " ")]);
     expect(rows).toEqual([["Subtotal", "$ 136,95"], ["Ahorro total", "-$ 20,74"], ["IVA (15 %)", "$ 17,43"], ["Gastos de envío", "$ 0,00"], ["Total pagado", "$ 133,64"]]);
     expect(details.querySelector("[data-tone='savings']")).not.toBeNull();
@@ -56,7 +56,7 @@ describe("successful order confirmation", () => {
   it("keeps an order without a pricing snapshot as it was: no savings are invented", async () => {
     renderConfirmation({ ...homeOrder, pricingSnapshotAvailable: false, originalSubtotal: "99.00", savingsTotal: "10.00" });
     await screen.findByRole("heading", { level: 1, name: "Es momento de celebrar" });
-    const details = screen.getByRole("region", { name: "Tu pedido N.º 700" });
+    const details = screen.getByRole("complementary", { name: "Tu pedido" });
     expect(within(details).queryByText("Ahorro total")).toBeNull();
     expect(within(details).getByText("Total")).toBeInTheDocument();
     expect(screen.queryByText(/Ahorraste/)).toBeNull();
@@ -64,16 +64,19 @@ describe("successful order confirmation", () => {
   });
 
   it("prioritizes pickup location, server readiness and code while moving commercial detail below", async () => {
-    renderConfirmation(pickupOrder);
+    renderConfirmation({ ...pickupOrder, orderReference: "PL-4827-1093" });
     expect(await screen.findByRole("heading", { level: 1, name: "Es momento de celebrar" })).toBeInTheDocument();
-    expect(screen.getByText("Gracias por tu pedido N.º 700")).toBeInTheDocument();
-    const immediate = within(screen.getByRole("complementary", { name: "Tu pedido" }));
-    expect(immediate.getByText("P-ABC234")).toBeInTheDocument();
-    expect(immediate.getByText(/19:32:12/)).toBeInTheDocument();
-    expect(immediate.queryByText(/IVA|Total|Cien años/)).not.toBeInTheDocument();
-    expect(immediate.getByRole("link", { name: "Ver pedido completo" })).toHaveAttribute("href", "/orders/700");
+    expect(screen.getByText("Gracias por tu pedido #PL-4827-1093")).toBeInTheDocument();
+    // What happens next leads: the code to show and when, beside the books to collect.
+    const pickupFacts = within(screen.getByRole("region", { name: "Retiro" }));
+    expect(pickupFacts.getByText("P-ABC234")).toBeInTheDocument();
+    expect(pickupFacts.getByText(/19:32:12/)).toBeInTheDocument();
+    // The receipt once: one "Tu pedido", one way to the full order.
+    expect(screen.getAllByRole("heading", { name: "Tu pedido" })).toHaveLength(1);
+    expect(screen.getAllByRole("link", { name: "Ver pedido completo" })).toHaveLength(1);
+    expect(within(screen.getByRole("complementary", { name: "Tu pedido" })).getByRole("link", { name: "Ver pedido completo" })).toHaveAttribute("href", "/orders/700");
     expect(screen.queryByText("America/Guayaquil")).not.toBeInTheDocument();
-    const details = within(screen.getByRole("region", { name: "Tu pedido N.º 700" }));
+    const details = within(screen.getByRole("complementary", { name: "Tu pedido" }));
     expect(details.getByText("IVA (15 %)" )).toBeInTheDocument();
     expect(details.getByText(/2[.,]78/)).toBeInTheDocument();
     expect(details.queryByText("Cien años de soledad")).not.toBeInTheDocument();
@@ -90,7 +93,7 @@ describe("successful order confirmation", () => {
     expect(within(destination).getByRole("heading", { name: "Enviar a" })).toBeInTheDocument();
     expect(within(destination).getByText("Punto de prueba Quito")).toBeInTheDocument();
     expect(within(destination).getByText("Calle de prueba 42")).toBeInTheDocument();
-    expect(within(destination).getByTitle("Mapa de Punto de prueba Quito")).toHaveAttribute("src", expect.stringContaining("marker=-0.22%2C-78.5"));
+    expectLocationMap(within(destination), "Mapa de Punto de prueba Quito", "-0.22", "-78.5");
     expect(within(destination).queryByRole("heading", { name: "Retirar en" })).not.toBeInTheDocument();
     expect(screen.getAllByText("Calle de prueba 42")).toHaveLength(1);
   });
@@ -100,12 +103,13 @@ describe("successful order confirmation", () => {
     const destination = await screen.findByRole("region", { name: "Destino confirmado" });
     expect(within(destination).getByText("Ana Pérez")).toBeInTheDocument();
     expect(within(destination).getByText(/Av\. Principal 123/)).toBeInTheDocument();
-    const immediate = within(screen.getByRole("complementary", { name: "Tu pedido" }));
-    expect(immediate.getByText("Entrega a domicilio")).toBeInTheDocument();
-    expect(immediate.getByText(/5.*7.*octubre/)).toBeInTheDocument();
-    expect(immediate.queryByText("Código de retiro")).not.toBeInTheDocument();
+    const delivery = within(screen.getByRole("region", { name: "Entrega" }));
+    expect(delivery.getByText("Entrega a domicilio")).toBeInTheDocument();
+    expect(delivery.getByText("Entrega estimada")).toBeInTheDocument();
+    expect(delivery.getByText(/5.*7.*octubre/)).toBeInTheDocument();
+    expect(screen.queryByText("Código de retiro")).not.toBeInTheDocument();
     expect(screen.queryByText("P-ABC234")).not.toBeInTheDocument();
-    expect(within(destination).getByTitle("Mapa de referencia de PUCE")).toHaveAttribute("src", expect.stringContaining("marker=-0.21%2C-78.4914"));
+    expectLocationMap(within(destination), "Mapa de referencia de PUCE", "-0.21", "-78.4914");
     expect(within(destination).getByText("Referencia PUCE en la entrada principal.")).toBeInTheDocument();
     expect(screen.queryByRole("list", { name: "Progreso del envío" })).not.toBeInTheDocument();
     expect(screen.getAllByText(/Av\. Principal 123/)).toHaveLength(1);
@@ -131,10 +135,39 @@ describe("successful order confirmation", () => {
 });
 
 it("confirms digital ownership without presenting any physical destination", async () => {
-  renderConfirmation({ ...homeOrder, fulfillment: null, address: null, shipment: null, items: [{ ...homeOrder.items[0], format: "EBOOK", requiresPhysicalFulfillment: false }] });
+  renderConfirmation({ ...homeOrder, fulfillment: null, address: null, shipment: null, items: [{ ...homeOrder.items[0], format: "EBOOK", requiresPhysicalFulfillment: false, digitalAccess: { state: "AVAILABLE", ownedItemId: "81" } }] });
   await screen.findByRole("heading", { name: "Es momento de celebrar" });
   expect(screen.queryByRole("region", { name: "Destino confirmado" })).not.toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "Ver Mi biblioteca" })).toHaveAttribute("href", "/biblioteca");
+  // Straight to the owned title, from its own line.
+  expect(screen.getByRole("link", { name: `Ver en Mi biblioteca: ${homeOrder.items[0].title}` })).toHaveAttribute("href", "/biblioteca/81");
+  expect(screen.queryByRole("link", { name: "Ver Mi biblioteca" })).not.toBeInTheDocument();
+});
+
+it("states the six-minute window only while the server still offers cancellation", async () => {
+  const digital = { ...homeOrder, fulfillment: null, address: null, shipment: null,
+    items: [{ ...homeOrder.items[0], format: "EBOOK", requiresPhysicalFulfillment: false, digitalAccess: { state: "AVAILABLE" as const, ownedItemId: "81" } }] };
+  const { unmount } = renderConfirmation({ ...digital, availableActions: { cancel: true, canCancel: true, changeShippingAddress: false, lifecycleState: "CANCELLATION_WINDOW", cancellationDeadline: "2026-10-04T23:61:12Z" } } as OrderDetail);
+  // An unreadable deadline falls back to the rule without a time; the action itself stays on the order detail.
+  await screen.findByRole("heading", { name: "Es momento de celebrar" });
+  const note = document.querySelector('[data-confirmation="cancel"]');
+  expect(note).toHaveTextContent("Puedes cancelarlo durante los 6 minutos siguientes a la aprobación del pago. Se hace desde el detalle del pedido.");
+  expect(within(note as HTMLElement).getByRole("link", { name: "detalle del pedido" })).toHaveAttribute("href", `/orders/${digital.orderId}`);
+  expect(screen.queryByRole("button", { name: "Cancelar pedido" })).not.toBeInTheDocument();
+  unmount();
+  const second = renderConfirmation({ ...digital, availableActions: { cancel: false, canCancel: false, changeShippingAddress: false, lifecycleState: "COMPLETED" } } as OrderDetail);
+  await screen.findByRole("heading", { name: "Es momento de celebrar" });
+  expect(screen.queryByText(/cancelarlo/)).not.toBeInTheDocument();
+  second.unmount();
+  // A window the server reports as closed is said, with its own time.
+  renderConfirmation({ ...digital, availableActions: { cancel: false, canCancel: false, changeShippingAddress: false, lifecycleState: "COMPLETED", cancellationDeadline: "2026-10-04T23:06:12Z" } } as OrderDetail);
+  expect(await screen.findByText(/^El plazo para cancelar terminó a las \d{2}:\d{2}\.$/)).toBeInTheDocument();
+});
+
+it("offers no library action on the confirmation until the title is really owned", async () => {
+  renderConfirmation({ ...homeOrder, fulfillment: null, address: null, shipment: null, payment: { ...homeOrder.payment!, state: "PENDING" },
+    items: [{ ...homeOrder.items[0], format: "EBOOK", requiresPhysicalFulfillment: false, digitalAccess: { state: "PENDING_PAYMENT", ownedItemId: null } }] });
+  expect(await screen.findByText(/Se añadirá a Mi biblioteca/)).toBeInTheDocument();
+  expect(screen.queryByRole("link", { name: /Mi biblioteca/ })).not.toBeInTheDocument();
 });
 
 it("limits a mixed purchase's delivery section to physical snapshots", async () => {
@@ -155,3 +188,10 @@ it("classifies confirmation items from server capabilities despite display forma
   expect(delivery.queryByText("Compra digital autorizada")).not.toBeInTheDocument();
   expect(screen.getByRole("region", { name: "Compras digitales" })).toHaveTextContent("Compra digital autorizada");
 });
+
+/** The pickup map: the point's map image, and a link to the full map at the exact backend coordinate. */
+function expectLocationMap(scope: Pick<typeof screen, "getByRole">, name: string, latitude: string, longitude: string) {
+  const map = scope.getByRole("img", { name }).closest("[data-location-map]")?.parentElement;
+  expect(map).toBeTruthy();
+  expect([...map!.querySelectorAll("a")].some((link) => link.getAttribute("href")?.includes(`mlat=${latitude}&mlon=${longitude}`))).toBe(true);
+}

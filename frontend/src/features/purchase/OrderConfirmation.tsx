@@ -8,25 +8,27 @@ import { ReadFailure } from "./CartPage";
 import { fulfillmentMethodLabel } from "./fulfillment";
 import { orderStory, type OrderStory } from "./orderStory";
 import { PurchaseFlow, PurchaseLayout, PurchaseSummary } from "./PurchaseFlow";
-import { deliveryWindowLabel, ivaLabel, paymentMethodLabel, paymentStateLabel, unitsLabel } from "./purchaseText";
+import { deliveryWindowLabel, ivaLabel, orderReference, paymentMethodLabel, paymentStateLabel, unitsLabel } from "./purchaseText";
 import { PickupDetails } from "./PickupDetails";
 import { ShipmentTrack } from "./ShipmentTrack";
 import { TransferFacts } from "./TransferFacts";
 import scene from "./orderDetail.module.css";
 import classes from "./purchaseFlow.module.css";
-import { InvoiceDocuments } from "./InvoiceDocuments";
+import { InvoiceAction } from "./InvoiceAction";
 import { SuccessfulOrderConfirmation } from "./SuccessfulOrderConfirmation";
+import { MaterialSymbol } from "@/shared/ui/MaterialSymbol";
+import { cancellationCondition } from "./cancellationPolicy";
 
 /**
  * The flow's last stage, shown when checkout hands over its order. Successful purchases get a quiet receipt;
  * pending or closed purchases retain their server-reported story and recovery actions.
  */
-export function OrderConfirmation({ order, headingRef }: { order: OrderDetail; headingRef: Ref<HTMLHeadingElement> }) {
+export function OrderConfirmation({ order, headingRef, cancelEnded }: { order: OrderDetail; headingRef: Ref<HTMLHeadingElement>; cancelEnded?: boolean }) {
   const story = orderStory({ orderState: order.orderState, purchaseState: order.purchaseState, paymentState: order.payment?.state, shipmentState: order.shipment?.state ?? null });
   if (story.kind !== "cancelled" && story.kind !== "payment-rejected" && story.kind !== "awaiting-payment") {
-    return <><SuccessfulOrderConfirmation order={order} headingRef={headingRef} /><InvoiceDocuments orderId={order.orderId} /></>;
+    return <SuccessfulOrderConfirmation order={order} headingRef={headingRef} cancelEnded={cancelEnded} />;
   }
-  return <><OtherOrderConfirmation order={order} headingRef={headingRef} /><InvoiceDocuments orderId={order.orderId} /></>;
+  return <OtherOrderConfirmation order={order} headingRef={headingRef} />;
 }
 
 /** Pending and closed purchases retain their server-reported story and recovery actions. */
@@ -45,7 +47,7 @@ function OtherOrderConfirmation({ order, headingRef }: { order: OrderDetail; hea
       <PurchaseLayout summary={
         <PurchaseSummary
           headingId="confirmation-summary-heading"
-          title={`Pedido N.° ${order.orderId}`}
+          title={`Pedido ${orderReference(order)}`}
           lines={order.items.map((item) => ({
             key: item.orderItemId,
             title: item.title,
@@ -63,15 +65,21 @@ function OtherOrderConfirmation({ order, headingRef }: { order: OrderDetail; hea
           ]}
         >
           <ButtonLink variant="primary" to={`/orders/${order.orderId}`} replace state={null}>Ver el pedido completo</ButtonLink>
+          <InvoiceAction orderId={order.orderId} issued={Boolean(order.invoice)} />
           <p className={classes.fine}>Compra simulada: no se hizo ningún cobro real.</p>
           <Link className={classes.quietLink} to="/catalog">Seguir explorando el catálogo</Link>
         </PurchaseSummary>
       }>
         <section className={`${scene.scene} ${classes.scene}`} data-tone={story.tone} data-story={story.kind} aria-labelledby="confirmation-heading">
           <div className={scene.storyCopy}>
-            <p className={classes.sceneOrder}>Pedido N.° {order.orderId}</p>
+            <p className={classes.sceneOrder}>Pedido {orderReference(order)}</p>
             <h1 id="confirmation-heading" className={scene.headline} ref={headingRef} tabIndex={-1}>{confirmationHeadline(story)}</h1>
             <p className={scene.lead}>{confirmationLead(order, story, window)}</p>
+            {/* While the payment is pending the server allows cancelling without any charge; the decision is on the detail. */}
+            {story.kind === "awaiting-payment" && Boolean(order.availableActions?.canCancel ?? order.availableActions?.cancel) && <p className={classes.cancelAside} data-confirmation="cancel">
+              <MaterialSymbol name="schedule" size={18} aria-hidden="true" />
+              <span>{cancellationCondition(order)} Se hace desde el <Link to={`/orders/${order.orderId}`} replace state={null}>detalle del pedido</Link>.</span>
+            </p>}
           </div>
           {!pickup && order.shipment && !closed && <ShipmentTrack shipment={order.shipment} />}
           {awaitingTransfer && <div className={scene.inset}>{transferDetails.data

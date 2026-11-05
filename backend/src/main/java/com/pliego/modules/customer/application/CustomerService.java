@@ -2,7 +2,6 @@ package com.pliego.modules.customer.application;
 
 import java.util.List;
 
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,22 +18,20 @@ public class CustomerService {
 
     private final CustomerGateway customerGateway;
     private final PasswordEncoder passwordEncoder;
-    private final ApplicationEventPublisher events;
-    private final com.pliego.modules.identity.application.EmailActionService emailActions;
+    private final com.pliego.modules.identity.application.EmailChangeService emailChanges;
 
     public CustomerService(CustomerGateway customerGateway, PasswordEncoder passwordEncoder,
-            ApplicationEventPublisher events, com.pliego.modules.identity.application.EmailActionService emailActions) {
+            com.pliego.modules.identity.application.EmailChangeService emailChanges) {
         this.customerGateway = customerGateway;
         this.passwordEncoder = passwordEncoder;
-        this.events = events;
-        this.emailActions = emailActions;
+        this.emailChanges = emailChanges;
     }
 
     @Transactional(readOnly = true)
     public CustomerProfile getProfile(long actorUserId) {
         CustomerGateway.CustomerProfile profile = customerGateway.findProfile(actorUserId);
         return new CustomerProfile(profile.customerId(), profile.email(), profile.firstNames(), profile.lastNames(),
-                profile.phone(), profile.state(), profile.version(), profile.emailVerified());
+                profile.phone(), profile.state(), profile.version(), profile.emailVerified(), profile.emailUndeliverableSince(), profile.pendingEmail());
     }
 
     @Transactional
@@ -52,32 +49,24 @@ public class CustomerService {
         return customerGateway.resolveAddress(actorUserId, key);
     }
 
-    /**
-     * Replaces the sign-in email after re-authenticating with the current password. The database
-     * routine owns normalization, validation and uniqueness; changed email requires verification and
-     * revokes refresh sessions. The verification intent joins this Spring transaction.
-     */
+    /** Reauthenticates under the user lock; identity changes only when the new address is confirmed. */
     @Transactional
-    public String changeEmail(long actorUserId, String newEmail, String currentPassword) {
+    public com.pliego.modules.identity.application.EmailChangeResult changeEmail(long actorUserId, String newEmail,
+            String currentPassword) {
         String passwordHash = customerGateway.passwordHash(actorUserId);
         if (passwordHash == null || !passwordEncoder.matches(currentPassword, passwordHash)) {
             throw new CurrentPasswordMismatchException();
         }
-        String previousEmail = customerGateway.findProfile(actorUserId).email();
-        String email = customerGateway.changeEmail(actorUserId, newEmail);
-        if (!email.equals(previousEmail)) {
-            emailActions.verifyChangedEmail(actorUserId);
-            events.publishEvent(new CustomerEmailChanged(actorUserId, previousEmail, email));
-        }
-        return email;
+        return emailChanges.request(actorUserId, newEmail);
     }
 
     @Transactional(readOnly = true)
     public List<CustomerAddress> listAddresses(long actorUserId) {
         return customerGateway.listAddresses(actorUserId).stream()
                 .map(address -> new CustomerAddress(address.addressId(), address.alias(), address.recipient(),
-                        address.line1(), address.line2(), address.city(), address.province(), address.countryCode(),
-                        address.postalCode(), address.reference(), address.phone(), address.primary()))
+                        address.line1(), address.line2(), address.city(), address.province(), address.provinceId(),
+                        address.cityId(), address.cityNeedsReview(), address.countryCode(), address.postalCode(),
+                        address.reference(), address.phone(), address.primary()))
                 .toList();
     }
 
@@ -122,7 +111,9 @@ public class CustomerService {
     }
 
     private static AddressData toGatewayAddress(AddressInput address) {
-        return new AddressData(address.alias(), address.recipient(), address.line1(), address.line2(), address.city(),
-                address.province(), address.countryCode(), address.postalCode(), address.reference(), address.phone());
+        return new AddressData(address.alias(), address.recipient(), address.line1(), address.line2(),
+                address.provinceId() == null ? null : Long.parseLong(address.provinceId()),
+                address.cityId() == null ? null : Long.parseLong(address.cityId()),address.city(),address.province(),
+                address.countryCode(),address.postalCode(),address.reference(),address.phone());
     }
 }

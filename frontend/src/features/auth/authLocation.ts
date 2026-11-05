@@ -9,12 +9,20 @@ export function emailActionLocation(pathname: string, from: string) {
   return from === "/" ? pathname : authLocation(pathname, from);
 }
 
-const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkout|(?:orders|biblioteca)(?:\/[1-9][0-9]{0,18})?)\/?$/;
+const customerIntentPath = /^\/(?:account(?:\/addresses)?|favorites|cart|checkout|orders(?:\/[1-9][0-9]{0,18}(?:\/invoice)?)?|biblioteca(?:\/[1-9][0-9]{0,18})?)\/?$/;
 
 /**
  * Validates the post-sign-in destination: catalog routes plus the CUSTOMER purchase
  * surfaces. Anything else, including other origins, falls back to the Home page.
  */
+/**
+ * An ADMIN sign-in may return to the admin page it came from (ADR 0047). Exact paths only, compared on the raw value
+ * (no normalization, so no traversal); customer flows never return to the administration area.
+ */
+export function adminReturnHref(candidate: string | null | undefined) {
+  return candidate && /^\/admin(?:\/(?:retiros|correcciones))?$/.test(candidate) ? candidate : "/admin";
+}
+
 export function safeAuthReturnHref(candidate: string | null | undefined) {
   if (candidate && candidate.startsWith("/") && !candidate.startsWith("//") && !candidate.includes("\\")) {
     try {

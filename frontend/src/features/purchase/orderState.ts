@@ -20,7 +20,8 @@ const shipmentLabels: Record<KnownShipmentState, string> = {
   PENDING: "Pedido confirmado", SHIPPED: "En camino", CANCELLED: "Envío cancelado",
 };
 const pickupLabels: Record<string, string> = {
-  PENDING: "Pendiente de retiro", COLLECTED: "Retirado", CANCELLED: "Pedido cancelado",
+  // ADR 0047: the server tells preparing (PENDING) from ready (READY); collection is confirmed at the counter.
+  PENDING: "En preparación", READY: "Listo para retirar", COLLECTED: "Retirado", CANCELLED: "Pedido cancelado",
 };
 
 /** Labels backend projections. Never infers progress, pickup readiness, or actions. */

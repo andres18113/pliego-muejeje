@@ -192,3 +192,59 @@ It sets image/webp, one-year immutable cache headers and sha256 metadata. It doe
 not configure public access or the domain. Do not delete historical CDN objects
 merely to satisfy its strict unexpected-key listing check. No upload is part of
 the preparation command.
+
+## Rendiciones JPEG para correo
+
+Desde la raíz del repositorio, preparar los archivos sin red ni credenciales:
+
+```bash
+uv run --cache-dir /tmp/pliego-email-cover-uv-cache --no-project \
+  --with-requirements scripts/requirements-covers.txt \
+  python scripts/generate-email-covers.py
+```
+
+El generador reúne las claves de los manifiestos `pliego-cover-manifest-v1`
+locales, incluidos los lotes marcados `PUBLISHED` y el registro histórico de
+retiradas, cuyos objetos públicos se conservan para pedidos antiguos. Excluye los
+lotes pendientes. Busca las copias WebP publicadas por su clave completa bajo
+`covers/generated/`; una fuente ausente se enumera y devuelve código 2, y nunca
+entra en el mapa de rendiciones. Las colisiones de nombres JPEG son errores.
+
+Cada copia es JPEG baseline de 168 px de ancho, calidad 85, RGB/sRGB, con alfa
+aplanado sobre blanco, proporción conservada y metadatos eliminados. No recorta ni
+modifica las portadas WebP. La carpeta ignorada `covers/generated/email-v1/`
+contiene los archivos bajo su clave completa y `manifest.json` con clave JPEG,
+clave WebP de origen, tamaño y SHA-256. También genera
+`backend/src/main/resources/notifications/email-cover-renditions.json`, que se
+incluye en el backend. El correo conserva la URL original validada cuando no hay
+una entrada en ese mapa; no deduce URLs cambiando extensiones.
+
+Validar archivos y mostrar solo conteos sin consultar R2 ni cargar credenciales:
+
+```bash
+python3 scripts/upload-r2-covers.py \
+  --manifest covers/generated/email-v1/manifest.json \
+  --assets-dir covers/generated/email-v1 --add-only --dry-run
+```
+
+La publicación posterior autorizada se ejecuta desde la raíz:
+
+```bash
+source ~/.config/pliego/r2.env
+uv run --cache-dir /tmp/pliego-email-cover-uv-cache --no-project \
+  --with-requirements scripts/requirements-r2.txt \
+  python scripts/upload-r2-covers.py \
+  --manifest covers/generated/email-v1/manifest.json \
+  --assets-dir covers/generated/email-v1 --add-only
+```
+
+Este modo exige `R2_BUCKET=pliego-covers` y exclusivamente claves JPEG bajo
+`covers/editions/email-v1/`. Verifica todos los objetos antes de escribir: omite
+los idénticos y cancela el lote ante conflictos o errores de consulta. Cada PUT
+usa `If-None-Match: *` para impedir sobrescrituras concurrentes, `image/jpeg`,
+caché pública inmutable de un año y metadato `sha256`. No enumera, elimina ni
+retira objetos. Las claves `email-v1` activan estas restricciones incluso sin
+`--add-only`. El dry-run es local: no informa qué objetos ya existen en R2.
+
+Publicar y comprobar los JPEG públicos antes de desplegar el backend con el
+mapa generado. Este cambio local no publica los archivos.
