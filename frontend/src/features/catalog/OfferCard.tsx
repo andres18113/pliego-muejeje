@@ -39,7 +39,7 @@ export function OfferCard({ edition, detailHref, returnHref, isFavorite, favorit
   return <article className={classes.card} data-offer-card data-edition-id={book.id} data-unavailable={!book.available || undefined}>
     <div className={classes.stage}>
       <BookCover url={book.cover.url} license={null} attribution={null} title={book.title} size="card" decorative loading="lazy" />
-      {urgency && <UrgencyChip label={urgency} className={classes.urgency} data-offer-urgency />}
+      {urgency && <UrgencyChip id={`${uid}-urgency`} label={urgency} className={classes.urgency} data-offer-urgency />}
       {cue && <p className={classes.cue}>{cue}</p>}
       <Tooltip label={favoriteLabel} events={{ hover: true, focus: true, touch: false }} position="top" multiline maw="calc(100vw - 32px)" withArrow>
         <ActionIcon type="button" size={40} radius="xl" variant="transparent" className={classes.favorite}
@@ -55,15 +55,19 @@ export function OfferCard({ edition, detailHref, returnHref, isFavorite, favorit
     <div className={classes.identity}>
       {/* The card's one link: its hit area covers the card; only the heart sits above it; "Ver oferta" is part of it. */}
       <Link id={`${uid}-edition-link`} to={detailHref} state={bookCardNavigationState(book, true, media)} onClick={onOpen} className={classes.link}
-        aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.editionLabel}`} aria-describedby={`${uid}-price`} data-bookcard-link>
+        aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.editionLabel}`} aria-describedby={`${uid}-price${book.discountLabel ? ` ${uid}-saving` : ""}${urgency ? ` ${uid}-urgency` : ""}`} data-bookcard-link>
         <h3 className={classes.title}>{book.title}</h3>
       </Link>
     </div>
 
+    {/* Read top to bottom, as on Google Store: the price line, then the saving on its own line under it. Urgency
+        is the stage's, never beside the saving. */}
     <div className={classes.pricing}>
-      <p className={classes.price} id={`${uid}-price`} data-bookcard-price>{book.priceLabel}</p>
-      {book.originalPriceLabel && <p className={classes.was}><span className="visually-hidden">Precio anterior </span><s>{book.originalPriceLabel}</s></p>}
-      {book.discountLabel && <SavingsChip amountLabel={book.discountLabel} />}
+      <div className={classes.priceLine}>
+        <p className={classes.price} id={`${uid}-price`} data-bookcard-price>{book.priceLabel}</p>
+        {book.originalPriceLabel && <p className={classes.was}><span className="visually-hidden">Precio anterior </span><s>{book.originalPriceLabel}</s></p>}
+      </div>
+      {book.discountLabel && <SavingsChip id={`${uid}-saving`} amountLabel={book.discountLabel} />}
       {!book.available && <p className={classes.unavailable}>Sin existencias</p>}
     </div>
 

@@ -30,8 +30,13 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
   const reasons = [...new Set(["reason" in favorite ? favorite.reason : null, cart && "reason" in cart ? cart.reason : null].filter((reason): reason is string => Boolean(reason)))];
   const reasonId = (reason: string) => feedback?.message === reason ? `${uid}-feedback` : `${uid}-reason-${reasons.indexOf(reason)}`;
   const Heading = headingOrder === 4 ? "h4" : "h3";
-  const urgency = book.offer ? offerUrgencyLabel(book.offer.daysRemaining) : null;
   const offerId = book.offer && book.discountLabel ? `${uid}-offer` : null;
+  const urgency = offerId && book.offer ? offerUrgencyLabel(book.offer.daysRemaining) : null;
+  // On a stage (the catalog shelf) urgency belongs to the jacket's field, top-left, as on Ofertas; the saving stays
+  // with the price. A card without a stage keeps both chips under the price.
+  const urgencyOnStage = Boolean(media && urgency);
+  const urgencyId = urgencyOnStage ? `${uid}-urgency` : null;
+  const cover = <BookCover url={book.cover.url} license={null} attribution={null} title={book.title} size="card" decorative loading="lazy" />;
   const favoriteControl = (
   <Tooltip label={favoriteLabel} events={{ hover: true, focus: true, touch: false }} position="top" multiline maw="calc(100vw - 32px)" withArrow>
     <ActionIcon id={`${uid}-favorite-action`} type="button" size={44} radius="md" variant="transparent"
@@ -43,11 +48,16 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
   </Tooltip>
   );
 
-  return <article className={[classes.card, className].filter(Boolean).join(" ")} data-bookcard data-edition-id={book.id} data-media={media} data-unavailable={!book.available || undefined}>
+  return <article className={[classes.card, className].filter(Boolean).join(" ")} data-bookcard data-edition-id={book.id} data-media={media} data-unavailable={!book.available || undefined} data-urgent={urgencyOnStage || undefined}>
     <Anchor id={`${uid}-edition-link`} component={Link} to={to} state={navigationState} onClick={onNavigate} underline="never" className={classes.mainLink}
-      aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.formatLabel}. ${book.editionLabel}`} aria-describedby={`${uid}-authors ${uid}-price${offerId ? ` ${offerId}` : ""} ${uid}-availability`} data-bookcard-link>
+      aria-label={`Ver edición: ${book.title}. ${book.publisher}, ${book.formatLabel}. ${book.editionLabel}`} aria-describedby={`${uid}-authors ${uid}-price${offerId ? ` ${offerId}` : ""}${urgencyId ? ` ${urgencyId}` : ""} ${uid}-availability`} data-bookcard-link>
       <div className={classes.shelf} data-bookcard-shelf>
-        <BookCover url={book.cover.url} license={null} attribution={null} title={book.title} size="card" decorative loading="lazy" />
+        {urgencyId ? <>
+          {/* Its own row at the stage's top, beside the favorite's corner: the jacket takes the room left below,
+              so the two never meet at any width or text size. Heard once, as the link's description. */}
+          <div className={classes.urgencyRow}><UrgencyChip id={urgencyId} label={urgency!} data-offer-urgency /></div>
+          <div className={classes.urgentCover}>{cover}</div>
+        </> : cover}
       </div>
       <div className={classes.identity} data-bookcard-identity>
         <Text component={Heading} lineClamp={4} className={classes.bookTitle} id={`${uid}-title`} data-bookcard-title>{book.title}</Text>
@@ -66,11 +76,11 @@ export function BookCard({ book, to, navigationState, onNavigate, favorite, cart
           <p className={classes.price} id={`${uid}-price`} data-bookcard-price>{book.priceLabel}</p>
           {book.originalPriceLabel && <p className={classes.was}><span className="visually-hidden">Precio anterior </span><s>{book.originalPriceLabel}</s></p>}
         </div>
-        {/* The offer as Ofertas and the edition page read it: the saving as one chip, then the days left only
-            when the server says five or fewer. No percentage, end date, copy or terms on a shelf card. */}
+        {/* The offer as Ofertas reads it: the saving as one chip beside the price; the days left (only when the
+            server says five or fewer) on the stage. No percentage, end date, copy or terms on a shelf card. */}
         {offerId && <div className={classes.offerChips} id={offerId} data-bookcard-offer>
           <SavingsChip amountLabel={book.discountLabel!} />
-          {urgency && <UrgencyChip label={urgency} data-offer-urgency />}
+          {urgency && !urgencyOnStage && <UrgencyChip label={urgency} data-offer-urgency />}
         </div>}
       </div>
       <p className={classes.availability} id={`${uid}-availability`} data-bookcard-availability><StockStatus available={book.available} size="compact" variant="quiet" /></p>

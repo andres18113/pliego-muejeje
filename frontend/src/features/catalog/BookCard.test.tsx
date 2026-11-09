@@ -126,6 +126,20 @@ describe("BookCard offer on the catalog shelf", () => {
     const urgency = document.querySelector("[data-offer-urgency]");
     if (label) expect(urgency).toHaveTextContent(label);
     else expect(urgency).toBeNull();
+    // Urgency belongs to the stage (as on Ofertas), never beside the saving under the price; the link still hears it.
+    expect(document.querySelector("[data-bookcard-offer] [data-offer-urgency]")).toBeNull();
+    expect(document.querySelector("[data-bookcard-offer]")).toHaveTextContent(/Ahorras \$\s*2,84/);
+    expect(document.querySelector("[data-bookcard]")?.hasAttribute("data-urgent")).toBe(Boolean(label));
+    if (label) {
+      expect(urgency?.closest("[data-bookcard-shelf]")).not.toBeNull();
+      expect(screen.getByRole("link")).toHaveAccessibleDescription(new RegExp(`Ahorras \\$\\s*2,84.*${label}.*Disponible`));
+    }
+  });
+
+  it("keeps both chips under the price on a card without a stage", () => {
+    setup({ book: offered(0) });
+    expect(document.querySelector("[data-bookcard-offer] [data-offer-urgency]")).toHaveTextContent("Termina hoy");
+    expect(document.querySelector("[data-bookcard]")?.hasAttribute("data-urgent")).toBe(false);
   });
 
   it("shows no offer chips for an edition without an offer", () => {
