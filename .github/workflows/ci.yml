@@ -126,6 +126,11 @@ jobs:
             | sudo tee /etc/apt/sources.list.d/pgdg.sources >/dev/null
           sudo apt-get update
           sudo apt-get install -y postgresql-18 postgresql-client-18
+          # Runner images that already ship PostgreSQL 18 come with a default 18/main cluster: drop it so the
+          # disposable cluster below always starts fresh on 55432, exactly as on images without one.
+          if pg_lsclusters --no-header | awk '$1 == "18" && $2 == "main" { found = 1 } END { exit !found }'; then
+            sudo pg_dropcluster --stop 18 main
+          fi
           sudo pg_createcluster -p 55432 18 main
           sudo pg_ctlcluster 18 main start
       - name: Create a disposable PostgreSQL database and ephemeral credentials
